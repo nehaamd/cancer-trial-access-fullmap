@@ -1,0 +1,13 @@
+{
+  "trials_raw": 4299,
+  "excluded_non_oncology_rule": 126,
+  "trials_kept": 4173,
+  "site_rows_kept": 56862,
+  "route": {
+    "oral": 1684,
+    "indeterminate": 468,
+    "non_oral": 2021
+  },
+  "excludes_55plus": 254,
+  "nci_treating_centers": 68
+}
