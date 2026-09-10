@@ -85,6 +85,16 @@ def main():
     tr["nearest_nci"] = np.where(z["t_nci_src"] >= 0, nci.name.values[np.clip(z["t_nci_src"], 0, None)], "NO ROAD CONNECTION")
     tr.loc[tr.road_mi_broad == 0, "nearest_broad"] = cname[tr.loc[tr.road_mi_broad == 0, "county_fips"].map(k_of).values]
     tr["trials_in_own_county"] = cnt_county[tr.county_fips.map(k_of).values]
+    # county household context and all-sites incidence inherited by each tract (ACS household tables and State Cancer Profiles are
+    # county-level); district/state figures below are residents-55+-weighted means of the county values, so a district that is
+    # 70% one county and 30% another gets a 70/30 blend by where its older residents live — not by land area.
+    cov = pd.read_csv(REF / "county_covariates.csv", dtype={"county_fips": str}).set_index("county_fips")
+    for col, src_ in (("acs_no_vehicle", "pct_hh_no_vehicle"), ("acs_uninsured", "uninsured_rate"), ("acs_uninsured_55_64", "uninsured_rate_55_64"), ("acs_poverty", "poverty_rate")):
+        tr[col] = tr.county_fips.map(cov[src_])
+    tr["acs_broadband"] = tr.county_fips.map(100 * cov.hh_broadband / cov.hh_total.replace(0, np.nan))
+    inc = pd.read_csv(REF / "cancer_incidence_county.csv", dtype={"county_fips": str}); inc = inc[inc.site == "all"].set_index("county_fips")
+    tr["inc_all_rate"] = tr.county_fips.map(inc.rate.where(inc.status.isin(["ok", "small_numbers"])))
+    tr["inc_all_cases"] = tr.county_fips.map(inc.avg_annual_count.where(inc.status.isin(["ok", "small_numbers"])))
     tr["on_main_road_network"] = (z["t_component"] == int(z["main_component"])).astype(int)
     tr.to_csv(OUT / "tract_access.csv", index=False)
 
@@ -110,6 +120,10 @@ def main():
              "wmean_trials_within_120rdmi": round(wm("trials_within_120rdmi"), 0), "wmean_trials_in_own_county": round(wm("trials_in_own_county"), 0),
              "modal_nearest_nci": g.groupby("nearest_nci").w.sum().idxmax(), "modal_nearest_broad": g.groupby("nearest_broad").w.sum().idxmax()}
         for c in tcols: r["wmean_" + c] = round(wm(c), 0)
+        def wm_avail(c):
+            m = g[c].notna(); Wm = g.loc[m, "w"].sum(); return (round(float((g.loc[m, c] * g.loc[m, "w"]).sum() / Wm), 1) if Wm > 0 else None, round(100 * float(Wm / W), 1))
+        for c in ("acs_no_vehicle", "acs_broadband", "acs_uninsured", "acs_uninsured_55_64", "acs_poverty", "inc_all_rate"): r[c], r[c + "_pop_covered_pct"] = wm_avail(c)
+        r["inc_all_cases_sum"] = int(g.drop_duplicates("county_fips").inc_all_cases.fillna(0).sum()) if "county_fips" in g else None
         return pd.Series(r)
     dist = m.groupby("cd_geoid").apply(agg, include_groups=False).reset_index()
     dist["state_fips"] = dist.cd_geoid.str[:2]; dist["cd"] = dist.cd_geoid.str[2:]

@@ -34,3 +34,13 @@ An external reviewer (separate session) raised four points; a critical re-read o
 | **Self-critique A.** The first sensitivity analysis counted *sites* far from county centers, not *people*. | — | Superseded by the population-weighted measurement above. |
 | **Self-critique B.** The first response said a Cedars-Sinai site was "silently mis-located" by a Boston ZIP in the registry. | Wrong: the pipeline's state check had rejected that ZIP and placed the site in Los Angeles County by city; only the ad-hoc check was fooled. | Corrected here; the same state check is now used for routing, and the city fallback additionally must agree with the assigned county (it caught 60 rows, e.g. a Cass County site listed with city "Dallas"). |
 | **Self-critique C.** A "Hoag Memorial Hospital, Newport Beach" row carries ZIP 92263 (Palm Springs) and is assigned to Riverside County by ZIP. | Registry inconsistency (city and ZIP disagree); the pipeline follows the ZIP, as designed. | Noted as an example of residual registry error; no per-row overrides are applied. |
+
+
+## Round 4 note
+
+State statistics and national/state/district household and incidence context were added; the filter-responsive access figures are computed in the browser from the same tract pools the pipeline uses (check "Live-filter tract file reproduces pipeline figures with no filter"). Two limits worth stating: (1) household and incidence context at district and state level are weighted means of *county* values (ACS household tables and State Cancer Profiles are county-level), so within-county variation is invisible; (2) filtered aggregates cover the 60-road-mile band only (30- and 120-mile figures remain unfiltered and tagged).
+
+
+## Round 6 note
+
+The trial and site tables draw on the same trial and facility arrays as the map, so a count on a card and the table it opens cannot disagree (checked: "Payload: trial/site tables are internally consistent"). Site identity is by registry name within a county with sponsor site codes removed; 340 of 9,494 sites are anonymous placeholders flagged "unresolved". No alias merges are applied until a human has reviewed `site_alias_candidates.csv`. The GitHub Actions refresh workflow has not been executed from this environment; the refresh chain itself (`run_refresh.sh`) was run here end-to-end for the 2026-09-10 pull.

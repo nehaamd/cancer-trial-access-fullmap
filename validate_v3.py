@@ -19,7 +19,7 @@ def main():
     tlog = json.load(open(REF / "tract_ref_log.json")); mlog = json.load(open(OUT / "tract_metrics_log.json")); rlog = json.load(open(OUT / "route_log.json"))
     glog = json.load(open(ROADS / "graph_stats.json")); blog = json.load(open(REF / "cancer_burden_log.json")); qlog = json.load(open("out/qc_log.json")); cts = json.load(open(OUT / "cancer_type_summary.json"))
     tr = pd.read_csv(OUT / "tract_access.csv", dtype={"tract": str, "county_fips": str}); cm = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str}); rd = pd.read_csv(OUT / "county_road_distances.csv", dtype={"county_fips": str})
-    dm = pd.read_csv(OUT / "district_metrics_v3.csv", dtype={"cd_geoid": str}); cp = pd.read_csv(REF / "county_pop55.csv", dtype={"county_fips": str}); sm = pd.read_csv(OUT / "state_metrics_v3.csv", dtype={"state_fips": str})
+    dm = pd.read_csv(OUT / "district_metrics_v3.csv", dtype={"cd_geoid": str}).set_index("cd_geoid", drop=False); cp = pd.read_csv(REF / "county_pop55.csv", dtype={"county_fips": str}); sm = pd.read_csv(OUT / "state_metrics_v3.csv", dtype={"state_fips": str}).set_index("state_fips", drop=False)
     # 1 population reconciliation
     cs = tr.groupby("county_fips").pop55.sum().reindex(cp.county_fips).fillna(0).values; mism = int((cs != cp.pop55.values).sum())
     check("Tract pop 55+ sums equal county ACS totals (3,143 counties)", f"{mism} mismatches; tract total {int(tr.pop55.sum()):,} = county total {int(cp.pop55.sum()):,}", mism == 0 and int(tr.pop55.sum()) == int(cp.pop55.sum()),
@@ -107,6 +107,34 @@ def main():
         check("Facility-level routing: residents whose own county's trials are >60 road-miles away are no longer scored at 0 mi", f"{inv['tracts_where_own_county_trials_exceed_60mi_pool']:,} tracts, {inv['pop55_in_those_tracts']:,} residents 55+", True, "this population was previously counted as having every trial in its county at zero distance")
     ui = open("docs/index.html").read()
     check("UI text matches validation evidence: router accuracy is qualified in the deployed page (guard against claiming a fix that was not made)", "phrase 'not yet against an independent routing engine' present in index.html" if "independent routing engine" in ui else "MISSING", "independent routing engine" in ui and "approximate" in ui)
+    # 10c live-filter data file: the browser's tract-level recount must reproduce the pipeline exactly when every trial passes
+    if Path("docs/tracts60.bin").exists():
+        import struct
+        buf = open("docs/tracts60.bin", "rb").read(); magic, n, ns, npairs, nst = struct.unpack("<IIIII", buf[:20]); o = 20
+        pop = np.frombuffer(buf, "<u4", n, o); o += n * 4; st_ = np.frombuffer(buf, "u1", n, o); o += n + ((4 - n % 4) % 4); di = np.frombuffer(buf, "<u2", n, o); o += n * 2 + ((4 - (n * 2) % 4) % 4)
+        split = [struct.unpack("<IHH", buf[o + 8 * i:o + 8 * i + 8]) for i in range(ns)]; o += 8 * ns; off = np.frombuffer(buf, "<u4", n + 1, o); o += (n + 1) * 4; ids = np.frombuffer(buf, "<u2", npairs, o)
+        Dj = json.loads(open("docs/data.js").read()[len("window.DATA="):-1]); SP = Dj["SP"]; order = Dj["meta"]["state_order"]; dkeys = Dj["district_keys"]
+        cnt = np.array([len(set().union(*[SP[x] for x in ids[off[i]:off[i + 1]]])) if off[i + 1] > off[i] else 0 for i in range(n)])
+        def agg_(mask_w):
+            idx, w = mask_w; W = w.sum(); return (round(100 * w[cnt[idx] < 20].sum() / W, 1), round(100 * w[cnt[idx] == 0].sum() / W, 1), round((w * cnt[idx]).sum() / W))
+        tx = order.index("48"); m = np.where(st_ == tx)[0]; got = agg_((m, pop[m].astype(float)))
+        want = (float(sm.loc["48", "pct_lt20_trials_within_60rdmi"]), float(sm.loc["48", "pct_zero_trials_within_60rdmi"]), int(sm.loc["48", "wmean_trials_within_60rdmi"]))
+        k = dkeys.index("4816"); m = np.where(di == k)[0]; ws = [(t, sh / 10000) for t, d, sh in split if d == k]; idx = np.concatenate([m, np.array([t for t, _ in ws], int)]); w = np.concatenate([pop[m].astype(float), np.array([pop[t] * sh for t, sh in ws])])
+        got_d = agg_((idx, w)); want_d = (float(dm.loc["4816", "pct_lt20_trials_within_60rdmi"]), float(dm.loc["4816", "pct_zero_trials_within_60rdmi"]), int(dm.loc["4816", "wmean_trials_within_60rdmi"]))
+        check("Live-filter tract file reproduces pipeline figures with no filter (Texas; TX-16)", f"TX: browser method {got} vs pipeline {want}; TX-16: {got_d} vs {want_d}", got == want and got_d == want_d, "same tract pools, same weights; guarantees filtered and unfiltered figures are comparable")
+    # 10d payload integrity for the trial / site tables and the refresh diff
+    Dj2 = json.loads(open("docs/data.js").read()[len("window.DATA="):-1]); T2 = Dj2["T"]; N2 = len(T2["id"]); bad_idx = 0; nbd_unsorted = 0; sp_bad = 0
+    for k_, c_ in Dj2["counties"].items():
+        for fa_ in c_["fac"]:
+            if any(j >= N2 for j in fa_[3]): bad_idx += 1
+        if any(c_["nbd"][i][1] > c_["nbd"][i + 1][1] for i in range(len(c_["nbd"]) - 1)): nbd_unsorted += 1
+    for sp_ in Dj2["SPI"]:
+        for cf_, i_ in sp_:
+            if i_ >= len(Dj2["counties"][cf_]["fac"]): sp_bad += 1
+    check("Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted)", f"{bad_idx} bad facility trial indices; {sp_bad} bad sitepoint→facility refs; {nbd_unsorted} unsorted nearby lists; sponsor names {sum(1 for x in T2['spn'] if x):,}/{N2:,}, last-update dates {sum(1 for x in T2['upd'] if x):,}/{N2:,}", bad_idx == 0 and sp_bad == 0 and nbd_unsorted == 0 and sum(1 for x in T2['spn'] if x) == N2)
+    if (OUT / "refresh_diff.json").exists():
+        rd_ = json.load(open(OUT / "refresh_diff.json"))["summary"]
+        check("Refresh diff: previous and current pulls compared", f"{rd_['previous_pull'][:10]} → {rd_['current_pull'][:10]}: {rd_['trials_previous']:,} → {rd_['trials_current']:,} trials; {rd_['trials_new']} new, {rd_['trials_no_longer_listed']} no longer listed, {rd_['sites_new_at_existing_trials']} sites added / {rd_['sites_removed_at_existing_trials']} removed at continuing trials; {rd_.get('counties_with_changed_trial_count', 0)} counties changed count", rd_["trials_current"] > 0, "registry data timestamp " + str(rd_.get("current_registry_data")))
     # 11 Tier 4 prototype
     if (OUT / "tier4_log.json").exists():
         t4 = json.load(open(OUT / "tier4_log.json")); rk = pd.read_csv(OUT / "tier4_candidates_ranked.csv"); gs = pd.read_csv(OUT / "tier4_greedy_sequence.csv")

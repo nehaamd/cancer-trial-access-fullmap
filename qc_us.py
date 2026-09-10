@@ -102,8 +102,10 @@ def main():
         rows.append({"name": name, "city": place, "state": st, "tier": tier, "lat": round(lat, 4), "lon": round(lon, 4), "coord_source": src})
     pd.DataFrame(rows).to_csv(REF / "nci_centers.csv", index=False)
 
-    if not (RAW / "trials_raw.csv").exists(): shutil.copy(RAW / "trials.csv", RAW / "trials_raw.csv")
-    if not (RAW / "us_sites_raw.csv").exists(): shutil.copy(RAW / "us_sites.csv", RAW / "us_sites_raw.csv")
+    # fetch_us.py writes the raw pull to trials.csv / us_sites.csv; keep a *_raw copy of THIS pull (always refresh — an older copy
+    # left over from a previous pull would silently be QC'd instead of the new data)
+    if (RAW / "fetch_log.json").stat().st_mtime > (RAW / "trials_raw.csv").stat().st_mtime if (RAW / "trials_raw.csv").exists() else True:
+        shutil.copy(RAW / "trials.csv", RAW / "trials_raw.csv"); shutil.copy(RAW / "us_sites.csv", RAW / "us_sites_raw.csv")
     raw = {}
     with open(RAW / "studies_raw.jsonl") as fh:
         for line in fh:

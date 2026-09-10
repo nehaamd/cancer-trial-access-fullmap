@@ -9,7 +9,7 @@ import requests
 import config
 
 RAW = Path("data/raw"); RAW.mkdir(parents=True, exist_ok=True)
-EXTRA = ["InterventionOtherName", "ArmGroupDescription", "BriefSummary", "MinimumAge", "MaximumAge", "Keyword", "OfficialTitle"]
+EXTRA = ["InterventionOtherName", "ArmGroupDescription", "BriefSummary", "MinimumAge", "MaximumAge", "Keyword", "OfficialTitle", "LeadSponsorName", "LastUpdatePostDate", "CentralContactName", "CentralContactPhone", "CentralContactEMail", "CollaboratorName"]
 
 STATES = {  # name/abbr -> (FIPS, USPS)
  "alabama":("01","AL"),"alaska":("02","AK"),"arizona":("04","AZ"),"arkansas":("05","AR"),"california":("06","CA"),"colorado":("08","CO"),
@@ -75,6 +75,10 @@ def flatten(ps):
              "conditions": ";".join(dig(ps, "conditionsModule", "conditions", default=[]) or []),
              "keywords": ";".join(dig(ps, "conditionsModule", "keywords", default=[]) or []),
              "official_title": dig(ps, "identificationModule", "officialTitle") or "",
+             "lead_sponsor": dig(ps, "sponsorCollaboratorsModule", "leadSponsor", "name") or "",
+             "collaborators": ";".join(c.get("name", "") for c in (dig(ps, "sponsorCollaboratorsModule", "collaborators", default=[]) or [])),
+             "last_update_posted": dig(ps, "statusModule", "lastUpdatePostDateStruct", "date") or "",
+             "central_contact": "; ".join(f"{c.get('name','')} {c.get('phone','')} {c.get('email','')}".strip() for c in (dig(ps, "contactsLocationsModule", "centralContacts", default=[]) or [])),
              "lead_sponsor_class": dig(ps, "sponsorCollaboratorsModule", "leadSponsor", "class"),
              "intervention_types": ";".join(sorted({(iv.get("type") or "") for iv in ivs})),
              "intervention_names": ";".join((iv.get("name") or "") for iv in ivs),
@@ -97,7 +101,9 @@ def main():
         w = csv.DictWriter(f, fieldnames=list(trials[0].keys())); w.writeheader(); w.writerows(trials)
     with open(RAW / "us_sites.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(sites[0].keys())); w.writeheader(); w.writerows(sites)
-    log = {"timestamp_utc": datetime.now(timezone.utc).isoformat(), "params": params, "api_total_count": total,
+    try: ver = requests.get(config.CTGOV_BASE.rsplit("/studies", 1)[0] + "/version", timeout=60, headers={"User-Agent": "us-trial-access-snapshot/0.1 (research)"}).json()
+    except Exception as e: ver = {"error": repr(e)}
+    log = {"timestamp_utc": datetime.now(timezone.utc).isoformat(), "registry_data_timestamp": ver.get("dataTimestamp"), "registry_api_version": ver.get("apiVersion"), "params": params, "api_total_count": total,
            "trials_with_us_recruiting_site": len(trials), "us_site_rows": len(sites)}
     json.dump(log, open(RAW / "fetch_log.json", "w"), indent=2); print(json.dumps({k: v for k, v in log.items() if k != "params"}, indent=2))
 
