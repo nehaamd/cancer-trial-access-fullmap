@@ -1,0 +1,1041 @@
+state_fips,name,rate_raw,ci_lo,ci_hi,count_raw,trend,rate,avg_annual_count,status,title,site,site_code
+21000,Kentucky,519,516.2,521.8,29054,stable,519.0,29054,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+19000,Iowa,498.8,495.6,502.0,20049,rising,498.8,20049,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+54000,West Virginia,498.1,494.0,502.1,12584,rising,498.1,12584,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+22000,Louisiana,489.2,486.5,491.9,27260,stable,489.2,27260,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+27000,Minnesota,486.8,484.4,489.1,33837,stable,486.8,33837,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+23000,Maine,482.3,477.8,486.9,9809,stable,482.3,9809,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+37000,North Carolina,479,477.2,480.7,61926,stable,479.0,61926,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+34000,New Jersey,477.4,475.6,479.2,55326,falling,477.4,55326,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+09000,Connecticut,476.7,473.8,479.5,22517,stable,476.7,22517,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+05000,Arkansas,476,472.8,479.2,17980,falling,476.0,17980,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+33000,New Hampshire,473.2,468.6,477.8,9075,falling,473.2,9075,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+39000,Ohio,472.9,471.3,474.5,71356,stable,472.9,71356,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+28000,Mississippi,472.8,469.6,476.1,17197,falling,472.8,17197,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+55000,Wisconsin,472.2,469.9,474.4,35861,stable,472.2,35861,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+13000,Georgia,471.9,470.1,473.7,57143,stable,471.9,57143,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+10000,Delaware,469.9,464.6,475.4,6418,falling,469.9,6418,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+12000,Florida,467.6,466.5,468.7,144928,stable,467.6,144928,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+29000,Missouri,467.2,465.0,469.4,36330,stable,467.2,36330,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+36000,New York,467.1,465.9,468.3,117656,stable,467.1,117656,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+46000,South Dakota,465.3,459.4,471.3,5105,stable,465.3,5105,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+17000,Illinois,464.2,462.6,465.7,72068,falling,464.2,72068,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+20000,Kansas,461.2,458.0,464.5,16174,falling,461.2,16174,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+18000,Indiana,458.2,456.1,460.4,37492,falling,458.2,37492,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+47000,Tennessee,457.1,455.0,459.2,39137,falling,457.1,39137,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+40000,Oklahoma,456.7,453.9,459.5,21377,stable,456.7,21377,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+42000,Pennsylvania,456.5,455.0,458.0,79597,falling,456.5,79597,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+38000,North Dakota,453.6,447.2,460.1,4078,stable,453.6,4078,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+30000,Montana,452.7,447.6,457.8,6628,falling,452.7,6628,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+50000,Vermont,452.5,446.1,459.1,4126,stable,452.5,4126,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+44000,Rhode Island,452,447.0,457.2,6487,falling,452.0,6487,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+24000,Maryland,451.3,449.1,453.5,33991,stable,451.3,33991,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+31000,Nebraska,450,446.0,454.0,10405,falling,450.0,10405,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+26000,Michigan,449.2,447.6,450.9,58577,falling,449.2,58577,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+16000,Idaho,446,442.0,450.1,9760,falling,446.0,9760,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+53000,Washington,439.7,437.7,441.6,39991,falling,439.7,39991,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+45000,South Carolina,438.4,436.1,440.7,29379,falling,438.4,29379,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+01000,Alabama,432.6,430.3,435.0,27512,falling,432.6,27512,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+02900,Alaska,432.6,425.6,439.6,3287,stable,432.6,3287,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+25000,Massachusetts,432.2,430.2,434.2,38479,falling,432.2,38479,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+48000,Texas,430.6,429.6,431.7,130184,falling,430.6,130184,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+49000,Utah,422.1,418.8,425.5,12570,rising,422.1,12570,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+11001,District of Columbia,420.9,413.9,428.0,2843,falling,420.9,2843,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+41000,Oregon,418.7,416.2,421.2,22862,falling,418.7,22862,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+51000,Virginia,414.6,412.8,416.4,43276,stable,414.6,43276,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+56000,Wyoming,407,400.2,413.9,2963,falling,407.0,2963,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+15000,Hawaii,406.9,402.7,411.1,7853,stable,406.9,7853,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+06000,California,405.6,404.7,406.4,182061,stable,405.6,182061,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+08000,Colorado,396.8,394.5,399.0,25849,falling,396.8,25849,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+04000,Arizona,392.4,390.6,394.3,36011,falling,392.4,36011,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+32000,Nevada,387.7,384.8,390.6,14505,falling,387.7,14505,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+35000,New Mexico,372.9,369.5,376.3,10093,falling,372.9,10093,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+72001,Puerto Rico,344.4,341.9,347.0,16095,falling,344.4,16095,ok,"All Cancer Sites (All Stages^), 2018-2022",all,001
+09000,Connecticut,146.2,143.9,148.4,3487,rising,146.2,3487,ok,"Breast (All Stages^), 2018-2022",breast,055
+10000,Delaware,144.9,140.6,149.3,995,rising,144.9,995,ok,"Breast (All Stages^), 2018-2022",breast,055
+37000,North Carolina,144.3,142.9,145.6,9621,stable,144.3,9621,ok,"Breast (All Stages^), 2018-2022",breast,055
+27000,Minnesota,141.8,140.0,143.7,4878,rising,141.8,4878,ok,"Breast (All Stages^), 2018-2022",breast,055
+33000,New Hampshire,141.5,137.9,145.2,1335,rising,141.5,1335,ok,"Breast (All Stages^), 2018-2022",breast,055
+44000,Rhode Island,140.7,136.6,144.8,1020,rising,140.7,1020,ok,"Breast (All Stages^), 2018-2022",breast,055
+24000,Maryland,138.6,136.9,140.3,5427,rising,138.6,5427,ok,"Breast (All Stages^), 2018-2022",breast,055
+15000,Hawaii,138.4,134.9,142.0,1287,stable,138.4,1287,ok,"Breast (All Stages^), 2018-2022",breast,055
+34000,New Jersey,138,136.6,139.4,8181,rising,138.0,8181,ok,"Breast (All Stages^), 2018-2022",breast,055
+53000,Washington,137.9,136.3,139.5,6328,rising,137.9,6328,ok,"Breast (All Stages^), 2018-2022",breast,055
+25000,Massachusetts,137.5,135.9,139.1,6213,rising,137.5,6213,ok,"Breast (All Stages^), 2018-2022",breast,055
+30000,Montana,137.5,133.4,141.7,955,rising,137.5,955,ok,"Breast (All Stages^), 2018-2022",breast,055
+55000,Wisconsin,137.5,135.7,139.2,5109,rising,137.5,5109,ok,"Breast (All Stages^), 2018-2022",breast,055
+11001,District of Columbia,137.4,131.9,143.1,492,stable,137.4,492,ok,"Breast (All Stages^), 2018-2022",breast,055
+19000,Iowa,137.3,134.8,139.7,2716,rising,137.3,2716,ok,"Breast (All Stages^), 2018-2022",breast,055
+29000,Missouri,136.6,134.9,138.3,5358,rising,136.6,5358,ok,"Breast (All Stages^), 2018-2022",breast,055
+20000,Kansas,136.5,133.9,139.1,2398,rising,136.5,2398,ok,"Breast (All Stages^), 2018-2022",breast,055
+45000,South Carolina,135.7,133.9,137.5,4631,rising,135.7,4631,ok,"Breast (All Stages^), 2018-2022",breast,055
+36000,New York,135.6,134.7,136.6,17327,rising,135.6,17327,ok,"Breast (All Stages^), 2018-2022",breast,055
+17000,Illinois,135.5,134.3,136.7,10722,rising,135.5,10722,ok,"Breast (All Stages^), 2018-2022",breast,055
+23000,Maine,134.7,131.2,138.2,1353,rising,134.7,1353,ok,"Breast (All Stages^), 2018-2022",breast,055
+13000,Georgia,134.1,132.9,135.5,8576,rising,134.1,8576,ok,"Breast (All Stages^), 2018-2022",breast,055
+08000,Colorado,134,132.2,135.8,4441,rising,134.0,4441,ok,"Breast (All Stages^), 2018-2022",breast,055
+16000,Idaho,133.4,130.2,136.6,1446,rising,133.4,1446,ok,"Breast (All Stages^), 2018-2022",breast,055
+39000,Ohio,133,131.8,134.2,10161,rising,133.0,10161,ok,"Breast (All Stages^), 2018-2022",breast,055
+42000,Pennsylvania,132.4,131.2,133.5,11531,rising,132.4,11531,ok,"Breast (All Stages^), 2018-2022",breast,055
+46000,South Dakota,132,127.4,136.7,692,stable,132.0,692,ok,"Breast (All Stages^), 2018-2022",breast,055
+50000,Vermont,131.9,126.8,137.1,586,stable,131.9,586,ok,"Breast (All Stages^), 2018-2022",breast,055
+22000,Louisiana,131.5,129.6,133.5,3753,rising,131.5,3753,ok,"Breast (All Stages^), 2018-2022",breast,055
+41000,Oregon,131.4,129.4,133.4,3604,falling,131.4,3604,ok,"Breast (All Stages^), 2018-2022",breast,055
+51000,Virginia,131.4,130.0,132.8,7023,rising,131.4,7023,ok,"Breast (All Stages^), 2018-2022",breast,055
+21000,Kentucky,130.4,128.5,132.4,3718,rising,130.4,3718,ok,"Breast (All Stages^), 2018-2022",breast,055
+26000,Michigan,130.4,129.1,131.7,8495,rising,130.4,8495,ok,"Breast (All Stages^), 2018-2022",breast,055
+02900,Alaska,130.4,125.1,135.9,489,stable,130.4,489,ok,"Breast (All Stages^), 2018-2022",breast,055
+38000,North Dakota,130.3,125.3,135.4,561,rising,130.3,561,ok,"Breast (All Stages^), 2018-2022",breast,055
+31000,Nebraska,129.3,126.3,132.4,1478,stable,129.3,1478,ok,"Breast (All Stages^), 2018-2022",breast,055
+12000,Florida,128.7,127.9,129.6,19703,rising,128.7,19703,ok,"Breast (All Stages^), 2018-2022",breast,055
+01000,Alabama,127.9,126.1,129.7,4181,rising,127.9,4181,ok,"Breast (All Stages^), 2018-2022",breast,055
+18000,Indiana,127.3,125.7,128.9,5282,falling,127.3,5282,ok,"Breast (All Stages^), 2018-2022",breast,055
+40000,Oklahoma,127.1,125.0,129.2,3020,rising,127.1,3020,ok,"Breast (All Stages^), 2018-2022",breast,055
+54000,West Virginia,126.8,123.9,129.8,1589,rising,126.8,1589,ok,"Breast (All Stages^), 2018-2022",breast,055
+47000,Tennessee,126.1,124.6,127.7,5553,rising,126.1,5553,ok,"Breast (All Stages^), 2018-2022",breast,055
+05000,Arkansas,125.8,123.4,128.2,2400,rising,125.8,2400,ok,"Breast (All Stages^), 2018-2022",breast,055
+56000,Wyoming,125.8,120.3,131.5,438,rising,125.8,438,ok,"Breast (All Stages^), 2018-2022",breast,055
+28000,Mississippi,125.6,123.3,128.0,2347,rising,125.6,2347,ok,"Breast (All Stages^), 2018-2022",breast,055
+06000,California,125.6,125.0,126.3,28877,rising,125.6,28877,ok,"Breast (All Stages^), 2018-2022",breast,055
+48000,Texas,123.7,122.9,124.5,19496,rising,123.7,19496,ok,"Breast (All Stages^), 2018-2022",breast,055
+49000,Utah,123.1,120.6,125.7,1856,rising,123.1,1856,ok,"Breast (All Stages^), 2018-2022",breast,055
+04000,Arizona,119.1,117.6,120.6,5446,stable,119.1,5446,ok,"Breast (All Stages^), 2018-2022",breast,055
+35000,New Mexico,115.9,113.2,118.6,1584,stable,115.9,1584,ok,"Breast (All Stages^), 2018-2022",breast,055
+32000,Nevada,111.5,109.3,113.7,2084,stable,111.5,2084,ok,"Breast (All Stages^), 2018-2022",breast,055
+72001,Puerto Rico,98.9,97.0,100.8,2410,rising,98.9,2410,ok,"Breast (All Stages^), 2018-2022",breast,055
+21000,Kentucky,46.5,45.6,47.3,2529,stable,46.5,2529,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+28000,Mississippi,46,45.0,47.1,1643,falling,46.0,1643,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+54000,West Virginia,44.4,43.2,45.6,1101,stable,44.4,1101,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+22000,Louisiana,44.3,43.5,45.2,2409,falling,44.3,2409,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+05000,Arkansas,42.2,41.3,43.2,1556,falling,42.2,1556,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+02900,Alaska,41.1,38.9,43.4,300,falling,41.1,300,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+40000,Oklahoma,40.6,39.7,41.4,1854,stable,40.6,1854,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+19000,Iowa,40.3,39.4,41.2,1572,stable,40.3,1572,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+01000,Alabama,40.2,39.4,40.9,2492,falling,40.2,2492,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+29000,Missouri,40.2,39.5,40.8,3033,stable,40.2,3033,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+13000,Georgia,39.9,39.4,40.4,4738,stable,39.9,4738,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+46000,South Dakota,39.5,37.8,41.3,419,falling,39.5,419,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+18000,Indiana,39.4,38.8,40.1,3148,falling,39.4,3148,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+20000,Kansas,39.4,38.4,40.3,1342,stable,39.4,1342,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+17000,Illinois,39.1,38.6,39.5,5945,falling,39.1,5945,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+47000,Tennessee,38.8,38.1,39.4,3214,stable,38.8,3214,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+38000,North Dakota,38.6,36.7,40.6,337,falling,38.6,337,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+31000,Nebraska,38.6,37.4,39.8,870,falling,38.6,870,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+39000,Ohio,38.4,38.0,38.9,5635,falling,38.4,5635,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+34000,New Jersey,38.3,37.8,38.8,4381,stable,38.3,4381,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+48000,Texas,38.3,38.0,38.6,11477,stable,38.3,11477,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+15000,Hawaii,38.2,36.9,39.5,715,stable,38.2,715,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+42000,Pennsylvania,37.1,36.6,37.5,6307,falling,37.1,6307,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+72001,Puerto Rico,36.7,35.9,37.5,1730,falling,36.7,1730,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+30000,Montana,36.4,35.0,38.0,511,falling,36.4,511,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+27000,Minnesota,36.3,35.7,37.0,2443,stable,36.3,2443,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+11001,District of Columbia,36.3,34.2,38.4,238,falling,36.3,238,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+12000,Florida,36.1,35.8,36.4,10964,falling,36.1,10964,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+56000,Wyoming,36.1,34.0,38.2,252,stable,36.1,252,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+45000,South Carolina,35.9,35.3,36.6,2318,stable,35.9,2318,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+36000,New York,35.8,35.4,36.1,8828,stable,35.8,8828,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+23000,Maine,35.7,34.4,37.0,685,stable,35.7,685,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+26000,Michigan,35.6,35.1,36.1,4456,falling,35.6,4456,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+37000,North Carolina,35.5,35.1,36.0,4440,falling,35.5,4440,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+16000,Idaho,35.5,34.3,36.7,748,stable,35.5,748,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+24000,Maryland,35.1,34.5,35.7,2567,stable,35.1,2567,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+55000,Wisconsin,34.9,34.3,35.6,2531,stable,34.9,2531,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+32000,Nevada,34.9,34.0,35.7,1280,stable,34.9,1280,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+09000,Connecticut,34.6,33.8,35.4,1581,stable,34.6,1581,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+33000,New Hampshire,34.6,33.3,35.9,627,stable,34.6,627,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+06000,California,34.2,33.9,34.4,15138,falling,34.2,15138,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+53000,Washington,34,33.4,34.6,2968,stable,34.0,2968,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+51000,Virginia,33.8,33.3,34.3,3417,falling,33.8,3417,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+10000,Delaware,33.6,32.2,35.1,437,falling,33.6,437,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+35000,New Mexico,33.2,32.2,34.2,864,stable,33.2,864,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+41000,Oregon,32.2,31.5,33.0,1677,stable,32.2,1677,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+44000,Rhode Island,32,30.7,33.4,445,stable,32.0,445,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+04000,Arizona,32,31.5,32.6,2854,stable,32.0,2854,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+50000,Vermont,32,30.2,33.8,276,stable,32.0,276,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+25000,Massachusetts,31.3,30.8,31.9,2682,falling,31.3,2682,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+08000,Colorado,31.2,30.6,31.9,1973,falling,31.2,1973,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+49000,Utah,29.7,28.8,30.6,858,stable,29.7,858,ok,"Colon & Rectum (All Stages^), 2018-2022",colorectal,020
+21000,Kentucky,83.7,82.6,84.8,4958,falling,83.7,4958,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+54000,West Virginia,75.9,74.4,77.4,2073,falling,75.9,2073,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+05000,Arkansas,70.4,69.2,71.6,2818,falling,70.4,2818,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+28000,Mississippi,68.3,67.1,69.5,2601,falling,68.3,2601,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+29000,Missouri,67.9,67.0,68.7,5584,falling,67.9,5584,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+47000,Tennessee,66.6,65.8,67.4,5999,falling,66.6,5999,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+23000,Maine,66.3,64.8,67.9,1454,falling,66.3,1454,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+18000,Indiana,65,64.3,65.8,5569,falling,65.0,5569,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+39000,Ohio,63.6,63.0,64.1,10146,falling,63.6,10146,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+40000,Oklahoma,62.9,61.9,63.9,3081,falling,62.9,3081,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+37000,North Carolina,61.9,61.3,62.5,8372,falling,61.9,8372,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+22000,Louisiana,60.9,60.0,61.8,3539,falling,60.9,3539,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+19000,Iowa,60,58.9,61.1,2555,falling,60.0,2555,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+26000,Michigan,58.7,58.1,59.3,8123,falling,58.7,8123,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+44000,Rhode Island,58.6,56.9,60.4,882,falling,58.6,882,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+33000,New Hampshire,58.3,56.7,59.8,1181,falling,58.3,1181,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+17000,Illinois,57.8,57.2,58.3,9294,falling,57.8,9294,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+01000,Alabama,57.6,56.8,58.4,3886,falling,57.6,3886,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+45000,South Carolina,57.4,56.6,58.2,4085,falling,57.4,4085,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+42000,Pennsylvania,56.5,56.0,57.0,10493,falling,56.5,10493,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+10000,Delaware,56,54.3,57.8,822,falling,56.0,822,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+13000,Georgia,55.4,54.8,56.0,6845,falling,55.4,6845,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+55000,Wisconsin,55.1,54.4,55.8,4415,falling,55.1,4415,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+25000,Massachusetts,55,54.4,55.7,5116,falling,55.0,5116,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+09000,Connecticut,54.1,53.1,55.0,2672,falling,54.1,2672,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+38000,North Dakota,53.8,51.7,56.0,504,stable,53.8,504,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+50000,Vermont,53.8,51.7,55.9,529,falling,53.8,529,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+27000,Minnesota,53.8,53.0,54.5,3905,falling,53.8,3905,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+46000,South Dakota,53.6,51.7,55.6,625,falling,53.6,625,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+12000,Florida,53.3,52.9,53.6,17931,falling,53.3,17931,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+36000,New York,52.4,52.0,52.8,13817,falling,52.4,13817,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+20000,Kansas,52.2,51.1,53.2,1921,falling,52.2,1921,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+02900,Alaska,51.7,49.2,54.2,387,falling,51.7,387,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+31000,Nebraska,51.5,50.2,52.8,1255,falling,51.5,1255,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+51000,Virginia,50.9,50.3,51.5,5510,falling,50.9,5510,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+24000,Maryland,48.7,48.0,49.5,3787,falling,48.7,3787,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+34000,New Jersey,48.7,48.1,49.2,5813,falling,48.7,5813,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+53000,Washington,47.8,47.2,48.4,4483,falling,47.8,4483,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+41000,Oregon,46.9,46.1,47.7,2697,falling,46.9,2697,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+48000,Texas,45.2,44.9,45.6,13606,falling,45.2,13606,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+30000,Montana,45.2,43.6,46.7,711,falling,45.2,711,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+11001,District of Columbia,44.4,42.1,46.7,298,falling,44.4,298,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+16000,Idaho,43.7,42.4,44.9,995,falling,43.7,995,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+32000,Nevada,43.4,42.4,44.4,1669,falling,43.4,1669,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+04000,Arizona,40.8,40.2,41.4,4020,falling,40.8,4020,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+56000,Wyoming,38.1,36.1,40.2,292,falling,38.1,292,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+15000,Hawaii,38,36.8,39.2,792,falling,38.0,792,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+08000,Colorado,37,36.4,37.7,2421,falling,37.0,2421,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+06000,California,36.3,36.0,36.5,16420,falling,36.3,16420,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+35000,New Mexico,31.8,30.9,32.8,920,falling,31.8,920,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+49000,Utah,25,24.1,25.8,733,falling,25.0,733,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+72001,Puerto Rico,14.6,14.1,15.0,760,falling,14.6,760,ok,"Lung & Bronchus (All Stages^), 2018-2022",lung,047
+22000,Louisiana,147.2,145.1,149.3,4158,rising,147.2,4158,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+34000,New Jersey,144.6,143.2,146.0,8385,stable,144.6,8385,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+24000,Maryland,142.1,140.4,143.9,5333,rising,142.1,5333,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+13000,Georgia,141.6,140.2,143.0,8501,rising,141.6,8501,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+72001,Puerto Rico,141.2,139.0,143.4,3281,falling,141.2,3281,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+28000,Mississippi,139,136.5,141.5,2528,stable,139.0,2528,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+09000,Connecticut,136.7,134.6,138.8,3300,rising,136.7,3300,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+10000,Delaware,136.3,132.4,140.3,972,rising,136.3,972,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+36000,New York,135.5,134.6,136.4,17090,rising,135.5,17090,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+11001,District of Columbia,135.1,129.3,141.2,416,stable,135.1,416,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+37000,North Carolina,132.3,131.0,133.6,8614,rising,132.3,8614,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+46000,South Dakota,132.1,127.8,136.5,775,rising,132.1,775,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+30000,Montana,131,127.5,134.7,1075,falling,131.0,1075,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+19000,Iowa,129.5,127.3,131.7,2710,rising,129.5,2710,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+49000,Utah,127.8,125.2,130.4,1917,rising,127.8,1917,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+55000,Wisconsin,126.7,125.1,128.3,5144,rising,126.7,5144,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+20000,Kansas,125.5,123.1,127.9,2269,rising,125.5,2269,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+38000,North Dakota,123.1,118.6,127.8,592,stable,123.1,592,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+17000,Illinois,122,120.9,123.2,9571,stable,122.0,9571,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+39000,Ohio,120.8,119.7,121.9,9362,rising,120.8,9362,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+27000,Minnesota,120.3,118.7,122.0,4406,rising,120.3,4406,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+26000,Michigan,119.6,118.4,120.8,8137,rising,119.6,8137,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+16000,Idaho,119.1,116.2,122.0,1390,falling,119.1,1390,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+33000,New Hampshire,118.7,115.7,121.8,1230,rising,118.7,1230,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+31000,Nebraska,118.1,115.3,120.9,1427,falling,118.1,1427,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+44000,Rhode Island,117.9,114.4,121.6,865,stable,117.9,865,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+05000,Arkansas,117.4,115.2,119.6,2252,stable,117.4,2252,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+47000,Tennessee,117.2,115.7,118.7,5089,stable,117.2,5089,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+21000,Kentucky,116.8,115.0,118.7,3337,stable,116.8,3337,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+45000,South Carolina,115,113.4,116.7,3953,stable,115.0,3953,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+50000,Vermont,114.1,109.8,118.6,564,rising,114.1,564,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+01000,Alabama,113.6,111.9,115.4,3641,falling,113.6,3641,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+25000,Massachusetts,113.1,111.6,114.5,5120,stable,113.1,5120,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+42000,Pennsylvania,111.2,110.3,112.3,10031,stable,111.2,10031,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+18000,Indiana,111.2,109.7,112.7,4614,falling,111.2,4614,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+48000,Texas,110.7,109.9,111.5,16468,stable,110.7,16468,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+56000,Wyoming,110.6,105.9,115.4,456,falling,110.6,456,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+51000,Virginia,110.1,108.8,111.4,5831,rising,110.1,5831,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+23000,Maine,108.5,105.6,111.3,1187,rising,108.5,1187,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+40000,Oklahoma,108,106.1,109.9,2558,rising,108.0,2558,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+02900,Alaska,107.7,102.9,112.7,448,rising,107.7,448,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+12000,Florida,106.8,106.0,107.5,16982,stable,106.8,16982,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+53000,Washington,105.8,104.5,107.2,4994,rising,105.8,4994,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+54000,West Virginia,104.9,102.5,107.5,1415,rising,104.9,1415,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+15000,Hawaii,104.2,101.4,107.1,1058,stable,104.2,1058,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+06000,California,102.6,102.0,103.2,23010,rising,102.6,23010,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+41000,Oregon,102.3,100.6,104.0,2931,rising,102.3,2931,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+08000,Colorado,102.2,100.6,103.8,3434,falling,102.2,3434,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+29000,Missouri,102.1,100.7,103.5,4073,stable,102.1,4073,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+32000,Nevada,96.4,94.4,98.4,1919,rising,96.4,1919,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+35000,New Mexico,90,87.8,92.3,1291,stable,90.0,1291,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+04000,Arizona,80,78.8,81.1,3810,stable,80.0,3810,ok,"Prostate (All Stages^), 2018-2022",prostate,066
+49000,Utah,42.7,41.7,43.8,1252,stable,42.7,1252,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+27000,Minnesota,38.8,38.1,39.5,2574,stable,38.8,2574,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+50000,Vermont,35.1,33.3,37.1,303,rising,35.1,303,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+19000,Iowa,32.8,32.0,33.7,1233,rising,32.8,1233,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+16000,Idaho,32.4,31.3,33.5,680,rising,32.4,680,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+04000,Arizona,32.3,31.8,32.9,2946,stable,32.3,2946,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+46000,South Dakota,30.3,28.7,31.9,317,rising,30.3,317,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+38000,North Dakota,30,28.3,31.8,248,rising,30.0,248,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+21000,Kentucky,28.8,28.2,29.5,1532,rising,28.8,1532,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+31000,Nebraska,28.7,27.7,29.8,631,stable,28.7,631,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+20000,Kansas,28.4,27.6,29.3,948,stable,28.4,948,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+33000,New Hampshire,28.1,27.0,29.2,527,falling,28.1,527,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+37000,North Carolina,28,27.6,28.5,3490,rising,28.0,3490,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+23000,Maine,27.5,26.4,28.7,530,rising,27.5,530,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+39000,Ohio,27.2,26.8,27.6,3901,rising,27.2,3901,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+30000,Montana,27.1,25.9,28.5,374,falling,27.1,374,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+56000,Wyoming,27,25.2,28.8,188,rising,27.0,188,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+12000,Florida,26.2,26.0,26.5,8071,stable,26.2,8071,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+53000,Washington,25.8,25.3,26.3,2299,stable,25.8,2299,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+10000,Delaware,25.3,24.1,26.6,339,falling,25.3,339,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+55000,Wisconsin,25.3,24.7,25.8,1824,rising,25.3,1824,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+54000,West Virginia,25,24.1,26.0,590,rising,25.0,590,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+13000,Georgia,25,24.6,25.4,2936,falling,25.0,2936,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+24000,Maryland,25,24.5,25.5,1837,rising,25.0,1837,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+15000,Hawaii,24.9,23.8,25.9,477,rising,24.9,477,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+05000,Arkansas,24.7,24.0,25.5,889,stable,24.7,889,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+41000,Oregon,24.3,23.6,24.9,1282,stable,24.3,1282,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+17000,Illinois,23.8,23.4,24.1,3559,rising,23.8,3559,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+06000,California,23.4,23.2,23.6,10424,rising,23.4,10424,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+32000,Nevada,22.6,21.9,23.4,835,stable,22.6,835,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+45000,South Carolina,22.4,21.9,23.0,1441,falling,22.4,1441,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+08000,Colorado,22.1,21.6,22.7,1423,rising,22.1,1423,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+01000,Alabama,21,20.5,21.6,1264,stable,21.0,1264,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+40000,Oklahoma,21,20.4,21.6,948,stable,21.0,948,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+51000,Virginia,21,20.6,21.4,2142,stable,21.0,2142,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+26000,Michigan,20.8,20.4,21.2,2566,rising,20.8,2566,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+34000,New Jersey,20.7,20.3,21.1,2382,stable,20.7,2382,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+29000,Missouri,20.4,20.0,20.9,1513,rising,20.4,1513,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+18000,Indiana,20.4,19.9,20.8,1597,falling,20.4,1597,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+47000,Tennessee,20.3,19.8,20.7,1670,stable,20.3,1670,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+42000,Pennsylvania,20,19.7,20.3,3347,falling,20.0,3347,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+44000,Rhode Island,19.3,18.3,20.4,271,falling,19.3,271,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+28000,Mississippi,19.2,18.5,19.9,655,stable,19.2,655,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+09000,Connecticut,19.2,18.6,19.8,895,falling,19.2,895,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+22000,Louisiana,18.7,18.1,19.2,983,stable,18.7,983,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+36000,New York,17.8,17.6,18.1,4405,stable,17.8,4405,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+35000,New Mexico,17.5,16.8,18.3,472,rising,17.5,472,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+02900,Alaska,16.2,14.9,17.6,121,rising,16.2,121,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+25000,Massachusetts,15.6,15.2,16.0,1359,falling,15.6,1359,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+48000,Texas,15.4,15.2,15.6,4565,rising,15.4,4565,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+11001,District of Columbia,9.8,8.7,10.9,66,rising,9.8,66,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+72001,Puerto Rico,3.3,3.1,3.6,149,stable,3.3,149,ok,"Melanoma of the Skin (All Stages^), 2018-2022",melanoma_skin,053
+27000,Minnesota,22.5,22.0,23.0,1555,stable,22.5,1555,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+19000,Iowa,21.6,20.9,22.3,864,stable,21.6,864,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+12000,Florida,21.6,21.4,21.8,6599,falling,21.6,6599,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+09000,Connecticut,21,20.4,21.6,976,stable,21.0,976,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+34000,New Jersey,20.9,20.5,21.2,2375,stable,20.9,2375,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+55000,Wisconsin,20.7,20.3,21.2,1546,stable,20.7,1546,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+36000,New York,20.3,20.0,20.6,5021,falling,20.3,5021,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+33000,New Hampshire,20.1,19.2,21.1,379,stable,20.1,379,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+21000,Kentucky,19.6,19.1,20.1,1079,falling,19.6,1079,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+23000,Maine,19.4,18.5,20.3,390,stable,19.4,390,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+54000,West Virginia,19.2,18.5,20.1,485,stable,19.2,485,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+50000,Vermont,19,17.7,20.4,175,falling,19.0,175,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+53000,Washington,18.9,18.5,19.4,1699,falling,18.9,1699,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+29000,Missouri,18.9,18.5,19.4,1455,stable,18.9,1455,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+39000,Ohio,18.9,18.6,19.2,2806,falling,18.9,2806,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+46000,South Dakota,18.9,17.7,20.1,207,stable,18.9,207,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+42000,Pennsylvania,18.8,18.5,19.1,3253,falling,18.8,3253,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+17000,Illinois,18.8,18.4,19.1,2867,falling,18.8,2867,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+20000,Kansas,18.7,18.1,19.4,652,stable,18.7,652,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+22000,Louisiana,18.7,18.2,19.3,1014,falling,18.7,1014,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+16000,Idaho,18.7,17.8,19.5,406,stable,18.7,406,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+31000,Nebraska,18.6,17.8,19.5,426,falling,18.6,426,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+38000,North Dakota,18.6,17.3,19.9,167,stable,18.6,167,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+26000,Michigan,18.6,18.2,18.9,2373,falling,18.6,2373,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+44000,Rhode Island,18.6,17.6,19.7,263,falling,18.6,263,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+49000,Utah,18.5,17.8,19.2,541,falling,18.5,541,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+25000,Massachusetts,18.5,18.1,18.9,1625,falling,18.5,1625,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+02900,Alaska,18.3,16.8,19.8,133,stable,18.3,133,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+18000,Indiana,18.3,17.8,18.7,1468,falling,18.3,1468,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+06000,California,18.1,18.0,18.3,8038,falling,18.1,8038,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+37000,North Carolina,18,17.7,18.4,2265,stable,18.0,2265,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+05000,Arkansas,17.8,17.2,18.4,667,stable,17.8,667,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+41000,Oregon,17.8,17.3,18.3,957,falling,17.8,957,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+48000,Texas,17.6,17.4,17.9,5225,falling,17.6,5225,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+10000,Delaware,17.5,16.5,18.6,232,falling,17.5,232,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+30000,Montana,17.4,16.4,18.4,253,falling,17.4,253,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+40000,Oklahoma,17.4,16.8,17.9,806,falling,17.4,806,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+24000,Maryland,17.3,16.9,17.7,1268,stable,17.3,1268,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+13000,Georgia,17.3,16.9,17.6,2020,stable,17.3,2020,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+47000,Tennessee,17.1,16.7,17.5,1428,falling,17.1,1428,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+08000,Colorado,16.3,15.8,16.8,1041,falling,16.3,1041,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+51000,Virginia,16.2,15.8,16.6,1653,falling,16.2,1653,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+28000,Mississippi,16,15.4,16.7,567,falling,16.0,567,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+56000,Wyoming,15.8,14.5,17.2,112,stable,15.8,112,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+45000,South Carolina,15.7,15.2,16.1,1017,falling,15.7,1017,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+11001,District of Columbia,15.5,14.2,16.9,105,falling,15.5,105,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+04000,Arizona,15.2,14.9,15.6,1390,falling,15.2,1390,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+15000,Hawaii,14.7,14.0,15.6,288,falling,14.7,288,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+32000,Nevada,14.2,13.6,14.8,520,falling,14.2,520,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+01000,Alabama,14.2,13.7,14.6,877,falling,14.2,877,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+35000,New Mexico,14.1,13.5,14.8,382,falling,14.1,382,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+72001,Puerto Rico,13.4,12.9,13.9,617,falling,13.4,617,ok,"Non-Hodgkin Lymphoma (All Stages^), 2018-2022",lymphoma,086
+12000,Florida,17.5,17.2,17.7,5248,falling,17.5,5248,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+19000,Iowa,17.2,16.6,17.8,683,rising,17.2,683,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+55000,Wisconsin,17.1,16.7,17.6,1257,stable,17.1,1257,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+27000,Minnesota,17,16.6,17.5,1150,stable,17.0,1150,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+16000,Idaho,17,16.2,17.8,362,rising,17.0,362,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+21000,Kentucky,16.4,15.9,16.9,874,stable,16.4,874,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+46000,South Dakota,16.1,15.0,17.3,173,stable,16.1,173,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+34000,New Jersey,16,15.7,16.3,1778,stable,16.0,1778,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+38000,North Dakota,15.7,14.6,17.0,140,stable,15.7,140,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+49000,Utah,15.7,15.1,16.4,463,rising,15.7,463,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+54000,West Virginia,15.7,14.9,16.4,382,stable,15.7,382,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+09000,Connecticut,15.5,14.9,16.0,703,rising,15.5,703,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+30000,Montana,15.3,14.4,16.3,215,stable,15.3,215,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+23000,Maine,15.3,14.5,16.1,293,falling,15.3,293,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+36000,New York,15.2,14.9,15.4,3689,falling,15.2,3689,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+48000,Texas,15,14.8,15.2,4374,stable,15.0,4374,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+29000,Missouri,15,14.6,15.4,1119,rising,15.0,1119,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+20000,Kansas,14.9,14.3,15.5,506,falling,14.9,506,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+53000,Washington,14.6,14.3,15.0,1284,falling,14.6,1284,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+42000,Pennsylvania,14.6,14.3,14.8,2432,falling,14.6,2432,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+37000,North Carolina,14.5,14.2,14.8,1787,falling,14.5,1787,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+44000,Rhode Island,14.5,13.5,15.5,195,stable,14.5,195,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+22000,Louisiana,14.4,14.0,14.9,766,rising,14.4,766,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+13000,Georgia,14.4,14.1,14.7,1656,falling,14.4,1656,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+05000,Arkansas,14.3,13.7,14.8,518,stable,14.3,518,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+33000,New Hampshire,14.2,13.4,15.1,261,falling,14.2,261,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+18000,Indiana,14.1,13.7,14.5,1109,falling,14.1,1109,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+50000,Vermont,14.1,12.9,15.3,123,stable,14.1,123,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+26000,Michigan,14,13.7,14.3,1751,falling,14.0,1751,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+17000,Illinois,13.8,13.5,14.1,2047,stable,13.8,2047,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+31000,Nebraska,13.6,12.9,14.3,306,falling,13.6,306,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+40000,Oklahoma,13.5,13.0,14.0,613,stable,13.5,613,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+10000,Delaware,13.3,12.4,14.3,171,falling,13.3,171,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+41000,Oregon,13.3,12.8,13.8,685,falling,13.3,685,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+47000,Tennessee,13.3,12.9,13.7,1079,stable,13.3,1079,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+24000,Maryland,13,12.7,13.4,930,stable,13.0,930,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+39000,Ohio,13,12.7,13.3,1858,rising,13.0,1858,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+28000,Mississippi,12.9,12.4,13.5,445,falling,12.9,445,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+25000,Massachusetts,12.9,12.5,13.2,1092,falling,12.9,1092,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+08000,Colorado,12.9,12.5,13.3,799,falling,12.9,799,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+06000,California,12.7,12.5,12.8,5444,falling,12.7,5444,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+35000,New Mexico,12.5,11.9,13.1,325,stable,12.5,325,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+56000,Wyoming,12.3,11.1,13.6,86,stable,12.3,86,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+04000,Arizona,12.2,11.9,12.6,1064,stable,12.2,1064,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+02900,Alaska,12.1,11.0,13.4,87,stable,12.1,87,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+45000,South Carolina,12.1,11.7,12.5,763,falling,12.1,763,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+01000,Alabama,11.9,11.5,12.3,711,falling,11.9,711,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+32000,Nevada,11.5,11.0,12.0,398,falling,11.5,398,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+51000,Virginia,10.7,10.5,11.0,1057,falling,10.7,1057,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+11001,District of Columbia,10.7,9.6,11.9,71,stable,10.7,71,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+15000,Hawaii,10.4,9.7,11.1,191,falling,10.4,191,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+72001,Puerto Rico,9.7,9.3,10.2,424,stable,9.7,424,ok,"Leukemia (All Stages^), 2018-2022",leukemia,090
+11001,District of Columbia,16.3,14.9,17.7,110,rising,16.3,110,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+34000,New Jersey,15.2,14.8,15.5,1793,rising,15.2,1793,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+22000,Louisiana,14.9,14.5,15.4,841,rising,14.9,841,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+55000,Wisconsin,14.9,14.5,15.3,1163,rising,14.9,1163,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+09000,Connecticut,14.8,14.3,15.3,718,rising,14.8,718,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+26000,Michigan,14.6,14.3,14.9,1953,rising,14.6,1953,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+10000,Delaware,14.5,13.6,15.4,205,stable,14.5,205,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+42000,Pennsylvania,14.5,14.2,14.8,2633,stable,14.5,2633,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+17000,Illinois,14.4,14.2,14.7,2284,stable,14.4,2284,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+36000,New York,14.4,14.2,14.6,3740,rising,14.4,3740,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+23000,Maine,14.4,13.7,15.2,306,stable,14.4,306,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+27000,Minnesota,14.4,14.0,14.8,1024,stable,14.4,1024,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+21000,Kentucky,14.4,13.9,14.8,821,rising,14.4,821,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+37000,North Carolina,14.3,14.0,14.6,1873,rising,14.3,1873,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+18000,Indiana,14.2,13.8,14.6,1185,rising,14.2,1185,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+39000,Ohio,14.2,13.9,14.4,2207,stable,14.2,2207,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+25000,Massachusetts,14,13.7,14.4,1279,stable,14.0,1279,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+28000,Mississippi,14,13.4,14.6,517,stable,14.0,517,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+19000,Iowa,14,13.5,14.5,581,rising,14.0,581,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+13000,Georgia,14,13.7,14.3,1681,stable,14.0,1681,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+54000,West Virginia,13.9,13.2,14.6,362,rising,13.9,362,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+29000,Missouri,13.8,13.5,14.2,1108,rising,13.8,1108,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+53000,Washington,13.8,13.5,14.2,1270,rising,13.8,1270,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+45000,South Carolina,13.8,13.4,14.2,948,stable,13.8,948,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+33000,New Hampshire,13.8,13.0,14.5,271,stable,13.8,271,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+24000,Maryland,13.8,13.4,14.1,1049,rising,13.8,1049,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+44000,Rhode Island,13.7,12.9,14.6,201,rising,13.7,201,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+48000,Texas,13.7,13.5,13.9,4078,rising,13.7,4078,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+12000,Florida,13.6,13.4,13.8,4471,rising,13.6,4471,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+16000,Idaho,13.5,12.8,14.2,301,rising,13.5,301,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+05000,Arkansas,13.4,12.9,13.9,521,rising,13.4,521,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+46000,South Dakota,13.3,12.4,14.4,150,rising,13.3,150,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+01000,Alabama,13.2,12.8,13.7,867,stable,13.2,867,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+51000,Virginia,13.2,12.9,13.6,1405,stable,13.2,1405,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+47000,Tennessee,13.2,12.9,13.6,1144,rising,13.2,1144,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+31000,Nebraska,13.2,12.6,13.9,316,rising,13.2,316,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+02900,Alaska,13,11.9,14.3,99,stable,13.0,99,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+50000,Vermont,13,11.9,14.1,122,stable,13.0,122,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+41000,Oregon,13,12.5,13.4,728,stable,13.0,728,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+30000,Montana,12.9,12.1,13.7,195,rising,12.9,195,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+15000,Hawaii,12.7,12.0,13.5,262,stable,12.7,262,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+06000,California,12.7,12.5,12.8,5745,rising,12.7,5745,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+40000,Oklahoma,12.6,12.1,13.1,603,rising,12.6,603,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+38000,North Dakota,12.5,11.5,13.6,117,rising,12.5,117,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+32000,Nevada,12.5,12.0,13.0,475,stable,12.5,475,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+04000,Arizona,12.4,12.1,12.7,1191,falling,12.4,1191,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+20000,Kansas,12.3,11.8,12.8,441,rising,12.3,441,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+49000,Utah,12.2,11.6,12.8,352,rising,12.2,352,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+08000,Colorado,11.9,11.5,12.3,772,rising,11.9,772,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+35000,New Mexico,11.9,11.3,12.5,338,rising,11.9,338,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+56000,Wyoming,11.8,10.7,13.0,88,rising,11.8,88,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+72001,Puerto Rico,8.2,7.8,8.5,418,stable,8.2,418,ok,"Pancreas (All Stages^), 2018-2022",pancreatic,040
+48000,Texas,12.6,12.4,12.8,4022,stable,12.6,4022,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+11001,District of Columbia,11.1,10.1,12.3,79,falling,11.1,79,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+22000,Louisiana,10.7,10.3,11.0,646,stable,10.7,646,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+35000,New Mexico,9.8,9.3,10.3,285,falling,9.8,285,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+06000,California,9.6,9.4,9.7,4510,falling,9.6,4510,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+02900,Alaska,9.5,8.5,10.5,76,rising,9.5,76,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+40000,Oklahoma,9.3,9.0,9.7,469,stable,9.3,469,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+21000,Kentucky,9.2,8.8,9.5,546,stable,9.2,546,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+15000,Hawaii,9.2,8.6,9.8,187,falling,9.2,187,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+37000,North Carolina,9,8.7,9.2,1231,stable,9.0,1231,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+05000,Arkansas,8.9,8.5,9.4,357,stable,8.9,357,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+41000,Oregon,8.8,8.5,9.2,516,falling,8.8,516,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+28000,Mississippi,8.7,8.3,9.1,339,stable,8.7,339,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+53000,Washington,8.6,8.4,8.9,836,falling,8.6,836,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+44000,Rhode Island,8.6,7.9,9.3,129,stable,8.6,129,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+01000,Alabama,8.6,8.3,8.9,589,stable,8.6,589,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+13000,Georgia,8.6,8.3,8.8,1089,stable,8.6,1089,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+47000,Tennessee,8.6,8.3,8.8,784,stable,8.6,784,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+29000,Missouri,8.5,8.2,8.8,712,rising,8.5,712,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+24000,Maryland,8.4,8.2,8.7,669,falling,8.4,669,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+25000,Massachusetts,8.4,8.1,8.7,785,falling,8.4,785,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+12000,Florida,8.3,8.2,8.5,2741,stable,8.3,2741,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+54000,West Virginia,8.3,7.8,8.8,225,stable,8.3,225,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+42000,Pennsylvania,8.3,8.1,8.5,1542,falling,8.3,1542,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+10000,Delaware,8.2,7.6,8.9,121,stable,8.2,121,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+17000,Illinois,8.2,8.0,8.4,1332,falling,8.2,1332,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+18000,Indiana,8.2,7.9,8.5,710,falling,8.2,710,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+36000,New York,8.1,8.0,8.3,2146,falling,8.1,2146,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+09000,Connecticut,8.1,7.7,8.4,405,stable,8.1,405,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+27000,Minnesota,8,7.7,8.3,581,stable,8.0,581,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+45000,South Carolina,8,7.7,8.3,578,stable,8.0,578,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+34000,New Jersey,8,7.8,8.2,969,stable,8.0,969,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+04000,Arizona,7.9,7.6,8.2,773,falling,7.9,773,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+72001,Puerto Rico,7.8,7.5,8.2,405,falling,7.8,405,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+39000,Ohio,7.6,7.4,7.8,1236,falling,7.6,1236,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+16000,Idaho,7.5,7.0,8.1,176,stable,7.5,176,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+51000,Virginia,7.5,7.2,7.7,828,stable,7.5,828,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+55000,Wisconsin,7.4,7.2,7.7,601,stable,7.4,601,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+32000,Nevada,7.4,7.0,7.8,293,rising,7.4,293,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+19000,Iowa,7.4,7.0,7.8,314,stable,7.4,314,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+26000,Michigan,7.2,7.0,7.4,1004,falling,7.2,1004,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+30000,Montana,7.2,6.6,7.8,116,rising,7.2,116,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+20000,Kansas,7.2,6.8,7.6,269,stable,7.2,269,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+08000,Colorado,7.1,6.8,7.4,494,falling,7.1,494,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+23000,Maine,7.1,6.6,7.6,152,rising,7.1,152,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+49000,Utah,7,6.6,7.5,214,stable,7.0,214,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+46000,South Dakota,6.8,6.1,7.5,80,stable,6.8,80,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+33000,New Hampshire,6.6,6.1,7.2,136,stable,6.6,136,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+38000,North Dakota,6.5,5.8,7.3,61,rising,6.5,61,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+31000,Nebraska,6.1,5.7,6.6,148,stable,6.1,148,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+50000,Vermont,5.9,5.2,6.7,59,stable,5.9,59,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+56000,Wyoming,4.8,4.1,5.6,40,stable,4.8,40,ok,"Liver & Bile Duct (All Stages^), 2018-2022",liver_biliary,035
+23000,Maine,26.7,25.7,27.7,571,stable,26.7,571,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+33000,New Hampshire,25.5,24.5,26.5,502,falling,25.5,502,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+09000,Connecticut,23.5,22.9,24.2,1144,falling,23.5,1144,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+44000,Rhode Island,22.5,21.4,23.6,335,falling,22.5,335,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+10000,Delaware,22.3,21.2,23.5,311,falling,22.3,311,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+21000,Kentucky,22,21.5,22.6,1246,stable,22.0,1246,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+19000,Iowa,21.8,21.2,22.4,911,falling,21.8,911,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+39000,Ohio,21.8,21.4,22.1,3378,falling,21.8,3378,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+54000,West Virginia,21.6,20.8,22.5,578,stable,21.6,578,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+30000,Montana,21.6,20.5,22.7,324,falling,21.6,324,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+50000,Vermont,21.5,20.1,22.9,206,falling,21.5,206,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+55000,Wisconsin,21.4,21.0,21.9,1660,falling,21.4,1660,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+42000,Pennsylvania,21.2,20.9,21.5,3867,falling,21.2,3867,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+34000,New Jersey,21.2,20.8,21.5,2487,falling,21.2,2487,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+27000,Minnesota,21,20.5,21.5,1489,falling,21.0,1489,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+26000,Michigan,20.8,20.5,21.2,2784,falling,20.8,2784,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+46000,South Dakota,20.6,19.4,21.8,233,stable,20.6,233,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+36000,New York,20.6,20.3,20.8,5342,falling,20.6,5342,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+25000,Massachusetts,20.2,19.8,20.7,1838,falling,20.2,1838,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+18000,Indiana,20.2,19.7,20.6,1672,falling,20.2,1672,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+16000,Idaho,20.1,19.3,21.0,447,falling,20.1,447,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+53000,Washington,19.9,19.5,20.3,1814,falling,19.9,1814,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+20000,Kansas,19.8,19.2,20.5,719,falling,19.8,719,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+17000,Illinois,19.7,19.4,20.0,3093,falling,19.7,3093,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+56000,Wyoming,19.7,18.2,21.2,146,falling,19.7,146,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+41000,Oregon,19.4,18.9,20.0,1090,falling,19.4,1090,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+05000,Arkansas,19.3,18.7,20.0,750,stable,19.3,750,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+37000,North Carolina,19,18.7,19.3,2477,falling,19.0,2477,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+29000,Missouri,18.9,18.5,19.4,1515,falling,18.9,1515,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+47000,Tennessee,18.9,18.5,19.3,1631,falling,18.9,1631,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+12000,Florida,18.8,18.6,19.0,6313,falling,18.8,6313,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+38000,North Dakota,18.6,17.4,19.9,173,falling,18.6,173,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+02900,Alaska,18.4,16.9,20.0,129,falling,18.4,129,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+40000,Oklahoma,18.3,17.7,18.8,870,falling,18.3,870,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+31000,Nebraska,18.1,17.4,18.9,435,falling,18.1,435,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+22000,Louisiana,18.1,17.6,18.6,1008,falling,18.1,1008,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+32000,Nevada,18,17.4,18.7,675,falling,18.0,675,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+13000,Georgia,18,17.6,18.3,2110,falling,18.0,2110,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+04000,Arizona,17.5,17.1,17.9,1697,falling,17.5,1697,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+08000,Colorado,17.2,16.8,17.7,1099,falling,17.2,1099,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+51000,Virginia,17,16.7,17.4,1773,falling,17.0,1773,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+01000,Alabama,17,16.5,17.5,1105,falling,17.0,1105,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+28000,Mississippi,16.9,16.3,17.6,621,stable,16.9,621,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+45000,South Carolina,16.9,16.5,17.4,1152,falling,16.9,1152,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+49000,Utah,16.7,16.0,17.4,471,stable,16.7,471,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+24000,Maryland,15.8,15.4,16.2,1184,falling,15.8,1184,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+06000,California,15.6,15.4,15.7,6963,falling,15.6,6963,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+48000,Texas,15.3,15.1,15.5,4454,falling,15.3,4454,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+11001,District of Columbia,13.7,12.4,15.0,89,stable,13.7,89,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+35000,New Mexico,13.6,13.0,14.3,389,falling,13.6,389,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+15000,Hawaii,13.2,12.5,13.9,274,falling,13.2,274,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+72001,Puerto Rico,9.6,9.2,10.0,507,falling,9.6,507,ok,"Bladder (All Stages^), 2018-2022",bladder_urothelial,071
+22000,Louisiana,23.8,23.2,24.4,1310,rising,23.8,1310,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+28000,Mississippi,22.4,21.7,23.1,802,stable,22.4,802,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+05000,Arkansas,22.4,21.7,23.1,826,falling,22.4,826,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+21000,Kentucky,22.1,21.6,22.7,1224,stable,22.1,1224,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+54000,West Virginia,22,21.1,22.9,533,rising,22.0,533,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+40000,Oklahoma,22,21.4,22.6,1009,rising,22.0,1009,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+48000,Texas,21.2,20.9,21.4,6433,rising,21.2,6433,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+19000,Iowa,21.2,20.5,21.8,839,rising,21.2,839,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+29000,Missouri,20.5,20.0,20.9,1568,rising,20.5,1568,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+38000,North Dakota,19.9,18.6,21.3,177,rising,19.9,177,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+47000,Tennessee,19.9,19.4,20.3,1688,falling,19.9,1688,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+20000,Kansas,19.5,18.9,20.2,670,stable,19.5,670,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+31000,Nebraska,19.4,18.5,20.2,444,rising,19.4,444,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+18000,Indiana,19.3,18.9,19.8,1558,stable,19.3,1558,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+55000,Wisconsin,19.1,18.7,19.6,1443,stable,19.1,1443,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+46000,South Dakota,18.9,17.7,20.2,202,rising,18.9,202,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+37000,North Carolina,18.9,18.6,19.2,2439,falling,18.9,2439,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+01000,Alabama,18.8,18.3,19.3,1180,rising,18.8,1180,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+02900,Alaska,18.6,17.1,20.0,142,stable,18.6,142,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+27000,Minnesota,18.4,18.0,18.9,1278,rising,18.4,1278,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+16000,Idaho,18.3,17.5,19.2,398,stable,18.3,398,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+17000,Illinois,18.2,17.9,18.5,2812,falling,18.2,2812,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+39000,Ohio,18.2,17.9,18.5,2702,stable,18.2,2702,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+13000,Georgia,18.1,17.7,18.4,2209,rising,18.1,2209,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+45000,South Carolina,18,17.5,18.5,1194,rising,18.0,1194,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+23000,Maine,17.8,17.0,18.7,359,rising,17.8,359,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+10000,Delaware,17.4,16.4,18.5,233,stable,17.4,233,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+35000,New Mexico,17.3,16.5,18.1,450,rising,17.3,450,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+44000,Rhode Island,16.9,16.0,18.0,240,stable,16.9,240,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+30000,Montana,16.9,15.9,18.0,243,rising,16.9,243,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+26000,Michigan,16.8,16.5,17.2,2162,stable,16.8,2162,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+33000,New Hampshire,16.8,16.0,17.7,319,rising,16.8,319,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+36000,New York,16.4,16.1,16.6,4094,falling,16.4,4094,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+04000,Arizona,16.3,16.0,16.7,1471,stable,16.3,1471,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+42000,Pennsylvania,16.2,16.0,16.5,2773,falling,16.2,2773,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+12000,Florida,16.1,15.9,16.3,4911,rising,16.1,4911,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+41000,Oregon,16,15.5,16.5,872,stable,16.0,872,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+51000,Virginia,16,15.7,16.4,1671,stable,16.0,1671,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+49000,Utah,15.8,15.2,16.5,473,rising,15.8,473,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+34000,New Jersey,15.8,15.5,16.2,1833,stable,15.8,1833,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+56000,Wyoming,15.7,14.4,17.2,114,stable,15.7,114,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+24000,Maryland,15.6,15.1,16.0,1171,falling,15.6,1171,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+53000,Washington,15.5,15.1,15.9,1411,falling,15.5,1411,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+09000,Connecticut,15.5,15.0,16.0,724,stable,15.5,724,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+50000,Vermont,15,13.8,16.3,135,stable,15.0,135,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+06000,California,15,14.8,15.2,6748,falling,15.0,6748,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+08000,Colorado,14.8,14.4,15.2,962,stable,14.8,962,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+25000,Massachusetts,14.7,14.3,15.1,1299,falling,14.7,1299,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+32000,Nevada,13.6,13.0,14.1,510,stable,13.6,510,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+15000,Hawaii,13.2,12.4,14.0,251,stable,13.2,251,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+11001,District of Columbia,12.2,11.0,13.4,84,falling,12.2,84,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+72001,Puerto Rico,9,8.6,9.5,414,stable,9.0,414,ok,"Kidney & Renal Pelvis (All Stages^), 2018-2022",kidney,072
+30000,Montana,7.4,6.7,8.1,97,stable,7.4,97,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+50000,Vermont,7.4,6.5,8.4,59,stable,7.4,59,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+33000,New Hampshire,7.4,6.8,8.0,124,stable,7.4,124,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+09000,Connecticut,7.2,6.8,7.6,306,stable,7.2,306,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+49000,Utah,7.1,6.7,7.5,220,stable,7.1,220,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+53000,Washington,7,6.8,7.3,599,falling,7.0,599,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+21000,Kentucky,7,6.7,7.4,360,falling,7.0,360,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+16000,Idaho,7,6.5,7.6,144,stable,7.0,144,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+27000,Minnesota,7,6.7,7.3,446,stable,7.0,446,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+23000,Maine,7,6.4,7.6,124,stable,7.0,124,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+54000,West Virginia,7,6.4,7.5,151,stable,7.0,151,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+31000,Nebraska,6.9,6.4,7.5,148,stable,6.9,148,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+55000,Wisconsin,6.8,6.6,7.1,473,falling,6.8,473,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+12000,Florida,6.8,6.6,6.9,1816,falling,6.8,1816,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+42000,Pennsylvania,6.7,6.5,6.9,1037,falling,6.7,1037,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+05000,Arkansas,6.7,6.3,7.1,233,stable,6.7,233,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+01000,Alabama,6.7,6.4,7.0,387,stable,6.7,387,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+20000,Kansas,6.7,6.3,7.1,217,stable,6.7,217,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+29000,Missouri,6.6,6.4,6.9,471,stable,6.6,471,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+34000,New Jersey,6.6,6.4,6.8,700,falling,6.6,700,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+19000,Iowa,6.6,6.2,7.0,242,falling,6.6,242,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+39000,Ohio,6.5,6.3,6.7,888,falling,6.5,888,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+18000,Indiana,6.5,6.3,6.8,493,falling,6.5,493,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+44000,Rhode Island,6.5,5.8,7.1,85,falling,6.5,85,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+25000,Massachusetts,6.4,6.2,6.7,522,falling,6.4,522,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+47000,Tennessee,6.4,6.2,6.7,503,stable,6.4,503,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+37000,North Carolina,6.4,6.2,6.6,758,stable,6.4,758,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+40000,Oklahoma,6.3,6.0,6.7,277,falling,6.3,277,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+41000,Oregon,6.3,6.0,6.6,314,falling,6.3,314,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+36000,New York,6.2,6.0,6.3,1408,falling,6.2,1408,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+04000,Arizona,6.2,5.9,6.4,513,falling,6.2,513,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+10000,Delaware,6.1,5.5,6.8,73,falling,6.1,73,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+08000,Colorado,6.1,5.8,6.4,386,falling,6.1,386,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+17000,Illinois,6.1,5.9,6.3,867,falling,6.1,867,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+26000,Michigan,6.1,5.9,6.3,718,falling,6.1,718,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+45000,South Carolina,6.1,5.8,6.4,372,falling,6.1,372,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+24000,Maryland,6,5.8,6.3,419,falling,6.0,419,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+48000,Texas,6,5.9,6.1,1799,falling,6.0,1799,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+38000,North Dakota,6,5.2,6.8,51,stable,6.0,51,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+02900,Alaska,5.9,5.1,6.8,45,stable,5.9,45,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+13000,Georgia,5.9,5.7,6.1,678,falling,5.9,678,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+06000,California,5.8,5.7,5.9,2491,falling,5.8,2491,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+51000,Virginia,5.6,5.4,5.9,545,stable,5.6,545,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+56000,Wyoming,5.6,4.8,6.5,38,stable,5.6,38,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+11001,District of Columbia,5.6,4.8,6.5,38,stable,5.6,38,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+22000,Louisiana,5.6,5.3,5.9,289,stable,5.6,289,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+28000,Mississippi,5.5,5.2,5.9,183,stable,5.5,183,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+32000,Nevada,5.4,5.1,5.8,189,stable,5.4,189,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+46000,South Dakota,5.4,4.7,6.1,52,falling,5.4,52,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+35000,New Mexico,5.3,4.9,5.7,130,stable,5.3,130,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+15000,Hawaii,4.2,3.8,4.7,72,stable,4.2,72,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+72001,Puerto Rico,4.1,3.8,4.4,162,falling,4.1,162,ok,"Brain & ONS (All Stages^), 2018-2022",brain_cns,076
+54000,West Virginia,11.9,11.0,12.9,140,falling,11.9,140,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+34000,New Jersey,11,10.6,11.4,652,falling,11.0,652,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+11001,District of Columbia,10.9,9.4,12.6,39,stable,10.9,39,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+12000,Florida,10.9,10.7,11.2,1678,stable,10.9,1678,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+36000,New York,10.9,10.6,11.1,1392,falling,10.9,1392,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+30000,Montana,10.8,9.7,12.0,75,falling,10.8,75,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+32000,Nevada,10.6,9.9,11.3,191,stable,10.6,191,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+06000,California,10.6,10.4,10.8,2429,falling,10.6,2429,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+48000,Texas,10.6,10.3,10.8,1645,stable,10.6,1645,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+16000,Idaho,10.5,9.7,11.5,114,falling,10.5,114,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+33000,New Hampshire,10.4,9.5,11.4,99,falling,10.4,99,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+42000,Pennsylvania,10.4,10.1,10.7,912,falling,10.4,912,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+40000,Oklahoma,10.4,9.8,11.0,242,falling,10.4,242,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+17000,Illinois,10.2,9.9,10.6,813,falling,10.2,813,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+55000,Wisconsin,10.2,9.8,10.7,386,falling,10.2,386,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+04000,Arizona,10.2,9.8,10.6,453,falling,10.2,453,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+10000,Delaware,10.2,9.1,11.4,70,falling,10.2,70,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+49000,Utah,10.1,9.4,10.8,154,falling,10.1,154,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+18000,Indiana,10,9.5,10.4,411,falling,10.0,411,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+05000,Arkansas,10,9.3,10.7,190,stable,10.0,190,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+50000,Vermont,10,8.6,11.5,42,stable,10.0,42,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+39000,Ohio,9.8,9.5,10.2,743,falling,9.8,743,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+24000,Maryland,9.8,9.4,10.3,388,falling,9.8,388,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+09000,Connecticut,9.8,9.2,10.4,236,falling,9.8,236,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+01000,Alabama,9.8,9.3,10.3,320,falling,9.8,320,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+53000,Washington,9.7,9.3,10.1,445,falling,9.7,445,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+13000,Georgia,9.7,9.3,10.1,615,falling,9.7,615,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+19000,Iowa,9.7,9.0,10.3,196,falling,9.7,196,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+26000,Michigan,9.6,9.2,10.0,622,stable,9.6,622,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+27000,Minnesota,9.5,9.1,10.0,332,falling,9.5,332,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+47000,Tennessee,9.5,9.1,10.0,411,falling,9.5,411,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+25000,Massachusetts,9.5,9.1,9.9,440,falling,9.5,440,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+08000,Colorado,9.5,9.0,10.0,317,falling,9.5,317,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+15000,Hawaii,9.5,8.5,10.5,82,falling,9.5,82,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+46000,South Dakota,9.5,8.3,10.8,52,falling,9.5,52,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+41000,Oregon,9.4,8.9,10.0,255,falling,9.4,255,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+35000,New Mexico,9.3,8.6,10.1,124,falling,9.3,124,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+37000,North Carolina,9.2,8.8,9.5,599,falling,9.2,599,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+29000,Missouri,9.1,8.7,9.6,354,falling,9.1,354,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+44000,Rhode Island,9.1,8.1,10.2,68,falling,9.1,68,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+20000,Kansas,9.1,8.4,9.8,158,falling,9.1,158,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+51000,Virginia,8.9,8.5,9.3,473,falling,8.9,473,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+31000,Nebraska,8.9,8.1,9.7,101,falling,8.9,101,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+02900,Alaska,8.8,7.5,10.4,32,falling,8.8,32,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+21000,Kentucky,8.7,8.2,9.2,244,falling,8.7,244,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+22000,Louisiana,8.6,8.1,9.1,243,falling,8.6,243,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+23000,Maine,8.4,7.6,9.4,79,falling,8.4,79,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+45000,South Carolina,8.3,7.9,8.8,283,falling,8.3,283,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+56000,Wyoming,8.3,7.0,9.8,29,falling,8.3,29,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+28000,Mississippi,8,7.4,8.6,149,falling,8.0,149,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+38000,North Dakota,7.9,6.7,9.2,35,falling,7.9,35,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+72001,Puerto Rico,7.9,7.3,8.5,177,stable,7.9,177,ok,"Ovary (All Stages^), 2018-2022",gynecologic_ovary,061
+54000,West Virginia,36.6,35.0,38.3,458,rising,36.6,458,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+15000,Hawaii,34.6,32.9,36.5,317,rising,34.6,317,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+42000,Pennsylvania,32.2,31.7,32.8,3030,falling,32.2,3030,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+72001,Puerto Rico,32,31.0,33.1,766,stable,32.0,766,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+11001,District of Columbia,31.7,29.2,34.4,119,rising,31.7,119,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+34000,New Jersey,31.3,30.7,32.0,2009,rising,31.3,2009,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+19000,Iowa,31,29.9,32.1,648,rising,31.0,648,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+36000,New York,30.9,30.5,31.3,4280,rising,30.9,4280,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+17000,Illinois,30.7,30.2,31.2,2581,rising,30.7,2581,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+23000,Maine,30.7,29.1,32.3,330,stable,30.7,330,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+55000,Wisconsin,30.4,29.7,31.2,1239,stable,30.4,1239,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+27000,Minnesota,30.4,29.6,31.3,1120,rising,30.4,1120,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+39000,Ohio,30.3,29.8,30.9,2446,falling,30.3,2446,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+33000,New Hampshire,30,28.5,31.6,312,stable,30.0,312,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+09000,Connecticut,29.5,28.5,30.4,769,rising,29.5,769,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+50000,Vermont,29.4,27.3,31.7,150,falling,29.4,150,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+02900,Alaska,29.4,27.0,32.0,114,rising,29.4,114,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+41000,Oregon,29.3,28.4,30.3,838,falling,29.3,838,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+18000,Indiana,29,28.3,29.8,1273,stable,29.0,1273,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+10000,Delaware,28.9,27.2,30.8,224,stable,28.9,224,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+26000,Michigan,28.8,28.2,29.4,2016,stable,28.8,2016,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+29000,Missouri,28.5,27.8,29.3,1178,stable,28.5,1178,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+21000,Kentucky,28.2,27.3,29.1,825,rising,28.2,825,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+06000,California,28.1,27.8,28.4,6734,stable,28.1,6734,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+24000,Maryland,28,27.2,28.7,1188,stable,28.0,1188,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+31000,Nebraska,28,26.6,29.4,338,stable,28.0,338,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+44000,Rhode Island,27.9,26.3,29.7,220,falling,27.9,220,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+46000,South Dakota,27.9,25.9,30.1,155,stable,27.9,155,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+25000,Massachusetts,27.6,27.0,28.3,1357,falling,27.6,1357,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+12000,Florida,27.5,27.1,27.8,4434,rising,27.5,4434,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+53000,Washington,27.2,26.6,27.9,1319,rising,27.2,1319,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+20000,Kansas,27.2,26.1,28.4,495,rising,27.2,495,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+37000,North Carolina,27,26.5,27.6,1918,rising,27.0,1918,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+49000,Utah,26.4,25.3,27.6,414,rising,26.4,414,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+51000,Virginia,26.3,25.6,26.9,1499,stable,26.3,1499,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+13000,Georgia,25.7,25.2,26.3,1737,rising,25.7,1737,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+40000,Oklahoma,25.7,24.8,26.7,632,rising,25.7,632,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+05000,Arkansas,25.7,24.6,26.7,501,stable,25.7,501,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+16000,Idaho,25.6,24.3,27.0,291,rising,25.6,291,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+48000,Texas,25.6,25.3,26.0,4175,rising,25.6,4175,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+47000,Tennessee,25.4,24.7,26.1,1167,stable,25.4,1167,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+38000,North Dakota,25.1,23.0,27.3,114,stable,25.1,114,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+35000,New Mexico,25,23.8,26.3,348,stable,25.0,348,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+28000,Mississippi,24.6,23.6,25.6,484,rising,24.6,484,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+30000,Montana,24.4,22.8,26.2,186,stable,24.4,186,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+32000,Nevada,24.1,23.1,25.1,467,rising,24.1,467,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+04000,Arizona,24,23.4,24.7,1125,stable,24.0,1125,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+45000,South Carolina,23.9,23.1,24.6,870,stable,23.9,870,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+56000,Wyoming,23.5,21.3,26.0,88,rising,23.5,88,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+08000,Colorado,22.5,21.8,23.2,794,rising,22.5,794,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+22000,Louisiana,21.7,21.0,22.5,653,rising,21.7,653,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+01000,Alabama,20.5,19.8,21.2,708,stable,20.5,708,ok,"Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",gynecologic_uterus,058
+72001,Puerto Rico,11.2,10.4,11.9,202,falling,11.2,202,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+40000,Oklahoma,10.1,9.5,10.8,197,stable,10.1,197,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+05000,Arkansas,9.9,9.1,10.6,150,stable,9.9,150,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+48000,Texas,9.5,9.3,9.8,1379,stable,9.5,1379,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+54000,West Virginia,9.5,8.6,10.5,91,stable,9.5,91,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+21000,Kentucky,9.3,8.8,9.9,215,rising,9.3,215,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+12000,Florida,9.2,9.0,9.5,1099,stable,9.2,1099,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+01000,Alabama,9.2,8.6,9.7,244,stable,9.2,244,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+28000,Mississippi,9.1,8.5,9.9,144,stable,9.1,144,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+22000,Louisiana,8.9,8.4,9.5,215,stable,8.9,215,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+56000,Wyoming,8.7,7.2,10.5,25,stable,8.7,25,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+20000,Kansas,8.5,7.8,9.2,120,stable,8.5,120,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+18000,Indiana,8.5,8.0,8.9,289,falling,8.5,289,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+29000,Missouri,8.5,8.0,8.9,268,stable,8.5,268,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+32000,Nevada,8.2,7.6,8.9,132,stable,8.2,132,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+35000,New Mexico,8.2,7.4,9.1,85,stable,8.2,85,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+13000,Georgia,7.9,7.6,8.3,445,stable,7.9,445,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+39000,Ohio,7.8,7.5,8.1,479,stable,7.8,479,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+45000,South Carolina,7.8,7.3,8.3,212,falling,7.8,212,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+11001,District of Columbia,7.6,6.4,9.0,28,falling,7.6,28,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+47000,Tennessee,7.5,7.1,7.9,273,falling,7.5,273,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+06000,California,7.3,7.1,7.5,1487,stable,7.3,1487,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+19000,Iowa,7.2,6.6,7.9,111,stable,7.2,111,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+17000,Illinois,7.2,6.9,7.5,492,stable,7.2,492,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+10000,Delaware,7.1,6.1,8.2,41,stable,7.1,41,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+34000,New Jersey,7,6.7,7.4,363,falling,7.0,363,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+37000,North Carolina,7,6.7,7.3,393,stable,7.0,393,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+30000,Montana,7,6.0,8.1,38,stable,7.0,38,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+36000,New York,6.9,6.7,7.1,775,falling,6.9,775,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+42000,Pennsylvania,6.8,6.6,7.1,480,falling,6.8,480,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+15000,Hawaii,6.7,5.9,7.6,52,stable,6.7,52,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+16000,Idaho,6.6,5.8,7.4,59,stable,6.6,59,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+53000,Washington,6.6,6.2,7.0,260,stable,6.6,260,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+26000,Michigan,6.6,6.2,6.9,339,falling,6.6,339,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+04000,Arizona,6.5,6.2,6.9,235,falling,6.5,235,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+31000,Nebraska,6.5,5.8,7.3,61,stable,6.5,61,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+44000,Rhode Island,6.4,5.4,7.4,37,stable,6.4,37,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+02900,Alaska,6.4,5.2,7.7,23,stable,6.4,23,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+41000,Oregon,6.3,5.9,6.8,142,stable,6.3,142,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+23000,Maine,6.2,5.4,7.2,45,falling,6.2,45,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+50000,Vermont,6.2,5.0,7.6,21,*,6.2,21,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+51000,Virginia,6.1,5.8,6.5,283,stable,6.1,283,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+24000,Maryland,6.1,5.7,6.5,211,stable,6.1,211,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+55000,Wisconsin,6.1,5.7,6.5,184,stable,6.1,184,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+08000,Colorado,5.9,5.5,6.3,175,stable,5.9,175,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+49000,Utah,5.8,5.3,6.4,86,stable,5.8,86,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+09000,Connecticut,5.6,5.1,6.1,110,falling,5.6,110,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+27000,Minnesota,5.5,5.1,5.9,159,stable,5.5,159,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+46000,South Dakota,5.4,4.4,6.5,25,stable,5.4,25,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+33000,New Hampshire,5.3,4.5,6.2,39,stable,5.3,39,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+38000,North Dakota,4.9,3.9,6.1,18,stable,4.9,18,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+25000,Massachusetts,4.8,4.5,5.1,184,falling,4.8,184,ok,"Cervix (All Stages^), 2018-2022",gynecologic_cervix,057
+19000,Iowa,14.7,14.1,15.2,592,rising,14.7,592,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+54000,West Virginia,14.5,13.8,15.2,371,rising,14.5,371,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+21000,Kentucky,14.4,13.9,14.8,821,rising,14.4,821,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+12000,Florida,14.3,14.1,14.5,4471,rising,14.3,4471,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+05000,Arkansas,14.1,13.5,14.6,535,stable,14.1,535,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+23000,Maine,14.1,13.3,14.8,297,rising,14.1,297,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+40000,Oklahoma,13.9,13.5,14.4,661,rising,13.9,661,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+22000,Louisiana,13.5,13.1,14.0,765,rising,13.5,765,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+29000,Missouri,13.5,13.1,13.8,1059,rising,13.5,1059,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+50000,Vermont,13.3,12.2,14.5,122,rising,13.3,122,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+27000,Minnesota,13.2,12.8,13.6,939,rising,13.2,939,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+18000,Indiana,13.1,12.7,13.5,1088,stable,13.1,1088,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+53000,Washington,13.1,12.7,13.4,1214,rising,13.1,1214,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+02900,Alaska,13.1,11.9,14.3,105,rising,13.1,105,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+55000,Wisconsin,13,12.6,13.4,1013,rising,13.0,1013,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+39000,Ohio,12.9,12.7,13.2,1982,rising,12.9,1982,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+37000,North Carolina,12.9,12.7,13.2,1703,rising,12.9,1703,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+13000,Georgia,12.9,12.7,13.2,1611,rising,12.9,1611,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+28000,Mississippi,12.9,12.4,13.5,478,stable,12.9,478,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+45000,South Carolina,12.9,12.5,13.3,880,stable,12.9,880,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+47000,Tennessee,12.9,12.5,13.2,1125,falling,12.9,1125,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+31000,Nebraska,12.8,12.2,13.5,301,rising,12.8,301,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+33000,New Hampshire,12.8,12.1,13.6,255,rising,12.8,255,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+15000,Hawaii,12.8,12.1,13.6,244,rising,12.8,244,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+10000,Delaware,12.8,11.9,13.7,176,rising,12.8,176,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+09000,Connecticut,12.6,12.1,13.1,609,rising,12.6,609,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+38000,North Dakota,12.4,11.3,13.5,113,stable,12.4,113,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+20000,Kansas,12.4,11.8,12.9,440,rising,12.4,440,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+42000,Pennsylvania,12.2,12.0,12.4,2151,falling,12.2,2151,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+17000,Illinois,12.2,11.9,12.4,1933,stable,12.2,1933,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+30000,Montana,12,11.2,12.9,179,stable,12.0,179,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+26000,Michigan,12,11.8,12.3,1599,rising,12.0,1599,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+01000,Alabama,12,11.6,12.4,772,falling,12.0,772,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+16000,Idaho,11.9,11.3,12.6,270,stable,11.9,270,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+41000,Oregon,11.9,11.5,12.3,659,falling,11.9,659,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+48000,Texas,11.8,11.6,12.0,3665,rising,11.8,3665,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+51000,Virginia,11.7,11.4,12.0,1244,rising,11.7,1244,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+46000,South Dakota,11.7,10.8,12.7,127,stable,11.7,127,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+34000,New Jersey,11.2,10.9,11.5,1335,rising,11.2,1335,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+25000,Massachusetts,11.1,10.8,11.5,1018,falling,11.1,1018,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+36000,New York,11.1,10.9,11.3,2845,rising,11.1,2845,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+08000,Colorado,11,10.6,11.3,739,rising,11.0,739,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+24000,Maryland,10.9,10.5,11.2,838,rising,10.9,838,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+44000,Rhode Island,10.4,9.7,11.2,153,stable,10.4,153,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+06000,California,10.4,10.3,10.5,4768,stable,10.4,4768,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+32000,Nevada,10.4,9.9,10.9,402,stable,10.4,402,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+11001,District of Columbia,10.1,9.0,11.2,68,falling,10.1,68,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+04000,Arizona,9.8,9.6,10.1,915,stable,9.8,915,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+49000,Utah,9.7,9.2,10.3,292,stable,9.7,292,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+35000,New Mexico,9.6,9.1,10.2,261,stable,9.6,261,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+56000,Wyoming,9.4,8.4,10.5,69,stable,9.4,69,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+72001,Puerto Rico,8.5,8.1,8.9,407,falling,8.5,407,ok,"Oral Cavity & Pharynx (All Stages^), 2018-2022",head_neck,003
+72001,Puerto Rico,22.2,21.5,23.0,786,falling,22.2,786,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+36000,New York,17.7,17.4,17.9,3807,falling,17.7,3807,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+49000,Utah,17.5,16.8,18.2,535,stable,17.5,535,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+09000,Connecticut,16.7,16.1,17.3,655,rising,16.7,655,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+34000,New Jersey,16.6,16.3,17.0,1670,falling,16.6,1670,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+31000,Nebraska,15.6,14.9,16.5,314,rising,15.6,314,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+54000,West Virginia,15.6,14.8,16.4,306,falling,15.6,306,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+38000,North Dakota,15.5,14.2,16.8,119,falling,15.5,119,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+42000,Pennsylvania,15.4,15.1,15.7,2175,falling,15.4,2175,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+10000,Delaware,15.3,14.3,16.5,165,stable,15.3,165,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+46000,South Dakota,14.6,13.5,15.8,132,stable,14.6,132,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+23000,Maine,14.6,13.7,15.6,228,stable,14.6,228,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+44000,Rhode Island,14.5,13.5,15.6,174,falling,14.5,174,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+25000,Massachusetts,14.4,14.0,14.8,1101,falling,14.4,1101,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+56000,Wyoming,14.4,13.0,15.8,86,stable,14.4,86,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+39000,Ohio,14,13.7,14.4,1779,falling,14.0,1779,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+35000,New Mexico,14,13.3,14.8,310,falling,14.0,310,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+20000,Kansas,13.9,13.3,14.6,425,falling,13.9,425,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+19000,Iowa,13.9,13.3,14.5,464,stable,13.9,464,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+30000,Montana,13.7,12.8,14.8,161,stable,13.7,161,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+33000,New Hampshire,13.5,12.6,14.4,206,stable,13.5,206,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+21000,Kentucky,13.1,12.6,13.6,630,falling,13.1,630,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+08000,Colorado,13.1,12.7,13.5,800,falling,13.1,800,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+17000,Illinois,13,12.7,13.2,1776,stable,13.0,1776,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+22000,Louisiana,12.8,12.3,13.3,629,falling,12.8,629,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+55000,Wisconsin,12.7,12.3,13.1,812,stable,12.7,812,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+40000,Oklahoma,12.7,12.2,13.2,517,stable,12.7,517,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+15000,Hawaii,12.6,11.8,13.5,203,falling,12.6,203,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+12000,Florida,12.6,12.4,12.8,3044,stable,12.6,3044,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+50000,Vermont,12.5,11.3,13.8,89,stable,12.5,89,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+06000,California,12.5,12.4,12.7,5218,falling,12.5,5218,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+16000,Idaho,12.4,11.7,13.2,236,falling,12.4,236,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+32000,Nevada,12.4,11.8,12.9,412,falling,12.4,412,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+27000,Minnesota,12.3,11.9,12.8,744,stable,12.3,744,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+29000,Missouri,12.1,11.7,12.5,802,stable,12.1,802,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+24000,Maryland,12.1,11.7,12.4,798,falling,12.1,798,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+53000,Washington,12,11.6,12.3,985,falling,12.0,985,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+04000,Arizona,12,11.6,12.3,909,falling,12.0,909,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+41000,Oregon,11.9,11.5,12.4,550,falling,11.9,550,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+48000,Texas,11.6,11.4,11.7,3406,falling,11.6,3406,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+18000,Indiana,11.3,11.0,11.7,799,falling,11.3,799,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+02900,Alaska,11.3,10.2,12.5,85,stable,11.3,85,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+26000,Michigan,11.3,11.0,11.6,1215,falling,11.3,1215,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+13000,Georgia,11.3,11.0,11.5,1269,falling,11.3,1269,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+51000,Virginia,11.1,10.8,11.5,1019,falling,11.1,1019,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+37000,North Carolina,11,10.7,11.3,1237,falling,11.0,1237,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+05000,Arkansas,10.8,10.3,11.4,349,falling,10.8,349,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+47000,Tennessee,10.6,10.2,10.9,785,falling,10.6,785,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+45000,South Carolina,9.5,9.1,9.9,530,falling,9.5,530,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+11001,District of Columbia,8.7,7.7,9.8,62,falling,8.7,62,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+28000,Mississippi,8.6,8.1,9.0,268,falling,8.6,268,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+01000,Alabama,8.6,8.2,8.9,463,falling,8.6,463,ok,"Thyroid (All Stages^), 2018-2022",thyroid,080
+23000,Maine,7.1,6.6,7.7,153,stable,7.1,153,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+54000,West Virginia,6.1,5.7,6.6,163,stable,6.1,163,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+33000,New Hampshire,5.9,5.5,6.4,123,falling,5.9,123,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+39000,Ohio,5.8,5.6,6.0,911,rising,5.8,911,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+19000,Iowa,5.7,5.4,6.1,242,stable,5.7,242,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+21000,Kentucky,5.7,5.4,6.0,332,rising,5.7,332,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+46000,South Dakota,5.6,5.0,6.3,63,stable,5.6,63,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+02900,Alaska,5.6,4.8,6.4,44,stable,5.6,44,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+18000,Indiana,5.6,5.3,5.8,473,stable,5.6,473,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+26000,Michigan,5.4,5.2,5.6,738,stable,5.4,738,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+42000,Pennsylvania,5.3,5.2,5.5,981,stable,5.3,981,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+55000,Wisconsin,5.3,5.1,5.6,425,falling,5.3,425,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+27000,Minnesota,5.3,5.1,5.5,382,stable,5.3,382,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+29000,Missouri,5.2,5.0,5.5,426,stable,5.2,426,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+50000,Vermont,5.2,4.6,6.0,51,stable,5.2,51,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+25000,Massachusetts,5.2,4.9,5.4,481,falling,5.2,481,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+40000,Oklahoma,5.1,4.9,5.4,250,rising,5.1,250,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+17000,Illinois,5,4.8,5.2,809,stable,5.0,809,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+30000,Montana,5,4.5,5.5,77,stable,5.0,77,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+44000,Rhode Island,5,4.5,5.5,74,falling,5.0,74,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+31000,Nebraska,4.9,4.5,5.3,117,stable,4.9,117,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+05000,Arkansas,4.9,4.6,5.2,193,stable,4.9,193,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+47000,Tennessee,4.9,4.7,5.1,434,stable,4.9,434,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+56000,Wyoming,4.8,4.1,5.6,36,stable,4.8,36,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+28000,Mississippi,4.8,4.5,5.1,183,stable,4.8,183,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+53000,Washington,4.8,4.6,5.0,451,stable,4.8,451,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+41000,Oregon,4.7,4.5,5.0,266,falling,4.7,266,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+32000,Nevada,4.7,4.4,5.0,181,stable,4.7,181,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+20000,Kansas,4.7,4.4,5.0,169,stable,4.7,169,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+10000,Delaware,4.7,4.2,5.2,67,falling,4.7,67,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+22000,Louisiana,4.6,4.4,4.9,269,falling,4.6,269,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+16000,Idaho,4.6,4.2,5.1,105,stable,4.6,105,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+09000,Connecticut,4.6,4.3,4.9,230,falling,4.6,230,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+45000,South Carolina,4.6,4.4,4.8,323,falling,4.6,323,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+38000,North Dakota,4.6,4.0,5.2,43,stable,4.6,43,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+12000,Florida,4.5,4.4,4.7,1496,falling,4.5,1496,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+01000,Alabama,4.4,4.2,4.7,295,falling,4.4,295,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+37000,North Carolina,4.4,4.2,4.5,589,falling,4.4,589,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+13000,Georgia,4.3,4.2,4.5,541,falling,4.3,541,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+51000,Virginia,4.3,4.1,4.5,461,stable,4.3,461,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+36000,New York,4.2,4.0,4.3,1094,stable,4.2,1094,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+34000,New Jersey,4.1,4.0,4.3,496,falling,4.1,496,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+48000,Texas,4.1,4.0,4.2,1253,stable,4.1,1253,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+04000,Arizona,4.1,3.9,4.3,393,stable,4.1,393,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+35000,New Mexico,4,3.7,4.4,114,stable,4.0,114,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+08000,Colorado,3.9,3.7,4.1,264,falling,3.9,264,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+24000,Maryland,3.9,3.7,4.1,305,falling,3.9,305,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+11001,District of Columbia,3.8,3.1,4.5,25,falling,3.8,25,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+06000,California,3.5,3.5,3.6,1634,falling,3.5,1634,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+49000,Utah,3.4,3.1,3.8,103,stable,3.4,103,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+15000,Hawaii,3.4,3.0,3.8,69,stable,3.4,69,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+72001,Puerto Rico,2.8,2.5,3.0,142,falling,2.8,142,ok,"Esophagus (All Stages^), 2018-2022",esophagus,017
+36000,New York,8.4,8.2,8.5,2103,stable,8.4,2103,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+34000,New Jersey,7.7,7.4,7.9,888,stable,7.7,888,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+06000,California,7.6,7.5,7.8,3403,stable,7.6,3403,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+15000,Hawaii,7.6,7.1,8.2,152,stable,7.6,152,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+02900,Alaska,7.3,6.4,8.3,54,stable,7.3,54,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+09000,Connecticut,7.3,6.9,7.7,345,falling,7.3,345,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+22000,Louisiana,7.2,6.9,7.5,399,stable,7.2,399,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+11001,District of Columbia,7.2,6.3,8.2,48,falling,7.2,48,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+17000,Illinois,7,6.9,7.2,1089,stable,7.0,1089,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+28000,Mississippi,7,6.7,7.5,254,stable,7.0,254,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+24000,Maryland,7,6.7,7.3,523,rising,7.0,523,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+13000,Georgia,7,6.8,7.2,836,rising,7.0,836,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+48000,Texas,6.9,6.8,7.1,2068,rising,6.9,2068,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+44000,Rhode Island,6.7,6.1,7.3,94,stable,6.7,94,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+21000,Kentucky,6.5,6.2,6.8,360,rising,6.5,360,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+35000,New Mexico,6.4,6.0,6.9,173,falling,6.4,173,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+10000,Delaware,6.4,5.7,7.0,85,stable,6.4,85,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+72001,Puerto Rico,6.3,6.0,6.7,318,falling,6.3,318,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+37000,North Carolina,6.3,6.1,6.5,804,stable,6.3,804,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+25000,Massachusetts,6.3,6.0,6.5,558,falling,6.3,558,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+01000,Alabama,6.2,5.9,6.5,396,stable,6.2,396,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+45000,South Carolina,6.1,5.9,6.4,410,falling,6.1,410,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+26000,Michigan,6.1,5.9,6.3,801,stable,6.1,801,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+55000,Wisconsin,6.1,5.8,6.3,462,stable,6.1,462,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+05000,Arkansas,6,5.7,6.4,227,falling,6.0,227,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+42000,Pennsylvania,6,5.9,6.2,1052,falling,6.0,1052,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+23000,Maine,6,5.5,6.6,124,stable,6.0,124,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+12000,Florida,5.9,5.8,6.0,1849,stable,5.9,1849,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+53000,Washington,5.9,5.7,6.1,533,rising,5.9,533,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+27000,Minnesota,5.9,5.6,6.2,409,rising,5.9,409,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+33000,New Hampshire,5.8,5.3,6.3,108,stable,5.8,108,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+39000,Ohio,5.7,5.5,5.9,859,stable,5.7,859,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+29000,Missouri,5.7,5.5,6.0,441,rising,5.7,441,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+51000,Virginia,5.7,5.5,5.9,585,stable,5.7,585,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+18000,Indiana,5.6,5.4,5.8,459,stable,5.6,459,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+47000,Tennessee,5.6,5.4,5.8,477,falling,5.6,477,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+50000,Vermont,5.5,4.8,6.3,49,stable,5.5,49,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+40000,Oklahoma,5.4,5.1,5.8,253,stable,5.4,253,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+04000,Arizona,5.4,5.2,5.6,492,stable,5.4,492,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+20000,Kansas,5.4,5.1,5.8,192,stable,5.4,192,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+54000,West Virginia,5.4,5.0,5.8,140,stable,5.4,140,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+38000,North Dakota,5.2,4.6,6.0,47,stable,5.2,47,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+32000,Nevada,5.2,4.9,5.6,192,stable,5.2,192,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+31000,Nebraska,5.1,4.7,5.5,117,stable,5.1,117,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+41000,Oregon,5,4.8,5.3,273,stable,5.0,273,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+08000,Colorado,5,4.8,5.3,325,stable,5.0,325,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+30000,Montana,5,4.5,5.6,71,stable,5.0,71,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+19000,Iowa,5,4.7,5.3,203,rising,5.0,203,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+46000,South Dakota,4.9,4.3,5.6,53,stable,4.9,53,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+49000,Utah,4.8,4.5,5.2,139,stable,4.8,139,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+56000,Wyoming,4.8,4.1,5.6,36,stable,4.8,36,ok,"Stomach (All Stages^), 2018-2022",stomach,018
+16000,Idaho,4.8,4.3,5.2,101,stable,4.8,101,ok,"Stomach (All Stages^), 2018-2022",stomach,018

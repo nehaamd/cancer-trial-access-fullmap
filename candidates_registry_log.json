@@ -1,0 +1,9 @@
+{
+  "timestamp_utc": "2026-09-09T18:59:15.725541+00:00",
+  "api_total_count": 11778,
+  "studies_read": 11778,
+  "site_rows": 212573,
+  "facilities": 23667,
+  "statuses": "COMPLETED,ACTIVE_NOT_RECRUITING,RECRUITING,ENROLLING_BY_INVITATION,NOT_YET_RECRUITING,SUSPENDED",
+  "start_date_from": "2016-01-01"
+}

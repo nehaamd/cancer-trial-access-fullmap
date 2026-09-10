@@ -1,0 +1,394 @@
+{
+  "sites": {
+    "all": {
+      "title": "All Cancer Sites (All Stages^), 2018-2022",
+      "status_counts": {
+        "ok": 2908,
+        "small_numbers": 118,
+        "not_available_state": 105,
+        "suppressed_source": 9,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 1821045.0,
+      "us_rate": 448.6,
+      "county_sum_published": 1803830.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 0.02,
+        "max_abs_pct_diff": 1.31,
+        "worst": "02"
+      }
+    },
+    "breast": {
+      "title": "Breast (All Stages^), 2018-2022",
+      "status_counts": {
+        "ok": 1846,
+        "small_numbers": 956,
+        "suppressed_source": 233,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 270245.0,
+      "us_rate": 131.3,
+      "county_sum_published": 267316.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 0.11,
+        "max_abs_pct_diff": 6.65,
+        "worst": "46"
+      }
+    },
+    "colorectal": {
+      "title": "Colon & Rectum (All Stages^), 2018-2022",
+      "status_counts": {
+        "ok": 1482,
+        "small_numbers": 1221,
+        "suppressed_source": 332,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 145073.0,
+      "us_rate": 36.7,
+      "county_sum_published": 143099.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 0.2,
+        "max_abs_pct_diff": 13.95,
+        "worst": "38"
+      }
+    },
+    "lung": {
+      "title": "Lung & Bronchus (All Stages^), 2018-2022",
+      "status_counts": {
+        "ok": 1979,
+        "small_numbers": 815,
+        "suppressed_source": 241,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 222606.0,
+      "us_rate": 52.5,
+      "county_sum_published": 220194.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 0.06,
+        "max_abs_pct_diff": 8.73,
+        "worst": "38"
+      }
+    },
+    "prostate": {
+      "title": "Prostate (All Stages^), 2018-2022",
+      "status_counts": {
+        "ok": 1827,
+        "small_numbers": 988,
+        "suppressed_source": 220,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 240633.0,
+      "us_rate": 116.4,
+      "county_sum_published": 237774.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 0.1,
+        "max_abs_pct_diff": 5.74,
+        "worst": "38"
+      }
+    },
+    "melanoma_skin": {
+      "title": "Melanoma of the Skin (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1296,
+        "ok": 981,
+        "suppressed_source": 758,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 91120.0,
+      "us_rate": 23.1,
+      "county_sum_published": 88938.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 1.0,
+        "max_abs_pct_diff": 17.74,
+        "worst": "38"
+      }
+    },
+    "lymphoma": {
+      "title": "Non-Hodgkin Lymphoma (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1351,
+        "suppressed_source": 868,
+        "ok": 816,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 73915.0,
+      "us_rate": 18.5,
+      "county_sum_published": 71896.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 2.09,
+        "max_abs_pct_diff": 28.5,
+        "worst": "46"
+      }
+    },
+    "leukemia": {
+      "title": "Leukemia (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1284,
+        "suppressed_source": 1070,
+        "ok": 681,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 55515.0,
+      "us_rate": 14.3,
+      "county_sum_published": 53376.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 3.02,
+        "max_abs_pct_diff": 30.06,
+        "worst": "46"
+      }
+    },
+    "pancreatic": {
+      "title": "Pancreas (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1319,
+        "suppressed_source": 1021,
+        "ok": 695,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 56905.0,
+      "us_rate": 13.7,
+      "county_sum_published": 54859.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 2.42,
+        "max_abs_pct_diff": 36.67,
+        "worst": "46"
+      }
+    },
+    "liver_biliary": {
+      "title": "Liver & Bile Duct (All Stages^), 2018-2022",
+      "status_counts": {
+        "suppressed_source": 1484,
+        "small_numbers": 1070,
+        "ok": 481,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 37201.0,
+      "us_rate": 8.6,
+      "county_sum_published": 34917.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 6.53,
+        "max_abs_pct_diff": 60.0,
+        "worst": "56"
+      }
+    },
+    "bladder_urothelial": {
+      "title": "Bladder (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1354,
+        "ok": 916,
+        "suppressed_source": 765,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 77545.0,
+      "us_rate": 18.8,
+      "county_sum_published": 75595.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 1.34,
+        "max_abs_pct_diff": 25.43,
+        "worst": "38"
+      }
+    },
+    "kidney": {
+      "title": "Kidney & Renal Pelvis (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1416,
+        "ok": 862,
+        "suppressed_source": 757,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 70592.0,
+      "us_rate": 17.5,
+      "county_sum_published": 68699.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 1.46,
+        "max_abs_pct_diff": 29.21,
+        "worst": "46"
+      }
+    },
+    "brain_cns": {
+      "title": "Brain & ONS (All Stages^), 2018-2022",
+      "status_counts": {
+        "suppressed_source": 1877,
+        "small_numbers": 833,
+        "ok": 325,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 23548.0,
+      "us_rate": 6.3,
+      "county_sum_published": 21040.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 11.14,
+        "max_abs_pct_diff": 60.53,
+        "worst": "56"
+      }
+    },
+    "gynecologic_ovary": {
+      "title": "Ovary (All Stages^), 2018-2022",
+      "status_counts": {
+        "suppressed_source": 2006,
+        "small_numbers": 753,
+        "ok": 276,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 20555.0,
+      "us_rate": 10.0,
+      "county_sum_published": 18195.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 14.36,
+        "max_abs_pct_diff": 72.41,
+        "worst": "56"
+      }
+    },
+    "gynecologic_uterus": {
+      "title": "Uterus (Corpus & Uterus, NOS) (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1293,
+        "suppressed_source": 1051,
+        "ok": 691,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 60686.0,
+      "us_rate": 27.9,
+      "county_sum_published": 58627.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 2.35,
+        "max_abs_pct_diff": 33.55,
+        "worst": "46"
+      }
+    },
+    "gynecologic_cervix": {
+      "title": "Cervix (All Stages^), 2018-2022",
+      "status_counts": {
+        "suppressed_source": 2295,
+        "small_numbers": 566,
+        "ok": 174,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 13019.0,
+      "us_rate": 7.5,
+      "county_sum_published": 10665.0,
+      "state_reconciliation": {
+        "states": 49,
+        "median_abs_pct_diff": 27.05,
+        "max_abs_pct_diff": 80.0,
+        "worst": "46"
+      }
+    },
+    "head_neck": {
+      "title": "Oral Cavity & Pharynx (All Stages^), 2018-2022",
+      "status_counts": {
+        "small_numbers": 1303,
+        "suppressed_source": 1071,
+        "ok": 661,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 50271.0,
+      "us_rate": 12.1,
+      "county_sum_published": 48215.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 3.23,
+        "max_abs_pct_diff": 41.73,
+        "worst": "46"
+      }
+    },
+    "thyroid": {
+      "title": "Thyroid (All Stages^), 2018-2022",
+      "status_counts": {
+        "suppressed_source": 1429,
+        "small_numbers": 1084,
+        "ok": 522,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 45453.0,
+      "us_rate": 12.9,
+      "county_sum_published": 43145.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 4.36,
+        "max_abs_pct_diff": 38.64,
+        "worst": "46"
+      }
+    },
+    "esophagus": {
+      "title": "Esophagus (All Stages^), 2018-2022",
+      "status_counts": {
+        "suppressed_source": 1859,
+        "small_numbers": 896,
+        "ok": 280,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 19397.0,
+      "us_rate": 4.6,
+      "county_sum_published": 16948.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 14.14,
+        "max_abs_pct_diff": 72.22,
+        "worst": "56"
+      }
+    },
+    "stomach": {
+      "title": "Stomach (All Stages^), 2018-2022",
+      "status_counts": {
+        "suppressed_source": 1859,
+        "small_numbers": 860,
+        "ok": 316,
+        "not_available_state": 105,
+        "not_available_county": 3
+      },
+      "us_avg_annual_count": 26110.0,
+      "us_rate": 6.5,
+      "county_sum_published": 23615.0,
+      "state_reconciliation": {
+        "states": 50,
+        "median_abs_pct_diff": 11.78,
+        "max_abs_pct_diff": 69.44,
+        "worst": "56"
+      }
+    }
+  },
+  "pulled": "2026-09-09",
+  "small_numbers_threshold_avg_annual_cases": 16,
+  "states_not_available": [
+    "20"
+  ],
+  "counties_not_in_source_all_sites": [
+    "02063",
+    "02066",
+    "51019"
+  ]
+}

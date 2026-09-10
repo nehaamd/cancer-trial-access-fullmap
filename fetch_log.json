@@ -1,0 +1,16 @@
+{
+  "timestamp_utc": "2026-09-09T16:45:31.297473+00:00",
+  "params": {
+    "query.cond": "cancer OR neoplasm OR neoplasms OR carcinoma OR lymphoma OR leukemia OR myeloma OR sarcoma OR melanoma OR malignancy OR malignant OR tumor OR tumour OR glioma OR mesothelioma",
+    "query.locn": "United States",
+    "filter.overallStatus": "RECRUITING",
+    "filter.advanced": "AREA[StudyType]INTERVENTIONAL AND AREA[DesignPrimaryPurpose]TREATMENT",
+    "fields": "NCTId,BriefTitle,OverallStatus,StudyType,Phase,DesignPrimaryPurpose,Condition,InterventionType,InterventionName,InterventionDescription,LeadSponsorClass,StartDate,LocationFacility,LocationCity,LocationState,LocationZip,LocationCountry,LocationStatus,InterventionOtherName,ArmGroupDescription,BriefSummary,MinimumAge,MaximumAge,Keyword,OfficialTitle",
+    "pageSize": 1000,
+    "countTotal": "true",
+    "format": "json"
+  },
+  "api_total_count": 4356,
+  "trials_with_us_recruiting_site": 4299,
+  "us_site_rows": 57586
+}

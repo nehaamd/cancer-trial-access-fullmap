@@ -1,0 +1,21 @@
+{
+  "states": 51,
+  "edges_from_tiger": 262658,
+  "noded_segments": 1573751,
+  "nodes": 1091734,
+  "edges": 3654341,
+  "connector_edges": 2303717,
+  "components": 4913,
+  "largest_component_share": 0.9702,
+  "components_over_1000_nodes": 5,
+  "speeds_mph": {
+    "S1100": 65.0,
+    "S1200": 50.0,
+    "connector": 25.0,
+    "access": 35.0
+  },
+  "connector_radius_m": 500,
+  "node_grid_m": 1,
+  "simplify_m": 30,
+  "source": "TIGER2025 PRISECROADS S1100+S1200"
+}

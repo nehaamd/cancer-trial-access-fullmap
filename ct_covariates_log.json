@@ -1,0 +1,24 @@
+{
+  "ct_legacy_counties": [
+    "09001",
+    "09003",
+    "09005",
+    "09007",
+    "09009",
+    "09011",
+    "09013",
+    "09015"
+  ],
+  "source": "ACS 2023 5-yr tract tables aggregated to legacy counties",
+  "planning_regions_replaced": [
+    "09110",
+    "09120",
+    "09130",
+    "09140",
+    "09150",
+    "09160",
+    "09170",
+    "09180",
+    "09190"
+  ]
+}

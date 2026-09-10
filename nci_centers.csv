@@ -1,0 +1,69 @@
+name,city,state,tier,lat,lon,coord_source
+O'Neal Comprehensive Cancer Center (UAB),birmingham,AL,Comprehensive,33.5272,-86.797,gazetteer_place_centroid
+University of Arizona Cancer Center,tucson,AZ,Comprehensive,32.153,-110.8708,gazetteer_place_centroid
+Mayo Clinic Cancer Center – Phoenix,phoenix,AZ,Comprehensive,33.5722,-112.0901,gazetteer_place_centroid
+Chao Family Comprehensive Cancer Center (UC Irvine),orange,CA,Comprehensive,33.787,-117.8613,gazetteer_place_centroid
+City of Hope,duarte,CA,Comprehensive,34.161,-117.9504,gazetteer_place_centroid
+Jonsson Comprehensive Cancer Center (UCLA),los angeles,CA,Comprehensive,34.0194,-118.4108,gazetteer_place_centroid
+Stanford Cancer Institute,stanford,CA,Comprehensive,37.433,-122.175,override
+UC Davis Comprehensive Cancer Center,sacramento,CA,Comprehensive,38.5677,-121.4682,gazetteer_place_centroid
+Moores Comprehensive Cancer Center (UCSD),la jolla,CA,Comprehensive,32.875,-117.236,override
+UCSF Helen Diller Family Comprehensive Cancer Center,san francisco,CA,Comprehensive,37.763,-122.458,override
+USC Norris Comprehensive Cancer Center,los angeles,CA,Comprehensive,34.0194,-118.4108,gazetteer_place_centroid
+University of Colorado Cancer Center,aurora,CO,Comprehensive,39.7095,-104.7205,gazetteer_place_centroid
+Yale Cancer Center,new haven,CT,Comprehensive,41.3108,-72.925,gazetteer_place_centroid
+Georgetown Lombardi Comprehensive Cancer Center,washington,DC,Comprehensive,38.9042,-77.0165,gazetteer_place_centroid
+Mayo Clinic Cancer Center – Jacksonville,jacksonville,FL,Comprehensive,30.3369,-81.6616,gazetteer_place_centroid
+Sylvester Comprehensive Cancer Center (Miami),miami,FL,Clinical,25.7752,-80.2086,gazetteer_place_centroid
+Moffitt Cancer Center,tampa,FL,Comprehensive,27.9701,-82.4797,gazetteer_place_centroid
+University of Florida Health Cancer Institute,gainesville,FL,Clinical,29.6795,-82.3468,gazetteer_place_centroid
+Winship Cancer Institute (Emory),atlanta,GA,Comprehensive,33.7629,-84.4227,gazetteer_place_centroid
+University of Hawai'i Cancer Center,urban honolulu,HI,Clinical,21.3,-157.85,override
+Robert H. Lurie Comprehensive Cancer Center (Northwestern),chicago,IL,Comprehensive,41.837,-87.6849,gazetteer_place_centroid
+University of Chicago Comprehensive Cancer Center,chicago,IL,Comprehensive,41.837,-87.6849,gazetteer_place_centroid
+IU Simon Comprehensive Cancer Center,indianapolis city,IN,Comprehensive,39.7767,-86.1459,gazetteer_place_centroid
+Holden Comprehensive Cancer Center (Iowa),iowa city,IA,Comprehensive,41.6557,-91.5309,gazetteer_place_centroid
+University of Kansas Cancer Center,kansas city,KS,Comprehensive,39.1225,-94.7418,gazetteer_place_centroid
+Markey Cancer Center (Kentucky),lexington-fayette,KY,Comprehensive,38.032,-84.508,override
+Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins),baltimore,MD,Comprehensive,39.3,-76.6105,gazetteer_place_centroid
+UM Greenebaum Comprehensive Cancer Center,baltimore,MD,Comprehensive,39.3,-76.6105,gazetteer_place_centroid
+Dana-Farber/Harvard Cancer Center,boston,MA,Comprehensive,42.3386,-71.0183,gazetteer_place_centroid
+Karmanos Cancer Institute (Wayne State),detroit,MI,Comprehensive,42.383,-83.1022,gazetteer_place_centroid
+University of Michigan Rogel Cancer Center,ann arbor,MI,Comprehensive,42.2761,-83.7309,gazetteer_place_centroid
+Masonic Cancer Center (Minnesota),minneapolis,MN,Comprehensive,44.9633,-93.2683,gazetteer_place_centroid
+Mayo Clinic Cancer Center – Rochester,rochester,MN,Comprehensive,44.0143,-92.4786,gazetteer_place_centroid
+Siteman Cancer Center (WashU),st. louis,MO,Comprehensive,38.6357,-90.2446,gazetteer_place_centroid
+Fred & Pamela Buffett Cancer Center (UNMC),omaha,NE,Clinical,41.2627,-96.0535,gazetteer_place_centroid
+Dartmouth Cancer Center,lebanon,NH,Comprehensive,43.6354,-72.2538,gazetteer_place_centroid
+Rutgers Cancer Institute of New Jersey,new brunswick,NJ,Comprehensive,40.4867,-74.4444,gazetteer_place_centroid
+UNM Comprehensive Cancer Center,albuquerque,NM,Comprehensive,35.1048,-106.6468,gazetteer_place_centroid
+Montefiore Einstein Cancer Center,bronx,NY,Comprehensive,40.88,-73.879,override
+Herbert Irving Comprehensive Cancer Center (Columbia),manhattan,NY,Comprehensive,40.77,-73.96,override
+Perlmutter Cancer Center (NYU Langone),manhattan,NY,Comprehensive,40.77,-73.96,override
+Memorial Sloan Kettering Cancer Center,manhattan,NY,Comprehensive,40.77,-73.96,override
+Roswell Park Comprehensive Cancer Center,buffalo,NY,Comprehensive,42.8925,-78.8597,gazetteer_place_centroid
+Mount Sinai Tisch Cancer Center,manhattan,NY,Clinical,40.77,-73.96,override
+Wilmot Cancer Institute (Rochester),rochester,NY,Clinical,43.1699,-77.6169,gazetteer_place_centroid
+Duke Cancer Institute,durham,NC,Comprehensive,35.9779,-78.8981,gazetteer_place_centroid
+UNC Lineberger Comprehensive Cancer Center,chapel hill,NC,Comprehensive,35.9283,-79.0414,gazetteer_place_centroid
+Wake Forest Baptist Comprehensive Cancer Center,winston-salem,NC,Comprehensive,36.1029,-80.2608,gazetteer_place_centroid
+Case Comprehensive Cancer Center,cleveland,OH,Comprehensive,41.4785,-81.6794,gazetteer_place_centroid
+OSU Comprehensive Cancer Center – James,columbus,OH,Comprehensive,39.9839,-82.9849,gazetteer_place_centroid
+Stephenson Cancer Center (Oklahoma),oklahoma city,OK,Clinical,35.4671,-97.5137,gazetteer_place_centroid
+Knight Cancer Institute (OHSU),portland,OR,Comprehensive,45.537,-122.65,gazetteer_place_centroid
+Abramson Cancer Center (Penn),philadelphia,PA,Comprehensive,40.0094,-75.1333,gazetteer_place_centroid
+Fox Chase Cancer Center,philadelphia,PA,Comprehensive,40.0094,-75.1333,gazetteer_place_centroid
+Sidney Kimmel Cancer Center (Jefferson),philadelphia,PA,Comprehensive,40.0094,-75.1333,gazetteer_place_centroid
+UPMC Hillman Cancer Center,pittsburgh,PA,Comprehensive,40.4399,-79.9757,gazetteer_place_centroid
+Hollings Cancer Center (MUSC),charleston,SC,Clinical,32.828,-79.9729,gazetteer_place_centroid
+St. Jude Children's Research Hospital,memphis,TN,Comprehensive,35.1092,-89.9685,gazetteer_place_centroid
+Vanderbilt-Ingram Cancer Center,nashville-davidson,TN,Comprehensive,36.144,-86.803,override
+Dan L Duncan Comprehensive Cancer Center (Baylor),houston,TX,Comprehensive,29.7857,-95.3888,gazetteer_place_centroid
+Harold C. Simmons Comprehensive Cancer Center (UTSW),dallas,TX,Comprehensive,32.7933,-96.7665,gazetteer_place_centroid
+Mays Cancer Center (UT Health San Antonio),san antonio,TX,Clinical,29.4628,-98.5246,gazetteer_place_centroid
+MD Anderson Cancer Center,houston,TX,Comprehensive,29.7857,-95.3888,gazetteer_place_centroid
+Huntsman Cancer Institute (Utah),salt lake city,UT,Comprehensive,40.7769,-111.931,gazetteer_place_centroid
+VCU Massey Comprehensive Cancer Center,richmond,VA,Comprehensive,37.5314,-77.476,gazetteer_place_centroid
+University of Virginia Cancer Center,charlottesville,VA,Comprehensive,38.0377,-78.4854,gazetteer_place_centroid
+Fred Hutch/UW/Seattle Children's Cancer Consortium,seattle,WA,Comprehensive,47.6193,-122.3515,gazetteer_place_centroid
+UW Carbone Cancer Center,madison,WI,Comprehensive,43.0878,-89.4299,gazetteer_place_centroid
