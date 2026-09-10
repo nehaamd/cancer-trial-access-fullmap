@@ -4,7 +4,7 @@
   "method": "Candidate universe. Existing facilities capable of hosting a trial, from the supplied candidates file (intended: Commission on Cancer-accredited programs plus NCORP affiliates; the stand-in used when those were unreachable is every US facility that hosted an interventional oncology treatment trial started 2016 or later on ClinicalTrials.gov). Candidates are excluded if (a) their county already hosts a limited menu (20 or more eligible recruiting trials) or (b) the facility itself already hosts an eligible recruiting trial today. Candidates are located by ZIP-code centroid (city centroid as fallback) and joined to the highway network like every other point in this project.\n\nObjective (primary). Residents aged 55+ who today have no eligible recruiting cancer treatment trial within 60 road-miles of their census tract's population center, and who would have one if a trial opened at the candidate (i.e. the candidate is within 60 road-miles of their tract). Secondary view: the same, for residents who today have fewer than 20 such trials within 60 road-miles.\n\nOutput. Every candidate ranked by the population 55+ it would newly cover (primary objective), and a greedy sequence: the best candidate is chosen, the residents it covers are removed, and the next best is chosen, for up to 25 steps, with the cumulative coverage curve. Marginal population is measured on the same road graph and tract data as the rest of the map.\n\nThis is not a recommendation to build anything. It identifies which existing, trial-capable facilities sit nearest to the largest currently uncovered older populations.",
   "uncovered_pop55": {
     "zero_trials_within_60rdmi": 4492874,
-    "lt20_trials_within_60rdmi": 12584055
+    "lt20_trials_within_60rdmi": 12582767
   },
   "candidates_read": 23667,
   "excluded_county_has_limited_menu": 20875,
@@ -424,5 +424,5 @@
       "pop55_newly_covered_lt20": 75153
     }
   ],
-  "seconds": 31
+  "seconds": 23
 }

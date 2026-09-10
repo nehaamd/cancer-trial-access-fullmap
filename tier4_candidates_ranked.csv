@@ -60,10 +60,10 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 59,422,Harbin Clinic Medical Oncology and Clinical Research,0,Rome,GA,30165,Floyd,13115,21244,41325,362,0,4,zip,3.4,34.315788,-85.295122,registry_stand_in
 60,548,Moses Lake Clinic,0,Moses Lake,WA,98837,Grant,53025,20180,27809,26,0,1,zip,1.9,47.146993,-119.315908,registry_stand_in
 61,711,GenesisCare USA - Key West,0,Key West,FL,33040,Monroe,12087,19700,19700,17,0,5,zip,7.5,24.54461,-81.921737,registry_stand_in
-62,509,Calaway-Young Cancer Center at Valley View Hospital,0,Glenwood Springs,CO,81601,Garfield,08045,18357,32197,28,0,1,zip,2.0,39.587562,-107.338712,registry_stand_in
-63,510,Valley View Hospital,0,Glenwood Springs,CO,81601,Garfield,08045,18357,32197,28,0,1,zip,2.0,39.587562,-107.338712,registry_stand_in
-64,511,Valley View Hospital Cancer Center,0,Glenwood Springs,CO,81601,Garfield,08045,18357,32197,28,0,6,zip,2.0,39.587562,-107.338712,registry_stand_in
-65,508,Lake Region Healthcare Corporation-Cancer Care,0,Fergus Falls,MN,56537,Otter Tail,27111,17685,32837,65,0,52,zip,0.8,46.276711,-96.091938,registry_stand_in
+62,508,Calaway-Young Cancer Center at Valley View Hospital,0,Glenwood Springs,CO,81601,Garfield,08045,18357,32197,28,0,1,zip,2.0,39.587562,-107.338712,registry_stand_in
+63,509,Valley View Hospital,0,Glenwood Springs,CO,81601,Garfield,08045,18357,32197,28,0,1,zip,2.0,39.587562,-107.338712,registry_stand_in
+64,510,Valley View Hospital Cancer Center,0,Glenwood Springs,CO,81601,Garfield,08045,18357,32197,28,0,6,zip,2.0,39.587562,-107.338712,registry_stand_in
+65,507,Lake Region Healthcare Corporation-Cancer Care,0,Fergus Falls,MN,56537,Otter Tail,27111,17685,32837,65,0,52,zip,0.8,46.276711,-96.091938,registry_stand_in
 66,477,Ottumwa Regional Health Center,0,Ottumwa,IA,52501,Wapello,19179,16538,36451,57,0,2,zip,0.7,41.044369,-92.42906,registry_stand_in
 67,539,786-C,0,Carrollton,GA,30117,Carroll,13045,16502,28760,760,0,1,zip,0.7,33.581851,-85.132439,registry_stand_in
 68,540,835 - B,0,Carrollton,GA,30117,Carroll,13045,16502,28760,760,0,1,zip,0.7,33.581851,-85.132439,registry_stand_in
@@ -82,15 +82,15 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 81,613,St. Jude Children's Research Hospital,0,Memphis,TN,38015,Tipton,47167,12355,24893,331,0,1,zip,0.5,35.559364,-89.824229,registry_stand_in
 82,194,USOR - Arizona Oncology Associates - Sedona,0,Sedona,AZ,86336,Yavapai,04025,11766,91385,64,1,1,zip,2.6,34.878547,-111.858031,registry_stand_in
 83,85,Russell Medical,0,Alexander City,AL,35010,Tallapoosa,01123,11455,169981,216,0,1,zip,0.4,32.916719,-85.940589,registry_stand_in
-84,880,"Saint Bernards Medical Center,4000 Linwood Drive",0,Paragould,AR,72450,Greene,05055,11396,11396,86,0,1,zip,1.1,36.079547,-90.51644,registry_stand_in
-85,881,St. Bernard's Medical Center,0,Paragould,AR,72450,Greene,05055,11396,11396,86,0,1,zip,1.1,36.079547,-90.51644,registry_stand_in
+84,877,"Saint Bernards Medical Center,4000 Linwood Drive",0,Paragould,AR,72450,Greene,05055,11396,11396,86,0,1,zip,1.1,36.079547,-90.51644,registry_stand_in
+85,878,St. Bernard's Medical Center,0,Paragould,AR,72450,Greene,05055,11396,11396,86,0,1,zip,1.1,36.079547,-90.51644,registry_stand_in
 86,311,Barnum Medical Research,0,Natchitoches,LA,71457,Natchitoches,22069,11090,60295,79,0,1,zip,0.4,31.739201,-93.091426,registry_stand_in
-87,893,568-A,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
-88,894,568-B,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
-89,895,568-C,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
-90,896,568-D,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
-91,897,568-E,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
-92,507,Southwestern Vermont Medical Center,0,Bennington,VT,05201,Bennington,50003,9195,32989,355,0,4,zip,1.4,42.869216,-73.128532,registry_stand_in
+87,888,568-A,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
+88,889,568-B,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
+89,890,568-C,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
+90,891,568-D,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
+91,892,568-E,0,Safford,AZ,85546,Graham,04009,10427,10427,10,0,1,zip,6.7,32.699939,-109.588569,registry_stand_in
+92,516,Southwestern Vermont Medical Center,0,Bennington,VT,05201,Bennington,50003,9195,31701,355,0,4,zip,1.4,42.869216,-73.128532,registry_stand_in
 93,547,Cheshire Medical Center,0,Keene,NH,03431,Cheshire,33005,9195,28140,319,0,1,zip,0.4,42.969069,-72.301965,registry_stand_in
 94,554,Baystate Franklin Medical Center,0,Greenfield,MA,01301,Franklin,25011,9195,27563,400,0,1,zip,0.9,42.626761,-72.60153,registry_stand_in
 95,499,Rheumatology and Pulmonary Clinic,0,Beckley,WV,25801,Raleigh,54081,9177,33677,109,0,1,zip,1.2,37.840601,-81.270723,registry_stand_in
@@ -99,7 +99,7 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 98,175,The Arthritis and Diabetes Clinic,0,Monroe,LA,71203,Ouachita,22073,8741,101433,105,5,1,zip,1.5,32.581991,-92.018572,registry_stand_in
 99,176,"The Arthritis & Diabetes Clinic, Inc.",0,Monroe,LA,71203,Ouachita,22073,8741,101433,105,5,2,zip,1.5,32.581991,-92.018572,registry_stand_in
 100,313,Mercy Medical Center - North Iowa,0,Mason City,IA,50401,Cerro Gordo,19033,8425,58382,63,0,1,zip,0.1,43.154082,-93.199836,registry_stand_in
-101,798,CARTI Stuttgart,0,Stuttgart,AR,72160,Arkansas,05001,8144,15682,81,0,1,zip,2.5,34.442806,-91.529738,registry_stand_in
+101,797,CARTI Stuttgart,0,Stuttgart,AR,72160,Arkansas,05001,8144,15682,81,0,1,zip,2.5,34.442806,-91.529738,registry_stand_in
 102,827,Freeport Memorial Hospital/Leonard C Ferguson Cancer Center,0,Freeport,IL,61032,Stephenson,17177,7975,13673,210,0,4,zip,0.2,42.318865,-89.636977,registry_stand_in
 103,469,Commonwealth Cancer Center - Frankfort,0,Danville,KY,40422,Boyle,21021,7608,37446,301,0,1,zip,0.3,37.644519,-84.806497,registry_stand_in
 104,470,Commonwealth Hematology,0,Danville,KY,40422,Boyle,21021,7608,37446,301,0,1,zip,0.3,37.644519,-84.806497,registry_stand_in
@@ -118,8 +118,8 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 117,618,"Northwest Georgia Oncology Northwest Georgia Oncology Centers, PCCenters, PC,100 Market Place Blvd",0,Cartersville,GA,30121,Bartow,13015,5296,24871,1225,0,1,zip,0.3,34.211854,-84.77693,registry_stand_in
 118,183,Epic Medical Research - Monroe,0,Monroe,LA,71201,Ouachita,22073,5134,97826,100,5,1,zip,1.0,32.539557,-92.106941,registry_stand_in
 119,777,Lallie Kemp Regional Medical Center,0,Independence,LA,70443,Tangipahoa,22105,4513,16598,323,2,1,zip,1.3,30.630554,-90.542882,registry_stand_in
-120,1069,Seattle Cancer Care Alliance,0,Seattle,WA,98331,Jefferson,53031,4345,4345,4,2,1,zip,12.3,47.745828,-124.180639,registry_stand_in
-121,888,FMC Science,0,Lampasas,TX,76550,Lampasas,48281,4065,10973,196,0,3,zip,1.1,31.102626,-98.259776,registry_stand_in
+120,1066,Seattle Cancer Care Alliance,0,Seattle,WA,98331,Jefferson,53031,4345,4345,4,2,1,zip,12.3,47.745828,-124.180639,registry_stand_in
+121,883,FMC Science,0,Lampasas,TX,76550,Lampasas,48281,4065,10973,196,0,3,zip,1.1,31.102626,-98.259776,registry_stand_in
 122,631,Skin & Allergy Center,0,Spring Hill,TN,37174,Maury,47119,4049,23861,388,0,1,zip,1.1,35.719255,-86.898188,registry_stand_in
 123,997,Intend Research,0,Norman,OK,73069,Cleveland,40027,3902,6202,449,1,1,zip,0.7,35.252521,-97.464398,registry_stand_in
 124,329,Cape Cod Healthcare Center,0,Hyannis,MA,02601,Barnstable,25001,3884,55538,331,0,1,zip,0.4,41.661161,-70.293197,registry_stand_in
@@ -136,7 +136,7 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 135,727,Medical University of South Carolina,0,Charleston,SC,29435,Colleton,45029,3600,18718,227,0,1,zip,1.4,32.953108,-80.466101,registry_stand_in
 136,173,"Arizona Oncology Associates, PC - HAL",0,Prescott Valley,AZ,86314,Yavapai,04025,3592,101449,61,1,1,zip,2.8,34.598251,-112.33074,registry_stand_in
 137,174,"Arizona Oncology Associates, PC - NAHOA Prescott Valley",0,Prescott Valley,AZ,86314,Yavapai,04025,3592,101449,61,1,1,zip,2.8,34.598251,-112.33074,registry_stand_in
-138,1034,SSM Health Dean Medical Group - Baraboo,0,Baraboo,WI,53913,Sauk,55111,3572,5173,195,0,2,zip,1.3,43.492773,-89.72873,registry_stand_in
+138,1031,SSM Health Dean Medical Group - Baraboo,0,Baraboo,WI,53913,Sauk,55111,3572,5173,195,0,2,zip,1.3,43.492773,-89.72873,registry_stand_in
 139,243,Appalachian Regional Healthcare,0,Hazard,KY,41701,Perry,21193,3523,74497,88,0,1,zip,0.4,37.295501,-83.182614,registry_stand_in
 140,244,Kentucky Cancer Clinic,0,Hazard,KY,41701,Perry,21193,3523,74497,88,0,1,zip,0.4,37.295501,-83.182614,registry_stand_in
 141,728,Cancer Center of Kansas - Fort Scott,0,Fort Scott,KS,66701,Bourbon,20011,3456,18603,52,0,15,zip,2.4,37.829814,-94.758937,registry_stand_in
@@ -149,16 +149,16 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 148,73,Georgia Cancer Specialists - Macon,0,Macon,GA,31217,Jones,13169,3254,184818,199,0,1,zip,0.9,32.844147,-83.500044,registry_stand_in
 149,74,"Northside Hospital,308 Coliseum Dr.",0,Macon,GA,31217,Jones,13169,3254,184818,199,0,2,zip,0.9,32.844147,-83.500044,registry_stand_in
 150,75,"Northside Hospital, Inc. - GCS/Macon",0,Macon,GA,31217,Jones,13169,3254,184818,199,0,2,zip,0.9,32.844147,-83.500044,registry_stand_in
-151,1037,Mayo Clinic Health System-Franciscan Healthcare,0,Sparta,WI,54656,Monroe,55081,2995,4955,82,0,1,zip,1.7,43.990087,-90.80319,registry_stand_in
-152,887,Newman Regional Health,0,Emporia,KS,66801,Lyon,20111,2919,11026,73,0,2,zip,0.1,38.411743,-96.223507,registry_stand_in
-153,1064,Dartmouth Cancer Center - Nashua,0,Nashua,NH,03063,Hillsborough,33011,2780,4396,1337,13,15,zip,0.4,42.7821,-71.518366,registry_stand_in
-154,1065,Norris Cotton Cancer Center-Nashua,0,Nashua,NH,03063,Hillsborough,33011,2780,4396,1337,13,4,zip,0.4,42.7821,-71.518366,registry_stand_in
-155,1066,Saint Joseph Hospital,0,Nashua,NH,03060,Hillsborough,33011,2780,4396,1390,13,2,zip,0.4,42.741087,-71.458266,registry_stand_in
-156,1067,St. Joseph Hospital,0,Nashua,NH,03060,Hillsborough,33011,2780,4396,1390,13,1,zip,0.4,42.741087,-71.458266,registry_stand_in
+151,1034,Mayo Clinic Health System-Franciscan Healthcare,0,Sparta,WI,54656,Monroe,55081,2995,4955,82,0,1,zip,1.7,43.990087,-90.80319,registry_stand_in
+152,882,Newman Regional Health,0,Emporia,KS,66801,Lyon,20111,2919,11026,73,0,2,zip,0.1,38.411743,-96.223507,registry_stand_in
+153,1061,Dartmouth Cancer Center - Nashua,0,Nashua,NH,03063,Hillsborough,33011,2780,4396,1337,13,15,zip,0.4,42.7821,-71.518366,registry_stand_in
+154,1062,Norris Cotton Cancer Center-Nashua,0,Nashua,NH,03063,Hillsborough,33011,2780,4396,1337,13,4,zip,0.4,42.7821,-71.518366,registry_stand_in
+155,1063,Saint Joseph Hospital,0,Nashua,NH,03060,Hillsborough,33011,2780,4396,1390,13,2,zip,0.4,42.741087,-71.458266,registry_stand_in
+156,1064,St. Joseph Hospital,0,Nashua,NH,03060,Hillsborough,33011,2780,4396,1390,13,1,zip,0.4,42.741087,-71.458266,registry_stand_in
 157,331,Olympic Medical Center,0,Port Angeles,WA,98362,Clallam,53009,2721,55276,39,0,1,zip,4.6,48.030261,-123.329376,registry_stand_in
 158,442,WMCHealth Heart and Vascular Institute Kingston Division of Cardiology,0,Kingston,NY,12401,Ulster,36111,2602,40273,419,0,1,zip,0.8,41.987541,-74.010273,registry_stand_in
 159,533,Local Institution - Unk077,0,Rhinebeck,NY,12572,Dutchess,36027,2602,29757,384,7,1,zip,1.3,41.924885,-73.863664,registry_stand_in
-160,745,Baystate Gynecologic Oncology,0,Springfield,MA,01107,Hampden,25013,2590,17860,788,15,1,zip,0.5,42.12106,-72.607068,registry_stand_in
+160,744,Baystate Gynecologic Oncology,0,Springfield,MA,01107,Hampden,25013,2590,17860,788,15,1,zip,0.5,42.12106,-72.607068,registry_stand_in
 161,990,786-D,0,Douglasville,GA,30134,Douglas,13097,2542,6250,1380,0,1,zip,1.9,33.77752,-84.78139,registry_stand_in
 162,991,835-B,0,Douglasville,GA,30134,Douglas,13097,2542,6250,1380,0,1,zip,1.9,33.77752,-84.78139,registry_stand_in
 163,992,835 - D,0,Douglasville,GA,30134,Douglas,13097,2542,6250,1380,0,1,zip,1.9,33.77752,-84.78139,registry_stand_in
@@ -168,11 +168,11 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 167,335,Endo,0,State College,PA,16801,Centre,42027,2531,54537,145,0,1,zip,0.2,40.78521,-77.842297,registry_stand_in
 168,336,Geisinger Medical Group,0,State College,PA,16801,Centre,42027,2531,54537,145,0,32,zip,0.2,40.78521,-77.842297,registry_stand_in
 169,88,Piedmont Columbus Regional Research Institute,0,Columbus,GA,31901,Muscogee,13215,2195,154853,210,4,1,zip,0.5,32.46435,-84.980144,registry_stand_in
-170,783,MUSC Hollings Cancer Center,0,Charleston,SC,29485,Dorchester,45035,2146,16148,217,0,1,zip,0.5,32.933189,-80.207197,registry_stand_in
-171,784,Palmetto Clinical Research,0,Summerville,SC,29485,Dorchester,45035,2146,16148,217,0,1,zip,0.5,32.933189,-80.207197,registry_stand_in
-172,785,Summerville,1,Summerville,SC,29485,Dorchester,45035,2146,16148,217,0,2,zip,0.5,32.933189,-80.207197,registry_stand_in
+170,782,MUSC Hollings Cancer Center,0,Charleston,SC,29485,Dorchester,45035,2146,16148,217,0,1,zip,0.5,32.933189,-80.207197,registry_stand_in
+171,783,Palmetto Clinical Research,0,Summerville,SC,29485,Dorchester,45035,2146,16148,217,0,1,zip,0.5,32.933189,-80.207197,registry_stand_in
+172,784,Summerville,1,Summerville,SC,29485,Dorchester,45035,2146,16148,217,0,2,zip,0.5,32.933189,-80.207197,registry_stand_in
 173,159,Northwest Florida Clinical Research Group,0,Gulf Breeze,FL,32561,Escambia,12033,2131,114169,192,13,2,zip,1.9,30.340667,-87.116593,registry_stand_in
-174,778,Rutland Regional Medical Center,0,Rutland,VT,05701,Rutland,50021,1876,16580,117,0,1,zip,2.2,43.624582,-72.910192,registry_stand_in
+174,799,Rutland Regional Medical Center,0,Rutland,VT,05701,Rutland,50021,1876,15292,117,0,1,zip,2.2,43.624582,-72.910192,registry_stand_in
 175,215,Graves Gilbert Clinic,0,Bowling Green,KY,42101,Warren,21227,1823,78172,117,1,2,zip,1.6,37.058097,-86.463061,registry_stand_in
 176,216,Med Center Health,0,Bowling Green,KY,42101,Warren,21227,1823,78172,117,1,1,zip,1.6,37.058097,-86.463061,registry_stand_in
 177,954,Morehead City,1,Morehead City,NC,28557,Carteret,37031,1701,7696,109,3,1,zip,1.0,34.737849,-76.750308,registry_stand_in
@@ -185,9 +185,9 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 184,484,"Low Country Rheumatology, PA",0,Summerville,SC,29486,Berkeley,45015,1391,35212,226,0,1,zip,2.6,33.103211,-80.166653,registry_stand_in
 185,248,Norton Cancer Institute,0,Louisville,KY,40402,Jackson,21109,1373,72792,128,0,1,zip,1.3,37.291039,-83.976505,registry_stand_in
 186,1147,UTMB Health Angleton Danbury Campus,0,Angleton,TX,77515,Brazoria,48039,1360,3404,1122,8,2,zip,0.7,29.173439,-95.451545,registry_stand_in
-187,875,New York Oncology Hematology,0,Troy,NY,12180,Rensselaer,36083,1282,11676,400,0,1,zip,0.8,42.748588,-73.599536,registry_stand_in
-188,876,Saint Marys Hospital-Troy,0,Troy,NY,12180,Rensselaer,36083,1282,11676,400,0,2,zip,0.8,42.748588,-73.599536,registry_stand_in
-189,877,Samaritan Hospital Hildegard Medicus Cancer Center,0,Troy,NY,12180,Rensselaer,36083,1282,11676,400,0,1,zip,0.8,42.748588,-73.599536,registry_stand_in
+187,893,New York Oncology Hematology,0,Troy,NY,12180,Rensselaer,36083,1282,10388,400,0,1,zip,0.8,42.748588,-73.599536,registry_stand_in
+188,894,Saint Marys Hospital-Troy,0,Troy,NY,12180,Rensselaer,36083,1282,10388,400,0,2,zip,0.8,42.748588,-73.599536,registry_stand_in
+189,895,Samaritan Hospital Hildegard Medicus Cancer Center,0,Troy,NY,12180,Rensselaer,36083,1282,10388,400,0,1,zip,0.8,42.748588,-73.599536,registry_stand_in
 190,1315,Ridgeland,1,Ridgeland,MS,39157,Madison,28089,1216,1216,178,0,1,zip,1.1,32.425376,-90.165592,registry_stand_in
 191,65,Deaconess Clinic,0,Evansville,IN,47713,Vanderburgh,18163,1107,207332,196,1,1,zip,0.1,37.948531,-87.555472,registry_stand_in
 192,66,Deaconess Clinic Downtown,0,Evansville,IN,47713,Vanderburgh,18163,1107,207332,196,1,18,zip,0.1,37.948531,-87.555472,registry_stand_in
@@ -195,7 +195,7 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 194,823,Danville Regional Medical Center,0,Danville,VA,24541,Pittsylvania,51143,1067,13956,292,0,2,zip,0.6,36.588812,-79.515049,registry_stand_in
 195,851,Memorial Hospital Of Martinsville,0,Martinsville,VA,24115,Giles,51071,1067,12191,397,1,1,city,0.2,36.683527,-79.863647,registry_stand_in
 196,852,Sovah Health Martinsville,0,Martinsville,VA,24112,Henry,51089,1067,12191,353,0,12,zip,1.2,36.72117,-79.846927,registry_stand_in
-197,1056,The University of North Carolina,0,Chapel Hill,NC,27572,Person,37145,1067,4475,482,0,1,zip,3.2,36.255106,-78.877494,registry_stand_in
+197,1053,The University of North Carolina,0,Chapel Hill,NC,27572,Person,37145,1067,4475,482,0,1,zip,3.2,36.255106,-78.877494,registry_stand_in
 198,214,Forrest General Hospital / Cancer Center,0,Hattiesburg,MS,39404,Jones,28067,1065,78621,121,0,8,city,0.0,31.307305,-89.317434,registry_stand_in
 199,1360,Grace Research LLC,0,Bossier City,LA,71111,Bossier,22015,992,992,162,0,1,zip,1.0,32.574458,-93.696292,registry_stand_in
 200,235,926-C,0,Vero Beach,FL,32960,Indian River,12061,953,74511,294,0,1,zip,0.2,27.640722,-80.403592,registry_stand_in
@@ -206,9 +206,9 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 205,240,Florida Cancer Specialists & Research Institute - 3730 7th Terrace,0,Vero Beach,FL,32960,Indian River,12061,953,74511,294,0,1,zip,0.2,27.640722,-80.403592,registry_stand_in
 206,241,Indian River Medical Center,0,Vero Beach,FL,32960,Indian River,12061,953,74511,294,0,4,zip,0.2,27.640722,-80.403592,registry_stand_in
 207,242,"SCRI - Florida Cancer Specialists - West Palm Beach,3730 7th Terrace, Suite 101",0,Vero Beach,FL,32960,Indian River,12061,953,74511,294,0,1,zip,0.2,27.640722,-80.403592,registry_stand_in
-208,892,Cleveland Clinic Florida,0,Port Saint Lucie,FL,34987,St. Lucie,12111,953,10497,330,10,1,zip,4.5,27.290285,-80.49712,registry_stand_in
-209,781,Mercy Medical Center,0,Springfield,MA,01104,Hampden,25013,949,16219,783,15,38,zip,0.2,42.132772,-72.567411,registry_stand_in
-210,782,"Sisu BHR, LLC",0,Springfield,MA,01103,Hampden,25013,949,16219,802,15,2,zip,0.5,42.104418,-72.59008,registry_stand_in
+208,887,Cleveland Clinic Florida,0,Port Saint Lucie,FL,34987,St. Lucie,12111,953,10497,330,10,1,zip,4.5,27.290285,-80.49712,registry_stand_in
+209,780,Mercy Medical Center,0,Springfield,MA,01104,Hampden,25013,949,16219,783,15,38,zip,0.2,42.132772,-72.567411,registry_stand_in
+210,781,"Sisu BHR, LLC",0,Springfield,MA,01103,Hampden,25013,949,16219,802,15,2,zip,0.5,42.104418,-72.59008,registry_stand_in
 211,500,Baptist Health Richmond,0,Richmond,KY,40475,Madison,21151,936,33563,292,0,2,zip,0.2,37.76237,-84.304577,registry_stand_in
 212,696,Coffeyville Regional Medical Center,0,Coffeyville,KS,67337,Montgomery,20125,873,21105,78,4,22,zip,0.9,37.053665,-95.598198,registry_stand_in
 213,1209,CHI Health - St. Francis Medical Center,0,Grand Island,NE,68802,Buffalo,31019,849,2175,54,19,1,city,0.4,40.921352,-98.358559,registry_stand_in
@@ -606,11 +606,11 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 605,503,"Indiana University Health Arnett, Inc.",0,Lafayette,IN,47904,Tippecanoe,18157,0,33296,257,4,1,zip,0.5,40.438641,-86.875329,registry_stand_in
 606,504,IU Health Arnett Cancer Center,0,Lafayette,IN,47904,Tippecanoe,18157,0,33296,257,4,2,zip,0.5,40.438641,-86.875329,registry_stand_in
 607,505,IU Health Arnett Hospital,0,Lafayette,IN,47904,Tippecanoe,18157,0,33296,257,4,1,zip,0.5,40.438641,-86.875329,registry_stand_in
-608,512,Premier Medical Group of the Hudson Valley,0,Poughkeepsie,NY,12603,Dutchess,36027,0,31835,648,7,5,zip,0.5,41.675868,-73.864484,registry_stand_in
-609,513,Premier Medical Group of the Hudson Valley PC,0,Poughkeepsie,NY,12603,Dutchess,36027,0,31835,648,7,4,zip,0.5,41.675868,-73.864484,registry_stand_in
-610,514,CARTI Cancer Center Conway,0,Conway,AR,72034,Faulkner,05045,0,31805,215,1,1,zip,1.0,35.053787,-92.47871,registry_stand_in
-611,515,CARTI Conway,0,Conway,AR,72034,Faulkner,05045,0,31805,215,1,1,zip,1.0,35.053787,-92.47871,registry_stand_in
-612,516,GSK Investigational Site,1,Asheville,NC,28816,Buncombe,37021,0,31801,317,12,1,city,0.1,35.570972,-82.552725,registry_stand_in
+608,511,Premier Medical Group of the Hudson Valley,0,Poughkeepsie,NY,12603,Dutchess,36027,0,31835,648,7,5,zip,0.5,41.675868,-73.864484,registry_stand_in
+609,512,Premier Medical Group of the Hudson Valley PC,0,Poughkeepsie,NY,12603,Dutchess,36027,0,31835,648,7,4,zip,0.5,41.675868,-73.864484,registry_stand_in
+610,513,CARTI Cancer Center Conway,0,Conway,AR,72034,Faulkner,05045,0,31805,215,1,1,zip,1.0,35.053787,-92.47871,registry_stand_in
+611,514,CARTI Conway,0,Conway,AR,72034,Faulkner,05045,0,31805,215,1,1,zip,1.0,35.053787,-92.47871,registry_stand_in
+612,515,GSK Investigational Site,1,Asheville,NC,28816,Buncombe,37021,0,31801,317,12,1,city,0.1,35.570972,-82.552725,registry_stand_in
 613,517,Western Maryland Regional Medical Center,0,Cumberland,MD,21502,Allegany,24001,0,31633,108,13,7,zip,0.4,39.641477,-78.756088,registry_stand_in
 614,518,569 - B,0,Lafayette,IN,47905,Tippecanoe,18157,0,31301,249,4,1,zip,0.7,40.421886,-86.763599,registry_stand_in
 615,519,569 - C,0,Lafayette,IN,47905,Tippecanoe,18157,0,31301,249,4,1,zip,0.7,40.421886,-86.763599,registry_stand_in
@@ -802,25 +802,25 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 801,739,Texas Oncology PA,0,Longview,TX,75601,Gregg,48183,0,18363,198,9,1,zip,0.5,32.508595,-94.724189,registry_stand_in
 802,740,Texas Oncology (Tyler) - USOR,0,Longview,TX,75601,Gregg,48183,0,18363,198,9,1,zip,0.5,32.508595,-94.724189,registry_stand_in
 803,741,USO Texas Oncology,0,Longview,TX,75601,Gregg,48183,0,18363,198,9,1,zip,0.5,32.508595,-94.724189,registry_stand_in
-804,742,"Saratoga Clinical Research, LLC",0,Saratoga Springs,NY,12866,Saratoga,36091,0,18291,358,5,1,zip,0.4,43.073715,-73.740236,registry_stand_in
-805,743,Montgomery Cancer Center,0,Mount Sterling,KY,40353,Montgomery,21173,0,18057,268,11,1,zip,0.2,38.065465,-83.948822,registry_stand_in
-806,744,Augusta Health Cancer Center,0,Fishersville,VA,22939,Augusta,51015,0,17901,154,4,1,zip,0.2,38.103454,-78.971468,registry_stand_in
-807,746,Endo,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,1,zip,0.3,36.703003,-76.592105,registry_stand_in
-808,747,Endo Clinical Trial,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,2,zip,0.3,36.703003,-76.592105,registry_stand_in
-809,748,Sentara Obici Hospital,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,1,zip,0.3,36.703003,-76.592105,registry_stand_in
-810,749,Specialists for Women,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,1,zip,0.3,36.703003,-76.592105,registry_stand_in
-811,750,942-M,0,Wellington,KS,67152,Sumner,20191,0,17667,180,4,2,zip,0.5,37.263003,-97.411479,registry_stand_in
-812,751,Callahan Cancer Center,0,North Platte,NE,69101,Lincoln,31111,0,17383,17,3,1,zip,0.2,41.150189,-100.805308,registry_stand_in
-813,752,Great Plains Health Callahan Cancer Center,0,North Platte,NE,69101,Lincoln,31111,0,17383,17,3,7,zip,0.2,41.150189,-100.805308,registry_stand_in
-814,753,928-J,0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
-815,754,Clinical Trial Site,1,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
-816,755,Sarah Cannon and HCA Research Institute,0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
-817,756,"SCRI TO Nashville- Franklin Tennessee Oncology, PLLC",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
-818,757,"Tennessee Ocology, LLC",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
-819,758,Tennessee Oncology - FRANKLIN - SCRI - PPDS,0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
-820,759,"Tennessee Oncology, PLLC",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,5,zip,1.1,35.912204,-86.768843,registry_stand_in
-821,760,"Tennessee Oncology, PLLC,4488 Carothers Parkway",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,2,zip,1.1,35.912204,-86.768843,registry_stand_in
-822,761,Vanderbilt Health One Hundred Oaks,0,Nashville,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+804,742,Montgomery Cancer Center,0,Mount Sterling,KY,40353,Montgomery,21173,0,18057,268,11,1,zip,0.2,38.065465,-83.948822,registry_stand_in
+805,743,Augusta Health Cancer Center,0,Fishersville,VA,22939,Augusta,51015,0,17901,154,4,1,zip,0.2,38.103454,-78.971468,registry_stand_in
+806,745,Endo,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,1,zip,0.3,36.703003,-76.592105,registry_stand_in
+807,746,Endo Clinical Trial,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,2,zip,0.3,36.703003,-76.592105,registry_stand_in
+808,747,Sentara Obici Hospital,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,1,zip,0.3,36.703003,-76.592105,registry_stand_in
+809,748,Specialists for Women,0,Suffolk,VA,23434,Suffolk,51800,0,17830,519,1,1,zip,0.3,36.703003,-76.592105,registry_stand_in
+810,749,942-M,0,Wellington,KS,67152,Sumner,20191,0,17667,180,4,2,zip,0.5,37.263003,-97.411479,registry_stand_in
+811,750,Callahan Cancer Center,0,North Platte,NE,69101,Lincoln,31111,0,17383,17,3,1,zip,0.2,41.150189,-100.805308,registry_stand_in
+812,751,Great Plains Health Callahan Cancer Center,0,North Platte,NE,69101,Lincoln,31111,0,17383,17,3,7,zip,0.2,41.150189,-100.805308,registry_stand_in
+813,752,928-J,0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+814,753,Clinical Trial Site,1,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+815,754,Sarah Cannon and HCA Research Institute,0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+816,755,"SCRI TO Nashville- Franklin Tennessee Oncology, PLLC",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+817,756,"Tennessee Ocology, LLC",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+818,757,Tennessee Oncology - FRANKLIN - SCRI - PPDS,0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+819,758,"Tennessee Oncology, PLLC",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,5,zip,1.1,35.912204,-86.768843,registry_stand_in
+820,759,"Tennessee Oncology, PLLC,4488 Carothers Parkway",0,Franklin,TN,37067,Williamson,47187,0,17213,451,10,2,zip,1.1,35.912204,-86.768843,registry_stand_in
+821,760,Vanderbilt Health One Hundred Oaks,0,Nashville,TN,37067,Williamson,47187,0,17213,451,10,1,zip,1.1,35.912204,-86.768843,registry_stand_in
+822,761,"Saratoga Clinical Research, LLC",0,Saratoga Springs,NY,12866,Saratoga,36091,0,17003,358,5,1,zip,0.4,43.073715,-73.740236,registry_stand_in
 823,763,Central Maine Medical Center,0,Lewiston,ME,04240,Androscoggin,23001,0,16841,228,0,5,zip,1.0,44.089513,-70.172095,registry_stand_in
 824,764,"Central Maine Medical Center, Clinical Research Department",0,Lewiston,ME,04240,Androscoggin,23001,0,16841,228,0,1,zip,1.0,44.089513,-70.172095,registry_stand_in
 825,765,DCOL Center for Clinical Research,0,Longview,TX,75605,Gregg,48183,0,16645,157,9,1,zip,2.6,32.585123,-94.710328,registry_stand_in
@@ -835,21 +835,21 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 834,774,MorphoSys Research Site,1,Ogden,UT,84405,Weber,49057,0,16607,447,11,1,zip,0.6,41.149885,-111.956861,registry_stand_in
 835,775,Ogden Regional Medical Center,0,Ogden,UT,84405,Weber,49057,0,16607,447,11,1,zip,0.6,41.149885,-111.956861,registry_stand_in
 836,776,Utah Cancer Specialists,0,Ogden,UT,84405,Weber,49057,0,16607,447,11,1,zip,0.6,41.149885,-111.956861,registry_stand_in
-837,779,Georgia Cancer Specialists - Canton,0,Canton,GA,30115,Cherokee,13057,0,16411,1311,1,1,zip,1.8,34.215519,-84.402426,registry_stand_in
-838,780,"Northside Hospital, Inc. - GCS/Canton",0,Canton,GA,30115,Cherokee,13057,0,16411,1311,1,2,zip,1.8,34.215519,-84.402426,registry_stand_in
-839,786,840-29 - Ashland-Bellefonte Cancer Center,0,Ashland,KY,41101,Boyd,21019,0,16003,187,1,1,zip,0.2,38.47752,-82.650548,registry_stand_in
-840,787,Ashland Bellefonte Cancer Center,0,Ashland,KY,41101,Boyd,21019,0,16003,187,1,4,zip,0.2,38.47752,-82.650548,registry_stand_in
-841,788,Research Center,0,Ashland,KY,41101,Boyd,21019,0,16003,187,1,1,zip,0.2,38.47752,-82.650548,registry_stand_in
-842,789,Atlanta Cancer Care - Cumming,0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,4,zip,1.6,34.196222,-84.096676,registry_stand_in
-843,790,Georgia Cancer Specialists - Cumming,0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,1,zip,1.6,34.196222,-84.096676,registry_stand_in
-844,791,Northside Hospital,0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,1,zip,1.6,34.196222,-84.096676,registry_stand_in
-845,792,"Northside Hospital,1505 Northside Blvd, Suite 4600",0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,2,zip,1.6,34.196222,-84.096676,registry_stand_in
-846,793,Adventist Health St. Helena - Martin-O'Neil Cancer Center (MOCC,0,St. Helena,CA,94574,Napa,06055,0,15909,385,18,1,zip,3.7,38.542448,-122.419923,registry_stand_in
-847,794,Adventist Health St. Helena/St. Helena Hospital/Martin O'Neil Cancer Center,0,St. Helena,CA,94574,Napa,06055,0,15909,385,18,1,zip,3.7,38.542448,-122.419923,registry_stand_in
-848,795,St. Helena Hospital - Martin-O'Neil Cancer Center,0,St. Helena,CA,94574,Napa,06055,0,15909,385,18,1,zip,3.7,38.542448,-122.419923,registry_stand_in
-849,796,942-N,0,Winfield,KS,67156,Cowley,20035,0,15836,172,4,2,zip,0.3,37.248449,-96.963204,registry_stand_in
-850,797,Winfield Healthcare Center,0,Winfield,KS,67156,Cowley,20035,0,15836,172,4,1,zip,0.3,37.248449,-96.963204,registry_stand_in
-851,799,Avon,1,Avon,IN,46123,Hendricks,18063,0,15596,592,6,1,zip,0.2,39.764437,-86.403388,registry_stand_in
+837,778,Georgia Cancer Specialists - Canton,0,Canton,GA,30115,Cherokee,13057,0,16411,1311,1,1,zip,1.8,34.215519,-84.402426,registry_stand_in
+838,779,"Northside Hospital, Inc. - GCS/Canton",0,Canton,GA,30115,Cherokee,13057,0,16411,1311,1,2,zip,1.8,34.215519,-84.402426,registry_stand_in
+839,785,840-29 - Ashland-Bellefonte Cancer Center,0,Ashland,KY,41101,Boyd,21019,0,16003,187,1,1,zip,0.2,38.47752,-82.650548,registry_stand_in
+840,786,Ashland Bellefonte Cancer Center,0,Ashland,KY,41101,Boyd,21019,0,16003,187,1,4,zip,0.2,38.47752,-82.650548,registry_stand_in
+841,787,Research Center,0,Ashland,KY,41101,Boyd,21019,0,16003,187,1,1,zip,0.2,38.47752,-82.650548,registry_stand_in
+842,788,Atlanta Cancer Care - Cumming,0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,4,zip,1.6,34.196222,-84.096676,registry_stand_in
+843,789,Georgia Cancer Specialists - Cumming,0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,1,zip,1.6,34.196222,-84.096676,registry_stand_in
+844,790,Northside Hospital,0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,1,zip,1.6,34.196222,-84.096676,registry_stand_in
+845,791,"Northside Hospital,1505 Northside Blvd, Suite 4600",0,Cumming,GA,30041,Forsyth,13117,0,15946,1419,1,2,zip,1.6,34.196222,-84.096676,registry_stand_in
+846,792,Adventist Health St. Helena - Martin-O'Neil Cancer Center (MOCC,0,St. Helena,CA,94574,Napa,06055,0,15909,385,18,1,zip,3.7,38.542448,-122.419923,registry_stand_in
+847,793,Adventist Health St. Helena/St. Helena Hospital/Martin O'Neil Cancer Center,0,St. Helena,CA,94574,Napa,06055,0,15909,385,18,1,zip,3.7,38.542448,-122.419923,registry_stand_in
+848,794,St. Helena Hospital - Martin-O'Neil Cancer Center,0,St. Helena,CA,94574,Napa,06055,0,15909,385,18,1,zip,3.7,38.542448,-122.419923,registry_stand_in
+849,795,942-N,0,Winfield,KS,67156,Cowley,20035,0,15836,172,4,2,zip,0.3,37.248449,-96.963204,registry_stand_in
+850,796,Winfield Healthcare Center,0,Winfield,KS,67156,Cowley,20035,0,15836,172,4,1,zip,0.3,37.248449,-96.963204,registry_stand_in
+851,798,Avon,1,Avon,IN,46123,Hendricks,18063,0,15596,592,6,1,zip,0.2,39.764437,-86.403388,registry_stand_in
 852,800,Baystate Health Center,0,Springfield,MA,01199,Hampden,25013,0,15270,752,15,1,city,1.4,42.115454,-72.539978,registry_stand_in
 853,801,Baystate Medical Center Inc.,0,Springfield,MA,01199,Hampden,25013,0,15270,752,15,1,city,1.4,42.115454,-72.539978,registry_stand_in
 854,802,Clinical Trial Site,1,Springfield,MA,01199,Hampden,25013,0,15270,752,15,1,city,1.4,42.115454,-72.539978,registry_stand_in
@@ -914,28 +914,28 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 913,872,Indiana Blood and Marrow Transplantation,0,Indianapolis,IN,46077,Boone,18011,0,11770,590,0,1,zip,2.1,39.98189,-86.278939,registry_stand_in
 914,873,CaroMont Health - Lincoln Cancer Center,0,Lincolnton,NC,28092,Lincoln,37109,0,11683,808,5,1,zip,0.8,35.483239,-81.253054,registry_stand_in
 915,874,Levine Cancer Institute-Lincolnton,0,Lincolnton,NC,28092,Lincoln,37109,0,11683,808,5,1,zip,0.8,35.483239,-81.253054,registry_stand_in
-916,878,Cheyenne Regional Medical Center Cheyenne Regional Med Ctr (3,0,Cheyenne,WY,82001,Laramie,56021,0,11620,122,15,1,zip,0.4,41.100082,-104.924884,registry_stand_in
-917,879,MidMichigan Medical Center - Clare,0,Clare,MI,48617,Clare,26035,0,11541,172,0,1,zip,2.1,43.851308,-84.717297,registry_stand_in
-918,882,Peninsula Regional Medical Center,0,Salisbury,MD,21801,Wicomico,24045,0,11384,165,2,2,zip,1.1,38.349417,-75.67847,registry_stand_in
-919,883,Berkshire Hematology Oncology Services at Berkshire Medical Center Cancer and Infusion Center,0,Pittsfield,MA,01201,Berkshire,25003,0,11086,480,1,1,zip,0.9,42.454302,-73.282074,registry_stand_in
-920,884,Berkshire Medical Center - Cancer Center,0,Pittsfield,MA,01201,Berkshire,25003,0,11086,480,1,5,zip,0.9,42.454302,-73.282074,registry_stand_in
-921,885,Southampton Women's Health,0,Franklin,VA,23851,Southampton,51175,0,11077,512,0,1,zip,0.6,36.652023,-76.957141,registry_stand_in
-922,886,Neurology Rare Disease Center,0,Denton,TX,76208,Denton,48121,0,11047,1554,15,1,zip,2.0,33.208706,-97.05541,registry_stand_in
-923,889,North Georgia Clinical Research,0,Woodstock,GA,30189,Cherokee,13057,0,10868,1407,1,1,zip,2.2,34.124224,-84.570679,registry_stand_in
-924,890,872-B,0,Pueblo,CO,81003,Pueblo,08101,0,10777,220,18,1,zip,0.4,38.277652,-104.656426,registry_stand_in
-925,891,872-E,0,Pueblo,CO,81003,Pueblo,08101,0,10777,220,18,1,zip,0.4,38.277652,-104.656426,registry_stand_in
-926,898,Marion L Shepard Cancer Center at Vidant Beaufort Hospital,0,Washington,NC,27889,Beaufort,37013,0,10371,154,1,4,zip,2.3,35.580432,-77.025019,registry_stand_in
-927,899,Cancer Care Center of South Texas,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
-928,900,DermReseach New Braunfels,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
-929,901,Texas Oncology (E Common) - USOR,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
-930,902,Texas Oncology P A,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
-931,903,Brownsburg,1,Brownsburg,IN,46112,Hendricks,18063,0,10122,576,6,1,zip,0.6,39.86391,-86.382425,registry_stand_in
-932,904,Wake Forest University at Elkin,0,Elkin,NC,28521,Duplin,37061,0,10052,204,1,3,zip,2.4,34.817902,-77.736618,registry_stand_in
-933,905,Heartland Hematology and Oncology,0,Kearney,NE,68845,Buffalo,31019,0,9962,45,19,16,zip,1.4,40.718088,-99.170857,registry_stand_in
-934,906,Nebraska Medicine Heartland Hematology Oncology,0,Kearney,NE,68845,Buffalo,31019,0,9962,45,19,2,zip,1.4,40.718088,-99.170857,registry_stand_in
+916,875,Cheyenne Regional Medical Center Cheyenne Regional Med Ctr (3,0,Cheyenne,WY,82001,Laramie,56021,0,11620,122,15,1,zip,0.4,41.100082,-104.924884,registry_stand_in
+917,876,MidMichigan Medical Center - Clare,0,Clare,MI,48617,Clare,26035,0,11541,172,0,1,zip,2.1,43.851308,-84.717297,registry_stand_in
+918,879,Peninsula Regional Medical Center,0,Salisbury,MD,21801,Wicomico,24045,0,11384,165,2,2,zip,1.1,38.349417,-75.67847,registry_stand_in
+919,880,Southampton Women's Health,0,Franklin,VA,23851,Southampton,51175,0,11077,512,0,1,zip,0.6,36.652023,-76.957141,registry_stand_in
+920,881,Neurology Rare Disease Center,0,Denton,TX,76208,Denton,48121,0,11047,1554,15,1,zip,2.0,33.208706,-97.05541,registry_stand_in
+921,884,North Georgia Clinical Research,0,Woodstock,GA,30189,Cherokee,13057,0,10868,1407,1,1,zip,2.2,34.124224,-84.570679,registry_stand_in
+922,885,872-B,0,Pueblo,CO,81003,Pueblo,08101,0,10777,220,18,1,zip,0.4,38.277652,-104.656426,registry_stand_in
+923,886,872-E,0,Pueblo,CO,81003,Pueblo,08101,0,10777,220,18,1,zip,0.4,38.277652,-104.656426,registry_stand_in
+924,896,Marion L Shepard Cancer Center at Vidant Beaufort Hospital,0,Washington,NC,27889,Beaufort,37013,0,10371,154,1,4,zip,2.3,35.580432,-77.025019,registry_stand_in
+925,897,Cancer Care Center of South Texas,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
+926,898,DermReseach New Braunfels,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
+927,899,Texas Oncology (E Common) - USOR,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
+928,900,Texas Oncology P A,0,New Braunfels,TX,78130,Guadalupe,48187,0,10318,740,5,1,zip,0.6,29.693649,-98.068676,registry_stand_in
+929,901,Brownsburg,1,Brownsburg,IN,46112,Hendricks,18063,0,10122,576,6,1,zip,0.6,39.86391,-86.382425,registry_stand_in
+930,902,Wake Forest University at Elkin,0,Elkin,NC,28521,Duplin,37061,0,10052,204,1,3,zip,2.4,34.817902,-77.736618,registry_stand_in
+931,903,Heartland Hematology and Oncology,0,Kearney,NE,68845,Buffalo,31019,0,9962,45,19,16,zip,1.4,40.718088,-99.170857,registry_stand_in
+932,904,Nebraska Medicine Heartland Hematology Oncology,0,Kearney,NE,68845,Buffalo,31019,0,9962,45,19,2,zip,1.4,40.718088,-99.170857,registry_stand_in
+933,905,Berkshire Hematology Oncology Services at Berkshire Medical Center Cancer and Infusion Center,0,Pittsfield,MA,01201,Berkshire,25003,0,9798,480,1,1,zip,0.9,42.454302,-73.282074,registry_stand_in
+934,906,Berkshire Medical Center - Cancer Center,0,Pittsfield,MA,01201,Berkshire,25003,0,9798,480,1,5,zip,0.9,42.454302,-73.282074,registry_stand_in
 935,907,Mercy Health Mercy Campus,0,Muskegon,MI,49444,Muskegon,26121,0,9705,297,18,13,zip,0.4,43.177117,-86.199527,registry_stand_in
 936,908,The Cancer & Hematology Centers of Muskegon,0,Norton Shores,MI,49444,Muskegon,26121,0,9705,297,18,1,zip,0.4,43.177117,-86.199527,registry_stand_in
-937,909,Bon Secours Maryview Medical Center,0,Portsmouth,VA,23707,Portsmouth,51740,0,9562,512,2,11,zip,0.4,36.841794,-76.340331,registry_stand_in
+937,909,Bon Secours Maryview Medical Center,0,Portsmouth,VA,23707,Portsmouth,51740,0,9562,512,3,11,zip,0.4,36.841794,-76.340331,registry_stand_in
 938,910,Armstrong Center for Medicine and Health,0,Kittanning,PA,16201,Armstrong,42005,0,9519,707,0,2,zip,0.8,40.812096,-79.4725,registry_stand_in
 939,911,Optum Medical Care - Carmel/Brewster Campus,0,Brewster,NY,10509,Putnam,36079,0,9474,3012,0,1,zip,0.8,41.410855,-73.59434,registry_stand_in
 940,912,952,0,Bolivar,MO,65613,Polk,29167,0,9392,132,17,2,zip,1.8,37.640914,-93.387351,registry_stand_in
@@ -982,8 +982,8 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 981,961,"Guthrie Medical Group, PC",0,Sayre,PA,18840,Bradford,42015,0,7630,181,16,1,zip,0.3,41.973067,-76.530371,registry_stand_in
 982,962,Guthrie Medical Group Sayre,0,Sayre,PA,18840,Bradford,42015,0,7630,181,16,1,zip,0.3,41.973067,-76.530371,registry_stand_in
 983,963,Robert Packer Hospital Satellite,0,Sayre,PA,18840,Bradford,42015,0,7630,181,16,1,zip,0.3,41.973067,-76.530371,registry_stand_in
-984,965,Delta Hematology/Oncology Associates,0,Portsmouth,VA,23704,Portsmouth,51740,0,7362,509,2,1,zip,0.2,36.826697,-76.312032,registry_stand_in
-985,966,Delta Oncology Associates,0,Portsmouth,VA,23704,Portsmouth,51740,0,7362,509,2,1,zip,0.2,36.826697,-76.312032,registry_stand_in
+984,965,Delta Hematology/Oncology Associates,0,Portsmouth,VA,23704,Portsmouth,51740,0,7362,509,3,1,zip,0.2,36.826697,-76.312032,registry_stand_in
+985,966,Delta Oncology Associates,0,Portsmouth,VA,23704,Portsmouth,51740,0,7362,509,3,1,zip,0.2,36.826697,-76.312032,registry_stand_in
 986,967,Indiana University School of Medicine,0,Indianapolis,IN,46131,Johnson,18081,0,7321,538,6,1,zip,0.5,39.473489,-86.043592,registry_stand_in
 987,968,562-B,0,Fleming Island,FL,32003,Clay,12019,0,7303,382,3,2,zip,1.6,30.095584,-81.710162,registry_stand_in
 988,969,Cancer Specialist of North Florida,0,Fleming Island,FL,32003,Clay,12019,0,7303,382,3,1,zip,1.6,30.095584,-81.710162,registry_stand_in
@@ -1033,77 +1033,77 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 1032,1020,USOR - Rocky Mountain Cancer Centers - Pueblo,0,Pueblo,CO,81008,Pueblo,08101,0,5746,232,18,1,zip,2.1,38.405766,-104.57872,registry_stand_in
 1033,1021,Dayton Physicians LLC-Wilson,0,Sidney,OH,45365,Shelby,39149,0,5532,432,0,12,zip,0.1,40.28258,-84.155811,registry_stand_in
 1034,1022,WVUH-East City Hospital,0,Martinsburg,WV,25401,Berkeley,54003,0,5529,465,7,1,zip,0.1,39.457168,-77.972428,registry_stand_in
-1035,1023,GSK Investigational Site,1,Clifton Park,NY,12065,Saratoga,36091,0,5428,391,5,1,zip,0.6,42.852284,-73.785597,registry_stand_in
-1036,1024,"New York Oncology Hematology, P.C.",0,Clifton Park,NY,12065,Saratoga,36091,0,5428,391,5,4,zip,0.6,42.852284,-73.785597,registry_stand_in
-1037,1025,New York Oncology Hematology Pc.,0,Clifton Park,NY,12065,Saratoga,36091,0,5428,391,5,1,zip,0.6,42.852284,-73.785597,registry_stand_in
-1038,1026,Genesis Medical Center - East Campus,0,Davenport,IA,52803,Scott,19163,0,5370,189,16,11,zip,0.8,41.538947,-90.555977,registry_stand_in
-1039,1027,Iowa Cancer Specialists,0,Davenport,IA,52807,Scott,19163,0,5370,170,16,20,zip,1.3,41.610645,-90.516298,registry_stand_in
-1040,1028,MercyOne Genesis Davenport Medical Center,0,Davenport,IA,52803,Scott,19163,0,5370,189,16,11,zip,0.8,41.538947,-90.555977,registry_stand_in
-1041,1029,University of Iowa Hospitals & Clinics - Davenport Clinic,0,Davenport,IA,52807,Scott,19163,0,5370,170,16,1,zip,1.3,41.610645,-90.516298,registry_stand_in
-1042,1030,Cornell University,0,Ithaca,NY,14850,Tompkins,36109,0,5353,318,4,2,zip,0.2,42.431831,-76.500228,registry_stand_in
-1043,1031,942-H,0,McPherson,KS,67460,McPherson,20113,0,5203,81,3,2,zip,0.9,38.382552,-97.699453,registry_stand_in
-1044,1032,McPherson Center for Health,0,McPherson,KS,67460,McPherson,20113,0,5203,81,3,1,zip,0.9,38.382552,-97.699453,registry_stand_in
-1045,1033,"East Mountain Medical Associates, PC",0,Great Barrington,MA,01230,Berkshire,25003,0,5181,717,1,1,zip,1.0,42.173196,-73.32429,registry_stand_in
-1046,1035,"Gabrail Cancer Center, LLC",0,Dover,OH,44622,Tuscarawas,39157,0,5083,436,0,1,zip,1.2,40.551338,-81.483514,registry_stand_in
-1047,1036,Rochester Dermatologic Surgery,0,Victor,NY,14564,Ontario,36069,0,4963,383,5,6,zip,0.4,42.986733,-77.434439,registry_stand_in
-1048,1038,Wake Forest University School of Medicine,0,Winston-Salem,NC,27013,Rowan,37159,0,4896,733,11,1,zip,1.1,35.750492,-80.700075,registry_stand_in
-1049,1039,942-D,0,El Dorado,KS,67042,Butler,20015,0,4877,171,4,2,zip,3.5,37.857264,-96.780718,registry_stand_in
-1050,1040,Susan B. Allen Memorial Hosptial,0,El Dorado,KS,67042,Butler,20015,0,4877,171,4,1,zip,3.5,37.857264,-96.780718,registry_stand_in
-1051,1041,UPMC Hillman Cancer Center - Uniontown,0,Uniontown,PA,15401,Fayette,42051,0,4849,687,13,3,zip,0.1,39.900708,-79.747923,registry_stand_in
-1052,1042,UPMC Uniontown,0,Uniontown,PA,15401,Fayette,42051,0,4849,687,13,1,zip,0.1,39.900708,-79.747923,registry_stand_in
-1053,1043,Medication Management,0,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,1,zip,0.4,36.103667,-79.813712,registry_stand_in
-1054,1044,"Medication Management, LLC",0,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,3,zip,0.4,36.103667,-79.813712,registry_stand_in
-1055,1045,Site reference,1,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,1,zip,0.4,36.103667,-79.813712,registry_stand_in
-1056,1046,Unified Women's Clinical Research-Greensboro,0,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,3,zip,0.4,36.103667,-79.813712,registry_stand_in
-1057,1047,Cape Fear Valley Cancer Center,0,Fayetteville,NC,28303,Cumberland,37051,0,4705,406,2,1,zip,0.4,35.085631,-78.959361,registry_stand_in
-1058,1048,Cape Fear Valley Health Systems - Cancer Center,0,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
-1059,1049,Carolina Institute For Clinical Research,0,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
-1060,1050,Carolina Institute for Clinical Research - Fayetteville,0,Fayetteville,NC,28303,Cumberland,37051,0,4705,406,2,1,zip,0.4,35.085631,-78.959361,registry_stand_in
-1061,1051,"Carolinas Medical Center, Levine Cancer Institute",0,Charlotte,NC,28303,Cumberland,37051,0,4705,406,2,1,zip,0.4,35.085631,-78.959361,registry_stand_in
-1062,1052,Cinical Study Site,1,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
-1063,1053,Duplicate_Unified Women's Clinical Research-Fayetteville,0,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
-1064,1054,Crossroads Clinical Research Inc,0,Mooresville,NC,28117,Iredell,37097,0,4530,847,12,1,zip,1.7,35.574965,-80.894155,registry_stand_in
-1065,1055,Lake Norman Hematology Oncology Specialists-Mooresville,0,Mooresville,NC,28117,Iredell,37097,0,4530,847,12,2,zip,1.7,35.574965,-80.894155,registry_stand_in
-1066,1057,Coastal Family Medicine - Orange Park,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,2,zip,0.5,30.167711,-81.739816,registry_stand_in
-1067,1058,HCA Florida First Coast Neurology- Orange Park,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
-1068,1059,Park Avenue Dermatology,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,2,zip,0.5,30.167711,-81.739816,registry_stand_in
-1069,1060,Park Avenue Dermatology Administration Annex,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
-1070,1061,Park Avenue Dermatology Administrative Annex,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
-1071,1062,"Park Avenue Dermatology, PA",0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
-1072,1063,Carolina Urologic Research Center,0,Myrtle Beach,SC,29272,Richland,45079,0,4429,148,3,1,city,0.6,33.71039,-78.886024,registry_stand_in
-1073,1068,AC Clinical Research,0,Tiffin,OH,44883,Seneca,39147,0,4371,410,0,1,zip,0.3,41.124173,-83.173639,registry_stand_in
-1074,1070,Cone Heath Cancer Center at Mebane,0,Mebane,NC,27302,Alamance,37001,0,4318,656,8,17,zip,2.0,36.135763,-79.263348,registry_stand_in
-1075,1071,"Virginia Oncology Associates,744 N. Battlefield Blvd",0,Chesapeake,VA,23320,Chesapeake,51550,0,4314,493,5,2,zip,0.4,36.751734,-76.217637,registry_stand_in
-1076,1072,Virginia Oncology Associates-Chesapeake,0,Chesapeake,VA,23320,Chesapeake,51550,0,4314,493,5,1,zip,0.4,36.751734,-76.217637,registry_stand_in
-1077,1073,Endo,0,Georgetown,TX,78628,Williamson,48491,0,4296,554,7,1,zip,2.2,30.664543,-97.778616,registry_stand_in
-1078,1074,Endo Clinical Trial,0,Georgetown,TX,78628,Williamson,48491,0,4296,554,7,2,zip,2.2,30.664543,-97.778616,registry_stand_in
-1079,1075,SUN-131-03 Investigational Site,1,Cedar Park,TX,78613,Williamson,48491,0,4296,579,7,1,zip,0.2,30.507079,-97.819464,registry_stand_in
-1080,1076,926-D,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
-1081,1077,926d,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
-1082,1078,Brain Matters Research,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,2,zip,0.1,27.199535,-80.255952,registry_stand_in
-1083,1079,Clinical Trial Site,1,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
-1084,1080,Florida Cancer Specialist - East,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
-1085,1081,Florida Cancer Specialists,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,5,zip,0.1,27.199535,-80.255952,registry_stand_in
-1086,1082,Florida Cancer Specialists East,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,2,zip,0.1,27.199535,-80.255952,registry_stand_in
-1087,1083,Martin Health System Center,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
-1088,1084,Robert and Carol Weissman Cancer Center at Martin Health,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
-1089,1085,"SCRI - Florida Cancer Specialists - West Palm Beach,301 SE Ocean Blvd, Suite 102",0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
-1090,1086,Covenant Health Oncology Group - Maryville,0,Maryville,TN,37804,Blount,47009,0,4198,298,1,4,zip,0.5,35.792283,-83.893161,registry_stand_in
-1091,1087,Thompson Cancer Survival Center,0,Knoxville,TN,37804,Blount,47009,0,4198,298,1,1,zip,0.5,35.792283,-83.893161,registry_stand_in
-1092,1088,Thompson Oncology Group-Maryville,0,Maryville,TN,37804,Blount,47009,0,4198,298,1,1,zip,0.5,35.792283,-83.893161,registry_stand_in
-1093,1089,Blue Ridge Cancer Care Oncology Associates SW VA,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1094,1090,Blue Ridge Cancer Care - Wytheville,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1095,1091,BRCC/Oncology & Hematology Associates of SW Virginia,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1096,1092,Exelixis,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1097,1093,Oncology and Hematology Associates of Southwest Virginia (Blacksburg,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1098,1094,Oncology and Hematology Associates of Southwest Virginia (Blacksburg) - USOR,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1099,1095,"Oncology and Hematology Associates of Southwest Virginia, Inc",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1100,1096,"Oncology and Hematology Associates of Southwest Virginia, Inc.,-Blacksburg",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1101,1097,"Oncology and Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,4,zip,0.3,37.260526,-80.416722,registry_stand_in
-1102,1098,"Oncology and Hematology Associates of Southwest Virginia, Inc (Us Oncology Research",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1103,1099,"Oncology Associates of Southwest Virginia, Inc.",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
-1104,1100,"Oncology & Hematology Assoc. SW Virginia, Inc., DBA Blue Ridge Cancer Care",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,2,zip,0.3,37.260526,-80.416722,registry_stand_in
-1105,1101,Oncology & Hematology Associates of SW Virginia,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1035,1023,Genesis Medical Center - East Campus,0,Davenport,IA,52803,Scott,19163,0,5370,189,16,11,zip,0.8,41.538947,-90.555977,registry_stand_in
+1036,1024,Iowa Cancer Specialists,0,Davenport,IA,52807,Scott,19163,0,5370,170,16,20,zip,1.3,41.610645,-90.516298,registry_stand_in
+1037,1025,MercyOne Genesis Davenport Medical Center,0,Davenport,IA,52803,Scott,19163,0,5370,189,16,11,zip,0.8,41.538947,-90.555977,registry_stand_in
+1038,1026,University of Iowa Hospitals & Clinics - Davenport Clinic,0,Davenport,IA,52807,Scott,19163,0,5370,170,16,1,zip,1.3,41.610645,-90.516298,registry_stand_in
+1039,1027,Cornell University,0,Ithaca,NY,14850,Tompkins,36109,0,5353,318,4,2,zip,0.2,42.431831,-76.500228,registry_stand_in
+1040,1028,942-H,0,McPherson,KS,67460,McPherson,20113,0,5203,81,3,2,zip,0.9,38.382552,-97.699453,registry_stand_in
+1041,1029,McPherson Center for Health,0,McPherson,KS,67460,McPherson,20113,0,5203,81,3,1,zip,0.9,38.382552,-97.699453,registry_stand_in
+1042,1030,"East Mountain Medical Associates, PC",0,Great Barrington,MA,01230,Berkshire,25003,0,5181,717,1,1,zip,1.0,42.173196,-73.32429,registry_stand_in
+1043,1032,"Gabrail Cancer Center, LLC",0,Dover,OH,44622,Tuscarawas,39157,0,5083,436,0,1,zip,1.2,40.551338,-81.483514,registry_stand_in
+1044,1033,Rochester Dermatologic Surgery,0,Victor,NY,14564,Ontario,36069,0,4963,383,5,6,zip,0.4,42.986733,-77.434439,registry_stand_in
+1045,1035,Wake Forest University School of Medicine,0,Winston-Salem,NC,27013,Rowan,37159,0,4896,733,11,1,zip,1.1,35.750492,-80.700075,registry_stand_in
+1046,1036,942-D,0,El Dorado,KS,67042,Butler,20015,0,4877,171,4,2,zip,3.5,37.857264,-96.780718,registry_stand_in
+1047,1037,Susan B. Allen Memorial Hosptial,0,El Dorado,KS,67042,Butler,20015,0,4877,171,4,1,zip,3.5,37.857264,-96.780718,registry_stand_in
+1048,1038,UPMC Hillman Cancer Center - Uniontown,0,Uniontown,PA,15401,Fayette,42051,0,4849,687,13,3,zip,0.1,39.900708,-79.747923,registry_stand_in
+1049,1039,UPMC Uniontown,0,Uniontown,PA,15401,Fayette,42051,0,4849,687,13,1,zip,0.1,39.900708,-79.747923,registry_stand_in
+1050,1040,Medication Management,0,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,1,zip,0.4,36.103667,-79.813712,registry_stand_in
+1051,1041,"Medication Management, LLC",0,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,3,zip,0.4,36.103667,-79.813712,registry_stand_in
+1052,1042,Site reference,1,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,1,zip,0.4,36.103667,-79.813712,registry_stand_in
+1053,1043,Unified Women's Clinical Research-Greensboro,0,Greensboro,NC,27408,Guilford,37081,0,4770,572,18,3,zip,0.4,36.103667,-79.813712,registry_stand_in
+1054,1044,Cape Fear Valley Cancer Center,0,Fayetteville,NC,28303,Cumberland,37051,0,4705,406,2,1,zip,0.4,35.085631,-78.959361,registry_stand_in
+1055,1045,Cape Fear Valley Health Systems - Cancer Center,0,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
+1056,1046,Carolina Institute For Clinical Research,0,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
+1057,1047,Carolina Institute for Clinical Research - Fayetteville,0,Fayetteville,NC,28303,Cumberland,37051,0,4705,406,2,1,zip,0.4,35.085631,-78.959361,registry_stand_in
+1058,1048,"Carolinas Medical Center, Levine Cancer Institute",0,Charlotte,NC,28303,Cumberland,37051,0,4705,406,2,1,zip,0.4,35.085631,-78.959361,registry_stand_in
+1059,1049,Cinical Study Site,1,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
+1060,1050,Duplicate_Unified Women's Clinical Research-Fayetteville,0,Fayetteville,NC,28304,Cumberland,37051,0,4705,334,2,1,zip,1.1,35.025528,-78.989604,registry_stand_in
+1061,1051,Crossroads Clinical Research Inc,0,Mooresville,NC,28117,Iredell,37097,0,4530,847,12,1,zip,1.7,35.574965,-80.894155,registry_stand_in
+1062,1052,Lake Norman Hematology Oncology Specialists-Mooresville,0,Mooresville,NC,28117,Iredell,37097,0,4530,847,12,2,zip,1.7,35.574965,-80.894155,registry_stand_in
+1063,1054,Coastal Family Medicine - Orange Park,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,2,zip,0.5,30.167711,-81.739816,registry_stand_in
+1064,1055,HCA Florida First Coast Neurology- Orange Park,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
+1065,1056,Park Avenue Dermatology,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,2,zip,0.5,30.167711,-81.739816,registry_stand_in
+1066,1057,Park Avenue Dermatology Administration Annex,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
+1067,1058,Park Avenue Dermatology Administrative Annex,0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
+1068,1059,"Park Avenue Dermatology, PA",0,Orange Park,FL,32073,Clay,12019,0,4460,399,3,1,zip,0.5,30.167711,-81.739816,registry_stand_in
+1069,1060,Carolina Urologic Research Center,0,Myrtle Beach,SC,29272,Richland,45079,0,4429,148,3,1,city,0.6,33.71039,-78.886024,registry_stand_in
+1070,1065,AC Clinical Research,0,Tiffin,OH,44883,Seneca,39147,0,4371,410,0,1,zip,0.3,41.124173,-83.173639,registry_stand_in
+1071,1067,Cone Heath Cancer Center at Mebane,0,Mebane,NC,27302,Alamance,37001,0,4318,656,8,17,zip,2.0,36.135763,-79.263348,registry_stand_in
+1072,1068,"Virginia Oncology Associates,744 N. Battlefield Blvd",0,Chesapeake,VA,23320,Chesapeake,51550,0,4314,493,5,2,zip,0.4,36.751734,-76.217637,registry_stand_in
+1073,1069,Virginia Oncology Associates-Chesapeake,0,Chesapeake,VA,23320,Chesapeake,51550,0,4314,493,5,1,zip,0.4,36.751734,-76.217637,registry_stand_in
+1074,1070,Endo,0,Georgetown,TX,78628,Williamson,48491,0,4296,554,7,1,zip,2.2,30.664543,-97.778616,registry_stand_in
+1075,1071,Endo Clinical Trial,0,Georgetown,TX,78628,Williamson,48491,0,4296,554,7,2,zip,2.2,30.664543,-97.778616,registry_stand_in
+1076,1072,SUN-131-03 Investigational Site,1,Cedar Park,TX,78613,Williamson,48491,0,4296,579,7,1,zip,0.2,30.507079,-97.819464,registry_stand_in
+1077,1073,926-D,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
+1078,1074,926d,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
+1079,1075,Brain Matters Research,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,2,zip,0.1,27.199535,-80.255952,registry_stand_in
+1080,1076,Clinical Trial Site,1,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
+1081,1077,Florida Cancer Specialist - East,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
+1082,1078,Florida Cancer Specialists,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,5,zip,0.1,27.199535,-80.255952,registry_stand_in
+1083,1079,Florida Cancer Specialists East,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,2,zip,0.1,27.199535,-80.255952,registry_stand_in
+1084,1080,Martin Health System Center,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
+1085,1081,Robert and Carol Weissman Cancer Center at Martin Health,0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
+1086,1082,"SCRI - Florida Cancer Specialists - West Palm Beach,301 SE Ocean Blvd, Suite 102",0,Stuart,FL,34994,Martin,12085,0,4224,493,4,1,zip,0.1,27.199535,-80.255952,registry_stand_in
+1087,1083,Covenant Health Oncology Group - Maryville,0,Maryville,TN,37804,Blount,47009,0,4198,298,1,4,zip,0.5,35.792283,-83.893161,registry_stand_in
+1088,1084,Thompson Cancer Survival Center,0,Knoxville,TN,37804,Blount,47009,0,4198,298,1,1,zip,0.5,35.792283,-83.893161,registry_stand_in
+1089,1085,Thompson Oncology Group-Maryville,0,Maryville,TN,37804,Blount,47009,0,4198,298,1,1,zip,0.5,35.792283,-83.893161,registry_stand_in
+1090,1086,Blue Ridge Cancer Care Oncology Associates SW VA,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1091,1087,Blue Ridge Cancer Care - Wytheville,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1092,1088,BRCC/Oncology & Hematology Associates of SW Virginia,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1093,1089,Exelixis,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1094,1090,Oncology and Hematology Associates of Southwest Virginia (Blacksburg,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1095,1091,Oncology and Hematology Associates of Southwest Virginia (Blacksburg) - USOR,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1096,1092,"Oncology and Hematology Associates of Southwest Virginia, Inc",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1097,1093,"Oncology and Hematology Associates of Southwest Virginia, Inc.,-Blacksburg",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1098,1094,"Oncology and Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,4,zip,0.3,37.260526,-80.416722,registry_stand_in
+1099,1095,"Oncology and Hematology Associates of Southwest Virginia, Inc (Us Oncology Research",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1100,1096,"Oncology Associates of Southwest Virginia, Inc.",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1101,1097,"Oncology & Hematology Assoc. SW Virginia, Inc., DBA Blue Ridge Cancer Care",0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,2,zip,0.3,37.260526,-80.416722,registry_stand_in
+1102,1098,Oncology & Hematology Associates of SW Virginia,0,Blacksburg,VA,24060,Montgomery,51121,0,4168,145,16,1,zip,0.3,37.260526,-80.416722,registry_stand_in
+1103,1099,GSK Investigational Site,1,Clifton Park,NY,12065,Saratoga,36091,0,4140,391,5,1,zip,0.6,42.852284,-73.785597,registry_stand_in
+1104,1100,"New York Oncology Hematology, P.C.",0,Clifton Park,NY,12065,Saratoga,36091,0,4140,391,5,4,zip,0.6,42.852284,-73.785597,registry_stand_in
+1105,1101,New York Oncology Hematology Pc.,0,Clifton Park,NY,12065,Saratoga,36091,0,4140,391,5,1,zip,0.6,42.852284,-73.785597,registry_stand_in
 1106,1102,Waldo Count General Hospital - Belfast,0,Belfast,ME,04915,Waldo,23027,0,4058,117,4,1,zip,1.3,44.463502,-69.037571,registry_stand_in
 1107,1103,014-029,0,Goshen,IN,46526,Elkhart,18039,0,4045,327,10,1,zip,1.0,41.558788,-85.87665,registry_stand_in
 1108,1104,122,0,Goshen,IN,46526,Elkhart,18039,0,4045,327,10,1,zip,1.0,41.558788,-85.87665,registry_stand_in
@@ -1511,8 +1511,8 @@ rank_zero,rank_lt20,name,name_is_placeholder,city,state,zip,county_name,county_f
 1510,1510,Northern Indiana Cancer Research Consortium,0,Westville,IN,46391,LaPorte,18091,0,0,1285,1,1,zip,0.8,41.554106,-86.918985,registry_stand_in
 1511,1511,McFarland Clinic PC-Boone,0,Boone,IA,50036,Boone,19015,0,0,205,4,16,zip,2.9,42.085446,-93.849635,registry_stand_in
 1512,1512,McFarland Clinic PC-Jefferson,0,Jefferson,IA,50129,Greene,19073,0,0,107,4,16,zip,0.1,42.013286,-94.376733,registry_stand_in
-1513,1513,Adult and Pediatric Urology P.C. Satellite,0,Council Bluffs,IA,51501,Pottawattamie,19155,0,0,326,11,1,zip,0.4,41.227277,-95.878439,registry_stand_in
-1514,1514,Jennie Edmundson Memorial Hospital,0,Council Bluffs,IA,51502,Pottawattamie,19155,0,0,319,11,3,city,0.2,41.235987,-95.853163,registry_stand_in
+1513,1513,Adult and Pediatric Urology P.C. Satellite,0,Council Bluffs,IA,51501,Pottawattamie,19155,0,0,326,10,1,zip,0.4,41.227277,-95.878439,registry_stand_in
+1514,1514,Jennie Edmundson Memorial Hospital,0,Council Bluffs,IA,51502,Pottawattamie,19155,0,0,319,10,3,city,0.2,41.235987,-95.853163,registry_stand_in
 1515,1515,The University Of Kansas Cancer Center,0,Kansas City,KS,66016,Atchison,20005,0,0,293,0,1,zip,0.8,39.467255,-95.222694,registry_stand_in
 1516,1516,University of Kansas Hospital,0,Kansas City,KS,66016,Atchison,20005,0,0,293,0,1,zip,0.8,39.467255,-95.222694,registry_stand_in
 1517,1517,Saint Elizabeth Fort Thomas,0,Fort Thomas,KY,41075,Campbell,21037,0,0,724,0,1,zip,0.3,39.082436,-84.457113,registry_stand_in
