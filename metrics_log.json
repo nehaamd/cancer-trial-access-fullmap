@@ -1,13 +1,13 @@
 {
   "age_filter": "trials with maximum age < 55 excluded (n=254)",
-  "site_rows": 53123,
+  "site_rows": 53101,
   "site_assignment": {
-    "zip": 51054,
-    "zip3": 1932,
+    "zip": 51031,
+    "zip3": 1933,
     "city_gazetteer": 119,
     "unassigned": 18
   },
-  "distinct_trials": 3919,
+  "distinct_trials": 3915,
   "counties": 3143,
   "counties_with_any_trial": 842,
   "broad_menu_counties": 83,

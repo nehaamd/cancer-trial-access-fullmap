@@ -1,0 +1,986 @@
+{
+  "summary": {
+    "previous_pull": "2026-09-09T16:45:31Z",
+    "current_pull": "2026-09-10T20:23:43Z",
+    "previous_registry_data": null,
+    "current_registry_data": "2026-09-10T09:00:04",
+    "trials_previous": 3919,
+    "trials_current": 3915,
+    "trials_new": 3,
+    "trials_no_longer_listed": 7,
+    "field_changes": 2,
+    "recruiting_sites_previous": 53123,
+    "recruiting_sites_current": 53101,
+    "sites_new_at_existing_trials": 46,
+    "sites_removed_at_existing_trials": 57,
+    "sites_of_new_trials": 13,
+    "sites_of_removed_trials": 24,
+    "counties_with_changed_trial_count": 52,
+    "counties_crossing_a_menu_threshold": 0
+  },
+  "new_trials": [
+    {
+      "nct_id": "NCT06102902",
+      "title": "Testing the Addition of Anti-cancer Drug, ZEN003694, to the Usual Chemotherapy Treatment, Cetuximab Plus Encorafenib, for Colorectal Cancer",
+      "phase": "PHASE1",
+      "sponsor": "National Cancer Institute (NCI)",
+      "n_us_sites": 10
+    },
+    {
+      "nct_id": "NCT07730021",
+      "title": "A Study of ASP388B Given by Itself and With Standard Therapies in Participants With Solid Tumors",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "Astellas Pharma Global Development, Inc.",
+      "n_us_sites": 2
+    },
+    {
+      "nct_id": "NCT07812805",
+      "title": "SKL35501 With SKL35502 Imaging in Adults With NTSR1 Positive Advanced Solid Tumors",
+      "phase": "PHASE1",
+      "sponsor": "SK Life Science, Inc.",
+      "n_us_sites": 1
+    }
+  ],
+  "no_longer_listed": [
+    {
+      "nct_id": "NCT04683653",
+      "title": "Study of Pelvic Hypofractionated Radiotherapy in Endometrial Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT05557045",
+      "title": "A Study of JZP815 Oral Capsules in Adult Participants With Advanced or Metastatic Solid Tumors Harboring Mitogen Activated Protein Kinase (MAPK) Pathway Alterations to Investigate the Safety, Dosing, and Antitumor Activity of JZP815",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06014827",
+      "title": "Biologically Guided Radiation Therapy (BgRT) and Stereotactic Body Radiation Therapy (SBRT) to Tyrosine Kinase Inhibitor in Oligoprogressive Oncogenic Positive Non-Small Cell Lung Carcinoma",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06295588",
+      "title": "Clinical Trial of the Seaweed Supplement Fucoidan in Survivors of Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06549478",
+      "title": "Biology-Guided Radiation Therapy for the Treatment of Patients With Bone Metastases",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06572605",
+      "title": "External Beam Radiation Therapy in Combination With Talquetamab for the Treatment of Multiple Myeloma Patients With Extramedullary Disease",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06680661",
+      "title": "ABBA CORD: dCBT w/ Abatacept for aGVHD Prophylaxis",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    }
+  ],
+  "field_changes": [
+    {
+      "nct_id": "NCT05052957",
+      "field": "maximum age",
+      "from": "75 Years",
+      "to": ""
+    },
+    {
+      "nct_id": "NCT07780838",
+      "field": "title",
+      "from": "Cyclical Gemcitabine, Cisplatin, and Durvalumab Alternating With Pemigatinib for the Treatment of Unresectable, Locally Advanced or Metastatic Biliary Tract Cancers With FGFR2 Alterations",
+      "to": "Alternating Chemo-immunotherapy and FGFR Inhibitor for FGFR-positive Biliary or Cholangiocarcinoma"
+    }
+  ],
+  "sites_new_at_existing_trials": [
+    {
+      "nct_id": "NCT03424005",
+      "facility": "city of hope - duarte",
+      "city": "duarte",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT03424005",
+      "facility": "city of hope - orange county lennar foundation cancer center",
+      "city": "irvine",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT03424005",
+      "facility": "city of hope\u00ae cancer center chicago",
+      "city": "zion",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT03424005",
+      "facility": "ucla health 200 medical plaza",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT04031677",
+      "facility": "drexel town square health center",
+      "city": "oak creek",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT04031677",
+      "facility": "froedtert and mcw moorland reserve health center",
+      "city": "new berlin",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT04031677",
+      "facility": "froedtert menomonee falls hospital",
+      "city": "menomonee falls",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT04031677",
+      "facility": "froedtert west bend hospital/kraemer cancer center",
+      "city": "west bend",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT04031677",
+      "facility": "montefiore medical center - moses campus",
+      "city": "the bronx",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04031677",
+      "facility": "montefiore medical center-einstein campus",
+      "city": "the bronx",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "glens falls hospital",
+      "city": "glens falls",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "parkland memorial hospital",
+      "city": "dallas",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "ut southwestern clinical center at richardson/plano",
+      "city": "richardson",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "ut southwestern simmons cancer center - redbird",
+      "city": "dallas",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "ut southwestern/simmons cancer center-dallas",
+      "city": "dallas",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "ut southwestern/simmons cancer center-fort worth",
+      "city": "fort worth",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "naval medical center - portsmouth",
+      "city": "portsmouth",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT05764720",
+      "facility": "city of hope",
+      "city": "duarte",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT05997615",
+      "facility": "uci health chao family comprehensive cancer center",
+      "city": "orange",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06150157",
+      "facility": "prisma health",
+      "city": "greenville",
+      "state": "SC"
+    },
+    {
+      "nct_id": "NCT06150157",
+      "facility": "swedish cancer institute",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06293898",
+      "facility": "city of hope - chicago",
+      "city": "zion",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06293898",
+      "facility": "scripps health",
+      "city": "san diego",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06293898",
+      "facility": "start - dfw",
+      "city": "fort worth",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06293898",
+      "facility": "start - los angeles",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06293898",
+      "facility": "start - new jersey",
+      "city": "east brunswick",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT06293898",
+      "facility": "start - san antonio",
+      "city": "san antonio",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06914128",
+      "facility": "dana-farber cancer institute - oncology department",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT06914128",
+      "facility": "froedtert hospital - clinical cancer center",
+      "city": "milwaukee",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT06914128",
+      "facility": "massachusetts general hospital - neurology",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT06917911",
+      "facility": "drexel town square health center",
+      "city": "oak creek",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT06917911",
+      "facility": "froedtert and mcw moorland reserve health center",
+      "city": "new berlin",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT06917911",
+      "facility": "froedtert menomonee falls hospital",
+      "city": "menomonee falls",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT06917911",
+      "facility": "froedtert west bend hospital/kraemer cancer center",
+      "city": "west bend",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT06917911",
+      "facility": "medical college of wisconsin",
+      "city": "milwaukee",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT07391774",
+      "facility": "laura and isaac perlmutter cancer center at nyu langone",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07391774",
+      "facility": "memorial medical center",
+      "city": "modesto",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07391774",
+      "facility": "nyu langone hospital - long island",
+      "city": "mineola",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07446322",
+      "facility": "beacon cancer center",
+      "city": "post falls",
+      "state": "ID"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "site 102 - start san antonio",
+      "city": "san antonio",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "site 104 - start new jersey",
+      "city": "east brunswick",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "site 105 - start los angeles",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "site 107 - start new york - long island",
+      "city": "lake success",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "dana farber cancer institute",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "rutgers cancer university",
+      "city": "new brunswick",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "yale university",
+      "city": "new haven",
+      "state": "CT"
+    }
+  ],
+  "sites_removed_at_existing_trials": [
+    {
+      "nct_id": "NCT03104491",
+      "facility": "the university of kansas cancer center",
+      "city": "westwood",
+      "state": "KS"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03866382",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03866382",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04031677",
+      "facility": "stony brook university medical center",
+      "city": "stony brook",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04840602",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04840602",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05256225",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "children's hospital of the king's daughters",
+      "city": "norfolk",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05987241",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06029270",
+      "facility": "methodist jennie edmundson hospital",
+      "city": "council bluffs",
+      "state": "IA"
+    },
+    {
+      "nct_id": "NCT06029270",
+      "facility": "nebraska cancer specialists/oncology hematology west pc - mej",
+      "city": "council bluffs",
+      "state": "IA"
+    },
+    {
+      "nct_id": "NCT06029270",
+      "facility": "nebraska methodist hospital",
+      "city": "omaha",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence hood river memorial hospital",
+      "city": "hood river",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06203600",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06203600",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06287775",
+      "facility": "memorial sloan kettering basking ridge",
+      "city": "basking ridge",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT06287775",
+      "facility": "memorial sloan kettering bergen",
+      "city": "montvale",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT06287775",
+      "facility": "memorial sloan kettering commack",
+      "city": "commack",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06287775",
+      "facility": "memorial sloan kettering monmouth",
+      "city": "middletown",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT06287775",
+      "facility": "memorial sloan kettering nassau",
+      "city": "uniondale",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06287775",
+      "facility": "memorial sloan kettering westchester",
+      "city": "harrison",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence hood river memorial hospital",
+      "city": "hood river",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07061951",
+      "facility": "unc lineberger comprehensive cancer center",
+      "city": "chapel hill",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "nebraska cancer specialists/oncology hematology west pc - mecc",
+      "city": "omaha",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "nebraska methodist hospital",
+      "city": "omaha",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "astera cancer care",
+      "city": "east brunswick",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "south texas accelerated research therapeutics (start)",
+      "city": "san antonio",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "start los angeles",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07462377",
+      "facility": "start new york long island",
+      "city": "lake success",
+      "state": "NY"
+    }
+  ],
+  "county_changes": [
+    {
+      "county": "Yamhill, Oregon",
+      "from": 56,
+      "to": 40
+    },
+    {
+      "county": "Clackamas, Oregon",
+      "from": 64,
+      "to": 48
+    },
+    {
+      "county": "Orange, California",
+      "from": 410,
+      "to": 413
+    },
+    {
+      "county": "Suffolk, Massachusetts",
+      "from": 623,
+      "to": 625
+    },
+    {
+      "county": "Washington, Wisconsin",
+      "from": 49,
+      "to": 51
+    },
+    {
+      "county": "Tarrant, Texas",
+      "from": 115,
+      "to": 117
+    },
+    {
+      "county": "Lake, Illinois",
+      "from": 101,
+      "to": 103
+    },
+    {
+      "county": "Waukesha, Wisconsin",
+      "from": 69,
+      "to": 71
+    },
+    {
+      "county": "Douglas, Nebraska",
+      "from": 212,
+      "to": 210
+    },
+    {
+      "county": "Milwaukee, Wisconsin",
+      "from": 208,
+      "to": 210
+    },
+    {
+      "county": "Cook, Illinois",
+      "from": 527,
+      "to": 525
+    },
+    {
+      "county": "Hood River, Oregon",
+      "from": 17,
+      "to": 15
+    },
+    {
+      "county": "Suffolk, New York",
+      "from": 298,
+      "to": 296
+    },
+    {
+      "county": "Los Angeles, California",
+      "from": 924,
+      "to": 923
+    },
+    {
+      "county": "Harris, Texas",
+      "from": 1021,
+      "to": 1020
+    },
+    {
+      "county": "New York, New York",
+      "from": 926,
+      "to": 925
+    },
+    {
+      "county": "Philadelphia, Pennsylvania",
+      "from": 400,
+      "to": 399
+    },
+    {
+      "county": "Franklin, Ohio",
+      "from": 390,
+      "to": 391
+    },
+    {
+      "county": "Nassau, New York",
+      "from": 386,
+      "to": 387
+    },
+    {
+      "county": "Davidson, Tennessee",
+      "from": 542,
+      "to": 541
+    },
+    {
+      "county": "Westchester, New York",
+      "from": 243,
+      "to": 242
+    },
+    {
+      "county": "San Diego, California",
+      "from": 244,
+      "to": 245
+    },
+    {
+      "county": "Bexar, Texas",
+      "from": 307,
+      "to": 308
+    },
+    {
+      "county": "Cuyahoga, Ohio",
+      "from": 313,
+      "to": 312
+    },
+    {
+      "county": "Salt Lake, Utah",
+      "from": 318,
+      "to": 317
+    },
+    {
+      "county": "New Haven, Connecticut",
+      "from": 312,
+      "to": 313
+    },
+    {
+      "county": "Bergen, New Jersey",
+      "from": 364,
+      "to": 363
+    },
+    {
+      "county": "King, Washington",
+      "from": 385,
+      "to": 386
+    },
+    {
+      "county": "Dallas, Texas",
+      "from": 438,
+      "to": 439
+    },
+    {
+      "county": "Orange, Florida",
+      "from": 162,
+      "to": 161
+    },
+    {
+      "county": "Orange, North Carolina",
+      "from": 173,
+      "to": 172
+    },
+    {
+      "county": "Somerset, New Jersey",
+      "from": 223,
+      "to": 222
+    },
+    {
+      "county": "Denver, Colorado",
+      "from": 208,
+      "to": 207
+    },
+    {
+      "county": "Adams, Colorado",
+      "from": 198,
+      "to": 199
+    },
+    {
+      "county": "Middlesex, New Jersey",
+      "from": 196,
+      "to": 197
+    },
+    {
+      "county": "Monmouth, New Jersey",
+      "from": 230,
+      "to": 229
+    },
+    {
+      "county": "Charlottesville, Virginia",
+      "from": 102,
+      "to": 103
+    },
+    {
+      "county": "Monroe, New York",
+      "from": 117,
+      "to": 116
+    },
+    {
+      "county": "Bronx, New York",
+      "from": 147,
+      "to": 148
+    },
+    {
+      "county": "Richmond, Virginia",
+      "from": 149,
+      "to": 150
+    },
+    {
+      "county": "Johnson, Kansas",
+      "from": 157,
+      "to": 156
+    },
+    {
+      "county": "Travis, Texas",
+      "from": 156,
+      "to": 155
+    },
+    {
+      "county": "Greenville, South Carolina",
+      "from": 78,
+      "to": 79
+    },
+    {
+      "county": "Sarasota, Florida",
+      "from": 96,
+      "to": 95
+    },
+    {
+      "county": "Kootenai, Idaho",
+      "from": 66,
+      "to": 67
+    },
+    {
+      "county": "Norfolk, Virginia",
+      "from": 68,
+      "to": 67
+    },
+    {
+      "county": "Montgomery, Texas",
+      "from": 70,
+      "to": 69
+    },
+    {
+      "county": "Anne Arundel, Maryland",
+      "from": 39,
+      "to": 40
+    },
+    {
+      "county": "Stanislaus, California",
+      "from": 36,
+      "to": 37
+    },
+    {
+      "county": "Warren, New York",
+      "from": 13,
+      "to": 14
+    },
+    {
+      "county": "Pottawattamie, Iowa",
+      "from": 11,
+      "to": 10
+    },
+    {
+      "county": "Portsmouth, Virginia",
+      "from": 2,
+      "to": 3
+    }
+  ]
+}

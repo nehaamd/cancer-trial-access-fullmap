@@ -1,0 +1,17 @@
+{
+  "labels": {
+    "early": "Early-stage / localized (incl. neoadjuvant, adjuvant)",
+    "advanced": "Advanced, metastatic, or relapsed / refractory",
+    "multiple": "Multiple settings stated",
+    "newdx": "Newly diagnosed, extent not stated",
+    "not_stated": "Setting not stated"
+  },
+  "counts_55plus": {
+    "Advanced, metastatic, or relapsed / refractory": 2187,
+    "Setting not stated": 989,
+    "Early-stage / localized (incl. neoadjuvant, adjuvant)": 346,
+    "Multiple settings stated": 239,
+    "Newly diagnosed, extent not stated": 158
+  },
+  "pct_not_stated_55plus": 25.2
+}
