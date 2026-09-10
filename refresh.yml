@@ -1,0 +1,37 @@
+# Scheduled registry refresh (weekly) — rebuilds the trial-dependent stages and publishes docs/.
+# STATUS: written for GitHub Actions but NOT executed from the build environment; run it once manually (Actions → Refresh → Run workflow)
+# and read the log before trusting the schedule. Reference data (Census roads/tracts, State Cancer Profiles, ACS) are rebuilt only
+# when their scripts are run by hand — they change yearly, not weekly.
+name: Refresh registry data
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 11 * * 1"   # Mondays 11:00 UTC
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: Restore road graph (rebuilt if the cache is empty; ~5 min, ~300 MB download)
+        uses: actions/cache@v4
+        with: { path: data/roads, key: roads-tiger2025-v1 }
+      - run: test -f data/roads/graph_us.npz || python build_roads_us.py
+      - name: Snapshot the previous pull
+        run: |
+          d=$(python -c "import json;print(json.load(open('data/raw/fetch_log.json'))['timestamp_utc'][:10])")
+          mkdir -p data/snapshots/$d && cp data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv out_adult55/county_metrics.csv data/snapshots/$d/ || true
+      - name: Refresh chain
+        run: sh run_refresh.sh
+      - run: python diff_snapshots.py
+      - name: Commit and publish
+        run: |
+          git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
+          git add -A docs data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv data/snapshots out_adult55/*.csv out_adult55/*.json out_adult55/*.md VALIDATION_v3.md
+          git commit -m "Registry refresh $(date -u +%F)" || echo "nothing to commit"
+          git push
