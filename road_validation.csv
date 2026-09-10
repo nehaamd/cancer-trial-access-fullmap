@@ -1,0 +1,39 @@
+from,to,published_road_mi,network_mi,pct_diff
+Los Angeles,San Francisco,382,381,-0.2
+Los Angeles,Las Vegas,270,267,-1.2
+Los Angeles,Phoenix,373,374,0.3
+Phoenix,Albuquerque,420,439,4.6
+Denver,Salt Lake City,520,493,-5.2
+Denver,Kansas City MO,605,608,0.4
+Seattle,Portland,174,179,2.7
+Seattle,Spokane,280,291,4.0
+Portland,Boise,430,421,-2.1
+Salt Lake City,Boise,340,350,3.0
+Chicago,Minneapolis,408,404,-0.9
+Chicago,St. Louis,297,292,-1.6
+Chicago,Detroit,283,265,-6.2
+Minneapolis,Fargo,234,233,-0.2
+Billings,Bismarck,414,419,1.2
+Atlanta,Nashville,250,242,-3.3
+Atlanta,Charlotte,245,239,-2.5
+Atlanta,Jacksonville,346,318,-8.1
+New York,Boston,215,203,-5.5
+New York,Washington DC,226,222,-2.0
+Washington DC,Pittsburgh,245,223,-8.9
+Miami,Orlando,236,225,-4.6
+Miami,Tampa,280,244,-12.8
+Memphis,Nashville,212,201,-5.1
+New Orleans,Houston,350,350,0.1
+Oklahoma City,Kansas City MO,350,348,-0.5
+Omaha,Denver,540,526,-2.6
+Las Vegas,Salt Lake City,420,414,-1.5
+Rapid City,Sioux Falls,348,348,0.1
+Cheyenne,Casper,178,184,3.3
+Little Rock,Memphis,137,147,7.3
+Reno,Sacramento,132,138,4.2
+Bangor,Boston,236,240,1.7
+Missoula,Billings,344,338,-1.7
+Charleston WV,Pittsburgh,227,216,-4.8
+Anchorage,Fairbanks,358,358,-0.0
+El Paso,San Antonio,552,543,-1.6
+Amarillo,Oklahoma City,260,256,-1.5

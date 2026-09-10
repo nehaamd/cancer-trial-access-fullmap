@@ -1,0 +1,265 @@
+{
+  "fragments_bridged": {
+    "n": 31,
+    "detail(component,nodes,gap_m)": [
+      [
+        86,
+        92,
+        2034
+      ],
+      [
+        120,
+        77,
+        770
+      ],
+      [
+        150,
+        81,
+        1348
+      ],
+      [
+        170,
+        154,
+        589
+      ],
+      [
+        234,
+        95,
+        1021
+      ],
+      [
+        237,
+        61,
+        4788
+      ],
+      [
+        254,
+        91,
+        956
+      ],
+      [
+        269,
+        68,
+        2756
+      ],
+      [
+        298,
+        117,
+        2265
+      ],
+      [
+        316,
+        331,
+        630
+      ],
+      [
+        357,
+        116,
+        1801
+      ],
+      [
+        448,
+        54,
+        3013
+      ],
+      [
+        495,
+        80,
+        3426
+      ],
+      [
+        521,
+        51,
+        1873
+      ],
+      [
+        2004,
+        64,
+        4850
+      ],
+      [
+        2995,
+        59,
+        738
+      ],
+      [
+        3054,
+        58,
+        2260
+      ],
+      [
+        3085,
+        65,
+        957
+      ],
+      [
+        3111,
+        64,
+        3955
+      ],
+      [
+        3262,
+        66,
+        630
+      ],
+      [
+        3359,
+        55,
+        1918
+      ],
+      [
+        3608,
+        72,
+        886
+      ],
+      [
+        3683,
+        60,
+        4150
+      ],
+      [
+        3723,
+        53,
+        1024
+      ],
+      [
+        3938,
+        54,
+        767
+      ],
+      [
+        3988,
+        54,
+        914
+      ],
+      [
+        4375,
+        66,
+        511
+      ],
+      [
+        4619,
+        59,
+        534
+      ],
+      [
+        4678,
+        61,
+        2487
+      ],
+      [
+        4855,
+        52,
+        510
+      ],
+      [
+        4879,
+        77,
+        952
+      ]
+    ],
+    "fragments_ge50_not_bridged": 9
+  },
+  "attachable_nodes_share": 0.9835,
+  "counties_off_road_network_gt30mi": [
+    "Aleutians East (02)",
+    "Aleutians West (02)",
+    "Bethel (02)",
+    "Bristol Bay (02)",
+    "Dillingham (02)",
+    "Hoonah-Angoon (02)",
+    "Juneau (02)",
+    "Kodiak Island (02)",
+    "Kusilvak (02)",
+    "Lake and Peninsula (02)",
+    "Nome (02)",
+    "North Slope (02)",
+    "Northwest Arctic (02)",
+    "Petersburg (02)",
+    "Sitka (02)",
+    "Wrangell (02)",
+    "Yakutat (02)",
+    "Yukon-Koyukuk (02)"
+  ],
+  "county_access_mi": {
+    "median": 0.98,
+    "p90": 3.81,
+    "max": 621371.2
+  },
+  "tracts_off_road_network_gt30mi": {
+    "n": 68,
+    "pop55": 47971,
+    "of_which_alaska": 46
+  },
+  "tract_access_mi": {
+    "median": 0.79,
+    "p90": 2.9,
+    "max": Infinity
+  },
+  "counties_no_road_route": {
+    "n": 35,
+    "broad": 35,
+    "limited": 26,
+    "nci": 34,
+    "list": [
+      "Aleutians East (02)",
+      "Aleutians West (02)",
+      "Anchorage (02)",
+      "Bethel (02)",
+      "Bristol Bay (02)",
+      "Chugach (02)",
+      "Copper River (02)",
+      "Denali (02)",
+      "Dillingham (02)",
+      "Fairbanks North Star (02)",
+      "Haines (02)",
+      "Hoonah-Angoon (02)",
+      "Juneau (02)",
+      "Kenai Peninsula (02)",
+      "Ketchikan Gateway (02)",
+      "Kodiak Island (02)",
+      "Kusilvak (02)",
+      "Lake and Peninsula (02)",
+      "Matanuska-Susitna (02)",
+      "Nome (02)",
+      "North Slope (02)",
+      "Northwest Arctic (02)",
+      "Petersburg (02)",
+      "Prince of Wales-Hyder (02)",
+      "Sitka (02)",
+      "Skagway (02)",
+      "Southeast Fairbanks (02)",
+      "Wrangell (02)",
+      "Yakutat (02)",
+      "Yukon-Koyukuk (02)",
+      "Hawaii (15)",
+      "Honolulu (15)",
+      "Kalawao (15)",
+      "Kauai (15)",
+      "Maui (15)"
+    ]
+  },
+  "tracts": 84396,
+  "tract_no_road_route": {
+    "broad": 656,
+    "limited": 201,
+    "nci": 328,
+    "pop55_no_route_to_broad": 667012
+  },
+  "tract_pairs_within_120rdmi": 1452012,
+  "county_pairs_within_120rdmi": 35223,
+  "router_validation": {
+    "pairs": 38,
+    "mean_abs_pct_diff": 3.1,
+    "max_abs_pct_diff": 12.8,
+    "unroutable_pairs": 0
+  },
+  "road_over_straightline_ratio_broad": {
+    "median": 1.198,
+    "p10": 1.095,
+    "p90": 1.38,
+    "counties_where_x1_2_underestimated": 1481,
+    "counties_compared": 3025
+  },
+  "seconds": 65
+}
