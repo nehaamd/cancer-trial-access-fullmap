@@ -1,0 +1,26 @@
+step,name,placeholder,city,state,county,pop55_newly_covered,cumulative_pop55_covered,pct_of_uncovered_pop55,lat,lon
+1,Jackson-Madison County General Hospital,0,Jackson,TN,"Madison, Tennessee",100161,100161,2.2,35.5882,-88.8534
+2,Central Recruiting Site,1,Sheffield,AL,"Colbert, Alabama",75907,176068,3.9,34.7584,-87.6965
+3,Idaho Falls,1,Idaho Falls,ID,"Bonneville, Idaho",72928,248996,5.5,43.4268,-112.0155
+4,Arrivent Investigative Site,1,Yuma,AZ,"Yuma, Arizona",72063,321059,7.1,32.7046,-114.6563
+5,Mercy Regional Cancer Center,0,Redding,CA,"Shasta, California",63834,384893,8.6,40.5772,-122.4547
+6,Texas Institute for Kidney and Endocrine Disorders,0,Lufkin,TX,"Angelina, Texas",53706,438599,9.8,31.327,-94.8396
+7,June E. Nylan Cancer Center,0,Sioux City,IA,"Woodbury, Iowa",53585,492184,11.0,42.4937,-96.3942
+8,Island Urology-Hilo,0,Hilo,HI,"Hawaii, Hawaii",44819,537003,12.0,19.6598,-155.2325
+9,IU Health Bloomington,0,Bloomington,IN,"Monroe, Indiana",40431,577434,12.9,39.0852,-86.6123
+10,Champlain Valley Physicians Hospital Medical Center,0,Plattsburgh,NY,"Clinton, New York",38337,615771,13.7,44.7091,-73.4735
+11,Cancer Center of Middle Georgia,0,Dublin,GA,"Laurens, Georgia",32771,648542,14.4,32.4895,-82.935
+12,Andalusia,1,Andalusia,AL,"Covington, Alabama",28598,677140,15.1,31.1771,-86.5515
+13,Pinnacle Research Group,0,Anniston,AL,"Calhoun, Alabama",27237,704377,15.7,33.6841,-85.7052
+14,Georgia Cancer Specialists - Blairsville,0,Blairsville,GA,"Union, Georgia",24296,728673,16.2,34.8568,-83.968
+15,Unity Health- Searcy Medical Center,0,Searcy,AR,"White, Arkansas",22456,751129,16.7,35.2267,-91.7368
+16,Prairie Lakes Cancer Center,0,Watertown,SD,"Codington, South Dakota",22269,773398,17.2,44.9367,-97.0928
+17,Faith Regional Health Services Carson Cancer Center,0,Norfolk,NE,"Madison, Nebraska",21060,794458,17.7,42.0198,-97.4426
+18,Moses Lake Clinic,0,Moses Lake,WA,"Grant, Washington",20180,814638,18.1,47.147,-119.3159
+19,GenesisCare USA - Key West,0,Key West,FL,"Monroe, Florida",19700,834338,18.6,24.5446,-81.9217
+20,Calaway-Young Cancer Center at Valley View Hospital,0,Glenwood Springs,CO,"Garfield, Colorado",18357,852695,19.0,39.5876,-107.3387
+21,Union Hospital,0,Terre Haute,IN,"Vigo, Indiana",18326,871021,19.4,39.4978,-87.3905
+22,Lake Region Healthcare Corporation-Cancer Care,0,Fergus Falls,MN,"Otter Tail, Minnesota",17685,888706,19.8,46.2767,-96.0919
+23,Ottumwa Regional Health Center,0,Ottumwa,IA,"Wapello, Iowa",16538,905244,20.1,41.0444,-92.4291
+24,Genesis Cancer and Blood Institute - 1123,0,Russellville,AR,"Pope, Arkansas",15549,920793,20.5,35.2806,-93.1416
+25,Regional West Medical Center,0,Scottsbluff,NE,"Sioux, Nebraska",14999,935792,20.8,42.1021,-103.5661
