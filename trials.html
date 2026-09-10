@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recruiting cancer trials by county</title>
+<style>
+  :root{--paper:#FAF8F4;--card:#FFFFFF;--ink:#1B2430;--ink-2:#4B5563;--ink-3:#7C8794;--rule:#E4E1DA;--rule-2:#CFCBC2;--navy:#0B3C5D;--gulf:#3F7FB5;--rust:#8A3B1E;--warn:#7A5A00;--r:8px;--shadow:0 1px 2px rgba(27,36,48,.06),0 4px 14px rgba(27,36,48,.05);--fs-0:.8rem;--fs-1:.92rem;--fs-3:1.3rem;--fs-4:1.75rem}
+  *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.45;background:var(--paper);-webkit-font-smoothing:antialiased}
+  a{color:var(--gulf)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding:1.1rem 1.5rem .8rem;border-bottom:1px solid var(--rule);background:var(--card)}
+  header h1{font-size:var(--fs-4);margin:0;font-weight:650;letter-spacing:-.02em;line-height:1.15} header p{margin:.3rem 0 0;color:var(--ink-2);font-size:var(--fs-1);max-width:92ch}
+  .hdr-links{display:flex;gap:.9rem;font-size:var(--fs-0);white-space:nowrap;align-self:flex-start;padding-top:.3rem} .hdr-links a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-2)} .hdr-links a:hover{color:var(--navy);border-color:var(--navy)}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:1rem 1.1rem;margin-bottom:.9rem}
+  .sel{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234B5563' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right .6rem center;border:1px solid var(--rule-2);border-radius:6px;padding:.36rem 1.7rem .36rem .6rem;font:inherit;font-size:var(--fs-0);cursor:pointer}
+  .chk{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer} .chk input{margin:0;accent-color:var(--navy)}
+  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .15rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
+  h2{font-size:var(--fs-3);font-weight:650;margin:1.2rem 0 .4rem;letter-spacing:-.015em}
+  .filters{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;padding:.55rem 1.5rem;border-bottom:1px solid var(--rule);background:var(--card);font-size:var(--fs-0);color:var(--ink-2)}
+  .filters b{color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em;font-size:var(--fs-0);margin-right:.2rem} .filters .state{margin-left:auto;color:var(--warn)}
+  main{padding:1rem 1.5rem 2rem;max-width:1400px}
+  table{border-collapse:collapse;width:100%;font-size:var(--fs-1);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)} th,td{text-align:left;vertical-align:top;padding:.5rem .65rem;border-top:1px solid var(--rule)} th{font-weight:650;color:var(--ink-2);font-size:var(--fs-0);text-transform:uppercase;letter-spacing:.05em;border-top:0;background:var(--paper)}
+  tbody tr:hover{background:#FCFBF8} td.n{white-space:nowrap;font-variant-numeric:tabular-nums} td.f{color:var(--ink-2);font-size:var(--fs-0)}
+  .empty{padding:1.2rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:60ch;background:var(--card)}
+  ul.fac{margin:0;padding:0;list-style:none;columns:2;column-gap:2rem;font-size:var(--fs-1)} ul.fac li{break-inside:avoid;padding:.3rem 0;border-top:1px solid var(--rule)} ul.fac li span{color:var(--ink-2);font-size:var(--fs-0)}
+  @media (max-width:800px){ul.fac{columns:1} td.f{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div><p class="kicker">County trial list</p><h1 id="title" style="margin-top:.1rem">Trials in this county</h1>
+  <p id="sub"></p></div>
+  <nav class="hdr-links"><a href="index.html">← Back to the map</a></nav>
+</header>
+<div class="filters" role="group" aria-label="Trial filters">
+  <span><b>Phase</b> <span id="f-phase"></span></span>
+  <span><b>Lead sponsor</b> <span id="f-sponsor"></span></span>
+  <span><b>Cancer type</b> <select id="f-type" class="sel"><option value="">All types</option></select></span>
+  <span class="state" id="f-state"></span>
+</div>
+<main>
+  <div id="list"></div>
+  <h2 id="fac-h">Recruiting facilities listed in this county</h2>
+  <p id="fac-note" style="color:var(--ink-2);font-size:var(--fs-0);max-width:70ch"></p>
+  <ul class="fac" id="fac"></ul>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+  const D = window.DATA, T = D.T, C = D.counties;
+  const FIPS2USPS = {"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
+  const fips = new URLSearchParams(location.search).get('county'), c = C[fips];
+  const typeLabel = {}; T.types.forEach(([k, l]) => typeLabel[k] = l); const spLabel = {}; T.sponsors.forEach(([k, l]) => spLabel[k] = l);
+  if (!c) { document.getElementById('title').textContent = 'County not found'; document.getElementById('sub').textContent = 'The link needs a 5-digit county FIPS code, e.g. trials.html?county=48201. Use the map to pick a county.'; document.getElementById('fac-h').style.display = 'none'; return; }
+  const st = FIPS2USPS[c.s]; document.title = `Recruiting cancer trials — ${c.n}, ${st}`;
+  document.getElementById('title').textContent = `${c.n}, ${st}: ${c.t.toLocaleString()} recruiting cancer treatment trial${c.t===1?'':'s'} open to patients 55+`;
+  document.getElementById('sub').textContent = `At ${c.f.toLocaleString()} registry-listed facilit${c.f===1?'y':'ies'} (distinct names after removing sponsor site codes). Registry pulled ${D.meta.pull}. A trial counts once here even if it has several sites in the county. Eligibility criteria are on each trial's ClinicalTrials.gov page.`;
+  const filt = { phase: new Set(T.phases), sponsor: new Set(T.sponsors.map(s => s[0])), type: (new URLSearchParams(location.search).get('type') || '') };
+  const fp = document.getElementById('f-phase'); T.phases.forEach(p => { const l = document.createElement('label'); const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.phase.add(p) : filt.phase.delete(p); render(); }); l.appendChild(i); l.appendChild(document.createTextNode(p === 'NA' ? 'N/A (not phased)' : 'Phase ' + p)); fp.appendChild(l); });
+  const fs = document.getElementById('f-sponsor'); T.sponsors.forEach(([k, lab]) => { const l = document.createElement('label'); const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.sponsor.add(k) : filt.sponsor.delete(k); render(); }); l.appendChild(i); l.appendChild(document.createTextNode(lab)); fs.appendChild(l); });
+  const ft = document.getElementById('f-type'); T.types.filter(([k]) => T.named_types.includes(k)).forEach(([k, lab]) => { const o = document.createElement('option'); o.value = k; o.textContent = lab; ft.appendChild(o); }); ft.value = filt.type; ft.addEventListener('change', () => { filt.type = ft.value; render(); });
+  const ftNote = document.createElement('span'); ftNote.style.color = 'var(--ink-3)'; ftNote.textContent = ' (includes basket trials naming this cancer)'; ft.after(ftNote);
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  function render() {
+    const ti = filt.type ? T.types.findIndex(t => t[0] === filt.type) : -1;
+    const rows = c.tr.filter(j => filt.phase.has(T.phases[T.ph[j]]) && filt.sponsor.has(T.sponsors[T.sp[j]][0]) && (ti < 0 || T.cats[j].includes(ti))).sort((a, b) => T.title[a].localeCompare(T.title[b]));
+    const active = filt.phase.size < T.phases.length || filt.sponsor.size < T.sponsors.length || !!filt.type;
+    document.getElementById('f-state').textContent = active ? `Showing ${rows.length} of ${c.tr.length} trials` : `${c.tr.length} trials`;
+    const el = document.getElementById('list');
+    if (!c.tr.length) { el.innerHTML = '<div class="empty">No recruiting cancer treatment trial open to patients 55+ lists a site in this county in the registry pull of ' + D.meta.pull + '. Nearby counties may host trials — the map shows trials within 60 road-miles.</div>'; return; }
+    if (!rows.length) { el.innerHTML = '<div class="empty">No trials in this county match the current filters. Clear a filter to see the ' + c.tr.length + ' eligible trials.</div>'; return; }
+    el.innerHTML = `<table><thead><tr><th>NCT ID</th><th>Title</th><th>Phase</th><th>Lead sponsor</th><th>Cancer type (assigned)</th><th class="f">Facilities in county</th></tr></thead><tbody>` +
+      rows.map(j => { const facs = (c.fac || []).filter(f => f[3].includes(j)).map(f => f[0]);
+        const named = T.cats[j].map(ci => T.types[ci][1]);
+        const ct = T.ct[j] < 0 || !T.types[T.ct[j]] ? '' : T.types[T.ct[j]][1];
+        const ctCell = T.multi[j] ? `${esc(ct)} (${esc(T.multi[j])})${named.length ? '<br><span class="f">also names: ' + esc(named.join(', ')) + '</span>' : ''}` : esc(ct);
+        return `<tr><td class="n"><a href="https://clinicaltrials.gov/study/${T.id[j]}" target="_blank" rel="noopener">${T.id[j]}</a></td><td>${esc(T.title[j])}</td><td class="n">${T.phases[T.ph[j]] === 'NA' ? 'N/A' : T.phases[T.ph[j]]}</td><td>${spLabel[T.sponsors[T.sp[j]][0]]}</td><td>${ctCell}</td><td class="f">${esc(facs.join('; '))}</td></tr>`; }).join('') + '</tbody></table>';
+  }
+  const fl = document.getElementById('fac'); const facs = c.fac || [];
+  document.getElementById('fac-note').textContent = facs.length ? 'Facility names are as listed in the registry (one line per distinct name in this county); a hospital with two spellings may appear twice.' : 'No facilities listed.';
+  fl.innerHTML = facs.slice().sort((a, b) => a[0].localeCompare(b[0])).map(f => `<li>${esc(f[0])} <span>${esc(f[1] || '')}${f[2] ? ' ' + esc(f[2]) : ''} · ${f[3].length} trial${f[3].length===1?'':'s'}</span></li>`).join('');
+  render();
+})();
+</script>
+</body>
+</html>

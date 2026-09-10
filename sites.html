@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where would an additional trial site help? — research prototype</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
+<style>
+  :root{--paper:#FAF8F4;--card:#FFFFFF;--ink:#1B2430;--ink-2:#4B5563;--ink-3:#7C8794;--rule:#E4E1DA;--rule-2:#CFCBC2;--navy:#0B3C5D;--gulf:#3F7FB5;--rust:#8A3B1E;--warn:#7A5A00;--r:8px;--shadow:0 1px 2px rgba(27,36,48,.06),0 4px 14px rgba(27,36,48,.05);--fs-0:.8rem;--fs-1:.92rem;--fs-3:1.3rem;--fs-4:1.75rem}
+  *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.45;background:var(--paper);-webkit-font-smoothing:antialiased}
+  a{color:var(--gulf)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding:1.1rem 1.5rem .8rem;border-bottom:1px solid var(--rule);background:var(--card)}
+  header h1{font-size:var(--fs-4);margin:0;font-weight:650;letter-spacing:-.02em;line-height:1.15} header p{margin:.3rem 0 0;color:var(--ink-2);font-size:var(--fs-1);max-width:92ch}
+  .hdr-links{display:flex;gap:.9rem;font-size:var(--fs-0);white-space:nowrap;align-self:flex-start;padding-top:.3rem} .hdr-links a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-2)} .hdr-links a:hover{color:var(--navy);border-color:var(--navy)}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:1rem 1.1rem;margin-bottom:.9rem}
+  .sel{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234B5563' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right .6rem center;border:1px solid var(--rule-2);border-radius:6px;padding:.36rem 1.7rem .36rem .6rem;font:inherit;font-size:var(--fs-0);cursor:pointer}
+  .chk{display:inline-flex;align-items:center;gap:.3rem;cursor:pointer} .chk input{margin:0;accent-color:var(--navy)}
+  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .15rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
+  h2{font-size:var(--fs-3);font-weight:650;margin:1.2rem 0 .4rem;letter-spacing:-.015em}
+  .banner{background:#FFF7DF;border-top:1px solid #E6D08A;border-bottom:1px solid #E6D08A;padding:.6rem 1.5rem;font-size:var(--fs-1);color:var(--ink)}
+  main{padding:1rem 1.5rem 2rem;max-width:1500px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(360px,1fr);gap:1.4rem}
+  h2:first-child{margin-top:0}
+  table{border-collapse:collapse;width:100%;font-size:var(--fs-0);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden} th,td{text-align:left;vertical-align:top;padding:.4rem .55rem;border-top:1px solid var(--rule)} th{font-weight:650;color:var(--ink-2);border-top:0;background:var(--paper);text-transform:uppercase;letter-spacing:.05em;font-size:.72rem}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap} td.ph{color:var(--warn)}
+  svg{width:100%;height:auto;display:block} .county{fill:#EEF0F2;stroke:#fff;stroke-width:.25} .county.zero{fill:#F3E6E0} .st{fill:none;stroke:var(--ink-3);stroke-width:.5}
+  #map{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
+  .cand{fill:var(--gulf);stroke:#fff;stroke-width:.6;opacity:.75} .pick{fill:var(--rust);stroke:#fff;stroke-width:.8}
+  .plabel{font-size:8px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:2.2px}
+  .legend{display:flex;gap:.9rem;flex-wrap:wrap;font-size:var(--fs-0);color:var(--ink-2);margin:.4rem 0 0} .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:12px;height:12px;border:1px solid rgba(0,0,0,.12);border-radius:3px}
+  .method{white-space:pre-wrap;font-size:var(--fs-0);color:var(--ink-2);background:var(--card);border:1px solid var(--rule);padding:.8rem 1rem;border-radius:var(--r);max-width:100ch}
+  .kpi{display:flex;gap:2rem;flex-wrap:wrap;margin:.4rem 0 .8rem} .kpi div{border-left:3px solid var(--rule-2);padding-left:.8rem} .kpi b{display:block;font-size:var(--fs-3);font-variant-numeric:tabular-nums} .kpi span{font-size:var(--fs-0);color:var(--ink-2)}
+  .curve{margin:.5rem 0 0;background:var(--card);border:1px solid var(--rule);border-radius:var(--r)} .axis text{font-size:9px;fill:var(--ink-2)} .axis line,.axis path{stroke:var(--rule)}
+  @media (max-width:1000px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div><p class="kicker">Research prototype</p><h1 style="margin-top:.1rem">Where would an additional trial site help?</h1>
+  <p>Of existing, trial-capable facilities that host no eligible recruiting trial today, which sit nearest to the most residents 55+ who have no recruiting cancer treatment trial within 60 road-miles? A maximal covering location problem on the same road graph and census tracts as the map.</p></div>
+  <nav class="hdr-links"><a href="index.html">← Back to the map</a></nav>
+</header>
+<div class="banner" id="banner"></div>
+<main>
+  <section>
+    <div class="kpi" id="kpi"></div>
+    <h2>Greedy sequence: each pick removes the residents it covers before the next is chosen</h2>
+    <svg id="curve" viewBox="0 0 560 170" class="curve" role="img" aria-label="Cumulative population newly covered by successive picks"></svg>
+    <table id="greedy"><thead><tr><th>Pick</th><th>Facility</th><th>County</th><th>Residents 55+ newly covered</th><th>Cumulative</th><th>% of uncovered</th></tr></thead><tbody></tbody></table>
+    <h2>All candidates, ranked individually (top 200 shown; full list in <code>tier4_candidates_ranked.csv</code>)</h2>
+    <p style="font-size:var(--fs-0);color:var(--ink-2);max-width:90ch">Individual rankings overlap: two facilities 20 miles apart cover mostly the same people. Use the greedy sequence above for a set; use this table to see the alternatives near each pick. "Trials in county" is the county's current eligible recruiting count (all below 20 by construction).</p>
+    <table id="ranked"><thead><tr><th>#</th><th>Facility</th><th>County</th><th>Newly covered (no trial within 60 mi)</th><th>Newly covered (fewer than 20)</th><th>Tracts within 60 mi</th><th>Trials in county</th></tr></thead><tbody></tbody></table>
+  </section>
+  <aside>
+    <h2>Map</h2>
+    <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Counties with no eligible trial, candidate facilities, and the greedy picks"></svg>
+    <div class="legend"><span><i style="background:#F3E6E0"></i>county with no eligible recruiting trial</span><span><i style="background:var(--gulf);border-radius:50%"></i>top-200 candidate</span><span><i style="background:var(--rust);border-radius:50%"></i>greedy pick (numbered)</span></div>
+    <h2>Methodology (fixed before the computation; reproduced verbatim)</h2>
+    <div class="method" id="method"></div>
+    <h2>Validation status</h2>
+    <p style="font-size:var(--fs-0);color:var(--ink-2);max-width:70ch" id="valid"></p>
+  </aside>
+</main>
+<script src="data.js"></script>
+<script src="geo.js"></script>
+<script src="tier4.js"></script>
+<script>
+(function(){
+  const T4 = window.TIER4, D = window.DATA, GEO = window.GEO, C = D.counties; const fmt = d3.format(',');
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  document.getElementById('banner').innerHTML = `<strong>Research prototype.</strong> Candidate universe: <em>${esc(T4.label)}</em>. ${T4.counts.candidates_read.toLocaleString()} facilities read; ${T4.counts.excluded_county_has_limited_menu.toLocaleString()} excluded because their county already hosts 20+ eligible trials, ${T4.counts.excluded_facility_already_recruiting.toLocaleString()} because the facility already hosts an eligible recruiting trial; ${T4.counts.candidates_evaluated.toLocaleString()} evaluated. Names marked <span style="color:var(--warn)">†</span> are sponsor placeholders in the registry ("Research Site", or just a city): the location is real, the facility is not identified. This is not a recommendation to build anything. Generated ${T4.generated}.`;
+  document.getElementById('kpi').innerHTML = `<div><b>${fmt(T4.uncovered.zero_trials_within_60rdmi)}</b><span>residents 55+ with no eligible recruiting trial within 60 road-miles today (primary objective)</span></div><div><b>${fmt(T4.uncovered.lt20_trials_within_60rdmi)}</b><span>with fewer than 20 (secondary view)</span></div><div><b>${T4.greedy.length ? T4.greedy[T4.greedy.length-1].pct_of_uncovered_pop55 : 0}%</b><span>of the uncovered population reached by the first ${T4.greedy.length} greedy picks</span></div>`;
+  document.getElementById('method').textContent = T4.method;
+  document.getElementById('valid').textContent = 'Automated: every pick is in a county with fewer than 20 eligible trials and at a facility with none; coverage is monotone along the greedy sequence. Plausibility read of the top picks (builder, same session): all are known rural or remote gaps (West Tennessee, eastern Idaho, the Alabama Shoals, Yuma, far-northern California, deep East Texas, Sioux City, the Big Island, the North Country, eastern Georgia, the Dakotas, the Nebraska Panhandle). Not yet independently reviewed; the intended candidate universe (CoC-accredited programs + NCORP affiliates) has not been substituted for the stand-in.';
+  const gb = document.querySelector('#greedy tbody'); gb.innerHTML = T4.greedy.map(g => `<tr><td class="n">${g.step}</td><td>${esc(g.name)}${g.placeholder ? ' <span class="ph">†</span>' : ''}, ${esc(g.city)}, ${g.state}</td><td>${esc(g.county)}</td><td class="n">${fmt(g.pop55_newly_covered)}</td><td class="n">${fmt(g.cumulative_pop55_covered)}</td><td class="n">${g.pct_of_uncovered_pop55}%</td></tr>`).join('');
+  const rb = document.querySelector('#ranked tbody'); rb.innerHTML = T4.ranked.map(r => `<tr><td class="n">${r[0]}</td><td>${esc(r[1])}${r[2] ? ' <span class="ph">†</span>' : ''}, ${esc(r[3])}, ${r[4]}</td><td>${esc(r[5])}</td><td class="n">${fmt(r[6])}</td><td class="n">${fmt(r[7])}</td><td class="n">${fmt(r[8])}</td><td class="n">${r[9]}</td></tr>`).join('');
+  // coverage curve
+  const cv = d3.select('#curve'), m = {l: 48, r: 12, t: 10, b: 28}, W = 560, H = 170; const x = d3.scaleLinear().domain([0, Math.max(1, T4.greedy.length)]).range([m.l, W - m.r]); const y = d3.scaleLinear().domain([0, 100]).range([H - m.b, m.t]);
+  const pts = [{step: 0, pct: 0}].concat(T4.greedy.map(g => ({step: g.step, pct: g.pct_of_uncovered_pop55})));
+  cv.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(Math.min(T4.greedy.length, 12)).tickFormat(d3.format('d')));
+  cv.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d => d + '%'));
+  cv.append('path').datum(pts).attr('fill', 'none').attr('stroke', 'var(--rust)').attr('stroke-width', 2).attr('d', d3.line().x(d => x(d.step)).y(d => y(d.pct)));
+  cv.append('text').attr('x', W - m.r).attr('y', H - 4).attr('text-anchor', 'end').attr('font-size', 9).attr('fill', 'var(--ink-2)').text('picks in sequence → share of uncovered residents 55+ newly covered');
+  // map
+  const svg = d3.select('#map'), proj = d3.geoAlbersUsa().fitSize([959, 594], GEO.counties); proj.translate([proj.translate()[0] + 8, proj.translate()[1] + 8]); const path = d3.geoPath(proj);
+  svg.append('g').selectAll('path').data(GEO.counties.features).join('path').attr('class', f => 'county' + (C[f.properties.id] && C[f.properties.id].t === 0 ? ' zero' : '')).attr('d', path);
+  svg.append('g').selectAll('path').data(GEO.districts.features).join('path').attr('class', 'st').attr('d', path).style('display', 'none');
+  svg.append('g').selectAll('circle').data(T4.ranked).join('circle').attr('class', 'cand').attr('r', 2.2).attr('transform', r => { const p = proj([r[10], r[9]]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
+  const gp = svg.append('g'); gp.selectAll('circle').data(T4.greedy).join('circle').attr('class', 'pick').attr('r', 5).attr('transform', g => { const p = proj([g.lon, g.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
+  gp.selectAll('text').data(T4.greedy).join('text').attr('class', 'plabel').attr('text-anchor', 'middle').attr('dy', -7).attr('transform', g => { const p = proj([g.lon, g.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; }).text(g => g.step);
+})();
+</script>
+</body>
+</html>
