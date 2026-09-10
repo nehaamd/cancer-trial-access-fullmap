@@ -1,0 +1,33 @@
+{
+  "age_filter": "trials with maximum age < 55 excluded (n=254)",
+  "site_rows": 53123,
+  "site_assignment": {
+    "zip": 51054,
+    "zip3": 1932,
+    "city_gazetteer": 119,
+    "unassigned": 18
+  },
+  "distinct_trials": 3919,
+  "counties": 3143,
+  "counties_with_any_trial": 842,
+  "broad_menu_counties": 83,
+  "limited_menu_counties": 380,
+  "districts": 436,
+  "us": {
+    "scope": "US (50 states + DC)",
+    "pop55_weighted": 98596429,
+    "n_counties_touched": 3143,
+    "pct_pop55_in_counties_with_zero_trials": 20.9,
+    "wmean_trials_in_own_county": 124.0,
+    "wmean_dist_to_broad_menu_mi": 81.7,
+    "wmean_dist_to_limited_menu_mi": 22.9,
+    "wmean_dist_to_nci_mi": 76.1,
+    "wmean_trials_within_60mi": 355.0,
+    "wmean_oral_trials_within_60mi": 162.0,
+    "wmean_oral_indeterminate_within_60mi": 43.0,
+    "pct_pop55_beyond_60mi_of_broad_menu": 37.0,
+    "pct_pop55_beyond_60mi_of_limited_menu": 12.6,
+    "pct_pop55_beyond_120mi_of_broad_menu": 19.1,
+    "pct_pop55_beyond_120mi_of_limited_menu": 3.1
+  }
+}

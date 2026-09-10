@@ -1,0 +1,45 @@
+{
+  "trials_all": 4173,
+  "trials_55plus": 3919,
+  "counts_55plus": {
+    "Multiple cancer types / basket or umbrella": 1124,
+    "Breast": 321,
+    "Lung & thoracic": 311,
+    "Prostate": 263,
+    "Lymphoma": 254,
+    "Leukemia": 200,
+    "Myeloma & plasma cell": 173,
+    "Gynecologic (ovarian, uterine, cervical)": 166,
+    "Brain & CNS": 162,
+    "Head & neck": 142,
+    "Colorectal": 111,
+    "Melanoma & skin": 99,
+    "Pancreatic": 90,
+    "Bladder & urothelial": 90,
+    "Sarcoma": 89,
+    "Liver & biliary": 77,
+    "Kidney": 63,
+    "Gastric & esophageal": 51,
+    "Other / unclassified": 42,
+    "Neuroendocrine & endocrine": 40,
+    "MDS & MPN": 35,
+    "Other named cancer": 16
+  },
+  "pct_multi_55plus": 28.7,
+  "pct_unclassified_55plus": 1.1,
+  "multi_subtypes_55plus": {
+    "multiple named cancers": 629,
+    "unspecified solid / hematologic": 441,
+    "basket with a named cohort": 34,
+    "unspecified (title)": 11,
+    "multiple named cancers (title/keywords)": 7,
+    "title names additional cancers": 2
+  },
+  "source_55plus": {
+    "conditions": 3789,
+    "none": 42,
+    "title/keywords": 41,
+    "conditions+title": 36,
+    "title": 11
+  }
+}
