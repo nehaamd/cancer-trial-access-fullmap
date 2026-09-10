@@ -39,6 +39,17 @@
   .filters[hidden]{display:none}
   .filters .fnote{font-size:var(--fs-0);color:var(--ink-3)} .filters .fstate{margin-left:auto;font-size:var(--fs-0);color:var(--warn);max-width:64ch}
   main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(360px,520px);min-height:0}
+  #left{min-width:0} .tabs{display:flex;align-items:center;gap:.15rem;padding:.55rem 1.5rem 0;border-bottom:1px solid var(--rule);background:var(--card)}
+  .tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:.45rem .8rem;font-size:var(--fs-1);color:var(--ink-2);cursor:pointer;margin-bottom:-1px} .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--navy);font-weight:650}
+  .tabs .tabnote{margin-left:auto;font-size:var(--fs-0);color:var(--ink-3)} .panel[hidden]{display:none} .panel{padding:.75rem 1rem 1rem 1.5rem}
+  .tbar{display:flex;flex-wrap:wrap;gap:.5rem .9rem;align-items:center;margin-bottom:.6rem;font-size:var(--fs-0);color:var(--ink-2)} .tbar .scope{font-weight:650;color:var(--ink)} .tbar .count{color:var(--ink-3)} .search{flex:1 1 220px;min-width:160px;border:1px solid var(--rule-2);border-radius:6px;padding:.4rem .6rem;font-size:var(--fs-1);background:var(--card)}
+  table.dt{border-collapse:collapse;width:100%;font-size:var(--fs-0);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)} .dt th,.dt td{text-align:left;vertical-align:top;padding:.42rem .55rem;border-top:1px solid var(--rule)} .dt th{border-top:0;background:var(--paper);color:var(--ink-2);font-weight:650;text-transform:uppercase;letter-spacing:.05em;font-size:.7rem;cursor:pointer;white-space:nowrap;user-select:none} .dt th.on{color:var(--navy)}
+  .dt td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap} .dt tr.exp td{background:#FCFBF8;border-top:0;padding-top:0} .dt .sub{color:var(--ink-2)} .dt .mono{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .linkish{background:none;border:0;padding:0;color:var(--gulf);text-decoration:underline;cursor:pointer;font:inherit} .linkish:hover{color:var(--navy)}
+  .num button.linkish{font-size:inherit;font-weight:inherit;color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--gulf)} .num button.linkish:hover{color:var(--navy)}
+  .more{margin:.6rem 0} .empty{padding:1rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:70ch;background:var(--card)}
+  .cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.6rem 0}
+  @media (max-width:980px){.cmp-grid{grid-template-columns:1fr}}
   #map-wrap{position:relative;padding:.75rem 1rem 1rem 1.5rem}
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;font-size:var(--fs-0);color:var(--ink-2);margin:0 0 .5rem;min-height:1.6rem}
   .legend .lg-title{font-weight:650;color:var(--ink)}
@@ -47,6 +58,11 @@
   .county{stroke:#fff;stroke-width:.3;cursor:pointer;transition:opacity .15s} .county:hover{stroke:var(--ink);stroke-width:1.1}
   .dim .county:not(.in-district){opacity:.32}
   .district{fill:none;stroke:var(--ink);stroke-width:.55;pointer-events:none;opacity:.8}
+  .unit-district .district.fillable{pointer-events:all;cursor:pointer;opacity:1;stroke:#fff;stroke-width:.6} .unit-district .district.fillable:hover{stroke:var(--ink);stroke-width:1.4}
+  .unit-district .county,.unit-state .county{fill:#F4F2EC !important;pointer-events:none;stroke:#fff;stroke-width:.2}
+  .statefill{fill:none;stroke:#fff;stroke-width:.8;pointer-events:none} .unit-state .statefill{pointer-events:all;cursor:pointer} .unit-state .statefill:hover{stroke:var(--ink);stroke-width:1.6}
+  .unit-state .district{display:none} .unit-district .district:not(.fillable){display:none}
+  .stateline{fill:none;stroke:var(--ink);stroke-width:.7;pointer-events:none;opacity:.85}
   .district.selected{stroke-width:2.6;stroke:var(--ink);opacity:1} .district.selected-halo{stroke:#fff;stroke-width:5.5;opacity:.95}
   .dlabel{font-size:9px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:2.5px;cursor:pointer}
   .nci{fill:#F5C518;stroke:#3a2f00;stroke-width:.5;pointer-events:none}
@@ -88,15 +104,16 @@
 <header>
   <div>
     <h1>How far are Americans from a cancer clinical trial?</h1>
-    <p>Recruiting cancer treatment trials open to patients 55 and older — by county and congressional district, measured in road miles from where people actually live.</p>
+    <p>Recruiting cancer treatment trials open to patients 55 and older — by county, congressional district and state, measured in road miles from where people actually live. Filter by phase, sponsor and cancer type; every figure that can respond does.</p>
   </div>
-  <nav class="hdr-links" aria-label="Pages"><a href="sites.html">Where would a new site help?</a><a href="#methods">Methods &amp; sources</a></nav>
+  <div style="text-align:right"><nav class="hdr-links" aria-label="Pages" style="justify-content:flex-end"><a href="sites.html">Where would a new site help?</a><a href="brief.html" id="brief-link">Printable brief</a><a href="#methods">Methods &amp; sources</a></nav><p id="stamp" style="font-size:var(--fs-0);color:var(--ink-3);margin:.35rem 0 0"></p></div>
 </header>
 <div class="toolbar" role="toolbar" aria-label="Map controls">
-  <div class="tb-group"><b>Color the map by</b>
-    <select class="sel" id="metric" aria-label="Map variable">
-      <option value="t">Trials in the county</option><option value="rn">Road miles to nearest NCI center</option><option value="rb">Road miles to a broad trial menu (100+ trials)</option><option value="inc">Cancer incidence rate</option><option value="acs">Household context (ACS)</option>
-    </select>
+  <div class="tb-group"><b>Map by</b>
+    <select class="sel" id="unit" aria-label="Map unit"><option value="county">Counties</option><option value="district">Congressional districts</option><option value="state">States</option></select>
+  </div>
+  <div class="tb-group"><b>Color</b>
+    <select class="sel" id="metric" aria-label="Map variable"></select>
     <select class="sel" id="inc-site" aria-label="Cancer site for the incidence layer" style="display:none"></select>
     <select class="sel" id="acs-var" aria-label="ACS variable" style="display:none">
       <option value="veh">Households without a vehicle</option><option value="bb">Households with broadband</option><option value="unins">Uninsured (all ages)</option><option value="unins55">Uninsured, ages 55–64</option><option value="pov">Poverty rate</option>
@@ -108,22 +125,42 @@
     <label class="chk"><input type="checkbox" id="lyr-l" checked> District numbers</label>
   </div>
   <div class="right">
-    <button class="btn" id="btn-filters" aria-expanded="true" aria-controls="filters">Filter trials <span class="badge" id="fbadge" hidden>0</span></button>
+    <span class="tb-group"><b>Filters</b> <span class="badge" id="fbadge" hidden>0</span></span>
     <button class="btn" id="btn-reset" title="Clear filters and selection">Reset</button>
   </div>
 </div>
-<div class="filters" id="filters" role="group" aria-label="Trial filters">
+<div class="filters" id="filters" role="group" aria-label="Trial filters: phase, sponsor, cancer type">
   <div class="tb-group"><b>Phase</b><span id="f-phase"></span></div>
   <div class="tb-group"><b>Sponsor</b><span id="f-sponsor"></span></div>
-  <div class="tb-group"><b>Cancer type</b><select class="sel" id="f-type"><option value="">All types</option></select><span class="fnote" id="f-type-note"></span></div>
+  <div class="tb-group"><b>Cancer type</b><select class="sel" id="f-type"><option value="">All cancer types</option></select><span class="fnote" id="f-type-note"></span></div>
+  <div class="tb-group"><b>Patient age</b><input type="number" id="f-age" class="sel" style="width:5.5rem;padding-right:.6rem" min="18" max="110" value="55" aria-label="Patient age used for eligibility"><span class="fnote" id="f-age-note"></span></div>
   <span class="fstate" id="f-state"></span>
 </div>
 <main>
-  <div id="map-wrap">
+  <div id="left">
+  <div class="tabs" role="tablist">
+    <button role="tab" data-tab="map" aria-selected="true">Map</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button><button role="tab" data-tab="compare">Compare counties</button><button role="tab" data-tab="changes">What changed</button>
+    <span class="tabnote" id="scope-note"></span>
+  </div>
+  <div id="map-wrap" class="panel">
     <div class="legend" id="legend" aria-live="polite"></div>
     <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Map of US counties with congressional district boundaries"></svg>
-    <div class="map-hint">Hover a county for details · click to select · double-click the map to zoom out</div>
+    <div class="map-hint">Hover for details · click to select · double-click the map to zoom out · "Map by" switches counties / districts / states</div>
     <div id="tip" role="tooltip"></div>
+  </div>
+  <div id="tab-trials" class="panel" hidden>
+    <div class="tbar"><span id="tr-scope" class="scope"></span>
+      <label class="chk">Show <select class="sel" id="tr-mode"><option value="in">trials with a site in this area</option><option value="30">within 30 road-miles</option><option value="60">within 60 road-miles</option><option value="120">within 120 road-miles</option></select></label>
+      <input class="search" id="tr-q" placeholder="Search NCT, title, intervention, sponsor, institution" aria-label="Search trials">
+      <span id="tr-count" class="count"></span><button class="btn" id="tr-csv">Download CSV</button><button class="btn" id="tr-clearfac" hidden>Clear site filter</button></div>
+    <div id="tr-table"></div>
+  </div>
+  <div id="tab-sites" class="panel" hidden>
+    <div class="tbar"><span id="si-scope" class="scope"></span><input class="search" id="si-q" placeholder="Search institution, city, ZIP" aria-label="Search sites"><span id="si-count" class="count"></span><button class="btn" id="si-csv">Download CSV</button></div>
+    <div id="si-table"></div>
+  </div>
+  <div id="tab-compare" class="panel" hidden><div id="cmp-body"></div></div>
+  <div id="tab-changes" class="panel" hidden><div id="chg-body"></div></div>
   </div>
   <aside id="pane">
     <div class="finder">
@@ -138,6 +175,7 @@
 </div>
 <script src="data.js"></script>
 <script src="geo.js"></script>
+<script src="changes.js"></script>
 <script>
 (function(){
   const D = window.DATA, GEO = window.GEO, C = D.counties, DI = D.districts, NCI = D.nci, T = D.T, SP = D.SP;
@@ -155,31 +193,43 @@
 
   // ---------- filters ----------
   const N = T.id.length, pass = new Uint8Array(N).fill(1);
-  const filt = { phase: new Set(T.phases), sponsor: new Set(T.sponsors.map(s => s[0])), type: '' };
+  const filt = { phase: new Set(T.phases), sponsor: new Set(T.sponsors.map(s => s[0])), type: '', age: 55 };
+  const TYPE2SITE = { breast: 'breast', colorectal: 'colorectal', lung: 'lung', prostate: 'prostate', melanoma_skin: 'melanoma_skin', lymphoma: 'lymphoma', leukemia: 'leukemia', pancreatic: 'pancreatic', liver_biliary: 'liver_biliary', bladder_urothelial: 'bladder_urothelial', kidney: 'kidney', brain_cns: 'brain_cns', head_neck: 'head_neck', neuroendocrine_endocrine: 'thyroid', gynecologic: 'gynecologic_ovary', gastric_esophageal: 'stomach' };
   const CK = Object.keys(C), CI = {}; CK.forEach((k, i) => CI[k] = i);
   const cnt = new Int32Array(CK.length), cntNamed = new Int32Array(CK.length), cnt60 = new Int32Array(CK.length), cnt60Named = new Int32Array(CK.length);
   const stamp = new Int32Array(N); let gen = 0, typeIdx = -1;
-  const nActive = () => (T.phases.length - filt.phase.size) + (T.sponsors.length - filt.sponsor.size) + (filt.type ? 1 : 0);
+  const nActive = () => (T.phases.length - filt.phase.size) + (T.sponsors.length - filt.sponsor.size) + (filt.type ? 1 : 0) + (filt.age !== 55 ? 1 : 0);
   const filtersActive = () => nActive() > 0;
   function recount() {
     typeIdx = filt.type ? T.types.findIndex(t => t[0] === filt.type) : -1;
-    for (let j = 0; j < N; j++) pass[j] = (filt.phase.has(T.phases[T.ph[j]]) && filt.sponsor.has(T.sponsors[T.sp[j]][0]) && (typeIdx < 0 || T.cats[j].includes(typeIdx))) ? 1 : 0;
+    const bucket = filt.type === 'multi' || filt.type === 'other_unclassified';  // the two buckets match on the primary label; named cancers match every cancer a trial names
+    const age = filt.age;
+    for (let j = 0; j < N; j++) pass[j] = (filt.phase.has(T.phases[T.ph[j]]) && filt.sponsor.has(T.sponsors[T.sp[j]][0]) && (typeIdx < 0 || (bucket ? T.ct[j] === typeIdx : T.cats[j].includes(typeIdx)))
+      && (age === 55 || ((T.amin[j] === null || T.amin[j] <= age) && (T.amax[j] === null || T.amax[j] >= age)))) ? 1 : 0;
+    FC = null; FD = null; FS = null;  // invalidate cached tract counts and per-geography figures
     CK.forEach((k, i) => { const c = C[k]; let n = 0, nn = 0; for (const j of c.tr) if (pass[j]) { n++; if (typeIdx < 0 || T.ct[j] === typeIdx) nn++; } cnt[i] = n; cntNamed[i] = nn;
       gen++; let m = 0, mn = 0; for (const s of c.nb) for (const j of SP[s]) if (pass[j] && stamp[j] !== gen) { stamp[j] = gen; m++; if (typeIdx < 0 || T.ct[j] === typeIdx) mn++; } cnt60[i] = m; cnt60Named[i] = mn; });
     const total = pass.reduce((a, b) => a + b, 0), badge = document.getElementById('fbadge'); badge.hidden = !filtersActive(); badge.textContent = nActive();
-    document.getElementById('f-state').textContent = filtersActive() ? `${fmt(total)} of ${fmt(N)} eligible trials match. County counts, 60-mile pools and trial lists are filtered; district and national figures are not.` : '';
+    document.getElementById('f-state').textContent = filtersActive() ? `${fmt(total)} of ${fmt(N)} eligible trials match. County counts, trial lists, and the access figure for the nation, states and districts are recomputed; distance-to-menu and NCI-center figures depend on all trials and are tagged.` : '';
   }
   const fp = document.getElementById('f-phase'); T.phases.forEach(p => { const l = document.createElement('label'); l.className = 'chk'; const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.phase.add(p) : filt.phase.delete(p); update(); }); l.appendChild(i); l.appendChild(document.createTextNode(p === 'NA' ? 'N/A' : 'Ph ' + p)); l.title = p === 'NA' ? 'Not phased (device, surgery, radiation…)' : 'Phase ' + p; fp.appendChild(l); });
   const fs = document.getElementById('f-sponsor'); T.sponsors.forEach(([k, lab]) => { const l = document.createElement('label'); l.className = 'chk'; const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.sponsor.add(k) : filt.sponsor.delete(k); update(); }); l.appendChild(i); l.appendChild(document.createTextNode(lab)); fs.appendChild(l); });
-  const ft = document.getElementById('f-type'); T.types.filter(([k]) => T.named_types.includes(k)).forEach(([k, lab]) => { const o = document.createElement('option'); o.value = k; o.textContent = lab; ft.appendChild(o); }); ft.addEventListener('change', () => { filt.type = ft.value; update(); });
-  document.getElementById('f-type-note').textContent = 'Includes basket / multi-cancer trials that name this cancer; counts show how many are basket trials.';
-  document.getElementById('btn-filters').addEventListener('click', e => { const f = document.getElementById('filters'); f.hidden = !f.hidden; e.currentTarget.setAttribute('aria-expanded', !f.hidden); });
-  document.getElementById('btn-reset').addEventListener('click', () => { filt.phase = new Set(T.phases); filt.sponsor = new Set(T.sponsors.map(s => s[0])); filt.type = ''; ft.value = ''; document.querySelectorAll('#filters input[type=checkbox]').forEach(i => i.checked = true); clearSelection(); update(); });
+  const ft = document.getElementById('f-type'); T.types.forEach(([k, lab]) => { const o = document.createElement('option'); o.value = k; o.textContent = lab; ft.appendChild(o); }); ft.addEventListener('change', () => { filt.type = ft.value; const site = TYPE2SITE[filt.type]; const si = site ? BSITE.findIndex(b => b[0] === site) : 0; if (si >= 0) { incSite = si; incSel.value = si; } update(); });
+  const fage = document.getElementById('f-age'); fage.addEventListener('change', () => { const v = Math.max(18, Math.min(110, parseInt(fage.value) || 55)); fage.value = v; filt.age = v;
+    document.getElementById('f-age-note').textContent = v === 55 ? '' : v < 55 ? `Trials whose minimum age is above ${v} or maximum age below ${v} are excluded. This dataset only contains trials open to at least one 55-year-old, so trials open only to younger patients are not here; population figures remain residents 55+.` : `Trials whose maximum age is below ${v} are excluded (no stated cap = kept).`; update(); });
+  document.getElementById('f-type-note').textContent = 'A named cancer includes basket trials that name it (counts show how many); "Multiple cancer types / basket" selects the basket bucket itself.';
+  document.getElementById('btn-reset').addEventListener('click', () => { filt.phase = new Set(T.phases); filt.sponsor = new Set(T.sponsors.map(s => s[0])); filt.type = ''; ft.value = ''; filt.age = 55; fage.value = 55; document.getElementById('f-age-note').textContent = ''; incSite = 0; incSel.value = 0; document.querySelectorAll('#filters input[type=checkbox]').forEach(i => i.checked = true); clearSelection(); update(); });
 
   // ---------- metrics ----------
   const DIST = [['under 30 road-mi',0,30,'#0B3C5D'],['30–60 (about an hour)',30,60,'#3F7FB5'],['60–120',60,120,'#9EC4E0'],['120–200',120,200,'#F2C48A'],['200–300',200,300,'#D98B4A'],['300 or more',300,1e9,'#8A3B1E']];
   const RAMP = ['#F3E6E0','#C9DCEE','#9EC4E0','#6BA3D6','#3F7FB5','#0B3C5D'];
-  let metric = 't', incSite = 0, acsVar = 'veh', incClasses = [], acsClasses = [], selectedState = '', selectedD = null, selectedC = null;
+  let unit = 'county', metric = 't', incSite = 0, acsVar = 'veh', incClasses = [], acsClasses = [], selectedState = '', selectedD = null, selectedC = null;
+  const PCT_CLASSES = [['under 10%',0,10,'#F3E6E0'],['10–25%',10,25,'#F2C48A'],['25–50%',25,50,'#D98B4A'],['50–75%',50,75,'#B8562E'],['75% or more',75,101,'#8A3B1E']];
+  const UNIT_METRICS = { county: ['t', 'rn', 'rb', 'inc', 'acs'], district: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'], state: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'] };
+  const defaultMetric = () => unit === 'county' ? 't' : 'l20';
+  const GEO_LABEL = { l20: 'Residents 55+ with fewer than 20 trials within 60 road-miles', z60: 'Residents 55+ with no trial within 60 road-miles', g60b: 'Residents 55+ more than 60 road-miles from a broad menu (100+ trials)', g60n: 'Residents 55+ more than 60 road-miles from an NCI center', medn: 'Median road miles to the nearest NCI center', ginc: 'Cancer incidence, all sites (age-adjusted, per 100,000)', gacs: 'Household context (ACS)' };
+  const geoRec = k => unit === 'district' ? DI[k] : D.state_data[k];
+  let FD = null, FS = null;  // filtered per-district / per-state access figures (from the tract file) when filters are on
   const METRICS = {
     t:  {label: () => 'Recruiting trials with a site in the county' + (filtersActive() ? ' (filtered)' : ''), get: c => cnt[CI[c.k]], classes: () => [['0 trials',0,1,'#F3E6E0'],['1–19',1,20,'#C9DCEE'],['20–99 (limited menu)',20,100,'#6BA3D6'],['100 or more (broad menu)',100,1e9,'#0B3C5D']]},
     rn: {label: () => 'Road miles from the county population center to the nearest NCI-designated cancer center', get: c => c.rn, classes: () => DIST, na: c => c.rn === null},
@@ -187,8 +237,16 @@
     inc: {label: () => 'Age-adjusted incidence per 100,000, ' + BSITE[incSite][1] + ', ' + D.meta.burden.period, get: c => c.b ? c.b[incSite][0] : null, classes: () => incClasses, na: c => !c.b || c.b[incSite][4] >= 2, caution: c => c.b && c.b[incSite][4] === 1},
     acs: {label: () => ({veh: 'Households without a vehicle (%)', bb: 'Households with a broadband subscription (%)', unins: 'Uninsured, all ages (%)', unins55: 'Uninsured, ages 55–64 (%)', pov: 'Poverty rate (%)'})[acsVar] + ', ACS 2023 5-year', get: c => c.acs ? c.acs[acsVar] : null, classes: () => acsClasses, na: c => !c.acs || c.acs[acsVar] === null}
   };
+  function geoValue(m, k) { const g = geoRec(k); if (!g) return null;
+    if (m === 'l20' || m === 'z60') { if (filtersActive()) { const F = unit === 'district' ? FD : FS; return F ? F[m][F.idx[k]] : null; } return g[m]; }
+    if (m === 'g60b' || m === 'g60n') return g[m]; if (m === 'medn') return g.medn; if (m === 'ginc') return g.ctx ? g.ctx.inc : null; if (m === 'gacs') return g.ctx ? g.ctx[acsVar] : null; return null; }
   function quantClasses(vals, unit) { const q = d3.scaleQuantile().domain(vals).range(RAMP); const e = [d3.min(vals)].concat(q.quantiles()).concat([d3.max(vals) + 1e-9]); return RAMP.map((col, i) => [`${Math.round(e[i]*10)/10}${i === RAMP.length-1 ? '+' : '–' + Math.round(e[i+1]*10)/10}${unit}`, e[i], e[i+1], col]); }
-  function rebuildDynamicClasses() { incClasses = quantClasses(CK.map(k => C[k].b && C[k].b[incSite][4] === 0 ? C[k].b[incSite][0] : null).filter(v => v !== null), ''); acsClasses = quantClasses(CK.map(k => C[k].acs ? C[k].acs[acsVar] : null).filter(v => v !== null && !isNaN(v)), '%'); }
+  function fillMetricSelect() { const sel_ = document.getElementById('metric'); sel_.innerHTML = ''; const labels = { t: 'Trials in the county', rn: 'Road miles to nearest NCI center', rb: 'Road miles to a broad trial menu (100+ trials)', inc: 'Cancer incidence rate', acs: 'Household context (ACS)', ...GEO_LABEL };
+    UNIT_METRICS[unit].forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = labels[m]; sel_.appendChild(o); }); if (!UNIT_METRICS[unit].includes(metric)) metric = defaultMetric(); sel_.value = metric; }
+  let geoClasses = [];
+  function rebuildDynamicClasses() {
+    if (unit !== 'county') { const keys = unit === 'district' ? Object.keys(DI) : Object.keys(D.state_data); const vals = keys.map(k => geoValue(metric, k)).filter(v => v !== null && v !== undefined && !isNaN(v));
+      geoClasses = (metric === 'medn') ? DIST : (metric === 'ginc' || metric === 'gacs') ? quantClasses(vals, metric === 'gacs' ? '%' : '') : PCT_CLASSES; } incClasses = quantClasses(CK.map(k => C[k].b && C[k].b[incSite][4] === 0 ? C[k].b[incSite][0] : null).filter(v => v !== null), ''); acsClasses = quantClasses(CK.map(k => C[k].acs ? C[k].acs[acsVar] : null).filter(v => v !== null && !isNaN(v)), '%'); }
   const colorFor = (m, c) => { const M = METRICS[m]; if (M.na && M.na(c)) return null; const v = M.get(c); if (v === null || v === undefined) return null; const k = M.classes().find(k => v >= k[1] && v < k[2]); return k ? k[3] : '#ddd'; };
 
   // ---------- map ----------
@@ -202,7 +260,15 @@
     .on('mousemove', (ev, f) => { const c = C[f.properties.id]; tip.style.display = 'block'; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = tipHTML(c); })
     .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => selectCounty(f.properties.id));
   const overlay = gC.append('g').attr('pointer-events', 'none');
-  const districtFeatures = GEO.districts.features; gD.selectAll('path').data(districtFeatures).join('path').attr('class', 'district').attr('d', path);
+  const districtFeatures = GEO.districts.features;
+  const dpaths = gD.selectAll('path').data(districtFeatures).join('path').attr('class', 'district').attr('d', path)
+    .on('mousemove', (ev, f) => { if (unit !== 'district') return; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.display = 'block'; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = geoTip('district', f.properties.id); })
+    .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { if (unit === 'district') selectDistrict(f.properties.id); });
+  const gSt = svg.insert('g', ':first-child'); const stateFeatures = (GEO.states || {features: []}).features;
+  const spaths = gSt.selectAll('path').data(stateFeatures).join('path').attr('class', 'statefill').attr('d', path)
+    .on('mousemove', (ev, f) => { if (unit !== 'state') return; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.display = 'block'; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = geoTip('state', f.properties.id); })
+    .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { if (unit === 'state') { pickS.value = f.properties.id; pickS.dispatchEvent(new Event('change')); } });
+  const gStLine = svg.append('g'); gStLine.selectAll('path').data(stateFeatures).join('path').attr('class', 'stateline').attr('d', path).style('display', 'none');
   const halo = gS.append('path').attr('class', 'district selected-halo'), sel = gS.append('path').attr('class', 'district selected');
   gN.selectAll('path').data(NCI).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(50)).attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
   function tipHTML(c) { const i = CI[c.k], fa = filtersActive();
@@ -212,7 +278,20 @@
     if (metric === 'inc') { const b = c.b ? c.b[incSite] : null; extra = '<br>' + (b && b[4] <= 1 ? `${BSITE[incSite][1]}: ${b[0]} per 100,000 (${b[3]} cases/yr)${b[4] === 1 ? ' — small numbers' : ''}` : b ? BSTATUS[b[4]] : 'no incidence data'); }
     if (metric === 'acs') { const v = c.acs ? c.acs[acsVar] : null; extra = '<br>' + METRICS.acs.label().split(',')[0] + ': ' + (v === null ? 'no data' : v + '%'); }
     return `<b>${esc(c.n)}, ${c.s2}</b><br>${l1}<br><span class="muted">${fmt(c.p)} residents 55+ · ${fmt(fa ? cnt60[i] : c.t60)} trials within 60 road-mi</span><br>${road}${extra}`; }
+  function geoTip(kind, k) { const g = kind === 'district' ? DI[k] : D.state_data[k]; if (!g) return ''; const fa = filtersActive(); const F = kind === 'district' ? FD : FS;
+    const l20 = fa && F ? F.l20[F.idx[k]] : g.l20, z = fa && F ? F.z60[F.idx[k]] : g.z60, t60 = fa && F ? F.t60[F.idx[k]] : g.t60;
+    const name = kind === 'district' ? `${g.st}-${cdLabel(g.cd)}${g.member ? ' · ' + esc(g.member) + (g.party ? ' (' + g.party + ')' : '') : ' · vacant'}` : esc(g.name);
+    return `<b>${name}</b><br>${fmt(g.p)} residents 55+<br>${pct(l20)}% have fewer than 20 ${fa ? 'matching ' : ''}trials within 60 road-mi; ${pct(z)}% have none; typical resident: ${fmt(Math.round(t60))}${fa ? ' <span class="muted">(filtered)</span>' : ''}<br><span class="muted">${pct(g.g60b)}% beyond 60 mi of a broad menu · median ${g.medn === null ? 'no route' : g.medn + ' mi'} to an NCI center${g.ctx && g.ctx.inc !== null ? ' · incidence ' + g.ctx.inc + '/100k' : ''}</span>`; }
   function paint() {
+    svg.classed('unit-district', unit === 'district').classed('unit-state', unit === 'state');
+    if (unit !== 'county') { if (filtersActive() && ((unit === 'district' && !FD) || (unit === 'state' && !FS))) { computeFilteredAll(); return; } rebuildDynamicClasses();
+      const cls = geoClasses; const colOf = v => { if (v === null || v === undefined || isNaN(v)) return 'var(--nodata)'; const k = cls.find(k => v >= k[1] && v < k[2]); return k ? k[3] : '#ddd'; };
+      if (unit === 'district') { dpaths.classed('fillable', true).style('fill', f => colOf(geoValue(metric, f.properties.id))); gD.raise(); gS.raise(); gL.raise(); gN.raise(); gStLine.style('display', null).raise(); }
+      else { spaths.style('fill', f => colOf(geoValue(metric, f.properties.id))); gSt.raise(); gS.raise(); gL.raise(); gN.raise(); gStLine.style('display', 'none'); dpaths.classed('fillable', false).style('fill', null); }
+      const lg = d3.select('#legend'); lg.html(''); lg.append('span').attr('class', 'lg-title').text((metric === 'gacs' ? METRICS.acs.label().split(',')[0] : GEO_LABEL[metric]) + (filtersActive() && (metric === 'l20' || metric === 'z60') ? ' (filtered)' : '') + ' · by ' + (unit === 'district' ? 'district' : 'state'));
+      cls.forEach(k => lg.append('span').html(`<i style="background:${k[3]}"></i>${k[0]}`)); lg.append('span').html('<i style="background:var(--nodata)"></i>no data / no road route');
+      document.getElementById('inc-site').style.display = 'none'; document.getElementById('acs-var').style.display = metric === 'gacs' ? '' : 'none'; return; }
+    dpaths.classed('fillable', false).style('fill', null); spaths.style('fill', null); gSt.lower(); gStLine.style('display', 'none'); gD.raise(); gS.raise(); gL.raise(); gN.raise();
     if (metric === 'inc' || metric === 'acs') rebuildDynamicClasses();
     counties.attr('fill', f => { const col = colorFor(metric, C[f.properties.id]); return col === null ? 'var(--nodata)' : col; });
     overlay.selectAll('path').data(metric === 'inc' ? countyFeatures.filter(f => METRICS.inc.caution(C[f.properties.id])) : []).join('path').attr('d', path).attr('fill', 'url(#hatch)').attr('stroke', 'none');
@@ -223,9 +302,10 @@
     else if (metric === 'acs') lg.append('span').html('<i style="background:var(--nodata)"></i>no data');
     document.getElementById('inc-site').style.display = metric === 'inc' ? '' : 'none'; document.getElementById('acs-var').style.display = metric === 'acs' ? '' : 'none';
   }
-  const incSel = document.getElementById('inc-site'); BSITE.forEach(([k, lab], i) => { const o = document.createElement('option'); o.value = i; o.textContent = lab; incSel.appendChild(o); }); incSel.addEventListener('change', () => { incSite = +incSel.value; paint(); if (selectedC) selectCounty(selectedC); pushURL(); });
+  const incSel = document.getElementById('inc-site'); BSITE.forEach(([k, lab], i) => { const o = document.createElement('option'); o.value = i; o.textContent = lab; incSel.appendChild(o); }); incSel.addEventListener('change', () => { incSite = +incSel.value; paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); pushURL(); });
   document.getElementById('acs-var').addEventListener('change', e => { acsVar = e.target.value; paint(); pushURL(); });
   document.getElementById('metric').addEventListener('change', e => { metric = e.target.value; paint(); pushURL(); });
+  document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); paint(); pushURL(); });
   document.getElementById('lyr-d').addEventListener('change', e => gD.style('display', e.target.checked ? null : 'none'));
   document.getElementById('lyr-n').addEventListener('change', e => gN.style('display', e.target.checked ? null : 'none'));
   let showLabels = true; document.getElementById('lyr-l').addEventListener('change', e => { showLabels = e.target.checked; refreshLabels(); });
@@ -246,65 +326,126 @@
 
   // ---------- URL state (shareable views) ----------
   function pushURL() { const p = new URLSearchParams(); if (selectedD) p.set('d', selectedD); else if (selectedC) p.set('c', selectedC); else if (selectedState) p.set('s', selectedState);
-    if (metric !== 't') p.set('m', metric); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if (metric === 'acs' && acsVar !== 'veh') p.set('acs', acsVar);
-    if (filt.type) p.set('type', filt.type); if (filt.phase.size < T.phases.length) p.set('ph', [...filt.phase].join(',')); if (filt.sponsor.size < T.sponsors.length) p.set('sp', [...filt.sponsor].join(','));
+    if (unit !== 'county') p.set('u', unit); if (metric !== defaultMetric()) p.set('m', metric); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if (metric === 'acs' && acsVar !== 'veh') p.set('acs', acsVar);
+    if (tab !== 'map') p.set('tab', tab); if (filt.type) p.set('type', filt.type); if (filt.age !== 55) p.set('age', filt.age); if (filt.phase.size < T.phases.length) p.set('ph', [...filt.phase].join(',')); if (filt.sponsor.size < T.sponsors.length) p.set('sp', [...filt.sponsor].join(','));
     const q = p.toString(); history.replaceState(null, '', q ? '?' + q : location.pathname); }
   function readURL() { const p = new URLSearchParams(location.search);
-    if (p.get('m') && METRICS[p.get('m')]) { metric = p.get('m'); document.getElementById('metric').value = metric; }
+    if (p.get('u') && ['county', 'district', 'state'].includes(p.get('u'))) { unit = p.get('u'); document.getElementById('unit').value = unit; fillMetricSelect(); }
+    if (p.get('m') && UNIT_METRICS[unit].includes(p.get('m'))) { metric = p.get('m'); document.getElementById('metric').value = metric; }
     if (p.get('site')) { const i = BSITE.findIndex(s => s[0] === p.get('site')); if (i >= 0) { incSite = i; incSel.value = i; } }
     if (p.get('acs')) { acsVar = p.get('acs'); document.getElementById('acs-var').value = acsVar; }
-    if (p.get('type') && T.named_types.includes(p.get('type'))) { filt.type = p.get('type'); ft.value = filt.type; }
+    if (p.get('type') && T.types.some(t => t[0] === p.get('type'))) { filt.type = p.get('type'); ft.value = filt.type; }
     if (p.get('ph')) { filt.phase = new Set(p.get('ph').split(',').filter(x => T.phases.includes(x))); [...fp.querySelectorAll('input')].forEach((i, k) => i.checked = filt.phase.has(T.phases[k])); }
     if (p.get('sp')) { filt.sponsor = new Set(p.get('sp').split(',')); [...fs.querySelectorAll('input')].forEach((i, k) => i.checked = filt.sponsor.has(T.sponsors[k][0])); }
-    return { d: p.get('d'), c: p.get('c'), s: p.get('s') }; }
-  const shareHTML = () => `<div class="share"><button class="btn" id="btn-share" type="button">Copy link to this view</button><span id="share-ok" style="color:var(--ink-3)"></span></div>`;
-  function wireShare() { const b = document.getElementById('btn-share'); if (!b) return; b.addEventListener('click', () => { if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(() => { document.getElementById('share-ok').textContent = 'copied'; setTimeout(() => { const s = document.getElementById('share-ok'); if (s) s.textContent = ''; }, 1800); }); }); }
+    if (p.get('age') && +p.get('age') >= 18) { filt.age = +p.get('age'); fage.value = filt.age; }
+    return { d: p.get('d'), c: p.get('c'), s: p.get('s'), tab: p.get('tab') }; }
+  const shareHTML = () => `<div class="share"><button class="btn" id="btn-share" type="button">Copy link to this view</button><a class="btn" id="btn-brief" href="brief.html" target="_blank" rel="noopener">Printable brief</a><span id="share-ok" style="color:var(--ink-3)"></span></div>`;
+  function wireShare() { const bl = document.getElementById('btn-brief'); if (bl) bl.href = 'brief.html' + (selectedD ? '?d=' + selectedD : selectedC ? '?c=' + selectedC : selectedState ? '?s=' + selectedState : ''); const bh = document.getElementById('brief-link'); if (bh) bh.href = bl ? bl.href : 'brief.html'; const b = document.getElementById('btn-share'); if (!b) return; b.addEventListener('click', () => { if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(() => { document.getElementById('share-ok').textContent = 'copied'; setTimeout(() => { const s = document.getElementById('share-ok'); if (s) s.textContent = ''; }, 1800); }); }); }
+
+  // ---------- tract-level data for live filtered aggregates (loaded on first use) ----------
+  let TB = null, TBp = null;
+  function loadTracts() { if (TB) return Promise.resolve(TB); if (TBp) return TBp;
+    TBp = fetch(D.meta.tracts_bin.file).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).then(buf => { const dv = new DataView(buf); if (dv.getUint32(0, true) !== 0x54524331) throw new Error('bad file');
+      const n = dv.getUint32(4, true), ns = dv.getUint32(8, true), np = dv.getUint32(12, true); let o = 20; const c4 = x => x + ((4 - x % 4) % 4);
+      const pop = new Uint32Array(buf, o, n); o += n * 4; const st = new Uint8Array(buf, o, n); o += c4(n); const di = new Uint16Array(buf, o, n); o += c4(n * 2);
+      const split = []; for (let i = 0; i < ns; i++) { split.push([dv.getUint32(o, true), dv.getUint16(o + 4, true), dv.getUint16(o + 6, true)]); o += 8; }
+      const off = new Uint32Array(buf, o, n + 1); o += (n + 1) * 4; const ids = new Uint16Array(buf, o, np);
+      TB = { n, pop, st, di, split, off, ids }; return TB; }).catch(e => { TBp = null; throw e; });
+    return TBp; }
+  let FC = null;  // per-tract count of passing trials within 60 road-miles, for the current filter
+  function tractCounts() { if (FC) return FC; const { n, off, ids } = TB; const c = new Int16Array(n);
+    for (let i = 0; i < n; i++) { gen++; let m = 0; for (let k = off[i]; k < off[i + 1]; k++) { const l = SP[ids[k]]; for (let q = 0; q < l.length; q++) { const j = l[q]; if (pass[j] && stamp[j] !== gen) { stamp[j] = gen; m++; } } } c[i] = m; }
+    FC = c; return c; }
+  function filteredGeo(kind, idx) { const { n, pop, st, di, split } = TB; const c = tractCounts(); let W = 0, z = 0, l20 = 0, l100 = 0, sum = 0;
+    const acc = (i, w) => { const m = c[i]; W += w; if (m === 0) z += w; if (m < 20) l20 += w; if (m < 100) l100 += w; sum += w * m; };
+    if (kind === 'nat') { for (let i = 0; i < n; i++) acc(i, pop[i]); }
+    else if (kind === 'state') { for (let i = 0; i < n; i++) if (st[i] === idx) acc(i, pop[i]); }
+    else { for (let i = 0; i < n; i++) if (di[i] === idx) acc(i, pop[i]); for (const [t, d, sh] of split) if (d === idx) acc(t, pop[t] * sh / 10000); }
+    return W ? { z: 100 * z / W, l20: 100 * l20 / W, l100: 100 * l100 / W, t60: sum / W } : null; }
+  function filteredAll() { const { n, pop, st, di, split } = TB; const c = tractCounts(); const nd = D.district_keys.length, ns = D.meta.state_order.length;
+    const mk = m => ({ W: new Float64Array(m), z: new Float64Array(m), l20: new Float64Array(m), sum: new Float64Array(m) }); const A = mk(nd), B = mk(ns);
+    const add = (X, g, w, m) => { X.W[g] += w; if (m === 0) X.z[g] += w; if (m < 20) X.l20[g] += w; X.sum[g] += w * m; };
+    for (let i = 0; i < n; i++) { const w = pop[i], m = c[i]; add(B, st[i], w, m); if (di[i] !== 0xFFFF) add(A, di[i], w, m); }
+    for (const [t, d, sh] of split) add(A, d, pop[t] * sh / 10000, c[t]);
+    const fin = (X, keys) => { const idx = {}; keys.forEach((k, i) => idx[k] = i); return { idx, l20: Array.from(X.W, (W, i) => W ? 100 * X.l20[i] / W : null), z60: Array.from(X.W, (W, i) => W ? 100 * X.z[i] / W : null), t60: Array.from(X.W, (W, i) => W ? X.sum[i] / W : null) }; };
+    FD = fin(A, D.district_keys); FS = fin(B, D.meta.state_order.map(sf => FIPS2USPS[sf])); }
+  function computeFilteredAll() { d3.select('#legend').html('<span class="lg-title">Computing filtered figures for every ' + unit + ' from census tracts…</span>'); loadTracts().then(() => { filteredAll(); paint(); }).catch(() => { d3.select('#legend').html('<span class="lg-title">Filtered district/state maps need tracts60.bin (available on the published site, not when opened from disk).</span>'); }); }
 
   // ---------- panes ----------
   const pane = document.getElementById('pane-body');
-  const statHTML = (num, unit, text, cls) => `<div class="stat${cls ? ' ' + cls : ''}"><div class="num${String(num).replace(/<[^>]+>/g, '').length > 6 ? ' small' : ''}">${num}<small>${unit}</small></div><p>${text}</p></div>`;
+  const statHTML = (num, unit, text, cls, id) => `<div class="stat${cls ? ' ' + cls : ''}"${id ? ` id="${id}"` : ''}><div class="num${String(num).replace(/<[^>]+>/g, '').length > 6 ? ' small' : ''}">${num}<small>${unit}</small></div><p>${text}</p></div>`;
   const utag = () => filtersActive() ? '<span class="unfiltered-tag" title="Pools every phase, sponsor and cancer type; does not change with the filters.">All trials · unfiltered</span>' : '';
-  function renderNational() { const n = D.meta.national, ut = utag();
-    pane.innerHTML = `<div class="card hero"><p class="kicker">United States · 50 states + DC</p><h2>${fmt(D.meta.trials)} recruiting trials</h2><p class="member">open to a 55-year-old, at ${fmt(D.meta.facilities)} facilities in ${fmt(D.meta.sitepoints)} locations · ${fmt(n.pop55)} residents 55+</p>
-      ${filtersActive() ? `<div class="caution">Filters are on. National and district summaries pool all trials (tagged below); county counts, 60-mile pools and trial lists are filtered.</div>` : ''}
-      ${statHTML(pct(n.pct_lt20_trials_within_60rdmi) + ut, '%', 'of US residents 55+ have fewer than 20 eligible trials within 60 road-miles of home; ' + pct(n.pct_zero_trials_within_60rdmi) + '% have none. (' + pct(n.pct_in_zero_trial_county) + '% live in a county with no trial — a county-boundary statistic that overstates isolation.)', n.pct_lt20_trials_within_60rdmi >= 50 ? 'hot' : '')}
-      ${statHTML(pct(n.pct_gt60rdmi_broad_menu) + ut, '%', 'live more than 60 road-miles from a broad menu (a county with 100+ trials); ' + pct(n.pct_gt120rdmi_broad_menu) + '% more than 120. ' + pct(n.pct_no_road_route_broad) + '% (Alaska, Hawaii) have no road connection to one.', '')}
-      ${statHTML(pct(n.pct_gt60rdmi_nci) + ut, '%', 'live more than 60 road-miles from an NCI-designated cancer center; the median resident 55+ is ' + fmt(n.median_road_mi_nci) + ' road-miles from one.', '')}</div>
+  const ftag = '<span class="unfiltered-tag" style="color:var(--navy);border-color:var(--navy)">Filtered</span>';
+  const rowsHTML = rows => `<ul class="rows">${rows.map(([a, b]) => `<li><span>${a}</span><span>${b}</span></li>`).join('')}</ul>`;
+  const pctOr = v => v === null || v === undefined ? '—' : pct(v) + '%';
+  function contextCard(ctx, binc, siteKey) { if (!ctx) return '';
+    const inc = binc ? binc[siteKey] : null; const incRow = inc && inc[0] !== null ? [`${BSITE[incSite][1]}, age-adjusted rate per 100,000${inc[1] ? ` · ${fmt(inc[1])} cases/yr` : ''}`, `${inc[0]}`] : [`${BSITE[incSite][1]}`, inc && inc[2] ? BSTATUS[{ok: 0, small_numbers: 1, suppressed_source: 2, not_available_state: 3, not_available_county: 4}[inc[2]] || 4] : '—'];
+    const incAll = ctx.inc !== null ? [`All cancer sites, age-adjusted rate per 100,000 (residents-55+-weighted mean of county rates${ctx.inc_cov !== null && ctx.inc_cov < 99.5 ? `, covering ${pct(ctx.inc_cov)}% of residents` : ''})${ctx.cases ? ` · ${fmt(ctx.cases)} cases/yr` : ''}`, `${ctx.inc}`] : ['All cancer sites', ctx.inc_cov === 0 ? 'not available (state does not release county data)' : '—'];
+    const rows = binc ? [incRow].concat(incSite === 0 ? [] : [incAll]) : [incAll];
+    return `<div class="card"><h3 style="margin-top:0">Cancer incidence · State Cancer Profiles, ${D.meta.burden.period}</h3>${rowsHTML(rows)}
+      <h3>Household context · ACS 2023 5-year, all ages${ctx.acs_cov !== null && ctx.acs_cov < 99.5 ? ` (covers ${pct(ctx.acs_cov)}% of residents)` : ''}</h3>${rowsHTML([['Households without a vehicle', pctOr(ctx.veh)], ['Households with broadband', pctOr(ctx.bb)], ['Uninsured, all ages / ages 55–64', `${pctOr(ctx.unins)} / ${pctOr(ctx.unins55)}`], ['Poverty rate', pctOr(ctx.pov)]])}
+      <p class="note">Household and incidence figures are county values averaged by where residents 55+ live; they are context, never combined into a score.</p></div>`; }
+  function roadCard(g) { const ut = utag();
+    return `<div class="card"><h3 style="margin-top:0">Road distance from home ${ut}</h3>${rowsHTML([
+      ['Median road-miles to the nearest NCI-designated center' + (g.mnci ? ` (for most: ${esc(g.mnci)})` : ''), g.medn === null ? 'no route' : fmt(g.medn)], ['Residents 55+ more than 60 / 120 road-miles from one', `${pct(g.g60n)}% / ${pct(g.g120n)}%`],
+      ['Median road-miles to a broad menu (county with 100+ trials)' + (g.mbroad ? ` (for most: ${esc(g.mbroad)})` : ''), g.medb === null ? 'no route' : fmt(g.medb)], ['More than 60 / 120 road-miles from a broad menu', `${pct(g.g60b)}% / ${pct(g.g120b)}%`],
+      ['Median road-miles to a limited menu (20+ trials)', g.medl === null ? 'no route' : fmt(g.medl)], ['More than 60 road-miles from a limited menu', `${pct(g.g60l)}%`],
+      ['Trials within 30 / 60 / 120 road-miles of a typical resident', `${fmt(g.t30)} / ${fmt(g.t60)} / ${fmt(g.t120)}`], ['Trials in a typical resident\'s own county', fmt(g.own)], ['Live in a county with no trial at all', `${pct(g.zc)}%`]].concat(g.nr ? [['No road connection to any broad menu (islands, Alaska)', `${pct(g.nr)}%`]] : []))}
+      <p class="note">Distances are shortest highway routes from each census tract's population center; medians and shares are weighted by residents 55+.</p></div>`; }
+  function breakdownCard(g) { const ut = utag(); const bd = (obj, labelOf, skip) => Object.entries(obj).filter(([kk]) => !skip || !skip.includes(kk)).sort((a, b) => b[1] - a[1]).map(([kk, v]) => `<li class="sub"><span>${labelOf(kk)}</span><span>${fmt(v)}</span></li>`).join('');
+    return `<div class="card"><h3 style="margin-top:0">Trials within 60 road-miles of a typical resident, by cancer type ${ut}</h3><ul class="rows">${bd(g.bd.ct, kk => typeLabel[kk] || kk, ['multi', 'other_unclassified'])}<li class="sub"><span><em>of which multi-cancer / basket trials</em></span><span>${fmt(g.bd.ct.multi || 0)}</span></li></ul>
+      <h3>By phase ${ut}</h3><ul class="rows">${bd(g.bd.ph, kk => kk === 'NA' ? 'Not phased (N/A)' : 'Phase ' + kk)}</ul><h3>By lead sponsor ${ut}</h3><ul class="rows">${bd(g.bd.sp, kk => sponsorLabel[kk] || kk)}</ul>
+      <p class="note">Cancer-type rows count every trial that names that cancer, so basket trials appear under each cancer they name and rows do not sum to the total.</p></div>`; }
+  function accessStats(g, geoKind, geoIdx) { const fa = filtersActive(); const ut = utag();
+    const s1 = statHTML(pct(g.l20) + ut, '%', 'of residents 55+ have fewer than 20 eligible trials within 60 road-miles of home; ' + pct(g.z60) + '% have none. A typical resident has ' + fmt(g.t60) + ' within 60 road-miles.', g.l20 >= 50 ? 'hot' : '', 'stat-access');
+    const s2 = statHTML(pct(g.g60b) + ut, '%', 'live more than 60 road-miles from a broad menu (a county with 100+ trials); ' + pct(g.g120b) + '% more than 120.' + (g.nr ? ' ' + pct(g.nr) + '% have no road connection to one.' : ''), g.g60b >= 50 ? 'hot' : '');
+    const s3 = statHTML((g.medn === null ? '—' : fmt(g.medn)) + ut, g.medn === null ? '' : ' road-mi', (g.medn === null ? 'No road route to an NCI center for most residents. ' : 'median road distance to the nearest NCI-designated cancer center. ') + pct(g.g60n) + '% are more than 60 road-miles from one.', g.medn !== null && g.medn >= 150 ? 'hot' : (g.medn === null ? 'na' : ''));
+    if (fa) setTimeout(() => fillFiltered(g, geoKind, geoIdx), 0);
+    return s1 + s2 + s3; }
+  function fillFiltered(g, kind, idx) { const el = document.getElementById('stat-access'); if (!el) return;
+    el.querySelector('p').innerHTML = 'computing filtered figures at census-tract level…';
+    loadTracts().then(() => { const r = filteredGeo(kind, idx); const el2 = document.getElementById('stat-access'); if (!el2 || !r) return;
+      const desc = filt.type ? typeLabel[filt.type] + ' trials' : 'trials matching the filters';
+      el2.querySelector('.num').innerHTML = `${pct(r.l20)}${ftag}<small>%</small>`; el2.classList.toggle('hot', r.l20 >= 50);
+      el2.querySelector('p').innerHTML = `of residents 55+ have fewer than 20 ${desc} within 60 road-miles of home; ${pct(r.z)}% have none; ${pct(r.l100)}% have fewer than 100. A typical resident has ${fmt(Math.round(r.t60))} within 60 road-miles. <span style="color:var(--ink-3)">All trials: ${pct(g.l20)}% under 20, ${pct(g.z60)}% none, ${fmt(g.t60)} typical.</span>`; })
+      .catch(() => { const el2 = document.getElementById('stat-access'); if (el2) el2.querySelector('p').innerHTML += ' <span class="flag">Filtered tract-level figures need the data file tracts60.bin (served on GitHub Pages; not available when opening the page from disk).</span>'; }); }
+  function filterCaution(scope) { return filtersActive() ? `<div class="caution">Filters are on (${nActive()}). The first figure below is recomputed for ${scope} from census tracts; distance-to-menu and distance-to-NCI-center figures depend on all trials and are tagged.</div>` : ''; }
+
+  function renderNational() { const g = D.meta.nat_core, ctx = D.meta.nat_ctx;
+    const worst = Object.entries(D.state_data).sort((a, b) => b[1].l20 - a[1].l20).slice(0, 5);
+    pane.innerHTML = `<div class="card hero"><p class="kicker">United States · 50 states + DC</p><h2><button class="linkish" data-open="in" style="color:inherit;text-decoration:none;border-bottom:2px dotted var(--gulf)">${fmt(D.meta.trials)} recruiting trials</button></h2><p class="member">open to a 55-year-old, at ${fmt(D.meta.facilities)} facilities in ${fmt(D.meta.sitepoints)} locations · ${fmt(g.p)} residents 55+ in ${fmt(g.nt)} census tracts</p>
+      ${filterCaution('the whole country')}${accessStats(g, 'nat', 0)}${shareHTML()}</div>
       <div class="card"><p class="kicker">Start here</p><div class="starters">
-        <button type="button" id="st-d"><b>Look up a congressional district</b><span>Pick a state, then a district — every number is weighted by where residents 55+ live.</span></button>
+        <button type="button" id="st-d"><b>Look up a state or congressional district</b><span>Pick a state, then a district — every number is weighted by where residents 55+ live.</span></button>
         <button type="button" id="st-c"><b>Find a county</b><span>Trials, facilities, road miles to the nearest NCI center, cancer incidence, household context.</span></button>
-        <a class="chip" href="sites.html" style="justify-self:start">Where would an additional trial site help? →</a></div></div>
-      <p class="note">Registry pulled ${D.meta.pull} · House members ${D.meta.members_pull.split(' ')[0]} · ${D.meta.vacant.length} seat${D.meta.vacant.length===1?'':'s'} vacant. Percentages are of residents 55+, weighted by census tract; distances are shortest routes on the Census highway network from each tract's population center to actual recruiting-site locations. Router compared against ${D.meta.router.pairs} approximate published city-pair distances (mean difference ${D.meta.router.mean_pct}%) — not yet against an independent routing engine on the same coordinates.</p>`;
-    document.getElementById('st-d').addEventListener('click', () => pickS.focus()); document.getElementById('st-c').addEventListener('click', () => document.getElementById('pick-c').focus()); }
-  function renderStateOverview(st) { const rows = Object.entries(DI).filter(([k,d]) => d.st === st).sort((a,b) => (+a[1].cd) - (+b[1].cd)); const p55 = rows.reduce((s,[k,d]) => s + d.p, 0);
-    const worst = rows.slice().sort((a,b) => b[1].l20 - a[1].l20).slice(0, 3);
-    pane.innerHTML = `<div class="card"><p class="kicker">State</p><h2>${stName[st]}</h2><p class="member">${rows.length} congressional district${rows.length===1?'':'s'} · ${fmt(p55)} residents 55+</p>
-      <h3>Districts</h3><div class="chips">${rows.map(([k,d]) => `<button type="button" class="chip" data-d="${k}">${st}-${cdLabel(d.cd)}</button>`).join('')}</div>
-      <h3>Least access · share of residents 55+ with fewer than 20 trials within 60 road-miles ${utag()}</h3><ul class="rows">${worst.map(([k,d]) => `<li><span>${st}-${cdLabel(d.cd)} · ${esc(d.member || 'vacant')}</span><span>${pct(d.l20)}%</span></li>`).join('')}</ul>
-      <p class="note">Pick a district above for its numbers, or click a county on the map.</p>${shareHTML()}</div>`;
-    pane.querySelectorAll('.chip[data-d]').forEach(b => b.addEventListener('click', () => selectDistrict(b.dataset.d))); wireShare(); }
+        <a class="chip" href="sites.html" style="justify-self:start">Where would an additional trial site help? →</a></div>
+      <h3>States with the least access · residents 55+ with fewer than 20 trials within 60 road-miles ${utag()}</h3><ul class="rows">${worst.map(([st, sd]) => `<li><span><button type="button" class="chip" data-s="${st}">${esc(sd.name)}</button></span><span>${pct(sd.l20)}%</span></li>`).join('')}</ul></div>
+      ${roadCard(g)}${breakdownCard(g)}${contextCard(ctx, D.meta.nat_binc, BSITE[incSite][0])}
+      <p class="note">Registry pulled ${D.meta.pull} · House members ${D.meta.members_pull.split(' ')[0]} · ${D.meta.vacant.length} seat${D.meta.vacant.length===1?'':'s'} vacant. Distances are shortest routes on the Census highway network from each tract's population center to actual recruiting-site locations. Router compared against ${D.meta.router.pairs} approximate published city-pair distances (mean difference ${D.meta.router.mean_pct}%) — not yet against an independent routing engine on the same coordinates.</p>`;
+    document.getElementById('st-d').addEventListener('click', () => pickS.focus()); document.getElementById('st-c').addEventListener('click', () => document.getElementById('pick-c').focus());
+    pane.querySelectorAll('.chip[data-s]').forEach(b => b.addEventListener('click', () => { pickS.value = b.dataset.s; pickS.dispatchEvent(new Event('change')); })); wireShare(); pane.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => openTrials('in'))); }
+  function renderStateOverview(st) { const g = D.state_data[st]; const rows = Object.entries(DI).filter(([k, d]) => d.st === st).sort((a, b) => (+a[1].cd) - (+b[1].cd)); const worst = rows.slice().sort((a, b) => b[1].l20 - a[1].l20).slice(0, 5);
+    pane.innerHTML = `<div class="card hero"><p class="kicker">State</p><h2>${esc(g.name)}</h2><p class="member"><button class="linkish" data-open="in">${fmt(g.trials)} recruiting trials</button> at <button class="linkish" data-open-sites="in">${fmt(g.fac)} sites</button> · ${g.broad} broad-menu and ${g.limited} limited-menu counties of ${g.counties} (${g.counties_with_trials} with any trial) · ${fmt(g.p)} residents 55+ · ${g.ndist} district${g.ndist === 1 ? '' : 's'}</p>
+      ${filterCaution(g.name)}${accessStats(g, 'state', D.meta.state_order.indexOf(g.fips))}${shareHTML()}</div>
+      <div class="card"><h3 style="margin-top:0">Districts</h3><div class="chips">${rows.map(([k, d]) => `<button type="button" class="chip" data-d="${k}">${st}-${cdLabel(d.cd)}</button>`).join('')}</div>
+      <h3>Least access · residents 55+ with fewer than 20 trials within 60 road-miles ${utag()}</h3><ul class="rows">${worst.map(([k, d]) => `<li><span><button type="button" class="chip" data-d="${k}">${st}-${cdLabel(d.cd)}</button> ${esc(d.member || 'vacant')}</span><span>${pct(d.l20)}%</span></li>`).join('')}</ul></div>
+      ${roadCard(g)}${breakdownCard(g)}${contextCard(g.ctx, g.binc, BSITE[incSite][0])}
+      <p class="note">State figures are population-55+-weighted over census tracts. Click a county on the map for county detail.</p>`;
+    pane.querySelectorAll('.chip[data-d]').forEach(b => b.addEventListener('click', () => selectDistrict(b.dataset.d))); wireShare(); facFilter = null; cmpSel = []; refreshTab(); pane.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => openTrials('in'))); pane.querySelectorAll('button[data-open-sites]').forEach(b => b.addEventListener('click', () => setTab('sites'))); }
   function selectDistrict(k) { selectedD = k; selectedC = null; const d = DI[k];
     if (d.st !== selectedState) { selectedState = d.st; pickS.value = d.st; zoomState(d.st); refreshLabels(); fillDistricts(d.st); }
     pickD.value = k; const f = districtFeatures.find(f => f.properties.id === k); halo.attr('d', path(f)); sel.attr('d', path(f)); svg.classed('dim', false); counties.classed('in-district', false);
     const cos = d.hr3521 === 'lead' ? 'lead sponsor of H.R. 3521 (verified 5 Sep 2026 — recheck before use)' : d.member ? 'H.R. 3521 cosponsor status not tracked here — check congress.gov' : 'seat currently vacant';
-    const bd = (obj, labelOf, skip) => Object.entries(obj).filter(([kk]) => !skip || !skip.includes(kk)).sort((a,b) => b[1]-a[1]).map(([kk, v]) => `<li class="sub"><span>${labelOf(kk)}</span><span>${fmt(v)}</span></li>`).join('');
-    const ut = utag();
-    const typeFocus = filt.type ? `<div class="caution"><strong>${typeLabel[filt.type]} trials within 60 road-miles of a typical resident here: ${fmt(d.bd.ct[filt.type] || 0)}</strong> (basket trials naming ${typeLabel[filt.type]} included). Every other number for this district pools all trials and does not respond to the filters — see the tags.</div>` : '';
     pane.innerHTML = `<div class="card hero"><p class="kicker">Congressional district · ${D.meta.plan}</p><h2>${d.st}-${cdLabel(d.cd)}</h2>
       <p class="member">${d.member ? `<span class="dot" style="background:${partyColor(d.party)}"></span>${esc(d.member)} (${partyName(d.party)})` : 'Vacant seat'} — ${cos}</p>
-      <div class="chips"><span class="chip static">${fmt(d.p)} residents 55+</span><span class="chip static">${fmt(d.nt)} census tracts</span></div>${typeFocus}
-      ${statHTML(pct(d.l20) + ut, '%', 'of residents 55+ have fewer than 20 eligible trials within 60 road-miles of home; ' + pct(d.z60) + '% have none. A typical resident has ' + fmt(d.t60) + ' within 60 road-miles (' + fmt(d.t30) + ' within 30, ' + fmt(d.t120) + ' within 120).', d.l20 >= 50 ? 'hot' : '')}
-      ${statHTML(pct(d.g60b) + ut, '%', 'live more than 60 road-miles from a broad menu (100+ trials; nearest for most: ' + esc(d.mbroad) + '), median ' + (d.medb === null ? 'not routable' : fmt(d.medb) + ' road-miles') + '; ' + pct(d.g120b) + '% more than 120.' + (d.nr ? ' ' + pct(d.nr) + '% have no road connection to any broad menu.' : ''), d.g60b >= 50 ? 'hot' : '')}
-      ${statHTML((d.medn === null ? '—' : fmt(d.medn)) + ut, d.medn === null ? '' : ' road-mi', (d.medn === null ? 'No road route to an NCI center for most residents. ' : 'median road distance to the nearest NCI-designated center (for most residents: ' + esc(d.mnci) + '). ') + pct(d.g60n) + '% are more than 60 road-miles from one' + (d.nrn ? '; ' + pct(d.nrn) + '% have no road connection' : '') + '. ' + pct(d.g60l) + '% are more than 60 road-miles from even a limited menu (20+ trials).', d.medn !== null && d.medn >= 150 ? 'hot' : (d.medn === null ? 'na' : ''))}
-      ${shareHTML()}</div>
-      <div class="card"><h3 style="margin-top:0">Trials within 60 road-miles of a typical resident, by cancer type ${ut}</h3><ul class="rows">${bd(d.bd.ct, kk => typeLabel[kk] || kk, ['multi','other_unclassified'])}<li class="sub"><span><em>of which multi-cancer / basket trials</em></span><span>${fmt(d.bd.ct.multi || 0)}</span></li></ul>
-      <h3>By phase ${ut}</h3><ul class="rows">${bd(d.bd.ph, kk => kk === 'NA' ? 'Not phased (N/A)' : 'Phase ' + kk)}</ul>
-      <h3>By lead sponsor ${ut}</h3><ul class="rows">${bd(d.bd.sp, kk => sponsorLabel[kk] || kk)}</ul>
-      <p class="note">Cancer-type rows count every trial that names that cancer, so basket trials appear under each cancer they name and rows do not sum to the total.${d.v2 ? ` Version 2 (straight-line ×1.2, land-area weights) gave ${pct(d.v2.g60b)}% beyond 60 miles of a broad menu; version 3 gives ${pct(d.g60b)}%.` : ''} District figures are population-55+-weighted over census tracts.</p></div>`;
-    pane.scrollTop = 0; wireShare(); pushURL(); }
+      <div class="chips"><span class="chip static">${fmt(d.p)} residents 55+</span><span class="chip static">${fmt(d.nt)} census tracts</span></div>
+      ${filterCaution('this district')}${accessStats(d, 'dist', D.district_keys.indexOf(k))}${shareHTML()}</div>
+      ${roadCard(d)}${breakdownCard(d)}${contextCard(d.ctx, null, BSITE[incSite][0])}
+      <p class="note">${d.v2 ? `Version 2 (straight-line ×1.2, land-area weights) gave ${pct(d.v2.g60b)}% beyond 60 miles of a broad menu; version 3 gives ${pct(d.g60b)}%. ` : ''}District figures are population-55+-weighted over census tracts (tracts split by the boundary apportioned by land area).</p>`;
+    pane.scrollTop = 0; wireShare(); facFilter = null; cmpSel = []; refreshTab(); pushURL(); }
   function selectCounty(k) { selectedC = k; selectedD = null; const c = C[k]; if (c.s2 !== selectedState) { selectedState = c.s2; pickS.value = c.s2; fillDistricts(c.s2); zoomState(c.s2); refreshLabels(); }
     counties.classed('in-district', f => f.properties.id === k); svg.classed('dim', true); halo.attr('d', null); sel.attr('d', null); pickD.value = '';
-    const i = CI[k], fa = filtersActive(), n = cnt[i], n60 = cnt60[i], nB = n - cntNamed[i], n60B = n60 - cnt60Named[i];
+    const i = CI[k], fa = filtersActive(), n = cnt[i], n60 = cnt60[i], nB = n - cntNamed[i], n60B = n60 - cnt60Named[i]; const nm = nearestMatching(k);
     const basket = (tot, b) => filt.type && tot ? ` <small style="font-size:.75em;color:var(--ink-2)">${fmt(tot - b)} named-only + ${fmt(b)} basket</small>` : '';
     const menu = c.t >= 100 ? 'Hosts a broad menu (100+ eligible trials).' : c.t >= 20 ? 'Hosts a limited menu (20–99).' : c.t ? '' : 'No recruiting eligible trial has a site here.';
     const roadStat = c.noroad === 'island' ? statHTML('—', '', 'No road connection from this county to any broad menu or NCI center (island or disconnected network). Straight-line ×1.2 for reference only: ' + fmt(c.sl.n) + ' mi to the nearest center.', 'na')
@@ -320,24 +461,112 @@
     else if (ball) burden += `<p class="note">Trials-per-diagnoses gap score not shown: all-sites count is ${ball[4] === 1 ? 'below the reliability threshold' : BSTATUS[ball[4]]}.</p>`;
     const acs = c.acs ? `<h3>Household context · ACS 2023 5-year, all ages</h3><ul class="rows"><li><span>Households without a vehicle</span><span>${c.acs.veh === null ? '—' : c.acs.veh + '%'}</span></li><li><span>Households with broadband</span><span>${c.acs.bb === null ? '—' : c.acs.bb + '%'}</span></li><li><span>Uninsured, all ages / ages 55–64</span><span>${c.acs.unins === null ? '—' : c.acs.unins + '%'} / ${c.acs.unins55 === null ? '—' : c.acs.unins55 + '%'}</span></li><li><span>Poverty rate</span><span>${c.acs.pov === null ? '—' : c.acs.pov + '%'}</span></li></ul>` : '<p class="note">No ACS household data for this county.</p>';
     pane.innerHTML = `<div class="card hero"><p class="kicker">County</p><h2>${esc(c.n)}, ${c.s2}</h2><p class="member">${fmt(c.p)} residents 55+</p>
-      ${statHTML(fa ? `${fmt(n)} <small>of ${fmt(c.t)}</small>${basket(n, nB)}` : fmt(c.t), fa ? '' : (c.t === 1 ? ' trial' : ' trials'), (fa ? 'eligible trials in the county match the filters; ' : 'with a recruiting site in the county, open to patients 55+; ') + fmt(c.f) + ' facilit' + (c.f === 1 ? 'y' : 'ies') + '. ' + menu, c.t === 0 ? 'hot' : '')}
-      ${statHTML((fa ? `${fmt(n60)} <small>of ${fmt(c.t60)}</small>${basket(n60, n60B)}` : fmt(c.t60)), fa ? '' : ' trials', 'have a recruiting site within 60 road-miles of the county population center (' + fmt(c.f60) + ' facilities in ' + fmt(c.nb.length) + ' locations).', (fa ? n60 : c.t60) < 20 ? 'hot' : '')}
+      ${statHTML(`<button class="linkish" data-open="in" title="Open the list of these trials">${fa ? `${fmt(n)} <small>of ${fmt(c.t)}</small>` : fmt(c.t)}</button>${fa ? basket(n, nB) : ''}`, fa ? '' : (c.t === 1 ? ' trial' : ' trials'), (fa ? 'eligible trials in the county match the filters; ' : 'with a recruiting site in the county, open to patients 55+; ') + `<button class="linkish" data-open-sites="in">${fmt(c.f)} recruiting site${c.f === 1 ? '' : 's'}</button>` + ' (distinct registry names after removing sponsor site codes). ' + menu + (nm && (fa ? n : c.t) === 0 ? ` <b>Nearest site with a matching trial: ${nm.mi} road-miles — ${esc(nm.names)}.</b>` : ''), c.t === 0 ? 'hot' : '')}
+      ${statHTML(`<button class="linkish" data-open="60" title="Open the list of these trials">${fa ? `${fmt(n60)} <small>of ${fmt(c.t60)}</small>` : fmt(c.t60)}</button>${fa ? basket(n60, n60B) : ''}`, fa ? '' : ' trials', 'have a recruiting site within 60 road-miles of the county population center (' + `<button class="linkish" data-open-sites="60">${fmt(c.f60)} sites in ${fmt(c.nb.length)} locations</button>` + ').', (fa ? n60 : c.t60) < 20 ? 'hot' : '')}
       ${roadStat}
       ${c.tr.length ? `<p style="margin:.6rem 0 0"><a class="chip" href="trials.html?county=${k}${filt.type ? '&type=' + filt.type : ''}">See the ${fmt(c.t)} trials and ${fmt(c.f)} facilities in this county →</a></p>` : ''}${shareHTML()}</div>
       <div class="card">${burden}${acs}</div>
-      <p class="note">County figures are not population-weighted; district figures are. "Within 60 road-miles" counts recruiting sites (located by ZIP) within 60 road-miles of the county's population center. NCI-center and broad-menu distances are from the same point.</p>`;
-    pane.scrollTop = 0; wireShare(); pushURL(); }
+      <p class="note">County figures are not population-weighted; district and state figures are. "Within 60 road-miles" counts recruiting sites (located by ZIP) within 60 road-miles of the county's population center.</p>`;
+    pane.scrollTop = 0; wireShare(); facFilter = null; refreshTab(); pushURL(); pane.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => openTrials(b.dataset.open))); pane.querySelectorAll('button[data-open-sites]').forEach(b => b.addEventListener('click', () => { trMode = b.dataset.openSites; document.getElementById('tr-mode').value = trMode; setTab('sites'); })); }
   function clearSelection() { selectedD = selectedC = null; selectedState = ''; pickS.value = ''; fillDistricts(''); svg.classed('dim', false); halo.attr('d', null); sel.attr('d', null); zoomTo(baseVB); refreshLabels(); renderNational(); pushURL(); }
   svg.on('dblclick', clearSelection);
-  function update() { recount(); paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); pushURL(); }
+  function update() { recount(); paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); refreshTab(); pushURL(); }
 
+  // ================= tabs: trials / sites / compare / changes =================
+  const SPI = D.SPI; let tab = 'map', trMode = 'in', trQ = '', siQ = '', facFilter = null, trSort = ['title', 1], siSort = ['n', -1], trShow = 100, siShow = 150, cmpSel = [], cmpSort = ['t', -1];
+  const stCounties = {}; CK.forEach(k => (stCounties[C[k].s2] = stCounties[C[k].s2] || []).push(k));
+  const facOf = (cf, i) => C[cf].fac[i];
+  function scope() {
+    if (selectedC) return { kind: 'county', key: selectedC, label: `${C[selectedC].n}, ${C[selectedC].s2}`, counties: [selectedC] };
+    if (selectedD) { const d = DI[selectedD]; return { kind: 'district', key: selectedD, label: `${d.st}-${cdLabel(d.cd)} (counties overlapping the district)`, counties: d.counties }; }
+    if (selectedState) return { kind: 'state', key: selectedState, label: stName[selectedState], counties: stCounties[selectedState] || [] };
+    return { kind: 'nat', key: '', label: 'United States', counties: CK }; }
+  function scopeFacilities() { const sc = scope(); const out = [];
+    if (sc.kind === 'county' && trMode !== 'in') { const thr = +trMode, seen = new Set(); for (const [sp, mi] of C[sc.key].nbd) { if (mi > thr) break; for (const [cf, i] of SPI[sp]) { const key = cf + ':' + i; if (!seen.has(key)) { seen.add(key); out.push({ cf, i, mi }); } } } return out; }
+    for (const cf of sc.counties) { const f = C[cf].fac; for (let i = 0; i < f.length; i++) out.push({ cf, i, mi: null }); } return out; }
+  function trialRows() { const rows = new Map(); const facs = facFilter ? scopeFacilities().filter(f => facOf(f.cf, f.i)[4] === facFilter) : scopeFacilities();
+    for (const f of facs) { const fa = facOf(f.cf, f.i); for (const j of fa[3]) { if (!pass[j]) continue; let r = rows.get(j); if (!r) { r = { j, sites: [] }; rows.set(j, r); } r.sites.push({ ...f, fa }); } }
+    let out = [...rows.values()]; const q = trQ.trim().toLowerCase();
+    if (q) out = out.filter(r => { const j = r.j; return T.id[j].toLowerCase().includes(q) || T.title[j].toLowerCase().includes(q) || T.iv[j].toLowerCase().includes(q) || T.spn[j].toLowerCase().includes(q) || r.sites.some(s => (s.fa[0] + ' ' + s.fa[1]).toLowerCase().includes(q)); });
+    const [k, dir] = trSort; const val = r => k === 'title' ? T.title[r.j] : k === 'id' ? T.id[r.j] : k === 'ph' ? T.phases[T.ph[r.j]] : k === 'sp' ? T.spn[r.j] : k === 'ct' ? T.types[T.ct[r.j]][1] : k === 'sites' ? r.sites.length : k === 'upd' ? T.upd[r.j] : k === 'mi' ? Math.min(...r.sites.map(s => s.mi ?? 0)) : '';
+    out.sort((a, b) => { const x = val(a), y = val(b); return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y))) * dir; }); return out; }
+  function siteRows() { const facs = scopeFacilities(); const q = siQ.trim().toLowerCase(); const out = [];
+    for (const f of facs) { const fa = facOf(f.cf, f.i); const n = fa[3].reduce((a, j) => a + pass[j], 0); if (q && !(fa[0] + ' ' + fa[1] + ' ' + fa[2]).toLowerCase().includes(q)) continue; out.push({ ...f, fa, n }); }
+    const [k, dir] = siSort; const val = r => k === 'name' ? r.fa[0] : k === 'city' ? r.fa[1] : k === 'n' ? r.n : k === 'mi' ? (r.mi ?? 0) : k === 'county' ? C[r.cf].n : '';
+    out.sort((a, b) => { const x = val(a), y = val(b); return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y))) * dir; }); return out; }
+  const th = (label, key, cur) => `<th data-k="${key}" class="${cur[0] === key ? 'on' : ''}">${label}${cur[0] === key ? (cur[1] > 0 ? ' ▲' : ' ▼') : ''}</th>`;
+  const ageTxt = j => (T.amin[j] === null && T.amax[j] === null) ? 'not stated' : `${T.amin[j] === null ? '—' : T.amin[j]}–${T.amax[j] === null ? 'no cap' : T.amax[j]}`;
+  function renderTrials() { const sc = scope(); const modeSel = document.getElementById('tr-mode'); modeSel.disabled = sc.kind !== 'county'; if (sc.kind !== 'county') { trMode = 'in'; modeSel.value = 'in'; }
+    const rows = trialRows(); const total = rows.length; const fa = filtersActive();
+    document.getElementById('tr-scope').textContent = sc.kind === 'county' && trMode !== 'in' ? `Trials with a recruiting site within ${trMode} road-miles of ${sc.label}` : `Trials with a recruiting site in ${sc.label}`;
+    document.getElementById('tr-count').textContent = `${fmt(total)} trial${total === 1 ? '' : 's'}${fa ? ' matching the filters' : ''}${facFilter ? ' at the selected site' : ''}`; document.getElementById('tr-clearfac').hidden = !facFilter;
+    const el = document.getElementById('tr-table');
+    if (!total) { el.innerHTML = `<div class="empty">${fa ? 'No trials here match the current filters.' : 'No recruiting eligible trial lists a site here.'}${sc.kind === 'county' && trMode !== '120' ? ` <button class="linkish" id="tr-nearby" data-next="${trMode === 'in' ? '60' : trMode === '30' ? '60' : '120'}">Show trials within ${trMode === 'in' || trMode === '30' ? 60 : 120} road-miles instead</button>` : ''}</div>`; const b = document.getElementById('tr-nearby'); if (b) b.addEventListener('click', () => { trMode = b.dataset.next; modeSel.value = trMode; renderTrials(); }); return; }
+    const shown = rows.slice(0, trShow); const nearby = sc.kind === 'county' && trMode !== 'in';
+    el.innerHTML = `<table class="dt"><thead><tr>${th('NCT', 'id', trSort)}${th('Title', 'title', trSort)}${th('Phase', 'ph', trSort)}${th('Sponsor', 'sp', trSort)}${th('Cancer type', 'ct', trSort)}<th>Interventions</th><th>Ages</th>${th('Sites', 'sites', trSort)}${nearby ? th('Nearest', 'mi', trSort) : ''}${th('Updated', 'upd', trSort)}</tr></thead><tbody>` +
+      shown.map(r => { const j = r.j; const named = T.cats[j].map(ci => T.types[ci][1]); const ct = T.types[T.ct[j]][1] + (T.multi[j] ? ` <span class="sub">(basket: names ${esc(named.join(', '))})</span>` : '');
+        return `<tr data-j="${j}"><td class="mono"><a href="https://clinicaltrials.gov/study/${T.id[j]}" target="_blank" rel="noopener">${T.id[j]}</a></td><td>${esc(T.title[j])}</td><td class="mono">${T.phases[T.ph[j]] === 'NA' ? 'N/A' : T.phases[T.ph[j]]}</td><td>${esc(T.spn[j])}<br><span class="sub">${sponsorLabel[T.sponsors[T.sp[j]][0]]}</span></td><td>${ct}</td><td class="sub">${esc(T.iv[j].split(';').slice(0, 4).join('; '))}${T.iv[j].split(';').length > 4 ? '…' : ''}</td><td class="mono">${ageTxt(j)}</td><td class="n"><button class="linkish" data-exp="${j}">${r.sites.length} ▸</button></td>${nearby ? `<td class="n">${Math.min(...r.sites.map(s => s.mi ?? 0))} mi</td>` : ''}<td class="mono sub">${T.upd[j]}</td></tr>`; }).join('') + '</tbody></table>' +
+      (rows.length > trShow ? `<p class="more"><button class="btn" id="tr-more">Show ${Math.min(200, rows.length - trShow)} more of ${fmt(rows.length)}</button></p>` : '');
+    el.querySelectorAll('th[data-k]').forEach(h => h.addEventListener('click', () => { const k = h.dataset.k; trSort = trSort[0] === k ? [k, -trSort[1]] : [k, 1]; renderTrials(); }));
+    el.querySelectorAll('button[data-exp]').forEach(b => b.addEventListener('click', () => { const j = +b.dataset.exp; const tr = b.closest('tr'); const nx = tr.nextElementSibling; if (nx && nx.classList.contains('exp')) { nx.remove(); b.textContent = b.textContent.replace('▾', '▸'); return; }
+      const r = rows.find(x => x.j === j); const row = document.createElement('tr'); row.className = 'exp'; row.innerHTML = `<td colspan="${nearby ? 10 : 9}"><div style="padding:.4rem 0 .6rem"><b>Recruiting sites ${nearby ? 'within ' + trMode + ' road-miles' : 'in ' + esc(sc.label)}</b> (listed as recruiting in the registry): ` +
+        r.sites.sort((a, b) => (a.mi ?? 0) - (b.mi ?? 0)).map(x => `${esc(x.fa[0])}${x.fa[5] ? ' <span class="unfiltered-tag">unresolved name</span>' : ''} — ${esc(x.fa[1])} ${x.fa[2] || ''} (${esc(C[x.cf].n)}, ${C[x.cf].s2})${x.mi !== null ? ` · ${x.mi} road-mi` : ''} <span class="sub">${x.fa[4]}</span>`).join('<br>') + (T.cc[j] ? `<br><span class="sub">Central contact: ${esc(T.cc[j])}</span>` : '') + `<br><span class="sub">Start ${T.start[j] || '—'} · registry record updated ${T.upd[j] || '—'} · interventions: ${esc(T.iv[j])}</span></div></td>`; tr.after(row); b.textContent = b.textContent.replace('▸', '▾'); }));
+    const m = document.getElementById('tr-more'); if (m) m.addEventListener('click', () => { trShow += 200; renderTrials(); }); }
+  function renderSites() { const sc = scope(); const rows = siteRows(); const nearby = sc.kind === 'county' && trMode !== 'in';
+    document.getElementById('si-scope').textContent = nearby ? `Recruiting sites within ${trMode} road-miles of ${sc.label}` : `Recruiting sites in ${sc.label}`; document.getElementById('si-count').textContent = `${fmt(rows.length)} site${rows.length === 1 ? '' : 's'} · ${fmt(rows.filter(r => r.n > 0).length)} with a matching trial · ${fmt(rows.filter(r => r.fa[5]).length)} unresolved names`;
+    const el = document.getElementById('si-table'); if (!rows.length) { el.innerHTML = '<div class="empty">No recruiting sites here.</div>'; return; }
+    el.innerHTML = `<table class="dt"><thead><tr>${th('Institution', 'name', siSort)}${th('City', 'city', siSort)}<th>ZIP</th>${th('County', 'county', siSort)}${nearby ? th('Road-mi', 'mi', siSort) : ''}${th('Matching trials', 'n', siSort)}<th>Site ID</th><th></th></tr></thead><tbody>` +
+      rows.slice(0, siShow).map(r => `<tr><td>${esc(r.fa[0])}${r.fa[5] ? ' <span class="unfiltered-tag" title="Sponsor placeholder name: the location is real but the institution is not identified in the registry">unresolved</span>' : ''}</td><td>${esc(r.fa[1])}</td><td class="mono">${r.fa[2] || ''}</td><td>${esc(C[r.cf].n)}, ${C[r.cf].s2}</td>${nearby ? `<td class="n">${r.mi}</td>` : ''}<td class="n">${r.n}</td><td class="mono sub">${r.fa[4]}</td><td>${r.n ? `<button class="linkish" data-fac="${r.fa[4]}">View trials</button>` : ''}</td></tr>`).join('') + '</tbody></table>' + (rows.length > siShow ? `<p class="more"><button class="btn" id="si-more">Show more (${fmt(rows.length - siShow)} remaining)</button></p>` : '');
+    el.querySelectorAll('th[data-k]').forEach(h => h.addEventListener('click', () => { const k = h.dataset.k; siSort = siSort[0] === k ? [k, -siSort[1]] : [k, 1]; renderSites(); }));
+    el.querySelectorAll('button[data-fac]').forEach(b => b.addEventListener('click', () => { facFilter = b.dataset.fac; setTab('trials'); }));
+    const m = document.getElementById('si-more'); if (m) m.addEventListener('click', () => { siShow += 300; renderSites(); }); }
+  function renderCompare() { const el = document.getElementById('cmp-body'); const st = selectedState || (selectedC ? C[selectedC].s2 : selectedD ? DI[selectedD].st : '');
+    if (!st) { el.innerHTML = '<div class="empty">Pick a state (or any county or district in it) to compare its counties.</div>'; return; }
+    const ks = stCounties[st]; const inc = k => C[k].b && C[k].b[incSite][4] <= 1 ? C[k].b[incSite][0] : null; const cases = k => C[k].b && C[k].b[0][4] <= 1 ? C[k].b[0][3] : null;
+    const val = { n: k => C[k].n, p: k => C[k].p, t: k => cnt[CI[k]], f: k => C[k].f, t60: k => cnt60[CI[k]], rn: k => C[k].rn ?? 9999, rb: k => C[k].rb ?? 9999, inc: k => inc(k) ?? -1, cases: k => cases(k) ?? -1, pov: k => C[k].acs ? C[k].acs.pov ?? -1 : -1 };
+    const [sk, dir] = cmpSort; const sorted = ks.slice().sort((a, b) => { const x = val[sk](a), y = val[sk](b); return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y))) * dir; });
+    const cols = [['County', 'n'], ['Residents 55+', 'p'], ['Trials' + (filtersActive() ? ' (filtered)' : ''), 't'], ['Sites', 'f'], ['Trials within 60 mi', 't60'], ['Road-mi to NCI', 'rn'], ['Road-mi to broad menu', 'rb'], [BSITE[incSite][1] + ' rate', 'inc'], ['Cases/yr (all)', 'cases'], ['Poverty %', 'pov']];
+    const show = v => v === null || v === undefined || v === 9999 || v === -1 ? '—' : (typeof v === 'number' ? fmt(v) : v);
+    el.innerHTML = `<div class="tbar"><span class="scope">${esc(stName[st])} · ${ks.length} counties</span><span class="count">Tick two counties to compare them side by side. Click a column to sort.</span><button class="btn" id="cmp-csv">Download CSV</button></div>` +
+      (cmpSel.length === 2 ? `<div class="cmp-grid">${cmpSel.map(k => { const c = C[k]; const ct = c.b ? c.b[incSite] : null; return `<div class="card"><p class="kicker">County</p><h2 style="font-size:var(--fs-3)">${esc(c.n)}, ${c.s2}</h2>${rowsHTML([['Residents 55+', fmt(c.p)], ['Trials in county' + (filtersActive() ? ' (filtered)' : ''), fmt(cnt[CI[k]])], ['Recruiting sites', fmt(c.f)], ['Trials within 60 road-miles', fmt(cnt60[CI[k]])], ['Road-miles to nearest NCI center', c.rn === null ? 'no route' : fmt(c.rn)], ['Road-miles to a broad menu', c.rb === null ? 'no route' : fmt(c.rb)], [BSITE[incSite][1] + ', per 100,000', ct && ct[4] <= 1 ? ct[0] : ct ? BSTATUS[ct[4]] : '—'], ['Annual new cases, all sites', c.b && c.b[0][4] <= 1 ? fmt(c.b[0][3]) : '—'], ['Poverty rate', c.acs && c.acs.pov !== null ? c.acs.pov + '%' : '—'], ['Households without a vehicle', c.acs && c.acs.veh !== null ? c.acs.veh + '%' : '—']])}<p style="margin:.5rem 0 0"><button class="linkish" data-open="${k}">Open county</button></p></div>`; }).join('')}</div>` : '') +
+      `<table class="dt"><thead><tr><th></th>${cols.map(([l, k]) => th(l, k, cmpSort)).join('')}</tr></thead><tbody>` + sorted.map(k => `<tr><td><input type="checkbox" data-cmp="${k}" ${cmpSel.includes(k) ? 'checked' : ''} aria-label="Select ${esc(C[k].n)}"></td><td><button class="linkish" data-open="${k}">${esc(C[k].n)}</button></td><td class="n">${fmt(C[k].p)}</td><td class="n">${fmt(cnt[CI[k]])}</td><td class="n">${fmt(C[k].f)}</td><td class="n">${fmt(cnt60[CI[k]])}</td><td class="n">${show(C[k].rn)}</td><td class="n">${show(C[k].rb)}</td><td class="n">${show(inc(k))}</td><td class="n">${show(cases(k))}</td><td class="n">${C[k].acs && C[k].acs.pov !== null ? C[k].acs.pov : '—'}</td></tr>`).join('') + '</tbody></table>';
+    el.querySelectorAll('th[data-k]').forEach(h => h.addEventListener('click', () => { const k = h.dataset.k; cmpSort = cmpSort[0] === k ? [k, -cmpSort[1]] : [k, k === 'n' ? 1 : -1]; renderCompare(); }));
+    el.querySelectorAll('input[data-cmp]').forEach(i => i.addEventListener('change', () => { const k = i.dataset.cmp; cmpSel = i.checked ? [...cmpSel.filter(x => x !== k), k].slice(-2) : cmpSel.filter(x => x !== k); renderCompare(); }));
+    el.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => { selectCounty(b.dataset.open); setTab('map'); }));
+    document.getElementById('cmp-csv').addEventListener('click', () => downloadCSV(`counties_${st}.csv`, [['county', 'state', 'residents_55plus', 'trials', 'sites', 'trials_within_60_road_mi', 'road_mi_nci', 'road_mi_broad_menu', 'incidence_' + BSITE[incSite][0], 'annual_cases_all_sites', 'poverty_pct']].concat(sorted.map(k => [C[k].n, C[k].s2, C[k].p, cnt[CI[k]], C[k].f, cnt60[CI[k]], C[k].rn ?? '', C[k].rb ?? '', inc(k) ?? '', cases(k) ?? '', C[k].acs ? C[k].acs.pov ?? '' : ''])))); }
+  function renderChanges() { const el = document.getElementById('chg-body'); const CH = window.CHANGES; if (!CH) { el.innerHTML = '<div class="empty">No refresh comparison is available (changes.js not present).</div>'; return; } const S = CH.summary;
+    const li = (arr, f) => arr.length ? `<ul class="rows">${arr.slice(0, 200).map(f).join('')}</ul>${arr.length > 200 ? `<p class="note">${arr.length - 200} more in refresh_diff.json</p>` : ''}` : '<p class="note">none</p>';
+    el.innerHTML = `<div class="card"><p class="kicker">Registry refresh</p><h2 style="font-size:var(--fs-3)">What changed between ${S.previous_pull.slice(0, 10)} and ${S.current_pull.slice(0, 10)}</h2>
+      <p class="member">Registry data timestamp ${S.current_registry_data || '—'} · eligible trials ${fmt(S.trials_previous)} → ${fmt(S.trials_current)} · recruiting site rows ${fmt(S.recruiting_sites_previous)} → ${fmt(S.recruiting_sites_current)} · ${fmt(S.counties_with_changed_trial_count ?? 0)} counties changed their trial count${S.counties_crossing_a_menu_threshold ? `, ${S.counties_crossing_a_menu_threshold} crossed a menu threshold` : ''}.</p>
+      <p class="note">This reflects the registry's reported information, not live confirmation that a site is enrolling. A trial "no longer listed" usually means its status left Recruiting, or it was withdrawn or suspended.</p></div>
+      <div class="card"><h3 style="margin-top:0">Newly listed trials (${S.trials_new})</h3>${li(CH.new_trials, x => `<li><span><a href="https://clinicaltrials.gov/study/${x.nct_id}" target="_blank" rel="noopener">${x.nct_id}</a> ${esc(x.title)}<br><span class="sub">${esc(x.sponsor || '')} · Phase ${x.phase || 'N/A'}</span></span><span>${x.n_us_sites} US site${x.n_us_sites === 1 ? '' : 's'}</span></li>`)}
+      <h3>No longer listed (${S.trials_no_longer_listed})</h3>${li(CH.no_longer_listed, x => `<li><span><a href="https://clinicaltrials.gov/study/${x.nct_id}" target="_blank" rel="noopener">${x.nct_id}</a> ${esc(x.title)}</span><span class="sub">was ${x.last_status}</span></li>`)}
+      <h3>Field changes on continuing trials (${S.field_changes})</h3>${li(CH.field_changes, x => `<li><span><a href="https://clinicaltrials.gov/study/${x.nct_id}" target="_blank" rel="noopener">${x.nct_id}</a> ${x.field}: <span class="sub">${esc(x.from || '—')}</span> → ${esc(x.to || '—')}</span><span></span></li>`)}</div>
+      <div class="card"><h3 style="margin-top:0">Recruiting sites added at continuing trials (${S.sites_new_at_existing_trials})</h3>${li(CH.sites_new_at_existing_trials, x => `<li><span>${esc(x.facility)}, ${esc(x.city)}, ${x.state}</span><span class="sub">${x.nct_id}</span></li>`)}
+      <h3>Recruiting sites removed at continuing trials (${S.sites_removed_at_existing_trials})</h3>${li(CH.sites_removed_at_existing_trials, x => `<li><span>${esc(x.facility)}, ${esc(x.city)}, ${x.state}</span><span class="sub">${x.nct_id}</span></li>`)}
+      <h3>Counties whose trial count changed most</h3>${li(CH.county_changes || [], x => `<li><span>${esc(x.county)}</span><span>${x.from} → ${x.to}</span></li>`)}</div>`; }
+  function downloadCSV(name, rows) { const csv = rows.map(r => r.map(v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(',')).join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); }
+  document.getElementById('tr-csv').addEventListener('click', () => { const sc = scope(); const rows = trialRows(); downloadCSV(`trials_${sc.kind}_${(sc.key || 'us').replace(/[^\w-]/g, '')}${trMode !== 'in' ? '_within' + trMode + 'mi' : ''}${filt.type ? '_' + filt.type : ''}.csv`,
+    [['nct_id', 'url', 'title', 'phase', 'lead_sponsor', 'sponsor_class', 'cancer_type_primary', 'cancers_named', 'interventions', 'min_age', 'max_age', 'start_date', 'last_update_posted', 'sites_in_scope', 'site_names', 'site_ids', 'nearest_site_road_mi', 'central_contact']].concat(rows.map(r => { const j = r.j; return [T.id[j], 'https://clinicaltrials.gov/study/' + T.id[j], T.title[j], T.phases[T.ph[j]], T.spn[j], sponsorLabel[T.sponsors[T.sp[j]][0]], T.types[T.ct[j]][1], T.cats[j].map(ci => T.types[ci][1]).join('; '), T.iv[j], T.amin[j] ?? '', T.amax[j] ?? '', T.start[j], T.upd[j], r.sites.length, r.sites.map(x => `${x.fa[0]} (${x.fa[1]} ${x.fa[2]})`).join('; '), r.sites.map(x => x.fa[4]).join('; '), r.sites.some(x => x.mi !== null) ? Math.min(...r.sites.map(x => x.mi ?? 0)) : '', T.cc[j]]; }))); });
+  document.getElementById('si-csv').addEventListener('click', () => { const sc = scope(); const rows = siteRows(); downloadCSV(`sites_${sc.kind}_${(sc.key || 'us').replace(/[^\w-]/g, '')}.csv`, [['site_id', 'institution', 'city', 'zip', 'county', 'state', 'road_mi_from_county_center', 'matching_trials', 'unresolved_name']].concat(rows.map(r => [r.fa[4], r.fa[0], r.fa[1], r.fa[2], C[r.cf].n, C[r.cf].s2, r.mi ?? '', r.n, r.fa[5]]))); });
+  document.getElementById('tr-mode').addEventListener('change', e => { trMode = e.target.value; trShow = 100; renderTrials(); });
+  document.getElementById('tr-q').addEventListener('input', e => { trQ = e.target.value; trShow = 100; renderTrials(); }); document.getElementById('si-q').addEventListener('input', e => { siQ = e.target.value; siShow = 150; renderSites(); });
+  document.getElementById('tr-clearfac').addEventListener('click', () => { facFilter = null; renderTrials(); });
+  function setTab(t) { tab = t; document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t)); ['map', 'trials', 'sites', 'compare', 'changes'].forEach(x => document.getElementById(x === 'map' ? 'map-wrap' : 'tab-' + x).hidden = x !== t);
+    document.getElementById('scope-note').textContent = t === 'map' ? '' : `Scope: ${scope().label} — change it with the state / district / county pickers`; if (t === 'trials') renderTrials(); if (t === 'sites') renderSites(); if (t === 'compare') renderCompare(); if (t === 'changes') renderChanges(); pushURL(); }
+  document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+  function openTrials(mode) { trMode = mode; document.getElementById('tr-mode').value = mode; facFilter = null; trShow = 100; setTab('trials'); }
+  function refreshTab() { if (tab === 'trials') renderTrials(); else if (tab === 'sites') renderSites(); else if (tab === 'compare') renderCompare(); }
+  function nearestMatching(k) { for (const [sp, mi] of C[k].nbd) { if (SP[sp].some(j => pass[j])) { const names = SPI[sp].map(([cf, i]) => facOf(cf, i)).filter(fa => fa[3].some(j => pass[j])); return { mi, names: names.slice(0, 2).map(fa => fa[0] + ', ' + fa[1]).join('; ') + (names.length > 2 ? ` (+${names.length - 2})` : '') }; } } return null; }
+  document.getElementById('stamp').textContent = `Registry data ${(D.meta.registry_data_timestamp || '').replace('T', ' ')} · pulled ${D.meta.pull_utc} · incidence ${D.meta.burden.period} · ACS 2023`;
   document.getElementById('foot').innerHTML = `<details><summary>Methods, sources and limits</summary>
   <p><strong>Trials.</strong> ClinicalTrials.gov API v2, pulled ${D.meta.pull}: interventional studies, status Recruiting, primary purpose Treatment, oncology conditions, with a US site whose status is Recruiting or unreported; non-oncology trials and trials with a maximum enrollment age under 55 removed → ${fmt(D.meta.trials)} trials at ${fmt(D.meta.facilities)} registry-listed facilities (distinct facility names per county after removing sponsor site codes; anonymous placeholders such as "Research Site" count once per county) in ${fmt(D.meta.sitepoints)} locations. Sites are assigned to counties by ZIP (Census 2020 ZCTA–county relationship), 3-digit ZIP prefix, then city gazetteer, and located for routing at the ZIP centroid (state-checked), city centroid, or county population center. Menu thresholds (20, 100 trials in a county) follow ASCO's 2024 county analysis.</p>
   <p><strong>People and distances.</strong> Population 55+ from ACS 2023 5-year (B01001) by census tract, reconciled exactly to county totals. Distances are shortest routes on the Census TIGER 2025 primary/secondary road network (nodes at every crossing; connectors within 500 m; an access edge from each population center to the nearest road) from each tract's population center to recruiting-site locations, to the nearest county with 20+ / 100+ trials, and to the nearest of 68 NCI-designated treating centers. District figures weight tracts by residents 55+ using the Census tract–119th Congressional District relationship file (${D.meta.plan}). The router was compared against ${D.meta.router.pairs} <em>approximate</em> published city-pair driving distances (mean difference ${D.meta.router.mean_pct}%, largest ${D.meta.router.max_pct}%); it has <em>not</em> been checked against an independent routing engine using the same start and end coordinates, so treat that figure as directional.</p>
   <p><strong>Other layers.</strong> Cancer type is assigned from registry condition text; ${D.meta.pct_multi}% of trials name several cancers or only generic terms and sit in an explicit multi-cancer bucket (${D.meta.pct_unclassified}% could not be classified). Filtering by a cancer type includes basket trials that name it, and shows how many. Cancer incidence: NCI/CDC State Cancer Profiles (NPCR + SEER), ${D.meta.burden.period}, pulled ${D.meta.burden.pulled}; Kansas does not release county data; counties under 16 average annual cases are flagged, not hidden. Household context: ACS 2023 5-year tables B08201, B28002, B27001, B17001, shown separately, never combined. House members and party from the public unitedstates/congress-legislators dataset (${D.meta.members_pull.split(' ')[0]}); vacancies shown as vacant.</p>
-  <p><strong>Limits.</strong> Counts are of trials, not of trials a given patient is eligible for. The road graph is highway-only: the last mile is a straight-line access edge and drive times use fixed per-class speeds. Alaska and the Hawaiian islands have no road connection to any broad-menu county or NCI center and are labelled as such, never scored. District and national summaries do not respond to the filters (they are tagged when filters are on). Registry status lags real enrollment. Re-pull before citing.</p></details>`;
-  const u = readURL(); recount(); paint();
+  <p><strong>Limits.</strong> Counts are of trials, not of trials a given patient is eligible for. The road graph is highway-only: the last mile is a straight-line access edge and drive times use fixed per-class speeds. Alaska and the Hawaiian islands have no road connection to any broad-menu county or NCI center and are labelled as such, never scored. With filters on, the access figure for the nation, a state or a district is recomputed live from census tracts (the page loads a 6 MB tract file once); distance-to-menu and distance-to-NCI-center figures and the breakdown lists depend on all trials and are tagged. Registry status lags real enrollment. Re-pull before citing.</p></details>`;
+  fillMetricSelect(); const u = readURL(); fillMetricSelect(); recount(); paint();
   if (u.d && DI[u.d]) selectDistrict(u.d); else if (u.c && C[u.c]) selectCounty(u.c); else if (u.s && stName[u.s]) { selectedState = u.s; pickS.value = u.s; fillDistricts(u.s); zoomState(u.s); refreshLabels(); renderStateOverview(u.s); } else renderNational();
+  if (u.tab && ['trials', 'sites', 'compare', 'changes'].includes(u.tab)) setTab(u.tab);
 })();
 </script>
 </body>

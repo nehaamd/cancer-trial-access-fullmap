@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cancer trial access brief</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
+<style>
+  :root{--ink:#1B2430;--ink-2:#4B5563;--ink-3:#7C8794;--rule:#E4E1DA;--navy:#0B3C5D;--rust:#8A3B1E;--gulf:#3F7FB5}
+  *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.45;background:#fff}
+  .page{max-width:8.5in;margin:0 auto;padding:.7in .75in}
+  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:2px solid var(--navy);padding-bottom:.5rem;margin-bottom:.9rem}
+  h1{font-size:1.6rem;margin:0;letter-spacing:-.02em;line-height:1.15} .kicker{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--ink-3);font-weight:700;margin:0 0 .2rem}
+  .member{color:var(--ink-2);margin:.2rem 0 0} .tools{font-size:.8rem;text-align:right} .tools a,.tools button{color:var(--gulf);font:inherit;background:none;border:0;cursor:pointer;text-decoration:underline;padding:0;margin-left:.6rem}
+  .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;align-items:start}
+  .stat{border-left:3px solid var(--rule);padding:.35rem 0 .35rem .7rem;margin:0 0 .6rem} .stat.hot{border-left-color:var(--rust)} .stat b{font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em} .stat p{margin:.15rem 0 0;font-size:.9rem;max-width:36ch}
+  svg{width:100%;height:auto;display:block;border:1px solid var(--rule)} .c{fill:#F1EFEA;stroke:#fff;stroke-width:.4} .c.t{fill:#9EC4E0} .c.b{fill:#0B3C5D} .hi{fill:none;stroke:var(--rust);stroke-width:2.2} .nci{fill:#F5C518;stroke:#3a2f00;stroke-width:.5}
+  h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-2);margin:1rem 0 .3rem}
+  ul.rows{list-style:none;margin:0;padding:0;font-size:.88rem} ul.rows li{display:flex;justify-content:space-between;gap:1rem;padding:.22rem 0;border-top:1px solid var(--rule)} ul.rows li span:last-child{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .defs{font-size:.8rem;color:var(--ink-2);columns:2;column-gap:1.4rem} .defs p{margin:0 0 .45rem;break-inside:avoid} .defs b{color:var(--ink)}
+  .foot{font-size:.74rem;color:var(--ink-3);border-top:1px solid var(--rule);margin-top:.8rem;padding-top:.4rem}
+  @media print{.tools{display:none} .page{padding:0;max-width:none} @page{margin:.6in}}
+</style>
+</head>
+<body><div class="page">
+<div class="top"><div><p class="kicker" id="kicker">Cancer clinical trial access brief</p><h1 id="title">…</h1><p class="member" id="member"></p></div><div class="tools"><button onclick="window.print()">Print / save as PDF</button><a id="back" href="index.html">Open in the map</a></div></div>
+<div class="grid"><div id="stats"></div><div><svg id="map" viewBox="0 0 480 300"></svg><p style="font-size:.74rem;color:var(--ink-3);margin:.3rem 0 0" id="maplegend"></p></div></div>
+<div id="extra"></div>
+<h2>Definitions</h2>
+<div class="defs" id="defs"></div>
+<div class="foot" id="foot"></div>
+</div>
+<script src="data.js"></script><script src="geo.js"></script>
+<script>
+(function(){
+  const D = window.DATA, GEO = window.GEO, C = D.counties, DI = D.districts, p = new URLSearchParams(location.search); const fmt = d3.format(','), pct = v => (Math.round(v*10)/10).toLocaleString(undefined,{maximumFractionDigits:1});
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); const cdLabel = cd => (cd==='0'||cd==='98') ? 'AL' : cd; const stName = {}; D.states.forEach(s => stName[s[0]] = s[1]);
+  const FIPS2USPS = {"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
+  const rows = r => `<ul class="rows">${r.map(([a,b]) => `<li><span>${a}</span><span>${b}</span></li>`).join('')}</ul>`; const stat = (n, u, t, hot) => `<div class="stat${hot?' hot':''}"><b>${n}</b><small> ${u}</small><p>${t}</p></div>`;
+  let kind, g, st, title, member = '', hiFeat = null, kicker = 'Cancer clinical trial access brief';
+  if (p.get('d') && DI[p.get('d')]) { kind = 'district'; g = DI[p.get('d')]; st = g.st; title = `${g.st}-${cdLabel(g.cd)}, ${stName[g.st]}`; member = g.member ? `${g.member} (${g.party})` : 'Vacant seat'; kicker = 'Congressional district · ' + D.meta.plan; hiFeat = GEO.districts.features.find(f => f.properties.id === p.get('d')); document.getElementById('back').href = `index.html?d=${p.get('d')}`; }
+  else if (p.get('c') && C[p.get('c')]) { kind = 'county'; const c = C[p.get('c')]; st = FIPS2USPS[c.s]; title = `${c.n} County, ${st}`; kicker = 'County'; hiFeat = GEO.counties.features.find(f => f.properties.id === p.get('c')); document.getElementById('back').href = `index.html?c=${p.get('c')}`;
+    g = { p: c.p, county: c }; }
+  else if (p.get('s') && D.state_data[p.get('s')]) { kind = 'state'; st = p.get('s'); g = D.state_data[st]; title = stName[st]; kicker = 'State'; hiFeat = (GEO.states||{features:[]}).features.find(f => f.properties.id === st); document.getElementById('back').href = `index.html?s=${st}`; }
+  else { kind = 'nat'; g = { ...D.meta.nat_core, ctx: D.meta.nat_ctx }; title = 'United States'; kicker = 'National'; }
+  document.getElementById('title').textContent = title; document.getElementById('member').textContent = member; document.getElementById('kicker').textContent = kicker;
+  const S = document.getElementById('stats');
+  if (kind === 'county') { const c = g.county; const b = c.b ? c.b[0] : null;
+    S.innerHTML = stat(fmt(c.t), c.t === 1 ? 'recruiting trial' : 'recruiting trials', `with a site in the county, open to patients 55+, at ${fmt(c.f)} recruiting sites. ${c.t >= 100 ? 'A broad menu (100+).' : c.t >= 20 ? 'A limited menu (20–99).' : c.t ? '' : 'No recruiting eligible trial lists a site here.'}`, c.t === 0)
+      + stat(fmt(c.t60), 'trials', `have a recruiting site within 60 road-miles of the county population center (${fmt(c.f60)} sites).`, c.t60 < 20)
+      + (c.rn === null ? stat('—', '', 'No road route to an NCI-designated center (island or off the highway network).') : stat(fmt(c.rn), 'road-mi', `to the nearest NCI-designated cancer center, ${esc(c.nn)}${c.hn !== null ? ` (about ${c.hn} h)` : ''}.`, c.rn >= 150))
+      + (c.rb === null ? '' : stat(c.rb === 0 ? '0' : fmt(c.rb), 'road-mi', c.rb === 0 ? 'This county is itself a broad menu.' : `to the nearest county with 100+ trials (${esc(c.nbm)}).`, c.rb >= 120));
+    document.getElementById('extra').innerHTML = `<h2>Cancer burden and household context</h2>` + rows([['Residents 55+', fmt(c.p)], ['All-sites cancer incidence, age-adjusted per 100,000 (2018–2022)', b && b[4] <= 1 ? `${b[0]}${b[4] === 1 ? ' (small numbers)' : ''}` : 'not available'], ['Average annual new cancer cases', b && b[4] <= 1 ? fmt(b[3]) : 'not available'], ['Eligible trials within 60 road-miles per 100 annual diagnoses', b && b[4] === 0 && b[3] ? (100 * c.t60 / b[3]).toFixed(1) : '—'], ['Households without a vehicle', c.acs && c.acs.veh !== null ? c.acs.veh + '%' : '—'], ['Households with broadband', c.acs && c.acs.bb !== null ? c.acs.bb + '%' : '—'], ['Uninsured, ages 55–64', c.acs && c.acs.unins55 !== null ? c.acs.unins55 + '%' : '—'], ['Poverty rate', c.acs && c.acs.pov !== null ? c.acs.pov + '%' : '—']]); }
+  else { const x = g.ctx || {};
+    S.innerHTML = stat(pct(g.l20), '%', `of residents 55+ have fewer than 20 eligible trials within 60 road-miles of home; ${pct(g.z60)}% have none. A typical resident has ${fmt(g.t60)} within 60 road-miles.`, g.l20 >= 50)
+      + stat(pct(g.g60b), '%', `live more than 60 road-miles from a broad menu (a county with 100+ trials); ${pct(g.g120b)}% more than 120.`, g.g60b >= 50)
+      + stat(g.medn === null ? '—' : fmt(g.medn), g.medn === null ? '' : 'road-mi', `median road distance to the nearest NCI-designated cancer center; ${pct(g.g60n)}% are more than 60 road-miles from one.`, g.medn !== null && g.medn >= 150);
+    document.getElementById('extra').innerHTML = `<h2>Cancer burden and household context</h2>` + rows([['Residents 55+', fmt(g.p)], [kind === 'state' ? 'Recruiting trials with a site in the state · sites' : kind === 'district' ? 'Census tracts' : 'Recruiting trials · sites', kind === 'state' ? `${fmt(g.trials)} · ${fmt(g.fac)}` : kind === 'district' ? fmt(g.nt) : `${fmt(D.meta.trials)} · ${fmt(D.meta.facilities)}`],
+      ['All-sites cancer incidence, age-adjusted per 100,000 (2018–2022)' + (kind === 'state' && g.binc && g.binc.all[0] !== null ? '' : ', residents-weighted county mean'), kind === 'state' && g.binc && g.binc.all[0] !== null ? g.binc.all[0] : x.inc !== null && x.inc !== undefined ? x.inc : 'not available'], ['Average annual new cancer cases', kind === 'state' && g.binc && g.binc.all[1] ? fmt(g.binc.all[1]) : x.cases ? fmt(x.cases) : '—'],
+      ['Households without a vehicle', x.veh != null ? x.veh + '%' : '—'], ['Households with broadband', x.bb != null ? x.bb + '%' : '—'], ['Uninsured, ages 55–64', x.unins55 != null ? x.unins55 + '%' : '—'], ['Poverty rate', x.pov != null ? x.pov + '%' : '—']]); }
+  // map: the state (or country) with the geography highlighted
+  const svg = d3.select('#map'), W = 480, H = 300; const feats = kind === 'nat' ? GEO.counties.features : GEO.counties.features.filter(f => C[f.properties.id] && FIPS2USPS[C[f.properties.id].s] === st);
+  const fc = { type: 'FeatureCollection', features: feats }; const proj = d3.geoAlbersUsa().fitSize([W - 8, H - 8], fc); proj.translate([proj.translate()[0] + 4, proj.translate()[1] + 4]); const path = d3.geoPath(proj);
+  svg.append('g').selectAll('path').data(feats).join('path').attr('d', path).attr('class', f => { const c = C[f.properties.id]; return 'c' + (c && c.t >= 100 ? ' b' : c && c.t > 0 ? ' t' : ''); });
+  if (kind !== 'nat') svg.append('g').selectAll('path').data(GEO.districts.features.filter(f => f.properties.s === st)).join('path').attr('d', path).attr('fill', 'none').attr('stroke', '#7C8794').attr('stroke-width', .6);
+  if (hiFeat) svg.append('path').attr('class', 'hi').attr('d', path(hiFeat));
+  svg.append('g').selectAll('path').data(D.nci.filter(n => kind === 'nat' || n.st === st)).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(60)).attr('transform', n => { const q = proj([n.lon, n.lat]); return q ? `translate(${q})` : 'translate(-100,-100)'; });
+  document.getElementById('maplegend').textContent = `Counties: dark = 100+ trials (broad menu), light blue = at least one trial, grey = none. Stars: NCI-designated cancer centers. ${hiFeat ? 'Outlined in red: this ' + kind + '.' : ''}`;
+  document.getElementById('defs').innerHTML = `<p><b>Eligible trial.</b> An interventional cancer treatment trial listed as Recruiting on ClinicalTrials.gov with at least one US site, open to at least one patient aged 55 or older.</p><p><b>Recruiting site.</b> A distinct registry facility name in a county after removing sponsor site codes; located at its ZIP-code centroid for routing.</p><p><b>Within 60 road-miles.</b> Shortest route on the Census primary/secondary highway network from the census tract's (or county's) population center to a recruiting site.</p><p><b>Broad / limited menu.</b> A county with 100+ / 20+ eligible trials (thresholds from ASCO's 2024 county analysis).</p><p><b>NCI-designated center.</b> One of the ${D.nci.length} NCI-designated treating centers in the pipeline's list; verify designations on cancer.gov before citing.</p><p><b>Population weighting.</b> District, state and national shares are weighted by residents 55+ in each census tract (ACS 2023 5-year).</p><p><b>Incidence.</b> Age-adjusted rate per 100,000, NCI/CDC State Cancer Profiles, 2018–2022; annual cases are the average over the same period. Kansas does not release county data.</p><p><b>Household context.</b> ACS 2023 5-year, all ages, county values (residents-55+-weighted means for larger areas).</p>`;
+  document.getElementById('foot').textContent = `Sources: ClinicalTrials.gov API v2 (registry data ${(D.meta.registry_data_timestamp || '').replace('T',' ')}, pulled ${D.meta.pull_utc}); Census TIGER 2025 roads; ACS 2023 5-year; Census 2020 tract–CD119 relationship file; NCI/CDC State Cancer Profiles 2018–2022; unitedstates/congress-legislators (${D.meta.members_pull.split(' ')[0]}). Router compared against ${D.meta.router.pairs} approximate published city-pair distances (mean difference ${D.meta.router.mean_pct}%); not yet checked against an independent routing engine. Generated ${new Date().toISOString().slice(0,10)} from the National Cancer Trial Access Map v3.`;
+})();
+</script>
+</body></html>

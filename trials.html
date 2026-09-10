@@ -58,12 +58,13 @@
   const filt = { phase: new Set(T.phases), sponsor: new Set(T.sponsors.map(s => s[0])), type: (new URLSearchParams(location.search).get('type') || '') };
   const fp = document.getElementById('f-phase'); T.phases.forEach(p => { const l = document.createElement('label'); const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.phase.add(p) : filt.phase.delete(p); render(); }); l.appendChild(i); l.appendChild(document.createTextNode(p === 'NA' ? 'N/A (not phased)' : 'Phase ' + p)); fp.appendChild(l); });
   const fs = document.getElementById('f-sponsor'); T.sponsors.forEach(([k, lab]) => { const l = document.createElement('label'); const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.sponsor.add(k) : filt.sponsor.delete(k); render(); }); l.appendChild(i); l.appendChild(document.createTextNode(lab)); fs.appendChild(l); });
-  const ft = document.getElementById('f-type'); T.types.filter(([k]) => T.named_types.includes(k)).forEach(([k, lab]) => { const o = document.createElement('option'); o.value = k; o.textContent = lab; ft.appendChild(o); }); ft.value = filt.type; ft.addEventListener('change', () => { filt.type = ft.value; render(); });
+  const ft = document.getElementById('f-type'); T.types.forEach(([k, lab]) => { const o = document.createElement('option'); o.value = k; o.textContent = lab; ft.appendChild(o); }); ft.value = filt.type; ft.addEventListener('change', () => { filt.type = ft.value; render(); });
   const ftNote = document.createElement('span'); ftNote.style.color = 'var(--ink-3)'; ftNote.textContent = ' (includes basket trials naming this cancer)'; ft.after(ftNote);
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   function render() {
     const ti = filt.type ? T.types.findIndex(t => t[0] === filt.type) : -1;
-    const rows = c.tr.filter(j => filt.phase.has(T.phases[T.ph[j]]) && filt.sponsor.has(T.sponsors[T.sp[j]][0]) && (ti < 0 || T.cats[j].includes(ti))).sort((a, b) => T.title[a].localeCompare(T.title[b]));
+    const bucket = filt.type === 'multi' || filt.type === 'other_unclassified';
+    const rows = c.tr.filter(j => filt.phase.has(T.phases[T.ph[j]]) && filt.sponsor.has(T.sponsors[T.sp[j]][0]) && (ti < 0 || (bucket ? T.ct[j] === ti : T.cats[j].includes(ti)))).sort((a, b) => T.title[a].localeCompare(T.title[b]));
     const active = filt.phase.size < T.phases.length || filt.sponsor.size < T.sponsors.length || !!filt.type;
     document.getElementById('f-state').textContent = active ? `Showing ${rows.length} of ${c.tr.length} trials` : `${c.tr.length} trials`;
     const el = document.getElementById('list');
