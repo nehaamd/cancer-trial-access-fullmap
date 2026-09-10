@@ -1,0 +1,10 @@
+# large or regenerable inputs (rebuilt by build_roads_us.py / route_us.py / fetch_us.py)
+data/roads/tl_2025_*.zip
+data/roads/seg_*.npz
+data/roads/graph_us.npz
+data/roads/route_cache.npz
+data/raw/studies_raw.jsonl
+data/geo/*.zip
+__pycache__/
+*.log
+data/roads/route_cache_sites.npz
