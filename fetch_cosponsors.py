@@ -1,8 +1,6 @@
 """Cosponsor tracking for the bills this site follows, joined to House districts and Senate seats.
 
 Tracked (119th Congress):
-  EPIC Act (Ensuring Pathways to Innovative Cures) — H.R. 1492 (Murphy) and S. 832 (Tillis): equalises the Medicare
-      negotiation timeline for small-molecule drugs (9 years) with biologics (13 years).
   Clinical Trial Modernization Act — H.R. 3521 (Ruiz) and S. 4440 (Scott): grants for trial outreach in underserved
       communities, anti-kickback safe harbours for participant expense reimbursement and free digital health tools, and a
       tax exclusion for trial participation payments.
@@ -24,13 +22,13 @@ from datetime import date
 from pathlib import Path
 
 BILLS = [
-    {"key": "epic_hr", "congress": 119, "type": "hr", "number": 1492, "topic": "epic", "label": "H.R. 1492", "short": "EPIC Act"},
-    {"key": "epic_s", "congress": 119, "type": "s", "number": 832, "topic": "epic", "label": "S. 832", "short": "EPIC Act"},
     {"key": "ctma_hr", "congress": 119, "type": "hr", "number": 3521, "topic": "ctma", "label": "H.R. 3521", "short": "Clinical Trial Modernization Act"},
     {"key": "ctma_s", "congress": 119, "type": "s", "number": 4440, "topic": "ctma", "label": "S. 4440", "short": "Clinical Trial Modernization Act"},
+    # To track another bill, add its House and/or Senate entry here with a shared "topic", and describe the topic in TOPICS, e.g.
+    # {"key": "epic_hr", "congress": 119, "type": "hr", "number": 1492, "topic": "epic", "label": "H.R. 1492", "short": "EPIC Act"},
+    # {"key": "epic_s",  "congress": 119, "type": "s",  "number": 832,  "topic": "epic", "label": "S. 832",    "short": "EPIC Act"},
 ]
-TOPICS = {"epic": {"name": "EPIC Act", "long": "Ensuring Pathways to Innovative Cures Act", "what": "would give small-molecule (mostly oral) drugs the same 13-year window before Medicare price negotiation that biologics have, instead of 9 years"},
-          "ctma": {"name": "Clinical Trial Modernization Act", "long": "Clinical Trial Modernization Act", "what": "would fund trial outreach in underserved and rural communities and let sponsors cover participants' travel and other costs without anti-kickback exposure"}}
+TOPICS = {"ctma": {"name": "Clinical Trial Modernization Act", "long": "Clinical Trial Modernization Act", "what": "would fund trial outreach in underserved and rural communities and let sponsors cover participants' travel and other costs without anti-kickback exposure"}}
 STFIPS = {"AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08", "CT": "09", "DE": "10", "DC": "11", "FL": "12", "GA": "13", "HI": "15", "ID": "16", "IL": "17", "IN": "18", "IA": "19", "KS": "20", "KY": "21",
           "LA": "22", "ME": "23", "MD": "24", "MA": "25", "MI": "26", "MN": "27", "MS": "28", "MO": "29", "MT": "30", "NE": "31", "NV": "32", "NH": "33", "NJ": "34", "NM": "35", "NY": "36", "NC": "37", "ND": "38", "OH": "39",
           "OK": "40", "OR": "41", "PA": "42", "RI": "44", "SC": "45", "SD": "46", "TN": "47", "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53", "WV": "54", "WI": "55", "WY": "56"}

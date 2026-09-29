@@ -43,9 +43,9 @@ def run(browser=False):
         legis = json.load(open(find("legislators-current.json"))); ids = {l["id"]["bioguide"] for l in legis}
         allm = {b for bills in CO["by_member"].values() for b in bills}; unresolved = [k for k in CO["by_member"] if k not in ids]
         check("Cosponsors: every sponsor / cosponsor bioguide ID resolves to a current member of Congress", f"{len(CO['by_member'])} members on {len(allm)} bills; unresolved: {unresolved or 'none'}", not unresolved)
-        b = CO["bills"]; exp = {"epic_hr": ("M001210", "hr", 1492), "epic_s": ("T000476", "s", 832), "ctma_hr": ("R000599", "hr", 3521), "ctma_s": ("S001184", "s", 4440)}
-        ok = all(b[k]["sponsor"] == v[0] and b[k]["type"] == v[1] and b[k]["number"] == v[2] for k, v in exp.items())
-        check("Cosponsors: bill numbers and sponsors as expected (Murphy H.R. 1492, Tillis S. 832, Ruiz H.R. 3521, Scott S. 4440)", "; ".join(f"{b[k]['label']} {CO['members'][b[k]['sponsor']]['name']} ({b[k]['n_cosponsors']} cosponsors)" for k in exp), ok)
+        b = CO["bills"]; exp = {"ctma_hr": ("R000599", "hr", 3521), "ctma_s": ("S001184", "s", 4440)}
+        ok = all(k in b and b[k]["sponsor"] == v[0] and b[k]["type"] == v[1] and b[k]["number"] == v[2] for k, v in exp.items()) and not any(k.startswith("epic") for k in b)
+        check("Cosponsors: the tracked bills are the Clinical Trial Modernization Act only (Ruiz H.R. 3521, Scott S. 4440)", "; ".join(f"{b[k]['label']} {CO['members'][b[k]['sponsor']]['name']} ({b[k]['n_cosponsors']} cosponsors)" for k in b), ok)
         pf = CO["by_member"].get("P000048", {}).get("ctma_hr", {}); check("Cosponsors: TX-11 (Pfluger) is an original cosponsor of H.R. 3521, not its sponsor (corrects the v3.2 label)", f"role = {pf.get('role')} ({pf.get('date')})", pf.get("role") == "original")
         nd = len(CO["district_map"]); vac = len(D["meta"]["vacant"]); check("Cosponsors: district → member map covers every non-vacant House seat (+ DC delegate)", f"{nd} mapped; {vac} vacant in the payload; 436 district rows", nd + vac == 436)
         ns = sum(len(v) for v in CO["senators"].values()); check("Cosponsors: 100 senators mapped to states", f"{ns} senators across {len(CO['senators'])} states", ns == 100)
