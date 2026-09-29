@@ -19,7 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - name: Pull sponsor and cosponsor lists from the bill-status feed
-        env: { CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }} }
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
         run: python fetch_cosponsors.py --require-network
       - name: Check the result (every ID resolves to a sitting member, chambers match, seats mapped)
         run: pip install -q pandas numpy && python validate_extras.py

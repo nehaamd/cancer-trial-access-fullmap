@@ -27,7 +27,8 @@ jobs:
           d=$(python -c "import json;print(json.load(open('data/raw/fetch_log.json'))['timestamp_utc'][:10])")
           mkdir -p data/snapshots/$d && cp data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv out_adult55/county_metrics.csv data/snapshots/$d/ || true
       - name: Refresh chain
-        env: { CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }} }   # optional; govinfo BILLSTATUS needs no key
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}   # optional; govinfo BILLSTATUS needs no key
         run: sh run_refresh.sh
       - run: python diff_snapshots.py
       - name: Commit and publish
