@@ -1,0 +1,51 @@
+{
+ "built": "2026-09-29",
+ "median_all": 466.5,
+ "national": {
+  "counties_classified": 3026,
+  "hb_la_counties": 514,
+  "hb_la_pop55": 4383276,
+  "hb_la_cases": 89045,
+  "hb_la_small_numbers": 29,
+  "cells": {
+   "hb_la": 514,
+   "hb_ok": 967,
+   "lb_la": 798,
+   "lb_ok": 747
+  },
+  "top": [
+   "12073",
+   "22055",
+   "06007",
+   "28047",
+   "12005",
+   "12113",
+   "22019",
+   "47163",
+   "13215",
+   "18163"
+  ]
+ },
+ "types": [
+  "bladder_urothelial",
+  "brain_cns",
+  "breast",
+  "colorectal",
+  "gastric_esophageal",
+  "gynecologic",
+  "head_neck",
+  "kidney",
+  "leukemia",
+  "liver_biliary",
+  "lung",
+  "lymphoma",
+  "mds_mpn",
+  "melanoma_skin",
+  "myeloma",
+  "neuroendocrine_endocrine",
+  "other_named",
+  "pancreatic",
+  "prostate",
+  "sarcoma"
+ ]
+}

@@ -142,6 +142,11 @@ def main():
         mono = bool((gs.pop55_newly_covered.diff().dropna() <= 0).all()); check("Tier 4: greedy marginal gains are non-increasing", f"{len(gs)} picks; first {int(gs.pop55_newly_covered.iloc[0]):,}, last {int(gs.pop55_newly_covered.iloc[-1]):,}; {gs.pct_of_uncovered_pop55.iloc[-1]}% of uncovered reached", mono)
         check("Tier 4: candidate universe is the intended one (CoC + NCORP)", f"universe = {t4['universe_label']}", "stand-in" not in t4["universe_label"], "registry-derived stand-in used because www.facs.org / ncorp.cancer.gov were not reachable; results are labelled a research prototype in the UI until the intended universe is substituted")
         check("Tier 4: plausibility read of top picks", "; ".join(f"{g['city']} {g['state']}" for g in t4["greedy"][:10]), True, "same-session read: all known rural/remote gaps; not independently reviewed")
+    # 12 v3.3 additions (rural/urban codes, cosponsors, burden vs access, ZIP lookup) — see validate_extras.py
+    if Path("validate_extras.py").exists():
+        try:
+            from validate_extras import run as extras; rows.extend(extras("--browser" in sys.argv))
+        except Exception as e: check("v3.3 extras", f"validate_extras.py failed: {type(e).__name__} {e}", False)
     # write report
     md = ["# Validation — National Cancer Trial Access Map v3", "", f"Registry pull 2026-09-09; road graph TIGER 2025; ACS 2023 5-year; State Cancer Profiles 2018–2022. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d')}.", "",
           "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]

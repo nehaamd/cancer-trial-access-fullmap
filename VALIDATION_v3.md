@@ -42,6 +42,37 @@ Registry pull 2026-09-09; road graph TIGER 2025; ACS 2023 5-year; State Cancer P
 | Tier 4: candidate universe is the intended one (CoC + NCORP) | universe = registry stand-in (facilities that hosted an oncology treatment trial started 2016+) | ✗ | registry-derived stand-in used because www.facs.org / ncorp.cancer.gov were not reachable; results are labelled a research prototype in the UI until the intended universe is substituted |
 | Tier 4: plausibility read of top picks | Jackson TN; Sheffield AL; Idaho Falls ID; Yuma AZ; Redding CA; Lufkin TX; Sioux City IA; Hilo HI; Bloomington IN; Plattsburgh NY | ✓ | same-session read: all known rural/remote gaps; not independently reviewed |
 
+## Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)
+
+Checks re-run by `validate_extras.py` on 2026-09-29.
+
+| Check | Result | Pass | Context |
+|---|---|---|---|
+| RUCC: every county carries a code; 2013 fallback limited to Connecticut | 3143 coded, 0 missing; 2013 fallback: 8 (09001, 09003, 09005, 09007, 09009, 09011, 09013, 09015) | ✓ |  |
+| RUCC: metro + nonmetro residents 55+ equal the national total; their weighted <20 / none shares reproduce the national figures | 98,596,429 vs 98,596,429; weighted <20 12.76% vs 12.8%; none 4.59% vs 4.6% | ✓ |  |
+| RUCC: nonmetro '<20 within 60 road-mi' share recomputed independently from tract_access.csv | 45.2% vs rucc.js 45.2%; metro 6.6% (nonmetro / metro ratio 6.8×) | ✓ |  |
+| RUCC: state metro + nonmetro populations equal state totals | 0 mismatches | ✓ |  |
+| tract_county.bin: every tract maps back to its own county through meta.county_order | 84,396 of 84,396 tracts; 3143 counties in order list | ✓ |  |
+| Cosponsors: every sponsor / cosponsor bioguide ID resolves to a current member of Congress | 88 members on 4 bills; unresolved: none | ✓ |  |
+| Cosponsors: bill numbers and sponsors as expected (Murphy H.R. 1492, Tillis S. 832, Ruiz H.R. 3521, Scott S. 4440) | H.R. 1492 Gregory F. Murphy (68 cosponsors); S. 832 Thom Tillis (7 cosponsors); H.R. 3521 Raul Ruiz (12 cosponsors); S. 4440 Tim Scott (1 cosponsors) | ✓ |  |
+| Cosponsors: TX-11 (Pfluger) is an original cosponsor of H.R. 3521, not its sponsor (corrects the v3.2 label) | role = original (2025-05-20) | ✓ |  |
+| Cosponsors: district → member map covers every non-vacant House seat (+ DC delegate) | 434 mapped; 2 vacant in the payload; 436 district rows | ✓ |  |
+| Cosponsors: 100 senators mapped to states | 100 senators across 50 states | ✓ |  |
+| Cosponsors: House bills carry only representatives, Senate bills only senators | chambers consistent | ✓ |  |
+| Cosponsors: freshness of the pull | fetched 2026-09-29 (1 days ago) from govinfo.gov bulk data BILLSTATUS XML (ht… | ✓ | re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date |
+| Burden: county '<20 within 60 road-mi' shares recomputed from tract_access.csv; their population-weighted mean equals the national share | max |diff| 0.05 pts (rounding); weighted mean 12.76% vs national 12.8% | ✓ |  |
+| Burden: national median and the high-burden/low-access cell recomputed independently | median 466.5 vs 466.5; cell 514 counties / 4,383,276 residents 55+ vs burden.js 514 / 4,383,276; 3026 classified | ✓ |  |
+| Burden: the four cells partition the classified counties | 514 + 967 + 798 + 747 = 3026 vs 3026 | ✓ |  |
+| Burden: plausibility read of the largest high-burden/low-access counties by annual diagnoses | Leon (12); Lafayette (22); Butte (06); Harrison (28); Bay (12) | ✓ | same-session read; mid-sized metros without a trial hub within 60 road-miles — not independently reviewed |
+| Burden: cancer-type-specific 'none within 60 road-mi' shares present for every named type | 20 types × 3143 counties | ✓ |  |
+| ZIP lookup: site points match the payload one-to-one; ZCTAs cover the 50 states + DC | 2464 site points vs 2464 in DATA.SP; 33,640 ZCTAs, 51 states | ✓ |  |
+| ZIP lookup: every ZCTA's county exists in the payload | 0 bad | ✓ |  |
+| ZIP lookup: spot check — nearest site point to ZIP 77030 (Texas Medical Center) is in Harris County within ~2 miles | 0.0 mi; facilities there include ['Investigative Site #129', '014', '069'] | ✓ |  |
+| ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites | 7 site points within 60 est. road-mi | ✓ |  |
+| ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
+| Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
+| Browser: in-page tract recomputation (no filter) reproduces burden.js county shares and rucc.js metro/nonmetro shares | 1 of 3143 counties differ by >0.55 pts (max 8.7, Bennington); metro 6.6% / nonmetro 45.2% vs 6.6 / 45.2 | ✓ | the residual county is a 20-trial threshold effect: the browser pools the 3,915 located trials, the pipeline table counts 3,919 eligible trials |
+
 ## Fresh-eyes review (Step 2)
 
 This review was done in the same session as the build, re-reading the deliverables against the spec after the automated checks passed. It is therefore weaker than an independent review and is labelled as such; a reader with no memory of the build should repeat it.
@@ -88,3 +119,10 @@ State statistics and national/state/district household and incidence context wer
 ## Round 6 note
 
 The trial and site tables draw on the same trial and facility arrays as the map, so a count on a card and the table it opens cannot disagree (checked: "Payload: trial/site tables are internally consistent"). Site identity is by registry name within a county with sponsor site codes removed; 340 of 9,494 sites are anonymous placeholders flagged "unresolved". No alias merges are applied until a human has reviewed `site_alias_candidates.csv`. The GitHub Actions refresh workflow has not been executed from this environment; the refresh chain itself (`run_refresh.sh`) was run here end-to-end for the 2026-09-10 pull.
+
+
+## Round 7 note (version 3.3 additions)
+
+Same-session checks, labelled as such. `validate_extras.py` (24 checks, all passing on 2026-09-29) verifies: RUCC coverage of all 3,143 counties with the 2013 fallback confined to Connecticut; metro + nonmetro populations and shares reproduce the national and state figures; the nonmetro headline recomputed independently from `tract_access.csv`; every cosponsor bioguide ID resolves to a current member, chambers match bill types, 434 seats + 2 vacancies + 100 senators mapped; the burden cell (514 counties) and the incidence median recomputed independently; the four cells partition the classified counties; ZIP-lookup site points match the payload one-to-one with two geographic spot checks; and, with `--browser`, that the page's own tract-level recomputation reproduces `burden.js` for all but one county (Bennington, VT — a 20-trial threshold effect of the four eligible trials that have no located site) and reproduces the metro / nonmetro shares exactly.
+
+Two things a reader should know. (1) The cosponsor lists were read from the govinfo bill-status XML through a text fetch rather than parsed by the script, because the build container cannot reach govinfo or congress.gov; the ID lists were extracted twice with identical results and every ID resolved to a sitting member with the expected chamber and state, but the script's own parse should be run once from a networked machine (it will overwrite `cosponsors_raw.json`). (2) The burden-vs-access thresholds (median incidence; at least half of residents; 20 trials) are conventions chosen to match the site's existing menu threshold, not findings; the page exposes them and a reader can change two of the three.
