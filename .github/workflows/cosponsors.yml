@@ -1,5 +1,5 @@
-# Refreshes the cosponsor lists shown on the map (H.R. 1492 / S. 832 EPIC Act, H.R. 3521 / S. 4440 Clinical Trial
-# Modernization Act) from the Library of Congress bill-status feed and commits the result, so the site never shows a stale
+# Refreshes the cosponsor lists shown on the map (Clinical Trial Modernization Act, H.R. 3521 / S. 4440; the tracked bills
+# are the BILLS list in fetch_cosponsors.py) from the Library of Congress bill-status feed and commits the result, so the site never shows a stale
 # pull. Run it by hand from the Actions tab ("Refresh cosponsors" -> "Run workflow"); it also runs every Monday.
 # Optional: add a repository secret CONGRESS_API_KEY (free at https://api.congress.gov/sign-up/) to use api.congress.gov
 # as a second source; without it the govinfo.gov XML feed is used, which needs no key.
