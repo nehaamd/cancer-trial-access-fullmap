@@ -103,7 +103,7 @@ def run(browser=False):
 def main():
     run("--browser" in sys.argv)
     md = ["# Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)", "", f"Checks re-run by `validate_extras.py` on {time.strftime('%Y-%m-%d')}.", "", "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
-    Path("VALIDATION_extras.md").write_text("\n".join(md) + "\n"); print(f"\n{sum(1 for r in rows if r[2] == '✓')}/{len(rows)} checks pass")
+    Path("VALIDATION_extras.md").write_text("\n".join(md) + "\n"); n_ok = sum(1 for r in rows if r[2] == '✓'); print(f"\n{n_ok}/{len(rows)} checks pass"); sys.exit(0 if n_ok == len(rows) else 1)
 
 
 if __name__ == "__main__":

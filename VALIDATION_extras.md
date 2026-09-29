@@ -27,4 +27,3 @@ Checks re-run by `validate_extras.py` on 2026-09-29.
 | ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites | 7 site points within 60 est. road-mi | ✓ |  |
 | ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
 | Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
-| Browser: in-page tract recomputation (no filter) reproduces burden.js county shares and rucc.js metro/nonmetro shares | 1 of 3143 counties differ by >0.55 pts (max 8.7, Bennington); metro 6.6% / nonmetro 45.2% vs 6.6 / 45.2 | ✓ | the residual county is a 20-trial threshold effect: the browser pools the 3,915 located trials, the pipeline table counts 3,919 eligible trials |

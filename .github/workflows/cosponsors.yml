@@ -1,0 +1,31 @@
+# Refreshes the cosponsor lists shown on the map (H.R. 1492 / S. 832 EPIC Act, H.R. 3521 / S. 4440 Clinical Trial
+# Modernization Act) from the Library of Congress bill-status feed and commits the result, so the site never shows a stale
+# pull. Run it by hand from the Actions tab ("Refresh cosponsors" -> "Run workflow"); it also runs every Monday.
+# Optional: add a repository secret CONGRESS_API_KEY (free at https://api.congress.gov/sign-up/) to use api.congress.gov
+# as a second source; without it the govinfo.gov XML feed is used, which needs no key.
+name: Refresh cosponsors
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 12 * * 1"   # Mondays 12:17 UTC
+permissions:
+  contents: write
+jobs:
+  cosponsors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Pull sponsor and cosponsor lists from the bill-status feed
+        env: { CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }} }
+        run: python fetch_cosponsors.py --require-network
+      - name: Check the result (every ID resolves to a sitting member, chambers match, seats mapped)
+        run: pip install -q pandas numpy && python validate_extras.py
+      - name: Commit and publish
+        run: |
+          git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
+          git add cosponsors_raw.json cosponsors.js VALIDATION_extras.md
+          git commit -m "Cosponsor refresh $(date -u +%F)" || echo "nothing to commit"
+          git push

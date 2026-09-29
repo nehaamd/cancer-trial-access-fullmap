@@ -16,6 +16,7 @@ Member names, parties, chambers and districts come from unitedstates/congress-le
 same file the rest of the site uses; a sponsor or cosponsor who has since left Congress is kept and flagged "former".
 
 Output: docs/cosponsors.js (window.COSPONSORS) — bills, per-member roles, a district -> member map and state -> senators map.
+Usage: python fetch_cosponsors.py [--require-network]   (the flag makes the run fail instead of reusing the saved pull when the feed is unreachable)
 """
 import json, os, sys, time, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
@@ -99,6 +100,7 @@ def main():
     if fetched:
         raw = {"fetched": str(date.today()), "source": source, "bills": fetched}; raw_path.write_text(json.dumps(raw, indent=1)); print("fetched live from", source)
     else:
+        if "--require-network" in sys.argv: sys.exit(f"could not fetch the bill-status feed ({source}); not falling back to the saved pull because --require-network was given")
         if not raw_path.exists(): sys.exit(f"no network ({source}) and no saved cosponsors_raw.json")
         raw = json.loads(raw_path.read_text()); print(f"network unavailable ({source}); using saved pull from {raw['fetched']} ({raw['source'][:60]}...)")
     legis = json.load(open(find("legislators-current.json")))
