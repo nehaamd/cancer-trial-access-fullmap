@@ -32,6 +32,12 @@
   .kpi{display:flex;gap:2rem;flex-wrap:wrap;margin:.4rem 0 .8rem} .kpi div{border-left:3px solid var(--rule-2);padding-left:.8rem} .kpi b{display:block;font-size:var(--fs-3);font-variant-numeric:tabular-nums} .kpi span{font-size:var(--fs-0);color:var(--ink-2)}
   .curve{margin:.5rem 0 0;background:var(--card);border:1px solid var(--rule);border-radius:var(--r)} .axis text{font-size:9px;fill:var(--ink-2)} .axis line,.axis path{stroke:var(--rule)}
   @media (max-width:1000px){main{grid-template-columns:1fr}}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;max-width:100%}
+  section,main,.wrap{min-width:0;max-width:100%}
+  .kpi>div{min-width:0;flex:1 1 100%}
+  body{overflow-wrap:anywhere}
+}
 </style>
 </head>
 <body>

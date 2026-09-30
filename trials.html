@@ -24,6 +24,12 @@
   .empty{padding:1.2rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:60ch;background:var(--card)}
   ul.fac{margin:0;padding:0;list-style:none;columns:2;column-gap:2rem;font-size:var(--fs-1)} ul.fac li{break-inside:avoid;padding:.3rem 0;border-top:1px solid var(--rule)} ul.fac li span{color:var(--ink-2);font-size:var(--fs-0)}
   @media (max-width:800px){ul.fac{columns:1} td.f{display:none}}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;max-width:100%}
+  section,main,.wrap{min-width:0;max-width:100%}
+  .kpi>div{min-width:0;flex:1 1 100%}
+  body{overflow-wrap:anywhere}
+}
 </style>
 </head>
 <body>
