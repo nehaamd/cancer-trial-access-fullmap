@@ -1,0 +1,74 @@
+bladder_urothelial	Urinary Tract Infection
+brain_cns	Anaplastic Oligoastrocytoma
+brain_cns	Anaplastic Pleomorphic Xanthoastrocytoma
+brain_cns	Ganglioglioma
+brain_cns	Oligoastrocytoma
+brain_cns	Pleomorphic Xanthoastrocytoma
+breast	Breast Cancer Survivor
+breast	Lymphedema, Breast Cancer
+colorectal	Anorectal Cancer
+gastric_esophageal	Barretts Esophagus With Dysplasia
+gynecologic	Endometrial Hyperplasia
+gynecologic	HPV-Related Endocervical Adenocarcinoma
+head_neck	Erythroleukoplakia
+head_neck	Lymphedema of the Head and Neck
+head_neck	Oral Cavity Dysplasia
+head_neck	Oropharyngeal Dysplasia
+leukemia	Acute Myeloid Leukemia With Myelodysplasia-Related Changes
+leukemia	Acute Myeloid Leukemia, Myelodysplasia-Related
+liver_biliary	Hepatitis B Virus Related Hepatocellular Carcinoma
+liver_biliary	Hepatopancreaticobiliary (HPB) Malignancy
+liver_biliary	Hepatopancreaticobiliary and Foregut Operations
+liver_biliary	Pancreatobiliary Carcinoma
+lymphoma	Hydroa Vacciniforme-Like Lymphoproliferative Disorder
+mds_mpn	Acute Myeloid Leukemia With Myelodysplasia-Related Changes
+mds_mpn	Acute Myeloid Leukemia, Myelodysplasia-Related
+mds_mpn	Hematopoetic Myelodysplasia
+mds_mpn	Myelodysplasia
+melanoma_skin	Merkel Cell Polyomavirus Infection
+other_named	Ganglioneuroblastoma
+other_named	Ganglioneuroblastoma, Nodular
+pancreatic	Gastroenteropancreatic NEC (GEP NEC)
+pancreatic	Gastroenteropancreatico Tumors
+pancreatic	Hepatopancreaticobiliary (HPB) Malignancy
+pancreatic	Hepatopancreaticobiliary and Foregut Operations
+prostate	Benign Prostatic Hyperplasia
+prostate	Prostatic Hyperplasia
+sarcoma	Advanced Leiomyosarcoma
+sarcoma	Advanced Ovarian Carcinosarcoma
+sarcoma	Angiosarcoma
+sarcoma	Angiosarcoma, Adult
+sarcoma	Carcinosarcoma
+sarcoma	Dermatofibrosarcoma Protuberans, Fibrosarcomatous
+sarcoma	Fallopian Tube Carcinosarcoma
+sarcoma	Fibrosarcoma NOS
+sarcoma	Inflammatory Leiomyosarcoma
+sarcoma	Leiomyosarcoma
+sarcoma	Leiomyosarcoma (LMS)
+sarcoma	Leiomyosarcomas
+sarcoma	Malignant Tenosynovial Giant Cell Tumor of Soft Tissue
+sarcoma	Metastatic Leiomyosarcoma
+sarcoma	Metastatic Myxofibrosarcoma
+sarcoma	Myxofibrosarcoma
+sarcoma	Myxofibrosarcoma (MFS)
+sarcoma	Neurofibromatosis
+sarcoma	Neurofibromatosis 1
+sarcoma	Neurofibromatosis 1 (NF1)
+sarcoma	Neurofibromatosis Type 1
+sarcoma	Neurofibromatosis Type 1 (NF1)
+sarcoma	Neurofibromatosis Type 1 (NF1)-Related Plexiform Neurofibromas (PNs)
+sarcoma	Neurofibromatosis Type 2
+sarcoma	Ovarian Carcinosarcoma
+sarcoma	Primary Peritoneal Carcinosarcoma
+sarcoma	Recurrent Fallopian Tube Carcinosarcoma
+sarcoma	Recurrent Ovarian Carcinosarcoma
+sarcoma	Recurrent Primary Peritoneal Carcinosarcoma
+sarcoma	Sclerosing Epithelioid Fibrosarcoma
+sarcoma	Stage III Uterine Corpus Carcinoma or Carcinosarcoma AJCC v8
+sarcoma	Stage IV Uterine Corpus Carcinoma or Carcinosarcoma AJCC v8
+sarcoma	Unresectable Leiomyosarcoma
+sarcoma	Unresectable Myxofibrosarcoma
+sarcoma	Uterine Adenosarcoma
+sarcoma	Uterine Carcinosarcoma
+sarcoma	Uterine Corpus Carcinosarcoma
+sarcoma	Uterine Leiomyosarcoma

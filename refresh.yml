@@ -25,7 +25,7 @@ jobs:
       - name: Snapshot the previous pull
         run: |
           d=$(python -c "import json;print(json.load(open('data/raw/fetch_log.json'))['timestamp_utc'][:10])")
-          mkdir -p data/snapshots/$d && cp data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv out_adult55/county_metrics.csv data/snapshots/$d/ || true
+          mkdir -p data/snapshots/$d && cp data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv out_adult55/county_metrics.csv out_adult55/national_metrics_v3.json out_adult55/state_metrics_v3.csv data/snapshots/$d/ || true
       - name: Refresh chain
         env:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}   # optional; govinfo BILLSTATUS needs no key
@@ -34,6 +34,6 @@ jobs:
       - name: Commit and publish
         run: |
           git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
-          git add -A docs data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv data/snapshots out_adult55/*.csv out_adult55/*.json out_adult55/*.md VALIDATION_v3.md VALIDATION_extras.md cosponsors_raw.json rucc_log.json burden_log.json
+          git add -A docs RELEASE_GATE.md qc_cancer_type_audit.md audit_allowlist.txt data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv data/snapshots out_adult55/*.csv out_adult55/*.json out_adult55/*.md VALIDATION_v3.md VALIDATION_extras.md cosponsors_raw.json rucc_log.json burden_log.json
           git commit -m "Registry refresh $(date -u +%F)" || echo "nothing to commit"
           git push
