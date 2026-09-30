@@ -101,6 +101,13 @@ Then open `docs/index.html` (or push `docs/` to GitHub Pages).
 
 To verify by hand: pick any row of `out_adult55/county_road_distances.csv` and check the road miles against a mapping site (expect within ~10%); open a few NCT IDs from `data/raw/trials.csv` on ClinicalTrials.gov and confirm status, purpose and a US site; compare `tract_access.csv` pop55 sums to `data/ref/county_pop55.csv`; pick rows from `out_adult55/qc_cancer_type_sample_200.csv` and judge the assigned cancer type from the title and conditions.
 
+## Before anything is published: the audit and the release gate
+Every refresh runs two checks that stop it, with nothing published, if they fail (GitHub Actions then reports the failure):
+- `audit_cancer_types.py` (right after classification) lists every registry condition string that could pull a trial into the wrong cancer type — a category stem matched inside a longer word ("anorectal melanoma", "gallbladder", "paraganglioma"), non-neoplastic wording, or a melanoma string reaching another category. Strings already reviewed are in `audit_allowlist.txt`; a new one holds the refresh until someone reads `qc_cancer_type_audit.md`, fixes the pattern or accepts the string (`--accept`).
+- `release_gate.py` (last) checks plausibility bounds on every headline number, drift against the previous weekly snapshot (a jump means a broken pull, not a real change), and payload consistency; see `RELEASE_GATE.md`.
+
+Weekly review after a green refresh, about ten minutes: read the Actions log; open `qc_cancer_type_audit.md` for anything marked NEW; open the map's "Recent changes" tab; check two districts you know well (for example your own and TX-11); glance at the national numbers on the findings page. Corrections are logged in `CHANGES_v3.md`.
+
 ## Weaknesses that remain
 - **Site locations are ZIP-code centroids**, not street addresses (96% of site rows); a few registry rows carry a ZIP that disagrees with the stated city and follow the ZIP. Menu distances (nearest county with 20+/100+ trials) remain county-level by definition.
 - **Router validation uses approximate published reference distances, not an independently-fetched routing benchmark.** The 3.1% mean difference is a real computation but the 38 comparison distances are approximate reference values, not re-fetched from a routing service using the router's own coordinates (no routing API is reachable from the build environment). The page says so; treat the figure as directional, not certified.

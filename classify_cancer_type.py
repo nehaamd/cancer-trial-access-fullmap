@@ -22,23 +22,23 @@ RAW, OUT = Path("data/raw"), Path("out_adult55")
 I = re.I
 
 CATS = {  # order matters only for display
- "breast":        r"breast|\btnbc\b|\bhr\+?/her2|mammary|ductal carcinoma in situ|\bdcis\b|lobular carcinom",
+ "breast":        r"breast|\btnbc\b|\bhr\+?/her2|(?<!extra)mammary|ductal carcinoma in situ|\bdcis\b|lobular carcinom",
  "lung":          r"lung|\bnsclc\b|\bsclc\b|mesotheliom|bronch|thymom|thymic|pleural|pulmonary (neoplasm|cancer|carcinom|nodule)",
  "colorectal":    r"colorectal|\bcolon\b|colonic|rectal|rectum|\bcrc\b|\bmcrc\b",
  "prostate":      r"prostat|\bcrpc\b|\bmcrpc\b|\bmhspc\b|\bcspc\b|\bhspc\b",
- "melanoma_skin": r"melanom|merkel|basal cell carcinom|cutaneous squamous|\bcscc\b|skin (cancer|neoplasm|carcinom)|nonmelanoma|non-melanoma",
+ "melanoma_skin": r"melanom|merkel|extramammary paget|basal cell carcinom|cutaneous squamous|\bcscc\b|skin (cancer|neoplasm|carcinom)|nonmelanoma|non-melanoma",
  "lymphoma":      r"lymphom|hodgkin|waldenstr|\bdlbcl\b|\bctcl\b|\bptcl\b|mycosis fungoides|sezary|\bnhl\b|\bmcl\b|\bpmbcl\b|richter|lymphoproliferative|castleman",
- "leukemia":      r"leuk|\baml\b|\bcll\b|\bcml\b|\bsll\b|\bapl\b|hairy cell|blastic plasmacytoid",
+ "leukemia":      r"leuk(?!oplak)|\baml\b|\bcll\b|\bcml\b|\bsll\b|\bapl\b|hairy cell|blastic plasmacytoid",
  "myeloma":       r"myelom|plasma cell|plasmacytom|amyloidosis|\bmgus\b|smoldering|light chain",
- "mds_mpn":       r"myelodysplas|\bmds\b|myelofibrosis|polycythemia|thrombocythemia|myeloproliferative|\bmpn\b|\bcmml\b|mastocytosis",
+ "mds_mpn":       r"myelodysplas|preleukemi|\bmds\b|myelofibrosis|polycythemia|thrombocythemia|myeloproliferative|\bmpn\b|\bcmml\b|mastocytosis",
  "pancreatic":    r"pancrea|\bpdac\b",
  "liver_biliary": r"hepatocellular|\bhcc\b|liver (cancer|neoplasm|carcinom|tumou?r)|hepatobiliary|cholangio|biliary|gallbladder|bile duct|hepatoblastom|fibrolamellar",
  "gastric_esophageal": r"gastric|stomach|esophag|oesophag|gastroesophageal|gastro-esophageal|\bgej\b|\bgea\b",
  "gynecologic":   r"ovar|endometri|cervical (cancer|carcinom|neoplasm|squamous|adenocarcinom|intraepithelial)|cervix|uterine|uterus|fallopian|primary peritoneal|vulva|vagina|gynecolog|trophoblast|leiomyosarcom",
- "bladder_urothelial": r"bladder|urothel|\bnmibc\b|\bmibc\b|upper (urinary )?tract|urinary tract|ureter",
+ "bladder_urothelial": r"(?<!gall)(?<!neo)bladder|urothel|\bnmibc\b|\bmibc\b|upper (urinary )?tract|urinary tract|ureter",
  "kidney":        r"kidney|renal cell|renal (cancer|carcinom|neoplasm|tumou?r)|\brcc\b|\bccrcc\b|wilms|nephroblastom",
  "brain_cns":     r"glio|\bgbm\b|astrocytom|brain (tumou?r|cancer|neoplasm|stem)|cns (tumou?r|neoplasm|cancer)|meningiom|ependymom|medulloblastom|oligodendro|central nervous system (tumou?r|neoplasm|cancer)|diffuse midline|\bdipg\b|craniopharyngiom|pituitary|neuro-?oncolog|\bhgg\b|\blgg\b",
- "head_neck":     r"head and neck|head & neck|\bhnscc\b|\bscchn\b|oral cavity|oropharyn|laryn|pharyn|nasopharyn|hypopharyn|salivary|tongue|sinonasal|oral (cancer|squamous|carcinom)|tonsil|lip cancer|adenoid cystic",
+ "head_neck":     r"head and neck|leukoplakia|erythroplakia|esthesioneuroblastom|olfactory neuroblastom|head & neck|\bhnscc\b|\bscchn\b|oral cavity|oropharyn|laryn|pharyn|nasopharyn|hypopharyn|salivary|tongue|sinonasal|oral (cancer|squamous|carcinom)|tonsil|lip cancer|adenoid cystic",
  "sarcoma":       r"sarcom|\bgist\b|gastrointestinal stromal|desmoid|osteosarcom|ewing|rhabdomyo|liposarcom|chondrosarcom|chordom|synovial|fibromatosis|nerve sheath|\bmpnst\b|giant cell tumou?r of bone|bone (cancer|tumou?r)",
  "neuroendocrine_endocrine": r"thyroid|adrenocortical|adrenal (cancer|carcinom|cortical)|pheochromocytom|paragangliom|neuroendocrin|\bnet\b|\bnets\b|carcinoid|parathyroid",
  "other_named":   r"testic|germ cell|seminom|penile|neuroblastom|retinoblastom|anal (cancer|carcinom|canal|squamous)|appendi|small bowel|small intestin|unknown primary|kaposi|uveal|ocular|eye (cancer|neoplasm)|urethral|peritoneal mesotheliom|histiocyt|langerhans|erdheim|nut carcinom|nut midline",
@@ -56,8 +56,14 @@ PRECEDENCE = [
  (r"cutaneous t-cell|cutaneous b-cell|cutaneous lymphom", {"lymphoma"}),
  (r"primary cns lymphom|cns lymphom|central nervous system lymphom", {"lymphoma"}),
  (r"uveal|ocular melanom|conjunctival melanom", {"melanoma_skin"}),
- (r"melanom", {"melanoma_skin"}),                                          # mucosal melanomas (anorectal, sinonasal, vulvar, oral) are melanoma, not the organ cancer: "Anorectal Melanoma" must not reach the colorectal filter
- (r"lung metasta|pulmonary metasta|brain metasta|cns metasta|leptomening|liver metasta|hepatic metasta|bone metasta|peritoneal metasta|carcinomatosis|spinal metasta|metastatic disease to", set()),  # metastatic *site*, not a primary
+ (r"melanom", {"melanoma_skin"}),
+ (r"paragangliom|pheochromocytom", {"neuroendocrine_endocrine"}),      # "paraganglioma" contains "glio"; these are neuroendocrine tumours
+ (r"craniopharyngiom", {"brain_cns"}),                                   # contains "pharyn"; a sellar/CNS tumour
+ (r"esthesioneuroblastom|olfactory neuroblastom", {"head_neck"}),       # sinonasal tumour, not a childhood neuroblastoma
+ (r"ganglioneuroblastom", {"other_named"}),                              # neuroblastic tumour (contains "glio")
+ (r"leukoplakia|erythroplakia", {"head_neck"}),                          # oral premalignant lesions (the leukaemia stem "leuk" is excluded from them)
+ (r"preleukemi", {"mds_mpn"}),                                           # preleukaemia is an MDS term                                          # mucosal melanomas (anorectal, sinonasal, vulvar, oral) are melanoma, not the organ cancer: "Anorectal Melanoma" must not reach the colorectal filter
+ (r"lung metasta|pulmonary metasta|endobronchial metasta|brain metasta|cns metasta|leptomening|liver metasta|hepatic metasta|bone metasta|peritoneal metasta|carcinomatosis|spinal metasta|metastatic disease to", set()),  # metastatic *site*, not a primary
 ]
 GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced cancer|advanced malignan|metastatic cancer|metastatic malignan|^cancers?$|^neoplasms?$|^tumou?rs?$|^malignan(t|cy|cies)|malignan(t|cy|cies)$|"
                      r"hematologic(al)? (malignan|cancer|neoplasm)|blood cancer|^carcinoma$|^adenocarcinoma$|^metasta(tic|sis|ses)$|refractory cancer|recurrent cancer|rare (cancer|tumou?r|disease)|"

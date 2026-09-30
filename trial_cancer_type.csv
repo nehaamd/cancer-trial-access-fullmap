@@ -232,7 +232,7 @@ NCT06510491,lymphoma,Lymphoma,,lymphoma,0,conditions
 NCT06856499,gynecologic,"Gynecologic (ovarian, uterine, cervical)",,gynecologic,0,conditions
 NCT05428007,melanoma_skin,Melanoma & skin,,melanoma_skin,0,conditions
 NCT06434064,breast,Breast,,breast,0,conditions
-NCT07282587,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;neuroendocrine_endocrine,0,conditions
+NCT07282587,neuroendocrine_endocrine,Neuroendocrine & endocrine,,neuroendocrine_endocrine,0,conditions
 NCT04774393,leukemia,Leukemia,,leukemia,0,conditions
 NCT07647328,breast,Breast,,breast,0,conditions
 NCT06469944,gastric_esophageal,Gastric & esophageal,,gastric_esophageal,0,conditions
@@ -377,7 +377,7 @@ NCT06082947,multi,Multiple cancer types / basket or umbrella,unspecified solid /
 NCT06708949,kidney,Kidney,,kidney,0,conditions
 NCT06417814,lung,Lung & thoracic,,lung,0,conditions
 NCT05743621,prostate,Prostate,,prostate,0,conditions
-NCT03126916,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;other_named,0,conditions
+NCT03126916,other_named,Other named cancer,,other_named,0,conditions
 NCT07723209,breast,Breast,,breast,0,conditions
 NCT06357533,lung,Lung & thoracic,,lung,0,conditions
 NCT05544136,head_neck,Head & neck,,head_neck,0,conditions
@@ -628,7 +628,7 @@ NCT07224425,melanoma_skin,Melanoma & skin,,melanoma_skin,1,conditions
 NCT04701476,multi,Multiple cancer types / basket or umbrella,multiple named cancers,colorectal;lung,0,conditions
 NCT07372625,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT07382817,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
-NCT05285358,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;liver_biliary,1,conditions
+NCT05285358,liver_biliary,Liver & biliary,,liver_biliary,1,conditions
 NCT06995508,head_neck,Head & neck,,head_neck,0,conditions
 NCT04139304,lymphoma,Lymphoma,,lymphoma,0,conditions
 NCT05721976,multi,Multiple cancer types / basket or umbrella,multiple named cancers,breast;gynecologic,0,conditions
@@ -1124,7 +1124,7 @@ NCT06972628,prostate,Prostate,,prostate,1,conditions
 NCT06682442,head_neck,Head & neck,,head_neck,0,conditions
 NCT03294954,other_named,Other named cancer,,other_named,0,conditions
 NCT07429266,mds_mpn,MDS & MPN,,mds_mpn,0,conditions
-NCT05286788,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;head_neck,0,conditions
+NCT05286788,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT06193486,prostate,Prostate,,prostate,0,conditions
 NCT06242470,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;breast;colorectal;gastric_esophageal;gynecologic;head_neck;kidney;liver_biliary;lung;melanoma_skin;pancreatic;prostate;sarcoma,1,conditions
 NCT07340541,breast,Breast,,breast,0,conditions
@@ -1450,7 +1450,7 @@ NCT04959474,breast,Breast,,breast,0,conditions
 NCT05423210,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT05946213,prostate,Prostate,,prostate,0,conditions
 NCT07405190,lung,Lung & thoracic,,lung,0,conditions
-NCT06176989,multi,Multiple cancer types / basket or umbrella,multiple named cancers,head_neck;neuroendocrine_endocrine;other_named;sarcoma,0,conditions
+NCT06176989,multi,Multiple cancer types / basket or umbrella,multiple named cancers,head_neck;neuroendocrine_endocrine;sarcoma,0,conditions
 NCT06382168,leukemia,Leukemia,,leukemia,0,conditions
 NCT06824168,leukemia,Leukemia,,leukemia,0,conditions
 NCT05521789,lung,Lung & thoracic,,lung,1,conditions
@@ -1842,7 +1842,7 @@ NCT06179303,breast,Breast,,breast,0,conditions
 NCT07128927,prostate,Prostate,,prostate,0,title/keywords
 NCT05388773,head_neck,Head & neck,,head_neck,0,conditions
 NCT06161545,head_neck,Head & neck,,head_neck,0,conditions
-NCT07210775,leukemia,Leukemia,,leukemia,0,conditions
+NCT07210775,head_neck,Head & neck,,head_neck,0,conditions
 NCT05019703,sarcoma,Sarcoma,,sarcoma,0,conditions
 NCT06063486,mds_mpn,MDS & MPN,,mds_mpn,0,conditions
 NCT06307795,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
@@ -1875,7 +1875,7 @@ NCT05417321,multi,Multiple cancer types / basket or umbrella,basket with a named
 NCT06344052,melanoma_skin,Melanoma & skin,,melanoma_skin,0,conditions
 NCT05024552,leukemia,Leukemia,,leukemia,0,conditions
 NCT05274048,gastric_esophageal,Gastric & esophageal,,gastric_esophageal,1,conditions
-NCT03603223,leukemia,Leukemia,,leukemia,0,conditions
+NCT03603223,head_neck,Head & neck,,head_neck,0,conditions
 NCT06902623,head_neck,Head & neck,,head_neck,0,conditions
 NCT05898646,myeloma,Myeloma & plasma cell,,myeloma,0,conditions
 NCT03785288,gynecologic,"Gynecologic (ovarian, uterine, cervical)",,gynecologic,0,conditions
@@ -2023,7 +2023,7 @@ NCT06892158,leukemia,Leukemia,,leukemia,1,conditions
 NCT07042438,lymphoma,Lymphoma,,lymphoma,0,conditions
 NCT05997615,prostate,Prostate,,prostate,0,conditions
 NCT05365035,mds_mpn,MDS & MPN,,mds_mpn,0,conditions
-NCT04318717,multi,Multiple cancer types / basket or umbrella,multiple named cancers,head_neck;melanoma_skin,0,conditions
+NCT04318717,melanoma_skin,Melanoma & skin,,melanoma_skin,0,conditions
 NCT06409390,breast,Breast,,breast,0,conditions
 NCT05879250,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT05969860,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;brain_cns;breast;colorectal;gastric_esophageal;gynecologic;head_neck;kidney;liver_biliary;lung;lymphoma;mds_mpn;melanoma_skin;myeloma;neuroendocrine_endocrine;other_named;pancreatic;prostate;sarcoma,1,conditions
@@ -2085,7 +2085,7 @@ NCT07206225,bladder_urothelial,Bladder & urothelial,,bladder_urothelial,0,condit
 NCT05372640,multi,Multiple cancer types / basket or umbrella,multiple named cancers,breast;other_named,1,conditions
 NCT07690189,gynecologic,"Gynecologic (ovarian, uterine, cervical)",,gynecologic,0,conditions
 NCT04256018,lymphoma,Lymphoma,,lymphoma,0,conditions
-NCT04119024,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;breast;head_neck;lung;melanoma_skin;neuroendocrine_endocrine,1,conditions
+NCT04119024,multi,Multiple cancer types / basket or umbrella,multiple named cancers,breast;head_neck;lung;melanoma_skin;neuroendocrine_endocrine,1,conditions
 NCT04167696,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;mds_mpn,0,conditions
 NCT07213817,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT07057791,lung,Lung & thoracic,,lung,0,conditions
@@ -2603,7 +2603,7 @@ NCT07220616,multi,Multiple cancer types / basket or umbrella,basket with a named
 NCT07076498,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT04644016,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;lymphoma;mds_mpn,0,conditions
 NCT06270706,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
-NCT07780838,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;liver_biliary,0,conditions
+NCT07780838,liver_biliary,Liver & biliary,,liver_biliary,0,conditions
 NCT05225363,gynecologic,"Gynecologic (ovarian, uterine, cervical)",,gynecologic,0,conditions
 NCT03326921,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;mds_mpn,0,conditions
 NCT04678648,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;colorectal;lung;pancreatic,1,conditions
@@ -2652,7 +2652,7 @@ NCT06635980,breast,Breast,,breast,0,conditions
 NCT05462496,pancreatic,Pancreatic,,pancreatic,0,conditions
 NCT03214562,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;mds_mpn,0,conditions
 NCT04222062,brain_cns,Brain & CNS,,brain_cns,0,conditions
-NCT07146646,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;liver_biliary,0,conditions
+NCT07146646,liver_biliary,Liver & biliary,,liver_biliary,0,conditions
 NCT07416552,colorectal,Colorectal,,colorectal,0,conditions
 NCT05940493,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT05523947,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
@@ -2661,7 +2661,7 @@ NCT06644183,leukemia,Leukemia,,leukemia,1,conditions
 NCT06347705,prostate,Prostate,,prostate,0,conditions
 NCT06949410,breast,Breast,,breast,0,conditions
 NCT06288113,prostate,Prostate,,prostate,0,conditions
-NCT03206060,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;neuroendocrine_endocrine,0,conditions
+NCT03206060,neuroendocrine_endocrine,Neuroendocrine & endocrine,,neuroendocrine_endocrine,0,conditions
 NCT06459973,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT04708054,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;mds_mpn,0,conditions
 NCT05857969,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;leukemia;lymphoma;other_named;sarcoma,1,conditions
@@ -2677,7 +2677,7 @@ NCT07043608,kidney,Kidney,,kidney,1,conditions
 NCT02332668,multi,Multiple cancer types / basket or umbrella,multiple named cancers,lymphoma;melanoma_skin,1,conditions
 NCT06137274,head_neck,Head & neck,,head_neck,0,conditions
 NCT04512716,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;lymphoma,0,conditions
-NCT05482516,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;colorectal;gastric_esophageal;liver_biliary;pancreatic,0,conditions
+NCT05482516,multi,Multiple cancer types / basket or umbrella,multiple named cancers,colorectal;gastric_esophageal;liver_biliary;pancreatic,0,conditions
 NCT06184321,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT06483555,pancreatic,Pancreatic,,pancreatic,0,conditions
 NCT06780111,gastric_esophageal,Gastric & esophageal,,gastric_esophageal,0,conditions
@@ -3077,7 +3077,7 @@ NCT05920798,multi,Multiple cancer types / basket or umbrella,multiple named canc
 NCT04959175,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT06977711,lymphoma,Lymphoma,,lymphoma,0,conditions
 NCT05281809,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;lymphoma,0,conditions
-NCT06427798,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;neuroendocrine_endocrine,0,conditions
+NCT06427798,neuroendocrine_endocrine,Neuroendocrine & endocrine,,neuroendocrine_endocrine,0,conditions
 NCT06580314,multi,Multiple cancer types / basket or umbrella,multiple named cancers,gynecologic;sarcoma,0,conditions
 NCT06205485,colorectal,Colorectal,,colorectal,0,conditions
 NCT06305715,lung,Lung & thoracic,,lung,0,conditions
@@ -3168,7 +3168,7 @@ NCT07698899,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT04734730,prostate,Prostate,,prostate,0,conditions
 NCT05640999,gynecologic,"Gynecologic (ovarian, uterine, cervical)",,gynecologic,0,conditions
 NCT06750484,breast,Breast,,breast,0,conditions
-NCT05919264,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;colorectal;gynecologic;head_neck;liver_biliary;prostate;sarcoma,1,conditions
+NCT05919264,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;colorectal;gynecologic;liver_biliary;prostate;sarcoma,1,conditions
 NCT06222593,kidney,Kidney,,kidney,0,conditions
 NCT07406633,sarcoma,Sarcoma,,sarcoma,1,conditions
 NCT06129734,leukemia,Leukemia,,leukemia,1,conditions
@@ -3436,7 +3436,7 @@ NCT06213311,lymphoma,Lymphoma,,lymphoma,0,conditions
 NCT07092514,neuroendocrine_endocrine,Neuroendocrine & endocrine,,neuroendocrine_endocrine,0,conditions
 NCT07037758,lung,Lung & thoracic,,lung,0,conditions
 NCT05901285,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
-NCT06479811,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;head_neck;kidney;lung;neuroendocrine_endocrine;other_named,0,conditions
+NCT06479811,multi,Multiple cancer types / basket or umbrella,multiple named cancers,head_neck;kidney;lung;neuroendocrine_endocrine,0,conditions
 NCT07194044,sarcoma,Sarcoma,,sarcoma,0,conditions
 NCT06152809,leukemia,Leukemia,,leukemia,0,conditions
 NCT07190248,lung,Lung & thoracic,,lung,0,conditions
@@ -3507,7 +3507,7 @@ NCT06826924,prostate,Prostate,,prostate,0,conditions
 NCT07228442,melanoma_skin,Melanoma & skin,,melanoma_skin,0,conditions
 NCT06267729,prostate,Prostate,,prostate,0,conditions
 NCT07012031,lung,Lung & thoracic,,lung,0,conditions
-NCT06172296,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;other_named,0,conditions
+NCT06172296,other_named,Other named cancer,,other_named,0,conditions
 NCT06511141,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;prostate,0,conditions
 NCT07513129,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;lymphoma,0,conditions
 NCT05454280,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
@@ -3698,7 +3698,7 @@ NCT03786796,kidney,Kidney,,kidney,0,conditions
 NCT04808323,colorectal,Colorectal,,colorectal,0,conditions
 NCT03564340,gynecologic,"Gynecologic (ovarian, uterine, cervical)",,gynecologic,0,conditions
 NCT04693468,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
-NCT06299891,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;head_neck,0,conditions
+NCT06299891,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT05074290,breast,Breast,,breast,0,conditions
 NCT05735080,multi,Multiple cancer types / basket or umbrella,multiple named cancers,breast;gynecologic,1,conditions
 NCT06285890,leukemia,Leukemia,,leukemia,0,conditions
@@ -3764,7 +3764,7 @@ NCT05307705,breast,Breast,,breast,0,conditions
 NCT07109219,leukemia,Leukemia,,leukemia,0,conditions
 NCT07293754,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT07516366,kidney,Kidney,,kidney,0,conditions
-NCT04924075,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;neuroendocrine_endocrine;sarcoma,0,conditions
+NCT04924075,multi,Multiple cancer types / basket or umbrella,multiple named cancers,neuroendocrine_endocrine;sarcoma,0,conditions
 NCT07360119,pancreatic,Pancreatic,,pancreatic,0,conditions
 NCT06664151,melanoma_skin,Melanoma & skin,,melanoma_skin,0,conditions
 NCT07585357,other_unclassified,Other / unclassified,,,0,none
@@ -3868,7 +3868,7 @@ NCT07311746,leukemia,Leukemia,,leukemia,0,conditions
 NCT07222488,bladder_urothelial,Bladder & urothelial,,bladder_urothelial,0,conditions
 NCT06772623,lung,Lung & thoracic,,lung,0,conditions
 NCT05296070,lymphoma,Lymphoma,,lymphoma,0,conditions
-NCT05233397,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;head_neck,0,conditions
+NCT05233397,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT07195682,kidney,Kidney,,kidney,0,conditions
 NCT07052916,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;lymphoma;myeloma,1,conditions
 NCT06672185,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
@@ -3915,8 +3915,8 @@ NCT04082520,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT06875310,lung,Lung & thoracic,,lung,0,conditions
 NCT06910124,myeloma,Myeloma & plasma cell,,myeloma,0,conditions
 NCT07565220,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;mds_mpn,0,conditions
-NCT05465174,multi,Multiple cancer types / basket or umbrella,multiple named cancers,brain_cns;head_neck,0,conditions
-NCT05859074,multi,Multiple cancer types / basket or umbrella,multiple named cancers,breast;head_neck;melanoma_skin;other_named;sarcoma,1,conditions
+NCT05465174,brain_cns,Brain & CNS,,brain_cns,0,conditions
+NCT05859074,multi,Multiple cancer types / basket or umbrella,multiple named cancers,head_neck;melanoma_skin;other_named;sarcoma,1,conditions
 NCT06337318,lymphoma,Lymphoma,,lymphoma,0,conditions
 NCT06566742,mds_mpn,MDS & MPN,,mds_mpn,0,conditions
 NCT07446257,liver_biliary,Liver & biliary,,liver_biliary,0,conditions
@@ -4008,7 +4008,7 @@ NCT04363164,prostate,Prostate,,prostate,0,conditions
 NCT05232409,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT02734537,head_neck,Head & neck,,head_neck,0,conditions
 NCT04633239,gynecologic,"Gynecologic (ovarian, uterine, cervical)",,gynecologic,0,conditions
-NCT07282912,multi,Multiple cancer types / basket or umbrella,multiple named cancers,bladder_urothelial;gastric_esophageal;liver_biliary;pancreatic,0,conditions
+NCT07282912,multi,Multiple cancer types / basket or umbrella,multiple named cancers,gastric_esophageal;liver_biliary;pancreatic,0,conditions
 NCT06623630,myeloma,Myeloma & plasma cell,,myeloma,0,conditions
 NCT05684965,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
 NCT06177171,other_unclassified,Other / unclassified,,,0,none
