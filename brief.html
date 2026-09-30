@@ -2,7 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cancer trial access brief</title>
+<title>Printable brief · Cancer Trial Access Map</title>
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/brief.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cancer Trial Access Map">
+<meta property="og:title" content="Printable brief · Cancer Trial Access Map">
+<meta property="og:description" content="A one-page brief for any US county, congressional district or state: how far residents 55 and older live from recruiting cancer trials, cancer burden, household context and cosponsor status.">
+<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/brief.html">
+<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Printable brief · Cancer Trial Access Map">
+<meta name="twitter:description" content="A one-page brief for any US county, congressional district or state: how far residents 55 and older live from recruiting cancer trials, cancer burden, household context and cosponsor status.">
+<meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
@@ -14,7 +33,7 @@
   .member{color:var(--ink-2);margin:.2rem 0 0} .tools{font-size:.8rem;text-align:right} .tools a,.tools button{color:var(--gulf);font:inherit;background:none;border:0;cursor:pointer;text-decoration:underline;padding:0;margin-left:.6rem}
   .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;align-items:start}
   .stat{border-left:3px solid var(--rule);padding:.35rem 0 .35rem .7rem;margin:0 0 .6rem} .stat.hot{border-left-color:var(--rust)} .stat b{font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em} .stat p{margin:.15rem 0 0;font-size:.9rem;max-width:36ch}
-  svg{width:100%;height:auto;display:block;border:1px solid var(--rule)} .c{fill:#F1EFEA;stroke:#fff;stroke-width:.4} .c.t{fill:#9EC4E0} .c.b{fill:#0B3C5D} .hi{fill:none;stroke:var(--rust);stroke-width:2.2;vector-effect:non-scaling-stroke} #map.dz .c,#map.dz path{vector-effect:non-scaling-stroke} .nci{fill:#F5C518;stroke:#3a2f00;stroke-width:.5}
+  svg{width:100%;height:auto;display:block;border:1px solid var(--rule)} .c{fill:#F1EFEA;stroke:#fff;stroke-width:.4} .c.t{fill:#9EC4E0} .c.b{fill:#0B3C5D} .hi{fill:none;stroke:var(--rust);stroke-width:2.2;vector-effect:non-scaling-stroke} #map.dz .c,#map.dz path{vector-effect:non-scaling-stroke} .nci{fill:#F0B429;stroke:#3a2f00;stroke-width:.6}
   h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-2);margin:1rem 0 .3rem}
   ul.rows{list-style:none;margin:0;padding:0;font-size:.88rem} ul.rows li{display:flex;justify-content:space-between;gap:1rem;padding:.22rem 0;border-top:1px solid var(--rule)} ul.rows li span:last-child{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
   .defs{font-size:.8rem;color:var(--ink-2);columns:2;column-gap:1.4rem} .defs p{margin:0 0 .45rem;break-inside:avoid} .defs b{color:var(--ink)}
@@ -29,7 +48,12 @@
   @media print{#ask,#from{outline:none !important;caret-color:transparent} .tools,.ask-hint{display:none} #from:empty{display:none} .ask{background:none} .page{padding:0;max-width:none} @page{margin:.6in}}
 </style>
 </head>
-<body><div class="page">
+<body>
+<header class="site">
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><a href="find.html">Find trials near a ZIP</a><a href="brief.html" id="brief-link" aria-current="page">Printable brief</a><a href="sites.html">Where would a new site help?</a><a href="index.html#methods">Methods &amp; data</a></nav>
+</header>
+<div class="page">
 <div class="top"><div><p class="kicker" id="kicker">Cancer clinical trial access brief</p><h1 id="title">…</h1><p class="member" id="member"></p></div><div class="tools"><button onclick="window.print()">Print / save as PDF</button><a id="back" href="index.html">Open in the map</a></div></div>
 <div class="ask" id="ask-box"><span class="ask-k">Our ask</span><p id="ask" contenteditable="true" spellcheck="true"></p><p id="from" contenteditable="true" spellcheck="true" data-ph="Add your name, title and institution (optional)"></p><p class="ask-hint">Click either line to edit it. Your wording is saved in this page's link, so copy the link after editing to share or reopen it.</p></div>
 <div class="grid"><div id="stats"></div><div><svg id="map" viewBox="0 0 480 300"></svg><p style="font-size:.74rem;color:var(--ink-3);margin:.3rem 0 0" id="maplegend"></p></div></div>
@@ -112,7 +136,7 @@
   if (kind === 'district' && hiFeat) { const b = path.bounds(hiFeat); let w = (b[1][0] - b[0][0]) * 1.8, h = (b[1][1] - b[0][1]) * 1.8; const cx = (b[0][0] + b[1][0]) / 2, cy = (b[0][1] + b[1][1]) / 2;
     w = Math.max(w, W * 0.22); h = Math.max(h, H * 0.22); if (w / h > W / H) h = w * H / W; else w = h * W / H;
     if (w < W * 0.6) { svg.attr('viewBox', [cx - w / 2, cy - h / 2, w, h].join(' ')).classed('dz', true); starScale = w / W; } }
-  svg.append('g').selectAll('path').data(D.nci.filter(n => kind === 'nat' || n.st === st)).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(60)).attr('transform', n => { const q = proj([n.lon, n.lat]); return q ? `translate(${q}) scale(${Math.max(starScale, .35)})` : 'translate(-100,-100)'; });
+  svg.append('g').selectAll('path').data(D.nci.filter(n => kind === 'nat' || n.st === st)).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(38)).attr('transform', n => { const q = proj([n.lon, n.lat]); return q ? `translate(${q}) scale(${Math.max(starScale, .35)})` : 'translate(-100,-100)'; });
   document.getElementById('maplegend').textContent = `Counties: dark = 100+ trials (broad menu), light blue = at least one trial, grey = none. Stars: NCI-designated cancer centers. ${hiFeat ? 'Outlined in red: this ' + kind + '.' : ''}${svg.classed('dz') ? ' Close-up of the district and its surroundings.' : ''}`;
   document.getElementById('defs').innerHTML = (window.RUCC ? `<p><b>Rural / urban.</b> USDA ERS Rural-Urban Continuum Codes, 2023 (Connecticut's legacy counties: 2013). Codes 1–3 are metro counties, 4–9 nonmetro, by urban population and adjacency to a metro area.</p>` : '') + (window.COSPONSORS ? `<p><b>Cosponsorship.</b> From the Library of Congress bill-status feed on the date shown; withdrawn cosponsors excluded. Verify on congress.gov before citing.</p>` : '') + `<p><b>Eligible trial.</b> An interventional cancer treatment trial listed as Recruiting on ClinicalTrials.gov with at least one US site, open to at least one patient aged 55 or older.</p><p><b>Recruiting site.</b> A distinct registry facility name in a county after removing sponsor site codes; located at its ZIP-code centroid for routing.</p><p><b>Within 60 road-miles.</b> Shortest route on the Census primary/secondary highway network from the census tract's (or county's) population center to a recruiting site.</p><p><b>Broad / limited menu.</b> A county with 100+ / 20+ eligible trials (thresholds from ASCO's 2024 county analysis).</p><p><b>NCI-designated center.</b> One of the ${D.nci.length} NCI-designated treating centers in the pipeline's list; verify designations on cancer.gov before citing.</p><p><b>Population weighting.</b> District, state and national shares are weighted by residents 55+ in each census tract (ACS 2023 5-year).</p><p><b>Incidence.</b> Age-adjusted rate per 100,000, NCI/CDC State Cancer Profiles, 2018–2022; annual cases are the average over the same period. Incidence is published only for counties: for a district the rate is the average of its counties weighted by residents 55+, and annual cases are each county's count shared out by the share of its residents 55+ who live in the district. Kansas does not release county data.</p><p><b>Household context.</b> ACS 2023 5-year, all ages. Counties: county values. Districts, states and the nation: summed from census tracts (tracts split by a district line counted by share).</p>`;
   document.getElementById('foot').textContent = `Sources: ClinicalTrials.gov API v2 (registry data ${(D.meta.registry_data_timestamp || '').replace('T',' ')}, pulled ${D.meta.pull_utc}); Census TIGER 2025 roads; ACS 2023 5-year; Census 2020 tract–CD119 relationship file; NCI/CDC State Cancer Profiles 2018–2022; unitedstates/congress-legislators (${D.meta.members_pull.split(' ')[0]}). Router compared against ${D.meta.router.pairs} approximate published city-pair distances (mean difference ${D.meta.router.mean_pct}%); not yet checked against an independent routing engine. Generated ${new Date().toISOString().slice(0,10)} from the National Cancer Trial Access Map v3.`;
