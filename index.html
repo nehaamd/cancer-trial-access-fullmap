@@ -3,57 +3,97 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How far are Americans from a cancer clinical trial?</title>
+<title>Cancer Trial Access Map</title>
 <meta name="description" content="Recruiting cancer treatment trials open to patients 55+, by county and congressional district, with road-network distances.">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
   :root{
-    --paper:#FAF8F4; --card:#FFFFFF; --ink:#1B2430; --ink-2:#4B5563; --ink-3:#7C8794; --rule:#E4E1DA; --rule-2:#CFCBC2;
+    --paper:#F7F5F0; --card:#FFFFFF; --ink:#1B2430; --ink-2:#4B5563; --ink-3:#7C8794; --rule:#E6E2DA; --rule-2:#CFCBC2;
     --navy:#0B3C5D; --gulf:#3F7FB5; --sky:#9EC4E0; --sand:#F2C48A; --clay:#D98B4A; --rust:#8A3B1E; --warn:#7A5A00; --nodata:#E9E7E1;
     --rep:#B22234; --dem:#2E5AAC; --ind:#7C8794;
-    --r:8px; --shadow:0 1px 2px rgba(27,36,48,.06), 0 4px 14px rgba(27,36,48,.05);
-    --fs-0:.8rem; --fs-1:.92rem; --fs-2:1.05rem; --fs-3:1.3rem; --fs-4:1.75rem; --fs-5:2.75rem;
+    --r:10px; --shadow:0 1px 2px rgba(27,36,48,.05), 0 6px 18px rgba(27,36,48,.05);
+    --fs-0:.84rem; --fs-1:.95rem; --fs-2:1.08rem; --fs-3:1.35rem; --fs-4:1.8rem; --fs-5:2.9rem;
+    --gutter:1.5rem;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
   a{color:var(--gulf)} a:hover{color:var(--navy)}
   button,select,input{font:inherit;color:inherit}
   :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
   .app{display:grid;grid-template-rows:auto auto auto 1fr auto;min-height:100vh}
-  header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding:1.1rem 1.5rem .75rem;border-bottom:1px solid var(--rule);background:var(--card)}
-  header h1{font-size:var(--fs-4);font-weight:650;margin:0;letter-spacing:-.02em;line-height:1.15}
-  header p{margin:.3rem 0 0;color:var(--ink-2);font-size:var(--fs-1);max-width:88ch}
-  .hdr-links{display:flex;gap:.9rem;font-size:var(--fs-0);white-space:nowrap;align-self:flex-start;padding-top:.3rem}
-  .hdr-links a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-2)} .hdr-links a:hover{color:var(--navy);border-color:var(--navy)}
-  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.1rem;padding:.6rem 1.5rem;background:var(--card);border-bottom:1px solid var(--rule)}
-  .tb-group{display:inline-flex;align-items:center;gap:.45rem;flex-wrap:wrap}
-  .tb-group > b{font-size:var(--fs-0);font-weight:650;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
-  .sel{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234B5563' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right .6rem center;border:1px solid var(--rule-2);border-radius:6px;padding:.38rem 1.7rem .38rem .6rem;font-size:var(--fs-1);cursor:pointer;min-width:0}
-  .sel:hover{border-color:var(--ink-3)}
-  .chk{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-0);color:var(--ink-2);cursor:pointer;padding:.15rem .1rem} .chk input{margin:0;accent-color:var(--navy)}
+
+  /* ---- header: name, tagline, page links ---- */
+  header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem var(--gutter);background:var(--navy);color:#fff}
+  .brand{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;min-width:0}
+  .brand .wordmark{color:#fff;text-decoration:none;font-size:var(--fs-3);font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+  .brand .tag{color:#C9D9E8;font-size:var(--fs-1)}
+  .hdr-links{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:flex-end}
+  .hdr-links a{color:#fff;text-decoration:none;font-size:var(--fs-0);padding:.35rem .7rem;border-radius:999px;border:1px solid rgba(255,255,255,.28);white-space:nowrap}
+  .hdr-links a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+  /* ---- search bar: one box for everything, filters behind a button ---- */
+  .searchbar{display:flex;align-items:center;gap:.6rem;padding:.75rem var(--gutter);background:var(--card);border-bottom:1px solid var(--rule);flex-wrap:wrap}
+  .search-wrap{position:relative;flex:1 1 420px;min-width:240px}
+  #q{width:100%;border:1.5px solid var(--rule-2);border-radius:999px;padding:.6rem 2.6rem .6rem 2.4rem;font-size:var(--fs-2);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .85rem center}
+  #q::-webkit-search-cancel-button,#q::-webkit-search-decoration{-webkit-appearance:none;display:none}
+  #q:focus{border-color:var(--gulf);box-shadow:0 0 0 4px rgba(63,127,181,.15);outline:none}
+  #q-clear{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--ink-3);font-size:1.3rem;line-height:1;cursor:pointer;padding:.2rem .5rem;border-radius:50%} #q-clear:hover{color:var(--ink);background:var(--paper)} #q-clear[hidden]{display:none}
+  #q-list{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule-2);border-radius:12px;box-shadow:0 12px 32px rgba(27,36,48,.18);z-index:30;overflow:hidden;max-height:60vh;overflow-y:auto} #q-list[hidden]{display:none}
+  #q-list .opt{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.55rem .9rem;cursor:pointer;border-top:1px solid var(--rule)} #q-list .opt:first-child{border-top:0}
+  #q-list .opt.on,#q-list .opt:hover{background:#EEF4FA} #q-list .opt b{font-weight:600} #q-list .opt .k{font-size:var(--fs-0);color:var(--ink-3);white-space:nowrap} #q-list .opt .sub{color:var(--ink-2);font-size:var(--fs-0);display:block}
+  #q-list .none{padding:.7rem .9rem;color:var(--ink-2);font-size:var(--fs-1)}
+  .btn{border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.45rem .9rem;font-size:var(--fs-0);cursor:pointer;color:var(--ink-2);display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap} .btn:hover{border-color:var(--ink-3);color:var(--ink)}
+  .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)} .btn.primary:hover{background:#0d4a72;color:#fff}
+  .btn[aria-expanded="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
   .badge[hidden]{display:none} .badge{display:inline-block;min-width:1.35em;padding:.05em .4em;border-radius:999px;background:var(--rust);color:#fff;font-size:.7rem;font-weight:700;text-align:center;line-height:1.4;vertical-align:middle}
-  .btn{border:1px solid var(--rule-2);background:var(--card);border-radius:6px;padding:.36rem .7rem;font-size:var(--fs-0);cursor:pointer;color:var(--ink-2)} .btn:hover{border-color:var(--ink-3);color:var(--ink)}
-  .toolbar .right{margin-left:auto;display:inline-flex;gap:.5rem;align-items:center}
-  .filters{background:var(--paper);border-bottom:1px solid var(--rule);padding:.5rem 1.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.2rem}
+  .btn[aria-expanded="true"] .badge{background:#fff;color:var(--navy)}
+  .fchip{display:inline-flex;align-items:center;gap:.4rem;background:#FFF3E8;border:1px solid #E7B892;color:var(--rust);border-radius:999px;padding:.3rem .5rem .3rem .8rem;font-size:var(--fs-0);max-width:100%} .fchip[hidden]{display:none}
+  .fchip b{font-weight:650} .fchip button{border:0;background:none;color:var(--rust);cursor:pointer;font-size:1.05rem;line-height:1;padding:0 .2rem;border-radius:50%} .fchip button:hover{background:#F7DFCB}
+  .stamp{margin-left:auto;font-size:var(--fs-0);color:var(--ink-3);white-space:nowrap}
+
+  /* ---- filter drawer (same controls as before, shown on demand) ---- */
+  .filters{background:#F1F5F9;border-bottom:1px solid var(--rule);padding:.8rem var(--gutter) .9rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.6rem}
   .filters[hidden]{display:none}
-  .filters .fnote{font-size:var(--fs-0);color:var(--ink-3)} .filters .fstate{margin-left:auto;font-size:var(--fs-0);color:var(--warn);max-width:64ch}
-  main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(360px,520px);min-height:0}
-  #left{min-width:0} .tabs{display:flex;align-items:center;gap:.15rem;padding:.55rem 1.5rem 0;border-bottom:1px solid var(--rule);background:var(--card)}
-  .tabs button{white-space:nowrap;background:none;border:0;border-bottom:3px solid transparent;padding:.45rem .8rem;font-size:var(--fs-1);color:var(--ink-2);cursor:pointer;margin-bottom:-1px} .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--navy);font-weight:650}
-  .tabs .tabnote{margin-left:auto;font-size:var(--fs-0);color:var(--ink-3)} .panel[hidden]{display:none} .panel{padding:.75rem 1rem 1rem 1.5rem}
-  .tbar{display:flex;flex-wrap:wrap;gap:.5rem .9rem;align-items:center;margin-bottom:.6rem;font-size:var(--fs-0);color:var(--ink-2)} .tbar .scope{font-weight:650;color:var(--ink)} .tbar .count{color:var(--ink-3)} .search{flex:1 1 220px;min-width:160px;border:1px solid var(--rule-2);border-radius:6px;padding:.4rem .6rem;font-size:var(--fs-1);background:var(--card)}
-  table.dt{border-collapse:collapse;width:100%;font-size:var(--fs-0);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)} .dt th,.dt td{text-align:left;vertical-align:top;padding:.42rem .55rem;border-top:1px solid var(--rule)} .dt th{border-top:0;background:var(--paper);color:var(--ink-2);font-weight:650;text-transform:uppercase;letter-spacing:.05em;font-size:.7rem;cursor:pointer;white-space:nowrap;user-select:none} .dt th.on{color:var(--navy)}
-  .dt td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap} .dt tr.exp td{background:#FCFBF8;border-top:0;padding-top:0} .dt .sub{color:var(--ink-2)} .dt .mono{font-variant-numeric:tabular-nums;white-space:nowrap}
-  .linkish{background:none;border:0;padding:0;color:var(--gulf);text-decoration:underline;cursor:pointer;font:inherit} .linkish:hover{color:var(--navy)}
-  .num button.linkish{font-size:inherit;font-weight:inherit;color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--gulf)} .num button.linkish:hover{color:var(--navy)}
-  .more{margin:.6rem 0} .empty{padding:1rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:70ch;background:var(--card)}
-  .cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.6rem 0}
-  @media (max-width:980px){.cmp-grid{grid-template-columns:1fr}}
-  #map-wrap{position:relative;padding:.75rem 1rem 1rem 1.5rem}
+  .tb-group{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .tb-group > b{font-size:var(--fs-0);font-weight:650;color:var(--ink-2);letter-spacing:.02em}
+  .filters .fnote{font-size:var(--fs-0);color:var(--ink-3);flex-basis:100%} .filters .fstate{flex-basis:100%;font-size:var(--fs-0);color:var(--warn)}
+  .filters .factions{margin-left:auto;display:inline-flex;gap:.5rem}
+  .sel{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234B5563' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right .6rem center;border:1px solid var(--rule-2);border-radius:8px;padding:.42rem 1.8rem .42rem .65rem;font-size:var(--fs-1);cursor:pointer;min-width:0;max-width:100%}
+  .sel:hover{border-color:var(--ink-3)}
+  .chk{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-0);color:var(--ink-2);cursor:pointer;padding:.15rem .1rem} .chk input{margin:0;accent-color:var(--navy);width:15px;height:15px}
+
+  /* ---- "start here" doors (national view only) ---- */
+  .doors{display:flex;align-items:stretch;gap:.6rem;padding:.6rem var(--gutter);background:var(--card);border-bottom:1px solid var(--rule);flex-wrap:wrap}
+  .doors[hidden]{display:none}
+  .doors .lead{align-self:center;font-size:var(--fs-0);color:var(--ink-3);font-weight:650;text-transform:uppercase;letter-spacing:.06em;padding-right:.2rem}
+  .door{flex:1 1 200px;display:block;text-align:left;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--rule-2);border-radius:var(--r);padding:.55rem .85rem;cursor:pointer;font:inherit;line-height:1.3}
+  .door:hover{border-color:var(--navy);background:#EEF4FA;color:var(--ink)} .door b{display:block;font-weight:650} .door span{color:var(--ink-2);font-size:var(--fs-0)}
+  .doors .x{border:0;background:none;color:var(--ink-3);font-size:1.3rem;cursor:pointer;padding:0 .3rem;align-self:center;border-radius:50%} .doors .x:hover{color:var(--ink);background:var(--paper)}
+
+  /* ---- main: map + pane ---- */
+  main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(360px,500px);min-height:0}
+  #left{min-width:0}
+  .tabs{display:flex;align-items:center;gap:.15rem;padding:.55rem var(--gutter) 0;border-bottom:1px solid var(--rule);background:var(--card)}
+  .tabs button[data-tab]{white-space:nowrap;background:none;border:0;border-bottom:3px solid transparent;padding:.5rem .85rem;font-size:var(--fs-1);color:var(--ink-2);cursor:pointer;margin-bottom:-1px} .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--navy);font-weight:650}
+  .tabs .tabnote{margin-left:auto;font-size:var(--fs-0);color:var(--ink-3);padding-bottom:.3rem}
+  .menu{position:relative} .menu>summary{list-style:none;cursor:pointer;white-space:nowrap;padding:.5rem .85rem;font-size:var(--fs-1);color:var(--ink-2);border-bottom:3px solid transparent;margin-bottom:-1px;display:inline-block}
+  .menu>summary::-webkit-details-marker{display:none} .menu>summary::after{content:" ▾";font-size:.8em}
+  .menu.on>summary{color:var(--ink);border-bottom-color:var(--navy);font-weight:650}
+  .menu>div{position:absolute;left:0;top:calc(100% + 2px);background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);z-index:20;min-width:240px;padding:.35rem}
+  .menu>div button[data-tab]{display:block;width:100%;text-align:left;border:0 !important;border-radius:6px;padding:.5rem .7rem !important;margin:0 !important} .menu>div button[data-tab]:hover{background:#EEF4FA} .menu>div button[data-tab] span{display:block;color:var(--ink-3);font-size:var(--fs-0);font-weight:400}
+  .menu>div button[aria-selected="true"]{background:#EEF4FA}
+  .panel[hidden]{display:none} .panel{padding:.75rem var(--gutter) 1rem}
+  .maptools{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.2rem;margin:0 0 .6rem}
+  .maptools .lab{font-size:var(--fs-0);font-weight:650;color:var(--ink-2)}
+  .layers>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-0);color:var(--ink-2);border:1px solid var(--rule-2);border-radius:999px;padding:.4rem .8rem;background:var(--card)} .layers>summary::-webkit-details-marker{display:none} .layers>summary:hover{border-color:var(--ink-3);color:var(--ink)}
+  .layers{position:relative} .layers>div{position:absolute;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);z-index:20;padding:.5rem .8rem;display:grid;gap:.3rem;min-width:190px}
+  .maptools .right{margin-left:auto}
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;font-size:var(--fs-0);color:var(--ink-2);margin:0 0 .5rem;min-height:1.6rem}
   .legend .lg-title{font-weight:650;color:var(--ink)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
+  #map-wrap{position:relative}
   svg#map{width:100%;height:auto;display:block;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
   .county{stroke:#fff;stroke-width:.3;cursor:pointer;transition:opacity .15s} .county:hover{stroke:var(--ink);stroke-width:1.1}
   .dim .county:not(.in-district){opacity:.32}
@@ -63,110 +103,144 @@
   .statefill{fill:none;stroke:#fff;stroke-width:.8;pointer-events:none} .unit-state .statefill{pointer-events:all;cursor:pointer} .unit-state .statefill:hover{stroke:var(--ink);stroke-width:1.6}
   .unit-state .district{display:none} .unit-district .district:not(.fillable){display:none}
   .stateline{fill:none;stroke:var(--ink);stroke-width:.7;pointer-events:none;opacity:.85}
-  .district.selected{stroke-width:2.6;stroke:var(--ink);opacity:1} .district.selected-halo{stroke:#fff;stroke-width:5.5;opacity:.95}
+  .district.selected{stroke-width:2.6;stroke:var(--rust);opacity:1} .district.selected-halo{stroke:#fff;stroke-width:5.5;opacity:.95}
   .dlabel{font-size:9px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:2.5px;cursor:pointer}
-  .dlabel.dsel{fill:var(--navy,#0b2545)}
-  /* zoomed to one district: keep lines at screen width instead of growing with the zoom */
+  .dlabel.dsel{fill:var(--rust)}
   #map.dz .county,#map.dz .district,#map.dz .stateline,#map.dz .statefill,#map.dz .nci{vector-effect:non-scaling-stroke}
   #map.dz .county{stroke-width:.6px} #map.dz .district{stroke-width:1.2px} #map.dz .district.selected{stroke-width:3px} #map.dz .district.selected-halo{stroke-width:7px} #map.dz .stateline{stroke-width:1.2px}
-  /* Alaska and Hawaii are drawn as insets in the lower left; hide them when another state is in view so they don't sit on top of it */
   #map.no-inset .inset{display:none}
   .nci{fill:#F5C518;stroke:#3a2f00;stroke-width:.5;pointer-events:none}
-  .map-hint{position:absolute;left:1.5rem;bottom:1.2rem;font-size:var(--fs-0);color:var(--ink-3);background:rgba(255,255,255,.85);padding:.2rem .5rem;border-radius:4px;pointer-events:none}
-  #tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;padding:.55rem .7rem;border-radius:6px;font-size:var(--fs-0);line-height:1.4;max-width:300px;display:none;z-index:5;box-shadow:0 6px 18px rgba(0,0,0,.25)} #tip b{font-size:var(--fs-1)} #tip .muted{color:#c7d0da}
-  aside{border-left:1px solid var(--rule);background:var(--paper);padding:.9rem 1.25rem 1.5rem;overflow:auto;max-height:calc(100vh - 150px);position:sticky;top:0}
-  .finder{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.9rem} .finder .full{grid-column:1/-1}
-  .finder select,.finder input{width:100%;background:var(--card);border:1px solid var(--rule-2);border-radius:6px;padding:.5rem .6rem;font-size:var(--fs-1)}
-  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:1rem 1.1rem;margin-bottom:.75rem} .card.hero{border-color:var(--navy)}
+  .map-hint{font-size:var(--fs-0);color:var(--ink-3);margin:.45rem 0 0}
+  #tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;padding:.55rem .7rem;border-radius:8px;font-size:var(--fs-0);line-height:1.4;max-width:300px;display:none;z-index:5;box-shadow:0 6px 18px rgba(0,0,0,.25)} #tip b{font-size:var(--fs-1)} #tip .muted{color:#c7d0da}
+  #busy{position:fixed;left:50%;bottom:1.2rem;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.5rem .9rem;border-radius:999px;font-size:var(--fs-0);z-index:40;box-shadow:0 6px 18px rgba(0,0,0,.25);display:flex;align-items:center;gap:.5rem} #busy[hidden]{display:none}
+  #busy i{width:.8rem;height:.8rem;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite} @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---- tables and tab furniture ---- */
+  .tbar{display:flex;flex-wrap:wrap;gap:.5rem .9rem;align-items:center;margin-bottom:.6rem;font-size:var(--fs-0);color:var(--ink-2)} .tbar .scope{font-weight:650;color:var(--ink);font-size:var(--fs-1)} .tbar .count{color:var(--ink-3)} .search{flex:1 1 220px;min-width:160px;border:1px solid var(--rule-2);border-radius:999px;padding:.45rem .8rem;font-size:var(--fs-1);background:var(--card)}
+  table.dt{border-collapse:collapse;width:100%;font-size:var(--fs-0);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)} .dt th,.dt td{text-align:left;vertical-align:top;padding:.45rem .6rem;border-top:1px solid var(--rule)} .dt th{border-top:0;background:var(--paper);color:var(--ink-2);font-weight:650;font-size:.74rem;cursor:pointer;white-space:nowrap;user-select:none} .dt th.on{color:var(--navy)}
+  .dt td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap} .dt tr.exp td{background:#FCFBF8;border-top:0;padding-top:0} .dt .sub{color:var(--ink-2)} .dt .mono{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .linkish{background:none;border:0;padding:0;color:var(--gulf);text-decoration:underline;cursor:pointer;font:inherit} .linkish:hover{color:var(--navy)}
+  .num button.linkish{font-size:inherit;font-weight:inherit;color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--gulf)} .num button.linkish:hover{color:var(--navy)}
+  .more{margin:.6rem 0} .empty{padding:1rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:70ch;background:var(--card)}
+  .cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.6rem 0}
+  @media (max-width:980px){.cmp-grid{grid-template-columns:1fr}}
+
+  /* ---- right pane ---- */
+  aside{border-left:1px solid var(--rule);background:var(--paper);padding:.9rem 1.25rem 1.5rem;overflow:auto;max-height:calc(100vh - 60px);position:sticky;top:0}
+  .finder{margin:0 0 .8rem} .finder summary{cursor:pointer;font-size:var(--fs-0);color:var(--ink-2);list-style:none;display:inline-flex;align-items:center;gap:.3rem} .finder summary::-webkit-details-marker{display:none} .finder summary::before{content:"▸";font-size:.8em} .finder[open] summary::before{content:"▾"}
+  .finder .grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.5rem} .finder .full{grid-column:1/-1}
+  .finder select,.finder input{width:100%;background:var(--card);border:1px solid var(--rule-2);border-radius:8px;padding:.5rem .6rem;font-size:var(--fs-1)}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:1rem 1.15rem;margin-bottom:.8rem} .card.hero{border-color:var(--navy);border-top:4px solid var(--navy)}
   .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .15rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
-  h2{font-size:var(--fs-4);font-weight:650;margin:0 0 .2rem;letter-spacing:-.02em;line-height:1.1}
-  h3{font-size:var(--fs-0);font-weight:650;margin:.9rem 0 .35rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+  h2{font-size:var(--fs-4);font-weight:700;margin:0 0 .2rem;letter-spacing:-.02em;line-height:1.1}
+  h3{font-size:var(--fs-0);font-weight:700;margin:1rem 0 .4rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
   .member{margin:0 0 .6rem;color:var(--ink-2);font-size:var(--fs-1)} .member .dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.3rem}
-  .stat{margin:0;padding:.7rem 0 .7rem .9rem;border-left:3px solid var(--rule-2)} .stat + .stat{border-top:1px solid var(--rule)}
+  .stat{margin:0;padding:.75rem 0 .75rem 1rem;border-left:3px solid var(--rule-2)} .stat + .stat{border-top:1px solid var(--rule)}
   .stat.hot{border-left-color:var(--rust)} .stat.na{border-left-color:var(--ink-3)}
-  .stat .num{font-size:var(--fs-5);font-weight:650;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;flex-wrap:wrap;gap:.1rem .35rem}
+  .stat .num{font-size:var(--fs-5);font-weight:700;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;flex-wrap:wrap;gap:.1rem .35rem}
   .stat .num small{font-size:var(--fs-2);font-weight:500;color:var(--ink-2)} .stat .num.small{font-size:var(--fs-3)}
-  .stat p{margin:.25rem 0 0;font-size:var(--fs-1);max-width:40ch;color:var(--ink)}
+  .stat p{margin:.3rem 0 0;font-size:var(--fs-1);max-width:42ch;color:var(--ink)}
   .rows{margin:.3rem 0 0;padding:0;list-style:none;font-size:var(--fs-1)}
-  .rows li{display:flex;justify-content:space-between;gap:1rem;padding:.32rem 0;border-top:1px solid var(--rule)} .rows li:first-child{border-top:0}
-  .rows li span:last-child{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;font-weight:600} .rows li.sub span:first-child{padding-left:1rem;color:var(--ink-2)}
+  .rows li{display:flex;justify-content:space-between;gap:1rem;padding:.35rem 0;border-top:1px solid var(--rule)} .rows li:first-child{border-top:0}
+  .rows li>span:last-child{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;font-weight:600} .rows li.sub>span:first-child{padding-left:1rem;color:var(--ink-2)}
   .chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:.4rem 0 0}
-  .chip{background:var(--card);border:1px solid var(--rule-2);border-radius:999px;padding:.18rem .65rem;font-size:var(--fs-0);cursor:pointer;color:var(--ink);text-decoration:none} .chip:hover{border-color:var(--navy);color:var(--navy)}
+  .chip{background:var(--card);border:1px solid var(--rule-2);border-radius:999px;padding:.22rem .7rem;font-size:var(--fs-0);cursor:pointer;color:var(--ink);text-decoration:none} .chip:hover{border-color:var(--navy);color:var(--navy)}
   .chip.static{cursor:default;background:var(--paper)} .chip.static:hover{border-color:var(--rule-2);color:var(--ink)}
   .note{color:var(--ink-2);font-size:var(--fs-0);margin:.6rem 0 0;max-width:64ch} .flag{color:var(--warn);font-size:var(--fs-0);margin:.3rem 0 0;max-width:64ch}
-  .caution{background:#FFF7DF;border:1px solid #E6D08A;border-radius:6px;padding:.5rem .7rem;font-size:var(--fs-0);color:var(--ink);margin:.6rem 0 0;max-width:64ch}
+  .caution{background:#FFF7DF;border:1px solid #E6D08A;border-radius:8px;padding:.5rem .7rem;font-size:var(--fs-0);color:var(--ink);margin:.6rem 0 0;max-width:64ch}
   .unfiltered-tag{display:inline-block;background:var(--paper);border:1px solid var(--ink-3);border-radius:3px;padding:.04rem .35rem;font-size:.66rem;font-weight:700;color:var(--warn);vertical-align:middle;letter-spacing:.03em;text-transform:uppercase}
   .starters{display:grid;gap:.5rem;margin:.6rem 0 0}
-  .starters button{text-align:left;background:var(--paper);border:1px solid var(--rule-2);border-radius:6px;padding:.55rem .7rem;cursor:pointer;font-size:var(--fs-1)} .starters button:hover{border-color:var(--navy)} .starters button b{display:block;font-weight:650} .starters button span{color:var(--ink-2);font-size:var(--fs-0)}
-  .share{display:inline-flex;gap:.4rem;align-items:center;margin-top:.7rem;font-size:var(--fs-0)}
-  footer{padding:.9rem 1.5rem 1.4rem;border-top:1px solid var(--rule);color:var(--ink-2);font-size:var(--fs-0);line-height:1.5;background:var(--card)}
-  footer details{max-width:130ch} footer summary{cursor:pointer;font-weight:650;color:var(--ink);padding:.2rem 0} footer p{margin:.4rem 0}
-  @media (max-width:980px){main{grid-template-columns:minmax(0,1fr)}aside{border-left:0;border-top:1px solid var(--rule);max-height:none;position:static}.filters .fstate{margin-left:0}.toolbar .right{margin-left:0}}
+  .starters button{text-align:left;background:var(--paper);border:1px solid var(--rule-2);border-radius:8px;padding:.55rem .7rem;cursor:pointer;font-size:var(--fs-1)} .starters button:hover{border-color:var(--navy)} .starters button b{display:block;font-weight:650} .starters button span{color:var(--ink-2);font-size:var(--fs-0)}
+  .share{display:inline-flex;gap:.4rem;align-items:center;margin-top:.8rem;font-size:var(--fs-0);flex-wrap:wrap}
+  abbr.g{text-decoration:none;border-bottom:1px dotted var(--gulf);cursor:help}
+
+  /* ---- footer ---- */
+  footer{padding:1.4rem var(--gutter) 1.8rem;border-top:1px solid var(--rule);color:var(--ink-2);font-size:var(--fs-0);line-height:1.55;background:var(--card)}
+  .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:1.2rem 2rem;margin-bottom:1rem;max-width:140ch}
+  .foot-grid b{color:var(--ink);display:block;margin-bottom:.2rem;font-size:var(--fs-1)} .foot-grid p{margin:0 0 .4rem}
+  .foot-grid dl{margin:0} .foot-grid dt{font-weight:650;color:var(--ink);display:inline} .foot-grid dd{display:inline;margin:0} .foot-grid dd::after{content:"";display:block;margin-bottom:.25rem}
+  footer details{max-width:140ch} footer summary{cursor:pointer;font-weight:650;color:var(--ink);padding:.2rem 0} footer p{margin:.4rem 0}
+
+  @media (max-width:980px){main{grid-template-columns:minmax(0,1fr)}aside{border-left:0;border-top:1px solid var(--rule);max-height:none;position:static}}
   @media (max-width:640px){
-    header{flex-direction:column;align-items:flex-start;gap:.5rem;padding:1rem 16px .6rem}
-    .hdr-links{flex-wrap:wrap;white-space:normal;gap:.35rem 1rem;padding-top:0}
-    #stamp{white-space:normal}
-    .toolbar,.filters{padding-left:16px;padding-right:16px}
-    .toolbar>*,.filters>*,.tb-group{max-width:100%;min-width:0}
-    .sel{max-width:100%}
-    .toolbar .right{margin-left:0}
-    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:.55rem 16px 0}
-    .tabs::-webkit-scrollbar{display:none}
-    #map-wrap{padding:.5rem 16px .75rem}
+    :root{--gutter:16px}
+    header{flex-direction:column;align-items:flex-start;gap:.5rem}
+    .brand{flex-direction:column;gap:.1rem} .brand .wordmark{white-space:normal}
+    .hdr-links{justify-content:flex-start}
+    .searchbar .stamp{margin-left:0;white-space:normal;flex-basis:100%}
+    .filters>*,.tb-group{max-width:100%;min-width:0} .filters .factions{margin-left:0}
+    .doors{gap:.4rem;position:relative;padding-right:2.2rem} .doors .lead{flex-basis:100%;padding:0} .door{flex:1 1 auto;padding:.4rem .7rem} .door b{font-size:var(--fs-0)} .door span{display:none} .doors .x{position:absolute;right:8px;top:6px}
+    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none} .tabs::-webkit-scrollbar{display:none} .tabs .tabnote{display:none}
+    .menu>div{position:fixed;left:16px;right:16px;top:auto}
+    .maptools .right{margin-left:0}
     #right,#pane-body{min-width:0}
-    .map-hint{position:static;display:block;margin-top:.35rem;background:none;padding:0}
     table{display:block;overflow-x:auto;max-width:100%}
+    .foot-grid{grid-template-columns:1fr}
+    .tbar,.tbar>*{max-width:100%;min-width:0} .tbar .chk{flex-wrap:wrap}
+    .rows li{flex-wrap:wrap} .rows li>span:last-child{white-space:normal}
   }
-  @media (prefers-reduced-motion:reduce){.county{transition:none}}
+  @media (prefers-reduced-motion:reduce){.county{transition:none}#busy i{animation:none}}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div>
-    <h1>How far are Americans from a cancer clinical trial?</h1>
-    <p>Recruiting cancer treatment trials open to patients 55 and older — by county, congressional district and state, measured in road miles from where people actually live. Filter by phase, sponsor and cancer type; every figure that can respond does.</p>
-  </div>
-  <div style="text-align:right"><nav class="hdr-links" aria-label="Pages" style="justify-content:flex-end"><a href="find.html">Find trials near a ZIP</a><a href="sites.html">Where would a new site help?</a><a href="brief.html" id="brief-link">Printable brief</a><a href="#methods">Methods &amp; sources</a></nav><p id="stamp" style="font-size:var(--fs-0);color:var(--ink-3);margin:.35rem 0 0"></p></div>
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tag">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="find.html">Find trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="sites.html">Where would a new site help?</a><a href="#methods">Methods &amp; data</a></nav>
 </header>
-<div class="toolbar" role="toolbar" aria-label="Map controls">
-  <div class="tb-group"><b>Map by</b>
-    <select class="sel" id="unit" aria-label="Map unit"><option value="county">Counties</option><option value="district">Congressional districts</option><option value="state">States</option></select>
-  </div>
-  <div class="tb-group"><b>Color</b>
-    <select class="sel" id="metric" aria-label="Map variable"></select>
-    <select class="sel" id="inc-site" aria-label="Cancer site for the incidence layer" style="display:none"></select>
-    <select class="sel" id="acs-var" aria-label="ACS variable" style="display:none">
-      <option value="veh">Households without a vehicle</option><option value="bb">Households with broadband</option><option value="unins">Uninsured (all ages)</option><option value="unins55">Uninsured, ages 55–64</option><option value="pov">Poverty rate</option>
-    </select>
-  </div>
-  <div class="tb-group"><b>Show</b>
-    <label class="chk"><input type="checkbox" id="lyr-d" checked> District lines</label>
-    <label class="chk"><input type="checkbox" id="lyr-n" checked> NCI centers</label>
-    <label class="chk"><input type="checkbox" id="lyr-l" checked> District numbers</label>
-  </div>
-  <div class="right">
-    <span class="tb-group"><b>Filters</b> <span class="badge" id="fbadge" hidden>0</span></span>
-    <button class="btn" id="btn-reset" title="Clear filters and selection">Reset</button>
-  </div>
+<div class="searchbar">
+  <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a ZIP code, county, congressional district, state or member of Congress" aria-label="Search places and members of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
+  <button class="btn" id="btn-filters" type="button" aria-expanded="false" aria-controls="filters">Filter trials <span class="badge" id="fbadge" hidden>0</span></button>
+  <span class="fchip" id="fchip" hidden></span>
+  <button class="btn" id="btn-reset" type="button" title="Clear filters and go back to the national view">Reset view</button>
+  <span class="stamp" id="stamp"></span>
 </div>
-<div class="filters" id="filters" role="group" aria-label="Trial filters: phase, sponsor, cancer type">
+<div class="filters" id="filters" role="group" aria-label="Trial filters: phase, sponsor, cancer type, patient age" hidden>
   <div class="tb-group"><b>Phase</b><span id="f-phase"></span></div>
   <div class="tb-group"><b>Sponsor</b><span id="f-sponsor"></span></div>
-  <div class="tb-group"><b>Cancer type</b><select class="sel" id="f-type"><option value="">All cancer types</option></select><span class="fnote" id="f-type-note"></span></div>
-  <div class="tb-group"><b>Patient age</b><input type="number" id="f-age" class="sel" style="width:5.5rem;padding-right:.6rem" min="18" max="110" value="55" aria-label="Patient age used for eligibility"><span class="fnote" id="f-age-note"></span></div>
+  <div class="tb-group"><b>Cancer type</b><select class="sel" id="f-type"><option value="">All cancer types</option></select></div>
+  <div class="tb-group"><b>Patient age</b><input type="number" id="f-age" class="sel" style="width:5.5rem;padding-right:.6rem" min="18" max="110" value="55" aria-label="Patient age used for eligibility"></div>
+  <span class="factions"><button class="btn" id="btn-clearf" type="button">Clear filters</button><button class="btn primary" id="btn-filters-done" type="button">Done</button></span>
+  <span class="fnote" id="f-type-note"></span><span class="fnote" id="f-age-note"></span>
   <span class="fstate" id="f-state"></span>
+</div>
+<div class="doors" id="doors" hidden>
+  <span class="lead">Start here</span>
+  <a class="door" href="find.html"><b>Patients and families</b><span>Find recruiting trials near a ZIP code</span></a>
+  <button class="door" type="button" id="door-d"><b>Advocates and congressional staff</b><span>Look up a district: access figures, cosponsor status, printable brief</span></button>
+  <a class="door" href="#methods"><b>Researchers and journalists</b><span>Methods, sources and downloadable tables</span></a>
+  <button class="x" type="button" id="doors-x" aria-label="Hide this strip">×</button>
 </div>
 <main>
   <div id="left">
   <div class="tabs" role="tablist">
-    <button role="tab" data-tab="map" aria-selected="true">Map</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button><button role="tab" data-tab="compare">Compare counties</button><button role="tab" data-tab="burden">Burden vs access</button><button role="tab" data-tab="changes">What changed</button>
+    <button role="tab" data-tab="map" aria-selected="true">Map</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button>
+    <details class="menu" id="analysis-menu"><summary role="button" aria-haspopup="true">Analysis</summary><div>
+      <button role="tab" data-tab="compare">Compare counties<span>Every county in a state, side by side</span></button>
+      <button role="tab" data-tab="burden">Need vs access<span>Counties with high cancer incidence and low trial access</span></button>
+      <button role="tab" data-tab="changes">Recent changes<span>What changed in the registry since the last refresh</span></button>
+    </div></details>
     <span class="tabnote" id="scope-note"></span>
   </div>
   <div id="map-wrap" class="panel">
+    <div class="maptools" role="toolbar" aria-label="Map controls">
+      <div class="tb-group"><span class="lab">Show areas as</span>
+        <select class="sel" id="unit" aria-label="Map unit"><option value="county">Counties</option><option value="district">Congressional districts</option><option value="state">States</option></select></div>
+      <div class="tb-group"><span class="lab">Color by</span>
+        <select class="sel" id="metric" aria-label="Map variable"></select>
+        <select class="sel" id="inc-site" aria-label="Cancer site for the incidence layer" style="display:none"></select>
+        <select class="sel" id="acs-var" aria-label="ACS variable" style="display:none">
+          <option value="veh">Households without a vehicle</option><option value="bb">Households with broadband</option><option value="unins">Uninsured (all ages)</option><option value="unins55">Uninsured, ages 55–64</option><option value="pov">Poverty rate</option>
+        </select></div>
+      <details class="layers right" id="layers"><summary>Layers</summary><div>
+        <label class="chk"><input type="checkbox" id="lyr-d" checked> District lines</label>
+        <label class="chk"><input type="checkbox" id="lyr-n" checked> NCI-designated centers</label>
+        <label class="chk"><input type="checkbox" id="lyr-l" checked> District numbers</label>
+      </div></details>
+    </div>
     <div class="legend" id="legend" aria-live="polite"></div>
     <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Map of US counties with congressional district boundaries"></svg>
-    <div class="map-hint">Hover for details · click to select · double-click the map to zoom out · "Map by" switches counties / districts / states</div>
+    <div class="map-hint">Hover for details · click to select · double-click the map to zoom back out · touch: tap to select</div>
     <div id="tip" role="tooltip"></div>
   </div>
   <div id="tab-trials" class="panel" hidden>
@@ -185,15 +259,28 @@
   <div id="tab-changes" class="panel" hidden><div id="chg-body"></div></div>
   </div>
   <aside id="pane">
-    <div class="finder">
+    <details class="finder" id="finder"><summary>Browse by state, district or county</summary><div class="grid">
       <select id="pick-s" aria-label="Zoom to a state"><option value="">State…</option></select>
       <select id="pick-d" aria-label="Choose a congressional district" disabled><option value="">District…</option></select>
-      <input class="full" id="pick-c" list="county-list" placeholder="Find a county (start typing)" aria-label="Find a county"><datalist id="county-list"></datalist>
-    </div>
+      <input class="full" id="pick-c" list="county-list" placeholder="County (start typing)" aria-label="Find a county"><datalist id="county-list"></datalist>
+    </div></details>
     <div id="pane-body"></div>
   </aside>
 </main>
-<footer id="methods"><div id="foot"></div></footer>
+<footer id="methods">
+  <div class="foot-grid">
+    <div><b>Cancer Trial Access Map</b><p>Recruiting cancer treatment trials open to patients 55 and older, by county, congressional district and state, measured in road miles from where people live. Built by Neha Agrawal, MD. <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a>.</p><p id="foot-stamp"></p></div>
+    <div><b>Cite as</b><p>Agrawal N. Cancer Trial Access Map. <span id="cite-url">https://nehaamd.github.io/cancer-trial-access-fullmap/</span> (data as of <span id="cite-date"></span>).</p><p>Every view has a link (“Copy link to this view”) that reopens the same place, filters and tab.</p></div>
+    <div><b>Key terms</b><dl>
+      <dt>Eligible trial.</dt><dd> A recruiting, interventional cancer treatment trial on ClinicalTrials.gov with a US site, open to at least one patient aged 55 or older.</dd>
+      <dt>Road-miles.</dt><dd> The shortest driving route on the highway network from where people live (each census tract's population center).</dd>
+      <dt>Broad menu / limited menu.</dt><dd> A county with 100 or more / 20 to 99 eligible trials (ASCO's 2024 thresholds).</dd>
+      <dt>NCI-designated center.</dt><dd> One of 68 cancer centers designated by the National Cancer Institute that treat patients.</dd>
+    </dl></div>
+  </div>
+  <div id="foot"></div>
+</footer>
+<div id="busy" hidden><i></i><span id="busy-txt">Loading census-tract data…</span></div>
 </div>
 <script src="data.js"></script>
 <script src="geo.js"></script>
@@ -250,6 +337,8 @@
   const fage = document.getElementById('f-age'); fage.addEventListener('change', () => { const v = Math.max(18, Math.min(110, parseInt(fage.value) || 55)); fage.value = v; filt.age = v;
     document.getElementById('f-age-note').textContent = v === 55 ? '' : v < 55 ? `Trials whose minimum age is above ${v} or maximum age below ${v} are excluded. This dataset only contains trials open to at least one 55-year-old, so trials open only to younger patients are not here; population figures remain residents 55+.` : `Trials whose maximum age is below ${v} are excluded (no stated cap = kept).`; update(); });
   document.getElementById('f-type-note').textContent = 'A named cancer includes basket trials that name it (counts show how many); "Multiple cancer types / basket" selects the basket bucket itself.';
+  const resetFilters = () => { filt.phase = new Set(T.phases); filt.sponsor = new Set(T.sponsors.map(s => s[0])); filt.type = ''; ft.value = ''; filt.age = 55; fage.value = 55; document.getElementById('f-age-note').textContent = ''; incSite = 0; incSel.value = 0; bvaCritUser = false; bvaThr = 50; document.querySelectorAll('#filters input[type=checkbox]').forEach(i => i.checked = true); update(); };
+  document.getElementById('btn-clearf').addEventListener('click', resetFilters); window.__resetFilters = resetFilters;
   document.getElementById('btn-reset').addEventListener('click', () => { filt.phase = new Set(T.phases); filt.sponsor = new Set(T.sponsors.map(s => s[0])); filt.type = ''; ft.value = ''; filt.age = 55; fage.value = 55; document.getElementById('f-age-note').textContent = ''; incSite = 0; incSel.value = 0; bvaCritUser = false; bvaThr = 50; document.querySelectorAll('#filters input[type=checkbox]').forEach(i => i.checked = true); clearSelection(); update(); });
 
   // ---------- metrics ----------
@@ -432,9 +521,10 @@
   function wireShare() { const bl = document.getElementById('btn-brief'); if (bl) bl.href = 'brief.html' + (selectedD ? '?d=' + selectedD : selectedC ? '?c=' + selectedC : selectedState ? '?s=' + selectedState : ''); const bh = document.getElementById('brief-link'); if (bh) bh.href = bl ? bl.href : 'brief.html'; const b = document.getElementById('btn-share'); if (!b) return; b.addEventListener('click', () => { if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(() => { document.getElementById('share-ok').textContent = 'copied'; setTimeout(() => { const s = document.getElementById('share-ok'); if (s) s.textContent = ''; }, 1800); }); }); }
 
   // ---------- tract-level data for live filtered aggregates (loaded on first use) ----------
+  const busy = (on, txt) => { const b = document.getElementById('busy'); b.hidden = !on; if (txt) document.getElementById('busy-txt').textContent = txt; };
   let TB = null, TBp = null;
   function loadTracts() { if (TB) return Promise.resolve(TB); if (TBp) return TBp;
-    TBp = fetch(D.meta.tracts_bin.file).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).then(buf => { const dv = new DataView(buf); if (dv.getUint32(0, true) !== 0x54524331) throw new Error('bad file');
+    busy(true, 'Loading census-tract data (6 MB, once)…'); TBp = fetch(D.meta.tracts_bin.file).finally(() => busy(false)).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).then(buf => { const dv = new DataView(buf); if (dv.getUint32(0, true) !== 0x54524331) throw new Error('bad file');
       const n = dv.getUint32(4, true), ns = dv.getUint32(8, true), np = dv.getUint32(12, true); let o = 20; const c4 = x => x + ((4 - x % 4) % 4);
       const pop = new Uint32Array(buf, o, n); o += n * 4; const st = new Uint8Array(buf, o, n); o += c4(n); const di = new Uint16Array(buf, o, n); o += c4(n * 2);
       const split = []; for (let i = 0; i < ns; i++) { split.push([dv.getUint32(o, true), dv.getUint16(o + 4, true), dv.getUint16(o + 6, true)]); o += 8; }
@@ -502,10 +592,10 @@
     return `<div class="card"><h3 style="margin-top:0">Trials within 60 road-miles of a typical resident, by cancer type ${ut}</h3><ul class="rows">${bd(g.bd.ct, kk => typeLabel[kk] || kk, ['multi', 'other_unclassified'])}<li class="sub"><span><em>of which multi-cancer / basket trials</em></span><span>${fmt(g.bd.ct.multi || 0)}</span></li></ul>
       <h3>By phase ${ut}</h3><ul class="rows">${bd(g.bd.ph, kk => kk === 'NA' ? 'Not phased (N/A)' : 'Phase ' + kk)}</ul><h3>By lead sponsor ${ut}</h3><ul class="rows">${bd(g.bd.sp, kk => sponsorLabel[kk] || kk)}</ul>
       <p class="note">Cancer-type rows count every trial that names that cancer, so basket trials appear under each cancer they name and rows do not sum to the total.</p></div>`; }
-  function accessStats(g, geoKind, geoIdx) { const fa = filtersActive(); const ut = utag();
-    const s1 = statHTML(pct(g.l20) + ut, '%', 'of residents 55+ have fewer than 20 eligible trials within 60 road-miles of home; ' + pct(g.z60) + '% have none. A typical resident has ' + fmt(g.t60) + ' within 60 road-miles.', g.l20 >= 50 ? 'hot' : '', 'stat-access');
+  function accessStats(g, geoKind, geoIdx, s1o) { const fa = filtersActive(); const ut = utag();
+    const s1 = s1o || statHTML(pct(g.l20) + ut, '%', 'of residents 55+ have fewer than 20 eligible trials within 60 road-miles of home; ' + pct(g.z60) + '% have none. A typical resident has ' + fmt(g.t60) + ' within 60 road-miles.', g.l20 >= 50 ? 'hot' : '', 'stat-access');
     const s2 = statHTML(pct(g.g60b) + ut, '%', 'live more than 60 road-miles from a broad menu (a county with 100+ trials); ' + pct(g.g120b) + '% more than 120.' + (g.nr ? ' ' + pct(g.nr) + '% have no road connection to one.' : ''), g.g60b >= 50 ? 'hot' : '');
-    const s3 = statHTML((g.medn === null ? '—' : fmt(g.medn)) + ut, g.medn === null ? '' : ' road-mi', (g.medn === null ? 'No road route to an NCI center for most residents. ' : 'median road distance to the nearest NCI-designated cancer center. ') + pct(g.g60n) + '% are more than 60 road-miles from one.', g.medn !== null && g.medn >= 150 ? 'hot' : (g.medn === null ? 'na' : ''));
+    const s3 = statHTML((g.medn === null ? '—' : fmt(g.medn)) + ut, g.medn === null ? '' : ' road-miles', (g.medn === null ? 'No road route to an NCI center for most residents. ' : 'median road distance to the nearest NCI-designated cancer center. ') + pct(g.g60n) + '% are more than 60 road-miles from one.', g.medn !== null && g.medn >= 150 ? 'hot' : (g.medn === null ? 'na' : ''));
     if (fa) setTimeout(() => fillFiltered(g, geoKind, geoIdx), 0);
     return s1 + s2 + s3; }
   function fillFiltered(g, kind, idx) { const el = document.getElementById('stat-access'); if (!el) return;
@@ -574,7 +664,7 @@
     const cell = rows.filter(r => r.q === 0); const cases = cell.reduce((s, r) => s + (r.cases || 0), 0), pop = cell.reduce((s, r) => s + r.p, 0);
     const shown = (bvaShowAll ? rows : cell).slice().sort((x, y) => { const [k, dir] = bvaSort; const v = r => k === 'n' ? C[r.k].n : k === 'st' ? C[r.k].s2 : k === 'rucc' ? (r.rucc ?? 99) : k === 'q' ? r.q : k === 'rn' ? (r.rn ?? 9999) : r[k] ?? -1; const a = v(x), b = v(y); return (typeof a === 'number' ? a - b : String(a).localeCompare(String(b))) * dir; });
     const opts = (vals, cur) => vals.map(([v, l]) => `<option value="${v}"${String(v) === String(cur) ? ' selected' : ''}>${l}</option>`).join('');
-    el.innerHTML = `<div class="card"><p class="kicker">Burden vs access · ${st ? esc(stName[st]) : 'United States'}${filtersActive() ? ' · filtered' : ''}</p><h2 style="font-size:var(--fs-3)">${fmt(cell.length)} of ${fmt(rows.length)} classified counties have high ${esc(BSITE[incSite][1])} incidence and low trial access</h2>
+    el.innerHTML = `<div class="card"><p class="kicker">Need vs access · ${st ? esc(stName[st]) : 'United States'}${filtersActive() ? ' · filtered' : ''}</p><h2 style="font-size:var(--fs-3)">${fmt(cell.length)} of ${fmt(rows.length)} classified counties have high ${esc(BSITE[incSite][1])} incidence and low trial access</h2>
       <p class="member">${fmt(pop)} residents 55+ · about ${fmt(cases)} new ${incSite ? esc(BSITE[incSite][1]) + ' ' : ''}diagnoses a year${cell.filter(r => r.small).length ? ` · ${cell.filter(r => r.small).length} of these counties have small-numbers incidence (hatched on the map)` : ''}</p>
       <div class="tbar" style="margin-top:.4rem"><label class="chk">Cancer <select class="sel" id="bva-site">${opts(BSITE.map((s, i) => [i, s[1]]), incSite)}</select></label><label class="chk">Low access = at least <select class="sel" id="bva-thr">${opts([[25, '25%'], [50, '50%'], [75, '75%']], bvaThr)}</select> of residents 55+ have <select class="sel" id="bva-crit">${opts([['l20', 'fewer than 20 ' + (filtersActive() ? 'matching ' : '') + 'trials'], ['z60', 'no ' + (filt.type && T.named_types.includes(filt.type) ? typeLabel[filt.type] : filtersActive() ? 'matching' : '') + ' trial']], bvaCrit)}</select> within 60 road-miles</label>
         <label class="chk"><input type="checkbox" id="bva-all"${bvaShowAll ? ' checked' : ''}> show all four cells</label><button class="btn" id="bva-csv">Download CSV</button></div>
@@ -599,20 +689,25 @@
     document.getElementById('bva-csv').addEventListener('click', () => downloadCSV(`burden_vs_access_${st || 'us'}_${BSITE[incSite][0]}${filt.type ? '_' + filt.type : ''}.csv`, [['county', 'state', 'county_fips', 'rucc_2023', 'residents_55plus', 'incidence_site', 'incidence_rate_per_100k', 'incidence_small_numbers', 'annual_cases', 'access_criterion', 'pct_residents_low_access', 'threshold_pct', 'trials_within_60_road_mi_typical', 'road_mi_nci', 'cell']]
       .concat((bvaShowAll ? rows : cell).map(r => [C[r.k].n, C[r.k].s2, r.k, r.rucc ?? '', r.p, BSITE[incSite][1], r.rate, r.small ? 1 : 0, r.cases ?? '', critLabel(), Math.round(r.a * 10) / 10, bvaThr, r.t60 === null || isNaN(r.t60) ? '' : Math.round(r.t60), r.rn ?? '', BVA_CLASSES[r.q][0]])))); }
 
-  function renderNational() { const g = D.meta.nat_core, ctx = D.meta.nat_ctx;
+  function renderNational() { const g = D.meta.nat_core, ctx = D.meta.nat_ctx; doors(true);
     const worst = Object.entries(D.state_data).sort((a, b) => b[1].l20 - a[1].l20).slice(0, 5);
-    pane.innerHTML = `<div class="card hero"><p class="kicker">United States · 50 states + DC</p><h2><button class="linkish" data-open="in" style="color:inherit;text-decoration:none;border-bottom:2px dotted var(--gulf)">${fmt(D.meta.trials)} recruiting trials</button></h2><p class="member">open to a 55-year-old, at ${fmt(D.meta.facilities)} facilities in ${fmt(D.meta.sitepoints)} locations · ${fmt(g.p)} residents 55+ in ${fmt(g.nt)} census tracts</p>
-      ${filterCaution('the whole country')}${accessStats(g, 'nat', 0)}${shareHTML()}</div>
-      <div class="card"><p class="kicker">Start here</p><div class="starters">
-        <button type="button" id="st-d"><b>Look up a state or congressional district</b><span>Pick a state, then a district — every number is weighted by where residents 55+ live.</span></button>
-        <button type="button" id="st-c"><b>Find a county</b><span>Trials, facilities, road miles to the nearest NCI center, cancer incidence, household context.</span></button>
-        <a class="chip" href="sites.html" style="justify-self:start">Where would an additional trial site help? →</a></div>
-      <h3>States with the least access · residents 55+ with fewer than 20 trials within 60 road-miles ${utag()}</h3><ul class="rows">${worst.map(([st, sd]) => `<li><span><button type="button" class="chip" data-s="${st}">${esc(sd.name)}</button></span><span>${pct(sd.l20)}%</span></li>`).join('')}</ul></div>
+    const M = v => (Math.round(g.p * v / 100 / 1e5) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 });  // millions of residents 55+
+    const ru = RU && RU.nat && RU.nat.metro && RU.nat.nonmetro ? RU.nat : null;
+    const lead = statHTML(M(g.l20) + utag(), ' million', `Americans 55 and older (${pct(g.l20)}%) have fewer than 20 eligible trials within 60 road-miles of home; ${M(g.z60)} million (${pct(g.z60)}%) have none. A typical resident has ${fmt(g.t60)} within 60 road-miles.${ru ? ` In rural (nonmetro) counties the share with fewer than 20 is ${pct(ru.nonmetro.l20)}%; in metro counties, ${pct(ru.metro.l20)}%.` : ''}`, g.l20 >= 50 ? 'hot' : '', 'stat-access');
+    pane.innerHTML = `<div class="card hero"><p class="kicker">United States · residents 55 and older</p><h2 style="font-size:var(--fs-3);margin-bottom:.5rem">How far are Americans from a cancer clinical trial?</h2>
+      ${filterCaution('the whole country')}${accessStats(g, 'nat', 0, lead)}
+      <p class="member" style="margin:.7rem 0 0"><button class="linkish" data-open="in">${fmt(D.meta.trials)} recruiting trials</button> open to a 55-year-old, at ${fmt(D.meta.facilities)} facilities in ${fmt(D.meta.sitepoints)} locations · ${fmt(g.p)} residents 55+ in ${fmt(g.nt)} census tracts</p>${shareHTML()}</div>
+      <div class="card"><h3 style="margin-top:0">States with the least access · residents 55+ with fewer than 20 trials within 60 road-miles ${utag()}</h3><ul class="rows">${worst.map(([st, sd]) => `<li><span><button type="button" class="chip" data-s="${st}">${esc(sd.name)}</button></span><span>${pct(sd.l20)}%</span></li>`).join('')}</ul>
+        <div class="chips" style="margin-top:.7rem"><button type="button" class="chip" id="st-d">Browse states and districts</button><button type="button" class="chip" id="st-c">Find a county</button><a class="chip" href="sites.html">Where would a new trial site help? →</a></div></div>
       ${roadCard(g)}${ruralCard('nat', 0, 'the country')}${burdenCard('nat')}${legislationNational()}${breakdownCard(g)}${contextCard(ctx, D.meta.nat_binc, BSITE[incSite][0])}
       <p class="note">Registry pulled ${D.meta.pull} · House members ${D.meta.members_pull.split(' ')[0]} · ${D.meta.vacant.length} seat${D.meta.vacant.length===1?'':'s'} vacant. Distances are shortest routes on the Census highway network from each tract's population center to actual recruiting-site locations. Router compared against ${D.meta.router.pairs} approximate published city-pair distances (mean difference ${D.meta.router.mean_pct}%) — not yet against an independent routing engine on the same coordinates.</p>`;
-    document.getElementById('st-d').addEventListener('click', () => pickS.focus()); document.getElementById('st-c').addEventListener('click', () => document.getElementById('pick-c').focus());
+    const openFinder = el => { document.getElementById('finder').open = true; el.focus(); };
+    document.getElementById('st-d').addEventListener('click', () => openFinder(pickS)); document.getElementById('st-c').addEventListener('click', () => openFinder(document.getElementById('pick-c')));
     pane.querySelectorAll('.chip[data-s]').forEach(b => b.addEventListener('click', () => { pickS.value = b.dataset.s; pickS.dispatchEvent(new Event('change')); })); wireShare(); wireLegislation(); fillFilteredRural('nat', 0); pane.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => openTrials('in'))); }
-  function renderStateOverview(st) { const g = D.state_data[st]; const rows = Object.entries(DI).filter(([k, d]) => d.st === st).sort((a, b) => (+a[1].cd) - (+b[1].cd)); const worst = rows.slice().sort((a, b) => b[1].l20 - a[1].l20).slice(0, 5);
+  let doorsDismissed = false; const doors = on => { document.getElementById('doors').hidden = !on || doorsDismissed; };
+  document.getElementById('doors-x').addEventListener('click', () => { doorsDismissed = true; doors(false); });
+  document.getElementById('door-d').addEventListener('click', () => { const q = document.getElementById('q'); q.focus(); q.placeholder = 'Type a district (TX-11), a member\'s name, or a ZIP code'; });
+  function renderStateOverview(st) { doors(false); const g = D.state_data[st]; const rows = Object.entries(DI).filter(([k, d]) => d.st === st).sort((a, b) => (+a[1].cd) - (+b[1].cd)); const worst = rows.slice().sort((a, b) => b[1].l20 - a[1].l20).slice(0, 5);
     pane.innerHTML = `<div class="card hero"><p class="kicker">State</p><h2>${esc(g.name)}</h2><p class="member"><button class="linkish" data-open="in">${fmt(g.trials)} recruiting trials</button> at <button class="linkish" data-open-sites="in">${fmt(g.fac)} sites</button> · ${g.broad} broad-menu and ${g.limited} limited-menu counties of ${g.counties} (${g.counties_with_trials} with any trial) · ${fmt(g.p)} residents 55+ · ${g.ndist} district${g.ndist === 1 ? '' : 's'}</p>
       ${filterCaution(g.name)}${accessStats(g, 'state', D.meta.state_order.indexOf(g.fips))}${shareHTML()}</div>
       <div class="card"><h3 style="margin-top:0">Districts</h3><div class="chips">${rows.map(([k, d]) => `<button type="button" class="chip" data-d="${k}">${st}-${cdLabel(d.cd)}</button>`).join('')}</div>
@@ -620,7 +715,7 @@
       ${roadCard(g)}${ruralCard('state', st, g.name)}${burdenCard('state', st)}${legislationState(st)}${breakdownCard(g)}${contextCard(g.ctx, g.binc, BSITE[incSite][0])}
       <p class="note">State figures are population-55+-weighted over census tracts. Click a county on the map for county detail.</p>`;
     pane.querySelectorAll('[data-d]').forEach(b => b.addEventListener('click', () => selectDistrict(b.dataset.d))); wireShare(); wireLegislation(); fillFilteredRural('state', D.meta.state_order.indexOf(g.fips)); facFilter = null; cmpSel = []; refreshTab(); pane.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => openTrials('in'))); pane.querySelectorAll('button[data-open-sites]').forEach(b => b.addEventListener('click', () => setTab('sites'))); }
-  function selectDistrict(k) { selectedD = k; selectedC = null; const d = DI[k];
+  function selectDistrict(k) { doors(false); selectedD = k; selectedC = null; const d = DI[k];
     if (d.st !== selectedState) { selectedState = d.st; pickS.value = d.st; fillDistricts(d.st); }
     zoomDistrict(k); refreshLabels();
     pickD.value = k; const f = districtFeatures.find(f => f.properties.id === k); halo.attr('d', path(f)); sel.attr('d', path(f)); svg.classed('dim', false); counties.classed('in-district', false);
@@ -633,7 +728,7 @@
       ${legislationDistrict(k, d)}${roadCard(d)}${breakdownCard(d)}${contextCard(d.ctx, null, BSITE[incSite][0])}
       <p class="note">${d.v2 ? `Version 2 (straight-line ×1.2, land-area weights) gave ${pct(d.v2.g60b)}% beyond 60 miles of a broad menu; version 3 gives ${pct(d.g60b)}%. ` : ''}District figures are population-55+-weighted over census tracts (tracts split by the boundary apportioned by land area).${RU && RU.districts[k] ? ` Most residents 55+ (${pct(RU.districts[k].modal_pct)}%) live in counties coded RUCC ${RU.districts[k].modal} (${RUCC_SHORT[RU.districts[k].modal]}).` : ''}</p>`;
     pane.scrollTop = 0; wireShare(); wireLegislation(); facFilter = null; cmpSel = []; refreshTab(); pushURL(); }
-  function selectCounty(k) { selectedC = k; selectedD = null; const c = C[k]; if (c.s2 !== selectedState || svg.classed('dz')) { selectedState = c.s2; pickS.value = c.s2; fillDistricts(c.s2); svg.classed('dz', false); zoomState(c.s2); refreshLabels(); }
+  function selectCounty(k) { doors(false); selectedC = k; selectedD = null; const c = C[k]; if (c.s2 !== selectedState || svg.classed('dz')) { selectedState = c.s2; pickS.value = c.s2; fillDistricts(c.s2); svg.classed('dz', false); zoomState(c.s2); refreshLabels(); }
     counties.classed('in-district', f => f.properties.id === k); svg.classed('dim', true); halo.attr('d', null); sel.attr('d', null); pickD.value = '';
     const i = CI[k], fa = filtersActive(), n = cnt[i], n60 = cnt60[i], nB = n - cntNamed[i], n60B = n60 - cnt60Named[i]; const nm = nearestMatching(k);
     const basket = (tot, b) => filt.type && tot ? ` <small style="font-size:.75em;color:var(--ink-2)">${fmt(tot - b)} named-only + ${fmt(b)} basket</small>` : '';
@@ -745,12 +840,13 @@
   document.getElementById('tr-q').addEventListener('input', e => { trQ = e.target.value; trShow = 100; renderTrials(); }); document.getElementById('si-q').addEventListener('input', e => { siQ = e.target.value; siShow = 150; renderSites(); });
   document.getElementById('tr-clearfac').addEventListener('click', () => { facFilter = null; renderTrials(); });
   function setTab(t) { tab = t; document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t)); ['map', 'trials', 'sites', 'compare', 'burden', 'changes'].forEach(x => document.getElementById(x === 'map' ? 'map-wrap' : 'tab-' + x).hidden = x !== t);
-    document.getElementById('scope-note').textContent = t === 'map' ? '' : `Scope: ${scope().label} — change it with the state / district / county pickers`; if (t === 'trials') renderTrials(); if (t === 'sites') renderSites(); if (t === 'compare') renderCompare(); if (t === 'burden') renderBurden(); if (t === 'changes') renderChanges(); pushURL(); }
+    document.getElementById('scope-note').textContent = t === 'map' ? '' : `Scope: ${scope().label} — change it with the search box or the map`; if (t === 'trials') renderTrials(); if (t === 'sites') renderSites(); if (t === 'compare') renderCompare(); if (t === 'burden') renderBurden(); if (t === 'changes') renderChanges(); pushURL(); }
   document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
   function openTrials(mode) { trMode = mode; document.getElementById('tr-mode').value = mode; facFilter = null; trShow = 100; setTab('trials'); }
   function refreshTab() { if (tab === 'trials') renderTrials(); else if (tab === 'sites') renderSites(); else if (tab === 'compare') renderCompare(); else if (tab === 'burden') renderBurden(); }
   function nearestMatching(k) { for (const [sp, mi] of C[k].nbd) { if (SP[sp].some(j => pass[j])) { const names = SPI[sp].map(([cf, i]) => facOf(cf, i)).filter(fa => fa[3].some(j => pass[j])); return { mi, names: names.slice(0, 2).map(fa => fa[0] + ', ' + fa[1]).join('; ') + (names.length > 2 ? ` (+${names.length - 2})` : '') }; } } return null; }
-  document.getElementById('stamp').textContent = `Registry data ${(D.meta.registry_data_timestamp || '').replace('T', ' ')} · pulled ${D.meta.pull_utc} · incidence ${D.meta.burden.period} · ACS 2023`;
+  { const nice = s => { const d = new Date(s + 'T12:00:00'); return isNaN(d) ? s : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }; const st_ = document.getElementById('stamp'); st_.textContent = `Data as of ${nice(D.meta.pull)}`; st_.title = `Registry data ${(D.meta.registry_data_timestamp || '').replace('T', ' ')} · pulled ${D.meta.pull_utc} · incidence ${D.meta.burden.period} · ACS 2023`;
+    document.getElementById('foot-stamp').textContent = `Trials: ClinicalTrials.gov, ${nice(D.meta.pull)} (refreshed weekly). Cancer incidence ${D.meta.burden.period}. Household data: ACS 2023 5-year. Districts: ${D.meta.plan}.`; document.getElementById('cite-date').textContent = nice(D.meta.pull); }
   document.getElementById('foot').innerHTML = `<details><summary>Methods, sources and limits</summary>
   <p><strong>Trials.</strong> ClinicalTrials.gov API v2, pulled ${D.meta.pull}: interventional studies, status Recruiting, primary purpose Treatment, oncology conditions, with a US site whose status is Recruiting or unreported; non-oncology trials and trials with a maximum enrollment age under 55 removed → ${fmt(D.meta.trials)} trials at ${fmt(D.meta.facilities)} registry-listed facilities (distinct facility names per county after removing sponsor site codes; anonymous placeholders such as "Research Site" count once per county) in ${fmt(D.meta.sitepoints)} locations. Sites are assigned to counties by ZIP (Census 2020 ZCTA–county relationship), 3-digit ZIP prefix, then city gazetteer, and located for routing at the ZIP centroid (state-checked), city centroid, or county population center. Menu thresholds (20, 100 trials in a county) follow ASCO's 2024 county analysis.</p>
   <p><strong>People and distances.</strong> Population 55+ from ACS 2023 5-year (B01001) by census tract, reconciled exactly to county totals. Distances are shortest routes on the Census TIGER 2025 primary/secondary road network (nodes at every crossing; connectors within 500 m; an access edge from each population center to the nearest road) from each tract's population center to recruiting-site locations, to the nearest county with 20+ / 100+ trials, and to the nearest of 68 NCI-designated treating centers. District figures weight tracts by residents 55+ using the Census tract–119th Congressional District relationship file (${D.meta.plan}). The router was compared against ${D.meta.router.pairs} <em>approximate</em> published city-pair driving distances (mean difference ${D.meta.router.mean_pct}%, largest ${D.meta.router.max_pct}%); it has <em>not</em> been checked against an independent routing engine using the same start and end coordinates, so treat that figure as directional.</p>
@@ -759,10 +855,65 @@
   ${RU ? `<p><strong>Rural / urban.</strong> USDA ERS Rural-Urban Continuum Codes, 2023 release: 1–3 metro, 4–9 nonmetro (by urban population size and adjacency to a metro area). The 2023 release codes Connecticut's nine planning regions; this site keeps the eight legacy counties, which therefore carry their 2013 codes. Metro / nonmetro figures are the same tract-weighted access measures as elsewhere, grouped by the code of each tract's county; with filters on, the three trial-count rows are recomputed live (the page loads a 169 KB tract-to-county file).</p>` : ''}
   ${BU ? `<p><strong>Burden vs access.</strong> A cross-tabulation of two published measures, never a combined score: county age-adjusted incidence for the chosen cancer site (State Cancer Profiles, ${D.meta.burden.period}) above or below the median of counties with a published rate, against the share of residents 55+ (population-weighted over the county's census tracts) with fewer than 20 — or, for a chosen cancer, no — recruiting trials within 60 road-miles, at a threshold the reader sets (default: at least half). Counties whose incidence rests on fewer than 16 average annual cases are classified but hatched; suppressed and unpublished counties (including all of Kansas) are not classified. Incidence and trial counts are for different periods and the incidence sites map only approximately onto the trial cancer-type categories.</p>` : ''}
   ${CO ? `<p><strong>Legislation.</strong> Sponsor and cosponsor lists for ${Object.keys(CO.bills).map(k => CO.bills[k].label).join(' / ')} (${[...new Set(Object.values(CO.meta.topics).map(t => t.name))].join('; ')}) from the Library of Congress bill-status feed (govinfo.gov BILLSTATUS; congress.gov API when a key is configured), as of ${CO.meta.fetched}; members matched to districts through unitedstates/congress-legislators. Withdrawn cosponsors are excluded. Cosponsorship is one signal of a member's position, not a vote; verify on congress.gov before citing.</p>` : ''}</details>`;
+  window.__nav = { selectDistrict, selectCounty, selectState: st => { pickS.value = st; pickS.dispatchEvent(new Event('change')); }, clearSelection, setTab };
   window.__validate = { loadTractsAll, filteredCounty, filteredRural, filteredGeo, tractCounts, CK, bvaClass, accessShare };  // hooks for validate_v3.py (headless checks only)
   fillMetricSelect(); const u = readURL(); fillMetricSelect(); recount(); paint();
   if (u.d && DI[u.d]) selectDistrict(u.d); else if (u.c && C[u.c]) selectCounty(u.c); else if (u.s && stName[u.s]) { selectedState = u.s; pickS.value = u.s; fillDistricts(u.s); zoomState(u.s); refreshLabels(); renderStateOverview(u.s); } else renderNational();
   if (u.tab && ['trials', 'sites', 'compare', 'burden', 'changes'].includes(u.tab)) setTab(u.tab);
+})();
+</script>
+<script>
+(function(){
+  const D = window.DATA, C = D.counties, DI = D.districts, stName = {}; D.states.forEach(s => stName[s[0]] = s[1]);
+  const cdLabel = cd => (cd === '0' || cd === '98') ? 'AL' : cd; const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  // ---- one search box: states, districts, members of Congress, counties, ZIP codes ----
+  const idx = [];
+  D.states.forEach(([usps, name]) => idx.push({ t: 's', k: usps, l: name, s: 'State', q: (name + ' ' + usps).toLowerCase() }));
+  Object.entries(DI).forEach(([k, d]) => { const lab = `${d.st}-${cdLabel(d.cd)}`; idx.push({ t: 'd', k, l: lab, m: (d.member || '').toLowerCase(), s: `${d.member ? d.member + (d.party ? ' (' + d.party + ')' : '') : 'Vacant seat'} · ${d.stname}`, q: (lab + ' ' + lab.replace('-', ' ') + ' ' + (d.member || '') + ' ' + d.stname + ' ' + d.st + ' district ' + cdLabel(d.cd)).toLowerCase() }); });
+  Object.entries(C).forEach(([k, c]) => idx.push({ t: 'c', k, l: `${c.n}, ${c.s2}`, p: c.p, s: `County · ${stName[c.s2] || ''}`, q: (c.n + ' county ' + c.s2 + ' ' + (stName[c.s2] || '')).toLowerCase() }));
+  const CO = window.COSPONSORS; if (CO && CO.senators) Object.entries(CO.senators).forEach(([st, ids]) => ids.forEach(bid => { const m = CO.members[bid]; if (m && stName[st]) idx.push({ t: 's', k: st, l: stName[st], m: m.name.toLowerCase(), s: `Sen. ${m.name} (${m.party}) — the state view shows senators' cosponsorship`, q: (m.name + ' senator ' + stName[st] + ' ' + st).toLowerCase() }); }));
+  let ZIP = null, ZIPp = null; const loadZip = () => ZIPp || (ZIPp = fetch('zip_county.json').then(r => r.json()).then(j => { ZIP = {}; Object.entries(j).forEach(([cf, zs]) => zs.forEach(z => ZIP[z] = cf)); return ZIP; }));
+  const q = document.getElementById('q'), list = document.getElementById('q-list'), clr = document.getElementById('q-clear'); let cur = -1, opts = [];
+  function rank(text) { const t = text.trim().toLowerCase().replace(/[^\w\s-]/g, ' ').replace(/\s+/g, ' ').trim(); if (!t) return [];
+    const words = t.split(/\s+/); const score = e => { let s = 0; for (const w of words) { if (!e.q.includes(w)) return -1; if (e.m && e.m.split(/[\s,]+/).some(x => x.startsWith(w))) s += 4.5; else if (e.l.toLowerCase().startsWith(w)) s += 3; else if (e.q.split(' ').some(x => x.startsWith(w))) s += 2; else s += 1; } return s + (e.t === 's' ? .3 : e.t === 'd' ? .2 : 0) + (e.p ? Math.log10(e.p) / 50 : 0); };
+    return idx.map(e => [score(e), e]).filter(x => x[0] > 0).sort((a, b) => b[0] - a[0] || a[1].l.localeCompare(b[1].l)).slice(0, 8).map(x => x[1]); }
+  function show(items, note) { opts = items; cur = -1; list.innerHTML = items.map((e, i) => `<div class="opt" role="option" data-i="${i}"><span><b>${esc(e.l)}</b><span class="sub">${esc(e.s)}</span></span><span class="k">${e.t === 's' ? 'state' : e.t === 'd' ? 'district' : e.t === 'c' ? 'county' : 'ZIP'}</span></div>`).join('') + (note ? `<div class="none">${note}</div>` : '');
+    list.hidden = !items.length && !note; q.setAttribute('aria-expanded', String(!list.hidden)); list.querySelectorAll('.opt').forEach(o => o.addEventListener('mousedown', ev => { ev.preventDefault(); go(opts[+o.dataset.i]); })); }
+  function go(e) { if (!e) return; list.hidden = true; q.setAttribute('aria-expanded', 'false'); q.value = e.l; clr.hidden = false;
+    if (e.t === 's') window.__nav.selectState(e.k); else if (e.t === 'd') window.__nav.selectDistrict(e.k); else if (e.t === 'c' || e.t === 'z') window.__nav.selectCounty(e.k);
+    if (window.innerWidth <= 980) document.getElementById('pane').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  q.addEventListener('input', () => { const v = q.value; clr.hidden = !v;
+    if (/^\d{5}$/.test(v.trim())) { loadZip().then(Z => { if (q.value.trim() !== v.trim()) return; const cf = Z[v.trim()]; if (cf && C[cf]) show([{ t: 'z', k: cf, l: `ZIP ${v.trim()} · ${C[cf].n}, ${C[cf].s2}`, s: 'County that contains this ZIP code' }]); else show([], 'No county found for that ZIP code (PO-box-only ZIPs are not in the Census file). Try the county or city name.'); }); return; }
+    if (/^\d{1,4}$/.test(v.trim())) { show([], 'Keep typing a 5-digit ZIP code, or type a county, district or member\'s name.'); return; }
+    const r = rank(v); show(r, !r.length && v.trim().length > 1 ? 'No state, district, county or member matches. Try “TX-11”, “Pfluger”, “Harris, TX” or a ZIP code.' : ''); });
+  q.addEventListener('keydown', ev => { if (list.hidden) return; if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') { ev.preventDefault(); cur = (cur + (ev.key === 'ArrowDown' ? 1 : -1) + opts.length) % opts.length; list.querySelectorAll('.opt').forEach((o, i) => o.classList.toggle('on', i === cur)); }
+    else if (ev.key === 'Enter') { ev.preventDefault(); go(opts[cur >= 0 ? cur : 0]); } else if (ev.key === 'Escape') { list.hidden = true; q.setAttribute('aria-expanded', 'false'); } });
+  q.addEventListener('focus', () => { if (q.value && opts.length) list.hidden = false; }); q.addEventListener('blur', () => setTimeout(() => { list.hidden = true; q.setAttribute('aria-expanded', 'false'); }, 150));
+  clr.addEventListener('click', () => { q.value = ''; clr.hidden = true; list.hidden = true; window.__nav.clearSelection(); q.focus(); });
+  document.getElementById('btn-reset').addEventListener('click', () => { q.value = ''; clr.hidden = true; });
+  // ---- filter drawer ----
+  const drawer = document.getElementById('filters'), fbtn = document.getElementById('btn-filters');
+  const setDrawer = on => { drawer.hidden = !on; fbtn.setAttribute('aria-expanded', String(on)); };
+  fbtn.addEventListener('click', () => setDrawer(drawer.hidden)); document.getElementById('btn-filters-done').addEventListener('click', () => setDrawer(false));
+  // ---- active-filter chip, derived from the controls themselves ----
+  const T = D.T, typeLabel = {}; T.types.forEach(([k, l]) => typeLabel[k] = l);
+  function chip() { const parts = []; const ph = [...document.querySelectorAll('#f-phase input')]; const on = ph.filter(i => i.checked); const phName = i => i.parentNode.textContent.trim().replace('Ph ', ''); if (on.length < ph.length) { const off = ph.filter(i => !i.checked); parts.push(!on.length ? 'no phases' : off.length <= on.length ? 'not Phase ' + off.map(phName).join('/') : 'Phase ' + on.map(phName).join('/')); }
+    const sp = [...document.querySelectorAll('#f-sponsor input')]; const son = sp.filter(i => i.checked); if (son.length < sp.length) { const soff = sp.filter(i => !i.checked); parts.push(!son.length ? 'no sponsors' : soff.length < son.length ? 'not ' + soff.map(i => i.parentNode.textContent.trim()).join('/') : son.map(i => i.parentNode.textContent.trim()).join(' + ')); }
+    const ty = document.getElementById('f-type').value; if (ty) parts.push(typeLabel[ty] || ty); const age = +document.getElementById('f-age').value; if (age !== 55) parts.push('age ' + age);
+    const el = document.getElementById('fchip'); el.hidden = !parts.length; if (parts.length) el.innerHTML = `<b>Filters:</b> ${esc(parts.join(' · '))} <button type="button" title="Clear filters" aria-label="Clear filters">×</button>`; const x = el.querySelector('button'); if (x) x.addEventListener('click', () => window.__resetFilters()); }
+  new MutationObserver(chip).observe(document.getElementById('f-state'), { childList: true, characterData: true, subtree: true }); chip();
+  if (new URLSearchParams(location.search).has('type') || new URLSearchParams(location.search).has('ph') || new URLSearchParams(location.search).has('sp') || new URLSearchParams(location.search).has('age')) setDrawer(false);
+  // ---- analysis menu: closes after a pick, shows which analysis tab is open ----
+  const menu = document.getElementById('analysis-menu'); const menuTabs = ['compare', 'burden', 'changes']; const names = { compare: 'Compare counties', burden: 'Need vs access', changes: 'Recent changes' };
+  const syncMenu = () => { const on = menuTabs.find(t => document.querySelector(`.tabs button[data-tab="${t}"]`).getAttribute('aria-selected') === 'true'); menu.classList.toggle('on', !!on); menu.querySelector('summary').textContent = on ? names[on] : 'Analysis'; };
+  menu.querySelectorAll('button[data-tab]').forEach(b => b.addEventListener('click', () => { menu.open = false; setTimeout(syncMenu, 0); }));
+  document.querySelectorAll('.tabs > button[data-tab]').forEach(b => b.addEventListener('click', () => setTimeout(syncMenu, 0))); syncMenu();
+  document.addEventListener('click', ev => { if (!menu.contains(ev.target)) menu.open = false; const ly = document.getElementById('layers'); if (!ly.contains(ev.target)) ly.open = false; });
+  // ---- plain-language tooltips on the first use of each term in the pane ----
+  const G = [[/\b(broad menu)\b/i, 'A county with 100 or more eligible trials (ASCO\'s 2024 threshold for a broad choice of trials).'], [/\b(limited menu)\b/i, 'A county with 20 to 99 eligible trials.'], [/\b(road-miles|road miles|road-mi)\b/i, 'Shortest driving route on the highway network, measured from where people live (each census tract\'s population center), not straight-line distance.'], [/\b(eligible trials?)\b/i, 'Recruiting, interventional cancer treatment trials on ClinicalTrials.gov with a US site, open to at least one patient aged 55 or older.'], [/\b(NCI-designated)\b/, 'Designated by the National Cancer Institute; 68 treating centers are included.'], [/\b(census tracts?)\b/i, 'Small Census Bureau areas of roughly 4,000 people; the map works out distances for each one.'], [/\b(nonmetro)\b/i, 'USDA Rural-Urban Continuum Codes 4–9: counties outside metropolitan areas.']];
+  function gloss(root) { const done = new Set(); const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentNode.closest('button, a, abbr, .num, h2, h3, .kicker, .unfiltered-tag, .chip') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT }); const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    while (nodes.length) { const n = nodes.shift(); for (const [re, tip] of G) { if (done.has(tip)) continue; const m = n.textContent.match(re); if (!m) continue; const at = m.index, len = m[0].length; const after = n.splitText(at); const rest = after.splitText(len); const ab = document.createElement('abbr'); ab.className = 'g'; ab.title = tip; ab.textContent = m[0]; after.parentNode.replaceChild(ab, after); done.add(tip); nodes.unshift(n, rest); break; } } }
+  const pane = document.getElementById('pane-body'); let glossing = false; const mo = new MutationObserver(() => { if (glossing) return; glossing = true; try { gloss(pane); } finally { glossing = false; } }); mo.observe(pane, { childList: true }); gloss(pane);
 })();
 </script>
 </body>
