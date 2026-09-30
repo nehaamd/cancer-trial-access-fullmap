@@ -5,11 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Find cancer clinical trials near a ZIP code</title>
 <meta name="description" content="Recruiting cancer treatment trials on ClinicalTrials.gov ranked by distance from a US ZIP code, with links to the study records and to NCI, LLS and ACS trial-navigation services. Information only; nothing you enter leaves your browser.">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/find.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cancer Trial Access Map">
+<meta property="og:title" content="Find cancer clinical trials near a ZIP code · Cancer Trial Access Map">
+<meta property="og:description" content="Recruiting cancer treatment trials ranked by driving distance from any US ZIP code, with links to the study records and free trial-navigation services. Nothing you enter leaves your browser.">
+<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/find.html">
+<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Find cancer clinical trials near a ZIP code · Cancer Trial Access Map">
+<meta name="twitter:description" content="Recruiting cancer treatment trials ranked by driving distance from any US ZIP code, with links to the study records and free trial-navigation services. Nothing you enter leaves your browser.">
+<meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <style>
   :root{--paper:#FAF8F4;--card:#FFFFFF;--ink:#1B2430;--ink-2:#4B5563;--ink-3:#7C8794;--rule:#E4E1DA;--rule-2:#CFCBC2;--navy:#0B3C5D;--gulf:#3F7FB5;--sky:#9EC4E0;--sand:#F2C48A;--rust:#8A3B1E;--warn:#7A5A00;--r:8px;--shadow:0 1px 2px rgba(27,36,48,.06),0 4px 14px rgba(27,36,48,.05)}
   *{box-sizing:border-box} html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
   a{color:var(--gulf)} a:hover{color:var(--navy)} button,select,input{font:inherit;color:inherit} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
-  .wrap{max-width:860px;margin:0 auto;padding:1rem 16px 3rem}
+  .wrap{max-width:860px;margin:0 auto;padding:1rem 16px 2rem}
   header{padding:.4rem 0 .8rem;border-bottom:1px solid var(--rule);margin-bottom:1rem} h1{font-size:1.6rem;line-height:1.15;letter-spacing:-.02em;margin:0 0 .35rem;font-weight:650} header p{margin:.2rem 0;color:var(--ink-2);font-size:.95rem}
   .nav{font-size:.82rem;display:flex;flex-wrap:wrap;gap:.6rem 1rem;margin-top:.5rem} .nav a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-2)} .nav a:hover{color:var(--navy);border-color:var(--navy)}
   form.f{display:grid;grid-template-columns:1fr 1fr;gap:.6rem .8rem;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:.9rem 1rem;margin-bottom:.9rem}
@@ -28,13 +47,18 @@
   @media print{form.f,.btn,.nav,.more-btn{display:none} .card{break-inside:avoid;box-shadow:none}}
 </style>
 </head>
-<body><div class="wrap">
-<header>
+<body>
+<header class="site">
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><a href="find.html" aria-current="page">Find trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="sites.html">Where would a new site help?</a><a href="index.html#methods">Methods &amp; data</a></nav>
+</header>
+<div class="page-head"><div style="max-width:860px;margin:0 auto">
+  <p class="kicker">For patients, families and navigators</p>
   <h1>Find cancer clinical trials near a ZIP code</h1>
   <p>Recruiting cancer <em>treatment</em> trials listed on ClinicalTrials.gov, ranked by estimated driving distance from a US ZIP code. Trials are listed, not matched: whether you qualify is decided by each study team after screening. <b>For information only.</b></p>
-  <p style="font-size:.85rem">Your ZIP code stays in your browser — this page has no server, accounts or tracking.</p>
-  <nav class="nav" aria-label="Pages"><a href="index.html">County &amp; district map</a><a href="sites.html">Where would a new site help?</a><a href="index.html#methods">Methods &amp; sources</a></nav>
-</header>
+  <p style="font-size:var(--fs-0)">Your ZIP code stays in your browser — this page has no server, accounts or tracking.</p>
+</div></div>
+<div class="wrap">
 <form class="f" id="f" autocomplete="off">
   <label>ZIP code<input id="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="e.g. 79901" required aria-describedby="zip-help"></label>
   <label>Cancer type<select id="type"><option value="">Any cancer</option></select></label>
@@ -54,6 +78,8 @@
 </div>
 <footer id="foot"></footer>
 </div>
+<footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><span data-site-date></span></div></footer>
+<script>window.addEventListener('load',function(){try{var D=window.DATA;if(!D)return;var d=new Date(D.meta.pull+'T12:00:00');var t='Data as of '+(isNaN(d)?D.meta.pull:d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}));document.querySelectorAll('[data-site-date]').forEach(function(e){e.textContent=t;});}catch(e){}});</script>
 <script src="data.js"></script><script src="find_data.js"></script>
 <script>
 (function(){

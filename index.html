@@ -4,7 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cancer Trial Access Map</title>
-<meta name="description" content="Recruiting cancer treatment trials open to patients 55+, by county and congressional district, with road-network distances.">
+<meta name="description" content="Recruiting cancer treatment trials open to patients 55 and older, by county, congressional district and state, measured in road miles from where people live.">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cancer Trial Access Map">
+<meta property="og:title" content="Cancer Trial Access Map">
+<meta property="og:description" content="How far are Americans from a cancer clinical trial? Recruiting cancer treatment trials by county, congressional district and state, in road miles from where people live.">
+<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/">
+<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cancer Trial Access Map">
+<meta name="twitter:description" content="How far are Americans from a cancer clinical trial? Recruiting cancer treatment trials by county, congressional district and state, in road miles from where people live.">
+<meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
@@ -28,7 +47,7 @@
   header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem var(--gutter);background:var(--navy);color:#fff}
   .brand{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;min-width:0}
   .brand .wordmark{color:#fff;text-decoration:none;font-size:var(--fs-3);font-weight:700;letter-spacing:-.01em;white-space:nowrap}
-  .brand .tag{color:#C9D9E8;font-size:var(--fs-1)}
+  .brand .tagline{color:#C9D9E8;font-size:var(--fs-1)}
   .hdr-links{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:flex-end}
   .hdr-links a{color:#fff;text-decoration:none;font-size:var(--fs-0);padding:.35rem .7rem;border-radius:999px;border:1px solid rgba(255,255,255,.28);white-space:nowrap}
   .hdr-links a:hover{background:rgba(255,255,255,.12);color:#fff}
@@ -109,7 +128,7 @@
   #map.dz .county,#map.dz .district,#map.dz .stateline,#map.dz .statefill,#map.dz .nci{vector-effect:non-scaling-stroke}
   #map.dz .county{stroke-width:.6px} #map.dz .district{stroke-width:1.2px} #map.dz .district.selected{stroke-width:3px} #map.dz .district.selected-halo{stroke-width:7px} #map.dz .stateline{stroke-width:1.2px}
   #map.no-inset .inset{display:none}
-  .nci{fill:#F5C518;stroke:#3a2f00;stroke-width:.5;pointer-events:none}
+  .nci{fill:#F0B429;stroke:#3a2f00;stroke-width:.7;pointer-events:none}
   .map-hint{font-size:var(--fs-0);color:var(--ink-3);margin:.45rem 0 0}
   #tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;padding:.55rem .7rem;border-radius:8px;font-size:var(--fs-0);line-height:1.4;max-width:300px;display:none;z-index:5;box-shadow:0 6px 18px rgba(0,0,0,.25)} #tip b{font-size:var(--fs-1)} #tip .muted{color:#c7d0da}
   #busy{position:fixed;left:50%;bottom:1.2rem;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.5rem .9rem;border-radius:999px;font-size:var(--fs-0);z-index:40;box-shadow:0 6px 18px rgba(0,0,0,.25);display:flex;align-items:center;gap:.5rem} #busy[hidden]{display:none}
@@ -184,9 +203,9 @@
 </head>
 <body>
 <div class="app">
-<header>
-  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tag">How far are Americans from a cancer clinical trial?</span></div>
-  <nav class="hdr-links" aria-label="Pages"><a href="find.html">Find trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="sites.html">Where would a new site help?</a><a href="#methods">Methods &amp; data</a></nav>
+<header class="site">
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html" aria-current="page">Map</a><a href="findings.html">Key findings</a><a href="find.html">Find trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="sites.html">Where would a new site help?</a><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
 <div class="searchbar">
   <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a ZIP code, county, congressional district, state or member of Congress" aria-label="Search places and members of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
@@ -208,7 +227,7 @@
   <span class="lead">Start here</span>
   <a class="door" href="find.html"><b>Patients and families</b><span>Find recruiting trials near a ZIP code</span></a>
   <button class="door" type="button" id="door-d"><b>Advocates and congressional staff</b><span>Look up a district: access figures, cosponsor status, printable brief</span></button>
-  <a class="door" href="#methods"><b>Researchers and journalists</b><span>Methods, sources and downloadable tables</span></a>
+  <a class="door" href="findings.html"><b>Researchers and journalists</b><span>Key findings, methods and downloadable tables</span></a>
   <button class="x" type="button" id="doors-x" aria-label="Hide this strip">×</button>
 </div>
 <main>
@@ -267,9 +286,9 @@
     <div id="pane-body"></div>
   </aside>
 </main>
-<footer id="methods">
+<footer id="methods" class="site">
   <div class="foot-grid">
-    <div><b>Cancer Trial Access Map</b><p>Recruiting cancer treatment trials open to patients 55 and older, by county, congressional district and state, measured in road miles from where people live. Built by Neha Agrawal, MD. <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a>.</p><p id="foot-stamp"></p></div>
+    <div><b>Cancer Trial Access Map</b><p>Recruiting cancer treatment trials open to patients 55 and older, by county, congressional district and state, measured in road miles from where people live. Built by Neha Agrawal, MD. <a href="findings.html">Key findings</a> · <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a>.</p><p id="foot-stamp"></p></div>
     <div><b>Cite as</b><p>Agrawal N. Cancer Trial Access Map. <span id="cite-url">https://nehaamd.github.io/cancer-trial-access-fullmap/</span> (data as of <span id="cite-date"></span>).</p><p>Every view has a link (“Copy link to this view”) that reopens the same place, filters and tab.</p></div>
     <div><b>Key terms</b><dl>
       <dt>Eligible trial.</dt><dd> A recruiting, interventional cancer treatment trial on ClinicalTrials.gov with a US site, open to at least one patient aged 55 or older.</dd>
@@ -372,7 +391,7 @@
   const critLabel = () => bvaCrit === 'z60' ? (filt.type && T.named_types.includes(filt.type) ? `no ${typeLabel[filt.type]} trial` : 'no ' + (filtersActive() ? 'matching ' : '') + 'trial') : `fewer than 20 ${filtersActive() ? 'matching ' : ''}trials`;
   const bvaDefinition = () => `High incidence = ${BSITE[incSite][1]} age-adjusted rate above the median of counties with a published rate (${BU ? BU.meta.medians[bvaSiteKey()] : '—'} per 100,000). Low access = at least ${bvaThr}% of residents 55+ have ${critLabel()} within 60 road-miles of home.`;
   const METRICS = {
-    t:  {label: () => 'Recruiting trials with a site in the county' + (filtersActive() ? ' (filtered)' : ''), get: c => cnt[CI[c.k]], classes: () => [['0 trials',0,1,'#F3E6E0'],['1–19',1,20,'#C9DCEE'],['20–99 (limited menu)',20,100,'#6BA3D6'],['100 or more (broad menu)',100,1e9,'#0B3C5D']]},
+    t:  {label: () => 'Recruiting trials with a site in the county' + (filtersActive() ? ' (filtered)' : ''), get: c => cnt[CI[c.k]], classes: () => [['0 trials',0,1,'#F6F1EC'],['1–19',1,20,'#B7D0E8'],['20–99 (limited menu)',20,100,'#6BA3D6'],['100 or more (broad menu)',100,1e9,'#0B3C5D']]},
     rn: {label: () => 'Road miles from the county population center to the nearest NCI-designated cancer center', get: c => c.rn, classes: () => DIST, na: c => c.rn === null},
     rb: {label: () => 'Road miles to the nearest county with 100 or more eligible trials', get: c => c.rb, classes: () => [['in a broad-menu county',0,0.5,'#0B3C5D'],['under 60 road-mi',0.5,60,'#3F7FB5'],['60–120',60,120,'#9EC4E0'],['120–200',120,200,'#F2C48A'],['200–300',200,300,'#D98B4A'],['300 or more',300,1e9,'#8A3B1E']], na: c => c.rb === null},
     inc: {label: () => 'Age-adjusted incidence per 100,000, ' + BSITE[incSite][1] + ', ' + D.meta.burden.period, get: c => c.b ? c.b[incSite][0] : null, classes: () => incClasses, na: c => !c.b || c.b[incSite][4] >= 2, caution: c => c.b && c.b[incSite][4] === 1},
@@ -414,7 +433,7 @@
     .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { if (unit === 'state') { pickS.value = f.properties.id; pickS.dispatchEvent(new Event('change')); } });
   const gStLine = svg.append('g'); gStLine.selectAll('path').data(stateFeatures).join('path').attr('class', 'stateline').attr('d', path).style('display', 'none');
   const halo = gS.append('path').attr('class', 'district selected-halo'), sel = gS.append('path').attr('class', 'district selected');
-  gN.selectAll('path').data(NCI).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(50)).attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
+  gN.selectAll('path').data(NCI).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(30)).attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
   function tipHTML(c) { const i = CI[c.k], fa = filtersActive();
     const l1 = fa ? `${fmt(cnt[i])} of ${fmt(c.t)} trials match · ${fmt(c.f)} facilities` : `${fmt(c.t)} trial${c.t===1?'':'s'} · ${fmt(c.f)} facilit${c.f===1?'y':'ies'}`;
     const road = c.noroad === 'island' ? 'no road connection to a broad menu or NCI center' : c.noroad === 'off' ? 'population center >30 mi from any highway' : `${c.rn} road-mi to ${esc(c.nn)}<br>${c.rb ? c.rb + ' road-mi to a broad menu' : 'hosts a broad menu'}`;
@@ -478,7 +497,7 @@
     // label size follows the zoom (about 9-20 screen px); labels that would overlap a larger or selected district's label are left off
     // (those districts are still clickable and listed in the District picker). The selected district always keeps its label.
     const k = curVB[2] / W, fs = Math.min(9 / k, 20) * k;
-    gN.selectAll('path').attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p}) scale(${Math.min(1, k * 3)})` : 'translate(-100,-100)'; });
+    gN.selectAll('path').attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p}) scale(${Math.min(1, Math.max(k * 1.4, 0.16))})` : 'translate(-100,-100)'; });
     const inView = f => { const c = path.centroid(f); return c[0] >= curVB[0] && c[0] <= curVB[0] + curVB[2] && c[1] >= curVB[1] && c[1] <= curVB[1] + curVB[3]; };
     const cand = (showLabels && selectedState) ? districtFeatures.filter(f => f.properties.s === selectedState || (selectedD && svg.classed('dz') && inView(f) && !INSET.has(f.properties.s))) : [];
     const pri = f => f.properties.id === selectedD ? Infinity : path.area(f); const kept = [], boxes = [];

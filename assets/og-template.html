@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>preview image template</title>
+<link rel="stylesheet" href="../site.css">
+<style>
+body{margin:0;width:1200px;height:630px;overflow:hidden;background:#F7F5F0;font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;color:#1B2430;position:relative}
+#map{position:absolute;right:-40px;top:20px;width:820px;height:auto}
+body.plain{width:1600px;height:1000px} body.plain #map{position:static;width:1600px;height:1000px} body.plain .txt,body.plain .bar,body.plain .url{display:none}
+.txt{position:absolute;left:56px;top:56px;width:470px}
+.brand{font-size:26px;font-weight:700;color:#0B3C5D;letter-spacing:-.01em}
+h1{font-size:44px;line-height:1.08;letter-spacing:-.02em;margin:18px 0 22px;font-weight:700}
+.num{font-size:96px;font-weight:700;letter-spacing:-.03em;line-height:1;color:#8A3B1E}
+.num small{font-size:34px;color:#4B5563;font-weight:500;letter-spacing:0}
+p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:440px}
+.bar{position:absolute;left:0;right:0;bottom:0;height:14px;background:#0B3C5D}
+.url{position:absolute;left:56px;bottom:34px;font-size:20px;color:#4B5563}
+.county{stroke:#fff;stroke-width:.35}.nci{fill:#F0B429;stroke:#3a2f00;stroke-width:.5}
+</style></head><body>
+<div class="txt"><div class="brand">Cancer Trial Access Map</div>
+<h1>How far are Americans from a cancer clinical trial?</h1>
+<div class="num"><span id="n"></span><small> million</small></div>
+<p>Americans 55 and older have fewer than 20 recruiting cancer trials within 60 road-miles of home.</p></div>
+<svg id="map" viewBox="0 0 975 610"></svg>
+<div class="url">nehaamd.github.io/cancer-trial-access-fullmap</div><div class="bar"></div>
+<script src="../d3.v7.min.js"></script><script src="../data.js"></script><script src="../geo.js"></script>
+<script>
+if (location.search.includes('plain')) document.body.classList.add('plain');
+const D=window.DATA,C=D.counties,G=window.GEO;document.getElementById('n').textContent=(Math.round(D.meta.nat_core.p*D.meta.nat_core.l20/100/1e5)/10).toLocaleString(undefined,{maximumFractionDigits:1});
+const proj=d3.geoAlbersUsa().fitSize([959,594],G.counties);proj.translate([proj.translate()[0]+8,proj.translate()[1]+8]);const path=d3.geoPath(proj);
+const col=t=>t>=100?'#0B3C5D':t>=20?'#6BA3D6':t>0?'#B7D0E8':'#F6F1EC';
+const svg=d3.select('#map');svg.append('g').selectAll('path').data(G.counties.features.filter(f=>C[f.properties.id])).join('path').attr('class','county').attr('d',path).attr('fill',f=>col(C[f.properties.id].t));
+svg.append('g').selectAll('path').data(G.states.features).join('path').attr('d',path).attr('fill','none').attr('stroke','#1B2430').attr('stroke-width',.6).attr('opacity',.7);
+svg.append('g').selectAll('path').data(D.nci).join('path').attr('class','nci').attr('d',d3.symbol().type(d3.symbolStar).size(34)).attr('transform',n=>{const p=proj([n.lon,n.lat]);return p?`translate(${p})`:'translate(-100,-100)'});
+</script></body></html>

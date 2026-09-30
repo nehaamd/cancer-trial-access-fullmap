@@ -3,7 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Where would an additional trial site help? — research prototype</title>
+<title>Where would an additional trial site help? · Cancer Trial Access Map</title>
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/sites.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cancer Trial Access Map">
+<meta property="og:title" content="Where would an additional trial site help? · Cancer Trial Access Map">
+<meta property="og:description" content="A research prototype: which existing, trial-capable facilities sit nearest to the most residents 55 and older who have no recruiting cancer trial within 60 road-miles.">
+<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/sites.html">
+<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Where would an additional trial site help? · Cancer Trial Access Map">
+<meta name="twitter:description" content="A research prototype: which existing, trial-capable facilities sit nearest to the most residents 55 and older who have no recruiting cancer trial within 60 road-miles.">
+<meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
@@ -41,11 +60,12 @@
 </style>
 </head>
 <body>
-<header>
-  <div><p class="kicker">Research prototype</p><h1 style="margin-top:.1rem">Where would an additional trial site help?</h1>
-  <p>Of existing, trial-capable facilities that host no eligible recruiting trial today, which sit nearest to the most residents 55+ who have no recruiting cancer treatment trial within 60 road-miles? A maximal covering location problem on the same road graph and census tracts as the map.</p></div>
-  <nav class="hdr-links"><a href="index.html">← Back to the map</a></nav>
+<header class="site">
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><a href="find.html">Find trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="sites.html" aria-current="page">Where would a new site help?</a><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
+<div class="page-head"><p class="kicker">Research prototype</p><h1>Where would an additional trial site help?</h1>
+  <p>Of existing, trial-capable facilities that host no eligible recruiting trial today, which sit nearest to the most residents 55+ who have no recruiting cancer treatment trial within 60 road-miles? A maximal covering location problem on the same road graph and census tracts as the map.</p></div>
 <div class="banner" id="banner"></div>
 <main>
   <section>
@@ -96,5 +116,7 @@
   gp.selectAll('text').data(T4.greedy).join('text').attr('class', 'plabel').attr('text-anchor', 'middle').attr('dy', -7).attr('transform', g => { const p = proj([g.lon, g.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; }).text(g => g.step);
 })();
 </script>
+<footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><span data-site-date></span></div></footer>
+<script>(function(){try{var D=window.DATA;if(!D)return;var d=new Date(D.meta.pull+'T12:00:00');var t='Data as of '+(isNaN(d)?D.meta.pull:d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}));document.querySelectorAll('[data-site-date]').forEach(function(e){e.textContent=t;});}catch(e){}})();</script>
 </body>
 </html>

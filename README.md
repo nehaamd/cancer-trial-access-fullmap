@@ -14,7 +14,18 @@ Web app: `docs/` (static, deployable to GitHub Pages as-is; `index.html` map wit
 - **Burden vs access: 514 counties (4,383,276 residents 55+, about 89,045 new cancer diagnoses a year) have above-median all-sites incidence AND at least half of residents 55+ with fewer than 20 trials within 60 road-miles** — a cross-tabulation of the two published measures, never a combined score (version 3.3; the page lets the reader change the cancer site, the access criterion and the threshold).
 
 ## Version 4 front page
-`docs/index.html` is the version 4 page (adopted 29 September 2026). It reads the same data files and keeps every control of the version 3 page (map units, colour layers, layers, all filters, the six tabs, downloads, pickers and URL parameters), with a different layering: one search box for ZIP codes, counties, districts, states, House members and senators (`zip_county.json`, built from `zcta_county.csv`, is fetched the first time a ZIP is typed); filters behind a "Filter trials" button with an active-filter chip; an "Analysis" menu for the three analyst tabs; a "start here" strip for patients, staff and researchers; a national pane that leads with residents affected rather than trial counts; plain-language tooltips on the first use of each term; a footer with citation and key terms. `docs/v4.html` forwards to it (it was the preview address). The version 3 layout is kept on the `classic-v3.3` branch and can be restored by reverting the swap.
+`docs/index.html` is the version 4 page (adopted 29 September 2026). It reads the same data files and keeps every control of the version 3 page (map units, colour layers, layers, all filters, the six tabs, downloads, pickers and URL parameters), with a different layering: one search box for ZIP codes, counties, districts, states, House members and senators (`zip_county.json`, built from `zcta_county.csv`, is fetched the first time a ZIP is typed); filters behind a "Filter trials" button with an active-filter chip; an "Analysis" menu for the three analyst tabs; a "start here" strip for patients, staff and researchers; a national pane that leads with residents affected rather than trial counts; plain-language tooltips on the first use of each term; a footer with citation and key terms. `docs/v4.html` forwards to it (it was the preview address). Every page shares `site.css` (typeface, header, footer) and carries Open Graph / Twitter tags and a favicon, so links preview as a card. The version 3 layout is kept on the `classic-v3.3` branch and can be restored by reverting the swap.
+
+## Site pages and shared assets
+| Page | Purpose |
+|---|---|
+| `index.html` | The map: counties, districts and states; filters; Trials / Sites / Analysis tabs; every view has a shareable link |
+| `findings.html` | Key findings: the headline numbers, metro vs nonmetro, every state ranked, the districts with least access, need vs access, the tracked bills, methods in brief, how to cite. Reads `findings.js`, built by `build_findings.py` (in `run_refresh.sh`) |
+| `find.html` | ZIP-code trial finder for patients and navigators |
+| `brief.html` | Printable one-page brief for a county, district or state, with an editable ask |
+| `trials.html`, `sites.html` | Per-county trial list; the new-site research prototype |
+| `site.css` | Shared typeface (Source Sans 3, self-hosted under `assets/fonts/`, SIL OFL), colour tokens, header and footer |
+| `assets/` | `favicon.svg` and PNG icons, `og-image.png` (the 1200×630 card shown when a link is shared), `map-national.png` (the findings page's map); regenerate after a data refresh with `python3 make_assets.py` (needs Playwright) |
 
 ## Files
 | File | What |
