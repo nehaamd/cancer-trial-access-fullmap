@@ -23,7 +23,7 @@ def check(name, detail, ok): rows.append((name, detail, ok)); print(("  PASS  " 
 
 # 1. classification audit
 r = subprocess.run([sys.executable, str(ROOT / "audit_cancer_types.py")], capture_output=True, text=True)
-check("Classification audit: no unreviewed condition strings", r.stdout.strip().splitlines()[0] if r.stdout.strip() else r.stderr.strip()[:200], r.returncode == 0)
+check("Classification audit: no unreviewed condition strings", (r.stdout.strip().splitlines()[0] if r.stdout.strip() else r.stderr.strip()[:200]), r.returncode == 0)
 
 # 2. headline numbers: bounds and drift
 nat = json.load(open(find("national_metrics_v3.json"))); D = json.loads(find("data.js").read_text().split("=", 1)[1].strip().rstrip(";")); meta = D["meta"]

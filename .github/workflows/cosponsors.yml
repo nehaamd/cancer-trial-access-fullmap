@@ -27,6 +27,6 @@ jobs:
       - name: Commit and publish
         run: |
           git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
-          git add cosponsors_raw.json cosponsors.js VALIDATION_extras.md
+          git add cosponsors_raw.json docs/cosponsors.js VALIDATION_extras.md
           git commit -m "Cosponsor refresh $(date -u +%F)" || echo "nothing to commit"
           git push
