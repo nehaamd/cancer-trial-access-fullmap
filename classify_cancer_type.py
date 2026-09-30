@@ -56,6 +56,7 @@ PRECEDENCE = [
  (r"cutaneous t-cell|cutaneous b-cell|cutaneous lymphom", {"lymphoma"}),
  (r"primary cns lymphom|cns lymphom|central nervous system lymphom", {"lymphoma"}),
  (r"uveal|ocular melanom|conjunctival melanom", {"melanoma_skin"}),
+ (r"melanom", {"melanoma_skin"}),                                          # mucosal melanomas (anorectal, sinonasal, vulvar, oral) are melanoma, not the organ cancer: "Anorectal Melanoma" must not reach the colorectal filter
  (r"lung metasta|pulmonary metasta|brain metasta|cns metasta|leptomening|liver metasta|hepatic metasta|bone metasta|peritoneal metasta|carcinomatosis|spinal metasta|metastatic disease to", set()),  # metastatic *site*, not a primary
 ]
 GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced cancer|advanced malignan|metastatic cancer|metastatic malignan|^cancers?$|^neoplasms?$|^tumou?rs?$|^malignan(t|cy|cies)|malignan(t|cy|cies)$|"

@@ -1105,7 +1105,7 @@ NCT07777822,lung,Lung & thoracic,,lung,0,conditions
 NCT06860594,brain_cns,Brain & CNS,,brain_cns,0,conditions
 NCT06378866,prostate,Prostate,,prostate,0,conditions
 NCT05382559,multi,Multiple cancer types / basket or umbrella,unspecified solid / hematologic,,1,conditions
-NCT05546827,multi,Multiple cancer types / basket or umbrella,multiple named cancers,colorectal;head_neck;melanoma_skin,0,conditions
+NCT05546827,melanoma_skin,Melanoma & skin,,melanoma_skin,0,conditions
 NCT05639972,multi,Multiple cancer types / basket or umbrella,multiple named cancers,gynecologic;head_neck;other_named,1,conditions
 NCT03670966,multi,Multiple cancer types / basket or umbrella,multiple named cancers,leukemia;mds_mpn,1,conditions
 NCT04696575,lung,Lung & thoracic,,lung,0,conditions
