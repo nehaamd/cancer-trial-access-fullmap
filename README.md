@@ -13,6 +13,9 @@ Web app: `docs/` (static, deployable to GitHub Pages as-is; `index.html` map wit
 - **Rural vs urban (USDA Rural-Urban Continuum Codes, 2023): 45.2% of residents 55+ in nonmetro counties (codes 4–9) have fewer than 20 recruiting trials within 60 road-miles, vs 6.6% in metro counties; 21.9% vs 1.3% have none; median road distance to an NCI-designated center 115 vs 36 miles.** Nonmetro counties hold 16.0% of residents 55+ (version 3.3).
 - **Burden vs access: 514 counties (4,383,276 residents 55+, about 89,045 new cancer diagnoses a year) have above-median all-sites incidence AND at least half of residents 55+ with fewer than 20 trials within 60 road-miles** — a cross-tabulation of the two published measures, never a combined score (version 3.3; the page lets the reader change the cancer site, the access criterion and the threshold).
 
+## Version 4 page (preview)
+`docs/v4.html` is a redesigned front page that reads the same data files and keeps every control of `index.html` (map units, colour layers, layers, all filters, the six tabs, downloads, pickers and URL parameters): one search box for ZIP codes, counties, districts, states and members of Congress; filters behind a "Filter trials" button with an active-filter chip; an "Analysis" menu for the three analyst tabs; a "start here" strip for patients, staff and researchers; the national pane leads with people rather than trial counts; plain-language tooltips on the first use of each term; a footer with citation and key terms. It is published alongside the current page at `v4.html` so both can be compared; to adopt it, rename it to `index.html` (the search box needs `zip_county.json`, built from `zcta_county.csv`). The layout before the redesign is kept on the `classic-v3.3` branch.
+
 ## Files
 | File | What |
 |---|---|
