@@ -49,7 +49,21 @@ def main():
             detail["county_changes"] = [{"county": f"{names.loc[f, 'county_name']}, {names.loc[f, 'state_name']}", "from": int(cmp_.get(f, 0)), "to": int(cur_[f])} for f in mv.abs().sort_values(ascending=False).index[:60]]
             summ["counties_with_changed_trial_count"] = int(len(mv)); summ["counties_crossing_a_menu_threshold"] = int(((cmp_.reindex(cur_.index).fillna(0) >= 20) != (cur_ >= 20)).sum() + ((cmp_.reindex(cur_.index).fillna(0) >= 100) != (cur_ >= 100)).sum())
     except Exception as e: summ["county_change_note"] = f"county movement not computed: {e}"
-    out = {"summary": summ, **detail}; json.dump(out, open(OUT / "refresh_diff.json", "w"), indent=2)
+    # refresh history: one row per archived pull (data/snapshots/<date>/national_metrics_v3.json, kept since the first refresh) plus the current pull
+    hist = []
+    for d in sorted(Path("data/snapshots").glob("*")):
+        nm, fl = d / "national_metrics_v3.json", d / "fetch_log.json"
+        if nm.exists():
+            n = json.load(open(nm)); f = json.load(open(fl)) if fl.exists() else {}
+            tcount = None
+            if (d / "trials.csv").exists():
+                tt = pd.read_csv(d / "trials.csv", dtype=str, keep_default_na=False); tcount = int((tt.excludes_55plus == "0").sum()) if "excludes_55plus" in tt.columns else int(len(tt))
+            hist.append({"pull": f.get("timestamp_utc", d.name)[:10], "registry_data": (f.get("registry_data_timestamp") or "")[:10] or None, "trials": tcount,
+                         "l20": n["pct_lt20_trials_within_60rdmi"], "z60": n["pct_zero_trials_within_60rdmi"], "g60b": n["pct_gt60rdmi_broad_menu"], "g60n": n["pct_gt60rdmi_nci"], "medn": n["median_road_mi_nci"]})
+    ncur = json.load(open(OUT / "national_metrics_v3.json"))
+    hist.append({"pull": lc["timestamp_utc"][:10], "registry_data": (lc.get("registry_data_timestamp") or "")[:10] or None, "trials": int(len(tc)), "l20": ncur["pct_lt20_trials_within_60rdmi"], "z60": ncur["pct_zero_trials_within_60rdmi"],
+                 "g60b": ncur["pct_gt60rdmi_broad_menu"], "g60n": ncur["pct_gt60rdmi_nci"], "medn": ncur["median_road_mi_nci"], "current": True})
+    out = {"summary": summ, "history": hist, **detail}; json.dump(out, open(OUT / "refresh_diff.json", "w"), indent=2)
     (DOCS / "changes.js").write_text("window.CHANGES=" + json.dumps(out, separators=(",", ":"), ensure_ascii=False) + ";", encoding="utf-8")
     print(json.dumps(summ, indent=1)); print("examples of field changes:", changes[:5])
 

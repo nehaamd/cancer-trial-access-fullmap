@@ -161,13 +161,13 @@
   const M = v => (Math.round(v / 1e5) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 }); const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const nice = s => { const d = new Date(s + 'T12:00:00'); return isNaN(d) ? s : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }); };
   const noBroad = F.states_no_broad_list; const listNames = a => a.length > 1 ? a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1] : a.join('');
-  const vals = { pull: nice(F.meta.pull), people_l20_m: M(N.people_l20), people_z60_m: M(N.people_z60), l20: pct(N.l20), z60: pct(N.z60), g60b: pct(N.g60b), g120b: pct(N.g120b), medn: fmt(N.medn), g60n: pct(N.g60n),
+  const dataDate = (F.meta.registry_data_timestamp || F.meta.pull).slice(0, 10); const vals = { pull: nice(dataDate), people_l20_m: M(N.people_l20), people_z60_m: M(N.people_z60), l20: pct(N.l20), z60: pct(N.z60), g60b: pct(N.g60b), g120b: pct(N.g120b), medn: fmt(N.medn), g60n: pct(N.g60n),
     nm_l20: pct(R.nonmetro.l20), m_l20: pct(R.metro.l20), nm_share: pct(100 * R.nonmetro.p / (R.nonmetro.p + R.metro.p)), nm_ratio: (R.nonmetro.l20 / R.metro.l20).toFixed(1), nm_medn: fmt(R.nonmetro.medn), m_medn: fmt(R.metro.medn),
     states_no_broad: F.states_no_broad, states_no_broad_names: listNames(noBroad), districts_all_beyond: F.districts.all_beyond_60_broad, broad_counties: fmt(F.states.reduce((s, x) => s + x.broad, 0)), plan: F.meta.plan,
     hb_counties: fmt(F.burden.hb_la_counties), hb_pop: fmt(F.burden.hb_la_pop55), hb_cases: fmt(F.burden.hb_la_cases), cos_date: nice(F.meta.cosponsors_fetched), trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities), n_tracts: fmt(F.meta.n_tracts), router_mean: F.meta.router.mean_pct, n_nci: F.meta.n_nci };
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
-  document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = `Data as of ${nice(F.meta.pull)}`);
-  document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map: road-distance access to recruiting cancer clinical trials for Americans 55 and older, by county, congressional district and state. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${F.meta.pull}; accessed ${new Date().toISOString().slice(0, 10)}.`;
+  document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = `Data as of ${nice(dataDate)}`);
+  document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map: road-distance access to recruiting cancer clinical trials for Americans 55 and older, by county, congressional district and state. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${dataDate}; accessed ${new Date().toISOString().slice(0, 10)}.`;
   document.title = 'Key findings · Cancer Trial Access Map';
 
   // ---- tooltip helper ----
