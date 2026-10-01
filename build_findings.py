@@ -63,5 +63,6 @@ out = {
     "burden": {k: BU["summary"]["nat"][k] for k in ("hb_la_counties", "hb_la_pop55", "hb_la_cases", "counties_classified")},
     "bills": bills, "topics": CO["meta"].get("topics", {}),
 }
-Path(ROOT / "findings.js").write_text("window.FINDINGS=" + json.dumps(out, separators=(",", ":")) + ";")
+DOCS = ROOT / "docs" if (ROOT / "docs").is_dir() and not (ROOT / "data.js").exists() else ROOT
+Path(DOCS / "findings.js").write_text("window.FINDINGS=" + json.dumps(out, separators=(",", ":")) + ";")
 print("findings.js written:", len(states), "states;", out["states_no_broad"], "states with no broad-menu county;", districts["all_beyond_60_broad"], "districts fully beyond 60 mi of a broad menu;", [(b["label"], b["n_cosponsors"]) for b in bills])

@@ -52,7 +52,7 @@ def stream(table, want):
 
 
 def tract_acs():
-    cache = ROOT / "tract_covariates.csv"
+    cache = (ROOT / "data" / "ref" if (ROOT / "data" / "ref").is_dir() else ROOT) / "tract_covariates.csv"
     if cache.exists() and "--refetch" not in sys.argv:
         return pd.read_csv(cache, dtype={"tract": str}).set_index("tract")
     print("streaming ACS 2023 5-year tract tables ...", flush=True)
@@ -120,7 +120,7 @@ def main():
     states = {k: ctx(g, one.loc[g.index]) for k, g in tr.groupby("state_fips")}
     nat = ctx(tr, one)
 
-    audit = pd.DataFrame.from_dict(dist, orient="index"); audit.index.name = "cd_geoid"; audit.reset_index().to_csv(ROOT / "district_context_v3.csv", index=False)
+    audit = pd.DataFrame.from_dict(dist, orient="index"); audit.index.name = "cd_geoid"; audit.reset_index().to_csv((ROOT / "out_adult55" if (ROOT / "out_adult55").is_dir() else ROOT) / "district_context_v3.csv", index=False)
 
     # rewrite data.js
     djs = find("data.js"); s = djs.read_text()

@@ -55,9 +55,9 @@ for title, kind in (("Matched inside a longer word", "inside a longer word"), ("
     md += [f"## {title} ({len(rows)})", "", "| Reviewed | Category | Condition string | Trials | Example |", "|---|---|---|---|---|"]
     md += [f"| {'yes' if (x[1], x[2]) in allow else '**NEW**'} | {x[1]} | {x[2]} | {x[3]} | {x[4]} |" for x in rows] + [""]
 md += ["A flagged string is not necessarily wrong (myelofibrosis reads as fibrosis but is an MPN). Review the NEW rows: fix the pattern in classify_cancer_type.py if the category is wrong, otherwise run `python3 audit_cancer_types.py --accept` to record that they were reviewed.", ""]
-(ROOT / "qc_cancer_type_audit.md").write_text("\n".join(md))
+((ROOT / "out_adult55") if (ROOT / "out_adult55").is_dir() else ROOT).joinpath("qc_cancer_type_audit.md").write_text("\n".join(md))
 if "--accept" in sys.argv:
     allow |= {(x[1], x[2]) for x in items}; allow_path.write_text("\n".join(f"{k}\t{c}" for k, c in sorted(allow)) + "\n"); print(f"allowlist now has {len(allow)} reviewed strings"); sys.exit(0)
-print(f"{len(items)} flagged strings, {len(new)} new to review (qc_cancer_type_audit.md)")
+print(f"{len(items)} flagged strings, {len(new)} new to review (out_adult55/qc_cancer_type_audit.md)")
 for x in new[:40]: print(f"  NEW  [{x[0]}] {x[1]}: {x[2]}  ({x[3]} trial{'s' if x[3] != 1 else ''}, e.g. {x[4]})")
 sys.exit(1 if new else 0)
