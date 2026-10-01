@@ -1,14 +1,14 @@
 {
-  "site_rows": 53083,
+  "site_rows": 53754,
   "geocode": {
-    "zip_centroid": 51031,
-    "city_centroid": 1967,
-    "county_centroid_city_disagrees": 60,
-    "county_centroid": 25
+    "zip_centroid": 51675,
+    "city_centroid": 1994,
+    "county_centroid_city_disagrees": 59,
+    "county_centroid": 26
   },
-  "site_points": 2464,
+  "site_points": 2486,
   "site_points_off_network_gt30mi": 0,
-  "tract_sitepoint_pairs_within_120": 5679068,
-  "county_sitepoint_pairs_within_120": 95684,
-  "seconds": 39
+  "tract_sitepoint_pairs_within_120": 5758915,
+  "county_sitepoint_pairs_within_120": 96774,
+  "seconds": 57
 }

@@ -1,8 +1,8 @@
 # Cancer-type classification audit
 
-5,170 distinct condition strings across 4,173 eligible trials · 76 strings flagged · **0 not yet reviewed**
+5,218 distinct condition strings across 4,169 eligible trials · 75 strings flagged · **0 not yet reviewed**
 
-## Matched inside a longer word (55)
+## Matched inside a longer word (54)
 
 | Reviewed | Category | Condition string | Trials | Example |
 |---|---|---|---|---|
@@ -16,9 +16,8 @@
 | yes | sarcoma | Carcinosarcoma | 1 | NCT05542407 |
 | yes | sarcoma | Dermatofibrosarcoma Protuberans, Fibrosarcomatous | 1 | NCT06239272 |
 | yes | head_neck | Erythroleukoplakia | 1 | NCT03603223 |
-| yes | sarcoma | Fallopian Tube Carcinosarcoma | 3 | NCT04919629 |
+| yes | sarcoma | Fallopian Tube Carcinosarcoma | 2 | NCT04919629 |
 | yes | sarcoma | Fibrosarcoma NOS | 1 | NCT06239272 |
-| yes | brain_cns | Ganglioglioma | 1 | NCT04065776 |
 | yes | other_named | Ganglioneuroblastoma | 1 | NCT03126916 |
 | yes | other_named | Ganglioneuroblastoma, Nodular | 2 | NCT03126916 |
 | yes | pancreatic | Gastroenteropancreatic NEC (GEP NEC) | 2 | NCT07278479 |
@@ -29,7 +28,7 @@
 | yes | pancreatic | Hepatopancreaticobiliary and Foregut Operations | 1 | NCT06562179 |
 | yes | liver_biliary | Hepatopancreaticobiliary and Foregut Operations | 1 | NCT06562179 |
 | yes | sarcoma | Inflammatory Leiomyosarcoma | 1 | NCT06239272 |
-| yes | sarcoma | Leiomyosarcoma | 10 | NCT03016819 |
+| yes | sarcoma | Leiomyosarcoma | 9 | NCT03016819 |
 | yes | sarcoma | Leiomyosarcoma (LMS) | 1 | NCT06789172 |
 | yes | sarcoma | Leiomyosarcomas | 1 | NCT05227326 |
 | yes | sarcoma | Malignant Tenosynovial Giant Cell Tumor of Soft Tissue | 1 | NCT06239272 |
@@ -47,11 +46,11 @@
 | yes | brain_cns | Oligoastrocytoma | 1 | NCT04623931 |
 | yes | sarcoma | Ovarian Carcinosarcoma | 3 | NCT04919629 |
 | yes | liver_biliary | Pancreatobiliary Carcinoma | 1 | NCT04221893 |
-| yes | brain_cns | Pleomorphic Xanthoastrocytoma | 2 | NCT04065776 |
-| yes | sarcoma | Primary Peritoneal Carcinosarcoma | 4 | NCT04919629 |
+| yes | brain_cns | Pleomorphic Xanthoastrocytoma | 1 | NCT04541082 |
+| yes | sarcoma | Primary Peritoneal Carcinosarcoma | 3 | NCT04919629 |
 | yes | sarcoma | Recurrent Fallopian Tube Carcinosarcoma | 1 | NCT06483048 |
-| yes | sarcoma | Recurrent Ovarian Carcinosarcoma | 2 | NCT05920798 |
-| yes | sarcoma | Recurrent Primary Peritoneal Carcinosarcoma | 2 | NCT05920798 |
+| yes | sarcoma | Recurrent Ovarian Carcinosarcoma | 1 | NCT06483048 |
+| yes | sarcoma | Recurrent Primary Peritoneal Carcinosarcoma | 1 | NCT06483048 |
 | yes | sarcoma | Sclerosing Epithelioid Fibrosarcoma | 1 | NCT06239272 |
 | yes | sarcoma | Stage III Uterine Corpus Carcinoma or Carcinosarcoma AJCC v8 | 1 | NCT05269381 |
 | yes | sarcoma | Stage IV Uterine Corpus Carcinoma or Carcinosarcoma AJCC v8 | 1 | NCT05269381 |
@@ -71,7 +70,7 @@
 | yes | leukemia | Acute Myeloid Leukemia, Myelodysplasia-Related | 1 | NCT05554406 |
 | yes | mds_mpn | Acute Myeloid Leukemia, Myelodysplasia-Related | 1 | NCT05554406 |
 | yes | gastric_esophageal | Barretts Esophagus With Dysplasia | 1 | NCT05753748 |
-| yes | prostate | Benign Prostatic Hyperplasia | 1 | NCT06511141 |
+| yes | prostate | Benign Prostatic Hyperplasia | 2 | NCT05148156 |
 | yes | breast | Breast Cancer Survivor | 2 | NCT06728579 |
 | yes | gynecologic | Endometrial Hyperplasia | 2 | NCT05903131 |
 | yes | mds_mpn | Hematopoetic Myelodysplasia | 1 | NCT06904066 |

@@ -22,6 +22,16 @@ jobs:
         uses: actions/cache@v4
         with: { path: data/roads, key: roads-tiger2025-v1 }
       - run: test -f data/roads/graph_us.npz || python build_roads_us.py
+      - name: Restore Census boundary files (downloaded if the cache is empty, ~34 MB; county 2023 + 2021 for Connecticut, districts 119th, states)
+        uses: actions/cache@v4
+        with: { path: data/geo, key: geo-cb2023-cb2021-cd119-states-v1 }
+      - run: |
+          mkdir -p data/geo
+          test -f data/geo/cb.zip         || curl -sSfL --retry 3 -o data/geo/cb.zip         https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_county_500k.zip
+          test -f data/geo/cb500_2021.zip || curl -sSfL --retry 3 -o data/geo/cb500_2021.zip https://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_county_500k.zip
+          test -f data/geo/cd119.zip      || curl -sSfL --retry 3 -o data/geo/cd119.zip      https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_us_cd119_500k.zip
+          test -f data/geo/states.zip     || curl -sSfL --retry 3 -o data/geo/states.zip     https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_state_500k.zip
+          ls -la data/geo
       - name: Snapshot the previous pull
         run: |
           d=$(python -c "import json;print(json.load(open('data/raw/fetch_log.json'))['timestamp_utc'][:10])")

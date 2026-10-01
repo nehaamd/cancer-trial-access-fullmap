@@ -1,45 +1,45 @@
 {
- "trials_all": 4169,
- "trials_55plus": 3915,
- "counts_55plus": {
-  "Multiple cancer types / basket or umbrella": 1115,
-  "Breast": 321,
-  "Lung & thoracic": 310,
-  "Prostate": 263,
-  "Lymphoma": 254,
-  "Leukemia": 198,
-  "Myeloma & plasma cell": 172,
-  "Gynecologic (ovarian, uterine, cervical)": 165,
-  "Brain & CNS": 162,
-  "Head & neck": 144,
-  "Colorectal": 112,
-  "Melanoma & skin": 101,
-  "Bladder & urothelial": 90,
-  "Pancreatic": 90,
-  "Sarcoma": 89,
-  "Liver & biliary": 80,
-  "Kidney": 63,
-  "Gastric & esophageal": 51,
-  "Other / unclassified": 41,
-  "Neuroendocrine & endocrine": 43,
-  "MDS & MPN": 35,
-  "Other named cancer": 16
- },
- "pct_multi_55plus": 28.5,
- "pct_unclassified_55plus": 1.0,
- "multi_subtypes_55plus": {
-  "multiple named cancers": 628,
-  "unspecified solid / hematologic": 440,
-  "basket with a named cohort": 34,
-  "unspecified (title)": 11,
-  "multiple named cancers (title/keywords)": 7,
-  "title names additional cancers": 2
- },
- "source_55plus": {
-  "conditions": 3786,
-  "none": 41,
-  "title/keywords": 41,
-  "conditions+title": 36,
-  "title": 11
- }
+  "trials_all": 4169,
+  "trials_55plus": 3917,
+  "counts_55plus": {
+    "Multiple cancer types / basket or umbrella": 1117,
+    "Breast": 320,
+    "Lung & thoracic": 308,
+    "Prostate": 269,
+    "Lymphoma": 249,
+    "Leukemia": 195,
+    "Myeloma & plasma cell": 174,
+    "Gynecologic (ovarian, uterine, cervical)": 167,
+    "Brain & CNS": 161,
+    "Head & neck": 144,
+    "Colorectal": 114,
+    "Melanoma & skin": 104,
+    "Bladder & urothelial": 91,
+    "Sarcoma": 88,
+    "Pancreatic": 86,
+    "Liver & biliary": 79,
+    "Kidney": 63,
+    "Gastric & esophageal": 53,
+    "Neuroendocrine & endocrine": 44,
+    "Other / unclassified": 41,
+    "MDS & MPN": 33,
+    "Other named cancer": 17
+  },
+  "pct_multi_55plus": 28.5,
+  "pct_unclassified_55plus": 1.0,
+  "multi_subtypes_55plus": {
+    "multiple named cancers": 623,
+    "unspecified solid / hematologic": 443,
+    "basket with a named cohort": 31,
+    "unspecified (title)": 11,
+    "multiple named cancers (title/keywords)": 7,
+    "title names additional cancers": 2
+  },
+  "source_55plus": {
+    "conditions": 3792,
+    "none": 41,
+    "title/keywords": 40,
+    "conditions+title": 33,
+    "title": 11
+  }
 }
