@@ -246,8 +246,8 @@
     "nci": 328,
     "pop55_no_route_to_broad": 667012
   },
-  "tract_pairs_within_120rdmi": 1452012,
-  "county_pairs_within_120rdmi": 35223,
+  "tract_pairs_within_120rdmi": 1462071,
+  "county_pairs_within_120rdmi": 35680,
   "router_validation": {
     "pairs": 38,
     "mean_abs_pct_diff": 3.1,
@@ -261,5 +261,5 @@
     "counties_where_x1_2_underestimated": 1481,
     "counties_compared": 3025
   },
-  "seconds": 56
+  "seconds": 72
 }
