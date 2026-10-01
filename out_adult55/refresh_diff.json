@@ -18,6 +18,29 @@
     "counties_with_changed_trial_count": 378,
     "counties_crossing_a_menu_threshold": 10
   },
+  "history": [
+    {
+      "pull": "2026-09-09",
+      "registry_data": null,
+      "trials": 3919,
+      "l20": 12.8,
+      "z60": 4.6,
+      "g60b": 38.8,
+      "g60n": 44.2,
+      "medn": 50.0
+    },
+    {
+      "pull": "2026-10-01",
+      "registry_data": "2026-09-30",
+      "trials": 3917,
+      "l20": 12.7,
+      "z60": 4.4,
+      "g60b": 38.8,
+      "g60n": 44.2,
+      "medn": 50.0,
+      "current": true
+    }
+  ],
   "new_trials": [
     {
       "nct_id": "NCT03796559",

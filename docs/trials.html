@@ -109,6 +109,6 @@
 })();
 </script>
 <footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><span data-site-date></span></div></footer>
-<script>(function(){try{var D=window.DATA;if(!D)return;var d=new Date(D.meta.pull+'T12:00:00');var t='Data as of '+(isNaN(d)?D.meta.pull:d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}));document.querySelectorAll('[data-site-date]').forEach(function(e){e.textContent=t;});}catch(e){}})();</script>
+<script>(function(){try{var D=window.DATA;if(!D)return;var dd=(D.meta.registry_data_timestamp||D.meta.pull).slice(0,10);var d=new Date(dd+'T12:00:00');var t='Data as of '+(isNaN(d)?dd:d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}));document.querySelectorAll('[data-site-date]').forEach(function(e){e.textContent=t;});}catch(e){}})();</script>
 </body>
 </html>
