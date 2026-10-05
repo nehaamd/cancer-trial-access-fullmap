@@ -1,22 +1,17 @@
 # Cancer-type classification audit
 
-5,218 distinct condition strings across 4,169 eligible trials · 75 strings flagged · **0 not yet reviewed**
+5,254 distinct condition strings across 4,257 eligible trials · 61 strings flagged · **0 not yet reviewed**
 
-## Matched inside a longer word (54)
+## Matched inside a longer word (40)
 
 | Reviewed | Category | Condition string | Trials | Example |
 |---|---|---|---|---|
 | yes | sarcoma | Advanced Leiomyosarcoma | 2 | NCT06498648 |
-| yes | sarcoma | Advanced Ovarian Carcinosarcoma | 1 | NCT06639074 |
 | yes | brain_cns | Anaplastic Oligoastrocytoma | 2 | NCT02800486 |
 | yes | brain_cns | Anaplastic Pleomorphic Xanthoastrocytoma | 1 | NCT04541082 |
-| yes | sarcoma | Angiosarcoma | 5 | NCT01042379 |
-| yes | sarcoma | Angiosarcoma, Adult | 1 | NCT06898970 |
 | yes | colorectal | Anorectal Cancer | 1 | NCT06669572 |
-| yes | sarcoma | Carcinosarcoma | 1 | NCT05542407 |
 | yes | sarcoma | Dermatofibrosarcoma Protuberans, Fibrosarcomatous | 1 | NCT06239272 |
 | yes | head_neck | Erythroleukoplakia | 1 | NCT03603223 |
-| yes | sarcoma | Fallopian Tube Carcinosarcoma | 2 | NCT04919629 |
 | yes | sarcoma | Fibrosarcoma NOS | 1 | NCT06239272 |
 | yes | other_named | Ganglioneuroblastoma | 1 | NCT03126916 |
 | yes | other_named | Ganglioneuroblastoma, Nodular | 2 | NCT03126916 |
@@ -44,22 +39,13 @@
 | yes | sarcoma | Neurofibromatosis Type 1 (NF1)-Related Plexiform Neurofibromas (PNs) | 1 | NCT06961565 |
 | yes | sarcoma | Neurofibromatosis Type 2 | 1 | NCT04374305 |
 | yes | brain_cns | Oligoastrocytoma | 1 | NCT04623931 |
-| yes | sarcoma | Ovarian Carcinosarcoma | 3 | NCT04919629 |
 | yes | liver_biliary | Pancreatobiliary Carcinoma | 1 | NCT04221893 |
 | yes | brain_cns | Pleomorphic Xanthoastrocytoma | 1 | NCT04541082 |
-| yes | sarcoma | Primary Peritoneal Carcinosarcoma | 3 | NCT04919629 |
-| yes | sarcoma | Recurrent Fallopian Tube Carcinosarcoma | 1 | NCT06483048 |
-| yes | sarcoma | Recurrent Ovarian Carcinosarcoma | 1 | NCT06483048 |
-| yes | sarcoma | Recurrent Primary Peritoneal Carcinosarcoma | 1 | NCT06483048 |
 | yes | sarcoma | Sclerosing Epithelioid Fibrosarcoma | 1 | NCT06239272 |
-| yes | sarcoma | Stage III Uterine Corpus Carcinoma or Carcinosarcoma AJCC v8 | 1 | NCT05269381 |
-| yes | sarcoma | Stage IV Uterine Corpus Carcinoma or Carcinosarcoma AJCC v8 | 1 | NCT05269381 |
 | yes | sarcoma | Unresectable Leiomyosarcoma | 2 | NCT05711615 |
 | yes | sarcoma | Unresectable Myxofibrosarcoma | 1 | NCT05711615 |
 | yes | sarcoma | Uterine Adenosarcoma | 1 | NCT07467772 |
-| yes | sarcoma | Uterine Carcinosarcoma | 1 | NCT05902988 |
-| yes | sarcoma | Uterine Corpus Carcinosarcoma | 1 | NCT03422198 |
-| yes | sarcoma | Uterine Leiomyosarcoma | 1 | NCT07467772 |
+| yes | sarcoma | Uterine Leiomyosarcoma | 3 | NCT05649956 |
 
 ## Reads as non-neoplastic or supportive care (21)
 

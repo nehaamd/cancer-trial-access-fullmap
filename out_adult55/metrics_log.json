@@ -1,34 +1,36 @@
 {
-  "age_filter": "trials with maximum age < 55 excluded (n=252)",
-  "site_rows": 53771,
+  "age_filter": "trials with maximum age < 55 excluded (n=256)",
+  "site_rows": 53902,
   "site_assignment": {
-    "zip": 51384,
-    "zip3": 1961,
-    "zip_pop": 291,
-    "city_gazetteer": 118,
-    "unassigned": 17
+    "zip": 51393,
+    "zip3": 1965,
+    "zip_pop": 293,
+    "city_gazetteer": 111,
+    "virtual_site": 108,
+    "unassigned": 18,
+    "zip_typo_corrected": 14
   },
-  "distinct_trials": 3917,
+  "distinct_trials": 4001,
   "counties": 3143,
-  "counties_with_any_trial": 848,
+  "counties_with_any_trial": 838,
   "broad_menu_counties": 83,
-  "limited_menu_counties": 383,
+  "limited_menu_counties": 377,
   "districts": 436,
   "us": {
     "scope": "US (50 states + DC)",
     "pop55_weighted": 98596429,
     "n_counties_touched": 3143,
-    "pct_pop55_in_counties_with_zero_trials": 20.7,
-    "wmean_trials_in_own_county": 126.0,
+    "pct_pop55_in_counties_with_zero_trials": 21.0,
+    "wmean_trials_in_own_county": 127.0,
     "wmean_dist_to_broad_menu_mi": 81.7,
-    "wmean_dist_to_limited_menu_mi": 23.0,
+    "wmean_dist_to_limited_menu_mi": 23.3,
     "wmean_dist_to_nci_mi": 77.9,
-    "wmean_trials_within_60mi": 358.0,
-    "wmean_oral_trials_within_60mi": 164.0,
+    "wmean_trials_within_60mi": 362.0,
+    "wmean_oral_trials_within_60mi": 167.0,
     "wmean_oral_indeterminate_within_60mi": 43.0,
     "pct_pop55_beyond_60mi_of_broad_menu": 37.0,
-    "pct_pop55_beyond_60mi_of_limited_menu": 12.8,
+    "pct_pop55_beyond_60mi_of_limited_menu": 13.0,
     "pct_pop55_beyond_120mi_of_broad_menu": 19.1,
-    "pct_pop55_beyond_120mi_of_limited_menu": 3.0
+    "pct_pop55_beyond_120mi_of_limited_menu": 3.1
   }
 }

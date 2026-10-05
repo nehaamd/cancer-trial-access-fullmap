@@ -4,10 +4,10 @@ county_fips,zip,shorter,longer,suggested_canonical
 01003,36526,southern cancer center,southern cancer center scc,southern cancer center scc
 01069,36303,dothan hematology oncology,xcancer research network dothan hematology oncology,xcancer research network dothan hematology oncology
 01073,35233,the university of alabama at birmingham,the university of alabama at birmingham o neal comprehensive cancer center,the university of alabama at birmingham o neal comprehensive cancer center
+01073,35233,uab hospital,the kirklin clinic of uab hospital,the kirklin clinic of uab hospital
 01073,35233,university of alabama at birmingham o neal comprehensive cancer center,the university of alabama at birmingham o neal comprehensive cancer center,the university of alabama at birmingham o neal comprehensive cancer center
 01073,35243,alabama oncology,alabama oncology grandview cancer center,alabama oncology grandview cancer center
 01073,35243,alabama oncology,birmingham hematology and oncology associates d b a alabama oncology,birmingham hematology and oncology associates d b a alabama oncology
-01073,35249,university of alabama at birmingham hospital,the university of alabama at birmingham hospital,the university of alabama at birmingham hospital
 01073,35294,university of alabama,o neal comprehensive cancer center at university of alabama birmingham,o neal comprehensive cancer center at university of alabama birmingham
 01073,35294,university of alabama,o neal comprehensive cancer center university of alabama,o neal comprehensive cancer center university of alabama
 01073,35294,university of alabama,the university of alabama,the university of alabama
@@ -37,16 +37,15 @@ county_fips,zip,shorter,longer,suggested_canonical
 04013,85054,mayo clinic,mayo clinic phoenix,mayo clinic phoenix
 04013,85054,mayo clinic,mayo clinic phoenix mayo clinic building,mayo clinic phoenix mayo clinic building
 04013,85054,mayo clinic,mayo clinic scottsdale arizona,mayo clinic scottsdale arizona
-04013,85054,mayo clinic,mayo clinic scottsdale ppds,mayo clinic scottsdale ppds
 04013,85054,mayo clinic comprehensive cancer center,mayo clinic comprehensive cancer center breast clinic,mayo clinic comprehensive cancer center breast clinic
 04013,85054,mayo clinic hospital,mayo clinic hospital arizona,mayo clinic hospital arizona
 04013,85054,mayo clinic hospital,mayo clinic hospital in arizona,mayo clinic hospital in arizona
 04013,85054,mayo clinic phoenix,mayo clinic phoenix mayo clinic building,mayo clinic phoenix mayo clinic building
 04013,85224,ironwood cancer and research center,ironwood cancer and research centers,ironwood cancer and research centers
-04013,85224,ironwood cancer and research center,ironwood cancer and research centers chandler ii,ironwood cancer and research centers chandler ii
+04013,85224,ironwood cancer and research center,ironwood cancer and research centers chandler,ironwood cancer and research centers chandler
 04013,85224,ironwood cancer and research center,ironwood cancer and research centers scottsdale,ironwood cancer and research centers scottsdale
 04013,85224,ironwood cancer and research center,ironwood physicians p c dba ironwood cancer and research centers,ironwood physicians p c dba ironwood cancer and research centers
-04013,85224,ironwood cancer and research centers,ironwood cancer and research centers chandler ii,ironwood cancer and research centers chandler ii
+04013,85224,ironwood cancer and research centers,ironwood cancer and research centers chandler,ironwood cancer and research centers chandler
 04013,85224,ironwood cancer and research centers,ironwood cancer and research centers scottsdale,ironwood cancer and research centers scottsdale
 04013,85224,ironwood cancer and research centers,ironwood physicians p c dba ironwood cancer and research centers,ironwood physicians p c dba ironwood cancer and research centers
 04013,85224,ironwood cancer research centers,ironwood cancer research centers research,ironwood cancer research centers research
@@ -66,6 +65,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 04013,85258,honorhealth,honorhealth research insisute,honorhealth research insisute
 04013,85258,honorhealth,honorhealth research institiute,honorhealth research institiute
 04013,85258,honorhealth,honorhealth research institute,honorhealth research institute
+04013,85259,mayo clinic scottsdale,mayo clinic scottsdale ppds,mayo clinic scottsdale ppds
 04013,85304,palo verde hematology oncology,palo verde hematology oncology center ltd,palo verde hematology oncology center ltd
 04013,85338,city of hope,city of hope arizona,city of hope arizona
 04013,85338,city of hope,city of hope cancer center phoenix,city of hope cancer center phoenix
@@ -138,6 +138,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06037,90025,the angeles clinic and research institute west los angeles,the angeles clinic and research institute west los angeles office,the angeles clinic and research institute west los angeles office
 06037,90027,california research institute,california research institute cri,california research institute cri
 06037,90027,children s hospital los angeles,children s hospital los angeles div of research immunology bmt adults and pediatrics,children s hospital los angeles div of research immunology bmt adults and pediatrics
+06037,90027,children s hospital of los angeles,children s hospital of los angeles data collection only,children s hospital of los angeles data collection only
 06037,90033,norris comprehensive cancer center,esc norris comprehensive cancer center,esc norris comprehensive cancer center
 06037,90033,norris comprehensive cancer center,university of southern california norris comprehensive cancer center,university of southern california norris comprehensive cancer center
 06037,90033,norris comprehensive cancer center,usc norris comprehensive cancer center,usc norris comprehensive cancer center
@@ -184,6 +185,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06037,90095,ucla department of medicine,ucla department of medicine hematology oncology,ucla department of medicine hematology oncology
 06037,90095,ucla health,ucla health bowyer oncology center,ucla health bowyer oncology center
 06037,90095,ucla hematology oncology,ucla hematology oncology administrative office,ucla hematology oncology administrative office
+06037,90095,ucla hematology oncology,ucla hematology oncology clinic los angeles,ucla hematology oncology clinic los angeles
 06037,90095,ucla hematology oncology,ucla hematology oncology la,ucla hematology oncology la
 06037,90095,ucla hematology oncology,ucla hematology oncology la 2,ucla hematology oncology la 2
 06037,90095,ucla hematology oncology,ucla hematology oncology main site,ucla hematology oncology main site
@@ -195,29 +197,31 @@ county_fips,zip,shorter,longer,suggested_canonical
 06037,90095,ucla medical center,ronald reagan ucla medical center,ronald reagan ucla medical center
 06037,90095,ucla medical center,ronald reagan ucla medical center drug information center,ronald reagan ucla medical center drug information center
 06037,90095,ucla medical center,ucla medical center of hematology oncology,ucla medical center of hematology oncology
+06037,90095,ucla medical center,university of california los angeles ucla medical center,university of california los angeles ucla medical center
 06037,90095,university of california,the regents of the university of california,the regents of the university of california
 06037,90095,university of california,ucla university of california los angeles medical center,ucla university of california los angeles medical center
 06037,90095,university of california,university of california at los angeles jonsson comprehensive cancer center,university of california at los angeles jonsson comprehensive cancer center
 06037,90095,university of california,university of california la,university of california la
 06037,90095,university of california,university of california los angeles,university of california los angeles
 06037,90095,university of california,university of california los angeles data collection only,university of california los angeles data collection only
-06037,90095,university of california,university of california los angeles health hematology oncology,university of california los angeles health hematology oncology
 06037,90095,university of california,university of california los angeles jonsson comprehensive cancer center,university of california los angeles jonsson comprehensive cancer center
 06037,90095,university of california,university of california los angeles medical center,university of california los angeles medical center
 06037,90095,university of california,university of california los angeles ucla,university of california los angeles ucla
 06037,90095,university of california,university of california los angeles ucla david geffen school of medicine,university of california los angeles ucla david geffen school of medicine
 06037,90095,university of california,university of california los angeles ucla division of hematology oncology,university of california los angeles ucla division of hematology oncology
+06037,90095,university of california,university of california los angeles ucla medical center,university of california los angeles ucla medical center
 06037,90095,university of california los angeles,ucla university of california los angeles medical center,ucla university of california los angeles medical center
 06037,90095,university of california los angeles,university of california los angeles data collection only,university of california los angeles data collection only
-06037,90095,university of california los angeles,university of california los angeles health hematology oncology,university of california los angeles health hematology oncology
 06037,90095,university of california los angeles,university of california los angeles jonsson comprehensive cancer center,university of california los angeles jonsson comprehensive cancer center
 06037,90095,university of california los angeles,university of california los angeles medical center,university of california los angeles medical center
 06037,90095,university of california los angeles,university of california los angeles ucla,university of california los angeles ucla
 06037,90095,university of california los angeles,university of california los angeles ucla david geffen school of medicine,university of california los angeles ucla david geffen school of medicine
 06037,90095,university of california los angeles,university of california los angeles ucla division of hematology oncology,university of california los angeles ucla division of hematology oncology
+06037,90095,university of california los angeles,university of california los angeles ucla medical center,university of california los angeles ucla medical center
 06037,90095,university of california los angeles medical center,ucla university of california los angeles medical center,ucla university of california los angeles medical center
 06037,90095,university of california los angeles ucla,university of california los angeles ucla david geffen school of medicine,university of california los angeles ucla david geffen school of medicine
 06037,90095,university of california los angeles ucla,university of california los angeles ucla division of hematology oncology,university of california los angeles ucla division of hematology oncology
+06037,90095,university of california los angeles ucla,university of california los angeles ucla medical center,university of california los angeles ucla medical center
 06037,90211,beverly hills cancer center,beverly hills cancer center clinical research advisors llc,beverly hills cancer center clinical research advisors llc
 06037,90211,cedars sinai cancer beverly hills,cedars sinai cancer beverly hills drug treatment and dispensing location,cedars sinai cancer beverly hills drug treatment and dispensing location
 06037,90211,clinical research advisors llc,beverly hills cancer center clinical research advisors llc,beverly hills cancer center clinical research advisors llc
@@ -243,6 +247,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06037,90404,ucla santa monica,ucla santa monica hematology oncology,ucla santa monica hematology oncology
 06037,90404,ucla santa monica,ucla santa monica medical center,ucla santa monica medical center
 06037,90404,ucla santa monica,university of california los angeles ucla santa monica cancer care,university of california los angeles ucla santa monica cancer care
+06037,90502,harbor ucla medical center,the lundquist institute for biomedical innovation at harbor ucla medical center,the lundquist institute for biomedical innovation at harbor ucla medical center
 06037,90602,pih health,pih health hematology medical oncology,pih health hematology medical oncology
 06037,90602,pih health,pih health hospital whittier hospital,pih health hospital whittier hospital
 06037,90602,pih health,pih health whittier hospital,pih health whittier hospital
@@ -264,6 +269,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06037,91010,city of hope,city of hope duarte,city of hope duarte
 06037,91010,city of hope,city of hope duarte 56419,city of hope duarte 56419
 06037,91010,city of hope,city of hope duarte cancer center,city of hope duarte cancer center
+06037,91010,city of hope,city of hope duarte main site,city of hope duarte main site
 06037,91010,city of hope,city of hope investigational drug services ids,city of hope investigational drug services ids
 06037,91010,city of hope,city of hope medical center,city of hope medical center
 06037,91010,city of hope,city of hope medical foundation,city of hope medical foundation
@@ -279,6 +285,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06037,91010,city of hope comprehensive cancer center,city of hope comprehensive cancer center duarte,city of hope comprehensive cancer center duarte
 06037,91010,city of hope duarte,city of hope duarte 56419,city of hope duarte 56419
 06037,91010,city of hope duarte,city of hope duarte cancer center,city of hope duarte cancer center
+06037,91010,city of hope duarte,city of hope duarte main site,city of hope duarte main site
 06037,91010,city of hope investigational drug services ids,ip address city of hope investigational drug services ids,ip address city of hope investigational drug services ids
 06037,91010,city of hope medical center,city of hope city of hope national medical center city of hope medical center,city of hope city of hope national medical center city of hope medical center
 06037,91010,city of hope national medical,city of hope city of hope national medical center city of hope medical center,city of hope city of hope national medical center city of hope medical center
@@ -361,6 +368,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06059,92868,chao family comprehensive cancer center,uc irvine chao family comprehensive cancer center,uc irvine chao family comprehensive cancer center
 06059,92868,chao family comprehensive cancer center,uc irvine health chao family comprehensive cancer center,uc irvine health chao family comprehensive cancer center
 06059,92868,chao family comprehensive cancer center,uci chao family comprehensive cancer center,uci chao family comprehensive cancer center
+06059,92868,chao family comprehensive cancer center,uci health chao family comprehensive cancer center,uci health chao family comprehensive cancer center
 06059,92868,chao family comprehensive cancer center university,chao family comprehensive cancer center university of california irvine,chao family comprehensive cancer center university of california irvine
 06059,92868,children s hospital of orange county,children s hospital of orange county rady children s health,children s hospital of orange county rady children s health
 06059,92868,st joseph hospital,providence st joseph hospital,providence st joseph hospital
@@ -375,6 +383,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06059,92868,uc irvine,university of california irvine uci health uc irvine medical center,university of california irvine uci health uc irvine medical center
 06059,92868,uc irvine health,uc irvine health chao family comprehensive cancer center,uc irvine health chao family comprehensive cancer center
 06059,92868,uc irvine medical center,university of california irvine uci health uc irvine medical center,university of california irvine uci health uc irvine medical center
+06059,92868,uci health,uci health chao family comprehensive cancer center,uci health chao family comprehensive cancer center
 06059,92868,uci health,university of california irvine uci health uc irvine medical center,university of california irvine uci health uc irvine medical center
 06059,92868,uci medical center,university of california irvine uci medical center,university of california irvine uci medical center
 06059,92868,university of california irvine,chao family comprehensive cancer center university of california irvine,chao family comprehensive cancer center university of california irvine
@@ -440,7 +449,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 06073,92037,uc san diego health,moores cancer centre at uc san diego health,moores cancer centre at uc san diego health
 06073,92037,uc san diego health,uc san diego health moores cancer center,uc san diego health moores cancer center
 06073,92037,uc san diego health,university of california san diego uc san diego health jacobs medical center moores cancer center,university of california san diego uc san diego health jacobs medical center moores cancer center
-06073,92037,university of california san diego ucsd,university of california san diego ucsd moores cancer center,university of california san diego ucsd moores cancer center
 06073,92078,kaiser permanente san marcos,kaiser permanente san marcos medical offices,kaiser permanente san marcos medical offices
 06073,92093,moores cancer center,moores cancer center at uc san diego,moores cancer center at uc san diego
 06073,92093,moores cancer center,moores cancer center uc san diego health,moores cancer center uc san diego health
@@ -448,11 +456,14 @@ county_fips,zip,shorter,longer,suggested_canonical
 06073,92093,moores cancer center,ucsd moores cancer center,ucsd moores cancer center
 06073,92093,moores cancer center,university of california at san diego moores cancer center,university of california at san diego moores cancer center
 06073,92093,moores cancer center,university of california san diego moores cancer center,university of california san diego moores cancer center
+06073,92093,moores cancer center,university of california san diego ucsd moores cancer center,university of california san diego ucsd moores cancer center
 06073,92093,moores cancer center,university of san diego moores cancer center,university of san diego moores cancer center
+06073,92093,ucsd moores cancer center,university of california san diego ucsd moores cancer center,university of california san diego ucsd moores cancer center
 06073,92093,university of california at san diego,university of california at san diego moores cancer center,university of california at san diego moores cancer center
 06073,92093,university of california san diego,university of california san diego health,university of california san diego health
 06073,92093,university of california san diego,university of california san diego moores cancer center,university of california san diego moores cancer center
 06073,92093,university of california san diego,university of california san diego ucsd medical center,university of california san diego ucsd medical center
+06073,92093,university of california san diego,university of california san diego ucsd moores cancer center,university of california san diego ucsd moores cancer center
 06073,92108,kaiser permanente san diego mission,kaiser permanente san diego mission road,kaiser permanente san diego mission road
 06073,92108,kaiser permanente san diego mission,kaiser permanente san diego mission road regulatory and lab supplies,kaiser permanente san diego mission road regulatory and lab supplies
 06073,92108,kaiser permanente san diego mission road,kaiser permanente san diego mission road regulatory and lab supplies,kaiser permanente san diego mission road regulatory and lab supplies
@@ -465,9 +476,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 06075,94115,kaiser permanente san francisco,kaiser permanente san francisco medical center,kaiser permanente san francisco medical center
 06075,94115,kaiser permanente san francisco,kaiser permanente san francisco medical center oncology,kaiser permanente san francisco medical center oncology
 06075,94115,kaiser permanente san francisco medical center,kaiser permanente san francisco medical center oncology,kaiser permanente san francisco medical center oncology
-06075,94143,ucsf medical center,ucsf medical center hematology and blood and marrow transplant clinic,ucsf medical center hematology and blood and marrow transplant clinic
-06075,94143,ucsf medical center,ucsf medical center mission bay benioff children s hospital,ucsf medical center mission bay benioff children s hospital
-06075,94143,ucsf medical center,ucsf medical center parnassus,ucsf medical center parnassus
 06075,94143,university of california,university of california san francisco,university of california san francisco
 06075,94143,university of california,university of california san francisco data collection only,university of california san francisco data collection only
 06075,94143,university of california,university of california san francisco helen diller comprehensive cancer center,university of california san francisco helen diller comprehensive cancer center
@@ -479,6 +487,9 @@ county_fips,zip,shorter,longer,suggested_canonical
 06075,94143,university of california san francisco,university of california san francisco ucsf,university of california san francisco ucsf
 06075,94158,ucsf helen diller family comprehensive cancer center,ucsf health ucsf helen diller family comprehensive cancer center,ucsf health ucsf helen diller family comprehensive cancer center
 06075,94158,ucsf helen diller family comprehensive cancer center,university of california san francisco ucsf helen diller family comprehensive cancer center,university of california san francisco ucsf helen diller family comprehensive cancer center
+06075,94158,ucsf medical center,ucsf medical center at mission bay,ucsf medical center at mission bay
+06075,94158,ucsf medical center,ucsf medical center at mount zion,ucsf medical center at mount zion
+06075,94158,ucsf medical center,ucsf medical center mission bay,ucsf medical center mission bay
 06081,94080,kaiser permanente south san francisco,kaiser permanente south san francisco medical center,kaiser permanente south san francisco medical center
 06083,93105,ridley tree cancer center,samsun clinic ridley tree cancer center,samsun clinic ridley tree cancer center
 06083,93105,sansum clinic,scri sansum clinic,scri sansum clinic
@@ -536,6 +547,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06115,95901,rideout cancer center,fremont rideout cancer center,fremont rideout cancer center
 08001,80045,anschutz cancer pavilion,university of colorado anschutz cancer pavilion,university of colorado anschutz cancer pavilion
 08001,80045,anschutz cancer pavilion,university of colorado anschutz cancer pavilion acp,university of colorado anschutz cancer pavilion acp
+08001,80045,anschutz cancer pavilion,university of colorado cancer center anschutz cancer pavilion,university of colorado cancer center anschutz cancer pavilion
 08001,80045,anschutz cancer pavilion,university of colorado hospital anschutz cancer pavilion,university of colorado hospital anschutz cancer pavilion
 08001,80045,anschutz cancer pavilion,university of colorado hospital anschutz cancer pavilion acp,university of colorado hospital anschutz cancer pavilion acp
 08001,80045,anshutz cancer pavilion,university of colorado hospital anshutz cancer pavilion,university of colorado hospital anshutz cancer pavilion
@@ -551,6 +563,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 08001,80045,university of colorado,university of colorado anschutz medical campus cu amc,university of colorado anschutz medical campus cu amc
 08001,80045,university of colorado,university of colorado aurora cancer center,university of colorado aurora cancer center
 08001,80045,university of colorado,university of colorado cancer center,university of colorado cancer center
+08001,80045,university of colorado,university of colorado cancer center anschutz cancer pavilion,university of colorado cancer center anschutz cancer pavilion
 08001,80045,university of colorado,university of colorado denver,university of colorado denver
 08001,80045,university of colorado,university of colorado denver anschultz medical campus,university of colorado denver anschultz medical campus
 08001,80045,university of colorado,university of colorado denver anschutz medical campus,university of colorado denver anschutz medical campus
@@ -571,6 +584,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 08001,80045,university of colorado anschutz cancer pavilion,university of colorado anschutz cancer pavilion acp,university of colorado anschutz cancer pavilion acp
 08001,80045,university of colorado anschutz medical campus,university of colorado anschutz medical campus cu amc,university of colorado anschutz medical campus cu amc
 08001,80045,university of colorado cancer center,uchealth cancer care anschutz medical campus university of colorado cancer center,uchealth cancer care anschutz medical campus university of colorado cancer center
+08001,80045,university of colorado cancer center,university of colorado cancer center anschutz cancer pavilion,university of colorado cancer center anschutz cancer pavilion
 08001,80045,university of colorado denver,university of colorado denver anschultz medical campus,university of colorado denver anschultz medical campus
 08001,80045,university of colorado denver,university of colorado denver anschutz medical campus,university of colorado denver anschutz medical campus
 08001,80045,university of colorado health,university of colorado health cancer care,university of colorado health cancer care
@@ -672,8 +686,13 @@ county_fips,zip,shorter,longer,suggested_canonical
 08035,80124,rocky mountain cancer centers llp,rocky mountain cancer centers llp aurora,rocky mountain cancer centers llp aurora
 08035,80124,rocky mountain cancer centers llp,rocky mountain cancer centers llp oncology,rocky mountain cancer centers llp oncology
 08035,80124,rocky mountain cancer centers lone tree,usor rocky mountain cancer centers lone tree,usor rocky mountain cancer centers lone tree
+08035,80129,highlands ranch hospital,uchealth highlands ranch hospital,uchealth highlands ranch hospital
+08035,80129,highlands ranch hospital,university of colorado cancer center highlands ranch hospital,university of colorado cancer center highlands ranch hospital
+08035,80129,highlands ranch hospital,university of colorado health highlands ranch hospital,university of colorado health highlands ranch hospital
 08037,81632,shaw cancer center,vail health hospital shaw cancer center,vail health hospital shaw cancer center
 08037,81632,shaw cancer center,vail health shaw cancer center,vail health shaw cancer center
+08041,80907,rocky mountain cancer center,rocky mountain cancer centers llp,rocky mountain cancer centers llp
+08041,80907,rocky mountain cancer center,rocky mountain cancer centers penrose,rocky mountain cancer centers penrose
 08059,80228,colorado urology,colorado urology st anthony hospital campus,colorado urology st anthony hospital campus
 08059,80228,saint anthony hospital,commonspirit saint anthony hospital cancer center,commonspirit saint anthony hospital cancer center
 08059,80401,intermountain health lutheran hospital,intermountain health lutheran hospital cancer center of colorado,intermountain health lutheran hospital cancer center of colorado
@@ -683,19 +702,19 @@ county_fips,zip,shorter,longer,suggested_canonical
 08077,81505,grand valley oncology,colorado west healthcare system grand valley oncology,colorado west healthcare system grand valley oncology
 08123,80631,banner md anderson cancer center,banner md anderson cancer center at north colorado medical center,banner md anderson cancer center at north colorado medical center
 08123,80631,north colorado medical center,banner md anderson cancer center at north colorado medical center,banner md anderson cancer center at north colorado medical center
-08123,80631,north colorado medical center,banner north colorado medical center,banner north colorado medical center
 09001,06810,danbury hospital,danbury hospital western connecticut health network,danbury hospital western connecticut health network
 09003,06030,university of connecticut,university of connecticut health center,university of connecticut health center
 09003,06102,hartford healthcare,hartford healthcare alliance data collection only,hartford healthcare alliance data collection only
+09003,06102,hartford healthcare,hartford healthcare cancer institute at hartford hospital,hartford healthcare cancer institute at hartford hospital
 09003,06102,hartford healthcare,hartford healthcare cancer institute hartford hospital data collection only,hartford healthcare cancer institute hartford hospital data collection only
 09003,06102,hartford healthcare,hartford healthcare data collection,hartford healthcare data collection
 09003,06102,hartford healthcare,hartford healthcare data collection only,hartford healthcare data collection only
 09003,06102,hartford healthcare,hartford healthcare hartford hospital,hartford healthcare hartford hospital
 09003,06102,hartford healthcare data collection,hartford healthcare data collection only,hartford healthcare data collection only
+09003,06102,hartford hospital,hartford healthcare cancer institute at hartford hospital,hartford healthcare cancer institute at hartford hospital
 09003,06102,hartford hospital,hartford healthcare cancer institute hartford hospital data collection only,hartford healthcare cancer institute hartford hospital data collection only
 09003,06102,hartford hospital,hartford healthcare hartford hospital,hartford healthcare hartford hospital
 09003,06102,hartford hospital,hartford hospital hh,hartford hospital hh
-09003,06106,hartford healthcare cancer institute,hartford healthcare cancer institute at hartford hospital,hartford healthcare cancer institute at hartford hospital
 09009,06418,smilow cancer hospital derby,smilow cancer hospital derby care center,smilow cancer hospital derby care center
 09009,06451,midstate medical center,midstate medical center msmc,midstate medical center msmc
 09009,06510,yale cancer center,yale cancer center and smilow cancer hospital,yale cancer center and smilow cancer hospital
@@ -707,6 +726,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 09009,06510,yale new haven hospital,yale new haven hospital smilow cancer center,yale new haven hospital smilow cancer center
 09009,06510,yale new haven hospital,yale new haven hospital smilow cancer hospital at yale new haven,yale new haven hospital smilow cancer hospital at yale new haven
 09009,06510,yale new haven hospital,yale new haven hospital yale cancer center,yale new haven hospital yale cancer center
+09009,06510,yale school of medicine,yale university yale cancer center yale school of medicine,yale university yale cancer center yale school of medicine
 09009,06511,smilow cancer hospital,smilow cancer hospital at yale new haven,smilow cancer hospital at yale new haven
 09009,06511,smilow cancer hospital,smilow cancer hospital phase 1 unit,smilow cancer hospital phase 1 unit
 09009,06511,smilow cancer hospital,smilow cancer hospital yale university,smilow cancer hospital yale university
@@ -775,17 +795,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 11001,20016,sibley memorial hospital,johns hopkins university sibley memorial hospital,johns hopkins university sibley memorial hospital
 11001,20016,sibley memorial hospital,sibley memorial hospital pharmacy department,sibley memorial hospital pharmacy department
 11001,20037,george washington medical faculty associates,the george washington medical faculty associates,the george washington medical faculty associates
-11001,20037,george washington university,george washington university medical center,george washington university medical center
-11001,20037,george washington university,george washington university medical faculty associates,george washington university medical faculty associates
-11001,20037,george washington university,the george washington university,the george washington university
-11001,20037,george washington university,the george washington university cancer center,the george washington university cancer center
-11001,20037,george washington university,the george washington university hospital,the george washington university hospital
 11001,20037,the george washington university,the george washington university cancer center,the george washington university cancer center
 11001,20037,the george washington university,the george washington university hospital,the george washington university hospital
-12001,32610,uf health,uf health cancer center university of florida,uf health cancer center university of florida
-12001,32610,uf health,uf health cancer institute gainesville,uf health cancer institute gainesville
-12001,32610,uf health,university of florida health uf health cancer center,university of florida health uf health cancer center
-12001,32610,uf health,university of florida uf health cancer center,university of florida uf health cancer center
+11001,20052,george washington university,george washington university cancer center,george washington university cancer center
+12001,32608,uf health,uf health davis cancer pavilion and shands med plaza,uf health davis cancer pavilion and shands med plaza
+12001,32608,uf health,uf health shands hospital,uf health shands hospital
 12001,32610,univ of florida,univ of florida health science ctr gainesville,univ of florida health science ctr gainesville
 12001,32610,university of florida health,university of florida health at shands,university of florida health at shands
 12001,32610,university of florida health,university of florida health science center gainesville,university of florida health science center gainesville
@@ -806,7 +820,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 12011,33063,research,d h national research centers inc investigational site number usa 002,d h national research centers inc investigational site number usa 002
 12011,33063,research,d h national research centers llc,d h national research centers llc
 12011,33063,research,d h pompano research center,d h pompano research center
-12011,33063,research,prophase llc clinitiative health research network,prophase llc clinitiative health research network
 12011,33065,ssak partners,ssak partners llc,ssak partners llc
 12011,33071,life clinical trials,life clinical trials coral springs,life clinical trials coral springs
 12011,33308,holy cross hospital,holy cross hospital michael dianne bienes comp cancer ctr,holy cross hospital michael dianne bienes comp cancer ctr
@@ -818,7 +831,9 @@ county_fips,zip,shorter,longer,suggested_canonical
 12011,33316,the oncology institute of hope and innovation fort lauderdale,the oncology institute of hope and innovation fort lauderdale 17th street,the oncology institute of hope and innovation fort lauderdale 17th street
 12011,33322,brcr medical center,brcr medical center inc internal medicine,brcr medical center inc internal medicine
 12011,33322,florida clinical trials group,florida clinical trials group llc,florida clinical trials group llc
+12011,33322,florida clinical trials group,florida clinical trials group llc plantation,florida clinical trials group llc plantation
 12011,33322,florida clinical trials group,florida clinical trials group plantation,florida clinical trials group plantation
+12011,33322,florida clinical trials group llc,florida clinical trials group llc plantation,florida clinical trials group llc plantation
 12011,33324,miami cancer institute,miami cancer institute at baptist health,miami cancer institute at baptist health
 12011,33324,miami cancer institute,miami cancer institute at plantation,miami cancer institute at plantation
 12011,33324,miami cancer institute,miami cancer institute plantation,miami cancer institute plantation
@@ -839,7 +854,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 12031,32209,university of florida,university of florida jacksonville,university of florida jacksonville
 12031,32224,mayo clinic,1017 mayo clinic,1017 mayo clinic
 12031,32224,mayo clinic,mayo clinic cancer center,mayo clinic cancer center
-12031,32224,mayo clinic,mayo clinic cancer center florida,mayo clinic cancer center florida
 12031,32224,mayo clinic,mayo clinic clinical trials referral office,mayo clinic clinical trials referral office
 12031,32224,mayo clinic,mayo clinic comprehensive cancer center,mayo clinic comprehensive cancer center
 12031,32224,mayo clinic,mayo clinic florida,mayo clinic florida
@@ -856,7 +870,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 12031,32224,mayo clinic,mayo clinic pharmacy,mayo clinic pharmacy
 12031,32224,mayo clinic,mayo clinical florida,mayo clinical florida
 12031,32224,mayo clinic,mayo clinical hospital florida,mayo clinical hospital florida
-12031,32224,mayo clinic cancer center,mayo clinic cancer center florida,mayo clinic cancer center florida
 12031,32224,mayo clinic comprehensive cancer center,mayo clinic in florida mayo clinic comprehensive cancer center,mayo clinic in florida mayo clinic comprehensive cancer center
 12031,32224,mayo clinic florida,mayo clinic florida comprehensive cancer center,mayo clinic florida comprehensive cancer center
 12031,32224,mayo clinic hospital,mayo clinic hospital florida,mayo clinic hospital florida
@@ -869,6 +882,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12033,32503,woodlands medical specialists,usor woodlands medical specialists,usor woodlands medical specialists
 12033,32504,ascension sacred heart,ascension sacred heart pensacola,ascension sacred heart pensacola
 12057,33606,tampa general hospital,tampa general hospital cancer institute,tampa general hospital cancer institute
+12057,33612,h lee moffitt cancer center,h lee moffitt cancer center and research center,h lee moffitt cancer center and research center
 12057,33612,h lee moffitt cancer center,h lee moffitt cancer center and research institute,h lee moffitt cancer center and research institute
 12057,33612,h lee moffitt cancer center,h lee moffitt cancer center and research institute hospital,h lee moffitt cancer center and research institute hospital
 12057,33612,h lee moffitt cancer center,h lee moffitt cancer center and research institute hospital inc,h lee moffitt cancer center and research institute hospital inc
@@ -879,6 +893,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12057,33612,h lee moffitt cancer center and research institute,h lee moffitt cancer center and research institute inc,h lee moffitt cancer center and research institute inc
 12057,33612,h lee moffitt cancer center and research institute hospital,h lee moffitt cancer center and research institute hospital inc,h lee moffitt cancer center and research institute hospital inc
 12057,33612,lee moffitt cancer center,h lee moffitt cancer center,h lee moffitt cancer center
+12057,33612,lee moffitt cancer center,h lee moffitt cancer center and research center,h lee moffitt cancer center and research center
 12057,33612,lee moffitt cancer center,h lee moffitt cancer center and research institute,h lee moffitt cancer center and research institute
 12057,33612,lee moffitt cancer center,h lee moffitt cancer center and research institute hospital,h lee moffitt cancer center and research institute hospital
 12057,33612,lee moffitt cancer center,h lee moffitt cancer center and research institute hospital inc,h lee moffitt cancer center and research institute hospital inc
@@ -886,6 +901,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12057,33612,lee moffitt cancer center,h lee moffitt cancer center research institute,h lee moffitt cancer center research institute
 12057,33612,moffit cancer center,h lee moffit cancer center and research institute,h lee moffit cancer center and research institute
 12057,33612,moffitt cancer center,h lee moffitt cancer center,h lee moffitt cancer center
+12057,33612,moffitt cancer center,h lee moffitt cancer center and research center,h lee moffitt cancer center and research center
 12057,33612,moffitt cancer center,h lee moffitt cancer center and research institute,h lee moffitt cancer center and research institute
 12057,33612,moffitt cancer center,h lee moffitt cancer center and research institute hospital,h lee moffitt cancer center and research institute hospital
 12057,33612,moffitt cancer center,h lee moffitt cancer center and research institute hospital inc,h lee moffitt cancer center and research institute hospital inc
@@ -906,7 +922,13 @@ county_fips,zip,shorter,longer,suggested_canonical
 12057,33612,moffitt cancer center and research institute,h lee moffitt cancer center and research institute inc,h lee moffitt cancer center and research institute inc
 12057,33612,moffitt cancer center mckinley campus,moffitt cancer center mckinley campus richard m shulze family foundation outpatient center,moffitt cancer center mckinley campus richard m shulze family foundation outpatient center
 12057,33612,moffitt cancer center research institute,h lee moffitt cancer center research institute,h lee moffitt cancer center research institute
-12057,33612,university of south florida,university of south florida carol and frank morsani center of advanced healthcare,university of south florida carol and frank morsani center of advanced healthcare
+12071,33901,florida cancer specialists,florida cancer specialists broadway,florida cancer specialists broadway
+12071,33901,florida cancer specialists,florida cancer specialists fort myers,florida cancer specialists fort myers
+12071,33901,florida cancer specialists,florida cancer specialists research institute,florida cancer specialists research institute
+12071,33901,florida cancer specialists,florida cancer specialists research institute south,florida cancer specialists research institute south
+12071,33901,florida cancer specialists,florida cancer specialists research south,florida cancer specialists research south
+12071,33901,florida cancer specialists,florida cancer specialists south,florida cancer specialists south
+12071,33901,florida cancer specialists,scri florida cancer specialists south region research office,scri florida cancer specialists south region research office
 12071,33901,florida cancer specialists research institute,florida cancer specialists research institute south,florida cancer specialists research institute south
 12071,33901,florida cancer specialists south,scri florida cancer specialists south region research office,scri florida cancer specialists south region research office
 12073,32308,florida cancer specialists,scri florida cancer specialists tallahassee cancer center,scri florida cancer specialists tallahassee cancer center
@@ -922,6 +944,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12085,34994,cleveland clinic martin north,cleveland clinic martin north hospital,cleveland clinic martin north hospital
 12086,33013,bioresearch partner,bioresearch partner hialeah,bioresearch partner hialeah
 12086,33013,bioresearch partner,bioresearch partner hialeah hospital,bioresearch partner hialeah hospital
+12086,33013,bioresearch partner,bioresearch partners,bioresearch partners
 12086,33013,bioresearch partner hialeah,bioresearch partner hialeah hospital,bioresearch partner hialeah hospital
 12086,33126,regis clinical research,regis clinical research llc,regis clinical research llc
 12086,33136,sylvester cancer center,sylvester cancer center u miami,sylvester cancer center u miami
@@ -938,6 +961,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12086,33136,sylvester comprehensive cancer center,university of california miami sylvester comprehensive cancer center,university of california miami sylvester comprehensive cancer center
 12086,33136,sylvester comprehensive cancer center,university of miami health system sylvester comprehensive cancer center miami,university of miami health system sylvester comprehensive cancer center miami
 12086,33136,sylvester comprehensive cancer center,university of miami hospital and clinics sylvester comprehensive cancer center,university of miami hospital and clinics sylvester comprehensive cancer center
+12086,33136,sylvester comprehensive cancer center,university of miami school of medicine sylvester comprehensive cancer center sccc,university of miami school of medicine sylvester comprehensive cancer center sccc
 12086,33136,sylvester comprehensive cancer center,university of miami sylvester comprehensive cancer center,university of miami sylvester comprehensive cancer center
 12086,33136,sylvester comprehensive cancer center miami,university of miami health system sylvester comprehensive cancer center miami,university of miami health system sylvester comprehensive cancer center miami
 12086,33136,university of miami,sylvester cancer center university of miami,sylvester cancer center university of miami
@@ -960,6 +984,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12086,33136,university of miami,university of miami miller school of medicine sylvester cancer centre,university of miami miller school of medicine sylvester cancer centre
 12086,33136,university of miami,university of miami sccc miami,university of miami sccc miami
 12086,33136,university of miami,university of miami school of medicine,university of miami school of medicine
+12086,33136,university of miami,university of miami school of medicine sylvester comprehensive cancer center sccc,university of miami school of medicine sylvester comprehensive cancer center sccc
 12086,33136,university of miami,university of miami sylvester cancer center,university of miami sylvester cancer center
 12086,33136,university of miami,university of miami sylvester cancer institute alex s place,university of miami sylvester cancer institute alex s place
 12086,33136,university of miami,university of miami sylvester cancer institute griffin cancer research building,university of miami sylvester cancer institute griffin cancer research building
@@ -985,6 +1010,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12086,33136,university of miami miller school of medicine,sylvester comprehensive cancer center university of miami miller school of medicine,sylvester comprehensive cancer center university of miami miller school of medicine
 12086,33136,university of miami miller school of medicine,university of miami miller school of medicine sylvester cancer center,university of miami miller school of medicine sylvester cancer center
 12086,33136,university of miami miller school of medicine,university of miami miller school of medicine sylvester cancer centre,university of miami miller school of medicine sylvester cancer centre
+12086,33136,university of miami school of medicine,university of miami school of medicine sylvester comprehensive cancer center sccc,university of miami school of medicine sylvester comprehensive cancer center sccc
 12086,33136,university of miami sylvester comprehensive cancer cente,university of miami sylvester comprehensive cancer center,university of miami sylvester comprehensive cancer center
 12086,33140,mount sinai,mount sinai braman comprehensive cancer center,mount sinai braman comprehensive cancer center
 12086,33140,mount sinai,mount sinai cancer center,mount sinai cancer center
@@ -992,10 +1018,8 @@ county_fips,zip,shorter,longer,suggested_canonical
 12086,33140,mount sinai,mount sinai comprehensive cancer center,mount sinai comprehensive cancer center
 12086,33140,mount sinai,mount sinai medical center,mount sinai medical center
 12086,33140,mount sinai,mount sinai medical center braman comprehensive cancer center,mount sinai medical center braman comprehensive cancer center
-12086,33140,mount sinai,mount sinai medical center comprehensive cancer center,mount sinai medical center comprehensive cancer center
 12086,33140,mount sinai,mount sinai medical center miami beach,mount sinai medical center miami beach
 12086,33140,mount sinai medical center,mount sinai medical center braman comprehensive cancer center,mount sinai medical center braman comprehensive cancer center
-12086,33140,mount sinai medical center,mount sinai medical center comprehensive cancer center,mount sinai medical center comprehensive cancer center
 12086,33140,mount sinai medical center,mount sinai medical center miami beach,mount sinai medical center miami beach
 12086,33143,baptist alliance mci,baptist alliance mci data collection only,baptist alliance mci data collection only
 12086,33165,biogenix,biogenix molecular,biogenix molecular
@@ -1020,6 +1044,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12095,32804,adventhealth,adventhealth cancer institute,adventhealth cancer institute
 12095,32804,adventhealth,adventhealth hematology and oncology,adventhealth hematology and oncology
 12095,32804,adventhealth,adventhealth medical group blood marrow transplant at orlando,adventhealth medical group blood marrow transplant at orlando
+12095,32804,adventhealth,adventhealth medical group bone marrow transplant at orlando,adventhealth medical group bone marrow transplant at orlando
 12095,32804,adventhealth,adventhealth medical group oncology and hematology at orlando,adventhealth medical group oncology and hematology at orlando
 12095,32804,adventhealth,adventhealth medical group oncology hematology at orlando,adventhealth medical group oncology hematology at orlando
 12095,32804,adventhealth,adventhealth orlando adventhealth medical group gynecological oncology,adventhealth orlando adventhealth medical group gynecological oncology
@@ -1028,12 +1053,14 @@ county_fips,zip,shorter,longer,suggested_canonical
 12095,32806,orlando health,orlando health ambulatory care center,orlando health ambulatory care center
 12095,32806,orlando health,orlando health cancer center,orlando health cancer center
 12095,32806,orlando health,orlando health cancer institute,orlando health cancer institute
+12095,32806,orlando health,orlando health cancer institute downtown orlando,orlando health cancer institute downtown orlando
 12095,32806,orlando health,orlando health cancer institute gynecologic cancer center orlando,orlando health cancer institute gynecologic cancer center orlando
 12095,32806,orlando health,orlando health cancer institute melanoma nsclc,orlando health cancer institute melanoma nsclc
 12095,32806,orlando health,orlando health orlando regional medical center,orlando health orlando regional medical center
 12095,32806,orlando health,orlando health uf health cancer center,orlando health uf health cancer center
 12095,32806,orlando health,orlando health winnie palmer hospital for women and babies,orlando health winnie palmer hospital for women and babies
 12095,32806,orlando health,university of florida health cancer center at orlando health,university of florida health cancer center at orlando health
+12095,32806,orlando health cancer institute,orlando health cancer institute downtown orlando,orlando health cancer institute downtown orlando
 12095,32806,orlando health cancer institute,orlando health cancer institute gynecologic cancer center orlando,orlando health cancer institute gynecologic cancer center orlando
 12095,32806,orlando health cancer institute,orlando health cancer institute melanoma nsclc,orlando health cancer institute melanoma nsclc
 12095,32827,florida cancer specialists,florida cancer specialists from sarah canon research institute,florida cancer specialists from sarah canon research institute
@@ -1094,21 +1121,28 @@ county_fips,zip,shorter,longer,suggested_canonical
 12105,33812,the oncology institute,the oncology institute of hope innovation lakeland,the oncology institute of hope innovation lakeland
 12109,32086,cancer specialists of north florida,cancer specialists of north florida st augustine,cancer specialists of north florida st augustine
 12115,34232,florida cancer specialist,florida cancer specialists,florida cancer specialists
+12115,34232,florida cancer specialist,florida cancer specialists and research institute,florida cancer specialists and research institute
 12115,34232,florida cancer specialist,florida cancer specialists research institute,florida cancer specialists research institute
 12115,34232,florida cancer specialist,florida cancer specialists research institute fcs sarasota,florida cancer specialists research institute fcs sarasota
 12115,34232,florida cancer specialist,florida cancer specialists sarah cannon research institute scri,florida cancer specialists sarah cannon research institute scri
+12115,34232,florida cancer specialist,florida cancer specialists sarasota,florida cancer specialists sarasota
 12115,34232,florida cancer specialist,florida cancer specialists sarasota drug development unit,florida cancer specialists sarasota drug development unit
 12115,34232,florida cancer specialist,florida cancer specialists sarasota north catttlemen rd,florida cancer specialists sarasota north catttlemen rd
 12115,34232,florida cancer specialist,scri florida cancer specialists,scri florida cancer specialists
 12115,34232,florida cancer specialist,scri florida cancer specialists sarasota,scri florida cancer specialists sarasota
+12115,34232,florida cancer specialists,florida cancer specialists and research institute,florida cancer specialists and research institute
 12115,34232,florida cancer specialists,florida cancer specialists research institute,florida cancer specialists research institute
 12115,34232,florida cancer specialists,florida cancer specialists research institute fcs sarasota,florida cancer specialists research institute fcs sarasota
 12115,34232,florida cancer specialists,florida cancer specialists sarah cannon research institute scri,florida cancer specialists sarah cannon research institute scri
+12115,34232,florida cancer specialists,florida cancer specialists sarasota,florida cancer specialists sarasota
 12115,34232,florida cancer specialists,florida cancer specialists sarasota drug development unit,florida cancer specialists sarasota drug development unit
 12115,34232,florida cancer specialists,florida cancer specialists sarasota north catttlemen rd,florida cancer specialists sarasota north catttlemen rd
 12115,34232,florida cancer specialists,scri florida cancer specialists,scri florida cancer specialists
 12115,34232,florida cancer specialists,scri florida cancer specialists sarasota,scri florida cancer specialists sarasota
 12115,34232,florida cancer specialists research institute,florida cancer specialists research institute fcs sarasota,florida cancer specialists research institute fcs sarasota
+12115,34232,florida cancer specialists sarasota,florida cancer specialists sarasota drug development unit,florida cancer specialists sarasota drug development unit
+12115,34232,florida cancer specialists sarasota,florida cancer specialists sarasota north catttlemen rd,florida cancer specialists sarasota north catttlemen rd
+12115,34232,florida cancer specialists sarasota,scri florida cancer specialists sarasota,scri florida cancer specialists sarasota
 12115,34232,sarah cannon research institute,florida cancer specialists sarah cannon research institute scri,florida cancer specialists sarah cannon research institute scri
 12115,34232,scri florida cancer specialists,scri florida cancer specialists sarasota,scri florida cancer specialists sarasota
 12115,34239,first physicians group,first physicians group sarasota,first physicians group sarasota
@@ -1186,6 +1220,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 13089,30322,winship cancer institute,university of emory winship cancer institute,university of emory winship cancer institute
 13089,30322,winship cancer institute,winship cancer institute at emory,winship cancer institute at emory
 13089,30322,winship cancer institute,winship cancer institute at emory university,winship cancer institute at emory university
+13089,30322,winship cancer institute,winship cancer institute emory hospital,winship cancer institute emory hospital
 13089,30322,winship cancer institute,winship cancer institute emory university,winship cancer institute emory university
 13089,30322,winship cancer institute,winship cancer institute of emory university,winship cancer institute of emory university
 13089,30322,winship cancer institute at emory,winship cancer institute at emory university,winship cancer institute at emory university
@@ -1197,6 +1232,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 13121,30308,emory university,emory university school of medicine,emory university school of medicine
 13121,30308,emory university,winship cancer institute emory university,winship cancer institute emory university
 13121,30308,emory university,winship cancer institute of emory university,winship cancer institute of emory university
+13121,30308,emory winship cancer inst,emory winship cancer institute,emory winship cancer institute
 13121,30318,piedmont cancer institute,piedmont cancer institute oneoncology,piedmont cancer institute oneoncology
 13121,30318,piedmont cancer institute,piedmont cancer institute pc,piedmont cancer institute pc
 13121,30318,piedmont healthcare,piedmont healthcare atlanta,piedmont healthcare atlanta
@@ -1232,14 +1268,18 @@ county_fips,zip,shorter,longer,suggested_canonical
 17019,61801,carle foundation hospital,the carle foundation hospital,the carle foundation hospital
 17031,60005,illinois cancer specialists,illinois cancer specialists ics,illinois cancer specialists ics
 17031,60077,orchard healthcare research,orchard healthcare research inc,orchard healthcare research inc
+17031,60077,orchard healthcare research,orchard healthcare research inc ohr skokie,orchard healthcare research inc ohr skokie
 17031,60077,orchard healthcare research,orchard healthcare research inc skokie,orchard healthcare research inc skokie
+17031,60077,orchard healthcare research inc,orchard healthcare research inc ohr skokie,orchard healthcare research inc ohr skokie
 17031,60077,orchard healthcare research inc,orchard healthcare research inc skokie,orchard healthcare research inc skokie
 17031,60153,loyola university,loyola university medical center,loyola university medical center
 17031,60153,loyola university,loyola university medical center adults and pediatrics,loyola university medical center adults and pediatrics
 17031,60153,loyola university medical center,loyola university medical center adults and pediatrics,loyola university medical center adults and pediatrics
 17031,60201,endeavor health,endeavor health evanston hospital,endeavor health evanston hospital
 17031,60201,endeavor health,endeavor health evanston kellogg cancer care center,endeavor health evanston kellogg cancer care center
+17031,60201,endeavor health,endeavor health kellogg cancer center,endeavor health kellogg cancer center
 17031,60201,endeavor health,endeavor health northshore,endeavor health northshore
+17031,60201,kellogg cancer center,endeavor health kellogg cancer center,endeavor health kellogg cancer center
 17031,60201,northshore university healthsystem,northshore university healthsystem evanston hospital,northshore university healthsystem evanston hospital
 17031,60415,associated urological specialists,associated urological specialists chicago ridge,associated urological specialists chicago ridge
 17031,60611,ann robert h lurie children s hospital of chicag,ann robert h lurie children s hospital of chicago,ann robert h lurie children s hospital of chicago
@@ -1282,7 +1322,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 17031,60612,university of illinois,university of illinois cancer center,university of illinois cancer center
 17031,60612,university of illinois,university of illinois chicago,university of illinois chicago
 17031,60612,university of illinois,university of illinois college of medicine uic cancer center,university of illinois college of medicine uic cancer center
-17031,60612,university of illinois,university of illinois hospital and health sciences system,university of illinois hospital and health sciences system
 17031,60612,university of illinois,university of illinois hospital and health sciences system outpatient cancer center,university of illinois hospital and health sciences system outpatient cancer center
 17031,60612,university of illinois,university of illinois hospital and health sciences systems,university of illinois hospital and health sciences systems
 17031,60612,university of illinois,university of illinois hospital health sciences system,university of illinois hospital health sciences system
@@ -1293,8 +1332,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 17031,60612,university of illinois at chicago,university of illinois at chicago mbccop,university of illinois at chicago mbccop
 17031,60612,university of illinois at chicago,university of illinois at chicago university of illinois cancer center,university of illinois at chicago university of illinois cancer center
 17031,60612,university of illinois cancer center,university of illinois at chicago university of illinois cancer center,university of illinois at chicago university of illinois cancer center
-17031,60612,university of illinois hospital and health sciences system,university of illinois hospital and health sciences system outpatient cancer center,university of illinois hospital and health sciences system outpatient cancer center
-17031,60612,university of illinois hospital and health sciences system,university of illinois hospital and health sciences systems,university of illinois hospital and health sciences systems
 17031,60612,university of illinois medical center,university of illinois medical center at chicago,university of illinois medical center at chicago
 17031,60637,the university of chicago,the university of chicago biological sciences division university of chicago medical center,the university of chicago biological sciences division university of chicago medical center
 17031,60637,the university of chicago,the university of chicago comprehensive cancer center,the university of chicago comprehensive cancer center
@@ -1323,6 +1360,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 17031,60637,university of chicago,university of chicago cancer research center,university of chicago cancer research center
 17031,60637,university of chicago,university of chicago comprehensive cancer center,university of chicago comprehensive cancer center
 17031,60637,university of chicago,university of chicago data collection only,university of chicago data collection only
+17031,60637,university of chicago,university of chicago duchossois center for advanced medicine dcam,university of chicago duchossois center for advanced medicine dcam
 17031,60637,university of chicago,university of chicago hospital,university of chicago hospital
 17031,60637,university of chicago,university of chicago medical center,university of chicago medical center
 17031,60637,university of chicago,university of chicago medicine,university of chicago medicine
@@ -1345,10 +1383,12 @@ county_fips,zip,shorter,longer,suggested_canonical
 17043,60532,duly health,duly health and care,duly health and care
 17043,60532,duly health,duly health and care chicago,duly health and care chicago
 17043,60532,duly health,duly health and care lisle,duly health and care lisle
+17043,60532,duly health,duly healthcare,duly healthcare
 17043,60532,duly health and care,duly health and care chicago,duly health and care chicago
 17043,60532,duly health and care,duly health and care lisle,duly health and care lisle
 17043,60540,edward hospital,edward hospital cancer center,edward hospital cancer center
 17089,60134,northwestern medicine delnor,northwestern medicine delnor hospital,northwestern medicine delnor hospital
+17097,60064,captain james a lovell federal health care center,captain james a lovell federal health care center va north chicago,captain james a lovell federal health care center va north chicago
 17097,60099,city of hope,city of hope at chicago,city of hope at chicago
 17097,60099,city of hope,city of hope cancer center chicago,city of hope cancer center chicago
 17097,60099,city of hope,city of hope chicago,city of hope chicago
@@ -1419,15 +1459,18 @@ county_fips,zip,shorter,longer,suggested_canonical
 18097,46202,indiana university,indiana university health simon cancer center,indiana university health simon cancer center
 18097,46202,indiana university,indiana university health university hospital,indiana university health university hospital
 18097,46202,indiana university,indiana university iu health multi d oncology clinic,indiana university iu health multi d oncology clinic
+18097,46202,indiana university,indiana university iu health physicians urology,indiana university iu health physicians urology
 18097,46202,indiana university,indiana university iu melvin and bren simon cancer center,indiana university iu melvin and bren simon cancer center
 18097,46202,indiana university,indiana university iu school of medicine,indiana university iu school of medicine
 18097,46202,indiana university,indiana university melvin and bren simon cancer center,indiana university melvin and bren simon cancer center
 18097,46202,indiana university,indiana university melvin and bren simon comprehensive cancer center,indiana university melvin and bren simon comprehensive cancer center
 18097,46202,indiana university,indiana university melvin bren simon cancer center,indiana university melvin bren simon cancer center
 18097,46202,indiana university,indiana university melvin bren simon comprehensive cancer center,indiana university melvin bren simon comprehensive cancer center
+18097,46202,indiana university,indiana university school of medicine,indiana university school of medicine
 18097,46202,indiana university,indiana university school of medicine simon cancer center,indiana university school of medicine simon cancer center
 18097,46202,indiana university,indiana university simon comprehensive cancer center,indiana university simon comprehensive cancer center
 18097,46202,indiana university,riley hospital for children at indiana university health,riley hospital for children at indiana university health
+18097,46202,indiana university,riley hospital for children indiana university,riley hospital for children indiana university
 18097,46202,indiana university health,indiana university health indiana university melvin and bren simon comprehensive cancer center,indiana university health indiana university melvin and bren simon comprehensive cancer center
 18097,46202,indiana university health,indiana university health melvin and bren simon cancer center,indiana university health melvin and bren simon cancer center
 18097,46202,indiana university health,indiana university health melvin and bren simon comprehensive cancer center,indiana university health melvin and bren simon comprehensive cancer center
@@ -1435,7 +1478,9 @@ county_fips,zip,shorter,longer,suggested_canonical
 18097,46202,indiana university health,indiana university health university hospital,indiana university health university hospital
 18097,46202,indiana university health,riley hospital for children at indiana university health,riley hospital for children at indiana university health
 18097,46202,indiana university melvin and bren simon comprehensive cancer center,indiana university health indiana university melvin and bren simon comprehensive cancer center,indiana university health indiana university melvin and bren simon comprehensive cancer center
+18097,46202,indiana university school of medicine,indiana university school of medicine simon cancer center,indiana university school of medicine simon cancer center
 18097,46202,riley hospital for children,riley hospital for children at indiana university health,riley hospital for children at indiana university health
+18097,46202,riley hospital for children,riley hospital for children indiana university,riley hospital for children indiana university
 18097,46219,community md anderson cancer center east,community md anderson cancer center east medical oncology,community md anderson cancer center east medical oncology
 18097,46237,franciscan health,franciscan health indianapolis,franciscan health indianapolis
 18097,46237,franciscan health,franciscan health oncology and hematology specialists,franciscan health oncology and hematology specialists
@@ -1467,7 +1512,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 19103,52242,university of iowa,university of iowa health care,university of iowa health care
 19103,52242,university of iowa,university of iowa health care holden comprehensive cancer center,university of iowa health care holden comprehensive cancer center
 19103,52242,university of iowa,university of iowa holden comprehensive cancer center,university of iowa holden comprehensive cancer center
-19103,52242,university of iowa,university of iowa hospital,university of iowa hospital
 19103,52242,university of iowa,university of iowa hospital and clinics,university of iowa hospital and clinics
 19103,52242,university of iowa,university of iowa hospitals,university of iowa hospitals
 19103,52242,university of iowa,university of iowa hospitals and clinics,university of iowa hospitals and clinics
@@ -1475,13 +1519,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 19103,52242,university of iowa,university of iowa hospitals clinics holden comprehensive cancer center,university of iowa hospitals clinics holden comprehensive cancer center
 19103,52242,university of iowa,university of iowa hospitals clinics parent,university of iowa hospitals clinics parent
 19103,52242,university of iowa health care,university of iowa health care holden comprehensive cancer center,university of iowa health care holden comprehensive cancer center
-19103,52242,university of iowa hospital,holden comprehensive cancer center university of iowa hospitals and clinics,holden comprehensive cancer center university of iowa hospitals and clinics
-19103,52242,university of iowa hospital,university of iowa hospital and clinics,university of iowa hospital and clinics
-19103,52242,university of iowa hospital,university of iowa hospitals,university of iowa hospitals
-19103,52242,university of iowa hospital,university of iowa hospitals and clinics,university of iowa hospitals and clinics
-19103,52242,university of iowa hospital,university of iowa hospitals clinics,university of iowa hospitals clinics
-19103,52242,university of iowa hospital,university of iowa hospitals clinics holden comprehensive cancer center,university of iowa hospitals clinics holden comprehensive cancer center
-19103,52242,university of iowa hospital,university of iowa hospitals clinics parent,university of iowa hospitals clinics parent
 19103,52242,university of iowa hospitals,holden comprehensive cancer center university of iowa hospitals and clinics,holden comprehensive cancer center university of iowa hospitals and clinics
 19103,52242,university of iowa hospitals,university of iowa hospitals and clinics,university of iowa hospitals and clinics
 19103,52242,university of iowa hospitals,university of iowa hospitals clinics,university of iowa hospitals clinics
@@ -1646,7 +1683,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 21145,42003,mercy health,mercy health paducah cancer center,mercy health paducah cancer center
 21145,42003,mercy health,mercy health paducah medical oncology and hematology,mercy health paducah medical oncology and hematology
 22017,71103,lsu health sciences center,lsu health sciences center at shreveport,lsu health sciences center at shreveport
-22019,70605,accurate clinical research inc,accurate clinical research inc smo network,accurate clinical research inc smo network
 22033,70808,our lady of the lake,our lady of the lake hospital,our lady of the lake hospital
 22033,70808,our lady of the lake,our lady of the lake hospital inc,our lady of the lake hospital inc
 22033,70808,our lady of the lake,our lady of the lake physician group,our lady of the lake physician group
@@ -1663,6 +1699,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 22071,70112,louisiana state university,louisiana state university health sciences center,louisiana state university health sciences center
 22071,70112,louisiana state university,louisiana state university hsc no cancer center,louisiana state university hsc no cancer center
 22071,70112,louisiana state university,louisiana state university medical center new orleans,louisiana state university medical center new orleans
+22071,70112,lsu health sciences,lsu health sciences center,lsu health sciences center
 22071,70112,tulane cancer center,tulane cancer center office of clinical research,tulane cancer center office of clinical research
 22071,70112,university medical center new orleans,louisiana state university medical center new orleans,louisiana state university medical center new orleans
 22073,71202,ochsner lsu health monroe medical center,ochsner lsu health monroe medical center family medicine clinic,ochsner lsu health monroe medical center family medicine clinic
@@ -1693,38 +1730,50 @@ county_fips,zip,shorter,longer,suggested_canonical
 24021,21702,james m stockman cancer institute,fmh james m stockman cancer institute,fmh james m stockman cancer institute
 24027,21044,central maryland radiation oncology,central maryland radiation oncology in howard county,central maryland radiation oncology in howard county
 24027,21044,maryland oncology,central maryland oncology center,central maryland oncology center
+24027,21044,maryland oncology,maryland oncology columbia,maryland oncology columbia
 24027,21044,maryland oncology,maryland oncology hematolofy,maryland oncology hematolofy
 24027,21044,maryland oncology,maryland oncology hematology,maryland oncology hematology
 24027,21044,maryland oncology,maryland oncology hematology columbia,maryland oncology hematology columbia
+24027,21044,maryland oncology,maryland oncology hematology independent of scri us oncology,maryland oncology hematology independent of scri us oncology
 24027,21044,maryland oncology,maryland oncology hematology moh,maryland oncology hematology moh
 24027,21044,maryland oncology,maryland oncology hematology p a,maryland oncology hematology p a
 24027,21044,maryland oncology,maryland oncology hematology primary,maryland oncology hematology primary
 24027,21044,maryland oncology,uso maryland oncology hematology,uso maryland oncology hematology
 24027,21044,maryland oncology hematology,maryland oncology hematology columbia,maryland oncology hematology columbia
+24027,21044,maryland oncology hematology,maryland oncology hematology independent of scri us oncology,maryland oncology hematology independent of scri us oncology
 24027,21044,maryland oncology hematology,maryland oncology hematology moh,maryland oncology hematology moh
 24027,21044,maryland oncology hematology,maryland oncology hematology p a,maryland oncology hematology p a
 24027,21044,maryland oncology hematology,maryland oncology hematology primary,maryland oncology hematology primary
 24027,21044,maryland oncology hematology,uso maryland oncology hematology,uso maryland oncology hematology
+24031,20817,american oncology partners of maryland,american oncology partners of maryland pa,american oncology partners of maryland pa
 24031,20817,american oncology partners of maryland,center for cancer and blood disorders american oncology partners of maryland,center for cancer and blood disorders american oncology partners of maryland
 24031,20817,american oncology partners p a,cancer center for blood disorders a division of american oncology partners p a,cancer center for blood disorders a division of american oncology partners p a
 24031,20817,american oncology partners p a,the center for cancer and blood disorders a division of american oncology partners p a,the center for cancer and blood disorders a division of american oncology partners p a
+24031,20817,american oncology partners pa,american oncology partners pa center for cancer and blood disorders,american oncology partners pa center for cancer and blood disorders
 24031,20817,american oncology partners pa,american oncology partners pa dba the center for cancer and blood disorders,american oncology partners pa dba the center for cancer and blood disorders
 24031,20817,american oncology partners pa,american oncology partners pa the center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders
+24031,20817,american oncology partners pa,american oncology partners pa the center for cancer and blood disorders bethesda,american oncology partners pa the center for cancer and blood disorders bethesda
+24031,20817,american oncology partners pa the center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders bethesda,american oncology partners pa the center for cancer and blood disorders bethesda
+24031,20817,center for cancer and blood disorders,american oncology partners pa center for cancer and blood disorders,american oncology partners pa center for cancer and blood disorders
 24031,20817,center for cancer and blood disorders,american oncology partners pa dba the center for cancer and blood disorders,american oncology partners pa dba the center for cancer and blood disorders
 24031,20817,center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders
+24031,20817,center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders bethesda,american oncology partners pa the center for cancer and blood disorders bethesda
 24031,20817,center for cancer and blood disorders,center for cancer and blood disorders american oncology partners of maryland,center for cancer and blood disorders american oncology partners of maryland
 24031,20817,center for cancer and blood disorders,the center for cancer and blood disorders,the center for cancer and blood disorders
 24031,20817,center for cancer and blood disorders,the center for cancer and blood disorders a division of american oncology partners p a,the center for cancer and blood disorders a division of american oncology partners p a
 24031,20817,center for cancer and blood disorders,the center for cancer and blood disorders bethesda,the center for cancer and blood disorders bethesda
 24031,20817,center for cancer and blood disorders,the center for cancer and blood disorders ccbd,the center for cancer and blood disorders ccbd
+24031,20817,center for cancer and blood disorders,the center for cancer and blood disorders ccbd bethesda,the center for cancer and blood disorders ccbd bethesda
 24031,20817,the center for cancer and blood disorders,american oncology partners pa dba the center for cancer and blood disorders,american oncology partners pa dba the center for cancer and blood disorders
 24031,20817,the center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders
+24031,20817,the center for cancer and blood disorders,american oncology partners pa the center for cancer and blood disorders bethesda,american oncology partners pa the center for cancer and blood disorders bethesda
 24031,20817,the center for cancer and blood disorders,the center for cancer and blood disorders a division of american oncology partners p a,the center for cancer and blood disorders a division of american oncology partners p a
 24031,20817,the center for cancer and blood disorders,the center for cancer and blood disorders bethesda,the center for cancer and blood disorders bethesda
 24031,20817,the center for cancer and blood disorders,the center for cancer and blood disorders ccbd,the center for cancer and blood disorders ccbd
+24031,20817,the center for cancer and blood disorders,the center for cancer and blood disorders ccbd bethesda,the center for cancer and blood disorders ccbd bethesda
+24031,20817,the center for cancer and blood disorders bethesda,american oncology partners pa the center for cancer and blood disorders bethesda,american oncology partners pa the center for cancer and blood disorders bethesda
+24031,20817,the center for cancer and blood disorders ccbd,the center for cancer and blood disorders ccbd bethesda,the center for cancer and blood disorders ccbd bethesda
 24031,20892,national cancer institute,national cancer institute developmental therapeutics clinic,national cancer institute developmental therapeutics clinic
-24031,20892,national institute of health,national institute of health clinical center,national institute of health clinical center
-24031,20892,national institute of health,national institute of health data collection and specimen analysis,national institute of health data collection and specimen analysis
 24031,20892,national institutes of health,national institutes of health clinical center,national institutes of health clinical center
 24031,20904,maryland oncology hematology,maryland oncology hematology p a,maryland oncology hematology p a
 24031,20904,maryland oncology hematology,maryland oncology hematology silver spring,maryland oncology hematology silver spring
@@ -1767,18 +1816,15 @@ county_fips,zip,shorter,longer,suggested_canonical
 24510,21229,st agnes hospital,ascension st agnes hospital,ascension st agnes hospital
 24510,21231,johns hopkins,johns hopkins kimmel cancer center,johns hopkins kimmel cancer center
 24510,21231,johns hopkins,johns hopkins kimmel com cancer ctr,johns hopkins kimmel com cancer ctr
-24510,21231,johns hopkins,johns hopkins medicine the sidney kimmel comprehensive cancer center,johns hopkins medicine the sidney kimmel comprehensive cancer center
 24510,21231,johns hopkins,johns hopkins skccc,johns hopkins skccc
 24510,21231,johns hopkins,johns hopkins university school of medicine jhusom,johns hopkins university school of medicine jhusom
 24510,21231,johns hopkins,skccc johns hopkins,skccc johns hopkins
 24510,21231,johns hopkins,skccc johns hopkins medical institution,skccc johns hopkins medical institution
 24510,21231,johns hopkins,the sidney kimmel comprehensive cancer center at johns hopkins,the sidney kimmel comprehensive cancer center at johns hopkins
 24510,21231,sidney kimmel comprehensive cancer center,john hopkins sidney kimmel comprehensive cancer center,john hopkins sidney kimmel comprehensive cancer center
-24510,21231,sidney kimmel comprehensive cancer center,johns hopkins medicine the sidney kimmel comprehensive cancer center,johns hopkins medicine the sidney kimmel comprehensive cancer center
 24510,21231,sidney kimmel comprehensive cancer center,the sidney kimmel comprehensive cancer center,the sidney kimmel comprehensive cancer center
 24510,21231,sidney kimmel comprehensive cancer center,the sidney kimmel comprehensive cancer center at johns hopkins,the sidney kimmel comprehensive cancer center at johns hopkins
 24510,21231,skccc johns hopkins,skccc johns hopkins medical institution,skccc johns hopkins medical institution
-24510,21231,the sidney kimmel comprehensive cancer center,johns hopkins medicine the sidney kimmel comprehensive cancer center,johns hopkins medicine the sidney kimmel comprehensive cancer center
 24510,21231,the sidney kimmel comprehensive cancer center,the sidney kimmel comprehensive cancer center at johns hopkins,the sidney kimmel comprehensive cancer center at johns hopkins
 24510,21287,john hopkins hospital,the john hopkins hospital,the john hopkins hospital
 24510,21287,johns hopkins hospital,johns hopkins hospital east baltimore,johns hopkins hospital east baltimore
@@ -1806,10 +1852,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 25021,02190,south shore hospital,dana farber brigham cancer center south shore hospital,dana farber brigham cancer center south shore hospital
 25021,02190,south shore hospital,dana farber cancer institute at south shore hospital,dana farber cancer institute at south shore hospital
 25021,02190,south shore hospital,df bwcc in clinical affiliation with south shore hospital,df bwcc in clinical affiliation with south shore hospital
-25021,02446,dana farber cancer institute,brigham and women s hospital dana farber cancer institute,brigham and women s hospital dana farber cancer institute
+25021,02467,dana farber cancer institute,dana farber cancer institute chestnut hill,dana farber cancer institute chestnut hill
 25023,02360,greater boston urology,greater boston urology llc,greater boston urology llc
 25023,02360,greater boston urology,greater boston urology plymouth care center,greater boston urology plymouth care center
 25025,02111,tufts medical center,tufts medical center ppds,tufts medical center ppds
+25025,02114,mass general brigham,dana farber mass general brigham cancer care inc,dana farber mass general brigham cancer care inc
 25025,02114,mass general brigham,mass general brigham cancer institute,mass general brigham cancer institute
 25025,02114,mass general brigham,mass general brigham cancer institute at massachusetts general hospital,mass general brigham cancer institute at massachusetts general hospital
 25025,02114,mass general brigham cancer institute,mass general brigham cancer institute at massachusetts general hospital,mass general brigham cancer institute at massachusetts general hospital
@@ -1857,7 +1904,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 25025,02215,dana farber,dana farber cancer institution,dana farber cancer institution
 25025,02215,dana farber,dana farber cancer research institute,dana farber cancer research institute
 25025,02215,dana farber,dana farber harvard cancer center,dana farber harvard cancer center
-25025,02215,dana farber,dana farber mass general brigham cancer care inc,dana farber mass general brigham cancer care inc
 25025,02215,dana farber,dana farber massachusetts general hospital inc,dana farber massachusetts general hospital inc
 25025,02215,dana farber cancer institute,1002 dana farber cancer institute,1002 dana farber cancer institute
 25025,02215,dana farber cancer institute,dana farber cancer institute boston children s,dana farber cancer institute boston children s
@@ -1906,6 +1952,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 26125,48084,michigan institute of urology,michigan institute of urology pc,michigan institute of urology pc
 26125,48084,michigan institute of urology,michigan institute of urology solaris,michigan institute of urology solaris
 26125,48084,michigan institute of urology,michigan institute of urology town center,michigan institute of urology town center
+26125,48334,karmanos cancer institute,karmanos cancer institute weisberg cancer treatment center,karmanos cancer institute weisberg cancer treatment center
 26125,48334,weisberg cancer treatment center,karmanos cancer institute weisberg cancer treatment center,karmanos cancer institute weisberg cancer treatment center
 26125,48341,saint joseph mercy oakland,trinity health saint joseph mercy oakland hospital,trinity health saint joseph mercy oakland hospital
 26147,48060,mclaren port huron,karmanos cancer institute at mclaren port huron,karmanos cancer institute at mclaren port huron
@@ -1922,6 +1969,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 26161,48109,university of michigan,university of michigan health system ann arbor,university of michigan health system ann arbor
 26161,48109,university of michigan,university of michigan health systems,university of michigan health systems
 26161,48109,university of michigan,university of michigan health university of michigan medical center,university of michigan health university of michigan medical center
+26161,48109,university of michigan,university of michigan hospital,university of michigan hospital
 26161,48109,university of michigan,university of michigan hospitals,university of michigan hospitals
 26161,48109,university of michigan,university of michigan medical center,university of michigan medical center
 26161,48109,university of michigan,university of michigan rogel cancer center,university of michigan rogel cancer center
@@ -1933,6 +1981,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 26161,48109,university of michigan health,university of michigan health university of michigan medical center,university of michigan health university of michigan medical center
 26161,48109,university of michigan health system,university of michigan health system ann arbor,university of michigan health system ann arbor
 26161,48109,university of michigan health system,university of michigan health systems,university of michigan health systems
+26161,48109,university of michigan hospital,university of michigan hospitals,university of michigan hospitals
 26161,48109,university of michigan medical center,university of michigan health university of michigan medical center,university of michigan health university of michigan medical center
 26161,48118,chelsea hospital,trinity health iha medical group hematology oncology chelsea hospital,trinity health iha medical group hematology oncology chelsea hospital
 26161,48197,trinity health,trinity health ann arbor hospital,trinity health ann arbor hospital
@@ -1976,6 +2025,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 26163,48201,wayne state university,wayne state university karmanos cancer institute,wayne state university karmanos cancer institute
 26163,48201,wayne state university,wayne state university school of medicine,wayne state university school of medicine
 26163,48202,henry ford cancer detroit,henry ford cancer detroit brigitte harris cancer pavilion,henry ford cancer detroit brigitte harris cancer pavilion
+26163,48202,henry ford cancer institute,henry ford cancer institute brigitte harris cancer pavilion,henry ford cancer institute brigitte harris cancer pavilion
 26163,48202,henry ford cancer institute,henry ford cancer institute henry ford health system,henry ford cancer institute henry ford health system
 26163,48202,henry ford health,henry ford cancer institute henry ford health system,henry ford cancer institute henry ford health system
 26163,48202,henry ford health,henry ford health cancer,henry ford health cancer
@@ -2042,7 +2092,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 27053,55455,university of minnesota medical center,university of minnesota medical center fairview,university of minnesota medical center fairview
 27109,55905,mayo clinic,mayo clinic cancer center,mayo clinic cancer center
 27109,55905,mayo clinic,mayo clinic cancer center outpatient pharmacy,mayo clinic cancer center outpatient pharmacy
-27109,55905,mayo clinic,mayo clinic cancer center rochester,mayo clinic cancer center rochester
 27109,55905,mayo clinic,mayo clinic clinical trials referral office,mayo clinic clinical trials referral office
 27109,55905,mayo clinic,mayo clinic comprehensive cancer center,mayo clinic comprehensive cancer center
 27109,55905,mayo clinic,mayo clinic comprehensive cancer center breast clinic,mayo clinic comprehensive cancer center breast clinic
@@ -2062,7 +2111,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 27109,55905,mayo clinic,mayo clinic transplant center rochester,mayo clinic transplant center rochester
 27109,55905,mayo clinic,mayo clinical rochester,mayo clinical rochester
 27109,55905,mayo clinic cancer center,mayo clinic cancer center outpatient pharmacy,mayo clinic cancer center outpatient pharmacy
-27109,55905,mayo clinic cancer center,mayo clinic cancer center rochester,mayo clinic cancer center rochester
 27109,55905,mayo clinic comprehensive cancer center,mayo clinic comprehensive cancer center breast clinic,mayo clinic comprehensive cancer center breast clinic
 27109,55905,mayo clinic comprehensive cancer center,mayo clinic in rochester minnesota mayo clinic comprehensive cancer center,mayo clinic in rochester minnesota mayo clinic comprehensive cancer center
 27109,55905,mayo clinic hospital,mayo clinic hospital rochester,mayo clinic hospital rochester
@@ -2115,6 +2163,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 29095,64132,hca midwest,hca midwest division,hca midwest division
 29095,64132,hca midwest,hca midwest health,hca midwest health
 29095,64132,midamerica cancer care,american oncology partners p a dba midamerica cancer care,american oncology partners p a dba midamerica cancer care
+29095,64132,midamerica cancer care,american oncology partners p a midamerica cancer care,american oncology partners p a midamerica cancer care
 29095,64132,midamerica cancer care,midamerica cancer care american oncology partners,midamerica cancer care american oncology partners
 29095,64132,midamerica cancer care,midamerica cancer care llc,midamerica cancer care llc
 29165,64154,the university of kansas cancer center north,the university of kansas cancer center north clinic,the university of kansas cancer center north clinic
@@ -2139,24 +2188,26 @@ county_fips,zip,shorter,longer,suggested_canonical
 29189,63141,mercy hospital,mercy hospital st louis,mercy hospital st louis
 29189,63141,mercy research david c pratt cancer center,mercy david c pratt cancer center st mercy research david c pratt cancer center,mercy david c pratt cancer center st mercy research david c pratt cancer center
 29189,63141,siteman cancer center west county,washington university school of medicine siteman cancer center west county,washington university school of medicine siteman cancer center west county
+29510,63108,siteman cancer center,siteman cancer center washington university medical campus,siteman cancer center washington university medical campus
 29510,63108,siteman cancer center,siteman cancer center washington university school of medicine,siteman cancer center washington university school of medicine
 29510,63108,siteman cancer center,washington university siteman cancer center,washington university siteman cancer center
+29510,63108,washington university medical campus,siteman cancer center washington university medical campus,siteman cancer center washington university medical campus
 29510,63110,barnes jewish hospital,barnes jewish hospital siteman cancer center washington university st louis,barnes jewish hospital siteman cancer center washington university st louis
 29510,63110,barnes jewish hospital,washington university school of medicine at barnes jewish hospital,washington university school of medicine at barnes jewish hospital
 29510,63110,saint louis university,saint louis university hospital,saint louis university hospital
 29510,63110,siteman cancer center at washington university,alvin j siteman cancer center at washington university,alvin j siteman cancer center at washington university
 29510,63110,siteman cancer center washington university,barnes jewish hospital siteman cancer center washington university st louis,barnes jewish hospital siteman cancer center washington university st louis
-29510,63110,siteman cancer center washington university,siteman cancer center washington university medical campus,siteman cancer center washington university medical campus
 29510,63110,washington university,alvin j siteman cancer center at washington university,alvin j siteman cancer center at washington university
 29510,63110,washington university,barnes jewish hospital siteman cancer center washington university st louis,barnes jewish hospital siteman cancer center washington university st louis
 29510,63110,washington university,siteman cancer center at washington university,siteman cancer center at washington university
 29510,63110,washington university,siteman cancer center washington university,siteman cancer center washington university
-29510,63110,washington university,siteman cancer center washington university medical campus,siteman cancer center washington university medical campus
 29510,63110,washington university,the washington university,the washington university
 29510,63110,washington university,washington university center for advanced medicine,washington university center for advanced medicine
 29510,63110,washington university,washington university in st louis,washington university in st louis
 29510,63110,washington university,washington university in st louis school of medicine,washington university in st louis school of medicine
 29510,63110,washington university,washington university infusion center pharmacy,washington university infusion center pharmacy
+29510,63110,washington university,washington university medicine,washington university medicine
+29510,63110,washington university,washington university of medicine,washington university of medicine
 29510,63110,washington university,washington university of st louis,washington university of st louis
 29510,63110,washington university,washington university school of medicine,washington university school of medicine
 29510,63110,washington university,washington university school of medicine adults only,washington university school of medicine adults only
@@ -2232,6 +2283,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 31079,68803,oncology hematology west pc dba nebraska cancer specialists,oncology hematology west pc dba nebraska cancer specialists grand island,oncology hematology west pc dba nebraska cancer specialists grand island
 31079,68803,oncology hematology west pc dba nebraska cancer specialists,oncology hematology west pc dba nebraska cancer specialists regional,oncology hematology west pc dba nebraska cancer specialists regional
 31109,68506,nebraska hematology oncology,nebraska hematology oncology nho,nebraska hematology oncology nho
+31109,68506,nebraska hematology oncology,nebraska hematology oncology p c,nebraska hematology oncology p c
 31109,68506,nebraska hematology oncology,nebraska hematology oncology revive research institute llc,nebraska hematology oncology revive research institute llc
 31109,68506,nho revive research institute,nho revive research institute llc,nho revive research institute llc
 31109,68516,cancer partners of nebraska,cancer partners of nebraska april sampson cancer center,cancer partners of nebraska april sampson cancer center
@@ -2382,6 +2434,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 34039,07901,atlantic health system,atlantic health system overlook medical center,atlantic health system overlook medical center
 34039,07901,overlook medical center,atlantic health overlook medical center,atlantic health overlook medical center
 34039,07901,overlook medical center,atlantic health system overlook medical center,atlantic health system overlook medical center
+34039,07922,summit medical group,summit medical group oncology,summit medical group oncology
 35001,87109,new mexico oncology hematology consultants,exigent research llc new mexico oncology hematology consultants ltd,exigent research llc new mexico oncology hematology consultants ltd
 35001,87109,new mexico oncology hematology consultants,new mexico oncology hematology consultants ltd,new mexico oncology hematology consultants ltd
 35001,87109,new mexico oncology hematology consultants ltd,exigent research llc new mexico oncology hematology consultants ltd,exigent research llc new mexico oncology hematology consultants ltd
@@ -2424,8 +2477,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 36005,10467,montefiore medical center,montefiore medical center moses campus,montefiore medical center moses campus
 36029,14263,roswell park,roswell park cancer institute,roswell park cancer institute
 36029,14263,roswell park,roswell park center institute,roswell park center institute
+36029,14263,roswell park,roswell park comprehensive,roswell park comprehensive
 36029,14263,roswell park,roswell park comprehensive cancer center,roswell park comprehensive cancer center
 36029,14263,roswell park,roswell park comprehensive care center,roswell park comprehensive care center
+36029,14263,roswell park comprehensive,roswell park comprehensive cancer center,roswell park comprehensive cancer center
+36029,14263,roswell park comprehensive,roswell park comprehensive care center,roswell park comprehensive care center
 36047,11215,brooklyn methodist hospital,brooklyn methodist hospital new york presbyterian,brooklyn methodist hospital new york presbyterian
 36047,11215,brooklyn methodist hospital,brooklyn methodist hospital newyork presbyterian,brooklyn methodist hospital newyork presbyterian
 36047,11215,brooklyn methodist hospital,new york presbyterian brooklyn methodist hospital,new york presbyterian brooklyn methodist hospital
@@ -2520,9 +2576,10 @@ county_fips,zip,shorter,longer,suggested_canonical
 36059,11590,clinical research alliance,clinical research alliance inc,clinical research alliance inc
 36059,11590,clinical research alliance,clinical research alliance ny,clinical research alliance ny
 36059,11590,clinical research alliance,clinical research alliance westbury,clinical research alliance westbury
-36061,10003,mount sinai,mount sinai beth israel,mount sinai beth israel
-36061,10003,mount sinai,mount sinai union square,mount sinai union square
 36061,10011,chelsea medical center at mount sinai,the blavatnik family chelsea medical center at mount sinai,the blavatnik family chelsea medical center at mount sinai
+36061,10011,mount sinai,chelsea medical center at mount sinai,chelsea medical center at mount sinai
+36061,10011,mount sinai,mount sinai chelsea,mount sinai chelsea
+36061,10011,mount sinai,the blavatnik family chelsea medical center at mount sinai,the blavatnik family chelsea medical center at mount sinai
 36061,10016,integrated medical professionals,integrated medical professionals pllc,integrated medical professionals pllc
 36061,10016,integrated medical professionals,integrated medical professionals pllc solaris,integrated medical professionals pllc solaris
 36061,10016,integrated medical professionals pllc,integrated medical professionals pllc solaris,integrated medical professionals pllc solaris
@@ -2658,6 +2715,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 36061,10029,mount sinai the tisch cancer institute,icahn school of medicine at mount sinai the tisch cancer institute,icahn school of medicine at mount sinai the tisch cancer institute
 36061,10029,mt sinai,icahn school of medicine at mt sinai,icahn school of medicine at mt sinai
 36061,10029,mt sinai,mt sinai hospital,mt sinai hospital
+36061,10029,mt sinai,mt sinai school of medicine,mt sinai school of medicine
 36061,10029,ruttenberg treatment center,mount sinai ruttenberg treatment center,mount sinai ruttenberg treatment center
 36061,10029,the tisch cancer institute mount sinai,the tisch cancer institute mount sinai medical center,the tisch cancer institute mount sinai medical center
 36061,10032,columbia university,columbia university herbert irving comphrensive cancer center,columbia university herbert irving comphrensive cancer center
@@ -2792,9 +2850,10 @@ county_fips,zip,shorter,longer,suggested_canonical
 36103,11725,memorial sloan kettering suffolk commack,memorial sloan kettering suffolk commack consent only,memorial sloan kettering suffolk commack consent only
 36103,11725,memorial sloan kettering suffolk commack,memorial sloan kettering suffolk commack limited protocol activities,memorial sloan kettering suffolk commack limited protocol activities
 36103,11725,memorial sloan kettering suffolk commack,memorial sloan kettering suffolk commack limited protocol activity,memorial sloan kettering suffolk commack limited protocol activity
-36103,11766,mount sinai,icahn school of medicine at mount sinai,icahn school of medicine at mount sinai
 36103,11794,stony brook university hospital,stony brook university hospital cancer center,stony brook university hospital cancer center
 36103,11795,good samaritan hospital,good samaritan hospital medical center,good samaritan hospital medical center
+36103,11967,new york cancer and blood,new york cancer and blood specialists,new york cancer and blood specialists
+36103,11967,new york cancer and blood,new york cancer and blood specialists shirley,new york cancer and blood specialists shirley
 36103,11967,new york cancer and blood specialists,new york cancer and blood specialists shirley,new york cancer and blood specialists shirley
 36119,10601,white plains hospital,white plains hospital center for cancer care,white plains hospital center for cancer care
 36119,10601,white plains hospital,white plains hospital center for cancer care oncology,white plains hospital center for cancer care oncology
@@ -2891,15 +2950,12 @@ county_fips,zip,shorter,longer,suggested_canonical
 37119,28204,novant health,novant health weisiger cancer institute charlotte,novant health weisiger cancer institute charlotte
 37119,28204,novant health cancer institute,novant health cancer institute elizabeth breast,novant health cancer institute elizabeth breast
 37119,28204,novant health cancer institute,novant health cancer institute hematology,novant health cancer institute hematology
-37119,28207,carolina oncology specialists,carolina oncology specialists pa,carolina oncology specialists pa
 37125,28374,firsthealth of the carolinas,firsthealth of the carolinas inc,firsthealth of the carolinas inc
 37125,28374,firsthealth of the carolinas,firsthealth of the carolinas moore regional hospital,firsthealth of the carolinas moore regional hospital
 37125,28374,firsthealth of the carolinas,firsthealth of the carolinas speciality center,firsthealth of the carolinas speciality center
 37129,28401,novant health zimmer cancer institute,novant health zimmer cancer institute wilmington,novant health zimmer cancer institute wilmington
-37135,27514,unc hospital,unc hospitals,unc hospitals
-37135,27514,unc hospital,unc hospitals adult oncology clinics,unc hospitals adult oncology clinics
-37135,27514,unc hospital,unc hospitals university of north carolina at chapel hill,unc hospitals university of north carolina at chapel hill
 37135,27514,unc hospitals,unc hospitals adult oncology clinics,unc hospitals adult oncology clinics
+37135,27514,unc hospitals,unc hospitals the university of north carolina at chapel hill,unc hospitals the university of north carolina at chapel hill
 37135,27514,unc hospitals,unc hospitals university of north carolina at chapel hill,unc hospitals university of north carolina at chapel hill
 37135,27599,lineberger comprehensive cancer center,lineberger comprehensive cancer center at university of north carolina,lineberger comprehensive cancer center at university of north carolina
 37135,27599,lineberger comprehensive cancer center,lineberger comprehensive cancer center at university of north carolina chapel hill,lineberger comprehensive cancer center at university of north carolina chapel hill
@@ -2909,13 +2965,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 37135,27599,lineberger comprehensive cancer center,university of north carolina at chapel hill lineberger comprehensive cancer center,university of north carolina at chapel hill lineberger comprehensive cancer center
 37135,27599,lineberger comprehensive cancer center at university of north carolina,lineberger comprehensive cancer center at university of north carolina chapel hill,lineberger comprehensive cancer center at university of north carolina chapel hill
 37135,27599,lineberger comprehensive cancer center at university of north carolina,unc lineberger comprehensive cancer center at university of north carolina,unc lineberger comprehensive cancer center at university of north carolina
-37135,27599,the university of north carolina at chapel hill,unc hospitals the university of north carolina at chapel hill,unc hospitals the university of north carolina at chapel hill
 37135,27599,unc lineberger comprehensive cancer center,unc lineberger comprehensive cancer center at university of north carolina,unc lineberger comprehensive cancer center at university of north carolina
 37135,27599,university of north carolina,lineberger comprehensive cancer center at university of north carolina,lineberger comprehensive cancer center at university of north carolina
 37135,27599,university of north carolina,lineberger comprehensive cancer center at university of north carolina chapel hill,lineberger comprehensive cancer center at university of north carolina chapel hill
 37135,27599,university of north carolina,lineberger comprehensive cancer center university of north carolina,lineberger comprehensive cancer center university of north carolina
 37135,27599,university of north carolina,the university of north carolina at chapel hill,the university of north carolina at chapel hill
-37135,27599,university of north carolina,unc hospitals the university of north carolina at chapel hill,unc hospitals the university of north carolina at chapel hill
 37135,27599,university of north carolina,unc lineberger comprehensive cancer center at university of north carolina,unc lineberger comprehensive cancer center at university of north carolina
 37135,27599,university of north carolina,university of north carolina at chapel hill,university of north carolina at chapel hill
 37135,27599,university of north carolina,university of north carolina at chapel hill cancer center,university of north carolina at chapel hill cancer center
@@ -2926,13 +2980,13 @@ county_fips,zip,shorter,longer,suggested_canonical
 37135,27599,university of north carolina,university of north carolina school of medicine,university of north carolina school of medicine
 37135,27599,university of north carolina,university of north carolina unc chapel hill,university of north carolina unc chapel hill
 37135,27599,university of north carolina at chapel hill,the university of north carolina at chapel hill,the university of north carolina at chapel hill
-37135,27599,university of north carolina at chapel hill,unc hospitals the university of north carolina at chapel hill,unc hospitals the university of north carolina at chapel hill
 37135,27599,university of north carolina at chapel hill,university of north carolina at chapel hill cancer center,university of north carolina at chapel hill cancer center
 37135,27599,university of north carolina at chapel hill,university of north carolina at chapel hill department of radiation oncology,university of north carolina at chapel hill department of radiation oncology
 37135,27599,university of north carolina at chapel hill,university of north carolina at chapel hill lineberger comprehensive cancer center,university of north carolina at chapel hill lineberger comprehensive cancer center
 37135,27599,university of north carolina at chapel hill,university of north carolina at chapel hill university of north carolina medical center,university of north carolina at chapel hill university of north carolina medical center
 37147,27834,east carolina university,brody school of medicine at east carolina university,brody school of medicine at east carolina university
 37147,27834,east carolina university,east carolina university brody school of medicine,east carolina university brody school of medicine
+37147,27834,east carolina university,east carolina university health medical center,east carolina university health medical center
 37159,28144,w g bill hefner va medical center,salisbury w g bill hefner va medical center salisbury nc,salisbury w g bill hefner va medical center salisbury nc
 37161,28043,levine cancer institute,levine cancer institute rutherford,levine cancer institute rutherford
 37171,27030,novant health cancer institute,novant health cancer institute mount airy,novant health cancer institute mount airy
@@ -2952,7 +3006,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 39025,45245,oncology hematology care clinical trials,oncology hematology care clinical trials llc,oncology hematology care clinical trials llc
 39035,44106,case comprehensive cancer center,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center
 39035,44106,case comprehensive cancer center,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center cleveland clinic taussig cancer center,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center cleveland clinic taussig cancer center
-39035,44106,case comprehensive cancer center,cleveland clinic taussig cancer center case comprehensive cancer center,cleveland clinic taussig cancer center case comprehensive cancer center
 39035,44106,case comprehensive cancer center,cleveland medical center university hospitals seidman cancer center case comprehensive cancer center,cleveland medical center university hospitals seidman cancer center case comprehensive cancer center
 39035,44106,case comprehensive cancer center,university hospitals cleveland medical center case comprehensive cancer center,university hospitals cleveland medical center case comprehensive cancer center
 39035,44106,case comprehensive cancer center,university hospitals cleveland medical center seidman cancer center case comprehensive cancer center,university hospitals cleveland medical center seidman cancer center case comprehensive cancer center
@@ -3000,8 +3053,10 @@ county_fips,zip,shorter,longer,suggested_canonical
 39035,44109,metrohealth,metrohealth medical center,metrohealth medical center
 39035,44109,metrohealth,metrohealth medical center cleveland,metrohealth medical center cleveland
 39035,44109,metrohealth medical center,metrohealth medical center cleveland,metrohealth medical center cleveland
+39035,44111,cleveland clinic cancer center at fairview hospital,the cleveland clinic cancer center at fairview hospital moll pavilion,the cleveland clinic cancer center at fairview hospital moll pavilion
 39035,44111,cleveland clinic cancer center fairview hospital,cleveland clinic cancer center fairview hospital moll pavilion,cleveland clinic cancer center fairview hospital moll pavilion
 39035,44111,cleveland clinic fairview hospital,cleveland clinic fairview hospital molly pavilion,cleveland clinic fairview hospital molly pavilion
+39035,44111,fairview hospital,cleveland clinic cancer center at fairview hospital,cleveland clinic cancer center at fairview hospital
 39035,44111,fairview hospital,cleveland clinic cancer center fairview hospital,cleveland clinic cancer center fairview hospital
 39035,44111,fairview hospital,cleveland clinic cancer center fairview hospital moll pavilion,cleveland clinic cancer center fairview hospital moll pavilion
 39035,44111,fairview hospital,cleveland clinic fairview hospital,cleveland clinic fairview hospital
@@ -3016,6 +3071,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 39035,44124,hillcrest hospital,cleveland clinic hillcrest hospital cancer center,cleveland clinic hillcrest hospital cancer center
 39035,44124,hillcrest hospital,cleveland clinic hillcrest hospital hillcrest hospital cancer center,cleveland clinic hillcrest hospital hillcrest hospital cancer center
 39035,44124,hillcrest hospital,hillcrest hospital cancer center,hillcrest hospital cancer center
+39035,44124,hillcrest hospital,hillcrest hospital cleveland clinic,hillcrest hospital cleveland clinic
 39035,44124,hillcrest hospital cancer center,cleveland clinic hillcrest hospital cancer center,cleveland clinic hillcrest hospital cancer center
 39035,44124,hillcrest hospital cancer center,cleveland clinic hillcrest hospital hillcrest hospital cancer center,cleveland clinic hillcrest hospital hillcrest hospital cancer center
 39035,44130,helios clinical research,clinical research solutions helios clinical research,clinical research solutions helios clinical research
@@ -3038,6 +3094,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 39035,44195,cleveland clinic,cleveland clinic oncology department,cleveland clinic oncology department
 39035,44195,cleveland clinic,cleveland clinic taussig cancer,cleveland clinic taussig cancer
 39035,44195,cleveland clinic,cleveland clinic taussig cancer center,cleveland clinic taussig cancer center
+39035,44195,cleveland clinic,cleveland clinic taussig cancer center case comprehensive cancer center,cleveland clinic taussig cancer center case comprehensive cancer center
 39035,44195,cleveland clinic,cleveland clinic taussig cancer center investigational pharmacy,cleveland clinic taussig cancer center investigational pharmacy
 39035,44195,cleveland clinic,cleveland clinic taussig cancer institute,cleveland clinic taussig cancer institute
 39035,44195,cleveland clinic,cleveland clinic taussig cancer institute case comprehensive cancer center,cleveland clinic taussig cancer institute case comprehensive cancer center
@@ -3057,24 +3114,26 @@ county_fips,zip,shorter,longer,suggested_canonical
 39035,44195,cleveland clinic main campus,cleveland clinic main campus cleveland,cleveland clinic main campus cleveland
 39035,44195,cleveland clinic taussig cancer,case comprehensive cancer center cleveland clinic taussig cancer center,case comprehensive cancer center cleveland clinic taussig cancer center
 39035,44195,cleveland clinic taussig cancer,cleveland clinic taussig cancer center,cleveland clinic taussig cancer center
+39035,44195,cleveland clinic taussig cancer,cleveland clinic taussig cancer center case comprehensive cancer center,cleveland clinic taussig cancer center case comprehensive cancer center
 39035,44195,cleveland clinic taussig cancer,cleveland clinic taussig cancer center investigational pharmacy,cleveland clinic taussig cancer center investigational pharmacy
 39035,44195,cleveland clinic taussig cancer,cleveland clinic taussig cancer institute,cleveland clinic taussig cancer institute
 39035,44195,cleveland clinic taussig cancer,cleveland clinic taussig cancer institute case comprehensive cancer center,cleveland clinic taussig cancer institute case comprehensive cancer center
 39035,44195,cleveland clinic taussig cancer,the cleveland clinic taussig cancer center,the cleveland clinic taussig cancer center
 39035,44195,cleveland clinic taussig cancer center,case comprehensive cancer center cleveland clinic taussig cancer center,case comprehensive cancer center cleveland clinic taussig cancer center
+39035,44195,cleveland clinic taussig cancer center,cleveland clinic taussig cancer center case comprehensive cancer center,cleveland clinic taussig cancer center case comprehensive cancer center
 39035,44195,cleveland clinic taussig cancer center,cleveland clinic taussig cancer center investigational pharmacy,cleveland clinic taussig cancer center investigational pharmacy
 39035,44195,cleveland clinic taussig cancer center,the cleveland clinic taussig cancer center,the cleveland clinic taussig cancer center
 39035,44195,cleveland clinic taussig cancer institute,cleveland clinic taussig cancer institute case comprehensive cancer center,cleveland clinic taussig cancer institute case comprehensive cancer center
 39035,44195,the cleveland clinic,the cleveland clinic foundation,the cleveland clinic foundation
 39035,44195,the cleveland clinic,the cleveland clinic taussig cancer center,the cleveland clinic taussig cancer center
 39049,43026,ohio state,ohio state university wexner medical center gynecologic oncology at mill run,ohio state university wexner medical center gynecologic oncology at mill run
+39049,43026,ohio state,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t
 39049,43026,ohio state,the ohio state university wexner medical center division of gynecologic oncology,the ohio state university wexner medical center division of gynecologic oncology
 39049,43210,clinical study site,clinical study sites,clinical study sites
 39049,43210,james cancer hospital and solove research institute,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute
 39049,43210,james cancer hospital and solove research institute,the james cancer hospital and solove research institute,the james cancer hospital and solove research institute
 39049,43210,james cancer hospital and solove research institute,the james cancer hospital and solove research institute at the ohio state university comprehensive c,the james cancer hospital and solove research institute at the ohio state university comprehensive c
 39049,43210,james cancer hospital and solove research institute,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center
-39049,43210,james cancer hospital and solove research institute,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t
 39049,43210,james cancer hospital and solove research institute,the james cancer hospital and solove research institute ohio state university,the james cancer hospital and solove research institute ohio state university
 39049,43210,james cancer hospital and solove research institute,the ohio state university the james cancer hospital and solove research institute,the ohio state university the james cancer hospital and solove research institute
 39049,43210,ohio state university,james cancer hospital solove research institute at the ohio state university comprehensive cancer center,james cancer hospital solove research institute at the ohio state university comprehensive cancer center
@@ -3090,7 +3149,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 39049,43210,ohio state university,ohio state university wexner medical center james cancer hospital,ohio state university wexner medical center james cancer hospital
 39049,43210,ohio state university,the james cancer hospital and solove research institute at the ohio state university comprehensive c,the james cancer hospital and solove research institute at the ohio state university comprehensive c
 39049,43210,ohio state university,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center
-39049,43210,ohio state university,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t
 39049,43210,ohio state university,the james cancer hospital and solove research institute ohio state university,the james cancer hospital and solove research institute ohio state university
 39049,43210,ohio state university,the ohio state university,the ohio state university
 39049,43210,ohio state university,the ohio state university college of medicine osucom,the ohio state university college of medicine osucom
@@ -3112,7 +3170,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 39049,43210,ohio state university comprehensive,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute
 39049,43210,ohio state university comprehensive,the james cancer hospital and solove research institute at the ohio state university comprehensive c,the james cancer hospital and solove research institute at the ohio state university comprehensive c
 39049,43210,ohio state university comprehensive,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center
-39049,43210,ohio state university comprehensive,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t
 39049,43210,ohio state university comprehensive,the ohio state university comprehensive cancer center,the ohio state university comprehensive cancer center
 39049,43210,ohio state university comprehensive cancer center,james cancer hospital solove research institute at the ohio state university comprehensive cancer center,james cancer hospital solove research institute at the ohio state university comprehensive cancer center
 39049,43210,ohio state university comprehensive cancer center,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute
@@ -3129,15 +3186,12 @@ county_fips,zip,shorter,longer,suggested_canonical
 39049,43210,the james cancer hospital and solove research institute,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute,ohio state university comprehensive cancer center osuccc the james cancer hospital and solove research institute
 39049,43210,the james cancer hospital and solove research institute,the james cancer hospital and solove research institute at the ohio state university comprehensive c,the james cancer hospital and solove research institute at the ohio state university comprehensive c
 39049,43210,the james cancer hospital and solove research institute,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center
-39049,43210,the james cancer hospital and solove research institute,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t
 39049,43210,the james cancer hospital and solove research institute,the james cancer hospital and solove research institute ohio state university,the james cancer hospital and solove research institute ohio state university
 39049,43210,the james cancer hospital and solove research institute,the ohio state university the james cancer hospital and solove research institute,the ohio state university the james cancer hospital and solove research institute
 39049,43210,the james cancer hospital and solove research institute at the ohio state university comprehensive c,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center
-39049,43210,the james cancer hospital and solove research institute at the ohio state university comprehensive c,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t
 39049,43210,the ohio state university,james cancer hospital solove research institute at the ohio state university comprehensive cancer center,james cancer hospital solove research institute at the ohio state university comprehensive cancer center
 39049,43210,the ohio state university,the james cancer hospital and solove research institute at the ohio state university comprehensive c,the james cancer hospital and solove research institute at the ohio state university comprehensive c
 39049,43210,the ohio state university,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer center
-39049,43210,the ohio state university,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t,the james cancer hospital and solove research institute at the ohio state university comprehensive cancer t
 39049,43210,the ohio state university,the ohio state university college of medicine osucom,the ohio state university college of medicine osucom
 39049,43210,the ohio state university,the ohio state university comprehensive cancer center,the ohio state university comprehensive cancer center
 39049,43210,the ohio state university,the ohio state university department of psychiatry,the ohio state university department of psychiatry
@@ -3166,10 +3220,12 @@ county_fips,zip,shorter,longer,suggested_canonical
 39049,43212,stefanie spielman comprehensive breast center,ohio state university stefanie spielman comprehensive breast center,ohio state university stefanie spielman comprehensive breast center
 39049,43212,stefanie spielman comprehensive breast center,osu wexner medical center stefanie spielman comprehensive breast center,osu wexner medical center stefanie spielman comprehensive breast center
 39049,43212,stefanie spielman comprehensive breast center,the ohio state university stefanie spielman comprehensive breast center,the ohio state university stefanie spielman comprehensive breast center
+39049,43214,ohiohealth,ohiohealth arthur g h bing md cancer center,ohiohealth arthur g h bing md cancer center
 39049,43214,ohiohealth,ohiohealth institute,ohiohealth institute
 39049,43214,ohiohealth,ohiohealth research institute,ohiohealth research institute
 39049,43214,ohiohealth,ohiohealth riverside methodist hospital,ohiohealth riverside methodist hospital
 39049,43214,riverside methodist hospital,ohiohealth riverside methodist hospital,ohiohealth riverside methodist hospital
+39049,43215,grant medical center,ohiohealth grant medical center,ohiohealth grant medical center
 39049,43219,mark h zangmeister cancer center,the mark h zangmeister cancer center ohio,the mark h zangmeister cancer center ohio
 39049,43219,the mark h zangmeister center,the mark h zangmeister center mid ohio oncology hematology inc,the mark h zangmeister center mid ohio oncology hematology inc
 39049,43219,zangmeister cancer center,mark h zangmeister cancer center,mark h zangmeister cancer center
@@ -3198,11 +3254,21 @@ county_fips,zip,shorter,longer,suggested_canonical
 39061,45220,good samaritan hospital,good samaritan hospital cincinnati,good samaritan hospital cincinnati
 39061,45220,good samaritan hospital,good samaritan hospital trihealth cancer institute,good samaritan hospital trihealth cancer institute
 39061,45220,good samaritan hospital,trihealth cancer institute good samaritan hospital,trihealth cancer institute good samaritan hospital
-39061,45226,oncology hematology care,oncology hematology care ohc,oncology hematology care ohc
 39061,45229,cincinnati children s hospital medical center,cincinnati children s hospital medical center data collection only,cincinnati children s hospital medical center data collection only
+39061,45242,oncology hematology care,oncology hematology care clinial trials,oncology hematology care clinial trials
+39061,45242,oncology hematology care,oncology hematology care clinical trials,oncology hematology care clinical trials
+39061,45242,oncology hematology care,oncology hematology care clinical trials llc ohc,oncology hematology care clinical trials llc ohc
+39061,45242,oncology hematology care,oncology hematology care inc,oncology hematology care inc
+39061,45242,oncology hematology care,oncology hematology care incorporated,oncology hematology care incorporated
+39061,45242,oncology hematology care,oncology hematology care primary,oncology hematology care primary
+39061,45242,oncology hematology care,uso oncology hematology care,uso oncology hematology care
+39061,45242,oncology hematology care,usor oncology hematology care blue ash,usor oncology hematology care blue ash
 39061,45242,oncology hematology care clinical trials,oncology hematology care clinical trials llc ohc,oncology hematology care clinical trials llc ohc
 39061,45242,oncology hematology care inc,oncology hematology care incorporated,oncology hematology care incorporated
+39061,45267,university of cincinnati uc,university of cincinnati uc cancer institute,university of cincinnati uc cancer institute
+39061,45267,university of cincinnati uc,university of cincinnati uc physicians company llc,university of cincinnati uc physicians company llc
 39085,44060,uh seidman cancer center,uh seidman cancer center at lake health mentor campus,uh seidman cancer center at lake health mentor campus
+39095,43606,promedica toledo hospital,promedica toledo hospital russell j ebeid children s hospital,promedica toledo hospital russell j ebeid children s hospital
 39113,45409,dayton physicians,dayton physicians network,dayton physicians network
 39113,45415,miami valley hospital north,dayton physician llc miami valley hospital north,dayton physician llc miami valley hospital north
 39113,45429,kettering health,kettering health cancer center,kettering health cancer center
@@ -3276,7 +3342,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 41039,97401,oncology associates of oregon pc,oncology associates of oregon pc willamette valley cancer institute,oncology associates of oregon pc willamette valley cancer institute
 41039,97401,uso oncology associates of oregon,uso oncology associates of oregon p c,uso oncology associates of oregon p c
 41039,97401,usor willamette valley cancer institute and research center,usor willamette valley cancer institute and research center eugene,usor willamette valley cancer institute and research center eugene
-41039,97401,willamette valley cancer center,oncology associates of oregon willamette valley cancer center,oncology associates of oregon willamette valley cancer center
 41039,97401,willamette valley cancer institute,oncology associates of oregon p c willamette valley cancer institute wvci,oncology associates of oregon p c willamette valley cancer institute wvci
 41039,97401,willamette valley cancer institute,oncology associates of oregon pc willamette valley cancer institute,oncology associates of oregon pc willamette valley cancer institute
 41039,97401,willamette valley cancer institute,usor willamette valley cancer institute and research center,usor willamette valley cancer institute and research center
@@ -3310,6 +3375,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 41051,97239,ohsu knight cancer institute,ohsu knight cancer institute south waterfront,ohsu knight cancer institute south waterfront
 41051,97239,oregon health and science university,oregon health and science university chh1,oregon health and science university chh1
 41051,97239,oregon health and science university,oregon health and science university chh2,oregon health and science university chh2
+41051,97239,oregon health and science university,oregon health and science university hospital,oregon health and science university hospital
 41051,97239,oregon health and science university,oregon health and science university knight cancer institute,oregon health and science university knight cancer institute
 41051,97239,oregon health and science university,oregon health and science university knight cancer institute marquam hill,oregon health and science university knight cancer institute marquam hill
 41051,97239,oregon health and science university,oregon health and science university ohsu marquam hill campus,oregon health and science university ohsu marquam hill campus
@@ -3329,6 +3395,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 42003,15212,allegheny,allegheny general hospital,allegheny general hospital
 42003,15212,allegheny,allegheny general hospital agh allegheny singer research institute,allegheny general hospital agh allegheny singer research institute
 42003,15212,allegheny,allegheny general hospital cancer institute,allegheny general hospital cancer institute
+42003,15212,allegheny,allegheny health network cancer institute,allegheny health network cancer institute
 42003,15212,allegheny,allegheny health network data collection only,allegheny health network data collection only
 42003,15212,allegheny,allegheny singer research institute,allegheny singer research institute
 42003,15212,allegheny,allegheny singer research institution,allegheny singer research institution
@@ -3365,7 +3432,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 42003,15232,hillman cancer center,upmc hillman cancer center radiation oncology,upmc hillman cancer center radiation oncology
 42003,15232,hillman cancer center,upmc hillman cancer center upmc,upmc hillman cancer center upmc
 42003,15232,university of pittsburgh cancer institute,university of pittsburgh cancer institute upci,university of pittsburgh cancer institute upci
-42003,15232,university of pittsburgh medical center upmc,university of pittsburgh medical center upmc hillman cancer center,university of pittsburgh medical center upmc hillman cancer center
 42003,15232,upmc hillman cancer center,university of pittsburg medical center upmc hillman cancer center,university of pittsburg medical center upmc hillman cancer center
 42003,15232,upmc hillman cancer center,university of pittsburgh medical center upmc hillman cancer center,university of pittsburgh medical center upmc hillman cancer center
 42003,15232,upmc hillman cancer center,university of pittsburgh upmc hillman cancer center,university of pittsburgh upmc hillman cancer center
@@ -3376,8 +3442,9 @@ county_fips,zip,shorter,longer,suggested_canonical
 42011,19611,reading hospital,reading hospital mcglinn cancer institute,reading hospital mcglinn cancer institute
 42015,18840,guthrie medical group,guthrie medical group pc and robert packer hospital guthrie cancer center sayre,guthrie medical group pc and robert packer hospital guthrie cancer center sayre
 42015,18840,guthrie medical group,guthrie medical group pc robert packer hospital,guthrie medical group pc robert packer hospital
+42017,18901,alliance cancer specialists,alliance cancer specialists pc,alliance cancer specialists pc
+42017,18901,alliance cancer specialists,scri alliance cancer specialists pc,scri alliance cancer specialists pc
 42017,18901,alliance cancer specialists pc,scri alliance cancer specialists pc,scri alliance cancer specialists pc
-42017,18960,alliance cancer specialists,alliance cancer specialists acs,alliance cancer specialists acs
 42029,19380,chester county hospital,penn medicine chester county hospital,penn medicine chester county hospital
 42043,17033,penn state cancer institute,penn state milton s hershey medical center penn state cancer institute,penn state milton s hershey medical center penn state cancer institute
 42043,17033,penn state milton s hershey medical center,penn state milton s hershey medical center penn state cancer institute,penn state milton s hershey medical center penn state cancer institute
@@ -3473,7 +3540,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 42101,19107,honickman center,jefferson health honickman center,jefferson health honickman center
 42101,19107,honickman center,thomas jefferson university honickman center,thomas jefferson university honickman center
 42101,19107,jefferson health,jefferson health honickman center,jefferson health honickman center
-42101,19107,jefferson health,jefferson health northeast,jefferson health northeast
 42101,19107,jefferson health,scri sydney kimmel cancer center jefferson health,scri sydney kimmel cancer center jefferson health
 42101,19107,jefferson health,sidney kimmel cancer center at jefferson health,sidney kimmel cancer center at jefferson health
 42101,19107,jefferson health,sidney kimmel cancer center jefferson health,sidney kimmel cancer center jefferson health
@@ -3532,8 +3598,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 42101,19111,fox chase cancer center,temple university fox chase cancer center,temple university fox chase cancer center
 42101,19140,temple university hospital,temple university hospital at broad street,temple university hospital at broad street
 42133,17403,cancer care associates of york,cancer care associates of york inc,cancer care associates of york inc
+44007,02903,brown university,brown university health,brown university health
 44007,02903,brown university,brown university health cancer institute,brown university health cancer institute
 44007,02903,brown university,brown university health rhode island hospital,brown university health rhode island hospital
+44007,02903,brown university health,brown university health cancer institute,brown university health cancer institute
+44007,02903,brown university health,brown university health rhode island hospital,brown university health rhode island hospital
 44007,02903,lifespan cancer institute,lifespan cancer institute at rhode island hospital,lifespan cancer institute at rhode island hospital
 44007,02903,lifespan cancer institute,lifespan cancer institute providence,lifespan cancer institute providence
 44007,02903,lifespan cancer institute,lifespan cancer institute rhode island hospital,lifespan cancer institute rhode island hospital
@@ -3626,6 +3695,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,research,sarah cannon research institute scri,sarah cannon research institute scri
 47037,37203,research,sarah cannon research institute scri oncology partners,sarah cannon research institute scri oncology partners
 47037,37203,research,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
+47037,37203,research,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,research,sarah cannon research institute usa tn,sarah cannon research institute usa tn
 47037,37203,research,sarah canon research institute scri oncology partners,sarah canon research institute scri oncology partners
 47037,37203,research,tennessee oncology greco hainsworth center for research,tennessee oncology greco hainsworth center for research
@@ -3655,6 +3725,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,sarah cannon,sarah cannon research institute scri,sarah cannon research institute scri
 47037,37203,sarah cannon,sarah cannon research institute scri oncology partners,sarah cannon research institute scri oncology partners
 47037,37203,sarah cannon,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
+47037,37203,sarah cannon,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,sarah cannon,sarah cannon research institute usa tn,sarah cannon research institute usa tn
 47037,37203,sarah cannon,sarah cannon scri oncology partners,sarah cannon scri oncology partners
 47037,37203,sarah cannon,sarah cannon tennessee oncology,sarah cannon tennessee oncology
@@ -3677,6 +3748,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,sarah cannon research,sarah cannon research institute scri,sarah cannon research institute scri
 47037,37203,sarah cannon research,sarah cannon research institute scri oncology partners,sarah cannon research institute scri oncology partners
 47037,37203,sarah cannon research,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
+47037,37203,sarah cannon research,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,sarah cannon research,sarah cannon research institute usa tn,sarah cannon research institute usa tn
 47037,37203,sarah cannon research,tennessee oncology nashville sarah cannon research institute,tennessee oncology nashville sarah cannon research institute
 47037,37203,sarah cannon research,the sarah cannon research institute tennessee oncology,the sarah cannon research institute tennessee oncology
@@ -3692,12 +3764,14 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,sarah cannon research institute,sarah cannon research institute scri,sarah cannon research institute scri
 47037,37203,sarah cannon research institute,sarah cannon research institute scri oncology partners,sarah cannon research institute scri oncology partners
 47037,37203,sarah cannon research institute,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
+47037,37203,sarah cannon research institute,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,sarah cannon research institute,sarah cannon research institute usa tn,sarah cannon research institute usa tn
 47037,37203,sarah cannon research institute,tennessee oncology nashville sarah cannon research institute,tennessee oncology nashville sarah cannon research institute
 47037,37203,sarah cannon research institute,the sarah cannon research institute tennessee oncology,the sarah cannon research institute tennessee oncology
 47037,37203,sarah cannon research institute oncology partners,sarah cannon research institute oncology partners scri nashville,sarah cannon research institute oncology partners scri nashville
 47037,37203,sarah cannon research institute scri,sarah cannon research institute scri oncology partners,sarah cannon research institute scri oncology partners
 47037,37203,sarah cannon research institute scri,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
+47037,37203,sarah cannon research institute tennessee oncology,the sarah cannon research institute tennessee oncology,the sarah cannon research institute tennessee oncology
 47037,37203,scri nashville,sarah cannon research institute oncology partners scri nashville,sarah cannon research institute oncology partners scri nashville
 47037,37203,scri oncology,sarah cannon research institute scri oncology partners,sarah cannon research institute scri oncology partners
 47037,37203,scri oncology,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
@@ -3715,9 +3789,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,scri oncology partners,scri oncology partners ppds,scri oncology partners ppds
 47037,37203,scri oncology partners,scri oncology partners tennessee,scri oncology partners tennessee
 47037,37203,scri oncology partners,tennessee oncology nashville scri oncology partners,tennessee oncology nashville scri oncology partners
+47037,37203,tennesse oncology,tennesse oncology elliston place plaza,tennesse oncology elliston place plaza
 47037,37203,tennessee oncology,greco hainsworth centers for research tennessee oncology,greco hainsworth centers for research tennessee oncology
 47037,37203,tennessee oncology,one oncology tennessee oncology,one oncology tennessee oncology
 47037,37203,tennessee oncology,sarah cannon research institute at tennessee oncology,sarah cannon research institute at tennessee oncology
+47037,37203,tennessee oncology,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,tennessee oncology,sarah cannon tennessee oncology,sarah cannon tennessee oncology
 47037,37203,tennessee oncology,tennessee oncology greco hainsworth center for research,tennessee oncology greco hainsworth center for research
 47037,37203,tennessee oncology,tennessee oncology nashville,tennessee oncology nashville
@@ -3725,7 +3801,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,tennessee oncology,tennessee oncology nashville centennial clinic medical oncology,tennessee oncology nashville centennial clinic medical oncology
 47037,37203,tennessee oncology,tennessee oncology nashville sarah cannon research institute,tennessee oncology nashville sarah cannon research institute
 47037,37203,tennessee oncology,tennessee oncology nashville scri oncology partners,tennessee oncology nashville scri oncology partners
-47037,37203,tennessee oncology,tennessee oncology nashville st thomas midtown clinic,tennessee oncology nashville st thomas midtown clinic
 47037,37203,tennessee oncology,tennessee oncology pllc,tennessee oncology pllc
 47037,37203,tennessee oncology,tennessee oncology pllc chattanooga,tennessee oncology pllc chattanooga
 47037,37203,tennessee oncology,tennessee oncology pllc elliston place plaza,tennessee oncology pllc elliston place plaza
@@ -3742,7 +3817,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,tennessee oncology nashville,tennessee oncology nashville centennial clinic medical oncology,tennessee oncology nashville centennial clinic medical oncology
 47037,37203,tennessee oncology nashville,tennessee oncology nashville sarah cannon research institute,tennessee oncology nashville sarah cannon research institute
 47037,37203,tennessee oncology nashville,tennessee oncology nashville scri oncology partners,tennessee oncology nashville scri oncology partners
-47037,37203,tennessee oncology nashville,tennessee oncology nashville st thomas midtown clinic,tennessee oncology nashville st thomas midtown clinic
 47037,37203,tennessee oncology nashville centennial clinic,tennessee oncology nashville centennial clinic medical oncology,tennessee oncology nashville centennial clinic medical oncology
 47037,37203,tennessee oncology pllc,tennessee oncology pllc chattanooga,tennessee oncology pllc chattanooga
 47037,37203,tennessee oncology pllc,tennessee oncology pllc elliston place plaza,tennessee oncology pllc elliston place plaza
@@ -3785,9 +3859,15 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37232,vanderbilt university medical center,vanderbilt university medical center henry joyce cancer clinic adults and pediatrics,vanderbilt university medical center henry joyce cancer clinic adults and pediatrics
 47037,37232,vanderbilt university medical center,vanderbilt university medical center vanderbilt ingram cancer center,vanderbilt university medical center vanderbilt ingram cancer center
 47065,37403,erlanger health,erlanger health inc,erlanger health inc
-47065,37403,tennessee oncology,tennessee oncology chattanooga downtown,tennessee oncology chattanooga downtown
-47065,37403,tennessee oncology,tennessee oncology chattanooga ghcr site i,tennessee oncology chattanooga ghcr site i
-47065,37403,tennessee oncology,tennessee oncology pllc chattanooga downtown,tennessee oncology pllc chattanooga downtown
+47065,37404,tennessee oncology,tennessee oncology chattanooga,tennessee oncology chattanooga
+47065,37404,tennessee oncology,tennessee oncology chattanooga memorial plaza,tennessee oncology chattanooga memorial plaza
+47065,37404,tennessee oncology,tennessee oncology chattanooga oncology hematology associates,tennessee oncology chattanooga oncology hematology associates
+47065,37404,tennessee oncology,tennessee oncology greco hainsworth centers for research chattanooga,tennessee oncology greco hainsworth centers for research chattanooga
+47065,37404,tennessee oncology,tennessee oncology pllc,tennessee oncology pllc
+47065,37404,tennessee oncology,tennessee oncology pllc chattanooga med park ii,tennessee oncology pllc chattanooga med park ii
+47065,37404,tennessee oncology,tennessee oncology pllc chattanooga medical park ii,tennessee oncology pllc chattanooga medical park ii
+47065,37404,tennessee oncology,tennessee oncology pllc chattanooga memorial,tennessee oncology pllc chattanooga memorial
+47065,37404,tennessee oncology,tennessee oncology pllc investigational drug services supply storage,tennessee oncology pllc investigational drug services supply storage
 47065,37404,tennessee oncology chattanooga,tennessee oncology chattanooga memorial plaza,tennessee oncology chattanooga memorial plaza
 47065,37404,tennessee oncology chattanooga,tennessee oncology chattanooga oncology hematology associates,tennessee oncology chattanooga oncology hematology associates
 47065,37404,tennessee oncology pllc,tennessee oncology pllc chattanooga med park ii,tennessee oncology pllc chattanooga med park ii
@@ -3829,6 +3909,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 47187,37067,tennessee oncology,tennessee oncology pllc franklin proton center,tennessee oncology pllc franklin proton center
 47187,37067,tennessee oncology,tennessee oncology pllc proton center,tennessee oncology pllc proton center
 47187,37067,tennessee oncology pllc franklin,tennessee oncology pllc franklin proton center,tennessee oncology pllc franklin proton center
+48027,76508,baylor scott white medical center,baylor scott white medical center temple,baylor scott white medical center temple
 48029,78229,mays cancer center,mays cancer center at university of texas health at san antonio,mays cancer center at university of texas health at san antonio
 48029,78229,mays cancer center,mays cancer center at university of texas health san antonio md anderson cencer center,mays cancer center at university of texas health san antonio md anderson cencer center
 48029,78229,mays cancer center,mays cancer center university of texas health san antonio,mays cancer center university of texas health san antonio
@@ -3919,9 +4000,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 48113,75246,baylor scott white research institute,baylor scott white research institute texas oncology,baylor scott white research institute texas oncology
 48113,75246,baylor university,baylor university medical center,baylor university medical center
 48113,75246,baylor university,baylor university medical center baylor charles a sammons cancer center,baylor university medical center baylor charles a sammons cancer center
+48113,75246,baylor university,baylor university medical center charles a sammons cancer center,baylor university medical center charles a sammons cancer center
 48113,75246,baylor university,baylor university medical center investigational drug services department of pharmacy,baylor university medical center investigational drug services department of pharmacy
 48113,75246,baylor university,texas oncology baylor university medical center,texas oncology baylor university medical center
 48113,75246,baylor university medical center,baylor university medical center baylor charles a sammons cancer center,baylor university medical center baylor charles a sammons cancer center
+48113,75246,baylor university medical center,baylor university medical center charles a sammons cancer center,baylor university medical center charles a sammons cancer center
 48113,75246,baylor university medical center,baylor university medical center investigational drug services department of pharmacy,baylor university medical center investigational drug services department of pharmacy
 48113,75246,baylor university medical center,texas oncology baylor university medical center,texas oncology baylor university medical center
 48113,75246,texas oncology,baylor scott white research institute texas oncology,baylor scott white research institute texas oncology
@@ -3949,11 +4032,13 @@ county_fips,zip,shorter,longer,suggested_canonical
 48113,75390,ut southwestern,genetic cancer prevention clinic ut southwestern,genetic cancer prevention clinic ut southwestern
 48113,75390,ut southwestern,ut southwestern harold c simmons cancer center,ut southwestern harold c simmons cancer center
 48113,75390,ut southwestern,ut southwestern medical center,ut southwestern medical center
+48113,75390,ut southwestern,ut southwestern medical center at dallas,ut southwestern medical center at dallas
 48113,75390,ut southwestern,ut southwestern medical center dallas,ut southwestern medical center dallas
 48113,75390,ut southwestern,ut southwestern medical center west campus building,ut southwestern medical center west campus building
 48113,75390,ut southwestern,ut southwestern medical center william p clements imaging center,ut southwestern medical center william p clements imaging center
 48113,75390,ut southwestern,ut southwestern medical center william p clements jr university hospital,ut southwestern medical center william p clements jr university hospital
 48113,75390,ut southwestern,ut southwestern simmons cancer center dallas,ut southwestern simmons cancer center dallas
+48113,75390,ut southwestern medical center,ut southwestern medical center at dallas,ut southwestern medical center at dallas
 48113,75390,ut southwestern medical center,ut southwestern medical center dallas,ut southwestern medical center dallas
 48113,75390,ut southwestern medical center,ut southwestern medical center west campus building,ut southwestern medical center west campus building
 48113,75390,ut southwestern medical center,ut southwestern medical center william p clements imaging center,ut southwestern medical center william p clements imaging center
@@ -4036,17 +4121,20 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77030,md anderson,md anderson cancer center uni of te,md anderson cancer center uni of te
 48201,77030,md anderson,md anderson cancer center university of texas,md anderson cancer center university of texas
 48201,77030,md anderson,md anderson cancer centre,md anderson cancer centre
+48201,77030,md anderson,md anderson cancer hospital,md anderson cancer hospital
 48201,77030,md anderson,the univeristy of texas md anderson cancer center,the univeristy of texas md anderson cancer center
 48201,77030,md anderson,the university of texas md anderson cancer center,the university of texas md anderson cancer center
 48201,77030,md anderson,the university of texas md anderson cancer center diagnostic imaging,the university of texas md anderson cancer center diagnostic imaging
 48201,77030,md anderson,the university of texas md anderson cancer center gynecologic oncology center,the university of texas md anderson cancer center gynecologic oncology center
 48201,77030,md anderson,the university of texas md anderson cancer center interventional radiology,the university of texas md anderson cancer center interventional radiology
 48201,77030,md anderson,the university of texas md anderson cancer center investigational pharmacy services,the university of texas md anderson cancer center investigational pharmacy services
+48201,77030,md anderson,the university of texas md anderson cancer center leukemia center,the university of texas md anderson cancer center leukemia center
 48201,77030,md anderson,the university of texas md anderson cancer center texas medical center,the university of texas md anderson cancer center texas medical center
 48201,77030,md anderson,u t md anderson cancer center,u t md anderson cancer center
 48201,77030,md anderson,u t md anderson cancer center division of cancer medicine,u t md anderson cancer center division of cancer medicine
 48201,77030,md anderson,u t md anderson cancer center investigational pharmacy services,u t md anderson cancer center investigational pharmacy services
 48201,77030,md anderson,uni of tx md anderson cancer cntr,uni of tx md anderson cancer cntr
+48201,77030,md anderson,univ of texas md anderson cancer center division of cancer medicine,univ of texas md anderson cancer center division of cancer medicine
 48201,77030,md anderson,university of texas md anderson,university of texas md anderson
 48201,77030,md anderson,university of texas md anderson cancer center,university of texas md anderson cancer center
 48201,77030,md anderson,ut md anderson,ut md anderson
@@ -4066,10 +4154,12 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77030,md anderson cancer center,the university of texas md anderson cancer center gynecologic oncology center,the university of texas md anderson cancer center gynecologic oncology center
 48201,77030,md anderson cancer center,the university of texas md anderson cancer center interventional radiology,the university of texas md anderson cancer center interventional radiology
 48201,77030,md anderson cancer center,the university of texas md anderson cancer center investigational pharmacy services,the university of texas md anderson cancer center investigational pharmacy services
+48201,77030,md anderson cancer center,the university of texas md anderson cancer center leukemia center,the university of texas md anderson cancer center leukemia center
 48201,77030,md anderson cancer center,the university of texas md anderson cancer center texas medical center,the university of texas md anderson cancer center texas medical center
 48201,77030,md anderson cancer center,u t md anderson cancer center,u t md anderson cancer center
 48201,77030,md anderson cancer center,u t md anderson cancer center division of cancer medicine,u t md anderson cancer center division of cancer medicine
 48201,77030,md anderson cancer center,u t md anderson cancer center investigational pharmacy services,u t md anderson cancer center investigational pharmacy services
+48201,77030,md anderson cancer center,univ of texas md anderson cancer center division of cancer medicine,univ of texas md anderson cancer center division of cancer medicine
 48201,77030,md anderson cancer center,university of texas md anderson cancer center,university of texas md anderson cancer center
 48201,77030,md anderson cancer center,ut md anderson cancer center,ut md anderson cancer center
 48201,77030,md anderson cancer center,ut md anderson cancer center houston,ut md anderson cancer center houston
@@ -4087,6 +4177,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77030,oncology consultants,oncology consultants texas medical center,oncology consultants texas medical center
 48201,77030,oncology consultants pa,oncology consultants pa houston,oncology consultants pa houston
 48201,77030,oncology consultants texas,oncology consultants texas medical center,oncology consultants texas medical center
+48201,77030,texas children s hospital,texas children s hospital data collection,texas children s hospital data collection
 48201,77030,the methodist hospital,the methodist hospital research institute,the methodist hospital research institute
 48201,77030,the university of texas m d anderson cancer center,1001 the university of texas m d anderson cancer center,1001 the university of texas m d anderson cancer center
 48201,77030,the university of texas m d anderson cancer center,the university of texas m d anderson cancer center gi medical oncology dept,the university of texas m d anderson cancer center gi medical oncology dept
@@ -4095,6 +4186,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77030,the university of texas md anderson cancer center,the university of texas md anderson cancer center gynecologic oncology center,the university of texas md anderson cancer center gynecologic oncology center
 48201,77030,the university of texas md anderson cancer center,the university of texas md anderson cancer center interventional radiology,the university of texas md anderson cancer center interventional radiology
 48201,77030,the university of texas md anderson cancer center,the university of texas md anderson cancer center investigational pharmacy services,the university of texas md anderson cancer center investigational pharmacy services
+48201,77030,the university of texas md anderson cancer center,the university of texas md anderson cancer center leukemia center,the university of texas md anderson cancer center leukemia center
 48201,77030,the university of texas md anderson cancer center,the university of texas md anderson cancer center texas medical center,the university of texas md anderson cancer center texas medical center
 48201,77030,u t md anderson cancer center,u t md anderson cancer center division of cancer medicine,u t md anderson cancer center division of cancer medicine
 48201,77030,u t md anderson cancer center,u t md anderson cancer center investigational pharmacy services,u t md anderson cancer center investigational pharmacy services
@@ -4109,9 +4201,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77030,university of texas,the university of texas md anderson cancer center gynecologic oncology center,the university of texas md anderson cancer center gynecologic oncology center
 48201,77030,university of texas,the university of texas md anderson cancer center interventional radiology,the university of texas md anderson cancer center interventional radiology
 48201,77030,university of texas,the university of texas md anderson cancer center investigational pharmacy services,the university of texas md anderson cancer center investigational pharmacy services
+48201,77030,university of texas,the university of texas md anderson cancer center leukemia center,the university of texas md anderson cancer center leukemia center
 48201,77030,university of texas,the university of texas md anderson cancer center texas medical center,the university of texas md anderson cancer center texas medical center
 48201,77030,university of texas,university of texas health science center at houston,university of texas health science center at houston
 48201,77030,university of texas,university of texas health science center houston,university of texas health science center houston
+48201,77030,university of texas,university of texas houston health science center,university of texas houston health science center
 48201,77030,university of texas,university of texas m d anderson,university of texas m d anderson
 48201,77030,university of texas,university of texas m d anderson cancer center,university of texas m d anderson cancer center
 48201,77030,university of texas,university of texas md anderson,university of texas md anderson
@@ -4132,6 +4226,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77030,university of texas md anderson,the university of texas md anderson cancer center gynecologic oncology center,the university of texas md anderson cancer center gynecologic oncology center
 48201,77030,university of texas md anderson,the university of texas md anderson cancer center interventional radiology,the university of texas md anderson cancer center interventional radiology
 48201,77030,university of texas md anderson,the university of texas md anderson cancer center investigational pharmacy services,the university of texas md anderson cancer center investigational pharmacy services
+48201,77030,university of texas md anderson,the university of texas md anderson cancer center leukemia center,the university of texas md anderson cancer center leukemia center
 48201,77030,university of texas md anderson,the university of texas md anderson cancer center texas medical center,the university of texas md anderson cancer center texas medical center
 48201,77030,university of texas md anderson,university of texas md anderson cancer center,university of texas md anderson cancer center
 48201,77030,university of texas md anderson cancer center,the university of texas md anderson cancer center,the university of texas md anderson cancer center
@@ -4139,6 +4234,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77030,university of texas md anderson cancer center,the university of texas md anderson cancer center gynecologic oncology center,the university of texas md anderson cancer center gynecologic oncology center
 48201,77030,university of texas md anderson cancer center,the university of texas md anderson cancer center interventional radiology,the university of texas md anderson cancer center interventional radiology
 48201,77030,university of texas md anderson cancer center,the university of texas md anderson cancer center investigational pharmacy services,the university of texas md anderson cancer center investigational pharmacy services
+48201,77030,university of texas md anderson cancer center,the university of texas md anderson cancer center leukemia center,the university of texas md anderson cancer center leukemia center
 48201,77030,university of texas md anderson cancer center,the university of texas md anderson cancer center texas medical center,the university of texas md anderson cancer center texas medical center
 48201,77030,ut md anderson,ut md anderson cancer center,ut md anderson cancer center
 48201,77030,ut md anderson,ut md anderson cancer center houston,ut md anderson cancer center houston
@@ -4149,7 +4245,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77070,methodist willowbrook hospital,houston methodist willowbrook hospital,houston methodist willowbrook hospital
 48201,77079,md anderson west houston,ut md anderson west houston,ut md anderson west houston
 48201,77090,lumi research,lumi research houston,lumi research houston
-48201,77375,dm clinical research,dm clinical research network,dm clinical research network
 48215,78596,texas oncology weslaco,texas oncology weslaco knapp medical plaza,texas oncology weslaco knapp medical plaza
 48245,77702,texas oncology,texas oncology gulf coast,texas oncology gulf coast
 48251,76028,the center for cancer and blood disorders,oner the center for cancer and blood disorders texas cancer care,oner the center for cancer and blood disorders texas cancer care
@@ -4178,6 +4273,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48423,75701,the university of texas health science center at tyler,the university of texas health science center at tyler dba ut health east texas hope cancer center,the university of texas health science center at tyler dba ut health east texas hope cancer center
 48423,75701,ut health east texas hope cancer center,the university of texas health science center at tyler dba ut health east texas hope cancer center,the university of texas health science center at tyler dba ut health east texas hope cancer center
 48423,75702,texas oncology,sarah cannon research institute texas oncology,sarah cannon research institute texas oncology
+48423,75702,texas oncology,scri texas oncology northeast texas,scri texas oncology northeast texas
 48423,75702,texas oncology,texas oncology northeast,texas oncology northeast
 48423,75702,texas oncology,texas oncology northeast texas,texas oncology northeast texas
 48423,75702,texas oncology,texas oncology northeast tx,texas oncology northeast tx
@@ -4186,25 +4282,22 @@ county_fips,zip,shorter,longer,suggested_canonical
 48423,75702,texas oncology,texas oncology pa tyler,texas oncology pa tyler
 48423,75702,texas oncology,texas oncology tyler,texas oncology tyler
 48423,75702,texas oncology,uso texas oncology northeast texas,uso texas oncology northeast texas
+48423,75702,texas oncology northeast,scri texas oncology northeast texas,scri texas oncology northeast texas
 48423,75702,texas oncology northeast,texas oncology northeast texas,texas oncology northeast texas
 48423,75702,texas oncology northeast,texas oncology northeast tx,texas oncology northeast tx
 48423,75702,texas oncology northeast,uso texas oncology northeast texas,uso texas oncology northeast texas
+48423,75702,texas oncology northeast texas,scri texas oncology northeast texas,scri texas oncology northeast texas
 48423,75702,texas oncology northeast texas,uso texas oncology northeast texas,uso texas oncology northeast texas
 48423,75702,texas oncology p a,texas oncology p a tyler,texas oncology p a tyler
-48439,76017,urology partners of north texas,urology partners of north texas upnt,urology partners of north texas upnt
+48439,76022,texas oncology,texas oncology bedford,texas oncology bedford
+48439,76022,texas oncology,texas oncology dfww,texas oncology dfww
+48439,76022,texas oncology,texas oncology gyn onc dfww,texas oncology gyn onc dfww
 48439,76104,jps health network,jps health network trinity springs pavilion,jps health network trinity springs pavilion
 48439,76104,jps health network,tarrant county hospital district jps health network,tarrant county hospital district jps health network
 48439,76104,start dallas,start dallas fort worth,start dallas fort worth
 48439,76104,start dallas,start dallas fort worth llc,start dallas fort worth llc
 48439,76104,start dallas,start dallas forth worth,start dallas forth worth
 48439,76104,start dallas fort worth,start dallas fort worth llc,start dallas fort worth llc
-48439,76104,texas oncology,scri texas oncology,scri texas oncology
-48439,76104,texas oncology,texas oncology dfw,texas oncology dfw
-48439,76104,texas oncology,texas oncology fort worth,texas oncology fort worth
-48439,76104,texas oncology,texas oncology fort worth cancer center,texas oncology fort worth cancer center
-48439,76104,texas oncology,texas oncology paris,texas oncology paris
-48439,76104,texas oncology,usor texas oncology,usor texas oncology
-48439,76104,texas oncology,usor texas oncology dallas fort worth dfw,usor texas oncology dallas fort worth dfw
 48439,76104,texas oncology fort worth,texas oncology fort worth cancer center,texas oncology fort worth cancer center
 48439,76104,the center for cancer and blood disorders,oner the center for cancer and blood disorders texas cancer care,oner the center for cancer and blood disorders texas cancer care
 48439,76104,the center for cancer and blood disorders,the center for cancer and blood disorders texas cancer care,the center for cancer and blood disorders texas cancer care
@@ -4217,6 +4310,8 @@ county_fips,zip,shorter,longer,suggested_canonical
 48453,78704,south austin medical center,sarah cannon st david south austin medical center,sarah cannon st david south austin medical center
 48453,78704,south austin medical center,st david s south austin medical center,st david s south austin medical center
 48453,78704,st david s south austin medical center,sarah cannon research institute st david s south austin medical center texas oncology south austin,sarah cannon research institute st david s south austin medical center texas oncology south austin
+48453,78705,texas oncology austin,texas oncology austin midtown,texas oncology austin midtown
+48453,78705,texas oncology austin,texas oncology austin midtown midtown medical center i,texas oncology austin midtown midtown medical center i
 48453,78705,texas oncology austin midtown,texas oncology austin midtown midtown medical center i,texas oncology austin midtown midtown medical center i
 48453,78712,university of texas at austin,dell medical school university of texas at austin,dell medical school university of texas at austin
 48453,78712,university of texas at austin,the university of texas at austin,the university of texas at austin
@@ -4291,12 +4386,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 49035,84119,start mountain region,south texas accelerated research therapeutics start mountain region,south texas accelerated research therapeutics start mountain region
 49035,84119,start mountain region,start mountain region llc,start mountain region llc
 49035,84143,intermountain healthcare,intermountain healthcare lds hospital,intermountain healthcare lds hospital
+49035,84143,lds hospital,intermountain health canyons region lds hospital,intermountain health canyons region lds hospital
 49035,84143,lds hospital,intermountain healthcare lds hospital,intermountain healthcare lds hospital
 49035,84143,lds hospital,intermountain lds hospital ph 1 research program,intermountain lds hospital ph 1 research program
 49053,84790,st george regional hospital,st george regional hospital cancer center,st george regional hospital cancer center
-50007,05401,university of vermont,the university of vermont medical center inc,the university of vermont medical center inc
 50007,05401,university of vermont,university of vermont medical center,university of vermont medical center
-50007,05401,university of vermont medical center,the university of vermont medical center inc,the university of vermont medical center inc
 51005,24457,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
 51005,24457,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care emmett medical surgical center,oncology hematology associates of southwest virginia inc dba blue ridge cancer care emmett medical surgical center
 51005,24457,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
@@ -4388,6 +4482,8 @@ county_fips,zip,shorter,longer,suggested_canonical
 51710,23502,virginia oncology associates,virginia oncology associates sentara health,virginia oncology associates sentara health
 51710,23502,virginia oncology associates,virginia oncology associates voa,virginia oncology associates voa
 51760,23219,virginia commonwealth university vcu,virginia commonwealth university vcu health,virginia commonwealth university vcu health
+51760,23298,vcu medical center,vcu medical center virginia commonwealth university,vcu medical center virginia commonwealth university
+51760,23298,vcu medical center,virginia commonwealth university vcu medical center,virginia commonwealth university vcu medical center
 51760,23298,virginia commonwealth university,vcu medical center virginia commonwealth university,vcu medical center virginia commonwealth university
 51760,23298,virginia commonwealth university,virginia commonwealth university main hospital,virginia commonwealth university main hospital
 51760,23298,virginia commonwealth university,virginia commonwealth university massey cancer center,virginia commonwealth university massey cancer center
@@ -4449,6 +4545,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 53033,98109,fred hutchinson cancer center,university of washington fred hutchinson cancer center seattle,university of washington fred hutchinson cancer center seattle
 53033,98109,fred hutchinson cancer center university of washington,fred hutchinson cancer center university of washington cancer consortium,fred hutchinson cancer center university of washington cancer consortium
 53033,98109,investigational,dren investigational site,dren investigational site
+53033,98109,investigational,gsk investigational site,gsk investigational site
 53033,98109,seattle cancer care alliance,seattle cancer care alliance at south lake union g3630,seattle cancer care alliance at south lake union g3630
 53033,98109,seattle cancer care alliance,university of washington seattle cancer care alliance,university of washington seattle cancer care alliance
 53033,98109,university of washington,fred hutch university of washington cancer consortium,fred hutch university of washington cancer consortium
@@ -4509,15 +4606,18 @@ county_fips,zip,shorter,longer,suggested_canonical
 54061,26506,west virginia,university of west virginia,university of west virginia
 54061,26506,west virginia,west virginia university,west virginia university
 54061,26506,west virginia,west virginia university cancer institute,west virginia university cancer institute
+54061,26506,west virginia,west virginia university cancer institute mary babb randolph cancer center,west virginia university cancer institute mary babb randolph cancer center
 54061,26506,west virginia,west virginia university health sciences campus,west virginia university health sciences campus
 54061,26506,west virginia,west virginia university healthcare,west virginia university healthcare
 54061,26506,west virginia,west virginia university hospitals,west virginia university hospitals
 54061,26506,west virginia,west virginia university school of medicine,west virginia university school of medicine
 54061,26506,west virginia university,west virginia university cancer institute,west virginia university cancer institute
+54061,26506,west virginia university,west virginia university cancer institute mary babb randolph cancer center,west virginia university cancer institute mary babb randolph cancer center
 54061,26506,west virginia university,west virginia university health sciences campus,west virginia university health sciences campus
 54061,26506,west virginia university,west virginia university healthcare,west virginia university healthcare
 54061,26506,west virginia university,west virginia university hospitals,west virginia university hospitals
 54061,26506,west virginia university,west virginia university school of medicine,west virginia university school of medicine
+54061,26506,west virginia university cancer institute,west virginia university cancer institute mary babb randolph cancer center,west virginia university cancer institute mary babb randolph cancer center
 55005,54868,marshfield medical center,marshfield medical center rice lake,marshfield medical center rice lake
 55015,53014,ascension calumet hospital,ascension calumet hospital chilton,ascension calumet hospital chilton
 55025,53715,ssm health dean medical group,circuit clinical ssm health dean medical group,circuit clinical ssm health dean medical group
@@ -4536,14 +4636,12 @@ county_fips,zip,shorter,longer,suggested_canonical
 55025,53792,university of wisconsin,university of wisconsin hospital,university of wisconsin hospital
 55025,53792,university of wisconsin,university of wisconsin hospital and clinics,university of wisconsin hospital and clinics
 55025,53792,university of wisconsin,university of wisconsin hospitals and clinics,university of wisconsin hospitals and clinics
-55025,53792,university of wisconsin,university of wisconsin madison,university of wisconsin madison
 55025,53792,university of wisconsin carbone cancer center,university of wisconsin carbone cancer center university hospital,university of wisconsin carbone cancer center university hospital
 55025,53792,university of wisconsin carbone cancer center,university of wisconsin carbone cancer center uwccc cancer connect,university of wisconsin carbone cancer center uwccc cancer connect
 55025,53792,university of wisconsin health,011 university of wisconsin health university hospital,011 university of wisconsin health university hospital
 55025,53792,university of wisconsin health,university of wisconsin health uw carbone cancer center,university of wisconsin health uw carbone cancer center
 55025,53792,university of wisconsin hospital,university of wisconsin hospital and clinics,university of wisconsin hospital and clinics
 55025,53792,university of wisconsin hospital,university of wisconsin hospitals and clinics,university of wisconsin hospitals and clinics
-55025,53792,university of wisconsin madison,carbone cancer center university of wisconsin madison,carbone cancer center university of wisconsin madison
 55025,53792,uw carbone cancer center,university of wisconsin health uw carbone cancer center,university of wisconsin health uw carbone cancer center
 55025,53792,uw health,university hospital and uw health clinics,university hospital and uw health clinics
 55025,53792,uw health,university hospital and uw health clinics carbone cancer center,university hospital and uw health clinics carbone cancer center
@@ -4564,6 +4662,22 @@ county_fips,zip,shorter,longer,suggested_canonical
 55079,53226,froedtert hospital,mcw clinical cancer center at froedtert hospital campus,mcw clinical cancer center at froedtert hospital campus
 55079,53226,froedtert hospital,medical college of wisconsin and froedtert hospital,medical college of wisconsin and froedtert hospital
 55079,53226,froedtert memorial lutheran hospital,froedtert memorial lutheran hospital medical college of wisconsin,froedtert memorial lutheran hospital medical college of wisconsin
+55079,53226,medical college of wi,froedtert and medical college of wisconsin,froedtert and medical college of wisconsin
+55079,53226,medical college of wi,froedtert and the medical college of wisconsin,froedtert and the medical college of wisconsin
+55079,53226,medical college of wi,froedtert and the medical college of wisconsin laps,froedtert and the medical college of wisconsin laps
+55079,53226,medical college of wi,froedtert hospital and the medical college of wisconsin,froedtert hospital and the medical college of wisconsin
+55079,53226,medical college of wi,froedtert hospital medical college of wisconsin,froedtert hospital medical college of wisconsin
+55079,53226,medical college of wi,froedtert hospital the medical college of wisconsin,froedtert hospital the medical college of wisconsin
+55079,53226,medical college of wi,froedtert medical college of wisconsin,froedtert medical college of wisconsin
+55079,53226,medical college of wi,froedtert memorial lutheran hospital medical college of wisconsin,froedtert memorial lutheran hospital medical college of wisconsin
+55079,53226,medical college of wi,froedtert the medical college of wisconsin,froedtert the medical college of wisconsin
+55079,53226,medical college of wi,medical college of wi at froedtert,medical college of wi at froedtert
+55079,53226,medical college of wi,medical college of wisconsin,medical college of wisconsin
+55079,53226,medical college of wi,medical college of wisconsin and froedtert hospital,medical college of wisconsin and froedtert hospital
+55079,53226,medical college of wi,medical college of wisconsin cancer center,medical college of wisconsin cancer center
+55079,53226,medical college of wi,medical college of wisconsin cancer center clinical trials office,medical college of wisconsin cancer center clinical trials office
+55079,53226,medical college of wi,the medical college of wisconsin,the medical college of wisconsin
+55079,53226,medical college of wi,the medical college of wisconsin inc,the medical college of wisconsin inc
 55079,53226,medical college of wisconsin,froedtert and medical college of wisconsin,froedtert and medical college of wisconsin
 55079,53226,medical college of wisconsin,froedtert and the medical college of wisconsin,froedtert and the medical college of wisconsin
 55079,53226,medical college of wisconsin,froedtert and the medical college of wisconsin laps,froedtert and the medical college of wisconsin laps

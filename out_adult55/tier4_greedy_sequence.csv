@@ -1,26 +1,26 @@
 step,name,placeholder,city,state,county,pop55_newly_covered,cumulative_pop55_covered,pct_of_uncovered_pop55,lat,lon
-1,Jackson,1,Jackson,TN,"Madison, Tennessee",96820,96820,2.6,35.6542,-88.8353
-2,Central Recruiting Site,1,Sheffield,AL,"Colbert, Alabama",76876,173696,4.7,34.7584,-87.6965
-3,Bingham Memorial Hospital,0,Blackfoot,ID,"Bingham, Idaho",76555,250251,6.7,43.1946,-112.3468
-4,Arrivent Investigative Site,1,Yuma,AZ,"Yuma, Arizona",72914,323165,8.7,32.7046,-114.6563
-5,Texas Institute for Kidney and Endocrine Disorders,0,Lufkin,TX,"Angelina, Texas",67462,390627,10.5,31.3229,-94.729
-6,Mercy Oncology Center,0,Redding,CA,"Shasta, California",60870,451497,12.1,40.5278,-122.3186
-7,June E. Nylan Cancer Center,0,Sioux City,IA,"Woodbury, Iowa",56123,507620,13.6,42.4937,-96.3942
-8,Island Urology-Hilo,0,Hilo,HI,"Hawaii, Hawaii",44750,552370,14.8,19.6887,-155.0829
-9,Champlain Valley Physicians Hospital Medical Center,0,Plattsburgh,NY,"Clinton, New York",40636,593006,15.9,44.7091,-73.4735
-10,Andalusia,1,Andalusia,AL,"Covington, Alabama",35234,628240,16.9,31.3094,-86.478
-11,Union Hospital,0,Terre Haute,IN,"Vigo, Indiana",31716,659956,17.7,39.4978,-87.3905
-12,Pinnacle Research Group,0,Anniston,AL,"Calhoun, Alabama",30304,690260,18.5,33.6841,-85.7052
-13,Georgia Cancer Specialists - Blairsville,0,Blairsville,GA,"Union, Georgia",25148,715408,19.2,34.8568,-83.968
-14,GenesisCare USA - Key West,0,Key West,FL,"Monroe, Florida",21106,736514,19.8,24.5446,-81.9217
-15,Regional West Medical Center,0,Scottsbluff,NE,"Sioux, Nebraska",19437,755951,20.3,41.8681,-103.662
-16,Unity Health- Searcy Medical Center,0,Searcy,AR,"White, Arkansas",18806,774757,20.8,35.2267,-91.7368
-17,"Saint Bernards Medical Center,4000 Linwood Drive",0,Paragould,AR,"Greene, Arkansas",18458,793215,21.3,36.0795,-90.5164
-18,Ottumwa Regional Health Center,0,Ottumwa,IA,"Wapello, Iowa",18344,811559,21.8,41.0444,-92.4291
-19,Calaway-Young Cancer Center at Valley View Hospital,0,Glenwood Springs,CO,"Garfield, Colorado",17791,829350,22.3,39.5876,-107.3387
-20,Moses Lake Clinic,0,Moses Lake,WA,"Grant, Washington",17234,846584,22.7,47.147,-119.3159
-21,Lake Region Healthcare Corporation-Cancer Care,0,Fergus Falls,MN,"Otter Tail, Minnesota",16417,863001,23.2,46.2767,-96.0919
-22,Faith Regional Health Services Carson Cancer Center,0,Norfolk,NE,"Madison, Nebraska",15954,878955,23.6,42.0198,-97.4426
-23,CHRISTUS St. Michael-Colom and Carney Clinic P.A,0,Texarkana,TX,"Bowie, Texas",15650,894605,24.0,33.5179,-94.1371
-24,Genesis Cancer and Blood Institute - 1123,0,Russellville,AR,"Pope, Arkansas",15458,910063,24.4,35.2806,-93.1416
-25,568-A,0,Safford,AZ,"Graham, Arizona",13059,923122,24.8,32.8333,-109.6974
+1,Russell Medical,0,Alexander City,AL,"Tallapoosa, Alabama",108218,108218,2.6,32.9167,-85.9406
+2,Jackson,1,Jackson,TN,"Madison, Tennessee",96820,205038,4.9,35.6542,-88.8353
+3,Central Recruiting Site,1,Sheffield,AL,"Colbert, Alabama",76876,281914,6.8,34.7584,-87.6965
+4,Mountain View Hospital,0,Idaho Falls,ID,"Bonneville, Idaho",76867,358781,8.6,43.4896,-112.0353
+5,Arrivent Investigative Site,1,Yuma,AZ,"Yuma, Arizona",72914,431695,10.4,32.7046,-114.6563
+6,Texas Institute for Kidney and Endocrine Disorders,0,Lufkin,TX,"Angelina, Texas",67462,499157,12.0,31.3229,-94.729
+7,Mercy Oncology Center,0,Redding,CA,"Shasta, California",60870,560027,13.5,40.5278,-122.3186
+8,June E. Nylan Cancer Center,0,Sioux City,IA,"Woodbury, Iowa",56123,616150,14.8,42.4937,-96.3942
+9,CHRISTUS Saint Patrick Hospital,0,Lake Charles,LA,"Calcasieu, Louisiana",52228,668378,16.1,30.2268,-93.2154
+10,Island Urology-Hilo,0,Hilo,HI,"Hawaii, Hawaii",44750,713128,17.2,19.6887,-155.0829
+11,Andalusia,1,Andalusia,AL,"Covington, Alabama",43852,756980,18.2,31.3094,-86.478
+12,Saint Joseph Regional Medical Center,0,Lewiston,ID,"Nez Perce, Idaho",43360,800340,19.3,46.3931,-116.9935
+13,Champlain Valley Physicians Hospital Medical Center,0,Plattsburgh,NY,"Clinton, New York",40636,840976,20.2,44.7091,-73.4735
+14,IU Health Bloomington,0,Bloomington,IN,"Monroe, Indiana",34291,875267,21.1,39.0852,-86.6123
+15,Arizona Arthritis and Rheumatology Research PLLC 3,0,Flagstaff,AZ,"Coconino, Arizona",29262,904529,21.8,35.1852,-111.6207
+16,Deaconess Clinic,0,Evansville,IN,"Vanderburgh, Indiana",26084,930613,22.4,37.9485,-87.5555
+17,Georgia Cancer Specialists - Blairsville,0,Blairsville,GA,"Union, Georgia",25148,955761,23.0,34.8568,-83.968
+18,Minot,1,Minot,ND,"Ward, North Dakota",23835,979596,23.6,48.2361,-101.2775
+19,Pinnacle Research Group,0,Anniston,AL,"Calhoun, Alabama",21659,1001255,24.1,33.6841,-85.7052
+20,GenesisCare USA - Key West,0,Key West,FL,"Monroe, Florida",21106,1022361,24.6,24.5446,-81.9217
+21,Regional West Medical Center,0,Scottsbluff,NE,"Sioux, Nebraska",19437,1041798,25.1,41.8681,-103.662
+22,Unity Health- Searcy Medical Center,0,Searcy,AR,"White, Arkansas",18806,1060604,25.5,35.2267,-91.7368
+23,"Saint Bernards Medical Center,4000 Linwood Drive",0,Paragould,AR,"Greene, Arkansas",18458,1079062,26.0,36.0795,-90.5164
+24,Ottumwa Regional Health Center,0,Ottumwa,IA,"Wapello, Iowa",18344,1097406,26.4,41.0444,-92.4291
+25,Calaway-Young Cancer Center at Valley View Hospital,0,Glenwood Springs,CO,"Garfield, Colorado",17791,1115197,26.8,39.5876,-107.3387

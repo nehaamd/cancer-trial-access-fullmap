@@ -1,17 +1,17 @@
 {
- "built": "2026-10-04",
+ "built": "2026-10-05",
  "median_all": 466.5,
  "national": {
   "counties_classified": 3026,
-  "hb_la_counties": 492,
-  "hb_la_pop55": 4273204,
-  "hb_la_cases": 86816,
-  "hb_la_small_numbers": 28,
+  "hb_la_counties": 497,
+  "hb_la_pop55": 4341298,
+  "hb_la_cases": 88182,
+  "hb_la_small_numbers": 29,
   "cells": {
-   "hb_la": 492,
-   "hb_ok": 989,
-   "lb_la": 761,
-   "lb_ok": 784
+   "hb_la": 497,
+   "hb_ok": 984,
+   "lb_la": 769,
+   "lb_ok": 776
   },
   "top": [
    "12073",

@@ -1,6 +1,6 @@
 {
- "fetched": "2026-10-04",
- "source": "https://raw.githubusercontent.com/unitedstates/congress-legislators/gh-pages/legislators-current.json",
+ "fetched": "2026-10-05",
+ "source": "https://unitedstates.github.io/congress-legislators/legislators-current.json",
  "status": "downloaded",
  "members": 539,
  "representatives": 439,
