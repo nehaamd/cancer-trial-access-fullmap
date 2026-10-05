@@ -65,7 +65,7 @@
   <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><a href="find.html">Find trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="sites.html" aria-current="page">Where would a new site help?</a><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
 <div class="page-head"><p class="kicker">Research prototype</p><h1>Where would an additional trial site help?</h1>
-  <p>Of existing, trial-capable facilities that host no eligible recruiting trial today, which sit nearest to the most residents 55+ who have no recruiting cancer treatment trial within 60 road-miles? A maximal covering location problem on the same road graph and census tracts as the map.</p></div>
+  <p>Of existing, trial-capable facilities that host no listed trial today, which sit nearest to the most residents 55+ who have no recruiting cancer treatment trial within 60 road-miles? A maximal covering location problem on the same road graph and census tracts as the map.</p></div>
 <div class="banner" id="banner"></div>
 <main>
   <section>
@@ -74,13 +74,13 @@
     <svg id="curve" viewBox="0 0 560 170" class="curve" role="img" aria-label="Cumulative population newly covered by successive picks"></svg>
     <table id="greedy"><thead><tr><th>Pick</th><th>Facility</th><th>County</th><th>Residents 55+ newly covered</th><th>Cumulative</th><th>% of uncovered</th></tr></thead><tbody></tbody></table>
     <h2>All candidates, ranked individually (top 200 shown; <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/blob/main/out_adult55/tier4_candidates_ranked.csv" target="_blank" rel="noopener">full list as a CSV file</a>)</h2>
-    <p style="font-size:var(--fs-0);color:var(--ink-2);max-width:90ch">Individual rankings overlap: two facilities 20 miles apart cover mostly the same people. Use the greedy sequence above for a set; use this table to see the alternatives near each pick. "Trials in county" is the county's current eligible recruiting count (all below 20 by construction).</p>
+    <p style="font-size:var(--fs-0);color:var(--ink-2);max-width:90ch">Individual rankings overlap: two facilities 20 miles apart cover mostly the same people. Use the greedy sequence above for a set; use this table to see the alternatives near each pick. "Trials in county" is the county's current count of listed trials (all below 20 by construction).</p>
     <table id="ranked"><thead><tr><th>#</th><th>Facility</th><th>County</th><th>Newly covered (no trial within 60 mi)</th><th>Newly covered (fewer than 20)</th><th>Tracts within 60 mi</th><th>Trials in county</th></tr></thead><tbody></tbody></table>
   </section>
   <aside>
     <h2>Map</h2>
-    <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Counties with no eligible trial, candidate facilities, and the greedy picks"></svg>
-    <div class="legend"><span><i style="background:#F3E6E0"></i>county with no eligible recruiting trial</span><span><i style="background:var(--gulf);border-radius:50%"></i>top-200 candidate</span><span><i style="background:var(--rust);border-radius:50%"></i>greedy pick (numbered)</span></div>
+    <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Counties with no listed trial, candidate facilities, and the greedy picks"></svg>
+    <div class="legend"><span><i style="background:#F3E6E0"></i>county with no listed trial</span><span><i style="background:var(--gulf);border-radius:50%"></i>top-200 candidate</span><span><i style="background:var(--rust);border-radius:50%"></i>greedy pick (numbered)</span></div>
     <h2>Methodology (fixed before the computation; reproduced verbatim)</h2>
     <div class="method" id="method"></div>
     <h2>Validation status</h2>
@@ -95,10 +95,10 @@
 (function(){
   const T4 = window.TIER4, D = window.DATA, GEO = window.GEO, C = D.counties; const fmt = d3.format(',');
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
-  document.getElementById('banner').innerHTML = `<strong>Research prototype.</strong> Candidate universe: <em>${esc(T4.label)}</em>. ${T4.counts.candidates_read.toLocaleString()} facilities read; ${T4.counts.excluded_county_has_limited_menu.toLocaleString()} excluded because their county already hosts 20+ eligible trials, ${T4.counts.excluded_facility_already_recruiting.toLocaleString()} because the facility already hosts an eligible recruiting trial; ${T4.counts.candidates_evaluated.toLocaleString()} evaluated. Names marked <span style="color:var(--warn)">†</span> are sponsor placeholders in the registry ("Research Site", or just a city): the location is real, the facility is not identified. This is not a recommendation to build anything. Generated ${T4.generated}.`;
-  document.getElementById('kpi').innerHTML = `<div><b>${fmt(T4.uncovered.zero_trials_within_60rdmi)}</b><span>residents 55+ with no eligible recruiting trial within 60 road-miles today (primary objective)</span></div><div><b>${fmt(T4.uncovered.lt20_trials_within_60rdmi)}</b><span>with fewer than 20 (secondary view)</span></div><div><b>${T4.greedy.length ? T4.greedy[T4.greedy.length-1].pct_of_uncovered_pop55 : 0}%</b><span>of the uncovered population reached by the first ${T4.greedy.length} greedy picks</span></div>`;
+  document.getElementById('banner').innerHTML = `<strong>Research prototype.</strong> Candidate universe: <em>${esc(T4.label)}</em>. ${T4.counts.candidates_read.toLocaleString()} facilities read; ${T4.counts.excluded_county_has_limited_menu.toLocaleString()} excluded because their county already hosts 20+ listed trials, ${T4.counts.excluded_facility_already_recruiting.toLocaleString()} because the facility already hosts a listed trial; ${T4.counts.candidates_evaluated.toLocaleString()} evaluated. Names marked <span style="color:var(--warn)">†</span> are sponsor placeholders in the registry ("Research Site", or just a city): the location is real, the facility is not identified. This is not a recommendation to build anything. Generated ${T4.generated}.`;
+  document.getElementById('kpi').innerHTML = `<div><b>${fmt(T4.uncovered.zero_trials_within_60rdmi)}</b><span>residents 55+ with no listed trial within 60 road-miles today (primary objective)</span></div><div><b>${fmt(T4.uncovered.lt20_trials_within_60rdmi)}</b><span>with fewer than 20 (secondary view)</span></div><div><b>${T4.greedy.length ? T4.greedy[T4.greedy.length-1].pct_of_uncovered_pop55 : 0}%</b><span>of the uncovered population reached by the first ${T4.greedy.length} greedy picks</span></div>`;
   document.getElementById('method').textContent = T4.method;
-  document.getElementById('valid').textContent = 'Automated checks on every refresh: each pick is in a county with fewer than 20 eligible trials and at a facility with none, and coverage is monotone along the greedy sequence. The picks have not been independently reviewed, and the intended candidate universe (CoC-accredited programs + NCORP affiliates) has not yet been substituted for the registry stand-in, so several names are sponsor placeholders or clinics that are not cancer programs.';
+  document.getElementById('valid').textContent = 'Automated checks on every refresh: each pick is in a county with fewer than 20 listed trials and at a facility with none, and coverage is monotone along the greedy sequence. The picks have not been independently reviewed, and the intended candidate universe (CoC-accredited programs + NCORP affiliates) has not yet been substituted for the registry stand-in, so several names are sponsor placeholders or clinics that are not cancer programs.';
   const gb = document.querySelector('#greedy tbody'); gb.innerHTML = T4.greedy.map(g => `<tr><td class="n">${g.step}</td><td>${esc(g.name)}${g.placeholder ? ' <span class="ph">†</span>' : ''}, ${esc(g.city)}, ${g.state}</td><td>${esc(g.county)}</td><td class="n">${fmt(g.pop55_newly_covered)}</td><td class="n">${fmt(g.cumulative_pop55_covered)}</td><td class="n">${g.pct_of_uncovered_pop55}%</td></tr>`).join('');
   const rb = document.querySelector('#ranked tbody'); rb.innerHTML = T4.ranked.map(r => `<tr><td class="n">${r[0]}</td><td>${esc(r[1])}${r[2] ? ' <span class="ph">†</span>' : ''}, ${esc(r[3])}, ${r[4]}</td><td>${esc(r[5])}</td><td class="n">${fmt(r[6])}</td><td class="n">${fmt(r[7])}</td><td class="n">${fmt(r[8])}</td><td class="n">${r[9]}</td></tr>`).join('');
   // coverage curve
@@ -117,7 +117,7 @@
   gp.selectAll('text').data(T4.greedy).join('text').attr('class', 'plabel').attr('text-anchor', 'middle').attr('dy', -7).attr('transform', g => { const p = proj([g.lon, g.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; }).text(g => g.step);
 })();
 </script>
-<footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><span data-site-date></span></div></footer>
+<footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script>try{document.querySelectorAll('[data-site-date]').forEach(function(e){e.textContent=SITE.stampText(window.DATA.meta);});}catch(e){}</script>
 </body>
 </html>
