@@ -4,13 +4,14 @@ For every county population center (2020 Census) and every census-tract internal
   * road miles (and indicative drive hours along the same shortest-mile route) to the nearest broad-menu county (>=100 trials),
     limited-menu county (>=20 trials) and NCI-designated treating center;
   * the set of trial-hosting counties within 120 road-miles (used for "trials within 30/60/120 road-miles" pools).
-Also: 30 published city-pair driving distances re-computed on the graph (router validation).
+Also: published city-pair driving distances re-computed on the graph (router validation), and a table of local routes -
+short in-town trips and water crossings - that guard against the two ways a highway graph goes wrong (LOCAL_CHECKS).
 
 Points are joined to the graph by a straight-line "access" edge to the nearest road node (35 mph), exactly as in the Texas build.
 Counties and NCI centers get their own graph node (so they can be Dijkstra sources); tracts are leaves (distance = nearest
 road node's distance + access length), which is numerically identical to giving them a node.
 
-Outputs: out_adult55/county_road_distances.csv, out_adult55/road_validation.csv, out_adult55/county_pairs_within_120rdmi.csv,
+Outputs: out_adult55/county_road_distances.csv, out_adult55/road_validation.csv, out_adult55/road_local_checks.csv, out_adult55/county_pairs_within_120rdmi.csv,
          data/roads/route_cache.npz (tract-level arrays), out_adult55/route_log.json
 """
 import json, time
@@ -43,6 +44,42 @@ VALIDATION = [
  ("El Paso", "48141", "San Antonio", "48029", 552), ("Amarillo", "48375", "Oklahoma City", "40109", 260),
 ]
 
+# Local routes re-checked on every run (road_local_checks.csv). The city pairs above cannot see a fault that only affects the last
+# few miles of a trip, and they cannot see a link that should not exist. Two kinds of route are therefore checked as well:
+#   "land"  - short trips between two points of one town, and a few longer ones, that the first national graph got badly wrong
+#             (a tract joined to the dead end of a one-way carriageway and routed 60-300 miles); fails if the network distance is
+#             more than 2 x the approximate driving distance + 5 miles;
+#   "water" - pairs separated by a sound, bay, lake or large river with no bridge nearby; fails if the network distance is less
+#             than 0.6 x the approximate driving distance, i.e. if the graph has invented a crossing.
+# Driving distances are approximate (rounded map values) and are used only as this coarse screen, never as a result.
+LOCAL_CHECKS = [
+ ("Bremerton WA to Seattle (the drive is around the Sound through Tacoma)", (47.567, -122.632), (47.606, -122.332), 65, "water"),
+ ("Oak Harbor WA to Everett (by Deception Pass)", (48.293, -122.643), (47.979, -122.202), 60, "water"),
+ ("Cape May NJ to Lewes DE (around Delaware Bay)", (38.935, -74.906), (38.774, -75.139), 180, "water"),
+ ("Greenport NY to New London CT (around Long Island Sound)", (41.103, -72.359), (41.356, -72.100), 200, "water"),
+ ("Plattsburgh NY to Burlington VT (around Lake Champlain by Rouses Point)", (44.699, -73.453), (44.476, -73.212), 60, "water"),
+ ("Port Bolivar TX to Galveston (around Galveston Bay)", (29.385, -94.760), (29.301, -94.797), 125, "water"),
+ ("Kingston WA to Edmonds (around Puget Sound)", (47.798, -122.497), (47.811, -122.377), 95, "water"),
+ ("Lake Providence LA to Mayersville MS (across the Mississippi; bridges at Vicksburg and Greenville)", (32.805, -91.171), (32.902, -91.051), 70, "water"),
+ ("Manchester OH to Tollesboro KY (across the Ohio by the Maysville bridge)", (38.688, -83.609), (38.559, -83.577), 30, "water"),
+ ("Rising Sun IN to Burlington KY (across the Ohio by I-275)", (38.949, -84.854), (39.029, -84.724), 25, "water"),
+ ("Port Orchard WA to Bremerton (around Sinclair Inlet)", (47.540, -122.636), (47.567, -122.632), 9, "water"),
+ ("Tucson AZ: Ajo Way at Mission Road to Banner University Medical Center", (32.178, -110.998), (32.240, -110.946), 7, "land"),
+ ("Traverse City MI: Chums Corner to Munson Medical Center", (44.660, -85.656), (44.762, -85.642), 7, "land"),
+ ("Kalispell MT: Evergreen to Logan Health", (48.232, -114.277), (48.214, -114.325), 4, "land"),
+ ("Spokane WA: South Hill to Sacred Heart Medical Center", (47.620, -117.393), (47.648, -117.413), 3, "land"),
+ ("Waterloo IA: north-east side to MercyOne", (42.487, -92.283), (42.4615, -92.3137), 4, "land"),
+ ("Pueblo CO: Belmont to Parkview Medical Center", (38.237, -104.673), (38.281, -104.612), 4, "land"),
+ ("Desert Hot Springs CA to Eisenhower Medical Center, Rancho Mirage", (33.961, -116.502), (33.762, -116.407), 18, "land"),
+ ("Rhinelander WI to Minocqua", (45.637, -89.412), (45.871, -89.711), 27, "land"),
+ ("Duluth MN: Lakeside to Essentia Health St. Mary's", (46.837, -92.012), (46.794, -92.094), 5, "land"),
+ ("Mackinaw City MI to St. Ignace (over the Mackinac Bridge)", (45.777, -84.727), (45.866, -84.728), 7, "land"),
+ ("Staten Island NY to Lower Manhattan (over the Verrazzano Bridge)", (40.579, -74.151), (40.713, -74.006), 15, "land"),
+ ("Missoula MT to Kalispell", (46.872, -113.994), (48.196, -114.313), 120, "land"),
+]
+LOCAL_LAND_MAX = lambda real: 2.0 * real + 5.0
+LOCAL_WATER_MIN = lambda real: 0.6 * real
+
 
 def to5070(lon, lat):
     p = gpd.GeoSeries(gpd.points_from_xy(lon, lat), crs=4326).to_crs(5070); return np.column_stack([p.x.values, p.y.values])
@@ -74,7 +111,7 @@ def main():
     MAX_ACCESS_MI = 30.0  # a point more than 30 straight-line miles from any primary/secondary road is "off the road network"
     cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str, "state_fips": str})
     cm = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str, "state_fips": str}).set_index("county_fips")
-    nci = pd.read_csv(REF / "nci_centers.csv")
+    nci = config.nci_targets()
     tr = pd.read_csv(REF / "tracts_us.csv", dtype={"tract": str, "county_fips": str})
     # --- county and NCI nodes appended to the graph with access edges ---
     cxy = to5070(cent.lon.values, cent.lat.values); cd, ci = tree.query(cxy); ci = aidx[ci]
@@ -176,11 +213,23 @@ def main():
     vdf = pd.DataFrame(val); vdf.to_csv(OUT / "road_validation.csv", index=False)
     log["router_validation"] = {"pairs": len(vdf), "mean_abs_pct_diff": round(float(vdf.pct_diff.abs().mean()), 1), "max_abs_pct_diff": round(float(vdf.pct_diff.abs().max()), 1),
                                 "unroutable_pairs": int(vdf.network_mi.isna().sum())}
+    # --- local checks: short trips and water crossings (see LOCAL_CHECKS) ---
+    loc = []
+    for name, pa, pb, real, kind in LOCAL_CHECKS:
+        xa = to5070(np.array([pa[1]]), np.array([pa[0]])); xb = to5070(np.array([pb[1]]), np.array([pb[0]])); da, ia = tree.query(xa); db, ib = tree.query(xb)
+        D = dijkstra(A, directed=False, indices=[int(aidx[ia[0]])], min_only=True); mi = float(D[int(aidx[ib[0]])] + (da[0] + db[0]) * M2MI)
+        ok = bool(np.isfinite(mi) and (mi <= LOCAL_LAND_MAX(real) if kind == "land" else mi >= LOCAL_WATER_MIN(real)))
+        loc.append({"route": name, "kind": kind, "approx_driving_mi": real, "network_mi": round(mi, 1) if np.isfinite(mi) else None,
+                    "limit": (f"at most {LOCAL_LAND_MAX(real):g}" if kind == "land" else f"at least {LOCAL_WATER_MIN(real):g}"), "ok": int(ok)})
+    ldf = pd.DataFrame(loc); ldf.to_csv(OUT / "road_local_checks.csv", index=False)
+    log["local_checks"] = {"routes": len(ldf), "land": int((ldf.kind == "land").sum()), "water": int((ldf.kind == "water").sum()), "failed": int((ldf.ok == 0).sum()),
+                           "failed_routes": ldf.loc[ldf.ok == 0, "route"].tolist()}
+    gs = json.load(open(ROADS / "graph_stats.json")); log["graph"] = {k: gs.get(k) for k in ("graph_version", "nodes", "edges", "densify_m", "connector_radius_m", "dead_end_bridges", "bridge_radius_m", "largest_component_share", "note")}
     okm = (rd.road_mi_broad > 0) & (rd.road_mi_broad < NOROAD); ratio = rd.road_mi_broad[okm] / (rd.straightline_x1_2_broad[okm] / config.ROAD_FACTOR)
     log["road_over_straightline_ratio_broad"] = {"median": round(float(ratio.median()), 3), "p10": round(float(ratio.quantile(.1)), 3), "p90": round(float(ratio.quantile(.9)), 3),
                                                  "counties_where_x1_2_underestimated": int((ratio > config.ROAD_FACTOR).sum()), "counties_compared": int(okm.sum())}
     log["seconds"] = round(time.time() - t0)
-    json.dump(log, open(OUT / "route_log.json", "w"), indent=2); print(json.dumps(log, indent=1)); print(vdf.to_string(index=False))
+    json.dump(log, open(OUT / "route_log.json", "w"), indent=2); print(json.dumps(log, indent=1)); print(vdf.to_string(index=False)); print(ldf.to_string(index=False))
 
 
 if __name__ == "__main__":

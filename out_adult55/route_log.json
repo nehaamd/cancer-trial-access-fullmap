@@ -1,166 +1,41 @@
 {
   "fragments_bridged": {
-    "n": 31,
+    "n": 6,
     "detail(component,nodes,gap_m)": [
       [
-        86,
-        92,
-        2034
-      ],
-      [
-        120,
-        77,
-        770
-      ],
-      [
-        150,
-        81,
-        1348
-      ],
-      [
-        170,
-        154,
-        589
-      ],
-      [
-        234,
-        95,
-        1021
-      ],
-      [
-        237,
-        61,
-        4788
-      ],
-      [
-        254,
-        91,
-        956
-      ],
-      [
-        269,
-        68,
-        2756
-      ],
-      [
-        298,
-        117,
-        2265
-      ],
-      [
-        316,
-        331,
-        630
-      ],
-      [
-        357,
-        116,
-        1801
-      ],
-      [
-        448,
-        54,
-        3013
-      ],
-      [
-        495,
-        80,
-        3426
-      ],
-      [
-        521,
-        51,
-        1873
-      ],
-      [
-        2004,
-        64,
-        4850
-      ],
-      [
-        2995,
-        59,
-        738
-      ],
-      [
-        3054,
-        58,
-        2260
-      ],
-      [
-        3085,
-        65,
-        957
-      ],
-      [
-        3111,
-        64,
-        3955
-      ],
-      [
-        3262,
-        66,
-        630
-      ],
-      [
-        3359,
-        55,
-        1918
-      ],
-      [
-        3608,
-        72,
-        886
-      ],
-      [
-        3683,
         60,
-        4150
+        63,
+        24
       ],
       [
-        3723,
+        64,
+        96,
+        4802
+      ],
+      [
+        72,
+        71,
+        147
+      ],
+      [
+        131,
         53,
-        1024
+        3679
       ],
       [
-        3938,
-        54,
-        767
+        142,
+        150,
+        143
       ],
       [
-        3988,
-        54,
-        914
-      ],
-      [
-        4375,
-        66,
-        511
-      ],
-      [
-        4619,
-        59,
-        534
-      ],
-      [
-        4678,
-        61,
-        2487
-      ],
-      [
-        4855,
-        52,
-        510
-      ],
-      [
-        4879,
-        77,
-        952
+        184,
+        199,
+        118
       ]
     ],
-    "fragments_ge50_not_bridged": 9
+    "fragments_ge50_not_bridged": 13
   },
-  "attachable_nodes_share": 0.9835,
+  "attachable_nodes_share": 0.9994,
   "counties_off_road_network_gt30mi": [
     "Aleutians East (02)",
     "Aleutians West (02)",
@@ -168,7 +43,6 @@
     "Bristol Bay (02)",
     "Dillingham (02)",
     "Hoonah-Angoon (02)",
-    "Juneau (02)",
     "Kodiak Island (02)",
     "Kusilvak (02)",
     "Lake and Peninsula (02)",
@@ -182,18 +56,18 @@
     "Yukon-Koyukuk (02)"
   ],
   "county_access_mi": {
-    "median": 0.98,
-    "p90": 3.81,
+    "median": 0.63,
+    "p90": 2.41,
     "max": 621371.2
   },
   "tracts_off_road_network_gt30mi": {
-    "n": 68,
-    "pop55": 47971,
-    "of_which_alaska": 46
+    "n": 54,
+    "pop55": 32452,
+    "of_which_alaska": 39
   },
   "tract_access_mi": {
-    "median": 0.79,
-    "p90": 2.9,
+    "median": 0.58,
+    "p90": 2.22,
     "max": Infinity
   },
   "counties_no_road_route": {
@@ -241,25 +115,43 @@
   },
   "tracts": 84396,
   "tract_no_road_route": {
-    "broad": 656,
-    "limited": 201,
-    "nci": 328,
-    "pop55_no_route_to_broad": 667012
+    "broad": 649,
+    "limited": 194,
+    "nci": 321,
+    "pop55_no_route_to_broad": 661727
   },
-  "tract_pairs_within_120rdmi": 1462071,
-  "county_pairs_within_120rdmi": 35680,
+  "tract_pairs_within_120rdmi": 1491490,
+  "county_pairs_within_120rdmi": 36756,
   "router_validation": {
     "pairs": 38,
     "mean_abs_pct_diff": 3.1,
-    "max_abs_pct_diff": 12.8,
+    "max_abs_pct_diff": 13.3,
     "unroutable_pairs": 0
   },
+  "local_checks": {
+    "routes": 23,
+    "land": 12,
+    "water": 11,
+    "failed": 0,
+    "failed_routes": []
+  },
+  "graph": {
+    "graph_version": 2,
+    "nodes": 3592520,
+    "edges": 6605995,
+    "densify_m": 400.0,
+    "connector_radius_m": 500.0,
+    "dead_end_bridges": 18011,
+    "bridge_radius_m": 5000.0,
+    "largest_component_share": 0.9919,
+    "note": "a node at least every 400 m and at every crossing; junctions within 500 m joined; highway dead ends within 5 km of another road linked across the gap; no link crosses a county line or coastal water"
+  },
   "road_over_straightline_ratio_broad": {
-    "median": 1.198,
-    "p10": 1.095,
-    "p90": 1.38,
-    "counties_where_x1_2_underestimated": 1481,
+    "median": 1.181,
+    "p10": 1.087,
+    "p90": 1.337,
+    "counties_where_x1_2_underestimated": 1275,
     "counties_compared": 3025
   },
-  "seconds": 72
+  "seconds": 269
 }

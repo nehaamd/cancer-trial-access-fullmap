@@ -5,6 +5,8 @@ Checks
   1. Classification audit has no unreviewed strings (audit_cancer_types.py; see qc_cancer_type_audit.md)
   2. Headline numbers are within plausible bounds and did not jump from the previous snapshot
      (a jump means the registry pull or a pipeline stage broke, not that access changed in a week)
+  2b. The road network still routes short local trips sensibly and has not invented water crossings (route_us.py LOCAL_CHECKS),
+      and few residents have a site nearby in a straight line but none by road (route_sites_us.py)
   3. The published payload is internally consistent (trial count, county / district / state counts, no NaN in headline fields)
     python3 release_gate.py
 """
@@ -34,8 +36,13 @@ for k, lo, hi in (("pct_lt20_trials_within_60rdmi", 5, 30), ("pct_zero_trials_wi
 snaps = sorted((ROOT / "data" / "snapshots").glob("*/national_metrics_v3.json")) if (ROOT / "data" / "snapshots").exists() else []
 if snaps:
     prev = json.load(open(snaps[-1])); pt = json.load(open(snaps[-1].parent / "fetch_log.json")).get("timestamp_utc", "?")[:10] if (snaps[-1].parent / "fetch_log.json").exists() else snaps[-1].parent.name
-    for k, tol in (("pct_lt20_trials_within_60rdmi", 1.5), ("pct_zero_trials_within_60rdmi", 1.0), ("pct_gt60rdmi_broad_menu", 2.0), ("pct_gt60rdmi_nci", 1.0), ("median_road_mi_nci", 5)):
-        check(f"{k} moved less than {tol} since {pt}", f"{prev[k]} -> {nat[k]}", abs(nat[k] - prev[k]) <= tol)
+    mv_prev, mv_now = int(prev.get("method_version", 1)), int(nat.get("method_version", 1))
+    if mv_prev != mv_now:
+        # the previous pull was calculated with an earlier method (config.METHOD_CHANGES): a step between the two is expected and is not drift
+        check(f"Drift vs the pull of {pt}", f"skipped once: the method changed (version {mv_prev} -> {mv_now}); the bounds above still apply", True)
+    else:
+        for k, tol in (("pct_lt20_trials_within_60rdmi", 1.5), ("pct_zero_trials_within_60rdmi", 1.0), ("pct_gt60rdmi_broad_menu", 2.0), ("pct_gt60rdmi_nci", 1.0), ("median_road_mi_nci", 5)):
+            check(f"{k} moved less than {tol} since {pt}", f"{prev[k]} -> {nat[k]}", abs(nat[k] - prev[k]) <= tol)
     pc = (ROOT / "data" / "snapshots" / snaps[-1].parent.name / "county_metrics.csv")
     if pc.exists():
         a = pd.read_csv(pc, dtype={"county_fips": str}); b = pd.read_csv(find("county_metrics.csv"), dtype={"county_fips": str})
@@ -43,6 +50,15 @@ if snaps:
         check("County trial-site total moved less than 15% since the previous pull", f"{ta:,} -> {tb:,}", abs(tb - ta) <= 0.15 * max(ta, 1))
 else:
     check("Drift vs previous snapshot", "no previous snapshot yet (first run) — skipped", True)
+
+# 2b. road network: a fault in the graph shows up as short trips routed the long way round, or as water crossed where there is no bridge
+rl = json.load(open(find("route_log.json"))); lc = rl.get("local_checks")
+if lc: check(f"Local route checks ({lc['land']} short trips, {lc['water']} water crossings; road_local_checks.csv)", f"{lc['routes'] - lc['failed']}/{lc['routes']} within tolerance" + ("; outside: " + "; ".join(lc["failed_routes"]) if lc["failed"] else ""), lc["failed"] == 0)
+else: check("Local route checks", "route_log.json has no local_checks (route_us.py not re-run?)", False)
+sl = json.load(open(find("route_sites_log.json"))).get("screen_site_near_in_straight_line_far_by_road")
+if sl: check("Residents 55+ with a site within 20 straight-line miles but none within 60 road-miles (ceiling 100,000; water barriers explain the rest)", f"{sl['pop55']:,} in {sl['tracts']:,} tracts; largest: " + ", ".join(f"{c['county']} {c['pop55']:,}" for c in sl["largest_counties"][:4]), sl["pop55"] <= 100_000)
+else: check("Near-in-a-straight-line, far-by-road screen", "route_sites_log.json has no screen (route_sites_us.py not re-run?)", False)
+rv = rl["router_validation"]; check("Router vs published city-pair distances (mean difference below 5%, every pair routable)", f"{rv['pairs']} pairs, mean {rv['mean_abs_pct_diff']}%, max {rv['max_abs_pct_diff']}%, unroutable {rv['unroutable_pairs']}", rv["mean_abs_pct_diff"] < 5 and rv["unroutable_pairs"] == 0)
 
 # 3. payload consistency
 T = D["T"]; check("data.js trial list matches meta.trials", f"{len(T['id']):,} vs {meta['trials']:,}", len(T["id"]) == meta["trials"])

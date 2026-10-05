@@ -48,6 +48,38 @@ NCI = [
  ("VCU Massey Comprehensive Cancer Center", "richmond", "VA", "Comprehensive"), ("University of Virginia Cancer Center", "charlottesville", "VA", "Comprehensive"),
  ("Fred Hutch/UW/Seattle Children's Cancer Consortium", "seattle", "WA", "Comprehensive"), ("UW Carbone Cancer Center", "madison", "WI", "Comprehensive"),
 ]
+# Where each center is drawn and measured to: the centroid of the hospital's ZIP code (the ZIP the registry lists for the center's
+# own trial sites; a hospital-only ZIP that is not a Census ZIP area is replaced by the ZIP area around it). A city centroid can be
+# 5-13 miles from the campus (Mayo Clinic in Phoenix and Jacksonville, USC Norris, the University of Arizona), which moved the
+# "nearest NCI center" distances of nearby counties. Centers not listed here use NCI_OVERRIDE, then the city centroid: for those
+# the city centroid is the closer of the two to the campus (a small city, or a ZIP area much larger than the campus).
+NCI_ZIP = {
+ "O'Neal Comprehensive Cancer Center (UAB)": "35233", "University of Arizona Cancer Center": "85719", "Mayo Clinic Cancer Center – Phoenix": "85054",
+ "Chao Family Comprehensive Cancer Center (UC Irvine)": "92868", "City of Hope": "91010", "Jonsson Comprehensive Cancer Center (UCLA)": "90095",
+ "UC Davis Comprehensive Cancer Center": "95817", "USC Norris Comprehensive Cancer Center": "90033", "University of Colorado Cancer Center": "80045",
+ "Yale Cancer Center": "06510", "Georgetown Lombardi Comprehensive Cancer Center": "20007", "Mayo Clinic Cancer Center – Jacksonville": "32224",
+ "Sylvester Comprehensive Cancer Center (Miami)": "33136", "Moffitt Cancer Center": "33612", "University of Florida Health Cancer Institute": "32610",
+ "Winship Cancer Institute (Emory)": "30322", "Robert H. Lurie Comprehensive Cancer Center (Northwestern)": "60611", "University of Chicago Comprehensive Cancer Center": "60637",
+ "IU Simon Comprehensive Cancer Center": "46202", "Holden Comprehensive Cancer Center (Iowa)": "52242", "University of Kansas Cancer Center": "66160",
+ "Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)": "21287", "UM Greenebaum Comprehensive Cancer Center": "21201", "Dana-Farber/Harvard Cancer Center": "02215",
+ "Karmanos Cancer Institute (Wayne State)": "48201", "Masonic Cancer Center (Minnesota)": "55455",
+ "Siteman Cancer Center (WashU)": "63110", "Fred & Pamela Buffett Cancer Center (UNMC)": "68105",
+ "Rutgers Cancer Institute of New Jersey": "08901", "UNM Comprehensive Cancer Center": "87102",
+ "Montefiore Einstein Cancer Center": "10467", "Herbert Irving Comprehensive Cancer Center (Columbia)": "10032", "Perlmutter Cancer Center (NYU Langone)": "10016",
+ "Memorial Sloan Kettering Cancer Center": "10065", "Mount Sinai Tisch Cancer Center": "10029",
+ "Wilmot Cancer Institute (Rochester)": "14642", "Duke Cancer Institute": "27705", "UNC Lineberger Comprehensive Cancer Center": "27599",
+ "Case Comprehensive Cancer Center": "44106", "OSU Comprehensive Cancer Center – James": "43210",
+ "Stephenson Cancer Center (Oklahoma)": "73104", "Knight Cancer Institute (OHSU)": "97239", "Abramson Cancer Center (Penn)": "19104", "Fox Chase Cancer Center": "19111",
+ "Sidney Kimmel Cancer Center (Jefferson)": "19107", "UPMC Hillman Cancer Center": "15232", "Hollings Cancer Center (MUSC)": "29425",
+ "St. Jude Children's Research Hospital": "38105", "Dan L Duncan Comprehensive Cancer Center (Baylor)": "77030", "Harold C. Simmons Comprehensive Cancer Center (UTSW)": "75390",
+ "Mays Cancer Center (UT Health San Antonio)": "78229", "MD Anderson Cancer Center": "77030", "Huntsman Cancer Institute (Utah)": "84112",
+ "VCU Massey Comprehensive Cancer Center": "23298", "University of Virginia Cancer Center": "22908", "Fred Hutch/UW/Seattle Children's Cancer Consortium": "98109",
+ "UW Carbone Cancer Center": "53792",
+}
+# NCI-designated, but treats children: kept in the list, never used as the "nearest NCI center" of residents 55+.
+NCI_NOT_ADULT = {"St. Jude Children's Research Hospital"}
+# One NCI designation with several campuses: each campus is a distance target, the designation is counted once.
+NCI_ONE_DESIGNATION = {n: "Mayo Clinic Comprehensive Cancer Center" for n in ("Mayo Clinic Cancer Center – Phoenix", "Mayo Clinic Cancer Center – Jacksonville", "Mayo Clinic Cancer Center – Rochester")}
 # Places that are not Census places or where a campus-level point is clearly better than the city centroid.
 NCI_OVERRIDE = {"la jolla": (32.875, -117.236), "bronx": (40.880, -73.879), "manhattan": (40.770, -73.960), "stanford": (37.433, -122.175),
                 "urban honolulu": (21.300, -157.850), "san francisco": (37.763, -122.458), "nashville-davidson": (36.144, -86.803), "lexington-fayette": (38.032, -84.508)}
@@ -88,19 +120,33 @@ def age_years(s):
     return float(m.group(1)) / {"year": 1, "month": 12, "week": 52, "day": 365}[m.group(2).lower()]
 
 
-def main():
-    OUT.mkdir(exist_ok=True)
+def write_nci_centers():
+    """data/ref/nci_centers.csv: one row per location. `center` groups the campuses of one designation; `adult` = 0 marks a center
+    that does not treat adults, which stays in the file but is never a distance target (config.nci_targets() drops it)."""
     gaz = pd.read_csv(REF / "gazetteer_places.csv", dtype=str)
     gaz["lat"] = gaz.lat.astype(float); gaz["lon"] = gaz.lon.astype(float)
+    zc = pd.read_csv(REF / "zcta_pop55.csv", dtype={"zcta": str}).set_index("zcta")
+    unknown = set(NCI_ZIP) - {n[0] for n in NCI}
+    if unknown: raise SystemExit(f"NCI_ZIP names not in the NCI list: {sorted(unknown)}")
     rows = []
     for name, place, st, tier in NCI:
-        if place in NCI_OVERRIDE: lat, lon = NCI_OVERRIDE[place]; src = "override"
+        if name in NCI_ZIP:
+            if NCI_ZIP[name] not in zc.index: raise SystemExit(f"ZIP {NCI_ZIP[name]} for {name} is not a Census ZIP area")
+            lat, lon, src = float(zc.loc[NCI_ZIP[name], "lat"]), float(zc.loc[NCI_ZIP[name], "lon"]), "zip_centroid_" + NCI_ZIP[name]
+        elif place in NCI_OVERRIDE: lat, lon = NCI_OVERRIDE[place]; src = "override"
         else:
             m = gaz[(gaz.state == st) & (gaz.place == place)]
             if m.empty: raise SystemExit(f"gazetteer miss: {place}, {st}")
             lat, lon, src = m.iloc[0].lat, m.iloc[0].lon, "gazetteer_place_centroid"
-        rows.append({"name": name, "city": place, "state": st, "tier": tier, "lat": round(lat, 4), "lon": round(lon, 4), "coord_source": src})
+        rows.append({"name": name, "city": place, "state": st, "tier": tier, "lat": round(lat, 4), "lon": round(lon, 4), "coord_source": src,
+                     "center": NCI_ONE_DESIGNATION.get(name, name), "adult": int(name not in NCI_NOT_ADULT)})
     pd.DataFrame(rows).to_csv(REF / "nci_centers.csv", index=False)
+    return rows
+
+
+def main():
+    OUT.mkdir(exist_ok=True)
+    rows = write_nci_centers()
 
     # fetch_us.py writes the raw pull to trials.csv / us_sites.csv; keep a *_raw copy of THIS pull (always refresh — an older copy
     # left over from a previous pull would silently be QC'd instead of the new data)
@@ -128,9 +174,12 @@ def main():
             w = csv.DictWriter(f, fieldnames=list(data[0].keys())); w.writeheader(); w.writerows(data)
     pd.DataFrame(excluded).to_csv(OUT / "qc_excluded_non_oncology.csv", index=False)
     log = {"trials_raw": len(trials), "excluded_non_oncology_rule": len(excluded), "trials_kept": len(kept), "site_rows_kept": len(sites),
-           "route": tally, "excludes_55plus": sum(t["excludes_55plus"] for t in kept), "nci_treating_centers": len(rows)}
+           "route": tally, "excludes_55plus": sum(t["excludes_55plus"] for t in kept), "nci_treating_centers": len(rows),
+           "nci_adult_locations": sum(r["adult"] for r in rows), "nci_adult_centers": len({r["center"] for r in rows if r["adult"]}), "nci_not_adult": sorted(NCI_NOT_ADULT)}
     json.dump(log, open(OUT / "qc_log.json", "w"), indent=2); print(json.dumps(log, indent=2))
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--nci-only" in sys.argv: print("NCI center locations written:", len(write_nci_centers()))   # refresh the reference file without touching the registry pull
+    else: main()

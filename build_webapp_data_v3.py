@@ -5,6 +5,7 @@ names are free text, so two spellings of one hospital can count twice and one na
 therefore approximate and is labelled as "facilities (registry-listed, deduplicated by name)".
 """
 import json, re
+import config
 from pathlib import Path
 import numpy as np, pandas as pd, geopandas as gpd
 from shapely.geometry import mapping
@@ -21,6 +22,28 @@ SITECODE = re.compile(r"\(?\s*(site|study site|local institution|investigative s
 def norm(x):
     """Facility key: lower-case, sponsor site codes removed ("( Site 0087)", "Local Institution - 0012", "/ID# 12345"), punctuation dropped."""
     y = SITECODE.sub(" ", str(x)); y = re.sub(r"[^a-z0-9 ]", " ", y.lower()); return re.sub(r"\s+", " ", y).strip()
+
+
+CODELIKE = re.compile(r"^(?:site|study site|center|centre|location)?[\s#:.-]*(?:[A-Za-z]{0,3}[\s-]?)?\d[\dA-Za-z-]*$", re.I)
+def clean_name(x):
+    """Display name of a facility: sponsor site codes removed, stray dashes and commas trimmed, brackets left balanced.
+    ("Translation Research in Oncology - US, Inc (TRIO-US)" used to lose its closing bracket.)"""
+    y = re.sub(r"\s+", " ", SITECODE.sub("", str(x))).strip(" -,/")
+    y = re.sub(r"\(\s*\)", "", y).strip(" -,/")
+    out, depth = [], 0
+    for ch in y:                                   # drop a ")" that closes nothing ...
+        if ch == "(": depth += 1
+        elif ch == ")":
+            if depth == 0: continue
+            depth -= 1
+        out.append(ch)
+    y = "".join(out).strip(" -,/")
+    while depth and y.endswith("("): y = y[:-1].strip(" -,/"); depth -= 1     # ... a "(" that opens nothing ...
+    y += ")" * depth                               # ... and close what is still open
+    return y or str(x)
+def code_like(name):
+    """A name that is only a sponsor's site code ("014", "USA02-0", "Site USA12-0", "GC2202"): the place is real, the facility is not identified."""
+    return bool(CODELIKE.match(str(name).strip()))
 
 
 def main():
@@ -62,8 +85,8 @@ def main():
     PLACEHOLDER = re.compile(r"^(research site|local institution|study site|clinical site|investigational site|investigative site|site|clinical research site|research facility|central recruiting site|recruiting site)$|^\s*$", re.I)
     fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", lambda s: s.value_counts().index[0]), city=("city", lambda s: s.value_counts().index[0]), zip=("zip", lambda s: s[s.str.len() == 5].value_counts().index[0] if (s.str.len() == 5).any() else ""),
                                                    trials=("nct_id", lambda s: sorted({j_of[n] for n in s})), n_rows=("nct_id", "size")).reset_index()
-    fac["name"] = fac.name.map(lambda x: re.sub(r"\s+", " ", SITECODE.sub("", x)).strip(" -(),") or x)
-    fac["unresolved"] = fac.fac.map(lambda f: int(bool(PLACEHOLDER.match(f))))
+    fac["name"] = fac.name.map(clean_name)
+    fac["unresolved"] = [int(bool(PLACEHOLDER.match(f)) or code_like(n)) for f, n in zip(fac.fac, fac.name)]
     fac = fac.sort_values(["county_fips", "fac"]).reset_index(drop=True); fac["site_id"] = [f"S{i:05d}" for i in range(len(fac))]
     fac_idx = {}; ct_fac = {}
     for f, g in fac.groupby("county_fips"):
@@ -109,12 +132,16 @@ def main():
         g = g.set_index("site"); B[f] = [[(None if pd.isna(g.loc[s, "rate"]) else round(float(g.loc[s, "rate"]), 1)), (None if pd.isna(g.loc[s, "ci_lo"]) else round(float(g.loc[s, "ci_lo"]), 1)),
                                          (None if pd.isna(g.loc[s, "ci_hi"]) else round(float(g.loc[s, "ci_hi"]), 1)), (None if pd.isna(g.loc[s, "avg_annual_count"]) else int(g.loc[s, "avg_annual_count"])),
                                          bstat[g.loc[s, "status"]]] if s in g.index else [None, None, None, None, 4] for s in bsites]
+    # the Census Bureau's own full name of each county-equivalent ("Harris County", "Orleans Parish", "Baltimore city",
+    # "Anchorage Municipality", "District of Columbia"), so no page has to guess the suffix. Connecticut: legacy counties (2021 file).
+    _n23 = gpd.read_file("zip://data/geo/cb.zip", ignore_geometry=True); _n21 = gpd.read_file("zip://data/geo/cb500_2021.zip", ignore_geometry=True)
+    namelsad = {**dict(zip(_n23.GEOID, _n23.NAMELSAD)), **dict(zip(_n21[_n21.STATEFP == "09"].GEOID, _n21[_n21.STATEFP == "09"].NAMELSAD))}
     counties = {}
     for f in cm.index:
         c = cm.loc[f]; r = rd.loc[f]; v = cov.loc[f] if f in cov.index else None
         def road(lab):
             mi = float(r[f"road_mi_{lab}"]); return None if mi >= NOROAD else round(mi)
-        counties[f] = {"n": c.county_name, "s": str(c.state_fips).zfill(2), "p": int(c.pop55), "t": int(c.trials_in_county), "f": len(ct_fac.get(f, [])),
+        counties[f] = {"n": c.county_name, "nl": namelsad.get(f) or None, "s": str(c.state_fips).zfill(2), "p": int(c.pop55), "t": int(c.trials_in_county), "f": len(ct_fac.get(f, [])),
                        "tr": ct_trials.get(f, []), "fac": ct_fac.get(f, []), "nb": nb60.get(f, []), "nbd": nbd.get(f, []), "t60": pool60[f], "f60": fac60[f],
                        "rb": road("broad"), "rl": road("limited"), "rn": road("nci"), "hb": None if r.road_mi_broad >= NOROAD else round(float(r.drive_hr_broad), 1),
                        "hn": None if r.road_mi_nci >= NOROAD else round(float(r.drive_hr_nci), 1), "nn": r.nearest_nci, "nbm": r.nearest_broad,
@@ -178,19 +205,22 @@ def main():
                         "bd": {"ct": {c.replace("wmean_t60_cancer_type_", ""): int(r[c]) for c in tcols["ct"]}, "ph": {c.replace("wmean_t60_phase_", ""): int(r[c]) for c in tcols["ph"]}, "sp": {c.replace("wmean_t60_sponsor_", ""): int(r[c]) for c in tcols["sp"]}},
                         "v2": {"g60b": float(old.loc[k, "pct_pop55_beyond_60mi_of_broad_menu"]), "zc": float(old.loc[k, "pct_pop55_in_counties_with_zero_trials"])} if k in old.index else None,
                         "member": m["name"] if m else "", "party": m["party"] if m else "", "hr3521": "lead" if k in lead_hr3521 else "", "ctx": ctx_of(r), "counties": d_counties.get(k, [])}
-    nci = pd.read_csv(REF / "nci_centers.csv"); short = lambda s: s.replace(" Comprehensive Cancer Center", "").replace(" Cancer Center", "")
+    nci = config.nci_targets(); short = lambda s: s.replace(" Comprehensive Cancer Center", "").replace(" Cancer Center", "")
     ncil = [{"n": short(r.name), "full": r.name, "lat": round(r.lat, 3), "lon": round(r.lon, 3), "st": r.state, "tier": r.tier} for r in nci.itertuples()]
     nat = json.load(open(OUT / "national_metrics_v3.json")); cts = json.load(open(OUT / "cancer_type_summary.json")); rlog = json.load(open(OUT / "route_log.json")); blog = json.load(open(REF / "cancer_burden_log.json"))
     nat_ctx = ctx_of(pd.Series(nat)); blog_sites = blog["sites"]
     nat_binc = {site: [blog_sites[site]["us_rate"], int(blog_sites[site]["us_avg_annual_count"]) if blog_sites[site]["us_avg_annual_count"] else None, "ok"] for site in bsites if site in blog_sites}
     nat_core = core_of(pd.Series(nat))
-    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2021 maps)", "members_pull": "2026-09-09 (unitedstates/congress-legislators, gh-pages)",
-            "router": {"pairs": rlog["router_validation"]["pairs"], "mean_pct": rlog["router_validation"]["mean_abs_pct_diff"], "max_pct": rlog["router_validation"]["max_abs_pct_diff"]},
+    llog = json.load(open(REF / "legislators_log.json")) if (REF / "legislators_log.json").exists() else {}; lc = rlog.get("local_checks")
+    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2021 maps)", "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
+            "router": {"pairs": rlog["router_validation"]["pairs"], "mean_pct": rlog["router_validation"]["mean_abs_pct_diff"], "max_pct": rlog["router_validation"]["max_abs_pct_diff"],
+                       **({"local": {"pairs": lc["routes"], "failed": lc["failed"], "note": ("all within tolerance" if not lc["failed"] else f"{lc['failed']} outside tolerance: " + "; ".join(lc["failed_routes"]))}} if lc else {})},
+            "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(),
             "burden": {"period": btitle["all"].split(", ")[-1], "pulled": blog["pulled"], "small_threshold": 16, "sites": [[s, btitle[s].split(" (All")[0]] for s in bsites], "not_available_states": ["KS"]},
             "sitepoints": int(SM.shape[0]), "pct_multi": cts["pct_multi_55plus"], "pct_unclassified": cts["pct_unclassified_55plus"], "national": {k: nat[k] for k in ("pop55", "pct_zero_trials_within_60rdmi", "pct_lt20_trials_within_60rdmi", "pct_in_zero_trial_county", "pct_gt60rdmi_broad_menu", "pct_gt120rdmi_broad_menu", "pct_gt60rdmi_nci", "median_road_mi_nci", "pct_no_road_route_broad")},
             "vacant": [k for k, v in districts.items() if not v["member"]]}
     statelist = sorted({(v["st"], v["stname"]) for v in districts.values()}, key=lambda x: x[1])
-    meta["routing"] = "facility-level: every recruiting site located by ZIP centroid (state-checked), city centroid, or county center; pools count sites within the road-mile band of the resident's tract or county population center"
+    meta["routing"] = "facility-level: every recruiting site located by ZIP centroid (state-checked; city centroid for a ZIP larger than 100 square miles), city centroid, or county center; pools count sites within the road-mile band of the resident's tract or county population center"
     data = {"meta": meta, "T": T, "SP": SP, "SPF": SPF, "SPI": SPI, "counties": counties, "districts": districts, "state_data": states_d, "nci": ncil, "states": statelist, "district_keys": list(districts.keys())}
     # ---- tract-level binary for live filtered aggregates (loaded on demand by the page) ----
     # layout (little-endian): u32 magic 0x54524331 ('TRC1'), u32 n_tracts, u32 n_split, u32 n_pairs, u32 n_states, then

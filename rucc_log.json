@@ -1,5 +1,5 @@
 {
- "built": "2026-09-30",
+ "built": "2026-10-04",
  "counties": 3143,
  "ct_2013_fallback": [
   "09001",
@@ -24,17 +24,17 @@
  },
  "headline": {
   "nonmetro_pop_pct": 16.0,
-  "l20_metro": 6.6,
-  "l20_nonmetro": 45.0,
-  "z60_metro": 1.2,
-  "z60_nonmetro": 21.1,
-  "medn_metro": 36,
+  "l20_metro": 6.0,
+  "l20_nonmetro": 42.6,
+  "z60_metro": 0.9,
+  "z60_nonmetro": 18.8,
+  "medn_metro": 35,
   "medn_nonmetro": 115,
-  "g60n_metro": 35.7,
-  "g60n_nonmetro": 89.2,
-  "t60_metro": 400,
-  "t60_nonmetro": 56
+  "g60n_metro": 35.2,
+  "g60n_nonmetro": 88.9,
+  "t60_metro": 405,
+  "t60_nonmetro": 60
  },
- "rucc_js_kb": 304,
+ "rucc_js_kb": 303,
  "tract_county_bin_bytes": 168800
 }

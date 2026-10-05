@@ -1,14 +1,52 @@
 {
   "site_rows": 53754,
   "geocode": {
-    "zip_centroid": 51675,
+    "zip_centroid": 49119,
+    "city_centroid_large_zip": 2334,
     "city_centroid": 1994,
+    "city_centroid_zip_spans_counties": 222,
     "county_centroid_city_disagrees": 59,
     "county_centroid": 26
   },
-  "site_points": 2486,
+  "site_points": 2484,
   "site_points_off_network_gt30mi": 0,
-  "tract_sitepoint_pairs_within_120": 5758915,
-  "county_sitepoint_pairs_within_120": 96774,
-  "seconds": 57
+  "tract_sitepoint_pairs_within_120": 5850456,
+  "county_sitepoint_pairs_within_120": 99740,
+  "screen_site_near_in_straight_line_far_by_road": {
+    "rule": "contiguous states; nearest site point within 20 straight-line miles, none within 60 road-miles",
+    "tracts": 22,
+    "pop55": 22196,
+    "pct_of_pop55": 0.023,
+    "largest_counties": [
+      {
+        "county": "Clinton, New York",
+        "pop55": 9873
+      },
+      {
+        "county": "Island, Washington",
+        "pop55": 6827
+      },
+      {
+        "county": "Essex, New York",
+        "pop55": 2654
+      },
+      {
+        "county": "Tulare, California",
+        "pop55": 1690
+      },
+      {
+        "county": "Knox, Maine",
+        "pop55": 980
+      },
+      {
+        "county": "Galveston, Texas",
+        "pop55": 172
+      },
+      {
+        "county": "Snohomish, Washington",
+        "pop55": 0
+      }
+    ]
+  },
+  "seconds": 153
 }
