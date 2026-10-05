@@ -79,7 +79,7 @@
   const typeLabel = {}; T.types.forEach(([k, l]) => typeLabel[k] = l); const spLabel = {}; T.sponsors.forEach(([k, l]) => spLabel[k] = l);
   if (!c) { document.getElementById('title').textContent = 'County not found'; document.getElementById('sub').textContent = 'The link needs a 5-digit county FIPS code, e.g. trials.html?county=48201. Use the map to pick a county.'; document.getElementById('fac-h').style.display = 'none'; return; }
   const st = FIPS2USPS[c.s], place = SITE.countyLabel(c, fips), dataDay = SITE.nice(SITE.dataDate(D.meta)); document.title = `Recruiting cancer trials — ${place}`;
-  document.getElementById('title').textContent = `${place}: ${c.t.toLocaleString()} recruiting cancer treatment trial${c.t===1?'':'s'} open to patients 55+`;
+  document.getElementById('title').textContent = `${place}: ${c.t.toLocaleString()} recruiting cancer treatment trial${c.t===1?'':'s'} accepting some adults 55+`;
   document.getElementById('sub').textContent = `At ${c.f.toLocaleString()} registry-listed facilit${c.f===1?'y':'ies'} (distinct names after removing sponsor site codes). Registry data as of ${dataDay}. A trial counts once here even if it has several sites in the county. Eligibility criteria are on each trial's ClinicalTrials.gov page.`;
   { const a = document.createElement('a'); a.href = 'index.html?c=' + fips; a.textContent = 'Open ' + SITE.countyName(c, fips) + ' on the map →'; const pp = document.createElement('p'); pp.appendChild(a); document.getElementById('sub').after(pp);
     // trials the registry lists for this state under a telemedicine service instead of a clinic (DATA.T.tele): named, not listed below
@@ -100,8 +100,8 @@
     const active = filt.phase.size < T.phases.length || filt.sponsor.size < T.sponsors.length || !!filt.type;
     document.getElementById('f-state').textContent = active ? `Showing ${rows.length} of ${c.tr.length} trials` : `${c.tr.length} trials`;
     const el = document.getElementById('list');
-    if (!c.tr.length) { el.innerHTML = '<div class="empty">No recruiting cancer treatment trial open to patients 55+ lists a site in this county in the registry data of ' + dataDay + '. Nearby counties may host trials — the map shows trials within 60 road-miles.</div>'; return; }
-    if (!rows.length) { el.innerHTML = '<div class="empty">No trials in this county match the current filters. Clear a filter to see the ' + c.tr.length + ' eligible trials.</div>'; return; }
+    if (!c.tr.length) { el.innerHTML = '<div class="empty">No listed trial (recruiting cancer treatment trials accepting some adults 55+) has a site in this county in the registry data of ' + dataDay + '. Nearby counties may host trials — the map shows trials within 60 road-miles.</div>'; return; }
+    if (!rows.length) { el.innerHTML = '<div class="empty">No trials in this county match the current filters. Clear a filter to see the ' + c.tr.length + ' listed trials.</div>'; return; }
     el.innerHTML = `<table><thead><tr><th>NCT ID</th><th>Title</th><th>Phase</th><th>Lead sponsor</th><th>Cancer type (assigned)</th><th class="f">Facilities in county</th></tr></thead><tbody>` +
       rows.map(j => { const facs = (c.fac || []).filter(f => f[3].includes(j)).map(f => f[0]);
         const named = SITE.namedCancers(T, j);
@@ -121,7 +121,7 @@
   render();
 })();
 </script>
-<footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><span data-site-date></span></div></footer>
+<footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script>try{document.querySelectorAll('[data-site-date]').forEach(function(e){e.textContent=SITE.stampText(window.DATA.meta);});}catch(e){}</script>
 </body>
 </html>

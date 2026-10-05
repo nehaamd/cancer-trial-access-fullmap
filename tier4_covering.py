@@ -6,11 +6,11 @@ METHODOLOGY (this text is reproduced verbatim in the output and the web page):
   Candidate universe. Existing facilities capable of hosting a trial, from the supplied candidates file (intended: Commission on
   Cancer-accredited programs plus NCORP affiliates; the stand-in used when those were unreachable is every US facility that hosted an
   interventional oncology treatment trial started 2016 or later on ClinicalTrials.gov). Candidates are excluded if (a) their county
-  already hosts a limited menu (20 or more eligible recruiting trials) or (b) the facility itself already hosts an eligible recruiting
-  trial today; an entry that is a telemedicine service rather than a place, or is listed under a mistyped ZIP code, is not a
+  already hosts a limited menu (20 or more listed trials) or (b) the facility itself already hosts a listed trial
+  today; an entry that is a telemedicine service rather than a place, or is listed under a mistyped ZIP code, is not a
   candidate. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and
   joined to the highway network like every other point in this project.
-  Objective (primary). Residents aged 55+ who today have no eligible recruiting cancer treatment trial within 60 road-miles of their
+  Objective (primary). Residents aged 55+ who today have no listed cancer treatment trial within 60 road-miles of their
   census tract's population center, and who would have one if a trial opened at the candidate (i.e. the candidate is within 60
   road-miles of their tract). Secondary view: the same, for residents who today have fewer than 20 such trials within 60 road-miles.
   Output. Every candidate ranked by the population 55+ it would newly cover (primary objective), and a greedy sequence: the best

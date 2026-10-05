@@ -1,8 +1,9 @@
 """Build docs/findings.js: the few numbers the Key findings page needs, taken from the pipeline outputs so the page
-stays current after a refresh without loading the 7 MB map payload.
+stays current after a refresh without loading the 7 MB map payload. The map page reads the same file for the number of
+people behind its national headline, so the two pages cannot disagree.
 
-Inputs (repository root or the pipeline folders): data.js, national_metrics_v3.json, state_metrics_v3.csv, rucc.js,
-burden.js, cosponsors.js. Run after build_webapp_data_v3.py / build_rucc.py / build_burden_access.py / fetch_cosponsors.py:
+Inputs (repository root or the pipeline folders): data.js, national_metrics_v3.json, state_metrics_v3.csv, tract_access.csv,
+rucc.js, burden.js, cosponsors.js. Run after build_webapp_data_v3.py / build_rucc.py / build_burden_access.py / fetch_cosponsors.py:
     python3 build_findings.py
 """
 import json, sys, datetime
@@ -27,6 +28,21 @@ FIPS2USPS = {"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"C
 SD = D["state_data"]; DI = D["districts"]; meta = D["meta"]; core = meta["nat_core"]
 
 def none_if_noroad(v): return None if v is None or v >= 999 else int(v)
+
+def people_counts():
+    """Residents 55+ behind the four national shares, counted over census tracts.
+
+    The share is published to one decimal, so the share times the population is not the count: 4.2% of 98.6 million is
+    4.14 million ("4.1 million"), where 4.16 million residents ("4.2 million") have no trial within 60 road-miles.
+    Stops if a count and its published share disagree by more than rounding, which would mean tract_access.csv and
+    data.js come from different runs."""
+    t = pd.read_csv(find("tract_access.csv"), usecols=["pop55", "trials_within_60rdmi", "road_mi_nci", "road_mi_broad"])
+    n = {"l20": t.pop55[t.trials_within_60rdmi < 20].sum(), "z60": t.pop55[t.trials_within_60rdmi == 0].sum(),
+         "g60n": t.pop55[t.road_mi_nci > 60].sum(), "g60b": t.pop55[t.road_mi_broad > 60].sum()}
+    if int(t.pop55.sum()) != int(core["p"]): sys.exit(f"tract_access.csv population {int(t.pop55.sum()):,} differs from data.js {int(core['p']):,}")
+    for k, v in n.items():
+        if abs(100 * v / core["p"] - core[k]) > 0.051: sys.exit(f"tract count for {k} ({100 * v / core['p']:.2f}%) disagrees with the published share ({core[k]}%)")
+    return {"people_" + k: int(v) for k, v in n.items()}
 
 states = []
 for _, r in st.iterrows():
@@ -57,7 +73,7 @@ out = {
              "plan": meta["plan"], "incidence_period": meta["burden"]["period"], "members_pull": meta["members_pull"].split(" ")[0], "cosponsors_fetched": CO["meta"]["fetched"], "router": meta["router"], "n_tracts": core["nt"], "n_nci": len(D["nci"]),
              "nci_centers": (meta.get("nci") or {}).get("centers"), "nci_excluded": (meta.get("nci") or {}).get("excluded", []), "graph_note": meta.get("graph_note")},
     "nat": {**{k: core[k] for k in ("p", "l20", "z60", "l100", "zc", "g60b", "g120b", "g60l", "g60n", "g120n", "nr", "medb", "medn", "medl", "t30", "t60", "t120", "own")},
-            "people_l20": int(round(core["p"] * core["l20"] / 100)), "people_z60": int(round(core["p"] * core["z60"] / 100)), "people_g60n": int(round(core["p"] * core["g60n"] / 100)), "people_g60b": int(round(core["p"] * core["g60b"] / 100))},
+            **people_counts()},
     "rural": {"metro": RU["nat"]["metro"], "nonmetro": RU["nat"]["nonmetro"]},
     "states": states, "states_no_broad": sum(1 for s in states if s["broad"] == 0), "states_no_broad_list": [s["name"] for s in sorted(states, key=lambda x: x["name"]) if s["broad"] == 0],
     "districts": districts,
