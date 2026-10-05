@@ -14,6 +14,21 @@ CONDITION_QUERY = (
     "cancer OR neoplasm OR neoplasms OR carcinoma OR lymphoma OR leukemia OR "
     "myeloma OR sarcoma OR melanoma OR malignancy OR malignant OR tumor OR tumour OR glioma OR mesothelioma"
 )
+# The registry matches whole words and the disease terms it has coded for each study. The list above therefore finds every study
+# the registry has coded as a neoplasm, but it misses (a) cancers the registry files outside its neoplasm tree - myelodysplastic
+# syndromes, myelofibrosis and the other myeloproliferative neoplasms, Langerhans cell histiocytosis - and (b) studies whose
+# condition text the registry has not coded at all, when that text uses a compound word ("Pancreatic Ductal Adenocarcinoma",
+# "Uterine Leiomyosarcoma", "Glioblastoma", "Liver Metastases", "AML"). A check against every recruiting US treatment study
+# (5 Oct 2026) found 107 such cancer trials, among them a 139-site cooperative-group trial in myelodysplastic syndrome.
+# The terms below ask for them by name. They also return unrelated studies (the registry treats "secondary" as a synonym of
+# "metastasis"); those never reach the data, because qc_us.py keeps a study only if its conditions or title name a cancer.
+CONDITION_QUERY += (
+    " OR adenocarcinoma OR cholangiocarcinoma OR carcinomatosis OR glioblastoma OR astrocytoma OR oligodendroglioma OR neuroblastoma OR medulloblastoma"
+    " OR leiomyosarcoma OR angiosarcoma OR osteosarcoma OR liposarcoma OR rhabdomyosarcoma OR chondrosarcoma"
+    " OR myelodysplastic OR myelodysplasia OR myelofibrosis OR myeloproliferative OR \"polycythemia vera\" OR \"essential thrombocythemia\" OR mastocytosis"
+    " OR \"Langerhans cell histiocytosis\" OR metastasis OR metastases OR metastatic OR oligometastatic OR oligometastasis OR hepatocellular"
+    " OR AML OR MDS OR HCC OR PDAC OR NSCLC OR macroglobulinemia"
+)
 
 # Overall study status to include. Add "NOT_YET_RECRUITING" for a sensitivity analysis.
 OVERALL_STATUS = ["RECRUITING"]
@@ -40,6 +55,17 @@ REQUEST_SLEEP_SEC = 0.6   # be polite
 # Site-level status to count as "available". Missing status is kept.
 # ---------------------------------------------------------------------------
 SITE_STATUS_KEEP = {"RECRUITING", None, ""}
+
+# ---------------------------------------------------------------------------
+# Registry "sites" that are not places. A fully decentralized study lists the same telemedicine service once per city
+# ("Ohio State University-Telemedicine" in 107 cities for NCT06906562); a resident of one of those cities is no closer to the
+# trial than anyone else, so such a row is not a location: it is not assigned to a county, not drawn, and not counted as a trial
+# "within 60 road-miles". The trial stays in the data (at its physical sites, if it lists any), and the pages show it as a
+# group of its own, labelled Telemedicine, for the states it names: panels, trial lists, briefs and the ZIP finder (DATA.T.tele).
+# Set VIRTUAL_SITES_ARE_LOCATIONS = True to count these rows as ordinary sites again.
+# ---------------------------------------------------------------------------
+VIRTUAL_SITE_PATTERN = r"\btele-?(?:medicine|health)\b|\bvirtual\b|\bdecentrali[sz]ed\b|\bremote (?:site|enrol\w*|participation|study)\b|\bonline study\b"
+VIRTUAL_SITES_ARE_LOCATIONS = False
 
 # ---------------------------------------------------------------------------
 # Distance thresholds (miles). Straight-line distance is inflated by
@@ -153,5 +179,16 @@ METHOD_CHANGES = [
         "NCI centers are located at their hospital's ZIP code rather than the city center, and St. Jude Children's Research Hospital, which treats children, is no longer a distance target. "
         "On the same registry data (Sep 30, 2026) the national figures moved as follows: fewer than 20 trials within 60 miles 12.7% to 11.8%; none within 60 miles 4.4% to 3.8%; "
         "beyond 60 miles of a broad menu 38.8% to 38.1%; beyond 60 miles of an NCI center 44.2% to 43.7%; median distance to an NCI center 50 to 48 miles.")},
+    {"version": 3, "date": "2026-10-05", "note": (
+        "Which registry rows count as a place, and which studies count as cancer trials. "
+        "A row that names a telemedicine or virtual service instead of a clinic is no longer a site: one fully decentralized study listed such a row in 107 cities, "
+        "and it had been the only trial within 60 road-miles for about 346,000 residents 55+. "
+        "Rows whose ZIP code is a typing error (the same named hospital is listed repeatedly in the stated city and never near that ZIP) are located where the registry's other rows list that hospital. "
+        "The registry search now also asks by name for cancers it files outside its neoplasm category or has not coded "
+        "(myelodysplastic syndromes, myelofibrosis, adenocarcinomas, glioblastoma, metastases: 107 more trials on Oct 5, 2026), "
+        "and studies kept only for wording such as 'tumor necrosis factor' or 'non-malignant' are dropped (8 studies). "
+        "On the same registry data (Sep 30, 2026) the telemedicine, ZIP and screening rules moved the national figures as follows: "
+        "none within 60 miles 3.8% to 4.2%; fewer than 20 trials within 60 miles 11.8% to 12.0%; counties with any trial 848 to 833; "
+        "distances to broad menus and NCI centers did not move. The wider search then added trials without moving these shares.")},
 ]
 METHOD_VERSION = METHOD_CHANGES[-1]["version"]

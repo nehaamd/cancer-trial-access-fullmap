@@ -84,10 +84,27 @@ NCI_ONE_DESIGNATION = {n: "Mayo Clinic Comprehensive Cancer Center" for n in ("M
 NCI_OVERRIDE = {"la jolla": (32.875, -117.236), "bronx": (40.880, -73.879), "manhattan": (40.770, -73.960), "stanford": (37.433, -122.175),
                 "urban honolulu": (21.300, -157.850), "san francisco": (37.763, -122.458), "nashville-davidson": (36.144, -86.803), "lexington-fayette": (38.032, -84.508)}
 
-ONC = re.compile(r"cancer|neoplas|carcinom|lymphom|leuk|myelom|sarcom|melanom|malignan|tumou?r|gliom|mesotheliom|blastom|adenoma|myelodysplas|metasta|oncolog|hodgkin|"
+ONC = re.compile(r"cancer|neoplas|carcinom|lymphom|leuka?emi|leukoplaki|myelom|sarcom|melanom|malignan|tumou?r|gliom|mesotheliom|blastom|adenoma|myelodysplas|metasta|oncolog|hodgkin|"
                  r"waldenstr|myelofibrosis|polycythemia|thrombocythemia|\bmds\b|\baml\b|\bcll\b|\bcml\b|nsclc|sclc|\bgist\b|\bmpn\b|\bhcc\b|\brcc\b|\bcrc\b|pdac|\bgbm\b|dlbcl|tnbc|"
-                 r"meningiom|ependymom|germinom|craniopharyngiom|schwannom|neurofibrom|mycosis fungoides|sezary|amyloidosis|lymphoproliferative|mastocytosis|histiocyt|"
+                 r"meningiom|ependymom|germinom|craniopharyngiom|schwannom|neurofibrom|mycosis fungoides|sezary|amyloidosis|lymphoproliferative|mastocytosis|(?<!lympho)histiocyt|"
                  r"castleman|paragangliom|pheochromocytom|desmoid|chordom|thymom|wilms|trophoblastic|plasmacytom|macroglobulinemia|\bptld\b|graft.versus.host|gvhd|\bctcl\b|\bptcl\b|\b[bt]-all\b|plasma cell|\bmgus\b|smoldering|hairy cell", re.I)
+# Wording that contains a cancer word and is not about cancer. It is blanked before ONC is applied, so a study is kept only if it
+# names a cancer somewhere else: "... Who Cannot Tolerate Tumor Necrosis Factor Inhibitors" (rheumatoid arthritis), "Non-Malignant
+# Disorders" and "Non-oncology Plasma Cell-related Diseases" (transplant and CAR-T studies for other diseases), myelomeningocele
+# (spina bifida). "leuk" alone also matched interleukin, leukocyte and leukodystrophy, and "histiocyt" matched hemophagocytic
+# lymphohistiocytosis; ONC now asks for leukemia / leukaemia / leukoplakia and for histiocytosis that is not "lympho-".
+NOT_ONC = re.compile(r"tumou?r[ -]necrosis[ -]factor|non[- ]?oncolog\w*(?:\s+plasma[- ]cell)?|non[- ]?malignan\w*|non[- ]?cancer\w*|myelomeningocele|myeloschisis", re.I)
+
+
+def is_onc(conditions, title):
+    """True when the registry conditions or the brief title name a cancer (after blanking the NOT_ONC wording)."""
+    mecp2 = "mecp2" in f"{conditions} {title}".lower()   # there "MDS" is MECP2 duplication syndrome, not myelodysplastic syndrome
+    for s in (conditions, title):
+        s = NOT_ONC.sub(" ", s or "")
+        if mecp2: s = re.sub(r"\bmds\b", " ", s, flags=re.I)
+        if ONC.search(s): return True
+    return False
+
 
 INJ = {"bortezomib", "carfilzomib"}
 ORAL_WORD = re.compile(r"\b(oral|orally|p\.?o\.?|by mouth|per os|tablet|tablets|capsule|capsules)\b", re.I)
@@ -159,7 +176,7 @@ def main():
     trials = list(csv.DictReader(open(RAW / "trials_raw.csv")))
     kept, excluded, tally = [], [], {}
     for t in trials:
-        if not (ONC.search(t["conditions"]) or ONC.search(t["brief_title"])):
+        if not is_onc(t["conditions"], t["brief_title"]):
             excluded.append({"nct_id": t["nct_id"], "brief_title": t["brief_title"], "conditions": t["conditions"], "n_us_sites": t["n_us_sites"]}); continue
         r, ev = route(raw[t["nct_id"]])
         mx = age_years(t.get("maximum_age"))

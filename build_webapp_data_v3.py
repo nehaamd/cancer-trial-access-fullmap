@@ -73,6 +73,11 @@ def main():
          "ct": [t_idx[c] for c in trials.cancer_type], "cats": [cats_for(n, c) for n, c in zip(trials.nct_id, trials.cancer_type)],
          "multi": [ctype.multi_subtype.get(n, "") if ctype.cancer_type.get(n) == "multi" else "" for n in trials.nct_id],
          "types": [[c, CT_LABEL[c]] for c in types], "named_types": named_types, "phases": phases, "sponsors": [["industry", "Industry"], ["academic_other", "Academic / other"], ["nih_federal", "NIH / federal"]]}
+    # ---- registry rows that are not places (metrics_us.assign_sites, config.VIRTUAL_SITE_PATTERN): trial index -> states named ----
+    allrows = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna("")
+    virt = allrows[(allrows.get("assign_method", "") == "virtual_site") & allrows.nct_id.isin(j_of)]
+    T["tele"] = {str(j_of[n]): sorted(set(g_.state)) for n, g_ in virt.groupby("nct_id")}
+    n_typo = int((allrows.get("assign_method", "") == "zip_typo_corrected").sum())
     # ---- per-county trial index and facilities ----
     ct_trials = sites.groupby("county_fips").nct_id.agg(lambda s: sorted({j_of[n] for n in s})).to_dict()
     # Site identity: key = (county, normalised name after removing sponsor site codes), then a reviewed alias list (data/ref/site_aliases.csv:
@@ -120,14 +125,17 @@ def main():
     # THERE. A facility is a name in a county, and one name is often listed at several addresses ("Texas Oncology - Central South"
     # at four Austin ZIP codes), so its own record (one ZIP, every trial) cannot say which trial is at which address. The pages
     # use SPX to print the ZIP of the trial's own registry row and to list a trial only at the locations that run it.
-    # A ZIP that failed the state check (the site was then placed by its city) is not printed.
+    # A ZIP that failed the state check, or was judged a typing error (the site was then placed elsewhere), is not printed.
+    # The third item is the city of those registry rows (one entry per ZIP and city spelling, so every trial carries the city of
+    # its own row): a facility's own record keeps one city for all its addresses, which printed "Shirley 11776" for a clinic the
+    # registry lists in Port Jefferson Station 11776.
     sg = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); sg["fac"] = sg.facility.map(norm); sg["fac"] = [ALIAS.get((c, f), f) for c, f in zip(sg.county_fips, sg.fac)]
     zip_used = sg.geocode.isin(["zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"]) & (sg.zip5.str.len() == 5)
     sg["zip_ok"] = np.where(zip_used, sg.zip5, "")
-    SPI = [[] for _ in range(int(zs["S_shape"][0]))]; SPX = [[] for _ in range(int(zs["S_shape"][0]))]
-    for (spi, cf, fc, zz), g_ in sg.groupby(["sp", "county_fips", "fac", "zip_ok"]):   # one entry per ZIP: two large ZIPs can share a city centroid
+    SPI = [[] for _ in range(int(zs["S_shape"][0]))]; SPX = [[] for _ in range(int(zs["S_shape"][0]))]; sg["city_row"] = sg.city.str.strip()
+    for (spi, cf, fc, zz, cty), g_ in sg.groupby(["sp", "county_fips", "fac", "zip_ok", "city_row"]):   # one entry per ZIP (two large ZIPs can share a city centroid) and per city spelling
         if (cf, fc) in fac_idx:
-            SPI[int(spi)].append([cf, fac_idx[(cf, fc)]]); SPX[int(spi)].append([zz, sorted({j_of[n] for n in g_.nct_id})])
+            SPI[int(spi)].append([cf, fac_idx[(cf, fc)]]); SPX[int(spi)].append([zz, sorted({j_of[n] for n in g_.nct_id}), cty])
     pool60 = {f: len(set().union(*[set(SP[i]) for i in nb60.get(f, [])])) if nb60.get(f) else 0 for f in cm.index}
     fac60 = {f: sum(SPF[i] for i in nb60.get(f, [])) for f in cm.index}
     burden = pd.read_csv(REF / "cancer_incidence_county.csv", dtype={"county_fips": str})
@@ -220,7 +228,7 @@ def main():
     nat_binc = {site: [blog_sites[site]["us_rate"], int(blog_sites[site]["us_avg_annual_count"]) if blog_sites[site]["us_avg_annual_count"] else None, "ok"] for site in bsites if site in blog_sites}
     nat_core = core_of(pd.Series(nat))
     llog = json.load(open(REF / "legislators_log.json")) if (REF / "legislators_log.json").exists() else {}; lc = rlog.get("local_checks")
-    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2021 maps)", "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
+    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2024 election maps)", "virtual_sites": {"rows": int(len(virt)), "trials": int(virt.nct_id.nunique())}, "zip_typos": n_typo, "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
             "router": {"pairs": rlog["router_validation"]["pairs"], "mean_pct": rlog["router_validation"]["mean_abs_pct_diff"], "max_pct": rlog["router_validation"]["max_abs_pct_diff"],
                        **({"local": {"pairs": lc["routes"], "failed": lc["failed"], "note": ("all within tolerance" if not lc["failed"] else f"{lc['failed']} outside tolerance: " + "; ".join(lc["failed_routes"]))}} if lc else {})},
             "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(),

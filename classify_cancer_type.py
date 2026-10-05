@@ -39,7 +39,7 @@ CATS = {  # order matters only for display
  "kidney":        r"kidney|renal cell|renal (cancer|carcinom|neoplasm|tumou?r)|\brcc\b|\bccrcc\b|wilms|nephroblastom",
  "brain_cns":     r"glio|\bgbm\b|astrocytom|brain (tumou?r|cancer|neoplasm|stem)|cns (tumou?r|neoplasm|cancer)|meningiom|ependymom|medulloblastom|oligodendro|central nervous system (tumou?r|neoplasm|cancer)|diffuse midline|\bdipg\b|craniopharyngiom|pituitary|neuro-?oncolog|\bhgg\b|\blgg\b",
  "head_neck":     r"head and neck|leukoplakia|erythroplakia|esthesioneuroblastom|olfactory neuroblastom|head & neck|\bhnscc\b|\bscchn\b|oral cavity|oropharyn|laryn|pharyn|nasopharyn|hypopharyn|salivary|tongue|sinonasal|oral (cancer|squamous|carcinom)|tonsil|lip cancer|adenoid cystic",
- "sarcoma":       r"sarcom|\bgist\b|gastrointestinal stromal|desmoid|osteosarcom|ewing|rhabdomyo|liposarcom|chondrosarcom|chordom|synovial|fibromatosis|nerve sheath|\bmpnst\b|giant cell tumou?r of bone|bone (cancer|tumou?r)",
+ "sarcoma":       r"sarcom|\bgist\b|gastrointestinal stromal|desmoid|osteosarcom|angiosarcom|ewing|rhabdomyo|liposarcom|chondrosarcom|chordom|synovial|fibromatosis|nerve sheath|\bmpnst\b|giant cell tumou?r of bone|bone (cancer|tumou?r)",
  "neuroendocrine_endocrine": r"thyroid|adrenocortical|adrenal (cancer|carcinom|cortical)|pheochromocytom|paragangliom|neuroendocrin|\bnet\b|\bnets\b|carcinoid|parathyroid",
  "other_named":   r"testic|germ cell|seminom|penile|neuroblastom|retinoblastom|anal (cancer|carcinom|canal|squamous)|appendi|small bowel|small intestin|unknown primary|kaposi|uveal|ocular|eye (cancer|neoplasm)|urethral|peritoneal mesotheliom|histiocyt|langerhans|erdheim|nut carcinom|nut midline",
 }
@@ -49,6 +49,7 @@ PRECEDENCE = [
  (r"myelomonocytic|atypical chronic myeloid", {"mds_mpn"}),                                         # CMML/JMML are MDS/MPN overlap entities, not "leukemia" for this purpose
  (r"plasma cell leukemia", {"myeloma"}),                                   # a plasma-cell disorder
  (r"gliosarcom", {"brain_cns"}),                                           # a glioblastoma variant, not a sarcoma
+ (r"carcinosarcom", set(CATS) - {"sarcoma"}),                              # a carcinoma of its organ (uterine, ovarian: gynecologic), not a sarcoma; the stem "sarcom" sits inside the word
  (r"leiomyosarcom", {"sarcoma"}),                                          # uterine leiomyosarcoma is a sarcoma
  (r"neck.*unknown primary|unknown primary.*neck", {"head_neck"}),
  (r"lymphoblastic lymphoma", {"lymphoma", "leukemia"}),                   # keep both; combined trials are genuinely two entities
@@ -63,13 +64,13 @@ PRECEDENCE = [
  (r"ganglioneuroblastom", {"other_named"}),                              # neuroblastic tumour (contains "glio")
  (r"leukoplakia|erythroplakia", {"head_neck"}),                          # oral premalignant lesions (the leukaemia stem "leuk" is excluded from them)
  (r"preleukemi", {"mds_mpn"}),                                           # preleukaemia is an MDS term                                          # mucosal melanomas (anorectal, sinonasal, vulvar, oral) are melanoma, not the organ cancer: "Anorectal Melanoma" must not reach the colorectal filter
- (r"lung metasta|pulmonary metasta|endobronchial metasta|brain metasta|cns metasta|leptomening|liver metasta|hepatic metasta|bone metasta|peritoneal metasta|carcinomatosis|spinal metasta|metastatic disease to", set()),  # metastatic *site*, not a primary
+ (r"lung metasta|pulmonary metasta|endobronchial metasta|brain metasta|cns metasta|leptomening|liver metasta|hepatic metasta|bone metasta|peritoneal metasta|carcinomatosis|spinal metasta|spine metasta|vertebral metasta|metastatic bone disease|metastatic disease to", set()),  # metastatic *site*, not a primary
 ]
 GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced cancer|advanced malignan|metastatic cancer|metastatic malignan|^cancers?$|^neoplasms?$|^tumou?rs?$|^malignan(t|cy|cies)|malignan(t|cy|cies)$|"
                      r"hematologic(al)? (malignan|cancer|neoplasm)|blood cancer|^carcinoma$|^adenocarcinoma$|^metasta(tic|sis|ses)$|refractory cancer|recurrent cancer|rare (cancer|tumou?r|disease)|"
                      r"^(advanced|metastatic|recurrent|refractory|relapsed|unresectable|locally advanced)( or [a-z]+)? (cancer|carcinoma|neoplasm|malignan|disease|tumou?r)s?$|"
                      r"multiple (cancer|tumou?r)|various (cancer|tumou?r)|pan-?cancer|tumor agnostic|tumou?r-agnostic|any cancer|all cancer|different cancer|"
-                     r"lung metasta|brain metasta|liver metasta|bone metasta|peritoneal metasta|spinal metasta|neoplasm metasta|carcinomatosis|leptomening|oligometasta|hematopoietic and lymphoid|gastrointestinal (neoplasm|cancer|tumou?r|malignan|carcinom)|genitourinary (neoplasm|cancer|tumou?r|malignan)|thoracic (neoplasm|cancer|tumou?r|malignan)|gynecologic(al)? (neoplasm|cancer|tumou?r|malignan)|"
+                     r"lung metasta|brain metasta|liver metasta|bone metasta|peritoneal metasta|spinal metasta|spine metasta|vertebral metasta|metastatic bone disease|oligoprogressive|neoplasm metasta|carcinomatosis|leptomening|oligometasta|hematopoietic and lymphoid|gastrointestinal (neoplasm|cancer|tumou?r|malignan|carcinom)|genitourinary (neoplasm|cancer|tumou?r|malignan)|thoracic (neoplasm|cancer|tumou?r|malignan)|gynecologic(al)? (neoplasm|cancer|tumou?r|malignan)|"
                      r"^(cancer|malignan|neoplasm|tumou?r)[a-z]* (of|in) (the )?(elderly|adult|child|older)", I)
 CATRX = {k: re.compile(v, I) for k, v in CATS.items()}
 PRERX = [(re.compile(p, I), keep) for p, keep in PRECEDENCE]
