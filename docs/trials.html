@@ -106,7 +106,13 @@
   }
   const fl = document.getElementById('fac'); const facs = c.fac || [];
   document.getElementById('fac-note').textContent = facs.length ? 'Facility names are as listed in the registry (one line per distinct name in this county); a hospital with two spellings may appear twice.' : 'No facilities listed.';
-  fl.innerHTML = facs.slice().sort((a, b) => a[0].localeCompare(b[0])).map(f => `<li>${esc(f[0])} <span>${esc(f[1] || '')}${f[2] ? ' ' + esc(f[2]) : ''} · ${f[3].length} trial${f[3].length===1?'':'s'}</span></li>`).join('');
+  // Where each name is listed: the city and ZIP of its registry rows at each location (DATA.SPX), most trials first. One name is
+  // often listed at several addresses, and the facility's own record keeps a single city and a single ZIP for all of them.
+  const places = new Map(); if (D.SPX) D.SPI.forEach((arr, sp) => arr.forEach(([cf, k], n) => { if (cf !== fips) return; let a = places.get(k); if (!a) places.set(k, a = []); a.push(D.SPX[sp][n]); }));
+  const where = (f, i) => { const pl = places.get(i); if (!pl || !pl.length) return `${f[1] || ''}${f[2] ? ' ' + f[2] : ''}`;
+    const m = new Map(); pl.forEach(p => { const lab = `${p[2] || f[1] || ''}${p[0] ? ' ' + p[0] : ''}`.trim(); m.set(lab, (m.get(lab) || 0) + p[1].length); });
+    const labs = [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(e => e[0]); return labs[0] + (labs.length > 1 ? ` (+${labs.length - 1} more address${labs.length > 2 ? 'es' : ''})` : ''); };
+  fl.innerHTML = facs.map((f, i) => [f, i]).sort((a, b) => a[0][0].localeCompare(b[0][0])).map(([f, i]) => `<li>${esc(f[0])} <span>${esc(where(f, i))} · ${f[3].length} trial${f[3].length===1?'':'s'}</span></li>`).join('');
   render();
 })();
 </script>
