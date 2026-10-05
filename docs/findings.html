@@ -106,8 +106,8 @@
   </section>
 
   <section id="states">
-    <h2>Fifteen states have no county with a broad menu of trials</h2>
-    <p>A broad menu, ASCO's term for a county with at least 100 recruiting trials, exists in <span data-f="broad_counties"></span> counties nationally. <span data-f="states_no_broad_names"></span> have none. The chart ranks every state by the share of residents 55 and older with fewer than 20 recruiting trials within 60 road-miles; click a state to open it on the map.</p>
+    <h2><span data-f="states_no_broad_cap">Several</span> states have no county with a broad menu of trials</h2>
+    <p>A broad menu (a county with at least 100 recruiting trials, the cut-off ASCO's 2024 county analysis used for a “broad portfolio”) exists in <span data-f="broad_counties"></span> counties nationally. <span data-f="states_no_broad_names"></span> have none. The chart ranks every state by the share of residents 55 and older with fewer than 20 recruiting trials within 60 road-miles; click a state to open it on the map.</p>
     <div class="chart" id="chart-states">
       <h4>Residents 55 and older with fewer than 20 recruiting trials within 60 road-miles, by state</h4>
       <p class="sub">Percent of residents 55+ · ◇ marks a state with no broad-menu county</p>
@@ -137,10 +137,10 @@
   <section id="how">
     <h2>How it was measured</h2>
     <ul class="plain">
-      <li><b>Trials.</b> Every interventional cancer treatment trial listed as Recruiting on ClinicalTrials.gov with a US site and open to at least one patient aged 55 or older: <span data-f="trials"></span> trials at <span data-f="facilities"></span> registry-listed facilities on <span data-f="pull"></span>. Refreshed weekly.</li>
+      <li><b>Trials.</b> Every interventional cancer treatment trial listed as Recruiting on ClinicalTrials.gov with a US site and open to at least one patient aged 55 or older: <span data-f="trials"></span> trials at <span data-f="facilities"></span> registry-listed facilities in the registry data of <span data-f="pull"></span>. A refresh is scheduled every Monday.</li>
       <li><b>People.</b> Residents 55 and older in each of <span data-f="n_tracts"></span> census tracts (ACS 2023 5-year), located at the tract's population center, so distances are measured from where people live rather than from county boundaries.</li>
       <li><b>Roads.</b> Shortest routes on the Census Bureau's primary and secondary road network for all 50 states and DC, checked against published city-pair driving distances (mean difference <span data-f="router_mean"></span>%).</li>
-      <li><b>Access.</b> For each tract, the number of distinct trials with a recruiting site within 30, 60 and 120 road-miles; the road distance to the nearest county with 20 or 100 trials and to the nearest of <span data-f="n_nci"></span> NCI-designated treating centers. District, state and national figures weight tracts by residents 55+.</li>
+      <li><b>Access.</b> For each tract, the number of distinct trials with a recruiting site within 30, 60 and 120 road-miles; the road distance to the nearest county with 20 or 100 trials and to the nearest NCI-designated center that treats adults (<span data-f="nci_text"></span>). District, state and national figures weight tracts by residents 55+.</li>
       <li><b>Limits.</b> Counts are of trials, not of trials a given patient is eligible for. Registry status lags real enrollment. Sites are located by ZIP code. Districts are the <span data-f="plan"></span>; several states have redrawn for 2026.</li>
     </ul>
     <p class="small">Full methods, validation and every data file: <a href="index.html#methods">Methods &amp; data</a> · <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">GitHub repository</a>.</p>
@@ -148,26 +148,28 @@
 
   <section id="about">
     <h2>About and how to cite</h2>
-    <p>The Cancer Trial Access Map was built by <b>Neha Agrawal, MD</b>, a medical oncologist, to put road-distance access to cancer clinical trials in front of the people who can change it: patients and navigators, congressional offices, and researchers. It is open source; the code, data and validation reports are public.</p>
+    <p>The Cancer Trial Access Map was built by <b>Neha Agrawal, MD</b>, a medical oncologist, to put road-distance access to cancer clinical trials in front of the people who can change it: patients and navigators, congressional offices, and researchers. The code, data and validation reports are public on GitHub.</p>
     <p class="cite" id="cite"></p>
     <div class="actions"><a class="btn primary" href="index.html">Open the map</a><a class="btn" href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem or suggest a change</a><button class="btn" type="button" onclick="window.print()">Print this page</button></div>
   </section>
 </main>
 <footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><span data-site-date></span></div></footer>
+<script src="site.js"></script>
 <script src="findings.js"></script>
 <script>
 (function () {
   const F = window.FINDINGS, N = F.nat, R = F.rural; const fmt = d3.format(','), pct = v => (Math.round(v * 10) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 });
   const M = v => (Math.round(v / 1e5) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 }); const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const nice = s => { const d = new Date(s + 'T12:00:00'); return isNaN(d) ? s : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }); };
+  const numWord = n => (['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'])[n] || String(n);
   const noBroad = F.states_no_broad_list; const listNames = a => a.length > 1 ? a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1] : a.join('');
   const dataDate = (F.meta.registry_data_timestamp || F.meta.pull).slice(0, 10); const vals = { pull: nice(dataDate), people_l20_m: M(N.people_l20), people_z60_m: M(N.people_z60), l20: pct(N.l20), z60: pct(N.z60), g60b: pct(N.g60b), g120b: pct(N.g120b), medn: fmt(N.medn), g60n: pct(N.g60n),
     nm_l20: pct(R.nonmetro.l20), m_l20: pct(R.metro.l20), nm_share: pct(100 * R.nonmetro.p / (R.nonmetro.p + R.metro.p)), nm_ratio: (R.nonmetro.l20 / R.metro.l20).toFixed(1), nm_medn: fmt(R.nonmetro.medn), m_medn: fmt(R.metro.medn),
-    states_no_broad: F.states_no_broad, states_no_broad_names: listNames(noBroad), districts_all_beyond: F.districts.all_beyond_60_broad, broad_counties: fmt(F.states.reduce((s, x) => s + x.broad, 0)), plan: F.meta.plan,
+    states_no_broad: F.states_no_broad, states_no_broad_cap: numWord(F.states_no_broad), states_no_broad_names: listNames(noBroad), nci_text: (F.meta.nci_centers ? F.meta.nci_centers + ' centers at ' : '') + F.meta.n_nci + ' locations' + ((F.meta.nci_excluded || []).length ? '; ' + F.meta.nci_excluded.join(', ') + ', which treats children, is not counted' : ''), districts_all_beyond: F.districts.all_beyond_60_broad, broad_counties: fmt(F.states.reduce((s, x) => s + x.broad, 0)), plan: F.meta.plan,
     hb_counties: fmt(F.burden.hb_la_counties), hb_pop: fmt(F.burden.hb_la_pop55), hb_cases: fmt(F.burden.hb_la_cases), cos_date: nice(F.meta.cosponsors_fetched), trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities), n_tracts: fmt(F.meta.n_tracts), router_mean: F.meta.router.mean_pct, n_nci: F.meta.n_nci };
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
-  document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = `Data as of ${nice(dataDate)}`);
-  document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map: road-distance access to recruiting cancer clinical trials for Americans 55 and older, by county, congressional district and state. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${dataDate}; accessed ${new Date().toISOString().slice(0, 10)}.`;
+  document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
+  document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map: road-distance access to recruiting cancer clinical trials for Americans 55 and older, by county, congressional district and state. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${dataDate}; accessed ${SITE.today()}.`;
   document.title = 'Key findings · Cancer Trial Access Map';
 
   // ---- tooltip helper ----

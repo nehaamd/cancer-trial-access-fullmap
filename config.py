@@ -1,6 +1,7 @@
 """
-Configuration for the Texas Trial Access Snapshot pipeline.
-Edit thresholds, NCI centers, and the city->county fallback here.
+Configuration shared by the pipeline scripts (it began as the Texas Trial Access Snapshot; the national build reuses it).
+Thresholds, the registry query, and - at the end - the national NCI-center loader and the register of method changes.
+The NCI_CENTERS list below is the Texas build's and is not used by the national scripts (see qc_us.py for the national list).
 """
 
 # ---------------------------------------------------------------------------
@@ -112,3 +113,45 @@ CITY_COUNTY_FALLBACK = {
     "denison": "48181", "gainesville": "48097", "decatur": "48497", "mineral wells": "48363",
     "graham": "48503", "vernon": "48487", "childress": "48075", "canyon": "48381",
 }
+
+
+# ---------------------------------------------------------------------------
+# National build: NCI-designated centers used as distance targets.
+# data/ref/nci_centers.csv is written by qc_us.py (one row per location). A center that does not treat adults
+# (adult = 0: St. Jude Children's Research Hospital) stays in that file but is not a place a resident aged 55+
+# can be treated, so it is never the "nearest NCI center". Every script that measures distance to an NCI center
+# reads the list through this function so they all use the same rows in the same order.
+# ---------------------------------------------------------------------------
+def nci_targets(path="data/ref/nci_centers.csv"):
+    import pandas as pd
+    n = pd.read_csv(path)
+    if "adult" in n.columns: n = n[n.adult == 1].reset_index(drop=True)
+    return n
+
+
+def nci_summary(path="data/ref/nci_centers.csv"):
+    """{"locations": distance targets, "centers": distinct designations among them, "excluded": names not used as targets}."""
+    import pandas as pd
+    n = pd.read_csv(path); a = n[n.adult == 1] if "adult" in n.columns else n
+    return {"locations": int(len(a)), "centers": int(a["center"].nunique()) if "center" in a.columns else None,
+            "excluded": sorted(n.loc[n.adult == 0, "name"]) if "adult" in n.columns else []}
+
+
+# ---------------------------------------------------------------------------
+# Method changes that move the published figures (newest last). tract_metrics_us.py stamps METHOD_VERSION into
+# national_metrics_v3.json, and every archived pull keeps that file, so the release gate does not mistake a change of
+# method for a broken refresh, and the "Recent changes" tab says which rows were calculated differently.
+# Add an entry (and so bump the version) whenever a change to the pipeline is expected to move the headline shares.
+# ---------------------------------------------------------------------------
+METHOD_CHANGES = [
+    {"version": 1, "date": "2026-09-09", "note": "First national release."},
+    {"version": 2, "date": "2026-10-05", "note": (
+        "Road network rebuilt: a node at least every 400 m, highway dead ends linked to the adjoining road, and no link across a county line or coastal water. "
+        "This corrected in-town trips that had been routed the long way round (for example parts of Tucson, Kalispell, Spokane, Pueblo and Duluth). "
+        "Sites in ZIP codes that span counties are now assigned to the county where most of the ZIP's residents live, "
+        "and sites in ZIP codes larger than 100 square miles are placed at their city rather than at the centroid of the ZIP (which was 15 miles outside Billings and Great Falls). "
+        "NCI centers are located at their hospital's ZIP code rather than the city center, and St. Jude Children's Research Hospital, which treats children, is no longer a distance target. "
+        "On the same registry data (Sep 30, 2026) the national figures moved as follows: fewer than 20 trials within 60 miles 12.7% to 11.8%; none within 60 miles 4.4% to 3.8%; "
+        "beyond 60 miles of a broad menu 38.8% to 38.1%; beyond 60 miles of an NCI center 44.2% to 43.7%; median distance to an NCI center 50 to 48 miles.")},
+]
+METHOD_VERSION = METHOD_CHANGES[-1]["version"]

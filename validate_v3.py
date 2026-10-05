@@ -17,7 +17,7 @@ def age_years(s):
 
 def main():
     tlog = json.load(open(REF / "tract_ref_log.json")); mlog = json.load(open(OUT / "tract_metrics_log.json")); rlog = json.load(open(OUT / "route_log.json"))
-    glog = json.load(open(ROADS / "graph_stats.json")); blog = json.load(open(REF / "cancer_burden_log.json")); qlog = json.load(open("out/qc_log.json")); cts = json.load(open(OUT / "cancer_type_summary.json"))
+    flog = json.load(open(RAW / "fetch_log.json")); glog = json.load(open(ROADS / "graph_stats.json")); blog = json.load(open(REF / "cancer_burden_log.json")); qlog = json.load(open("out/qc_log.json")); cts = json.load(open(OUT / "cancer_type_summary.json"))
     tr = pd.read_csv(OUT / "tract_access.csv", dtype={"tract": str, "county_fips": str}); cm = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str}); rd = pd.read_csv(OUT / "county_road_distances.csv", dtype={"county_fips": str})
     dm = pd.read_csv(OUT / "district_metrics_v3.csv", dtype={"cd_geoid": str}).set_index("cd_geoid", drop=False); cp = pd.read_csv(REF / "county_pop55.csv", dtype={"county_fips": str}); sm = pd.read_csv(OUT / "state_metrics_v3.csv", dtype={"state_fips": str}).set_index("state_fips", drop=False)
     # 1 population reconciliation
@@ -54,6 +54,15 @@ def main():
     rv = rlog["router_validation"]; val = pd.read_csv(OUT / "road_validation.csv")
     check("Router vs published city-pair driving distances (target mean < 5%)", f"{rv['pairs']} pairs, mean |error| {rv['mean_abs_pct_diff']}%, max {rv['max_abs_pct_diff']}% ({val.loc[val.pct_diff.abs().idxmax(), 'from']}–{val.loc[val.pct_diff.abs().idxmax(), 'to']})", rv["mean_abs_pct_diff"] < 5,
           "routes run between county population centers, published values are city center to city center; the tails (Miami–Tampa, DC–Pittsburgh, Atlanta–Jacksonville) are pairs where the centroid sits well outside downtown")
+    lc = rlog.get("local_checks")
+    if lc:
+        loc = pd.read_csv(OUT / "road_local_checks.csv"); worst = loc[loc.kind == "land"].assign(r=lambda d: d.network_mi / d.approx_driving_mi).sort_values("r").iloc[-1]
+        check("Router on local trips and water crossings (road_local_checks.csv)", f"{lc['routes'] - lc['failed']}/{lc['routes']} within tolerance: {lc['land']} short or regional trips (at most 2x the driving distance + 5 mi; longest relative to the drive: {worst.route}, {worst.network_mi} vs about {worst.approx_driving_mi} mi) and {lc['water']} water crossings (at least 0.6x the drive around, i.e. no invented crossing)",
+              lc["failed"] == 0, "added October 2026: the first national graph routed several in-town trips 60-300 miles (Tucson, Kalispell, Spokane, Pueblo, Duluth); the city-pair check above could not see it. Driving distances are approximate map values, used only as a coarse screen")
+    if (OUT / "route_sites_log.json").exists():
+        sc = json.load(open(OUT / "route_sites_log.json")).get("screen_site_near_in_straight_line_far_by_road")
+        if sc: check("Residents 55+ with a recruiting site within 20 straight-line miles but none within 60 road-miles (contiguous states)", f"{sc['pop55']:,} residents in {sc['tracts']:,} tracts ({sc['pct_of_pop55']}% of residents 55+); largest: " + "; ".join(f"{c['county']} {c['pop55']:,}" for c in sc["largest_counties"][:6]),
+                     sc["pop55"] <= 100_000, "what remains should be places cut off by water with no bridge (islands, peninsulas, lake shores); ferries are not modelled. About 194,000 before the October 2026 graph repair")
     # 6 registry spot-check
     if "--no-registry" not in sys.argv:
         t = pd.read_csv(RAW / "trials.csv", dtype=str, keep_default_na=False); t = t[pd.to_numeric(t.max_age_years, errors="coerce").fillna(999) >= 55]
@@ -103,7 +112,8 @@ def main():
     # 10b facility-level routing (review round 2)
     if (OUT / "route_sites_log.json").exists():
         rs = json.load(open(OUT / "route_sites_log.json")); g = rs["geocode"]
-        check("Facility-level routing: recruiting sites located below county level", f"{g.get('zip_centroid',0):,} ZIP-centroid + {g.get('city_centroid',0):,} city-centroid of {rs['site_rows']:,} site rows ({100*(g.get('zip_centroid',0)+g.get('city_centroid',0))/rs['site_rows']:.1f}%); {g.get('county_centroid_city_disagrees',0)+g.get('county_centroid',0)} fell back to the county center; {rs['site_points']:,} distinct locations", (g.get('zip_centroid',0)+g.get('city_centroid',0))/rs['site_rows'] > 0.95, "city fallback rejected when >40 mi from the assigned county's center (e.g. a registry row with city Dallas but a Cass County ZIP)")
+        nz = g.get("zip_centroid", 0); ncity = sum(v for k, v in g.items() if k.startswith("city_centroid")); nlarge = g.get("city_centroid_large_zip", 0)
+        check("Facility-level routing: recruiting sites located below county level", f"{nz:,} ZIP-centroid + {ncity:,} city-centroid ({nlarge:,} of them because the ZIP is larger than 100 sq mi) of {rs['site_rows']:,} site rows ({100*(nz+ncity)/rs['site_rows']:.1f}%); {g.get('county_centroid_city_disagrees',0)+g.get('county_centroid',0)} fell back to the county center; {rs['site_points']:,} distinct locations", (nz+ncity)/rs['site_rows'] > 0.95, "city fallback rejected when >40 mi from the assigned county's center (e.g. a registry row with city Dallas but a Cass County ZIP)")
         check("Facility-level routing: residents whose own county's trials are >60 road-miles away are no longer scored at 0 mi", f"{inv['tracts_where_own_county_trials_exceed_60mi_pool']:,} tracts, {inv['pop55_in_those_tracts']:,} residents 55+", True, "this population was previously counted as having every trial in its county at zero distance")
     ui = open("docs/index.html").read()
     check("UI text matches validation evidence: router accuracy is qualified in the deployed page (guard against claiming a fix that was not made)", "phrase 'not yet against an independent routing engine' present in index.html" if "independent routing engine" in ui else "MISSING", "independent routing engine" in ui and "approximate" in ui)
@@ -148,7 +158,7 @@ def main():
             from validate_extras import run as extras; rows.extend(extras("--browser" in sys.argv))
         except Exception as e: check("v3.3 extras", f"validate_extras.py failed: {type(e).__name__} {e}", False)
     # write report
-    md = ["# Validation — National Cancer Trial Access Map v3", "", f"Registry pull 2026-09-09; road graph TIGER 2025; ACS 2023 5-year; State Cancer Profiles 2018–2022. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d')}.", "",
+    md = ["# Validation — National Cancer Trial Access Map v3", "", f"Registry pull {flog['timestamp_utc'][:10]}" + (f" (registry data of {flog['registry_data_timestamp'][:10]})" if flog.get("registry_data_timestamp") else "") + f"; road graph TIGER 2025 (graph version {glog.get('graph_version', 1)}); ACS 2023 5-year; State Cancer Profiles 2018–2022. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d')}.", "",
           "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
     text = "\n".join(md) + "\n" + (("\n" + Path("VALIDATION_review.md").read_text()) if Path("VALIDATION_review.md").exists() else "")
     (OUT / "VALIDATION_v3.md").write_text(text); Path("VALIDATION_v3.md").write_text(text)

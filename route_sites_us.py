@@ -4,7 +4,9 @@ Previously every trial was placed at its county's population center, and a resid
 regardless of county size. Now each recruiting site is located at its ZIP-code centroid (ZCTA), with the same state check the
 county assignment uses (a ZIP whose state disagrees with the site's stated state is rejected — e.g. a Los Angeles site listed with
 a Boston ZIP falls through to the city gazetteer, exactly as it did for county assignment), then the city centroid, then — only
-if nothing else is available — the county population center (flagged).
+if nothing else is available — the county population center (flagged). Two exceptions put a site at its city although its ZIP
+is known: a ZIP larger than 100 square miles, whose centroid is in open country (tier4_covering.SiteLocator), and a ZIP that
+spans counties when the site was assigned to the county where the ZIP's residents live (metrics_us.assign_sites).
 
 Sites at the same location are merged into "site points". For every tract and county population center: road miles to every
 site point within 120 road-miles. "Trials within X road-miles" then means trials with at least one recruiting site within X
@@ -20,7 +22,7 @@ import numpy as np, pandas as pd, geopandas as gpd
 from scipy import sparse
 from scipy.spatial import cKDTree
 from scipy.sparse.csgraph import dijkstra
-from tier4_covering import prepare_graph, norm, to5070
+from tier4_covering import prepare_graph, norm, to5070, SiteLocator
 
 REF, OUT, ROADS, RAW = Path("data/ref"), Path("out_adult55"), Path("data/roads"), Path("data/raw")
 M2MI = 1 / 1609.344; SPEED_ACCESS = 35.0; MAX_ACCESS_MI = 30.0; BAND_MAX = 120.0
@@ -33,23 +35,24 @@ def main():
     j_of = {nct: j for j, nct in enumerate(trials.nct_id)}
     sites = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna(""); sites = sites[(sites.county_fips != "") & sites.nct_id.isin(j_of)].copy()
     sites["zip5"] = sites.zip.str.extract(r"(\d{5})", expand=False).fillna("")
-    zc = pd.read_csv(REF / "zcta_pop55.csv", dtype={"zcta": str}).set_index("zcta"); z2c = dict(pd.read_csv(REF / "zcta_county.csv", dtype=str).values)
-    gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str}).drop_duplicates(["state", "place"]).set_index(["state", "place"])
+    z2c = dict(pd.read_csv(REF / "zcta_county.csv", dtype=str).values); loc = SiteLocator()
     cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str, "state_fips": str}).set_index("county_fips")
+    clat, clon = cent.lat.to_dict(), cent.lon.to_dict()
     lat, lon, how = [], [], []
     for r in sites.itertuples():
-        zcty = z2c.get(r.zip5)
-        if r.zip5 in zc.index and zcty and zcty[:2] == r.county_fips[:2]:
-            lat.append(zc.loc[r.zip5, "lat"]); lon.append(zc.loc[r.zip5, "lon"]); how.append("zip_centroid"); continue
-        key = (r.state, str(r.city).strip().lower()); c = cent.loc[r.county_fips]
-        if key in gz.index:
-            glat, glon = gz.loc[key, "lat"], gz.loc[key, "lon"]
-            # the city name must agree with the assigned county: a registry row like city "Dallas" + ZIP 75521 (Atlanta, TX) was
-            # assigned to Cass County by ZIP, and must not be drawn 180 miles away in Dallas. 40 mi ~ the radius of a large county.
-            if np.hypot((glat - c.lat) * 69.0, (glon - c.lon) * 69.0 * np.cos(np.radians(c.lat))) <= 40:
-                lat.append(glat); lon.append(glon); how.append("city_centroid"); continue
-            lat.append(c.lat); lon.append(c.lon); how.append("county_centroid_city_disagrees"); continue
-        lat.append(c.lat); lon.append(c.lon); how.append("county_centroid")
+        zcty = z2c.get(r.zip5); z = loc.by_zip(r.zip5, r.state, r.city) if (zcty and zcty[:2] == r.county_fips[:2]) else None
+        c = loc.city(r.state, r.city); la0, lo0 = clat[r.county_fips], clon[r.county_fips]
+        # the city name must agree with the assigned county: a registry row like city "Dallas" + ZIP 75521 (Atlanta, TX) was
+        # assigned to Cass County by ZIP, and must not be drawn 180 miles away in Dallas. 40 mi ~ the radius of a large county.
+        city_ok = bool(c) and np.hypot((c[0] - la0) * 69.0, (c[1] - lo0) * 69.0 * np.cos(np.radians(la0))) <= 40
+        # A site assigned to the county where its ZIP's residents live rather than where its land is ("zip_pop", metrics_us.py)
+        # is placed at its city: the ZIP centroid is in the other county.
+        if z and getattr(r, "assign_method", "") == "zip_pop" and city_ok and z[2] == "zip_centroid": z = (c[0], c[1], "city_centroid_zip_spans_counties")
+        if z: lat.append(z[0]); lon.append(z[1]); how.append(z[2]); continue
+        if c:
+            if city_ok: lat.append(c[0]); lon.append(c[1]); how.append("city_centroid"); continue
+            lat.append(la0); lon.append(lo0); how.append("county_centroid_city_disagrees"); continue
+        lat.append(la0); lon.append(lo0); how.append("county_centroid")
     sites["lat"], sites["lon"], sites["geocode"] = lat, lon, how
     log["site_rows"] = len(sites); log["geocode"] = sites.geocode.value_counts().to_dict()
     # merge coincident locations into site points
@@ -83,6 +86,16 @@ def main():
     pt_src, pt_t, pt_mi = (np.concatenate(x) for x in (pt_src, pt_t, pt_mi)); pc_src, pc_c, pc_mi = (np.concatenate(x) for x in (pc_src, pc_c, pc_mi))
     # a site point inside a resident's own tract can still be a few miles away by road; nothing is forced to zero any more
     log["tract_sitepoint_pairs_within_120"] = int(len(pt_src)); log["county_sitepoint_pairs_within_120"] = int(len(pc_src))
+    # --- screen: residents with a recruiting site close by in a straight line but none within 60 miles by road. A real water
+    #     barrier produces a few of these (Whidbey Island, the Bolivar Peninsula, the New York shore of Lake Champlain); a fault in
+    #     the road graph produces many (the first national graph: about 194,000 residents 55+). release_gate.py puts a ceiling on it. ---
+    near_road = np.full(len(tr), np.inf); np.minimum.at(near_road, pt_t, pt_mi)
+    sl = cKDTree(pxy[~p_off]).query(txy)[0] * M2MI
+    lower48 = ~tr.county_fips.str[:2].isin(["02", "15"]).values; flag = lower48 & (sl <= 20.0) & (near_road > 60.0)
+    pop55 = tr.pop55.values; by_c = pd.Series(pop55[flag], index=tr.county_fips.values[flag]).groupby(level=0).sum().sort_values(ascending=False)
+    log["screen_site_near_in_straight_line_far_by_road"] = {"rule": "contiguous states; nearest site point within 20 straight-line miles, none within 60 road-miles",
+        "tracts": int(flag.sum()), "pop55": int(pop55[flag].sum()), "pct_of_pop55": round(100 * float(pop55[flag].sum()) / float(pop55.sum()), 3),
+        "largest_counties": [{"county": f"{cent.county_name.get(f, f)}, {cent.state_name.get(f, '')}", "pop55": int(v)} for f, v in by_c.head(12).items()]}
     np.savez_compressed(ROADS / "route_cache_sites.npz", tract=tr.tract.values.astype(str), county_fips=cent.index.values.astype(str),
                         sp_lat=pts.lat.values, sp_lon=pts.lon.values, sp_county=pts.county_fips.values.astype(str), sp_n_facilities=pts.n_facilities.values,
                         S_indptr=S.indptr, S_indices=S.indices, S_shape=np.array(S.shape), trial_ids=trials.nct_id.values.astype(str),

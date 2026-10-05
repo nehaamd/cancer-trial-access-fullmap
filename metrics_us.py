@@ -29,17 +29,32 @@ def assign_sites(sites, cent):
     pts = gpd.GeoDataFrame(gaz, geometry=gpd.points_from_xy(gaz.lon, gaz.lat), crs=4326)
     gaz_county = gpd.sjoin(pts, counties, how="left", predicate="within")
     city2c = {(r.state, r.place): r.GEOID for r in gaz_county.dropna(subset=["GEOID"]).itertuples()}
+    # A ZIP that spans counties: zcta_county.csv gives the county with most of its land. Where most of the ZIP's residents 55+
+    # live in a different county (zcta_county_parts.csv), the site goes to that county instead - unless the site's own city is
+    # known to lie in the land-area county. Hospitals stand where the people are: ZIP 49684 is 61% Leelanau County by land, but
+    # Munson Medical Center and two-thirds of the ZIP's older residents are in Traverse City, Grand Traverse County.
+    zpop = {}
+    if (REF / "zcta_county_parts.csv").exists():
+        pp = pd.read_csv(REF / "zcta_county_parts.csv", dtype={"zcta": str, "county_fips": str}); pp = pp[pp.pop55_share.notna()]
+        zpop = pp.sort_values("pop55_share", ascending=False).drop_duplicates("zcta").set_index("zcta").county_fips.to_dict()
+
+    def city_county(state, city):
+        city = (city or "").strip().lower()
+        for cand in (city, city.replace("saint ", "st. "), city.replace("st ", "st. "), city.replace("ft. ", "fort ").replace("ft ", "fort ")):
+            cc = city2c.get((state, cand))
+            if cc: return cc
+        return None
     method, county = [], []
     for s in sites.itertuples():
         z = (s.zip or "")[:5]; st = s.state_fips
         c = z2c.get(z) if z.isdigit() and len(z) == 5 else None
-        if c and c[:2] == st: method.append("zip"); county.append(c); continue
+        if c and c[:2] == st:
+            cp = zpop.get(z)
+            if cp and cp != c and cp[:2] == st and city_county(s.state, s.city) != c: method.append("zip_pop"); county.append(cp); continue
+            method.append("zip"); county.append(c); continue
         c3 = z3.get(z[:3]) if len(z) >= 3 and z[:3].isdigit() else None
         if c3 and c3[:2] == st: method.append("zip3"); county.append(c3); continue
-        city = (s.city or "").strip().lower()
-        for cand in (city, city.replace("saint ", "st. "), city.replace("st ", "st. "), city.replace("ft. ", "fort ").replace("ft ", "fort ")):
-            cc = city2c.get((s.state, cand))
-            if cc: break
+        cc = city_county(s.state, s.city)
         if cc and cc[:2] == st: method.append("city_gazetteer"); county.append(cc); continue
         method.append("unassigned"); county.append(None)
     sites = sites.copy(); sites["county_fips"] = county; sites["assign_method"] = method
@@ -59,7 +74,7 @@ def main():
     cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str, "state_fips": str})
     pop = pd.read_csv(REF / "county_pop55.csv", dtype={"county_fips": str})
     cd = pd.read_csv(REF / "county_cd.csv", dtype=str); cd["share"] = cd.share.astype(float)
-    nci = pd.read_csv(REF / "nci_centers.csv")
+    nci = config.nci_targets()
 
     sites = assign_sites(sites, cent); sites.to_csv(OUT / "site_assignment_qc.csv", index=False)
     qc = sites.assign_method.value_counts().to_dict()

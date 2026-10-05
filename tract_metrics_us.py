@@ -8,6 +8,7 @@ District weights: each tract-district record carries weight = tract pop 55+ x la
 A tract with no road route to a target is treated as beyond every distance threshold and counted in pct_no_road_route_*.
 """
 import json
+import config
 from pathlib import Path
 import numpy as np, pandas as pd
 from scipy import sparse
@@ -79,7 +80,7 @@ def main():
     for lab in ("broad", "lim", "nci"):
         d = z[f"t_{lab}"]; h = z[f"t_{lab}_hr"]
         tr[f"road_mi_{lab}"] = np.where(np.isfinite(d), np.round(d, 1), NOROAD); tr[f"drive_hr_{lab}"] = np.where(np.isfinite(h), np.round(h, 2), NOROAD)
-    cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str}); nci = pd.read_csv(REF / "nci_centers.csv")
+    cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str}); nci = config.nci_targets()
     cname = (cent.county_name + ", " + cent.state_name).values
     tr["nearest_broad"] = np.where(z["t_broad_src"] >= 0, cname[np.clip(z["t_broad_src"], 0, None)], "NO ROAD CONNECTION")
     tr["nearest_nci"] = np.where(z["t_nci_src"] >= 0, nci.name.values[np.clip(z["t_nci_src"], 0, None)], "NO ROAD CONNECTION")
@@ -134,6 +135,7 @@ def main():
     tr["w"] = tr.pop55; tr["state_fips"] = tr.county_fips.str[:2]
     st = tr.groupby("state_fips").apply(agg, include_groups=False).reset_index(); st.to_csv(OUT / "state_metrics_v3.csv", index=False)
     nat = agg(tr); nat = {k: (int(v) if isinstance(v, (np.integer,)) else float(v) if isinstance(v, (np.floating,)) else v) for k, v in nat.items()}
+    nat["method_version"] = config.METHOD_VERSION   # kept with every snapshot, so a later refresh knows whether two pulls were calculated the same way
     json.dump(nat, open(OUT / "national_metrics_v3.json", "w"), indent=2, default=str)
     # invariants
     inv = {"tract_pool_monotone_violations": int(((tr.trials_within_30rdmi > tr.trials_within_60rdmi) | (tr.trials_within_60rdmi > tr.trials_within_120rdmi)).sum()),

@@ -40,14 +40,17 @@ def main():
               "no_longer_listed": [{"nct_id": n, "title": tp.loc[n, "brief_title"], "last_status": tp.loc[n, "overall_status"], "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"} for n in gone],
               "field_changes": changes, "sites_new_at_existing_trials": [{"nct_id": a, "facility": b, "city": c, "state": d} for a, b, c, d in sites_new_existing][:500],
               "sites_removed_at_existing_trials": [{"nct_id": a, "facility": b, "city": c, "state": d} for a, b, c, d in sites_gone_existing][:500]}
-    # county movement (needs the current county metrics and the previous site assignment; approximate via ZIP->county of both site sets if available)
+    # county movement. Both pulls are assigned to counties here, with the current rules (metrics_us.assign_sites), so the list
+    # shows what the registry changed and nothing else: a change in how sites are assigned to counties never appears as movement.
     try:
-        cmc = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str}); prev_cm = Path(prev_dir) / "county_metrics.csv"
-        if prev_cm.exists():
-            cmp_ = pd.read_csv(prev_cm, dtype={"county_fips": str}).set_index("county_fips").trials_in_county; cur_ = cmc.set_index("county_fips").trials_in_county
-            d = (cur_ - cmp_.reindex(cur_.index).fillna(0)); mv = d[d != 0]; names = cmc.set_index("county_fips")
-            detail["county_changes"] = [{"county": f"{names.loc[f, 'county_name']}, {names.loc[f, 'state_name']}", "from": int(cmp_.get(f, 0)), "to": int(cur_[f])} for f in mv.abs().sort_values(ascending=False).index[:60]]
-            summ["counties_with_changed_trial_count"] = int(len(mv)); summ["counties_crossing_a_menu_threshold"] = int(((cmp_.reindex(cur_.index).fillna(0) >= 20) != (cur_ >= 20)).sum() + ((cmp_.reindex(cur_.index).fillna(0) >= 100) != (cur_ >= 100)).sum())
+        from metrics_us import assign_sites
+        cmc = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str}); names = cmc.set_index("county_fips")
+        count = lambda sites: assign_sites(sites, None).dropna(subset=["county_fips"]).groupby("county_fips").nct_id.nunique().reindex(names.index).fillna(0).astype(int)
+        cmp_, cur_ = count(sp), count(sc)
+        if not (cur_ == names.trials_in_county).all(): summ["county_change_note"] = "county recount differs from county_metrics.csv; check the trial universe"
+        d = cur_ - cmp_; mv = d[d != 0]
+        detail["county_changes"] = [{"county": f"{names.loc[f, 'county_name']}, {names.loc[f, 'state_name']}", "from": int(cmp_[f]), "to": int(cur_[f])} for f in mv.abs().sort_values(ascending=False, kind="stable").index[:60]]
+        summ["counties_with_changed_trial_count"] = int(len(mv)); summ["counties_crossing_a_menu_threshold"] = int(((cmp_ >= 20) != (cur_ >= 20)).sum() + ((cmp_ >= 100) != (cur_ >= 100)).sum())
     except Exception as e: summ["county_change_note"] = f"county movement not computed: {e}"
     # refresh history: one row per archived pull (data/snapshots/<date>/national_metrics_v3.json, kept since the first refresh) plus the current pull
     hist = []
@@ -58,14 +61,18 @@ def main():
             tcount = None
             if (d / "trials.csv").exists():
                 tt = pd.read_csv(d / "trials.csv", dtype=str, keep_default_na=False); tcount = int((tt.excludes_55plus == "0").sum()) if "excludes_55plus" in tt.columns else int(len(tt))
-            hist.append({"pull": f.get("timestamp_utc", d.name)[:10], "registry_data": (f.get("registry_data_timestamp") or "")[:10] or None, "trials": tcount,
+            hist.append({"pull": f.get("timestamp_utc", d.name)[:10], "registry_data": (f.get("registry_data_timestamp") or "")[:10] or None, "trials": tcount, "method": int(n.get("method_version", 1)),
                          "l20": n["pct_lt20_trials_within_60rdmi"], "z60": n["pct_zero_trials_within_60rdmi"], "g60b": n["pct_gt60rdmi_broad_menu"], "g60n": n["pct_gt60rdmi_nci"], "medn": n["median_road_mi_nci"]})
     ncur = json.load(open(OUT / "national_metrics_v3.json"))
-    hist.append({"pull": lc["timestamp_utc"][:10], "registry_data": (lc.get("registry_data_timestamp") or "")[:10] or None, "trials": int(len(tc)), "l20": ncur["pct_lt20_trials_within_60rdmi"], "z60": ncur["pct_zero_trials_within_60rdmi"],
+    hist.append({"pull": lc["timestamp_utc"][:10], "registry_data": (lc.get("registry_data_timestamp") or "")[:10] or None, "trials": int(len(tc)), "method": int(ncur.get("method_version", 1)), "l20": ncur["pct_lt20_trials_within_60rdmi"], "z60": ncur["pct_zero_trials_within_60rdmi"],
                  "g60b": ncur["pct_gt60rdmi_broad_menu"], "g60n": ncur["pct_gt60rdmi_nci"], "medn": ncur["median_road_mi_nci"], "current": True})
-    out = {"summary": summ, "history": hist, **detail}; json.dump(out, open(OUT / "refresh_diff.json", "w"), indent=2)
+    # method changes that fall inside the history shown (config.METHOD_CHANGES): rows on either side are not directly comparable
+    import config
+    seen = {h["method"] for h in hist}; summ["method_version"] = hist[-1]["method"]
+    methods = [m for m in config.METHOD_CHANGES if m["version"] > min(seen) and m["version"] <= max(seen)]
+    out = {"summary": summ, "history": hist, "method_changes": methods, **detail}; json.dump(out, open(OUT / "refresh_diff.json", "w"), indent=2)
     (DOCS / "changes.js").write_text("window.CHANGES=" + json.dumps(out, separators=(",", ":"), ensure_ascii=False) + ";", encoding="utf-8")
-    print(json.dumps(summ, indent=1)); print("examples of field changes:", changes[:5])
+    print(json.dumps(summ, indent=1)); print("examples of field changes:", changes[:5]); print("method changes shown:", [m["version"] for m in methods])
 
 
 if __name__ == "__main__":

@@ -7,8 +7,8 @@ METHODOLOGY (this text is reproduced verbatim in the output and the web page):
   Cancer-accredited programs plus NCORP affiliates; the stand-in used when those were unreachable is every US facility that hosted an
   interventional oncology treatment trial started 2016 or later on ClinicalTrials.gov). Candidates are excluded if (a) their county
   already hosts a limited menu (20 or more eligible recruiting trials) or (b) the facility itself already hosts an eligible recruiting
-  trial today. Candidates are located by ZIP-code centroid (city centroid as fallback) and joined to the highway network like every
-  other point in this project.
+  trial today. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and
+  joined to the highway network like every other point in this project.
   Objective (primary). Residents aged 55+ who today have no eligible recruiting cancer treatment trial within 60 road-miles of their
   census tract's population center, and who would have one if a trial opened at the candidate (i.e. the candidate is within 60
   road-miles of their tract). Secondary view: the same, for residents who today have fewer than 20 such trials within 60 road-miles.
@@ -34,6 +34,38 @@ def norm(x):
     y = SITECODE.sub(" ", str(x)); y = re.sub(r"[^a-z0-9 ]", " ", y.lower()); return re.sub(r"\s+", " ", y).strip()
 def to5070(lon, lat):
     p = gpd.GeoSeries(gpd.points_from_xy(lon, lat), crs=4326).to_crs(5070); return np.column_stack([p.x.values, p.y.values])
+
+
+class SiteLocator:
+    """Where a facility is, from its ZIP code and city: the ZIP centroid - or, for a large ZIP, the centroid of its city.
+
+    A ZIP code of more than BIG_ZIP_SQMI square miles is typical of a rural hub: the town in one corner, range or forest in the rest.
+    Its centroid is in open country (16 miles from Billings for ZIP 59101, 15 from Great Falls for 59405, 18 from Durango for
+    81301, 180 from Fairbanks for 99701), which put the hospital - and every trial in it - that far from the people of its own
+    town. A site in such a ZIP is placed at the Census centroid of the city the registry names, when that city is more than
+    CITY_MIN_MI from the ZIP centroid (otherwise the two agree) and within twice the ZIP's radius of it (otherwise city and ZIP
+    disagree, and the ZIP is kept as the more specific of the two)."""
+    BIG_ZIP_SQMI = 100.0; CITY_MIN_MI = 3.0
+
+    def __init__(self):
+        zc = pd.read_csv(REF / "zcta_pop55.csv", dtype={"zcta": str}); self.zip = {z: (float(a), float(b)) for z, a, b in zip(zc.zcta, zc.lat, zc.lon)}
+        ar = pd.read_csv(REF / "zcta_land_area.csv", dtype={"zcta": str}) if (REF / "zcta_land_area.csv").exists() else pd.DataFrame({"zcta": [], "land_sqmi": []})
+        self.area = dict(zip(ar.zcta, ar.land_sqmi.astype(float)))
+        gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str}).drop_duplicates(["state", "place"])
+        self.place = {(a, b): (float(c), float(d)) for a, b, c, d in zip(gz.state, gz.place, gz.lat, gz.lon)}
+
+    def city(self, state, city):
+        return self.place.get((state, str(city).strip().lower()))
+
+    def by_zip(self, zip5, state, city):
+        """(lat, lon, how) for a ZIP that has a centroid; how is "zip_centroid" or "city_centroid_large_zip". None if the ZIP is unknown."""
+        z = self.zip.get(zip5)
+        if z is None: return None
+        a = self.area.get(zip5, 0.0); c = self.city(state, city)
+        if c and a > self.BIG_ZIP_SQMI:
+            d = float(np.hypot((z[0] - c[0]) * 69.0, (z[1] - c[1]) * 69.0 * np.cos(np.radians(z[0]))))
+            if self.CITY_MIN_MI < d <= max(2.0 * np.sqrt(a / np.pi), 10.0): return c[0], c[1], "city_centroid_large_zip"
+        return z[0], z[1], "zip_centroid"
 
 
 def prepare_graph():
@@ -73,12 +105,12 @@ def main():
     log["excluded_county_has_limited_menu"] = int(excl_a.sum()); log["excluded_facility_already_recruiting"] = int((~excl_a & excl_b).sum())
     cand = cand[~excl_a & ~excl_b].copy()
     # geocode: ZIP centroid, then city gazetteer
-    zc = pd.read_csv(REF / "zcta_pop55.csv", dtype={"zcta": str}).set_index("zcta"); gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str}).drop_duplicates(["state", "place"]).set_index(["state", "place"])
-    lat, lon, how = [], [], []
+    loc = SiteLocator(); lat, lon, how = [], [], []
     for r in cand.itertuples():
-        if r.zip in zc.index: lat.append(zc.loc[r.zip, "lat"]); lon.append(zc.loc[r.zip, "lon"]); how.append("zip"); continue
-        key = (r.state, str(r.city).strip().lower())
-        if key in gz.index: lat.append(gz.loc[key, "lat"]); lon.append(gz.loc[key, "lon"]); how.append("city"); continue
+        z = loc.by_zip(r.zip, r.state, r.city)
+        if z: lat.append(z[0]); lon.append(z[1]); how.append("zip" if z[2] == "zip_centroid" else "city_large_zip"); continue
+        c = loc.city(r.state, r.city)
+        if c: lat.append(c[0]); lon.append(c[1]); how.append("city"); continue
         lat.append(np.nan); lon.append(np.nan); how.append("none")
     cand["lat"], cand["lon"], cand["geocode"] = lat, lon, how; log["geocode"] = cand.geocode.value_counts().to_dict(); cand = cand[cand.geocode != "none"].copy()
     cxy = to5070(cand.lon.values, cand.lat.values); cd, ci = tree.query(cxy); ci = aidx[ci]; c_acc = cd * M2MI

@@ -54,7 +54,8 @@ for k, b in CO["bills"].items():
 out = {
     "built": datetime.date.today().isoformat(),
     "meta": {"pull": meta["pull"], "registry_data_timestamp": meta.get("registry_data_timestamp"), "trials": meta["trials"], "facilities": meta["facilities"], "sitepoints": meta["sitepoints"],
-             "plan": meta["plan"], "incidence_period": meta["burden"]["period"], "members_pull": meta["members_pull"].split(" ")[0], "cosponsors_fetched": CO["meta"]["fetched"], "router": meta["router"], "n_tracts": core["nt"], "n_nci": len(D["nci"])},
+             "plan": meta["plan"], "incidence_period": meta["burden"]["period"], "members_pull": meta["members_pull"].split(" ")[0], "cosponsors_fetched": CO["meta"]["fetched"], "router": meta["router"], "n_tracts": core["nt"], "n_nci": len(D["nci"]),
+             "nci_centers": (meta.get("nci") or {}).get("centers"), "nci_excluded": (meta.get("nci") or {}).get("excluded", []), "graph_note": meta.get("graph_note")},
     "nat": {**{k: core[k] for k in ("p", "l20", "z60", "l100", "zc", "g60b", "g120b", "g60l", "g60n", "g120n", "nr", "medb", "medn", "medl", "t30", "t60", "t120", "own")},
             "people_l20": int(round(core["p"] * core["l20"] / 100)), "people_z60": int(round(core["p"] * core["z60"] / 100)), "people_g60n": int(round(core["p"] * core["g60n"] / 100)), "people_g60b": int(round(core["p"] * core["g60b"] / 100))},
     "rural": {"metro": RU["nat"]["metro"], "nonmetro": RU["nat"]["nonmetro"]},
