@@ -192,3 +192,27 @@ A second, longer check of the published site against outside sources: 40 cities 
 **Checks added to every refresh** (`validate_v3.py`): no telemedicine row is assigned to a county and the finder's telemedicine list matches; mistyped-ZIP rows are not drawn at the ZIP; every trial at every location carries the city of its own registry row.
 
 **Not changed, for the author to decide:** about 20 supportive-care and prevention studies that the registry files as treatment trials (insomnia, smoking cessation and hot flashes in people with cancer) are still counted; graft-versus-host disease and amyloidosis studies are counted when the search returns them; "recruiting sites" is still a count of distinct names.
+
+## 2026-10-05 · wording, age filter and "Prototype" label after outside review
+
+No access figure changes. Same registry data (5 October 2026).
+
+**Age.** The national panel said all 4,001 trials were "open to a 55-year-old". 39 of them require patients to be 60 or older (26 of those 65 or older, 11 of them 70 or older), so 3,962 are. The trial set was already defined as trials accepting at least one patient aged 55 or older, which fits a population of everyone 55 and older; the sentence now says "accepting some adults aged 55 or older". The Patient age box on the map showed 55 but applied no age filter at that value. It now starts empty ("Any 55+"), and any age typed into it, 55 included, keeps only the trials open at that age. Counting only trials open at exactly 55 would move the national figures from 12.0% to 12.1% (fewer than 20 within 60 road-miles) and from 4.2% to 4.3% (none).
+
+**"Average", not "typical".** The number of trials within 60 road-miles "of a typical resident" is a population-weighted mean (354 nationally). The median resident has 241 and a quarter of residents have 60 or fewer, so the pages now say "Residents 55+ have an average of 354 within 60 road-miles". The methods text says that the median is lower.
+
+**"Listed", not "eligible".** "Eligible trial" meant a trial that meets the map's criteria and read as if a patient were eligible for it. The term is now "listed trial" on every page, in the briefs and in the README, with "Listed does not mean a given patient qualifies" in the map's definition.
+
+**Distances.** The map said distances run "to actual recruiting-site locations". Sites are placed at the center of their ZIP code or city, so the text now says "approximate trial-site locations", with a line under the map. The ZIP finder says next to its results that distance is straight-line distance × 1.2 between ZIP-code centers, not a routed drive; this was in the note at the bottom only.
+
+**People, counted.** "4.1 million have none" was the rounded share times the population (4.2% × 98.6 million = 4,141,050). The count over census tracts is 4,155,856, which is 4.2 million and is what the new-site page already printed. `build_findings.py` now counts the residents behind the four national shares from `tract_access.csv` and stops if a count and its published share disagree; the map reads the same numbers from `findings.js`.
+
+**No refresh schedule on the pages.** "A refresh is scheduled every Monday" is removed from the map, the key-findings page and the README; every refresh up to 5 October was started by hand. The pages show the date of the registry data, and say how many days old it is once it is more than 10 days old.
+
+**Briefs.** Each brief carries a "Prototype · figures under review" label that also prints. The label takes no extra height: all 51 state and 436 district briefs and 260 sampled county briefs still print on one page.
+
+**Report a problem.** Every page links to the repository's issue list (it needs a GitHub account).
+
+**New-site page.** The method text stored in `tier4.js` still says "eligible recruiting trial" until the next refresh rewrites that file from `tier4_covering.py`.
+
+**Corrected estimate, nothing changed.** The entry above says about 20 supportive-care and prevention studies are counted. That was low. In a random sample of 200 listed trials, 9 do not treat the cancer itself (meal timing, exercise, depression in survivors, pain, hearing protection, at-home paracentesis) and 4 more treat a complication of treatment or prevent a second cancer: roughly 1 in 20, or about 200 trials. The registry files them all as primary purpose Treatment. Leaving out the 97 trials with no drug, biologic, radiation, procedure or device arm leaves both headline shares unchanged (12.0%, 4.2%); leaving out a wider set of 217 moves "none within 60 road-miles" from 4.2% to 4.3%. Whether to keep, label or drop them is still for the author to decide.

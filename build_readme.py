@@ -22,8 +22,8 @@ def main():
     ml = json.load(open("out_adult55/metrics_log.json")); rl = json.load(open("out_adult55/route_log.json")); rr = rl["road_over_straightline_ratio_broad"]
     met, non = ru["metro"], ru["nonmetro"]; nci = (f"{m['nci_centers']} centers at {m['n_nci']} locations" if m.get("nci_centers") else f"{m['n_nci']} locations")
     lines = [START,
-        "## Headline results (residents 55+, trials open to a 55-year-old, road miles from each census tract's population center)",
-        f"Registry data as of {nice(m.get('registry_data_timestamp') or m['pull'])}: {m['trials']:,} eligible trials at about {round(m['facilities'], -2):,} registry-listed facilities ({m['sitepoints']:,} distinct site locations).",
+        "## Headline results (residents 55+, trials accepting some adults aged 55 or older, road miles from each census tract's population center)",
+        f"Registry data as of {nice(m.get('registry_data_timestamp') or m['pull'])}: {m['trials']:,} listed trials at about {round(m['facilities'], -2):,} registry-listed facilities ({m['sitepoints']:,} distinct site locations).",
         f"- **{n['l20']}% of Americans 55+ have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; {n['z60']}% have none.** ({n['zc']}% live in a county with no trial — a county-boundary statistic that overstates isolation and is not the lead number.)",
         f"- **{n['g60b']}% live more than 60 road-miles from a broad menu** (a county with 100 or more trials); {n['g120b']}% more than 120; {n['nr']}% (Alaska, Hawaii) have no road connection to one at all.",
         f"- **{n['g60n']}% live more than 60 road-miles from an NCI-designated cancer center that treats adults** ({nci}); the median resident 55+ is {n['medn']} road-miles from one; {n['g120n']}% are more than 120.",
