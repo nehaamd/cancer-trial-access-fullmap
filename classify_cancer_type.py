@@ -49,6 +49,7 @@ PRECEDENCE = [
  (r"myelomonocytic|atypical chronic myeloid", {"mds_mpn"}),                                         # CMML/JMML are MDS/MPN overlap entities, not "leukemia" for this purpose
  (r"plasma cell leukemia", {"myeloma"}),                                   # a plasma-cell disorder
  (r"gliosarcom", {"brain_cns"}),                                           # a glioblastoma variant, not a sarcoma
+ (r"carcinosarcom", set(CATS) - {"sarcoma"}),                              # a carcinoma of its organ (uterine, ovarian: gynecologic), not a sarcoma; the stem "sarcom" sits inside the word
  (r"leiomyosarcom", {"sarcoma"}),                                          # uterine leiomyosarcoma is a sarcoma
  (r"neck.*unknown primary|unknown primary.*neck", {"head_neck"}),
  (r"lymphoblastic lymphoma", {"lymphoma", "leukemia"}),                   # keep both; combined trials are genuinely two entities
