@@ -107,13 +107,16 @@
     const rows = new Map(), facs = new Set();
     for (const [s, mi] of near) { const hit = SP[s].filter(pass); if (!hit.length) continue;
       for (const j of hit) { let r = rows.get(j); if (!r) { r = { j, mi, sites: [] }; rows.set(j, r); } r.sites.push([s, mi]); }
-      for (const [cf, i] of SPI[s]) { const fa = C[cf].fac[i]; if (fa && fa[3].some(pass)) facs.add(cf + ':' + i); } }
+      for (const x of atPoint(s)) if (x.tr.some(pass)) facs.add(x.key); }
     const list = [...rows.values()].sort((a, b) => a.mi - b.mi || a.sites.length - b.sites.length); last = { zip, z, list, radius, type, age, nsites: facs.size }; show = 50; render(); document.getElementById('next').hidden = false; }
   const junk = n => !n || /^[\d\s#().-]*$/.test(n) || n.length < 4;  // registry rows whose 'facility' is only a site number
-  // The facilities at one location that list this trial. Locations are ZIP-code centroids, so one location can hold several hospitals;
-  // only the ones whose registry record names this trial are returned.
-  function hosts(s, j) { return SPI[s].map(([cf, i]) => ({ fa: C[cf].fac[i], cf })).filter(x => x.fa && x.fa[3].includes(j)).sort((a, b) => (a.fa[5] - b.fa[5]) || (junk(a.fa[0]) - junk(b.fa[0])) || a.fa[0].localeCompare(b.fa[0])); }
-  const facText = x => `${esc(x.fa[0])}${x.fa[5] ? ' <span class="sub">(site name not given in registry)</span>' : ''}, ${esc(x.fa[1])}${x.fa[2] ? ' ' + esc(x.fa[2]) : ''}`;
+  // The facilities at one location, each with the trials it runs THERE and the ZIP the registry gives for it there (DATA.SPX).
+  // One facility name is often listed at several addresses, so its own record (one ZIP, all its trials) is not used for either:
+  // a trial is shown only at the locations whose registry rows name it, with the ZIP of those rows.
+  const SPX = D.SPX || null;
+  const atPoint = s => SPI[s].map(([cf, i], k) => { const fa = C[cf].fac[i]; return fa ? { fa, cf, key: cf + ':' + i, zip: SPX ? SPX[s][k][0] : fa[2], tr: SPX ? SPX[s][k][1] : fa[3] } : null; }).filter(Boolean);
+  function hosts(s, j) { return atPoint(s).filter(x => x.tr.includes(j)).sort((a, b) => (a.fa[5] - b.fa[5]) || (junk(a.fa[0]) - junk(b.fa[0])) || a.fa[0].localeCompare(b.fa[0])); }
+  const facText = x => `${esc(x.fa[0])}${x.fa[5] ? ' <span class="sub">(site name not given in registry)</span>' : ''}, ${esc(x.fa[1])}${x.zip ? ' ' + esc(x.zip) : ''}`;
   const miText = mi => mi < 1 ? 'under 1 mi' : `~${mi} mi`;
   function render() { const { zip, z, list, radius, type, age, nsites } = last; const cty = C[z[2]]; const tl = type ? T.types.find(t => t[0] === type)[1] : 'cancer';
     const young = age && age < 55 ? `<p class="warn"><b>Age ${age}:</b> this list only covers trials open to at least one patient aged 55 or older, so trials that enrol only younger patients are missing. For a complete search at this age, use the NCI or ClinicalTrials.gov search or ask a navigator (below).</p>` : '';

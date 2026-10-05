@@ -141,6 +141,18 @@ def main():
     for sp_ in Dj2["SPI"]:
         for cf_, i_ in sp_:
             if i_ >= len(Dj2["counties"][cf_]["fac"]): sp_bad += 1
+    # every trial at every location carries the ZIP of its own registry row (SPX), and the per-location lists add up to the facility's list
+    if "SPX" in Dj2:
+        SPX_ = Dj2["SPX"]; shape_ok = len(SPX_) == len(Dj2["SPI"]) and all(len(a) == len(b) for a, b in zip(SPX_, Dj2["SPI"])); union = {}; outside = 0
+        for s_i, (ents, refs) in enumerate(zip(SPX_, Dj2["SPI"])):
+            here = set(Dj2["SP"][s_i])
+            for (z_, tr_), (cf_, i_) in zip(ents, refs): union.setdefault((cf_, i_), set()).update(tr_); outside += len(set(tr_) - here)
+        mism = sum(1 for (cf_, i_), u_ in union.items() if u_ != set(Dj2["counties"][cf_]["fac"][i_][3]))
+        sgq = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); sgq = sgq[sgq.geocode.isin(["zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"])]
+        shown = {(s_i, T2["id"][j_]): z_ for s_i, ents in enumerate(SPX_) for z_, tr_ in ents for j_ in tr_ if z_}   # one facility is enough: all rows at a ZIP-located point share the ZIP unless two large ZIPs share a city
+        samp = sgq.sample(min(4000, len(sgq)), random_state=11); wrong = sum(1 for r_ in samp.itertuples() if (int(r_.sp), r_.nct_id) in shown and r_.zip5 not in {z_ for z_, tr_ in SPX_[int(r_.sp)] if T2["id"].index(r_.nct_id) in tr_}) if len(samp) else 0
+        check("Payload: each trial is listed at a location with the ZIP of its own registry row", f"{len(samp):,} registry rows sampled, {wrong} shown under a different ZIP; {mism} facilities whose per-location trial lists do not add up to their list; {outside} trial entries outside their location's pool", shape_ok and wrong == 0 and mism == 0 and outside == 0,
+              "a facility is a name in a county and one name is often listed at several ZIP codes; before October 2026 the pages printed the facility's most common ZIP for every trial (4.8% of trial-location rows)")
     check("Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted)", f"{bad_idx} bad facility trial indices; {sp_bad} bad sitepoint→facility refs; {nbd_unsorted} unsorted nearby lists; sponsor names {sum(1 for x in T2['spn'] if x):,}/{N2:,}, last-update dates {sum(1 for x in T2['upd'] if x):,}/{N2:,}", bad_idx == 0 and sp_bad == 0 and nbd_unsorted == 0 and sum(1 for x in T2['spn'] if x) == N2)
     if (OUT / "refresh_diff.json").exists():
         rd_ = json.load(open(OUT / "refresh_diff.json"))["summary"]
