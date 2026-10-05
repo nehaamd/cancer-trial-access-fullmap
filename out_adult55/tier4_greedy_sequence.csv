@@ -10,7 +10,7 @@ step,name,placeholder,city,state,county,pop55_newly_covered,cumulative_pop55_cov
 9,Champlain Valley Physicians Hospital Medical Center,0,Plattsburgh,NY,"Clinton, New York",40636,593006,15.9,44.7091,-73.4735
 10,Andalusia,1,Andalusia,AL,"Covington, Alabama",35234,628240,16.9,31.3094,-86.478
 11,Union Hospital,0,Terre Haute,IN,"Vigo, Indiana",31716,659956,17.7,39.4978,-87.3905
-12,Pinnacle Research Group,0,Anniston,AL,"Calhoun, Alabama",30304,690260,18.5,33.6841,-85.7052
+12,Pinnacle Research Group,0,Anniston,AL,"Calhoun, Alabama",30304,690260,18.6,33.6841,-85.7052
 13,Georgia Cancer Specialists - Blairsville,0,Blairsville,GA,"Union, Georgia",25148,715408,19.2,34.8568,-83.968
 14,GenesisCare USA - Key West,0,Key West,FL,"Monroe, Florida",21106,736514,19.8,24.5446,-81.9217
 15,Regional West Medical Center,0,Scottsbluff,NE,"Sioux, Nebraska",19437,755951,20.3,41.8681,-103.662
@@ -18,9 +18,9 @@ step,name,placeholder,city,state,county,pop55_newly_covered,cumulative_pop55_cov
 17,"Saint Bernards Medical Center,4000 Linwood Drive",0,Paragould,AR,"Greene, Arkansas",18458,793215,21.3,36.0795,-90.5164
 18,Ottumwa Regional Health Center,0,Ottumwa,IA,"Wapello, Iowa",18344,811559,21.8,41.0444,-92.4291
 19,Calaway-Young Cancer Center at Valley View Hospital,0,Glenwood Springs,CO,"Garfield, Colorado",17791,829350,22.3,39.5876,-107.3387
-20,Moses Lake Clinic,0,Moses Lake,WA,"Grant, Washington",17234,846584,22.7,47.147,-119.3159
+20,Moses Lake Clinic,0,Moses Lake,WA,"Grant, Washington",17234,846584,22.8,47.147,-119.3159
 21,Lake Region Healthcare Corporation-Cancer Care,0,Fergus Falls,MN,"Otter Tail, Minnesota",16417,863001,23.2,46.2767,-96.0919
 22,Faith Regional Health Services Carson Cancer Center,0,Norfolk,NE,"Madison, Nebraska",15954,878955,23.6,42.0198,-97.4426
 23,CHRISTUS St. Michael-Colom and Carney Clinic P.A,0,Texarkana,TX,"Bowie, Texas",15650,894605,24.0,33.5179,-94.1371
-24,Genesis Cancer and Blood Institute - 1123,0,Russellville,AR,"Pope, Arkansas",15458,910063,24.4,35.2806,-93.1416
+24,Genesis Cancer and Blood Institute - 1123,0,Russellville,AR,"Pope, Arkansas",15458,910063,24.5,35.2806,-93.1416
 25,568-A,0,Safford,AZ,"Graham, Arizona",13059,923122,24.8,32.8333,-109.6974

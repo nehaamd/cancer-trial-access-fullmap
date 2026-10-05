@@ -1,13 +1,18 @@
 {
-  "trials_raw": 4294,
+  "trials_raw": 4287,
   "excluded_non_oncology_rule": 125,
-  "trials_kept": 4169,
-  "site_rows_kept": 57550,
+  "trials_kept": 4162,
+  "site_rows_kept": 57114,
   "route": {
-    "non_oral": 2025,
-    "indeterminate": 464,
-    "oral": 1680
+    "non_oral": 2022,
+    "oral": 1674,
+    "indeterminate": 466
   },
   "excludes_55plus": 252,
-  "nci_treating_centers": 68
+  "nci_treating_centers": 68,
+  "nci_adult_locations": 67,
+  "nci_adult_centers": 65,
+  "nci_not_adult": [
+    "St. Jude Children's Research Hospital"
+  ]
 }

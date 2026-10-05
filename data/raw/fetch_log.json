@@ -1,6 +1,6 @@
 {
-  "timestamp_utc": "2026-10-01T03:50:25.760380+00:00",
-  "registry_data_timestamp": "2026-09-30T09:00:05",
+  "timestamp_utc": "2026-10-05T04:07:40.531191+00:00",
+  "registry_data_timestamp": "2026-10-02T09:00:04",
   "registry_api_version": "2.0.5",
   "params": {
     "query.cond": "cancer OR neoplasm OR neoplasms OR carcinoma OR lymphoma OR leukemia OR myeloma OR sarcoma OR melanoma OR malignancy OR malignant OR tumor OR tumour OR glioma OR mesothelioma",
@@ -12,7 +12,7 @@
     "countTotal": "true",
     "format": "json"
   },
-  "api_total_count": 4354,
-  "trials_with_us_recruiting_site": 4294,
-  "us_site_rows": 58240
+  "api_total_count": 4349,
+  "trials_with_us_recruiting_site": 4287,
+  "us_site_rows": 57804
 }
