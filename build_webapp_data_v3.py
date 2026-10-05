@@ -116,10 +116,18 @@ def main():
     nb60 = {cfips[c]: sorted(g.sp.tolist()) for c, g in pc[pc.mi <= 60].groupby("c")}
     nbd = {cfips[c]: [[int(a), int(round(b))] for a, b in sorted(zip(g.sp.tolist(), g.mi.tolist()), key=lambda x: x[1])] for c, g in pc.groupby("c")}  # all site points within 120 road-mi, nearest first
     # sitepoint -> facilities: [county_fips, index into that county's fac list]
+    # SPX runs parallel to SPI: for each facility at a site point, the ZIP the registry gives for it THERE and the trials it runs
+    # THERE. A facility is a name in a county, and one name is often listed at several addresses ("Texas Oncology - Central South"
+    # at four Austin ZIP codes), so its own record (one ZIP, every trial) cannot say which trial is at which address. The pages
+    # use SPX to print the ZIP of the trial's own registry row and to list a trial only at the locations that run it.
+    # A ZIP that failed the state check (the site was then placed by its city) is not printed.
     sg = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); sg["fac"] = sg.facility.map(norm); sg["fac"] = [ALIAS.get((c, f), f) for c, f in zip(sg.county_fips, sg.fac)]
-    SPI = [[] for _ in range(int(zs["S_shape"][0]))]
-    for (spi, cf, fc), _ in sg.groupby(["sp", "county_fips", "fac"]):
-        if (cf, fc) in fac_idx: SPI[int(spi)].append([cf, fac_idx[(cf, fc)]])
+    zip_used = sg.geocode.isin(["zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"]) & (sg.zip5.str.len() == 5)
+    sg["zip_ok"] = np.where(zip_used, sg.zip5, "")
+    SPI = [[] for _ in range(int(zs["S_shape"][0]))]; SPX = [[] for _ in range(int(zs["S_shape"][0]))]
+    for (spi, cf, fc, zz), g_ in sg.groupby(["sp", "county_fips", "fac", "zip_ok"]):   # one entry per ZIP: two large ZIPs can share a city centroid
+        if (cf, fc) in fac_idx:
+            SPI[int(spi)].append([cf, fac_idx[(cf, fc)]]); SPX[int(spi)].append([zz, sorted({j_of[n] for n in g_.nct_id})])
     pool60 = {f: len(set().union(*[set(SP[i]) for i in nb60.get(f, [])])) if nb60.get(f) else 0 for f in cm.index}
     fac60 = {f: sum(SPF[i] for i in nb60.get(f, [])) for f in cm.index}
     burden = pd.read_csv(REF / "cancer_incidence_county.csv", dtype={"county_fips": str})
@@ -221,7 +229,7 @@ def main():
             "vacant": [k for k, v in districts.items() if not v["member"]]}
     statelist = sorted({(v["st"], v["stname"]) for v in districts.values()}, key=lambda x: x[1])
     meta["routing"] = "facility-level: every recruiting site located by ZIP centroid (state-checked; city centroid for a ZIP larger than 100 square miles), city centroid, or county center; pools count sites within the road-mile band of the resident's tract or county population center"
-    data = {"meta": meta, "T": T, "SP": SP, "SPF": SPF, "SPI": SPI, "counties": counties, "districts": districts, "state_data": states_d, "nci": ncil, "states": statelist, "district_keys": list(districts.keys())}
+    data = {"meta": meta, "T": T, "SP": SP, "SPF": SPF, "SPI": SPI, "SPX": SPX, "counties": counties, "districts": districts, "state_data": states_d, "nci": ncil, "states": statelist, "district_keys": list(districts.keys())}
     # ---- tract-level binary for live filtered aggregates (loaded on demand by the page) ----
     # layout (little-endian): u32 magic 0x54524331 ('TRC1'), u32 n_tracts, u32 n_split, u32 n_pairs, u32 n_states, then
     #   pop55 u32[n]; state_idx u8[n] (index into meta.state_order) padded to 4; dist_idx u16[n] (index into district_keys, 0xFFFF = split) padded to 4;
