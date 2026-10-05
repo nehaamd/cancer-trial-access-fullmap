@@ -15,14 +15,16 @@
     "sites_removed_at_existing_trials": 330,
     "sites_of_new_trials": 638,
     "sites_of_removed_trials": 762,
-    "counties_with_changed_trial_count": 378,
-    "counties_crossing_a_menu_threshold": 10
+    "counties_with_changed_trial_count": 377,
+    "counties_crossing_a_menu_threshold": 10,
+    "method_version": 2
   },
   "history": [
     {
       "pull": "2026-09-09",
       "registry_data": null,
       "trials": 3919,
+      "method": 1,
       "l20": 12.8,
       "z60": 4.6,
       "g60b": 38.8,
@@ -33,12 +35,20 @@
       "pull": "2026-10-01",
       "registry_data": "2026-09-30",
       "trials": 3917,
-      "l20": 12.7,
-      "z60": 4.4,
-      "g60b": 38.8,
-      "g60n": 44.2,
-      "medn": 50.0,
+      "method": 2,
+      "l20": 11.8,
+      "z60": 3.8,
+      "g60b": 38.1,
+      "g60n": 43.7,
+      "medn": 48.0,
       "current": true
+    }
+  ],
+  "method_changes": [
+    {
+      "version": 2,
+      "date": "2026-10-05",
+      "note": "Road network rebuilt: a node at least every 400 m, highway dead ends linked to the adjoining road, and no link across a county line or coastal water. This corrected in-town trips that had been routed the long way round (for example parts of Tucson, Kalispell, Spokane, Pueblo and Duluth). Sites in ZIP codes that span counties are now assigned to the county where most of the ZIP's residents live, and sites in ZIP codes larger than 100 square miles are placed at their city rather than at the centroid of the ZIP (which was 15 miles outside Billings and Great Falls). NCI centers are located at their hospital's ZIP code rather than the city center, and St. Jude Children's Research Hospital, which treats children, is no longer a distance target. On the same registry data (Sep 30, 2026) the national figures moved as follows: fewer than 20 trials within 60 miles 12.7% to 11.8%; none within 60 miles 4.4% to 3.8%; beyond 60 miles of a broad menu 38.8% to 38.1%; beyond 60 miles of an NCI center 44.2% to 43.7%; median distance to an NCI center 50 to 48 miles."
     }
   ],
   "new_trials": [
@@ -6233,19 +6243,39 @@
   ],
   "county_changes": [
     {
+      "county": "Clackamas, Oregon",
+      "from": 64,
+      "to": 45
+    },
+    {
+      "county": "Yamhill, Oregon",
+      "from": 56,
+      "to": 37
+    },
+    {
       "county": "Miami, Ohio",
       "from": 40,
       "to": 25
     },
     {
       "county": "Los Angeles, California",
-      "from": 923,
+      "from": 924,
       "to": 937
     },
     {
       "county": "New York, New York",
-      "from": 925,
+      "from": 926,
       "to": 937
+    },
+    {
+      "county": "Nassau, New York",
+      "from": 386,
+      "to": 395
+    },
+    {
+      "county": "San Diego, California",
+      "from": 244,
+      "to": 253
     },
     {
       "county": "Durham, North Carolina",
@@ -6253,19 +6283,9 @@
       "to": 248
     },
     {
-      "county": "Duval, Florida",
-      "from": 248,
-      "to": 256
-    },
-    {
-      "county": "San Diego, California",
-      "from": 245,
-      "to": 253
-    },
-    {
-      "county": "Olmsted, Minnesota",
-      "from": 288,
-      "to": 296
+      "county": "Orange, California",
+      "from": 410,
+      "to": 418
     },
     {
       "county": "Maricopa, Arizona",
@@ -6273,29 +6293,29 @@
       "to": 369
     },
     {
-      "county": "Nassau, New York",
-      "from": 387,
-      "to": 395
-    },
-    {
-      "county": "Salt Lake, Utah",
-      "from": 317,
-      "to": 324
-    },
-    {
-      "county": "Cook, Illinois",
-      "from": 525,
-      "to": 532
-    },
-    {
-      "county": "Muskegon, Michigan",
-      "from": 18,
-      "to": 25
-    },
-    {
       "county": "New Haven, Connecticut",
-      "from": 313,
+      "from": 312,
       "to": 320
+    },
+    {
+      "county": "Olmsted, Minnesota",
+      "from": 288,
+      "to": 296
+    },
+    {
+      "county": "Duval, Florida",
+      "from": 248,
+      "to": 256
+    },
+    {
+      "county": "Milwaukee, Wisconsin",
+      "from": 208,
+      "to": 216
+    },
+    {
+      "county": "Middlesex, New Jersey",
+      "from": 196,
+      "to": 203
     },
     {
       "county": "Jefferson, Alabama",
@@ -6303,14 +6323,19 @@
       "to": 171
     },
     {
-      "county": "Middlesex, New Jersey",
-      "from": 197,
-      "to": 203
+      "county": "Muskegon, Michigan",
+      "from": 18,
+      "to": 25
     },
     {
-      "county": "Orange, North Carolina",
-      "from": 172,
-      "to": 178
+      "county": "Suffolk, Massachusetts",
+      "from": 623,
+      "to": 629
+    },
+    {
+      "county": "Salt Lake, Utah",
+      "from": 318,
+      "to": 324
     },
     {
       "county": "Hillsborough, Florida",
@@ -6318,19 +6343,44 @@
       "to": 314
     },
     {
-      "county": "Milwaukee, Wisconsin",
-      "from": 210,
-      "to": 216
-    },
-    {
       "county": "Broward, Florida",
       "from": 190,
       "to": 196
     },
     {
-      "county": "Dallas, Texas",
-      "from": 439,
-      "to": 434
+      "county": "Kootenai, Idaho",
+      "from": 66,
+      "to": 72
+    },
+    {
+      "county": "Cook, Illinois",
+      "from": 526,
+      "to": 531
+    },
+    {
+      "county": "Franklin, Ohio",
+      "from": 390,
+      "to": 395
+    },
+    {
+      "county": "Orange, North Carolina",
+      "from": 173,
+      "to": 178
+    },
+    {
+      "county": "Tarrant, Texas",
+      "from": 115,
+      "to": 120
+    },
+    {
+      "county": "Lake, Illinois",
+      "from": 103,
+      "to": 108
+    },
+    {
+      "county": "Waukesha, Wisconsin",
+      "from": 69,
+      "to": 74
     },
     {
       "county": "Knox, Tennessee",
@@ -6338,29 +6388,19 @@
       "to": 67
     },
     {
-      "county": "Orange, California",
-      "from": 413,
-      "to": 418
-    },
-    {
       "county": "Bonner, Idaho",
       "from": 57,
       "to": 62
     },
     {
-      "county": "Kootenai, Idaho",
-      "from": 67,
-      "to": 72
+      "county": "Davidson, Tennessee",
+      "from": 542,
+      "to": 538
     },
     {
-      "county": "Suffolk, New York",
-      "from": 296,
-      "to": 300
-    },
-    {
-      "county": "Harrison, West Virginia",
-      "from": 10,
-      "to": 14
+      "county": "Dallas, Texas",
+      "from": 438,
+      "to": 434
     },
     {
       "county": "San Francisco, California",
@@ -6368,24 +6408,9 @@
       "to": 254
     },
     {
-      "county": "Harris, Texas",
-      "from": 1020,
-      "to": 1024
-    },
-    {
-      "county": "Monongalia, West Virginia",
-      "from": 59,
-      "to": 63
-    },
-    {
-      "county": "Snohomish, Washington",
-      "from": 60,
-      "to": 64
-    },
-    {
-      "county": "Brown, Wisconsin",
-      "from": 58,
-      "to": 62
+      "county": "Grafton, New Hampshire",
+      "from": 80,
+      "to": 84
     },
     {
       "county": "Fairfield, Connecticut",
@@ -6393,9 +6418,29 @@
       "to": 77
     },
     {
+      "county": "Snohomish, Washington",
+      "from": 60,
+      "to": 64
+    },
+    {
+      "county": "Monongalia, West Virginia",
+      "from": 59,
+      "to": 63
+    },
+    {
+      "county": "Brown, Wisconsin",
+      "from": 58,
+      "to": 62
+    },
+    {
       "county": "Alameda, California",
       "from": 53,
       "to": 57
+    },
+    {
+      "county": "Washington, Wisconsin",
+      "from": 49,
+      "to": 53
     },
     {
       "county": "Essex, New Jersey",
@@ -6408,29 +6453,39 @@
       "to": 34
     },
     {
+      "county": "Harrison, West Virginia",
+      "from": 10,
+      "to": 14
+    },
+    {
+      "county": "Harris, Texas",
+      "from": 1021,
+      "to": 1024
+    },
+    {
       "county": "Bergen, New Jersey",
-      "from": 363,
+      "from": 364,
       "to": 367
     },
     {
-      "county": "Franklin, Ohio",
-      "from": 391,
-      "to": 395
+      "county": "Miami-Dade, Florida",
+      "from": 366,
+      "to": 363
     },
     {
-      "county": "Suffolk, Massachusetts",
-      "from": 625,
-      "to": 629
+      "county": "St. Louis, Missouri",
+      "from": 365,
+      "to": 362
     },
     {
-      "county": "Grafton, New Hampshire",
-      "from": 80,
-      "to": 84
+      "county": "Allegheny, Pennsylvania",
+      "from": 324,
+      "to": 327
     },
     {
-      "county": "Monmouth, New Jersey",
-      "from": 229,
-      "to": 232
+      "county": "Adams, Colorado",
+      "from": 197,
+      "to": 200
     },
     {
       "county": "Montgomery, Maryland",
@@ -6438,79 +6493,9 @@
       "to": 188
     },
     {
-      "county": "Waukesha, Wisconsin",
-      "from": 71,
-      "to": 74
-    },
-    {
-      "county": "Contra Costa, California",
-      "from": 48,
-      "to": 51
-    },
-    {
-      "county": "Lucas, Ohio",
-      "from": 63,
-      "to": 66
-    },
-    {
-      "county": "Palm Beach, Florida",
-      "from": 76,
-      "to": 73
-    },
-    {
-      "county": "New London, Connecticut",
-      "from": 51,
-      "to": 54
-    },
-    {
-      "county": "Orleans, Louisiana",
-      "from": 51,
-      "to": 54
-    },
-    {
-      "county": "Will, Illinois",
-      "from": 54,
-      "to": 57
-    },
-    {
-      "county": "Greene, Missouri",
-      "from": 57,
-      "to": 60
-    },
-    {
-      "county": "Placer, California",
-      "from": 57,
-      "to": 60
-    },
-    {
-      "county": "Lake, Indiana",
-      "from": 54,
-      "to": 57
-    },
-    {
-      "county": "Clackamas, Oregon",
-      "from": 48,
-      "to": 45
-    },
-    {
-      "county": "Wake, North Carolina",
-      "from": 44,
-      "to": 47
-    },
-    {
-      "county": "Leelanau, Michigan",
-      "from": 39,
-      "to": 42
-    },
-    {
-      "county": "Lee, Florida",
-      "from": 64,
-      "to": 61
-    },
-    {
-      "county": "San Luis Obispo, California",
-      "from": 31,
-      "to": 34
+      "county": "Johnson, Kansas",
+      "from": 157,
+      "to": 154
     },
     {
       "county": "Jefferson, Kentucky",
@@ -6518,19 +6503,44 @@
       "to": 141
     },
     {
-      "county": "Volusia, Florida",
-      "from": 32,
-      "to": 29
+      "county": "Yellowstone, Montana",
+      "from": 100,
+      "to": 103
     },
     {
-      "county": "Yamhill, Oregon",
-      "from": 40,
-      "to": 37
+      "county": "Sarasota, Florida",
+      "from": 96,
+      "to": 93
     },
     {
-      "county": "Arapahoe, Colorado",
-      "from": 48,
-      "to": 51
+      "county": "Dauphin, Pennsylvania",
+      "from": 83,
+      "to": 86
+    },
+    {
+      "county": "Macon, Illinois",
+      "from": 82,
+      "to": 85
+    },
+    {
+      "county": "Palm Beach, Florida",
+      "from": 76,
+      "to": 73
+    },
+    {
+      "county": "Lucas, Ohio",
+      "from": 63,
+      "to": 66
+    },
+    {
+      "county": "Lee, Florida",
+      "from": 64,
+      "to": 61
+    },
+    {
+      "county": "Greene, Missouri",
+      "from": 57,
+      "to": 60
     }
   ]
 }

@@ -1,12 +1,24 @@
 {
+  "graph_version": 2,
   "states": 51,
   "edges_from_tiger": 262658,
   "noded_segments": 1573751,
-  "nodes": 1091734,
-  "edges": 3654341,
-  "connector_edges": 2303717,
-  "components": 4913,
-  "largest_component_share": 0.9702,
+  "segment_pieces": 4092284,
+  "nodes": 3592520,
+  "junction_nodes": 1091734,
+  "edges": 6605995,
+  "connector_edges": 2661975,
+  "connectors_dropped_by_land_guard": 23185,
+  "dead_end_bridges": 18011,
+  "dead_ends_examined": 119600,
+  "dead_ends_no_link_on_land": 283,
+  "bridge_gap_m": {
+    "median": 2162,
+    "p90": 4333,
+    "max": 5000
+  },
+  "components": 205,
+  "largest_component_share": 0.9919,
   "components_over_1000_nodes": 5,
   "speeds_mph": {
     "S1100": 65.0,
@@ -14,8 +26,16 @@
     "connector": 25.0,
     "access": 35.0
   },
-  "connector_radius_m": 500,
+  "densify_m": 400.0,
+  "connector_radius_m": 500.0,
+  "connector_rule": "junction-to-junction or line end only",
+  "land_guard_over_m": 250.0,
+  "land_guard_source": "Census cartographic boundary file, counties 1:500k (2023)",
+  "bridge_radius_m": 5000.0,
+  "bridge_length_factor": 1.2,
+  "bridge_rule": "existing route longer than 3 x 1.2 x gap + 0.5 mi",
   "node_grid_m": 1,
   "simplify_m": 30,
-  "source": "TIGER2025 PRISECROADS S1100+S1200"
+  "source": "TIGER2025 PRISECROADS S1100+S1200",
+  "note": "a node at least every 400 m and at every crossing; junctions within 500 m joined; highway dead ends within 5 km of another road linked across the gap; no link crosses a county line or coastal water"
 }

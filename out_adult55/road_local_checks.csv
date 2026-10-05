@@ -1,0 +1,24 @@
+route,kind,approx_driving_mi,network_mi,limit,ok
+Bremerton WA to Seattle (the drive is around the Sound through Tacoma),water,65,64.4,at least 39,1
+Oak Harbor WA to Everett (by Deception Pass),water,60,61.4,at least 36,1
+Cape May NJ to Lewes DE (around Delaware Bay),water,180,163.2,at least 108,1
+Greenport NY to New London CT (around Long Island Sound),water,200,197.5,at least 120,1
+Plattsburgh NY to Burlington VT (around Lake Champlain by Rouses Point),water,60,73.4,at least 36,1
+Port Bolivar TX to Galveston (around Galveston Bay),water,125,125.4,at least 75,1
+Kingston WA to Edmonds (around Puget Sound),water,95,102.4,at least 57,1
+Lake Providence LA to Mayersville MS (across the Mississippi; bridges at Vicksburg and Greenville),water,70,85.4,at least 42,1
+Manchester OH to Tollesboro KY (across the Ohio by the Maysville bridge),water,30,23.7,at least 18,1
+Rising Sun IN to Burlington KY (across the Ohio by I-275),water,25,23.4,at least 15,1
+Port Orchard WA to Bremerton (around Sinclair Inlet),water,9,8.6,at least 5.4,1
+Tucson AZ: Ajo Way at Mission Road to Banner University Medical Center,land,7,6.5,at most 19,1
+Traverse City MI: Chums Corner to Munson Medical Center,land,7,7.7,at most 19,1
+Kalispell MT: Evergreen to Logan Health,land,4,4.4,at most 13,1
+Spokane WA: South Hill to Sacred Heart Medical Center,land,3,6.5,at most 11,1
+Waterloo IA: north-east side to MercyOne,land,4,7.4,at most 13,1
+Pueblo CO: Belmont to Parkview Medical Center,land,4,6.6,at most 13,1
+"Desert Hot Springs CA to Eisenhower Medical Center, Rancho Mirage",land,18,29.5,at most 41,1
+Rhinelander WI to Minocqua,land,27,28.1,at most 59,1
+Duluth MN: Lakeside to Essentia Health St. Mary's,land,5,5.2,at most 15,1
+Mackinaw City MI to St. Ignace (over the Mackinac Bridge),land,7,7.4,at most 19,1
+Staten Island NY to Lower Manhattan (over the Verrazzano Bridge),land,15,23.3,at most 35,1
+Missoula MT to Kalispell,land,120,115.6,at most 245,1

@@ -593,6 +593,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 08005,80113,skin cancer institute,melanoma skin cancer institute,melanoma skin cancer institute
 08005,80113,skin cancer institute,the melanoma and skin cancer institute,the melanoma and skin cancer institute
 08005,80113,skin cancer institute,the melanoma skin cancer institute,the melanoma skin cancer institute
+08013,80504,longs peak hospital,uchealth longs peak hospital,uchealth longs peak hospital
 08031,80206,uchealth cherry creek,uchealth cherry creek medical center,uchealth cherry creek medical center
 08031,80210,adventhealth porter,adventhealth porter oncology research,adventhealth porter oncology research
 08031,80218,colorado blood cancer institute,colorado blood cancer institute cbci,colorado blood cancer institute cbci
@@ -680,7 +681,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 08069,80528,poudre valley health care inc,poudre valley health care inc d b a poudre valley health system,poudre valley health care inc d b a poudre valley health system
 08069,80538,medical center of the rockies,uchealth medical center of the rockies,uchealth medical center of the rockies
 08077,81505,grand valley oncology,colorado west healthcare system grand valley oncology,colorado west healthcare system grand valley oncology
-08123,80504,longs peak hospital,uchealth longs peak hospital,uchealth longs peak hospital
 08123,80631,banner md anderson cancer center,banner md anderson cancer center at north colorado medical center,banner md anderson cancer center at north colorado medical center
 08123,80631,north colorado medical center,banner md anderson cancer center at north colorado medical center,banner md anderson cancer center at north colorado medical center
 08123,80631,north colorado medical center,banner north colorado medical center,banner north colorado medical center
@@ -1132,6 +1132,13 @@ county_fips,zip,shorter,longer,suggested_canonical
 13051,31405,st joseph,nancy n j c lewis cancer research pavillion st josephs candler health system,nancy n j c lewis cancer research pavillion st josephs candler health system
 13051,31405,st joseph,st joseph s candler health system,st joseph s candler health system
 13051,31405,summit cancer care,summit cancer care pc,summit cancer care pc
+13059,30607,university cancer and blood cent,university cancer and blood center,university cancer and blood center
+13059,30607,university cancer and blood cent,university cancer and blood center athens comprehensive cancer center,university cancer and blood center athens comprehensive cancer center
+13059,30607,university cancer and blood cent,university cancer and blood center llc,university cancer and blood center llc
+13059,30607,university cancer and blood center,university cancer and blood center athens comprehensive cancer center,university cancer and blood center athens comprehensive cancer center
+13059,30607,university cancer and blood center,university cancer and blood center llc,university cancer and blood center llc
+13059,30607,university cancer blood center,university cancer blood center llc,university cancer blood center llc
+13059,30607,university cancer blood center,university cancer blood center ucbc athens,university cancer blood center ucbc athens
 13067,30060,northwest georgia oncology centers,northwest georgia oncology centers a service of wellstar cobb hospital,northwest georgia oncology centers a service of wellstar cobb hospital
 13067,30060,northwest georgia oncology centers,northwest georgia oncology centers p c,northwest georgia oncology centers p c
 13067,30060,northwest georgia oncology centers,northwest georgia oncology centers pc,northwest georgia oncology centers pc
@@ -1201,13 +1208,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 13121,30342,northside hospital,atlanta cancer care northside hospital,atlanta cancer care northside hospital
 13121,30342,northside hospital,northside hospital atlanta,northside hospital atlanta
 13121,30342,northside hospital,northside hospital cancer institute,northside hospital cancer institute
-13157,30607,university cancer and blood cent,university cancer and blood center,university cancer and blood center
-13157,30607,university cancer and blood cent,university cancer and blood center athens comprehensive cancer center,university cancer and blood center athens comprehensive cancer center
-13157,30607,university cancer and blood cent,university cancer and blood center llc,university cancer and blood center llc
-13157,30607,university cancer and blood center,university cancer and blood center athens comprehensive cancer center,university cancer and blood center athens comprehensive cancer center
-13157,30607,university cancer and blood center,university cancer and blood center llc,university cancer and blood center llc
-13157,30607,university cancer blood center,university cancer blood center llc,university cancer blood center llc
-13157,30607,university cancer blood center,university cancer blood center ucbc athens,university cancer blood center ucbc athens
 13185,31602,pearlman cancer center,south georgia medical center pearlman cancer center,south georgia medical center pearlman cancer center
 13245,30912,augusta university,augusta university georgia cancer center,augusta university georgia cancer center
 13245,30912,augusta university,augusta university medical center,augusta university medical center
@@ -1874,6 +1874,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 26047,49770,karmanos cancer institute at mclaren northern,karmanos cancer institute at mclaren northern michigan,karmanos cancer institute at mclaren northern michigan
 26047,49770,karmanos cancer institute at mclaren northern,karmanos cancer institute at mclaren northern michigan petoskey,karmanos cancer institute at mclaren northern michigan petoskey
 26047,49770,karmanos cancer institute at mclaren northern michigan,karmanos cancer institute at mclaren northern michigan petoskey,karmanos cancer institute at mclaren northern michigan petoskey
+26055,49684,munson medical center,munson medical center cowell family cancer center,munson medical center cowell family cancer center
 26065,48912,sparrow hospital,herbert herman cancer center sparrow hospital,herbert herman cancer center sparrow hospital
 26065,48912,university of michigan health sparrow,university of michigan health sparrow lansing,university of michigan health sparrow lansing
 26081,49503,bamf health,bamf health inc,bamf health inc
@@ -1899,7 +1900,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 26081,49546,start midwest,start midwest michigan pc,start midwest michigan pc
 26081,49546,start midwest,start midwest oncology,start midwest oncology
 26081,49546,start midwest cancer research,start midwest cancer research center,start midwest cancer research center
-26089,49684,munson medical center,munson medical center cowell family cancer center,munson medical center cowell family cancer center
 26099,48314,cancer and leukemia center,profound research llc at cancer and leukemia center,profound research llc at cancer and leukemia center
 26121,49444,cancer and hematology centers of western michigan,cancer and hematology centers of western michigan norton shores,cancer and hematology centers of western michigan norton shores
 26125,48073,oakland medical group,profound research llc mhp medonc royal oak oakland medical group location,profound research llc mhp medonc royal oak oakland medical group location
@@ -3898,6 +3898,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48029,78240,texas oncology san antonio medical center,texas oncology san antonio medical center research drive,texas oncology san antonio medical center research drive
 48061,78550,texas oncology central south,texas oncology central south texas,texas oncology central south texas
 48061,78550,texas oncology harlingen,texas oncology harlingen medical arts pavillion,texas oncology harlingen medical arts pavillion
+48091,78130,texas oncology san antonio,texas oncology san antonio medical center,texas oncology san antonio medical center
 48113,75039,next dallas,next dallas oncology department,next dallas oncology department
 48113,75039,next oncology,next oncology dallas,next oncology dallas
 48113,75039,next oncology,next oncology irving,next oncology irving
@@ -3969,7 +3970,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 48167,77573,md anderson league city,ut md anderson league city,ut md anderson league city
 48171,78624,texas oncology san antonio,usor texas oncology san antonio medical center,usor texas oncology san antonio medical center
 48181,75020,texas oncology northeast texas,usor texas oncology northeast texas denison,usor texas oncology northeast texas denison
-48187,78130,texas oncology san antonio,texas oncology san antonio medical center,texas oncology san antonio medical center
 48201,77025,kelsey seybold clinic,kelsey seybold clinic main campus,kelsey seybold clinic main campus
 48201,77027,houston metro urology,houston metro urology hmu,houston metro urology hmu
 48201,77027,houston metro urology,houston metro urology hmu southwest location,houston metro urology hmu southwest location
@@ -4153,7 +4153,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 48215,78596,texas oncology weslaco,texas oncology weslaco knapp medical plaza,texas oncology weslaco knapp medical plaza
 48245,77702,texas oncology,texas oncology gulf coast,texas oncology gulf coast
 48251,76028,the center for cancer and blood disorders,oner the center for cancer and blood disorders texas cancer care,oner the center for cancer and blood disorders texas cancer care
-48253,79601,hendrick health,hendrick health system,hendrick health system
 48303,79410,covenant children s hospital,covenant children s hospital joe arrington cancer research and treatment center,covenant children s hospital joe arrington cancer research and treatment center
 48303,79410,joe arrington cancer research and treatment center,covenant children s hospital joe arrington cancer research and treatment center,covenant children s hospital joe arrington cancer research and treatment center
 48303,79430,texas tech university health sciences center,texas tech university health sciences center lubbock,texas tech university health sciences center lubbock
@@ -4211,6 +4210,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48439,76104,the center for cancer and blood disorders,the center for cancer and blood disorders texas cancer care,the center for cancer and blood disorders texas cancer care
 48439,76104,the center for cancer and blood disorders texas cancer care,oner the center for cancer and blood disorders texas cancer care,oner the center for cancer and blood disorders texas cancer care
 48439,76104,usor texas oncology,usor texas oncology dallas fort worth dfw,usor texas oncology dallas fort worth dfw
+48441,79601,hendrick health,hendrick health system,hendrick health system
 48441,79606,texas oncology abilene,texas oncology abilene antilley road,texas oncology abilene antilley road
 48453,78701,dell seton medical center,dell seton medical center at the university of texas,dell seton medical center at the university of texas
 48453,78704,south austin medical center,sarah cannon research institute st david s south austin medical center texas oncology south austin,sarah cannon research institute st david s south austin medical center texas oncology south austin
@@ -4297,15 +4297,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 50007,05401,university of vermont,the university of vermont medical center inc,the university of vermont medical center inc
 50007,05401,university of vermont,university of vermont medical center,university of vermont medical center
 50007,05401,university of vermont medical center,the university of vermont medical center inc,the university of vermont medical center inc
-51003,22903,university of virginia,1027 university of virginia,1027 university of virginia
-51003,22903,university of virginia,university of virginia cancer center,university of virginia cancer center
-51003,22903,university of virginia,university of virginia comprehensive cancer center,university of virginia comprehensive cancer center
-51003,22903,university of virginia,university of virginia health system,university of virginia health system
-51003,22903,university of virginia,university of virginia school of medicine,university of virginia school of medicine
-51003,22903,uva health,uva health emily couric clinical cancer cente,uva health emily couric clinical cancer cente
-51003,22903,uva health,uva health fontaine research park,uva health fontaine research park
-51003,22903,uva health,uva health university hospital,uva health university hospital
-51003,22903,uva health,uva health uva emily couric clinical cancer center,uva health uva emily couric clinical cancer center
 51005,24457,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
 51005,24457,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care emmett medical surgical center,oncology hematology associates of southwest virginia inc dba blue ridge cancer care emmett medical surgical center
 51005,24457,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
@@ -4369,21 +4360,18 @@ county_fips,zip,shorter,longer,suggested_canonical
 51121,24060,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
 51121,24060,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc d b a blue ridge cancer care,oncology hematology associates of southwest virginia inc d b a blue ridge cancer care
 51121,24060,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
-51161,24014,blue ridge cancer care,blue ridge cancer care oncology and hematology associates of southwest virginia,blue ridge cancer care oncology and hematology associates of southwest virginia
-51161,24014,blue ridge cancer care,blue ridge cancer care roanoke,blue ridge cancer care roanoke
-51161,24014,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
-51161,24014,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc
-51161,24014,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
-51161,24014,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
 51177,22408,hematology oncology associates of fredericksburg,hematology oncology associates of fredericksburg inc,hematology oncology associates of fredericksburg inc
 51197,24382,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
 51197,24382,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc
 51197,24382,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
 51197,24382,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
+51540,22903,uva health,uva health emily couric clinical cancer cente,uva health emily couric clinical cancer cente
+51540,22903,uva health,uva health fontaine research park,uva health fontaine research park
+51540,22903,uva health,uva health university hospital,uva health university hospital
+51540,22903,uva health,uva health uva emily couric clinical cancer center,uva health uva emily couric clinical cancer center
 51540,22908,emily couric clinical cancer center,university of virginia emily couric clinical cancer center,university of virginia emily couric clinical cancer center
 51540,22908,university of virginia,cancer center at the university of virginia,cancer center at the university of virginia
 51540,22908,university of virginia,university of virginia cancer center,university of virginia cancer center
-51540,22908,university of virginia,university of virginia comprehensive cancer center,university of virginia comprehensive cancer center
 51540,22908,university of virginia,university of virginia emily couric clinical cancer center,university of virginia emily couric clinical cancer center
 51540,22908,university of virginia,university of virginia health,university of virginia health
 51540,22908,university of virginia,university of virginia health system,university of virginia health system
@@ -4406,6 +4394,16 @@ county_fips,zip,shorter,longer,suggested_canonical
 51760,23298,virginia commonwealth university,virginia commonwealth university medical center,virginia commonwealth university medical center
 51760,23298,virginia commonwealth university,virginia commonwealth university school of medicine,virginia commonwealth university school of medicine
 51760,23298,virginia commonwealth university,virginia commonwealth university vcu medical center,virginia commonwealth university vcu medical center
+51770,24014,blue ridge cancer care,blue ridge cancer care oncology and hematology associates of southwest virginia,blue ridge cancer care oncology and hematology associates of southwest virginia
+51770,24014,blue ridge cancer care,blue ridge cancer care roanoke,blue ridge cancer care roanoke
+51770,24014,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
+51770,24014,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc
+51770,24014,oncology hematology associates of southwest virginia,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
+51770,24014,oncology hematology associates of southwest virginia inc,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
+51775,24153,blue ridge cancer care,blue ridge cancer care oncology hematology assoc of sw virginia inc,blue ridge cancer care oncology hematology assoc of sw virginia inc
+51775,24153,blue ridge cancer care,blue ridge cancer care oncology hematology associates of southwest va,blue ridge cancer care oncology hematology associates of southwest va
+51775,24153,blue ridge cancer care,oncology hematology associates of southwest virginia inc d b a blue ridge cancer care,oncology hematology associates of southwest virginia inc d b a blue ridge cancer care
+51775,24153,blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care,oncology hematology associates of southwest virginia inc dba blue ridge cancer care
 51810,23456,virginia oncology associates,virginia oncology associates virginia beach,virginia oncology associates virginia beach
 51840,22601,shenandoah oncology,shenandoah oncology p c,shenandoah oncology p c
 53005,99336,kadlec clinic hematology and onco,kadlec clinic hematology and oncology,kadlec clinic hematology and oncology
