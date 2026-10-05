@@ -60,8 +60,9 @@ SITE_STATUS_KEEP = {"RECRUITING", None, ""}
 # Registry "sites" that are not places. A fully decentralized study lists the same telemedicine service once per city
 # ("Ohio State University-Telemedicine" in 107 cities for NCT06906562); a resident of one of those cities is no closer to the
 # trial than anyone else, so such a row is not a location: it is not assigned to a county, not drawn, and not counted as a trial
-# "within 60 road-miles". The trial stays in the data (at its physical sites, if it lists any) and the ZIP finder lists it
-# separately for the states it names. Set VIRTUAL_SITES_ARE_LOCATIONS = True to count these rows as ordinary sites again.
+# "within 60 road-miles". The trial stays in the data (at its physical sites, if it lists any), and the pages show it as a
+# group of its own, labelled Telemedicine, for the states it names: panels, trial lists, briefs and the ZIP finder (DATA.T.tele).
+# Set VIRTUAL_SITES_ARE_LOCATIONS = True to count these rows as ordinary sites again.
 # ---------------------------------------------------------------------------
 VIRTUAL_SITE_PATTERN = r"\btele-?(?:medicine|health)\b|\bvirtual\b|\bdecentrali[sz]ed\b|\bremote (?:site|enrol\w*|participation|study)\b|\bonline study\b"
 VIRTUAL_SITES_ARE_LOCATIONS = False
