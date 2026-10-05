@@ -7,7 +7,8 @@ METHODOLOGY (this text is reproduced verbatim in the output and the web page):
   Cancer-accredited programs plus NCORP affiliates; the stand-in used when those were unreachable is every US facility that hosted an
   interventional oncology treatment trial started 2016 or later on ClinicalTrials.gov). Candidates are excluded if (a) their county
   already hosts a limited menu (20 or more eligible recruiting trials) or (b) the facility itself already hosts an eligible recruiting
-  trial today. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and
+  trial today; an entry that is a telemedicine service rather than a place, or is listed under a mistyped ZIP code, is not a
+  candidate. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and
   joined to the highway network like every other point in this project.
   Objective (primary). Residents aged 55+ who today have no eligible recruiting cancer treatment trial within 60 road-miles of their
   census tract's population center, and who would have one if a trial opened at the candidate (i.e. the candidate is within 60
@@ -24,6 +25,7 @@ import numpy as np, pandas as pd, geopandas as gpd
 from scipy import sparse
 from scipy.spatial import cKDTree
 from scipy.sparse.csgraph import dijkstra, connected_components
+import config
 
 REF, OUT, ROADS, DOCS = Path("data/ref"), Path("out_adult55"), Path("data/roads"), Path("docs")
 M2MI = 1 / 1609.344; SPEED_ACCESS = 35.0; MAX_ACCESS_MI = 30.0; BAND = 60.0; GREEDY_STEPS = 25
@@ -97,7 +99,15 @@ def main():
     # ---- candidates ----
     cand = pd.read_csv(a.candidates, dtype={"county_fips": str, "zip": str}).fillna(""); cand["fac"] = cand.name.map(norm); log["candidates_read"] = len(cand)
     cm = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str}).set_index("county_fips")
-    sites = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna(""); sites = sites[sites.county_fips != ""]; sites["fac"] = sites.facility.map(norm)
+    sites = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna("")
+    # not candidates: a registry entry that is a telemedicine service (config.VIRTUAL_SITE_PATTERN), and an entry listed under a ZIP
+    # that metrics_us.zip_typos judged a typing error (the facility is real, but not where that ZIP is)
+    typo = sites[sites.assign_method == "zip_typo_corrected"] if "assign_method" in sites.columns else sites.iloc[0:0]
+    typo_keys = {(r.state, norm(r.facility), r.zip[:5]) for r in typo.itertuples()}
+    virt = None if config.VIRTUAL_SITES_ARE_LOCATIONS else re.compile(config.VIRTUAL_SITE_PATTERN, re.I)
+    drop = np.array([(virt is not None and bool(virt.search(r.name))) or (r.state, r.fac, str(r.zip)[:5]) in typo_keys for r in cand.itertuples()], bool)
+    log["excluded_not_a_place_or_mistyped_zip"] = int(drop.sum()); cand = cand[~drop].copy()
+    sites = sites[sites.county_fips != ""]; sites["fac"] = sites.facility.map(norm)
     hosting = sites.groupby(["county_fips", "fac"]).nct_id.nunique()
     cand["county_trials"] = cand.county_fips.map(cm.trials_in_county).fillna(0).astype(int)
     cand["eligible_trials_at_facility"] = [int(hosting.get((r.county_fips, r.fac), 0)) for r in cand.itertuples()]

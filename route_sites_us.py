@@ -6,7 +6,10 @@ county assignment uses (a ZIP whose state disagrees with the site's stated state
 a Boston ZIP falls through to the city gazetteer, exactly as it did for county assignment), then the city centroid, then — only
 if nothing else is available — the county population center (flagged). Two exceptions put a site at its city although its ZIP
 is known: a ZIP larger than 100 square miles, whose centroid is in open country (tier4_covering.SiteLocator), and a ZIP that
-spans counties when the site was assigned to the county where the ZIP's residents live (metrics_us.assign_sites).
+spans counties when the site was assigned to the county where the ZIP's residents live (metrics_us.assign_sites). A row
+whose ZIP is a typing error is placed at the ZIP where the registry's other rows list that facility (metrics_us.zip_typos),
+and a row that is not a place at all - a telemedicine "site" - has no county and never reaches this script
+(config.VIRTUAL_SITE_PATTERN).
 
 Sites at the same location are merged into "site points". For every tract and county population center: road miles to every
 site point within 120 road-miles. "Trials within X road-miles" then means trials with at least one recruiting site within X
@@ -40,7 +43,11 @@ def main():
     clat, clon = cent.lat.to_dict(), cent.lon.to_dict()
     lat, lon, how = [], [], []
     for r in sites.itertuples():
-        zcty = z2c.get(r.zip5); z = loc.by_zip(r.zip5, r.state, r.city) if (zcty and zcty[:2] == r.county_fips[:2]) else None
+        # the ZIP is a typing error (metrics_us.zip_typos): the row is located at the ZIP where the registry's other rows put that facility
+        fix = getattr(r, "zip_fix", "") if getattr(r, "assign_method", "") == "zip_typo_corrected" else ""
+        zf = loc.by_zip(fix, r.state, r.city) if fix else None
+        if zf: lat.append(zf[0]); lon.append(zf[1]); how.append("zip_typo_corrected"); continue
+        zcty = z2c.get(r.zip5); z = loc.by_zip(r.zip5, r.state, r.city) if (zcty and zcty[:2] == r.county_fips[:2] and not fix) else None
         c = loc.city(r.state, r.city); la0, lo0 = clat[r.county_fips], clon[r.county_fips]
         # the city name must agree with the assigned county: a registry row like city "Dallas" + ZIP 75521 (Atlanta, TX) was
         # assigned to Cass County by ZIP, and must not be drawn 180 miles away in Dallas. 40 mi ~ the radius of a large county.

@@ -4,6 +4,7 @@ Usage: python validate_v3.py [--no-registry]   (registry re-check needs clinical
 import json, random, re, sys, time
 from pathlib import Path
 import numpy as np, pandas as pd, requests
+import config
 
 REF, OUT, RAW, ROADS = Path("data/ref"), Path("out_adult55"), Path("data/raw"), Path("data/roads")
 rows = []
@@ -146,13 +147,41 @@ def main():
         SPX_ = Dj2["SPX"]; shape_ok = len(SPX_) == len(Dj2["SPI"]) and all(len(a) == len(b) for a, b in zip(SPX_, Dj2["SPI"])); union = {}; outside = 0
         for s_i, (ents, refs) in enumerate(zip(SPX_, Dj2["SPI"])):
             here = set(Dj2["SP"][s_i])
-            for (z_, tr_), (cf_, i_) in zip(ents, refs): union.setdefault((cf_, i_), set()).update(tr_); outside += len(set(tr_) - here)
+            for ent_, (cf_, i_) in zip(ents, refs): tr_ = ent_[1]; union.setdefault((cf_, i_), set()).update(tr_); outside += len(set(tr_) - here)
         mism = sum(1 for (cf_, i_), u_ in union.items() if u_ != set(Dj2["counties"][cf_]["fac"][i_][3]))
         sgq = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); sgq = sgq[sgq.geocode.isin(["zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"])]
-        shown = {(s_i, T2["id"][j_]): z_ for s_i, ents in enumerate(SPX_) for z_, tr_ in ents for j_ in tr_ if z_}   # one facility is enough: all rows at a ZIP-located point share the ZIP unless two large ZIPs share a city
-        samp = sgq.sample(min(4000, len(sgq)), random_state=11); wrong = sum(1 for r_ in samp.itertuples() if (int(r_.sp), r_.nct_id) in shown and r_.zip5 not in {z_ for z_, tr_ in SPX_[int(r_.sp)] if T2["id"].index(r_.nct_id) in tr_}) if len(samp) else 0
+        shown = {(s_i, T2["id"][j_]): e_[0] for s_i, ents in enumerate(SPX_) for e_ in ents for j_ in e_[1] if e_[0]}   # one facility is enough: all rows at a ZIP-located point share the ZIP unless two large ZIPs share a city
+        samp = sgq.sample(min(4000, len(sgq)), random_state=11); wrong = sum(1 for r_ in samp.itertuples() if (int(r_.sp), r_.nct_id) in shown and r_.zip5 not in {e_[0] for e_ in SPX_[int(r_.sp)] if T2["id"].index(r_.nct_id) in e_[1]}) if len(samp) else 0
         check("Payload: each trial is listed at a location with the ZIP of its own registry row", f"{len(samp):,} registry rows sampled, {wrong} shown under a different ZIP; {mism} facilities whose per-location trial lists do not add up to their list; {outside} trial entries outside their location's pool", shape_ok and wrong == 0 and mism == 0 and outside == 0,
               "a facility is a name in a county and one name is often listed at several ZIP codes; before October 2026 the pages printed the facility's most common ZIP for every trial (4.8% of trial-location rows)")
+        # the city printed with each location is one the registry itself gives for a trial at that location (third item of an SPX entry)
+        if any(len(e_) > 2 for ents in SPX_ for e_ in ents):
+            allq = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); jx = {n_: j_ for j_, n_ in enumerate(T2["id"])}
+            said = {}
+            for r_ in allq.itertuples(): said.setdefault((int(r_.sp), jx.get(r_.nct_id)), set()).add(r_.city.strip())
+            ents_n = 0; city_bad = 0
+            for s_i, ents in enumerate(SPX_):
+                for e_ in ents:
+                    ents_n += 1
+                    if not all(e_[2] in said.get((s_i, j_), ()) for j_ in e_[1]): city_bad += 1
+            check("Payload: each trial is listed at a location with the city of its own registry row", f"{ents_n:,} facility-location entries, {city_bad} naming a city that is not the registry's for one of their trials", city_bad == 0,
+                  "before October 2026 the pages printed a facility's most common city next to each row's own ZIP (2.7% of first lines in the ZIP finder named a different town)")
+    # registry rows that are not places (telemedicine services) and rows whose ZIP is a typing error
+    sa_ = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna("")
+    if "assign_method" in sa_.columns:
+        import re as _re
+        vrx = _re.compile(config.VIRTUAL_SITE_PATTERN, _re.I); is_v = sa_.facility.map(lambda x: bool(vrx.search(x)))
+        located = int((is_v & (sa_.county_fips != "")).sum()); n_v = int(is_v.sum()); tele = Dj2["T"].get("tele", {})
+        if not config.VIRTUAL_SITES_ARE_LOCATIONS:
+            want = {n_ for n_ in sa_[is_v].nct_id if n_ in set(T2["id"])}
+            check("Telemedicine / virtual registry rows are not mapped as sites", f"{n_v} rows in {sa_[is_v].nct_id.nunique()} trials; {located} of them assigned to a county; {len(tele)} trial(s) listed for the ZIP finder's telemedicine section", located == 0 and {T2['id'][int(k_)] for k_ in tele} == want,
+                  "a fully decentralized study lists one telemedicine row per city; counted as sites, the rows of one such study (NCT06906562) were the only trial within 60 road-miles for about 346,000 residents 55+")
+        ty = sa_[sa_.assign_method == "zip_typo_corrected"]
+        if len(ty):
+            gq_ = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); k_ = set(zip(ty.nct_id, ty.facility, ty.zip.str[:5]))
+            at_zip = sum(1 for r_ in gq_.itertuples() if (r_.nct_id, r_.facility, r_.zip5) in k_ and r_.geocode in ("zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"))
+            check("Registry rows with a mistyped ZIP are located where the registry lists that facility", f"{len(ty)} rows (" + "; ".join(f"{r_.facility[:28]}, {r_.city} {r_.zip[:5]}" for r_ in ty.head(4).itertuples()) + ("; ..." if len(ty) > 4 else "") + f"); {at_zip} still drawn at the ZIP", at_zip == 0,
+                  "judged a typing error only when the same named facility is listed repeatedly near the stated city and never near the ZIP (metrics_us.zip_typos)")
     check("Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted)", f"{bad_idx} bad facility trial indices; {sp_bad} bad sitepoint→facility refs; {nbd_unsorted} unsorted nearby lists; sponsor names {sum(1 for x in T2['spn'] if x):,}/{N2:,}, last-update dates {sum(1 for x in T2['upd'] if x):,}/{N2:,}", bad_idx == 0 and sp_bad == 0 and nbd_unsorted == 0 and sum(1 for x in T2['spn'] if x) == N2)
     if (OUT / "refresh_diff.json").exists():
         rd_ = json.load(open(OUT / "refresh_diff.json"))["summary"]

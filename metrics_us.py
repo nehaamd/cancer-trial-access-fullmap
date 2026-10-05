@@ -1,6 +1,6 @@
 """National county / district / state access metrics. Same definitions as the Texas pipeline.
 Usage: python metrics_us.py [--min-max-age 55] [--out out_adult55]"""
-import argparse, json
+import argparse, collections, json, re
 from pathlib import Path
 import geopandas as gpd, numpy as np, pandas as pd
 import config
@@ -14,6 +14,70 @@ def hav_matrix(lat1, lon1, lat2, lon2):
     dphi = p2 - p1; dl = np.radians(lon2)[None, :] - np.radians(lon1)[:, None]
     a = np.sin(dphi / 2) ** 2 + np.cos(p1) * np.cos(p2) * np.sin(dl / 2) ** 2
     return 2 * R_MI * np.arcsin(np.sqrt(np.clip(a, 0, 1)))
+
+
+CONFLICT_MI = 40.0     # a ZIP centroid farther than this from every place of the stated name does not belong to that city
+NEAR_MI = 25.0         # "the same facility is listed near here"
+MIN_LISTINGS = 2       # the facility must be listed at least this often, by name, near the stated city
+GENERIC_NAME = re.compile(r"\b(site|sites|investigational|investigative|clinical study|clinical research|trial|trials)\b")
+
+
+def _mi(a, b):
+    return float(np.hypot((a[0] - b[0]) * 69.0, (a[1] - b[1]) * 69.0 * np.cos(np.radians(a[0]))))
+
+
+def zip_typos(sites):
+    """Registry rows whose ZIP code is a typing error, judged from the registry's own other rows.
+    Returns {row index: (evidence, ZIP at which the registry most often lists that facility near the stated city)}.
+
+    A row is examined when its ZIP centroid is more than CONFLICT_MI (and more than twice the ZIP's own radius) from every Census
+    place of the stated city name in the same state. Usually the ZIP is then the better half of the address: sponsors write the
+    parent organisation's city for a satellite clinic ("New York" for Riverhead, "Sioux Falls" for Yankton), and those rows are
+    left alone. The ZIP is judged a typing error only when all of these hold:
+      - the facility has a name of its own (not "Research Site" or a sponsor's site code);
+      - the same facility name is listed at least MIN_LISTINGS times, in rows whose ZIP and city agree, within NEAR_MI of the
+        stated city;
+      - no facility whose name contains this name, or is contained in it, is listed within NEAR_MI of the ZIP (a second campus);
+      - no other trial lists the same facility with the same ZIP (a slip of the keyboard is not repeated by another sponsor).
+    Example: "University of Iowa, Iowa City, 52252". The university is at 52242; 52252 is a village 45 miles away with no trial
+    site, and the row put a trial within reach of Dubuque that is not there. Such a row is located where the registry's other
+    rows put that facility (their most common ZIP), and the mistyped ZIP is not printed."""
+    from tier4_covering import norm
+    zc = pd.read_csv(REF / "zcta_pop55.csv", dtype={"zcta": str}); zxy = {z: (float(a), float(b)) for z, a, b in zip(zc.zcta, zc.lat, zc.lon)}
+    z2c = dict(pd.read_csv(REF / "zcta_county.csv", dtype=str).values); radius = {}
+    if (REF / "zcta_land_area.csv").exists():
+        ar = pd.read_csv(REF / "zcta_land_area.csv", dtype={"zcta": str}); radius = {z: float(np.sqrt(a / np.pi)) for z, a in zip(ar.zcta, ar.land_sqmi.astype(float))}
+    gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str}); places = collections.defaultdict(list)
+    for a, b, c, d in zip(gz.state, gz.place, gz.lat, gz.lon): places[(a, b)].append((float(c), float(d)))
+
+    def city_pts(state, city):
+        c = (city or "").strip().lower()
+        for cand in (c, c.replace("saint ", "st. "), c.replace("st ", "st. "), c.replace("ft. ", "fort ").replace("ft ", "fort ")):
+            if (state, cand) in places: return places[(state, cand)]
+        return []
+    rows = []
+    for i, st, city, z, fac, sf, nct in zip(sites.index, sites.state, sites.city, sites.zip, sites.facility, sites.state_fips, sites.nct_id):
+        z = (z or "")[:5]
+        if not (z.isdigit() and len(z) == 5 and z in zxy and z2c.get(z, "")[:2] == sf): continue      # the ZIP is not used for this row anyway
+        pts = city_pts(st, city)
+        if not pts: continue                                                                           # the city is not a Census place: nothing to compare
+        near = min(pts, key=lambda q: _mi(zxy[z], q)); d = _mi(zxy[z], near)
+        rows.append((i, st, z, norm(fac), d > max(CONFLICT_MI, 2 * radius.get(z, 0.0)), near, nct))
+    agree = collections.defaultdict(list); same_zip = collections.defaultdict(set)
+    for i, st, z, nm, conflict, near, nct in rows:
+        if conflict: same_zip[(st, nm, z)].add(nct)
+        elif nm: agree[st].append((frozenset(nm.split()), nm, zxy[z], z))
+    out = {}
+    for i, st, z, nm, conflict, near, nct in rows:
+        if not conflict or not nm or GENERIC_NAME.search(nm) or not re.search(r"[a-z]{3}", nm): continue
+        tok = frozenset(nm.split())
+        if len(tok) < 2 or len(same_zip[(st, nm, z)]) > 1: continue
+        zs = [z2 for t, n2, q, z2 in agree[st] if n2 == nm and _mi(q, near) <= NEAR_MI]
+        if len(zs) < MIN_LISTINGS: continue
+        if any((t <= tok or tok <= t) and len(t & tok) >= 2 and _mi(q, zxy[z]) <= NEAR_MI for t, n2, q, z2 in agree[st]): continue
+        best = collections.Counter(zs).most_common(1)[0][0]
+        out[i] = (f"listed {len(zs)}x near the stated city (most often at ZIP {best}), never near ZIP {z}", best)
+    return out
 
 
 def assign_sites(sites, cent):
@@ -44,8 +108,17 @@ def assign_sites(sites, cent):
             cc = city2c.get((state, cand))
             if cc: return cc
         return None
+    # Rows that are not places (config.VIRTUAL_SITE_PATTERN) get no county, so nothing downstream draws or measures to them;
+    # rows whose ZIP is a typing error (zip_typos) are assigned through the ZIP at which the registry's other rows list that facility.
+    virtual = None if config.VIRTUAL_SITES_ARE_LOCATIONS else re.compile(config.VIRTUAL_SITE_PATTERN, re.I)
+    typos = zip_typos(sites)
     method, county = [], []
     for s in sites.itertuples():
+        if virtual is not None and virtual.search(s.facility or ""): method.append("virtual_site"); county.append(None); continue
+        if s.Index in typos:
+            zf = typos[s.Index][1]; cz = z2c.get(zf); cp = zpop.get(zf)      # the ZIP where the registry's other rows put this facility, and its county
+            if cz and cp and cp != cz and cp[:2] == s.state_fips and city_county(s.state, s.city) != cz: cz = cp
+            if cz and cz[:2] == s.state_fips: method.append("zip_typo_corrected"); county.append(cz); continue
         z = (s.zip or "")[:5]; st = s.state_fips
         c = z2c.get(z) if z.isdigit() and len(z) == 5 else None
         if c and c[:2] == st:
@@ -58,6 +131,8 @@ def assign_sites(sites, cent):
         if cc and cc[:2] == st: method.append("city_gazetteer"); county.append(cc); continue
         method.append("unassigned"); county.append(None)
     sites = sites.copy(); sites["county_fips"] = county; sites["assign_method"] = method
+    sites["assign_note"] = [typos[i][0] if m == "zip_typo_corrected" else "" for i, m in zip(sites.index, method)]
+    sites["zip_fix"] = [typos[i][1] if m == "zip_typo_corrected" else "" for i, m in zip(sites.index, method)]   # where route_sites_us.py puts the row
     return sites
 
 
