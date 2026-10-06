@@ -230,3 +230,21 @@ No figure changes. Same registry data (5 October 2026). Pages only (`docs/index.
 **Navigation.** The inner tab that showed the map was also labelled "Map", like the page link above it; it is now "Overview". The figures panel fades at its lower edge while more of it sits below the fold.
 
 **Checked.** The legend's national total equals the panel's headline; the sum of a state's circles matches the state panel's share (within the 0.1-point rounding of county shares) for six states, filtered and unfiltered; a county's hover figure equals its panel figure; every Color by option at county, district and state level draws without errors and only the default draws circles; the layer, filter and place come back from a link; circles rescale on zoom and return at reset; phone width has no overflow.
+
+## 2026-10-05 · the figures panel follows the map; one number per card; comparisons; rural vs metro
+
+No figure changes. Same registry data (5 October 2026). Pages only (`docs/index.html`); nothing needs a refresh. Second part of the 5 October design review (the first is the map's default layer, above).
+
+**The figure shown on the map comes first.** The panel's first card is now the figure the map is colored by, tagged "On the map": residents short of trials, trials in the county, road-miles to an NCI center or a broad menu, cancer incidence, household context, the rural-urban code, burden vs access, and at district and state level the share with fewer than 20 (or no) trials, the share beyond 60 road-miles of a broad menu or an NCI center, the median distance, and cosponsors of a tracked bill. Figures that were not in the panel before are built for the purpose: counties with any trial (838 of 3,143 nationally; per state; whole counties touching a district), the national and state cosponsor counts, a county's incidence, household figure, rural-urban code and burden-vs-access class. Changing "Color by" re-renders the panel in place.
+
+**One number per card.** Each card is a number, one sentence, and a grey line with the secondary figures that used to sit in the sentence (the "none" share, the average number of trials within reach, the 120-mile shares, the median distances, the most common center). Nothing was dropped: every figure of the old panel is still printed, which the sweep below checks.
+
+**Comparisons.** At state level every card carries the national figure; at district and county level, the state and the national figure. When filters are on, the comparisons are recomputed from the census tracts along with the figure itself.
+
+**Rural vs metro.** The nation and each state get a card of their own: the share of residents 55+ in nonmetro counties with fewer than 20 trials within 60 road-miles against the metro share, and how many of the residents short of trials live in each (nationally 6.8 million of 11.8 million in nonmetro counties, 5.1 million in metro counties). The detailed rural/urban table further down is unchanged. Districts keep their nonmetro chip; counties their code.
+
+**County figure for the default layer.** A county's panel now states the share and number of its residents 55+ with fewer than 20 trials within 60 road-miles (population-weighted over its census tracts), with the state and national shares beside it; this is the figure the map's circle is drawn from.
+
+**Most residents short.** On the default layer the first card lists the five counties with the most residents 55+ short of trials (nationally, in the state, or whole counties touching the district), each a link to that county; the list is recomputed when filters are on.
+
+**Checked.** A sweep of the nation, all 51 states, all 436 districts and 65 counties: every figure of the old panel is still shown; the first card's number equals the data file; the comparison line equals the state and national figures; the rural card equals `rucc.js`. The on-map card follows each of the 20 layer settings tried. Under four filter settings the national card equals the map legend's total, the state and district comparisons equal the filtered state and national figures, and a county's card equals its hover figure.
