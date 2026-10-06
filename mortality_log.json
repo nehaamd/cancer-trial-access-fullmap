@@ -1,0 +1,134 @@
+{
+ "built": "2026-10-06",
+ "period": "2020-2024",
+ "tertiles_all": [
+  151.4,
+  172.6
+ ],
+ "national": {
+  "counties_classified": 3083,
+  "hh_counties": 479,
+  "hh_pop55": 3369958,
+  "hh_deaths": 27470,
+  "hh_small": 86,
+  "cells": {
+   "hh": 479,
+   "h_only": 528,
+   "l_only": 792,
+   "neither": 1284
+  },
+  "tertile_low_access": {
+   "1": 447,
+   "2": 345,
+   "3": 479
+  },
+  "tertile_counties": {
+   "1": 1098,
+   "2": 978,
+   "3": 1007
+  },
+  "pop55_classified": 98570631,
+  "top": [
+   {
+    "f": "28047",
+    "name": "Harrison County",
+    "st": "MS",
+    "p": 61132,
+    "rate": 180.8,
+    "deaths": 469,
+    "small": false,
+    "l20": 78.6
+   },
+   {
+    "f": "47163",
+    "name": "Sullivan County",
+    "st": "TN",
+    "p": 58201,
+    "rate": 179.0,
+    "deaths": 456,
+    "small": false,
+    "l20": 100.0
+   },
+   {
+    "f": "41019",
+    "name": "Douglas County",
+    "st": "OR",
+    "p": 45576,
+    "rate": 175.4,
+    "deaths": 356,
+    "small": false,
+    "l20": 90.2
+   },
+   {
+    "f": "01015",
+    "name": "Calhoun County",
+    "st": "AL",
+    "p": 36094,
+    "rate": 179.4,
+    "deaths": 275,
+    "small": false,
+    "l20": 70.7
+   },
+   {
+    "f": "48485",
+    "name": "Wichita County",
+    "st": "TX",
+    "p": 35017,
+    "rate": 189.0,
+    "deaths": 282,
+    "small": false,
+    "l20": 60.5
+   },
+   {
+    "f": "01055",
+    "name": "Etowah County",
+    "st": "AL",
+    "p": 34025,
+    "rate": 182.5,
+    "deaths": 267,
+    "small": false,
+    "l20": 70.7
+   },
+   {
+    "f": "21227",
+    "name": "Warren County",
+    "st": "KY",
+    "p": 33158,
+    "rate": 173.6,
+    "deaths": 247,
+    "small": false,
+    "l20": 94.3
+   },
+   {
+    "f": "48135",
+    "name": "Ector County",
+    "st": "TX",
+    "p": 31563,
+    "rate": 187.9,
+    "deaths": 246,
+    "small": false,
+    "l20": 100.0
+   },
+   {
+    "f": "21059",
+    "name": "Daviess County",
+    "st": "KY",
+    "p": 31456,
+    "rate": 181.2,
+    "deaths": 244,
+    "small": false,
+    "l20": 100.0
+   },
+   {
+    "f": "45085",
+    "name": "Sumter County",
+    "st": "SC",
+    "p": 31427,
+    "rate": 177.6,
+    "deaths": 241,
+    "small": false,
+    "l20": 100.0
+   }
+  ]
+ }
+}

@@ -76,7 +76,7 @@
     <p class="kicker">Key findings · residents 55 and older · data as of <span data-f="pull"></span></p>
     <h1>Cancer clinical trials are close for most Americans and out of reach for millions</h1>
     <p class="lede"><b><span data-f="people_l20_m"></span> million Americans aged 55 and older</b> (<span data-f="l20"></span>%) live more than an hour's drive from a reasonable choice of recruiting cancer treatment trials; <span data-f="people_z60_m"></span> million have none within 60 road-miles. In rural counties the share without a reasonable choice is <span data-f="nm_l20"></span>%; in metro counties it is <span data-f="m_l20"></span>%.</p>
-    <nav class="toc" aria-label="Sections"><a href="#numbers">The numbers</a><a href="#rural">Rural vs metro</a><a href="#states">States</a><a href="#need">Need vs access</a><a href="#policy">What would change it</a><a href="#how">How it was measured</a><a href="#about">About &amp; cite</a></nav>
+    <nav class="toc" aria-label="Sections"><a href="#numbers">The numbers</a><a href="#rural">Rural vs metro</a><a href="#states">States</a><a href="#need">Need vs access</a><a href="#deaths">Deaths vs access</a><a href="#policy">What would change it</a><a href="#how">How it was measured</a><a href="#about">About &amp; cite</a></nav>
   </div>
 
   <section id="numbers">
@@ -126,6 +126,17 @@
     <div class="actions"><a class="btn" href="index.html?m=bva">Map these counties</a><a class="btn" href="index.html?tab=burden">See the list</a></div>
   </section>
 
+  <section id="deaths" hidden>
+    <h2>Where cancer deaths are high and trials are far</h2>
+    <p id="deaths-lead"></p>
+    <div class="two">
+      <div class="chart"><h4>States with the most residents 55+ in such counties</h4><p class="sub">Share of each state's residents 55+ who live in a county in the "high mortality · low access" corner</p><div id="tbl-deaths-states"></div></div>
+      <div class="chart"><h4>The ten counties with the most residents 55+</h4><p class="sub">Age-adjusted all-cancer death rate per 100,000, <span id="deaths-period"></span>; share of residents 55+ with fewer than 20 trials within 60 road-miles</p><div id="tbl-deaths-counties"></div></div>
+    </div>
+    <p class="small" id="deaths-note"></p>
+    <div class="actions"><a class="btn" href="index.html?m=mva">Map these counties</a><a class="btn" href="index.html?tab=burden&amp;meas=mort">See the list</a></div>
+  </section>
+
   <section id="policy">
     <h2>What would change this</h2>
     <p>Distance is a cost: fuel, lodging, days away from work and family, often for a year or more of visits. Two bills in the 119th Congress address that cost directly. The <b>Clinical Trial Modernization Act</b> would let trial sponsors cover participants' travel, lodging and cost-sharing, exempt free digital health tools that enable remote participation from anti-kickback rules, exclude trial payments from taxable income, and fund outreach and recruitment in underserved and rural communities. The map shows, for every district and state, whether its members have signed on.</p>
@@ -155,7 +166,7 @@
 </main>
 <footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
-<script src="findings.js"></script>
+<script src="findings.js"></script><script src="mortality.js"></script>
 <script>
 (function () {
   const F = window.FINDINGS, N = F.nat, R = F.rural; const fmt = d3.format(','), pct = v => (Math.round(v * 10) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 });
@@ -171,6 +182,19 @@
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
   document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map: road-distance access to recruiting cancer clinical trials for Americans 55 and older, by county, congressional district and state. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${dataDate}; accessed ${SITE.today()}.`;
   document.title = 'Key findings · Cancer Trial Access Map';
+
+  // ---- deaths vs access (mortality.js; county names and populations from data.js; access shares from burden.js) ----
+  (function () { const MO = window.MORTALITY; if (!MO) return; const sec = document.getElementById('deaths'); sec.hidden = false;
+    const S = MO.summary.nat, T = MO.meta.tertiles.all;
+    document.getElementById('deaths-lead').innerHTML = `<b>${fmt(S.hh_counties)} counties</b> have an all-cancer death rate in the top third of US counties (at least ${T[1]} deaths per 100,000 a year, age-adjusted, ${MO.meta.period}) and at least half of their residents 55+ with fewer than 20 trials within 60 road-miles. They are home to <b>${M(S.hh_pop55)} million residents 55 and older</b> and about ${fmt(S.hh_deaths)} cancer deaths a year. Of the ${fmt(S.cells.hh + S.cells.l_only)} low-access counties with a published rate, ${fmt(S.tertile_low_access['3'])} are in the top third for cancer deaths, ${fmt(S.tertile_low_access['2'])} in the middle third and ${fmt(S.tertile_low_access['1'])} in the bottom third. Death rates and access are two separate published measures set side by side, never combined into a score.`;
+    document.getElementById('deaths-period').textContent = MO.meta.period;
+    const stPop = {}; (F.states || []).forEach(x => stPop[x.usps] = x.pop55);
+    const srows = Object.entries(MO.summary.states).map(([st, x]) => ({ st, name: ((F.states || []).find(y => y.usps === st) || {}).name || st, n: x.hh_counties, p: x.hh_pop55, share: stPop[st] ? 100 * x.hh_pop55 / stPop[st] : null })).filter(r => r.n > 0).sort((a, b) => b.p - a.p).slice(0, 10);
+    document.getElementById('tbl-deaths-states').innerHTML = `<table><thead><tr><th>State</th><th class="n">Counties</th><th class="n">Residents 55+</th><th class="n">Share of state</th></tr></thead><tbody>${srows.map(r => `<tr><td><a href="index.html?m=mva&s=${r.st}">${esc(r.name)}</a></td><td class="n">${fmt(r.n)}</td><td class="n">${fmt(r.p)}</td><td class="n">${r.share === null ? '—' : pct(r.share) + '%'}</td></tr>`).join('')}</tbody></table>`;
+    const crows = S.top;
+    document.getElementById('tbl-deaths-counties').innerHTML = `<table><thead><tr><th>County</th><th class="n">Residents 55+</th><th class="n">Death rate</th><th class="n">Short of trials</th></tr></thead><tbody>${crows.map(r => `<tr><td><a href="index.html?m=mva&c=${r.f}">${esc(r.name)}, ${r.st}</a></td><td class="n">${fmt(r.p)}</td><td class="n">${r.rate}${r.small ? '*' : ''}</td><td class="n">${r.l20 === null ? '—' : pct(r.l20) + '%'}</td></tr>`).join('')}</tbody></table>`;
+    const sc = MO.meta.status_counts_all || {};
+    document.getElementById('deaths-note').innerHTML = `Death rates: NCI/CDC State Cancer Profiles (National Vital Statistics System), five-year age-adjusted rates per 100,000, all ages, ${MO.meta.period}; pulled ${nice(MO.meta.pulled)}. The top third starts at ${T[1]} and the middle third at ${T[0]} per 100,000 among the ${fmt(sc.ok || 0)} counties with a reliable published rate; ${fmt(sc.small_numbers || 0)} counties with fewer than ${MO.meta.small_threshold} deaths a year on average are classified but marked small-numbers (* above), and ${fmt(sc.suppressed_source || 0)} counties the source suppresses are left out. Access: the same tract-weighted county shares as the map. The incidence version of this view (above) uses the county median instead of the top third, which is why its count is different.`; })();
 
   // ---- tooltip helper ----
   const tipOn = (tipEl, wrap) => (ev, html) => { const r = wrap.getBoundingClientRect(); tipEl.style.display = 'block'; tipEl.innerHTML = html; const x = ev.clientX - r.left, y = ev.clientY - r.top; tipEl.style.left = (x > r.width - 300 ? x - 290 : x + 14) + 'px'; tipEl.style.top = (y + 14) + 'px'; };
