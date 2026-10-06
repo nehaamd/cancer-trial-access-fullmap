@@ -52,7 +52,13 @@ def main():
     l20 = share(tr.trials_within_60rdmi.values < 20); z60 = share(tr.trials_within_60rdmi.values == 0)
     t60 = (pd.Series(w * tr.trials_within_60rdmi.values, index=tr.index).groupby(tr.county_fips).sum() / W).round().astype(int)
     zt = {t: share(tr[c].values == 0) for t, c in zip(types, tcols)}
-    county = {f: {"l20": float(l20[f]), "z60": float(z60[f]), "t60": int(t60[f]), "zt": [float(zt[t][f]) for t in types]} for f in W.index}
+    # the typical resident: population-weighted median of trials within 60 road-miles over the county's tracts (the map's shading;
+    # a mean is pulled up by a few tracts near a city, so it can show "broad menu" where most residents have fewer than 20)
+    def wmedian(d):
+        d = d.sort_values("trials_within_60rdmi"); cw = d.pop55.cumsum().values; half = d.pop55.sum() / 2
+        return int(d.trials_within_60rdmi.values[min(int(np.searchsorted(cw, half)), len(d) - 1)]) if half > 0 else int(d.trials_within_60rdmi.median())
+    t60m = g.apply(wmedian)
+    county = {f: {"l20": float(l20[f]), "z60": float(z60[f]), "t60": int(t60[f]), "t60m": int(t60m[f]), "zt": [float(zt[t][f]) for t in types]} for f in W.index}
     # incidence, from the same file the payload uses
     inc = pd.read_csv(find("cancer_incidence_county.csv"), dtype={"county_fips": str})
     medians = {s: (round(float(gg[gg.status == "ok"].rate.median()), 1) if (gg.status == "ok").any() else None) for s, gg in inc.groupby("site")}

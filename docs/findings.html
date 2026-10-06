@@ -75,7 +75,7 @@
   <div class="hero">
     <p class="kicker">Key findings · residents 55 and older · data as of <span data-f="pull"></span></p>
     <h1>Cancer clinical trials are close for most Americans and out of reach for millions</h1>
-    <p class="lede"><b><span data-f="people_l20_m"></span> million Americans aged 55 and older</b> (<span data-f="l20"></span>%) live more than an hour's drive from a reasonable choice of recruiting cancer treatment trials; <span data-f="people_z60_m"></span> million have none within 60 road-miles. In rural counties the share without a reasonable choice is <span data-f="nm_l20"></span>%; in metro counties it is <span data-f="m_l20"></span>%.</p>
+    <p class="lede"><b><span data-f="people_l20_m"></span> million Americans aged 55 and older</b> (<span data-f="l20"></span>%) have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; <span data-f="people_z60_m"></span> million have none within 60 road-miles. In rural (nonmetro) counties the share with fewer than 20 is <span data-f="nm_l20"></span>%; in metro counties it is <span data-f="m_l20"></span>%.</p>
     <nav class="toc" aria-label="Sections"><a href="#numbers">The numbers</a><a href="#rural">Rural vs metro</a><a href="#states">States</a><a href="#need">Need vs access</a><a href="#deaths">Deaths vs access</a><a href="#policy">What would change it</a><a href="#how">How it was measured</a><a href="#about">About &amp; cite</a></nav>
   </div>
 
@@ -94,7 +94,7 @@
 
   <section id="rural">
     <h2>The gap is rural</h2>
-    <p>The <span data-f="nm_share"></span>% of Americans 55 and older who live in nonmetro counties are <span data-f="nm_ratio"></span> times as likely as metro residents to have fewer than 20 trials within an hour's drive, and their median distance to an NCI-designated cancer center is <span data-f="nm_medn"></span> road-miles, against <span data-f="m_medn"></span> in metro counties.</p>
+    <p>The <span data-f="nm_share"></span>% of Americans 55 and older who live in nonmetro counties are <span data-f="nm_ratio"></span> times as likely as metro residents to have fewer than 20 trials within 60 road-miles, and their median distance to an NCI-designated cancer center is <span data-f="nm_medn"></span> road-miles, against <span data-f="m_medn"></span> in metro counties.</p>
     <div class="chart" id="chart-rural">
       <h4>Access to recruiting cancer trials, metro vs nonmetro counties</h4>
       <p class="sub">Share of residents 55 and older · USDA Rural-Urban Continuum Codes 2023 (metro 1–3, nonmetro 4–9)</p>
@@ -164,12 +164,13 @@
     <div class="actions"><a class="btn primary" href="index.html">Open the map</a><a class="btn" href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem or suggest a change</a><button class="btn" type="button" onclick="window.print()">Print this page</button></div>
   </section>
 </main>
-<footer class="site"><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<footer class="site">
+<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
 <script src="findings.js"></script><script src="mortality.js"></script>
 <script>
 (function () {
-  const F = window.FINDINGS, N = F.nat, R = F.rural; const fmt = d3.format(','), pct = v => (Math.round(v * 10) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 });
+  const F = window.FINDINGS, N = F.nat, R = F.rural; const fmt = d3.format(','), pct = v => (Math.round(v * 10) / 10).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const M = v => (Math.round(v / 1e5) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 }); const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const nice = s => { const d = new Date(s + 'T12:00:00'); return isNaN(d) ? s : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }); };
   const numWord = n => (['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'])[n] || String(n);
