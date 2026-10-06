@@ -75,7 +75,7 @@ window.EXPLORE = (function () {
     return { text: n === null || n === undefined ? `No figure for ${lab} here.` : `The average resident 55+ ${pl.kind === 'nat' ? 'in the United States' : 'in ' + esc(pl.label)} has ${fmt(n)} recruiting ${lab} ${SITE.plural(n, 'trial')} within 60 road-miles of home${pl.kind !== 'nat' && nn !== null ? `; nationally, ${fmt(nn)}` : ''}.`, more: 'An average is pulled up by residents near a big center; the map recomputes the share with none for this cancer when you filter it.' };
   }
   // one sentence of teaching per cancer type: why the total count can mislead (shared with the map, in site.js)
-  const TEACH = SITE.TEACH, teach = SITE.teach;
+  const teach = SITE.teach;
   // ---- search over counties, districts, states and members (cities and ZIP codes loaded on demand) ----
   const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 -]/g, ' ').replace(/\s+/g, ' ').trim();
   let IDX = null, PLACES = null, ZIP = null, PLp = null, ZIPp = null;
@@ -112,5 +112,5 @@ window.EXPLORE = (function () {
     const house = pl.kind === 'district' ? [pl] : pl.kind === 'county' ? pl.d.map(k => district(k)).filter(Boolean) : Object.keys(X.districts).filter(k => X.districts[k].st === st).map(k => district(k)).sort((a, b) => (+a.cd) - (+b.cd));
     return { st, house, senators: (X.states[st] || {}).senators || [] }; }
 
-  return { X, M, NAT, fmt, pct, people, esc, cdLabel, stName, typeLabel, county, district, state, nation, fromParams, param, links, stateOf, countyRank, districtRank, stateRank, facts, cancerLine, teach, TEACH, search, wireSearch, pickToPlace, loadZip, roleOf, ROLE, delegation, dataDate };
+  return { X, M, NAT, fmt, pct, people, esc, cdLabel, stName, typeLabel, county, district, state, nation, fromParams, param, links, stateOf, countyRank, districtRank, stateRank, facts, cancerLine, teach, search, wireSearch, pickToPlace, loadZip, roleOf, ROLE, delegation, dataDate };
 })();
