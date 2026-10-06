@@ -41,7 +41,23 @@ window.SITE = (function () {
     const named = namedCancers(T, j); return primary + (named.length ? ': names ' + named.join(', ') : ' (cancers not named individually)');
   }
 
+  // One general sentence shown when a cancer type is chosen: a count of trials overstates the options for any one person.
+  const teach = () => 'A count of trials is not the same as trials that fit one person: stage, test results and past treatment narrow the list.';
+  // One sentence for the distance figures: a distance on the map is a trip that participation may require many times.
+  const TRIPS = 'Participation may require this trip many times: treatment trials often need visits every one to three weeks at first, plus extra scans and blood tests.';
+  // Phone only (640 px and narrower): fold long reading pages section by section. containers: elements whose direct
+  // children are the heading (h2) and its content; keepOpen: indexes left open. Laptop and tablet layouts are untouched.
+  function foldOnPhone(containers, keepOpen) {
+    if (!window.matchMedia('(max-width:640px)').matches) return;
+    containers.forEach((box, i) => { const h = box.querySelector(':scope > h2'); if (!h || box.dataset.folded) return; box.dataset.folded = '1'; box.classList.add('fold');
+      if ((keepOpen || []).includes(i)) box.classList.add('open'); h.setAttribute('role', 'button'); h.setAttribute('tabindex', '0'); h.setAttribute('aria-expanded', String(box.classList.contains('open')));
+      // delegated, so a page that re-renders the section's content keeps working
+      const flip = () => { const on = !box.classList.contains('open'); box.classList.toggle('open', on); const hh = box.querySelector(':scope > h2'); if (hh) { hh.setAttribute('role', 'button'); hh.setAttribute('tabindex', '0'); hh.setAttribute('aria-expanded', String(on)); } };
+      const isHead = t => { const hh = t.closest('h2'); return hh && hh.parentElement === box; };
+      box.addEventListener('click', e => { if (isHead(e.target)) flip(); }); box.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && isHead(e.target)) { e.preventDefault(); flip(); } }); });
+    const openHash = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); if (!t) return; const box = t.closest('.fold') || (t.querySelector && t.querySelector(':scope > .fold')); if (box && !box.classList.contains('open')) { box.classList.add('open'); const h = box.querySelector(':scope > h2'); if (h) h.setAttribute('aria-expanded', 'true'); } setTimeout(() => t.scrollIntoView({ block: 'start' }), 30); };
+    openHash(); window.addEventListener('hashchange', openHash); }
   const plural = (n, one, many) => n === 1 ? one : (many || one + 's');
   function ordinal(n) { const v = n % 100, s = ['th', 'st', 'nd', 'rd']; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
-  return { USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, ordinal };
+  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, ordinal };
 })();
