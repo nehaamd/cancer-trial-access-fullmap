@@ -44,7 +44,7 @@ window.SITE = (function () {
 const TEACH = {
     breast: 'Breast cancer trials are usually written for one subtype — hormone-receptor-positive, HER2-positive or triple-negative — and for a stage or setting (before surgery, after surgery, or metastatic). A county with 20 breast trials may have none for a given person.',
     lung: 'Lung cancer trials separate small-cell from non-small-cell disease and, within non-small-cell, often require a specific driver mutation (EGFR, ALK, KRAS G12C and others) or a PD-L1 level. Stage and prior treatment narrow the list further.',
-    colorectal: 'For colorectal cancer, stage, biomarkers such as mismatch-repair (MSI) status and RAS or BRAF mutations, and prior treatment lines determine which trials might be relevant. The count here is every colorectal trial, not the ones that would fit one patient.',
+    colorectal: 'For colorectal cancer, stage, biomarkers such as mismatch-repair (MMR) or microsatellite-instability (MSI) status, RAS and BRAF mutations, and HER2, and prior treatment lines determine which trials might be relevant. The count here is every colorectal trial, not the ones that would fit one patient.',
     prostate: 'Prostate trials are divided by whether the cancer still responds to hormone therapy (castration-sensitive or castration-resistant), whether it has spread, and prior treatments. A local trial for one setting may not apply to another.',
     leukemia: 'Leukemia trials depend on the type (acute or chronic, myeloid or lymphoid), genetic features of the disease and whether it is newly diagnosed or has relapsed. Many open only at centers with transplant programs.',
     lymphoma: 'Lymphoma trials are written for specific subtypes (Hodgkin, diffuse large B-cell, follicular, mantle cell and others) and for newly diagnosed or relapsed disease. CAR-T and bispecific-antibody trials mostly open at large centers.',
@@ -62,7 +62,7 @@ const TEACH = {
     bladder_urothelial: 'Bladder cancer trials separate non-muscle-invasive from muscle-invasive and metastatic disease; some require specific genetic alterations (such as FGFR).',
     neuroendocrine_endocrine: 'Neuroendocrine and endocrine cancers are uncommon and varied; trials often specify the organ of origin, grade and receptor imaging results.',
     other_named: 'Rarer cancers have few trials each, and most open only at specialized centers, so the distance to one is often the whole story.',
-    multi: 'Basket and umbrella trials enroll several cancers that share a target or a biomarker. They widen what counts as “a trial near me”, but each still has its own eligibility rules.',
+    multi: 'Basket trials enroll several cancers that share a target or biomarker; umbrella trials test several treatments within one cancer, matched to its biomarkers. Both widen what counts as “a trial near me”, but each still has its own eligibility rules.',
     other_unclassified: 'A few studies name a condition the classifier could not place; treat their count with caution.'
   };
   const teach = type => TEACH[type] || 'Stage, biomarkers and prior treatment further determine which trials might be relevant; a count of trials is a count of doors, not of doors that will open for one person.';
