@@ -93,7 +93,7 @@
 
   /* ---- invitation strip (national view only) ---- */
   .invite{position:relative;padding:.7rem calc(var(--gutter) + 1.6rem) .75rem var(--gutter);background:var(--card);border-bottom:1px solid var(--rule)}
-  .invite[hidden]{display:none}
+  .invite[hidden]{display:none} .inv-toggle{display:none}
   .invite-lead{margin:0 0 .45rem;font-size:var(--fs-1);color:var(--ink-2);max-width:120ch} .invite-lead b{color:var(--ink)}
   .invite-qs{display:flex;gap:.4rem;flex-wrap:wrap}
   .invite-qs a,.invite-qs button{font-family:inherit;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:#EEF4FA;border:1px solid #D5E3EF;border-radius:999px;padding:.35rem .8rem;text-decoration:none;cursor:pointer;line-height:1.3}
@@ -209,7 +209,9 @@
     .hdr-links{justify-content:flex-start}
     .searchbar .stamp{margin-left:0;white-space:normal;flex-basis:100%}
     .filters>*,.tb-group{max-width:100%;min-width:0} .filters .factions{margin-left:0}
-    .invite-lead{font-size:var(--fs-0)} .invite-qs a,.invite-qs button{padding:.3rem .65rem}
+    .invite-lead{font-size:var(--fs-0);margin:0} .invite-qs a,.invite-qs button{padding:.3rem .65rem} .inv-more{display:none}
+    .invite-qs{display:none;margin-top:.45rem} .invite.open .invite-qs{display:flex} .invite.open .inv-more{display:inline}
+    .inv-toggle{display:inline-block;margin-top:.35rem;font-family:inherit;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
     .doors{gap:.4rem;position:relative;padding-right:2.2rem} .doors .lead{flex-basis:100%;padding:0} .door{flex:1 1 auto;padding:.4rem .7rem} .door b{font-size:var(--fs-0)} .door span{display:none} .doors .x{position:absolute;right:8px;top:6px}
     .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none} .tabs::-webkit-scrollbar{display:none} .tabs .tabnote{display:none}
     .menu>div{position:fixed;left:16px;right:16px;top:auto}
@@ -246,8 +248,9 @@
   <span class="fstate" id="f-state"></span>
 </div>
 <div class="invite" id="doors" hidden>
-  <p class="invite-lead"><b>Explore geographic access to cancer clinical trials</b> — for communities, clinicians, advocates and research teams. No background in clinical trials is needed to start; the filters, methods and downloadable tables are here for anyone who wants the detail. Each question below opens a view you can change yourself.</p>
-  <div class="invite-qs">
+  <p class="invite-lead"><b>Explore geographic access to cancer clinical trials</b><span class="inv-more"> — for communities, clinicians, advocates and research teams. No background in clinical trials is needed to start; the filters, methods and downloadable tables are here for anyone who wants the detail. Each question below opens a view you can change yourself.</span></p>
+  <button type="button" class="inv-toggle" id="inv-toggle" aria-expanded="false" aria-controls="inv-qs">Questions to explore ▾</button>
+  <div class="invite-qs" id="inv-qs">
     <a href="community.html">What does access look like where I live?</a>
     <button type="button" id="inv-type">Would the picture change for a particular cancer?</button>
     <a href="learn.html#barriers">Why can someone live near trials and still struggle to participate?</a>
@@ -934,6 +937,7 @@
   document.getElementById('doors-x').addEventListener('click', () => { doorsDismissed = true; doors(false); });
   document.getElementById('inv-type').addEventListener('click', () => { window.__openFilters && window.__openFilters(); const sel_ = document.getElementById('f-type'); sel_.focus(); sel_.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
   document.getElementById('inv-compare').addEventListener('click', () => { setTab('compare'); });
+  document.getElementById('inv-toggle').addEventListener('click', e => { const box = document.getElementById('doors'), on = !box.classList.contains('open'); box.classList.toggle('open', on); e.target.setAttribute('aria-expanded', String(on)); e.target.textContent = on ? 'Hide questions ▴' : 'Questions to explore ▾'; });
   function renderStateOverview(st) { doors(false); const g = D.state_data[st]; const rows = Object.entries(DI).filter(([k, d]) => d.st === st).sort((a, b) => (+a[1].cd) - (+b[1].cd)); const worst = rows.slice().sort((a, b) => b[1].l20 - a[1].l20).slice(0, 5);
     pane.innerHTML = `<div class="card hero"><p class="kicker">State</p><h2>${esc(g.name)}</h2><p class="member"><button class="linkish" data-open="in">${fmt(g.trials)} recruiting trials</button> at <button class="linkish" data-open-sites="in">${fmt(g.fac)} sites</button> · ${g.broad} broad-menu and ${g.limited} limited-menu ${g.broad + g.limited === 1 ? 'county' : 'counties'} of ${g.counties} (${g.counties_with_trials} with any trial) · ${fmt(g.p)} residents 55+ · ${g.ndist} district${g.ndist === 1 ? '' : 's'}</p>
       ${filterCaution(g.name)}${heroStats('state', g, st)}${teleNote(st)}${shareHTML()}</div>

@@ -66,7 +66,7 @@
   .flag{background:#FBF1E8;border-left:3px solid var(--rust);padding:.4rem .7rem;border-radius:0 8px 8px 0;margin:.6rem 0;font-size:var(--fs-1)}
   .dlist{display:flex;gap:.4rem;flex-wrap:wrap;margin:.4rem 0 0}
   .ind{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.3rem;vertical-align:baseline}
-  @media (max-width:640px){ .fact{grid-template-columns:1fr} .fact details{grid-column:1} .fact .num{font-size:1.7rem} main{font-size:16px} }
+  @media (max-width:640px){ .btns{display:grid;grid-template-columns:1fr 1fr;gap:.45rem} .btns .btn{justify-content:center;text-align:center;padding:.55rem .6rem;font-size:var(--fs-0)} .btns .btn.primary{grid-column:1 / -1} .fact{grid-template-columns:1fr} .fact details{grid-column:1} .fact .num{font-size:1.7rem} main{font-size:16px} }
   @media print{ .search-wrap,.try,.btns,.questions,h2.qs,.qs-sub{display:none} }
 </style>
 </head>

@@ -208,6 +208,7 @@
     document.getElementById('copy').addEventListener('click', () => { navigator.clipboard.writeText(location.href).then(() => { document.getElementById('copied').textContent = 'Copied.'; setTimeout(() => document.getElementById('copied').textContent = '', 2000); }).catch(() => { document.getElementById('copied').textContent = location.href; }); });
   }
   render();
+  SITE.foldOnPhone(['findings-body', 'policy-body', 'contribute-body'].map(id => document.getElementById(id)), [0]);
 })();
 </script>
 </body></html>

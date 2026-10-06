@@ -191,6 +191,7 @@
 (function () { const M = window.COMMUNITY.meta; const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull };
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
   const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US') };
-  document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || ''); })();
+  document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || '');
+  SITE.foldOnPhone([...document.querySelectorAll('main section')], [0]); })();
 </script>
 </body></html>
