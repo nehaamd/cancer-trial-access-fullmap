@@ -1,0 +1,477 @@
+{
+ "sites": {
+  "all": {
+   "title": "All Cancer Sites, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "ok": 2710,
+    "small_numbers": 373,
+    "suppressed_source": 58,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 609828.0,
+   "us_rate": 143.2,
+   "county_sum_published": 609725.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 0.01,
+    "max_abs_pct_diff": 2.21,
+    "worst": "02"
+   }
+  },
+  "breast": {
+   "title": "Breast, 2020-2024",
+   "who": "All Races (includes Hispanic), Female, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 1325,
+    "small_numbers": 1262,
+    "ok": 554,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 42482.0,
+   "us_rate": 18.9,
+   "county_sum_published": 40637.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 4.7,
+    "max_abs_pct_diff": 49.5,
+    "worst": "46"
+   }
+  },
+  "colorectal": {
+   "title": "Colon & Rectum, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "small_numbers": 1504,
+    "suppressed_source": 942,
+    "ok": 695,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 53162.0,
+   "us_rate": 12.7,
+   "county_sum_published": 51693.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 1.85,
+    "max_abs_pct_diff": 38.05,
+    "worst": "38"
+   }
+  },
+  "lung": {
+   "title": "Lung & Bronchus, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "ok": 1592,
+    "small_numbers": 1131,
+    "suppressed_source": 418,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 132544.0,
+   "us_rate": 30.2,
+   "county_sum_published": 131886.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 0.17,
+    "max_abs_pct_diff": 16.75,
+    "worst": "46"
+   }
+  },
+  "prostate": {
+   "title": "Prostate, 2020-2024",
+   "who": "All Races (includes Hispanic), Male, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 1509,
+    "small_numbers": 1188,
+    "ok": 444,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 33466.0,
+   "us_rate": 18.9,
+   "county_sum_published": 31306.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 6.97,
+    "max_abs_pct_diff": 53.33,
+    "worst": "38"
+   }
+  },
+  "melanoma_skin": {
+   "title": "Melanoma of the Skin, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2546,
+    "small_numbers": 493,
+    "ok": 102,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 8340.0,
+   "us_rate": 2.0,
+   "county_sum_published": 6162.0,
+   "state_reconciliation": {
+    "states": 49,
+    "median_abs_pct_diff": 30.99,
+    "max_abs_pct_diff": 78.12,
+    "worst": "54"
+   }
+  },
+  "lymphoma": {
+   "title": "Non-Hodgkin Lymphoma, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 1981,
+    "small_numbers": 886,
+    "ok": 274,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 19932.0,
+   "us_rate": 4.8,
+   "county_sum_published": 17590.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 16.41,
+    "max_abs_pct_diff": 60.34,
+    "worst": "46"
+   }
+  },
+  "leukemia": {
+   "title": "Leukemia, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 1829,
+    "small_numbers": 983,
+    "ok": 329,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 23602.0,
+   "us_rate": 5.7,
+   "county_sum_published": 21315.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 10.47,
+    "max_abs_pct_diff": 57.14,
+    "worst": "56"
+   }
+  },
+  "pancreatic": {
+   "title": "Pancreas, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "small_numbers": 1323,
+    "suppressed_source": 1188,
+    "ok": 630,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 48756.0,
+   "us_rate": 11.3,
+   "county_sum_published": 46986.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 3.69,
+    "max_abs_pct_diff": 38.89,
+    "worst": "38"
+   }
+  },
+  "liver_biliary": {
+   "title": "Liver & Bile Duct, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 1724,
+    "small_numbers": 1021,
+    "ok": 396,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 29265.0,
+   "us_rate": 6.6,
+   "county_sum_published": 27001.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 8.52,
+    "max_abs_pct_diff": 64.44,
+    "worst": "56"
+   }
+  },
+  "bladder_urothelial": {
+   "title": "Bladder, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2089,
+    "small_numbers": 808,
+    "ok": 244,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 17114.0,
+   "us_rate": 4.1,
+   "county_sum_published": 14783.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 17.35,
+    "max_abs_pct_diff": 71.11,
+    "worst": "46"
+   }
+  },
+  "kidney": {
+   "title": "Kidney & Renal Pelvis, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2174,
+    "small_numbers": 767,
+    "ok": 200,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 14617.0,
+   "us_rate": 3.4,
+   "county_sum_published": 12145.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 19.23,
+    "max_abs_pct_diff": 65.79,
+    "worst": "38"
+   }
+  },
+  "brain_cns": {
+   "title": "Brain & ONS, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2103,
+    "small_numbers": 778,
+    "ok": 260,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 18111.0,
+   "us_rate": 4.4,
+   "county_sum_published": 15792.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 15.13,
+    "max_abs_pct_diff": 60.38,
+    "worst": "46"
+   }
+  },
+  "gynecologic_ovary": {
+   "title": "Ovary, 2020-2024",
+   "who": "All Races (includes Hispanic), Female, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2358,
+    "small_numbers": 593,
+    "ok": 190,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 13124.0,
+   "us_rate": 5.7,
+   "county_sum_published": 10973.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 23.38,
+    "max_abs_pct_diff": 86.96,
+    "worst": "56"
+   }
+  },
+  "gynecologic_uterus": {
+   "title": "Uterus (Corpus & Uterus, NOS), 2020-2024",
+   "who": "All Races (includes Hispanic), Female, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2426,
+    "small_numbers": 541,
+    "ok": 174,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 12750.0,
+   "us_rate": 5.4,
+   "county_sum_published": 10559.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 27.31,
+    "max_abs_pct_diff": 76.19,
+    "worst": "38"
+   }
+  },
+  "gynecologic_cervix": {
+   "title": "Cervix, 2020-2024",
+   "who": "All Races (includes Hispanic), Female, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2857,
+    "small_numbers": 255,
+    "ok": 29,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 4212.0,
+   "us_rate": 2.1,
+   "county_sum_published": 2584.0,
+   "state_reconciliation": {
+    "states": 44,
+    "median_abs_pct_diff": 47.45,
+    "max_abs_pct_diff": 90.32,
+    "worst": "54"
+   }
+  },
+  "head_neck": {
+   "title": "Oral Cavity & Pharynx, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2351,
+    "small_numbers": 631,
+    "ok": 159,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 11655.0,
+   "us_rate": 2.7,
+   "county_sum_published": 9318.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 24.53,
+    "max_abs_pct_diff": 82.35,
+    "worst": "38"
+   }
+  },
+  "thyroid": {
+   "title": "Thyroid, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2995,
+    "small_numbers": 137,
+    "ok": 9,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 2137.0,
+   "us_rate": 0.5,
+   "county_sum_published": 1048.0,
+   "state_reconciliation": {
+    "states": 35,
+    "median_abs_pct_diff": 57.14,
+    "max_abs_pct_diff": 89.09,
+    "worst": "51"
+   }
+  },
+  "esophagus": {
+   "title": "Esophagus, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2077,
+    "small_numbers": 831,
+    "ok": 233,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 15951.0,
+   "us_rate": 3.7,
+   "county_sum_published": 13611.0,
+   "state_reconciliation": {
+    "states": 51,
+    "median_abs_pct_diff": 17.65,
+    "max_abs_pct_diff": 71.05,
+    "worst": "56"
+   }
+  },
+  "stomach": {
+   "title": "Stomach, 2020-2024",
+   "who": "All Races (includes Hispanic), Both Sexes, All Ages",
+   "period": "2020-2024",
+   "status_counts": {
+    "suppressed_source": 2533,
+    "small_numbers": 465,
+    "ok": 143,
+    "not_available_county": 2
+   },
+   "rows_not_in_geography": [
+    "02261"
+   ],
+   "us_avg_annual_count": 11038.0,
+   "us_rate": 2.7,
+   "county_sum_published": 8891.0,
+   "state_reconciliation": {
+    "states": 50,
+    "median_abs_pct_diff": 30.68,
+    "max_abs_pct_diff": 85.19,
+    "worst": "30"
+   }
+  }
+ },
+ "pulled": "2026-10-06",
+ "source": "NCI/CDC State Cancer Profiles, death rates (NVSS), age-adjusted, all ages",
+ "small_numbers_threshold_avg_annual_deaths": 16,
+ "remap": {
+  "51917": "51019"
+ },
+ "counties_not_available": [
+  "02063",
+  "02066"
+ ],
+ "periods": [
+  "2020-2024"
+ ]
+}

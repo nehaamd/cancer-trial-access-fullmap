@@ -1,0 +1,1041 @@
+state_fips,name,site,site_code,title,period,rate,ci_lo,ci_hi,avg_annual_count,trend,status
+21000,Kentucky,all,001,"All Cancer Sites, 2020-2024",2020-2024,179.4,177.8,181.0,10375.0,falling,ok
+54000,West Virginia,all,001,"All Cancer Sites, 2020-2024",2020-2024,177.0,174.7,179.4,4720.0,falling,ok
+28000,Mississippi,all,001,"All Cancer Sites, 2020-2024",2020-2024,175.7,173.8,177.7,6563.0,falling,ok
+40000,Oklahoma,all,001,"All Cancer Sites, 2020-2024",2020-2024,172.7,171.0,174.4,8415.0,falling,ok
+05000,Arkansas,all,001,"All Cancer Sites, 2020-2024",2020-2024,166.7,164.9,168.6,6578.0,falling,ok
+47000,Tennessee,all,001,"All Cancer Sites, 2020-2024",2020-2024,166.2,165.0,167.4,14768.0,falling,ok
+18000,Indiana,all,001,"All Cancer Sites, 2020-2024",2020-2024,163.0,161.7,164.2,13850.0,falling,ok
+22000,Louisiana,all,001,"All Cancer Sites, 2020-2024",2020-2024,162.0,160.5,163.5,9246.0,falling,ok
+29000,Missouri,all,001,"All Cancer Sites, 2020-2024",2020-2024,160.9,159.6,162.1,13146.0,falling,ok
+39000,Ohio,all,001,"All Cancer Sites, 2020-2024",2020-2024,157.8,156.9,158.7,24893.0,falling,ok
+01000,Alabama,all,001,"All Cancer Sites, 2020-2024",2020-2024,157.7,156.3,159.1,10467.0,falling,ok
+23000,Maine,all,001,"All Cancer Sites, 2020-2024",2020-2024,155.5,153.1,157.9,3422.0,falling,ok
+26000,Michigan,all,001,"All Cancer Sites, 2020-2024",2020-2024,155.3,154.3,156.2,21117.0,falling,ok
+45000,South Carolina,all,001,"All Cancer Sites, 2020-2024",2020-2024,154.9,153.5,156.2,11001.0,falling,ok
+10000,Delaware,all,001,"All Cancer Sites, 2020-2024",2020-2024,154.7,151.7,157.6,2263.0,falling,ok
+37000,North Carolina,all,001,"All Cancer Sites, 2020-2024",2020-2024,151.9,150.9,152.8,20558.0,falling,ok
+20000,Kansas,all,001,"All Cancer Sites, 2020-2024",2020-2024,150.9,149.1,152.8,5569.0,falling,ok
+42000,Pennsylvania,all,001,"All Cancer Sites, 2020-2024",2020-2024,149.5,148.7,150.3,27777.0,falling,ok
+50000,Vermont,all,001,"All Cancer Sites, 2020-2024",2020-2024,148.8,145.3,152.4,1458.0,falling,ok
+46000,South Dakota,all,001,"All Cancer Sites, 2020-2024",2020-2024,148.6,145.4,151.8,1740.0,falling,ok
+13000,Georgia,all,001,"All Cancer Sites, 2020-2024",2020-2024,148.5,147.5,149.5,18342.0,falling,ok
+19000,Iowa,all,001,"All Cancer Sites, 2020-2024",2020-2024,148.2,146.5,149.8,6372.0,stable,ok
+02900,Alaska,all,001,"All Cancer Sites, 2020-2024",2020-2024,148.1,144.0,152.4,1086.0,falling,ok
+41000,Oregon,all,001,"All Cancer Sites, 2020-2024",2020-2024,147.2,145.8,148.6,8461.0,falling,ok
+31000,Nebraska,all,001,"All Cancer Sites, 2020-2024",2020-2024,147.1,144.9,149.3,3582.0,falling,ok
+17000,Illinois,all,001,"All Cancer Sites, 2020-2024",2020-2024,146.5,145.7,147.4,23602.0,falling,ok
+55000,Wisconsin,all,001,"All Cancer Sites, 2020-2024",2020-2024,146.5,145.3,147.7,11677.0,falling,ok
+51000,Virginia,all,001,"All Cancer Sites, 2020-2024",2020-2024,145.9,144.8,146.9,15775.0,falling,ok
+53000,Washington,all,001,"All Cancer Sites, 2020-2024",2020-2024,143.0,141.9,144.1,13465.0,falling,ok
+56000,Wyoming,all,001,"All Cancer Sites, 2020-2024",2020-2024,142.5,138.6,146.5,1083.0,stable,ok
+33000,New Hampshire,all,001,"All Cancer Sites, 2020-2024",2020-2024,142.4,140.0,144.8,2899.0,falling,ok
+32000,Nevada,all,001,"All Cancer Sites, 2020-2024",2020-2024,141.6,139.9,143.3,5494.0,falling,ok
+48000,Texas,all,001,"All Cancer Sites, 2020-2024",2020-2024,140.8,140.2,141.4,43479.0,falling,ok
+30000,Montana,all,001,"All Cancer Sites, 2020-2024",2020-2024,140.7,138.0,143.5,2200.0,stable,ok
+11001,District of Columbia,all,001,"All Cancer Sites, 2020-2024",2020-2024,139.8,135.8,143.8,953.0,falling,ok
+24000,Maryland,all,001,"All Cancer Sites, 2020-2024",2020-2024,139.3,138.1,140.5,10861.0,falling,ok
+27000,Minnesota,all,001,"All Cancer Sites, 2020-2024",2020-2024,139.3,138.0,140.5,10237.0,falling,ok
+44000,Rhode Island,all,001,"All Cancer Sites, 2020-2024",2020-2024,137.4,134.8,140.1,2106.0,falling,ok
+16000,Idaho,all,001,"All Cancer Sites, 2020-2024",2020-2024,137.3,135.1,139.5,3197.0,falling,ok
+12000,Florida,all,001,"All Cancer Sites, 2020-2024",2020-2024,135.9,135.4,136.5,47200.0,falling,ok
+38000,North Dakota,all,001,"All Cancer Sites, 2020-2024",2020-2024,134.2,130.8,137.6,1292.0,falling,ok
+25000,Massachusetts,all,001,"All Cancer Sites, 2020-2024",2020-2024,133.0,132.0,134.1,12453.0,falling,ok
+09000,Connecticut,all,001,"All Cancer Sites, 2020-2024",2020-2024,130.8,129.4,132.2,6577.0,falling,ok
+04000,Arizona,all,001,"All Cancer Sites, 2020-2024",2020-2024,130.1,129.1,131.2,13028.0,falling,ok
+06000,California,all,001,"All Cancer Sites, 2020-2024",2020-2024,130.1,129.6,130.5,60260.0,falling,ok
+35000,New Mexico,all,001,"All Cancer Sites, 2020-2024",2020-2024,129.6,127.7,131.5,3737.0,falling,ok
+34000,New Jersey,all,001,"All Cancer Sites, 2020-2024",2020-2024,127.0,126.1,127.9,15406.0,falling,ok
+08000,Colorado,all,001,"All Cancer Sites, 2020-2024",2020-2024,125.9,124.7,127.2,8321.0,falling,ok
+36000,New York,all,001,"All Cancer Sites, 2020-2024",2020-2024,122.8,122.2,123.4,32607.0,falling,ok
+49000,Utah,all,001,"All Cancer Sites, 2020-2024",2020-2024,120.6,118.8,122.4,3583.0,stable,ok
+15000,Hawaii,all,001,"All Cancer Sites, 2020-2024",2020-2024,119.4,117.3,121.6,2567.0,falling,ok
+72001,Puerto Rico,all,001,"All Cancer Sites, 2020-2024",2020-2024,98.6,97.4,99.8,5364.0,falling,ok
+28000,Mississippi,breast,055,"Breast, 2020-2024",2020-2024,23.6,22.6,24.6,468.0,stable,ok
+11001,District of Columbia,breast,055,"Breast, 2020-2024",2020-2024,22.8,20.6,25.0,87.0,falling,ok
+40000,Oklahoma,breast,055,"Breast, 2020-2024",2020-2024,22.3,21.4,23.1,567.0,falling,ok
+10000,Delaware,breast,055,"Breast, 2020-2024",2020-2024,21.9,20.4,23.5,168.0,stable,ok
+47000,Tennessee,breast,055,"Breast, 2020-2024",2020-2024,21.3,20.7,21.9,999.0,stable,ok
+21000,Kentucky,breast,055,"Breast, 2020-2024",2020-2024,21.2,20.5,22.0,642.0,stable,ok
+22000,Louisiana,breast,055,"Breast, 2020-2024",2020-2024,21.2,20.5,22.0,638.0,falling,ok
+13000,Georgia,breast,055,"Breast, 2020-2024",2020-2024,21.0,20.5,21.6,1405.0,falling,ok
+54000,West Virginia,breast,055,"Breast, 2020-2024",2020-2024,21.0,19.9,22.2,291.0,falling,ok
+45000,South Carolina,breast,055,"Breast, 2020-2024",2020-2024,20.8,20.1,21.5,769.0,falling,ok
+01000,Alabama,breast,055,"Breast, 2020-2024",2020-2024,20.6,19.9,21.3,723.0,stable,ok
+32000,Nevada,breast,055,"Breast, 2020-2024",2020-2024,20.5,19.6,21.5,405.0,falling,ok
+05000,Arkansas,breast,055,"Breast, 2020-2024",2020-2024,20.3,19.4,21.2,413.0,falling,ok
+18000,Indiana,breast,055,"Breast, 2020-2024",2020-2024,20.2,19.6,20.8,911.0,stable,ok
+29000,Missouri,breast,055,"Breast, 2020-2024",2020-2024,20.1,19.5,20.7,867.0,falling,ok
+49000,Utah,breast,055,"Breast, 2020-2024",2020-2024,19.9,19.0,21.0,311.0,falling,ok
+51000,Virginia,breast,055,"Breast, 2020-2024",2020-2024,19.8,19.3,20.4,1149.0,stable,ok
+39000,Ohio,breast,055,"Breast, 2020-2024",2020-2024,19.7,19.3,20.2,1639.0,falling,ok
+37000,North Carolina,breast,055,"Breast, 2020-2024",2020-2024,19.7,19.3,20.2,1427.0,falling,ok
+56000,Wyoming,breast,055,"Breast, 2020-2024",2020-2024,19.7,17.7,21.9,75.0,falling,ok
+24000,Maryland,breast,055,"Breast, 2020-2024",2020-2024,19.7,19.1,20.3,833.0,falling,ok
+31000,Nebraska,breast,055,"Breast, 2020-2024",2020-2024,19.5,18.4,20.7,249.0,falling,ok
+26000,Michigan,breast,055,"Breast, 2020-2024",2020-2024,19.5,19.0,20.0,1378.0,falling,ok
+16000,Idaho,breast,055,"Breast, 2020-2024",2020-2024,19.3,18.2,20.5,229.0,falling,ok
+20000,Kansas,breast,055,"Breast, 2020-2024",2020-2024,19.3,18.4,20.2,372.0,falling,ok
+48000,Texas,breast,055,"Breast, 2020-2024",2020-2024,19.3,19.0,19.6,3194.0,stable,ok
+41000,Oregon,breast,055,"Breast, 2020-2024",2020-2024,19.2,18.5,20.0,574.0,stable,ok
+17000,Illinois,breast,055,"Breast, 2020-2024",2020-2024,19.1,18.7,19.5,1641.0,falling,ok
+35000,New Mexico,breast,055,"Breast, 2020-2024",2020-2024,19.0,18.0,20.1,288.0,falling,ok
+42000,Pennsylvania,breast,055,"Breast, 2020-2024",2020-2024,19.0,18.6,19.4,1867.0,falling,ok
+08000,Colorado,breast,055,"Breast, 2020-2024",2020-2024,18.8,18.1,19.4,660.0,stable,ok
+34000,New Jersey,breast,055,"Breast, 2020-2024",2020-2024,18.6,18.1,19.1,1224.0,falling,ok
+06000,California,breast,055,"Breast, 2020-2024",2020-2024,18.5,18.3,18.8,4577.0,falling,ok
+53000,Washington,breast,055,"Breast, 2020-2024",2020-2024,18.5,17.9,19.0,918.0,falling,ok
+12000,Florida,breast,055,"Breast, 2020-2024",2020-2024,18.4,18.1,18.7,3197.0,stable,ok
+04000,Arizona,breast,055,"Breast, 2020-2024",2020-2024,18.3,17.7,18.8,927.0,stable,ok
+30000,Montana,breast,055,"Breast, 2020-2024",2020-2024,17.9,16.6,19.4,141.0,falling,ok
+33000,New Hampshire,breast,055,"Breast, 2020-2024",2020-2024,17.5,16.3,18.7,183.0,falling,ok
+55000,Wisconsin,breast,055,"Breast, 2020-2024",2020-2024,17.2,16.6,17.8,706.0,falling,ok
+23000,Maine,breast,055,"Breast, 2020-2024",2020-2024,17.1,16.0,18.3,195.0,falling,ok
+19000,Iowa,breast,055,"Breast, 2020-2024",2020-2024,17.1,16.3,18.0,384.0,falling,ok
+02900,Alaska,breast,055,"Breast, 2020-2024",2020-2024,17.0,15.1,19.0,65.0,falling,ok
+27000,Minnesota,breast,055,"Breast, 2020-2024",2020-2024,17.0,16.4,17.6,655.0,falling,ok
+46000,South Dakota,breast,055,"Breast, 2020-2024",2020-2024,16.8,15.3,18.4,101.0,falling,ok
+50000,Vermont,breast,055,"Breast, 2020-2024",2020-2024,16.6,14.9,18.3,84.0,falling,ok
+09000,Connecticut,breast,055,"Breast, 2020-2024",2020-2024,16.5,15.8,17.2,452.0,stable,ok
+36000,New York,breast,055,"Breast, 2020-2024",2020-2024,16.1,15.8,16.4,2287.0,falling,ok
+38000,North Dakota,breast,055,"Breast, 2020-2024",2020-2024,16.1,14.5,17.9,80.0,falling,ok
+15000,Hawaii,breast,055,"Breast, 2020-2024",2020-2024,16.0,14.9,17.2,173.0,stable,ok
+44000,Rhode Island,breast,055,"Breast, 2020-2024",2020-2024,15.5,14.3,16.9,125.0,falling,ok
+25000,Massachusetts,breast,055,"Breast, 2020-2024",2020-2024,15.1,14.6,15.6,768.0,falling,ok
+72001,Puerto Rico,breast,055,"Breast, 2020-2024",2020-2024,15.0,14.4,15.7,426.0,stable,ok
+28000,Mississippi,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,17.5,16.9,18.1,642.0,stable,ok
+40000,Oklahoma,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,16.7,16.2,17.3,794.0,stable,ok
+54000,West Virginia,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,16.5,15.8,17.3,427.0,falling,ok
+21000,Kentucky,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,16.2,15.7,16.7,913.0,stable,ok
+05000,Arkansas,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,15.5,14.9,16.1,595.0,stable,ok
+22000,Louisiana,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,15.0,14.6,15.5,836.0,stable,ok
+47000,Tennessee,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,15.0,14.6,15.4,1297.0,stable,ok
+02900,Alaska,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,14.7,13.4,16.1,104.0,stable,ok
+18000,Indiana,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,14.7,14.3,15.1,1225.0,falling,ok
+01000,Alabama,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,14.5,14.1,15.0,936.0,falling,ok
+56000,Wyoming,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,14.4,13.1,15.7,105.0,stable,ok
+29000,Missouri,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,14.4,14.0,14.7,1143.0,stable,ok
+31000,Nebraska,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,14.4,13.7,15.1,341.0,stable,ok
+46000,South Dakota,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,14.1,13.1,15.1,164.0,stable,ok
+20000,Kansas,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.9,13.4,14.5,502.0,stable,ok
+32000,Nevada,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.9,13.4,14.5,532.0,falling,ok
+48000,Texas,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.8,13.7,14.0,4283.0,stable,ok
+13000,Georgia,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.7,13.4,14.0,1678.0,falling,ok
+39000,Ohio,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.6,13.4,13.9,2094.0,falling,ok
+45000,South Carolina,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.4,13.0,13.8,920.0,falling,ok
+19000,Iowa,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.3,12.8,13.8,556.0,stable,ok
+26000,Michigan,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.3,13.0,13.5,1743.0,falling,ok
+17000,Illinois,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,13.0,12.8,13.3,2070.0,falling,ok
+51000,Virginia,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.9,12.6,13.3,1371.0,falling,ok
+42000,Pennsylvania,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.9,12.7,13.1,2336.0,stable,ok
+11001,District of Columbia,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.8,11.6,14.1,87.0,falling,ok
+50000,Vermont,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.7,11.7,13.9,118.0,stable,ok
+37000,North Carolina,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.7,12.5,13.0,1679.0,falling,ok
+35000,New Mexico,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.6,12.0,13.3,351.0,stable,ok
+16000,Idaho,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.3,11.7,13.0,278.0,falling,ok
+04000,Arizona,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.3,12.0,12.6,1191.0,falling,ok
+30000,Montana,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.3,11.5,13.1,186.0,falling,ok
+72001,Puerto Rico,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.3,11.8,12.7,646.0,stable,ok
+10000,Delaware,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.2,11.4,13.1,174.0,falling,ok
+24000,Maryland,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.2,11.9,12.6,947.0,falling,ok
+23000,Maine,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.2,11.5,13.0,255.0,stable,ok
+41000,Oregon,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,12.1,11.6,12.5,665.0,falling,ok
+53000,Washington,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.9,11.6,12.2,1093.0,stable,ok
+06000,California,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.9,11.7,12.0,5479.0,falling,ok
+38000,North Dakota,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.9,10.9,12.9,113.0,falling,ok
+12000,Florida,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.8,11.7,12.0,3988.0,falling,ok
+15000,Hawaii,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.7,11.1,12.5,244.0,falling,ok
+55000,Wisconsin,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.5,11.2,11.9,889.0,falling,ok
+27000,Minnesota,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.5,11.1,11.8,818.0,stable,ok
+34000,New Jersey,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.4,11.1,11.7,1372.0,falling,ok
+08000,Colorado,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,11.2,10.9,11.6,736.0,falling,ok
+33000,New Hampshire,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,10.8,10.2,11.5,212.0,stable,ok
+49000,Utah,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,10.8,10.3,11.4,319.0,stable,ok
+36000,New York,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,10.7,10.6,10.9,2797.0,falling,ok
+44000,Rhode Island,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,10.5,9.8,11.3,158.0,falling,ok
+09000,Connecticut,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,10.2,9.8,10.6,504.0,falling,ok
+25000,Massachusetts,colorectal,020,"Colon & Rectum, 2020-2024",2020-2024,9.9,9.6,10.2,902.0,falling,ok
+21000,Kentucky,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,48.8,48.0,49.6,2937.0,falling,ok
+54000,West Virginia,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,46.9,45.7,48.1,1305.0,falling,ok
+28000,Mississippi,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,43.9,42.9,44.8,1696.0,falling,ok
+05000,Arkansas,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,43.2,42.3,44.1,1766.0,falling,ok
+40000,Oklahoma,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,42.3,41.4,43.1,2129.0,falling,ok
+47000,Tennessee,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,42.2,41.6,42.8,3909.0,falling,ok
+29000,Missouri,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,40.5,39.8,41.1,3415.0,falling,ok
+18000,Indiana,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,40.0,39.4,40.6,3519.0,falling,ok
+22000,Louisiana,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,38.3,37.6,39.1,2267.0,falling,ok
+01000,Alabama,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,37.6,36.9,38.2,2602.0,falling,ok
+39000,Ohio,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,37.4,36.9,37.8,6100.0,falling,ok
+23000,Maine,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,36.8,35.7,38.0,838.0,falling,ok
+26000,Michigan,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,36.1,35.6,36.5,5099.0,falling,ok
+37000,North Carolina,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,35.7,35.3,36.2,5007.0,falling,ok
+45000,South Carolina,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,35.3,34.7,35.9,2619.0,falling,ok
+20000,Kansas,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,34.2,33.3,35.0,1296.0,falling,ok
+19000,Iowa,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,33.7,32.9,34.5,1477.0,falling,ok
+10000,Delaware,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,33.6,32.3,34.9,513.0,falling,ok
+17000,Illinois,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,32.2,31.8,32.6,5322.0,falling,ok
+42000,Pennsylvania,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,32.1,31.7,32.4,6141.0,falling,ok
+46000,South Dakota,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,31.6,30.2,33.1,382.0,falling,ok
+02900,Alaska,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,31.3,29.5,33.3,236.0,stable,ok
+13000,Georgia,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,31.1,30.7,31.6,3978.0,falling,ok
+50000,Vermont,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,31.0,29.4,32.6,316.0,falling,ok
+51000,Virginia,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,31.0,30.5,31.4,3459.0,falling,ok
+33000,New Hampshire,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,30.8,29.7,31.9,654.0,falling,ok
+31000,Nebraska,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,30.7,29.8,31.8,770.0,stable,ok
+55000,Wisconsin,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,30.5,29.9,31.0,2510.0,falling,ok
+44000,Rhode Island,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,30.5,29.2,31.7,475.0,falling,ok
+12000,Florida,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,29.4,29.1,29.6,10566.0,falling,ok
+41000,Oregon,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,29.1,28.5,29.7,1735.0,falling,ok
+27000,Minnesota,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,28.4,27.8,28.9,2140.0,falling,ok
+32000,Nevada,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,28.3,27.6,29.1,1133.0,falling,ok
+25000,Massachusetts,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,28.1,27.6,28.6,2681.0,falling,ok
+38000,North Dakota,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,28.0,26.5,29.6,273.0,falling,ok
+24000,Maryland,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,27.7,27.2,28.2,2208.0,falling,ok
+53000,Washington,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,27.6,27.1,28.1,2673.0,falling,ok
+48000,Texas,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,27.0,26.7,27.3,8433.0,falling,ok
+56000,Wyoming,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,26.7,25.0,28.4,209.0,falling,ok
+09000,Connecticut,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,26.1,25.5,26.8,1341.0,falling,ok
+30000,Montana,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,26.1,25.0,27.2,427.0,falling,ok
+11001,District of Columbia,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,24.9,23.2,26.6,169.0,falling,ok
+16000,Idaho,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,24.6,23.7,25.6,593.0,falling,ok
+34000,New Jersey,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,24.6,24.2,25.0,3038.0,falling,ok
+36000,New York,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,24.5,24.2,24.8,6666.0,falling,ok
+04000,Arizona,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,24.1,23.6,24.5,2510.0,falling,ok
+15000,Hawaii,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,22.2,21.3,23.1,494.0,falling,ok
+06000,California,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,21.6,21.4,21.8,10083.0,falling,ok
+08000,Colorado,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,20.6,20.1,21.1,1388.0,falling,ok
+35000,New Mexico,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,19.8,19.1,20.6,594.0,falling,ok
+49000,Utah,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,15.1,14.4,15.7,455.0,falling,ok
+72001,Puerto Rico,lung,047,"Lung & Bronchus, 2020-2024",2020-2024,10.3,9.9,10.7,582.0,stable,ok
+11001,District of Columbia,prostate,066,"Prostate, 2020-2024",2020-2024,28.5,25.6,31.5,76.0,falling,ok
+28000,Mississippi,prostate,066,"Prostate, 2020-2024",2020-2024,24.1,23.0,25.3,361.0,stable,ok
+30000,Montana,prostate,066,"Prostate, 2020-2024",2020-2024,22.1,20.5,23.8,153.0,falling,ok
+23000,Maine,prostate,066,"Prostate, 2020-2024",2020-2024,21.9,20.5,23.3,201.0,stable,ok
+08000,Colorado,prostate,066,"Prostate, 2020-2024",2020-2024,21.8,20.9,22.6,581.0,stable,ok
+16000,Idaho,prostate,066,"Prostate, 2020-2024",2020-2024,21.7,20.3,23.0,215.0,falling,ok
+13000,Georgia,prostate,066,"Prostate, 2020-2024",2020-2024,21.6,21.0,22.3,1037.0,stable,ok
+49000,Utah,prostate,066,"Prostate, 2020-2024",2020-2024,21.5,20.3,22.7,269.0,falling,ok
+45000,South Carolina,prostate,066,"Prostate, 2020-2024",2020-2024,21.5,20.7,22.3,617.0,stable,ok
+50000,Vermont,prostate,066,"Prostate, 2020-2024",2020-2024,21.5,19.4,23.6,88.0,falling,ok
+53000,Washington,prostate,066,"Prostate, 2020-2024",2020-2024,21.2,20.5,21.9,832.0,stable,ok
+55000,Wisconsin,prostate,066,"Prostate, 2020-2024",2020-2024,21.2,20.4,21.9,703.0,stable,ok
+41000,Oregon,prostate,066,"Prostate, 2020-2024",2020-2024,21.1,20.3,22.0,518.0,stable,ok
+46000,South Dakota,prostate,066,"Prostate, 2020-2024",2020-2024,21.0,19.1,22.9,101.0,stable,ok
+18000,Indiana,prostate,066,"Prostate, 2020-2024",2020-2024,20.6,19.9,21.3,699.0,stable,ok
+37000,North Carolina,prostate,066,"Prostate, 2020-2024",2020-2024,20.5,19.9,21.1,1102.0,stable,ok
+51000,Virginia,prostate,066,"Prostate, 2020-2024",2020-2024,20.3,19.7,20.9,886.0,stable,ok
+32000,Nevada,prostate,066,"Prostate, 2020-2024",2020-2024,20.2,19.2,21.2,340.0,stable,ok
+40000,Oklahoma,prostate,066,"Prostate, 2020-2024",2020-2024,20.1,19.2,21.0,409.0,stable,ok
+24000,Maryland,prostate,066,"Prostate, 2020-2024",2020-2024,20.0,19.3,20.7,627.0,stable,ok
+06000,California,prostate,066,"Prostate, 2020-2024",2020-2024,19.9,19.6,20.2,3848.0,falling,ok
+02900,Alaska,prostate,066,"Prostate, 2020-2024",2020-2024,19.8,17.3,22.4,58.0,falling,ok
+35000,New Mexico,prostate,066,"Prostate, 2020-2024",2020-2024,19.7,18.6,20.9,251.0,stable,ok
+01000,Alabama,prostate,066,"Prostate, 2020-2024",2020-2024,19.7,18.9,20.5,527.0,stable,ok
+10000,Delaware,prostate,066,"Prostate, 2020-2024",2020-2024,19.6,18.0,21.3,121.0,stable,ok
+47000,Tennessee,prostate,066,"Prostate, 2020-2024",2020-2024,19.5,18.9,20.2,697.0,stable,ok
+31000,Nebraska,prostate,066,"Prostate, 2020-2024",2020-2024,19.5,18.3,20.8,201.0,stable,ok
+56000,Wyoming,prostate,066,"Prostate, 2020-2024",2020-2024,19.4,17.3,21.7,66.0,stable,ok
+19000,Iowa,prostate,066,"Prostate, 2020-2024",2020-2024,19.2,18.3,20.2,349.0,stable,ok
+39000,Ohio,prostate,066,"Prostate, 2020-2024",2020-2024,19.2,18.8,19.7,1235.0,stable,ok
+26000,Michigan,prostate,066,"Prostate, 2020-2024",2020-2024,19.2,18.6,19.7,1078.0,stable,ok
+27000,Minnesota,prostate,066,"Prostate, 2020-2024",2020-2024,19.2,18.5,19.9,589.0,falling,ok
+22000,Louisiana,prostate,066,"Prostate, 2020-2024",2020-2024,19.1,18.3,20.0,443.0,stable,ok
+05000,Arkansas,prostate,066,"Prostate, 2020-2024",2020-2024,19.0,18.1,20.0,316.0,falling,ok
+29000,Missouri,prostate,066,"Prostate, 2020-2024",2020-2024,18.9,18.3,19.6,640.0,stable,ok
+54000,West Virginia,prostate,066,"Prostate, 2020-2024",2020-2024,18.8,17.7,20.0,215.0,stable,ok
+09000,Connecticut,prostate,066,"Prostate, 2020-2024",2020-2024,18.8,17.9,19.6,390.0,stable,ok
+21000,Kentucky,prostate,066,"Prostate, 2020-2024",2020-2024,18.7,17.9,19.5,432.0,stable,ok
+17000,Illinois,prostate,066,"Prostate, 2020-2024",2020-2024,18.7,18.2,19.1,1234.0,falling,ok
+42000,Pennsylvania,prostate,066,"Prostate, 2020-2024",2020-2024,18.3,17.9,18.8,1420.0,stable,ok
+72001,Puerto Rico,prostate,066,"Prostate, 2020-2024",2020-2024,18.3,17.6,19.0,474.0,falling,ok
+48000,Texas,prostate,066,"Prostate, 2020-2024",2020-2024,18.2,17.8,18.5,2217.0,stable,ok
+33000,New Hampshire,prostate,066,"Prostate, 2020-2024",2020-2024,18.2,16.8,19.5,153.0,stable,ok
+44000,Rhode Island,prostate,066,"Prostate, 2020-2024",2020-2024,18.1,16.6,19.7,113.0,falling,ok
+38000,North Dakota,prostate,066,"Prostate, 2020-2024",2020-2024,17.8,16.0,19.7,75.0,falling,ok
+25000,Massachusetts,prostate,066,"Prostate, 2020-2024",2020-2024,17.5,16.9,18.2,655.0,falling,ok
+20000,Kansas,prostate,066,"Prostate, 2020-2024",2020-2024,17.3,16.4,18.3,273.0,stable,ok
+04000,Arizona,prostate,066,"Prostate, 2020-2024",2020-2024,17.3,16.7,17.8,789.0,falling,ok
+12000,Florida,prostate,066,"Prostate, 2020-2024",2020-2024,16.5,16.2,16.8,2656.0,stable,ok
+34000,New Jersey,prostate,066,"Prostate, 2020-2024",2020-2024,15.9,15.4,16.4,781.0,stable,ok
+15000,Hawaii,prostate,066,"Prostate, 2020-2024",2020-2024,15.5,14.4,16.6,156.0,stable,ok
+36000,New York,prostate,066,"Prostate, 2020-2024",2020-2024,15.2,14.9,15.5,1669.0,falling,ok
+49000,Utah,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.8,2.6,3.1,85.0,stable,ok
+16000,Idaho,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.8,2.5,3.2,65.0,falling,ok
+21000,Kentucky,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.7,2.5,2.9,148.0,falling,ok
+40000,Oklahoma,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.6,2.3,2.8,121.0,falling,ok
+54000,West Virginia,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.5,2.2,2.8,64.0,falling,ok
+19000,Iowa,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.5,2.3,2.7,104.0,falling,ok
+20000,Kansas,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.5,2.2,2.7,88.0,falling,ok
+47000,Tennessee,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.5,2.3,2.6,209.0,stable,ok
+56000,Wyoming,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.0,3.0,18.0,stable,ok
+08000,Colorado,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.3,2.6,160.0,falling,ok
+30000,Montana,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.1,2.8,36.0,falling,ok
+39000,Ohio,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.3,2.5,365.0,falling,ok
+18000,Indiana,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.2,2.5,194.0,falling,ok
+55000,Wisconsin,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.2,2.5,184.0,stable,ok
+41000,Oregon,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.2,2.6,132.0,stable,ok
+46000,South Dakota,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.4,2.0,2.8,27.0,stable,ok
+33000,New Hampshire,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.3,2.0,2.6,46.0,falling,ok
+31000,Nebraska,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.3,2.0,2.6,56.0,falling,ok
+29000,Missouri,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.3,2.1,2.4,178.0,falling,ok
+53000,Washington,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.3,2.1,2.4,211.0,falling,ok
+04000,Arizona,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.3,2.1,2.4,222.0,stable,ok
+10000,Delaware,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.2,1.9,2.7,31.0,falling,ok
+42000,Pennsylvania,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.2,2.1,2.3,386.0,falling,ok
+01000,Alabama,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.2,2.0,2.3,137.0,falling,ok
+51000,Virginia,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.2,2.0,2.3,227.0,stable,ok
+37000,North Carolina,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.1,2.0,2.3,282.0,falling,ok
+12000,Florida,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.1,2.0,2.2,714.0,stable,ok
+27000,Minnesota,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.1,2.0,2.3,151.0,stable,ok
+45000,South Carolina,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.1,1.9,2.2,142.0,stable,ok
+25000,Massachusetts,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.1,1.9,2.2,191.0,falling,ok
+23000,Maine,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.1,1.8,2.4,44.0,falling,ok
+44000,Rhode Island,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.0,1.7,2.4,31.0,falling,ok
+32000,Nevada,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.0,1.8,2.2,77.0,falling,ok
+26000,Michigan,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.0,1.9,2.1,261.0,falling,ok
+05000,Arkansas,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.0,1.8,2.2,73.0,stable,ok
+50000,Vermont,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,2.0,1.6,2.4,18.0,falling,ok
+38000,North Dakota,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.9,1.5,2.4,18.0,*,ok
+17000,Illinois,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.8,1.7,1.9,290.0,stable,ok
+02900,Alaska,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.8,1.3,2.3,13.0,*,small_numbers
+35000,New Mexico,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.8,1.6,2.0,51.0,falling,ok
+06000,California,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.8,1.7,1.8,807.0,stable,ok
+13000,Georgia,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.8,1.7,1.9,214.0,stable,ok
+24000,Maryland,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.7,1.6,1.9,131.0,stable,ok
+34000,New Jersey,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.7,1.6,1.8,203.0,falling,ok
+48000,Texas,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.6,1.6,1.7,500.0,falling,ok
+28000,Mississippi,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.6,1.4,1.8,58.0,falling,ok
+09000,Connecticut,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.6,1.4,1.8,78.0,falling,ok
+22000,Louisiana,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.5,1.3,1.6,82.0,falling,ok
+36000,New York,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.5,1.4,1.5,381.0,stable,ok
+15000,Hawaii,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.3,1.1,1.6,28.0,falling,ok
+11001,District of Columbia,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,1.1,0.8,1.6,8.0,*,small_numbers
+72001,Puerto Rico,melanoma_skin,053,"Melanoma of the Skin, 2020-2024",2020-2024,0.6,0.5,0.7,29.0,stable,ok
+21000,Kentucky,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.8,5.5,6.1,325.0,falling,ok
+40000,Oklahoma,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.6,5.3,5.9,270.0,falling,ok
+54000,West Virginia,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.6,5.1,6.0,145.0,falling,ok
+10000,Delaware,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.5,5.0,6.2,77.0,falling,ok
+20000,Kansas,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.5,5.2,5.9,201.0,stable,ok
+18000,Indiana,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.4,5.2,5.6,448.0,falling,ok
+26000,Michigan,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.4,5.2,5.6,717.0,falling,ok
+19000,Iowa,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.4,5.1,5.7,231.0,falling,ok
+41000,Oregon,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.3,5.1,5.6,301.0,falling,ok
+53000,Washington,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.3,5.1,5.5,488.0,stable,ok
+27000,Minnesota,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.3,5.1,5.6,386.0,falling,ok
+39000,Ohio,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.3,5.1,5.4,813.0,falling,ok
+47000,Tennessee,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.2,5.0,5.5,449.0,falling,ok
+31000,Nebraska,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.2,4.8,5.7,126.0,falling,ok
+05000,Arkansas,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.2,4.9,5.6,204.0,falling,ok
+55000,Wisconsin,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.2,5.0,5.5,407.0,falling,ok
+23000,Maine,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.2,4.8,5.7,114.0,falling,ok
+29000,Missouri,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.2,5.0,5.4,416.0,stable,ok
+46000,South Dakota,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.1,4.5,5.8,58.0,stable,ok
+42000,Pennsylvania,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.1,4.9,5.2,931.0,falling,ok
+16000,Idaho,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,5.0,4.6,5.4,113.0,falling,ok
+50000,Vermont,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.9,4.3,5.6,47.0,stable,ok
+02900,Alaska,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.9,4.2,5.7,33.0,falling,ok
+30000,Montana,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.8,4.4,5.4,75.0,falling,ok
+22000,Louisiana,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.8,4.6,5.1,265.0,falling,ok
+28000,Mississippi,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.8,4.5,5.1,172.0,falling,ok
+37000,North Carolina,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.6,4.9,622.0,falling,ok
+17000,Illinois,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.6,4.9,748.0,falling,ok
+48000,Texas,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.6,4.8,1409.0,falling,ok
+33000,New Hampshire,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.3,5.2,93.0,falling,ok
+45000,South Carolina,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.5,4.9,322.0,falling,ok
+06000,California,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.6,4.8,2138.0,falling,ok
+44000,Rhode Island,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.2,5.2,71.0,falling,ok
+51000,Virginia,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.5,4.9,492.0,falling,ok
+24000,Maryland,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.7,4.4,4.9,354.0,falling,ok
+56000,Wyoming,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.6,3.9,5.4,35.0,falling,ok
+09000,Connecticut,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.6,4.3,4.8,225.0,stable,ok
+32000,Nevada,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.6,4.2,4.9,173.0,falling,ok
+49000,Utah,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.5,4.2,4.9,128.0,stable,ok
+08000,Colorado,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.5,4.3,4.7,285.0,stable,ok
+04000,Arizona,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.5,4.3,4.6,445.0,falling,ok
+01000,Alabama,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.4,4.2,4.7,285.0,falling,ok
+38000,North Dakota,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.4,3.8,5.0,42.0,stable,ok
+12000,Florida,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.4,4.3,4.5,1522.0,falling,ok
+25000,Massachusetts,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.3,4.2,4.5,401.0,falling,ok
+13000,Georgia,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.3,4.1,4.5,512.0,falling,ok
+35000,New Mexico,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.2,3.9,4.6,120.0,falling,ok
+34000,New Jersey,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.2,4.0,4.4,503.0,falling,ok
+15000,Hawaii,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.2,3.8,4.6,90.0,falling,ok
+36000,New York,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,4.1,4.0,4.2,1080.0,falling,ok
+11001,District of Columbia,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,3.6,3.0,4.3,24.0,falling,ok
+72001,Puerto Rico,lymphoma,086,"Non-Hodgkin Lymphoma, 2020-2024",2020-2024,3.1,2.9,3.4,169.0,stable,ok
+46000,South Dakota,leukemia,090,"Leukemia, 2020-2024",2020-2024,7.2,6.5,7.9,81.0,stable,ok
+20000,Kansas,leukemia,090,"Leukemia, 2020-2024",2020-2024,7.0,6.6,7.4,251.0,falling,ok
+21000,Kentucky,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.9,6.6,7.3,378.0,falling,ok
+54000,West Virginia,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.7,6.2,7.1,173.0,falling,ok
+40000,Oklahoma,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.5,6.2,6.9,309.0,falling,ok
+55000,Wisconsin,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.5,6.2,6.7,501.0,falling,ok
+28000,Mississippi,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.4,6.1,6.8,229.0,falling,ok
+47000,Tennessee,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.3,6.1,6.6,535.0,falling,ok
+27000,Minnesota,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.3,6.0,6.6,451.0,falling,ok
+41000,Oregon,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.3,6.0,6.6,347.0,falling,ok
+16000,Idaho,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.3,5.8,6.7,142.0,falling,ok
+39000,Ohio,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.3,6.1,6.4,954.0,falling,ok
+18000,Indiana,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.2,6.0,6.5,509.0,falling,ok
+26000,Michigan,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.2,6.0,6.4,813.0,falling,ok
+19000,Iowa,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.2,5.8,6.5,263.0,falling,ok
+38000,North Dakota,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.2,5.5,6.9,58.0,falling,ok
+49000,Utah,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.2,5.8,6.6,177.0,stable,ok
+31000,Nebraska,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.2,5.7,6.6,147.0,falling,ok
+29000,Missouri,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.1,5.9,6.4,486.0,falling,ok
+05000,Arkansas,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.1,5.8,6.5,232.0,falling,ok
+10000,Delaware,leukemia,090,"Leukemia, 2020-2024",2020-2024,6.0,5.4,6.6,84.0,falling,ok
+17000,Illinois,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.9,5.7,6.1,921.0,falling,ok
+01000,Alabama,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.9,5.6,6.2,375.0,falling,ok
+22000,Louisiana,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.9,5.6,6.2,321.0,falling,ok
+42000,Pennsylvania,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.9,5.7,6.1,1074.0,falling,ok
+53000,Washington,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.9,5.7,6.1,533.0,falling,ok
+56000,Wyoming,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.8,5.0,6.7,42.0,falling,ok
+45000,South Carolina,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.8,5.5,6.1,393.0,falling,ok
+51000,Virginia,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.8,5.6,6.0,603.0,falling,ok
+23000,Maine,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.8,5.3,6.3,121.0,falling,ok
+08000,Colorado,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.7,5.4,6.0,363.0,falling,ok
+37000,North Carolina,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.7,5.5,5.9,734.0,falling,ok
+48000,Texas,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.7,5.6,5.8,1679.0,stable,ok
+13000,Georgia,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.7,5.5,5.9,661.0,falling,ok
+30000,Montana,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.6,5.1,6.2,84.0,falling,ok
+12000,Florida,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.6,5.5,5.7,1903.0,falling,ok
+09000,Connecticut,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.6,5.3,5.9,273.0,falling,ok
+44000,Rhode Island,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.5,5.0,6.1,82.0,falling,ok
+50000,Vermont,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.5,4.9,6.2,54.0,falling,ok
+04000,Arizona,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.5,5.3,5.7,533.0,falling,ok
+24000,Maryland,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.5,5.2,5.7,410.0,stable,ok
+02900,Alaska,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.5,4.7,6.4,37.0,falling,ok
+32000,Nevada,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.4,5.0,5.7,197.0,falling,ok
+06000,California,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.3,5.2,5.4,2392.0,falling,ok
+33000,New Hampshire,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.2,4.7,5.7,102.0,falling,ok
+11001,District of Columbia,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.2,4.4,6.0,35.0,falling,ok
+34000,New Jersey,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.2,5.0,5.3,606.0,falling,ok
+25000,Massachusetts,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.1,4.9,5.3,467.0,falling,ok
+35000,New Mexico,leukemia,090,"Leukemia, 2020-2024",2020-2024,5.0,4.6,5.4,138.0,falling,ok
+36000,New York,leukemia,090,"Leukemia, 2020-2024",2020-2024,4.9,4.7,5.0,1256.0,falling,ok
+15000,Hawaii,leukemia,090,"Leukemia, 2020-2024",2020-2024,4.4,4.0,4.9,94.0,falling,ok
+72001,Puerto Rico,leukemia,090,"Leukemia, 2020-2024",2020-2024,4.0,3.7,4.2,209.0,stable,ok
+10000,Delaware,pancreatic,040,"Pancreas, 2020-2024",2020-2024,13.0,12.1,13.8,197.0,rising,ok
+28000,Mississippi,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.6,12.1,13.1,475.0,stable,ok
+26000,Michigan,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.6,12.3,12.8,1742.0,rising,ok
+22000,Louisiana,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.4,12.0,12.8,719.0,stable,ok
+18000,Indiana,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.4,12.0,12.7,1065.0,stable,ok
+55000,Wisconsin,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.3,12.0,12.7,1004.0,rising,ok
+42000,Pennsylvania,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.1,11.9,12.3,2283.0,rising,ok
+50000,Vermont,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.0,11.1,13.1,121.0,rising,ok
+39000,Ohio,pancreatic,040,"Pancreas, 2020-2024",2020-2024,12.0,11.8,12.3,1927.0,stable,ok
+29000,Missouri,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.9,11.6,12.2,985.0,rising,ok
+37000,North Carolina,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.9,11.6,12.1,1636.0,rising,ok
+47000,Tennessee,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.8,11.5,12.2,1067.0,rising,ok
+21000,Kentucky,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.8,11.4,12.2,695.0,rising,ok
+46000,South Dakota,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.8,10.9,12.7,140.0,rising,ok
+23000,Maine,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.8,11.1,12.4,266.0,stable,ok
+17000,Illinois,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.8,11.5,12.0,1925.0,stable,ok
+31000,Nebraska,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.7,11.1,12.3,290.0,rising,ok
+54000,West Virginia,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.7,11.1,12.3,312.0,rising,ok
+45000,South Carolina,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.6,11.3,12.0,846.0,rising,ok
+25000,Massachusetts,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.6,11.3,11.9,1098.0,stable,ok
+20000,Kansas,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.5,11.0,12.0,431.0,rising,ok
+01000,Alabama,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.5,11.1,11.9,780.0,rising,ok
+33000,New Hampshire,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.4,10.8,12.1,237.0,stable,ok
+05000,Arkansas,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.4,10.9,11.9,457.0,rising,ok
+44000,Rhode Island,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.4,10.6,12.2,176.0,stable,ok
+09000,Connecticut,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.4,11.0,11.8,578.0,stable,ok
+24000,Maryland,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.4,11.0,11.7,900.0,stable,ok
+56000,Wyoming,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.4,10.3,12.5,88.0,stable,ok
+40000,Oklahoma,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.3,10.9,11.8,561.0,rising,ok
+53000,Washington,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.3,11.0,11.6,1088.0,stable,ok
+41000,Oregon,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.3,10.9,11.7,661.0,stable,ok
+11001,District of Columbia,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.3,10.2,12.5,77.0,falling,ok
+51000,Virginia,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.3,11.0,11.5,1239.0,stable,ok
+27000,Minnesota,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.2,10.9,11.6,839.0,rising,ok
+19000,Iowa,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.2,10.7,11.7,484.0,rising,ok
+34000,New Jersey,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.2,10.9,11.4,1374.0,stable,ok
+16000,Idaho,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.2,10.6,11.8,268.0,stable,ok
+13000,Georgia,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.0,10.7,11.3,1385.0,stable,ok
+38000,North Dakota,pancreatic,040,"Pancreas, 2020-2024",2020-2024,11.0,10.0,12.0,108.0,stable,ok
+12000,Florida,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.8,10.7,11.0,3833.0,rising,ok
+32000,Nevada,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.8,10.3,11.3,431.0,stable,ok
+30000,Montana,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.7,10.0,11.5,171.0,stable,ok
+48000,Texas,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.7,10.6,10.9,3349.0,rising,ok
+15000,Hawaii,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.6,10.0,11.3,231.0,stable,ok
+36000,New York,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.6,10.4,10.8,2860.0,falling,ok
+06000,California,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.6,10.4,10.7,4959.0,rising,ok
+02900,Alaska,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.5,9.5,11.7,81.0,stable,ok
+49000,Utah,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.3,9.8,10.8,310.0,rising,ok
+04000,Arizona,pancreatic,040,"Pancreas, 2020-2024",2020-2024,10.1,9.9,10.4,1044.0,stable,ok
+35000,New Mexico,pancreatic,040,"Pancreas, 2020-2024",2020-2024,9.9,9.4,10.5,295.0,stable,ok
+08000,Colorado,pancreatic,040,"Pancreas, 2020-2024",2020-2024,9.9,9.6,10.3,670.0,stable,ok
+72001,Puerto Rico,pancreatic,040,"Pancreas, 2020-2024",2020-2024,6.8,6.5,7.1,373.0,rising,ok
+22000,Louisiana,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,8.9,8.5,9.2,540.0,stable,ok
+48000,Texas,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,8.5,8.4,8.7,2773.0,stable,ok
+28000,Mississippi,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,8.1,7.7,8.6,315.0,stable,ok
+35000,New Mexico,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.9,7.5,8.4,240.0,stable,ok
+05000,Arkansas,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.9,7.5,8.3,322.0,rising,ok
+40000,Oklahoma,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.7,7.4,8.1,395.0,stable,ok
+06000,California,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.5,7.4,7.6,3606.0,falling,ok
+15000,Hawaii,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.5,7.0,8.0,164.0,stable,ok
+02900,Alaska,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.5,6.6,8.4,58.0,stable,ok
+44000,Rhode Island,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.4,6.8,8.1,115.0,rising,ok
+11001,District of Columbia,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.4,6.5,8.4,52.0,falling,ok
+21000,Kentucky,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.2,6.9,7.6,438.0,rising,ok
+47000,Tennessee,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.2,6.9,7.4,669.0,stable,ok
+01000,Alabama,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,7.1,6.8,7.4,496.0,stable,ok
+41000,Oregon,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.9,6.6,7.2,418.0,stable,ok
+45000,South Carolina,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.9,6.6,7.1,517.0,stable,ok
+29000,Missouri,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.8,6.5,7.0,572.0,stable,ok
+37000,North Carolina,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.7,6.5,6.9,958.0,stable,ok
+54000,West Virginia,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.7,6.3,7.2,186.0,rising,ok
+53000,Washington,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.7,6.5,7.0,665.0,falling,ok
+72001,Puerto Rico,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.6,6.3,7.0,369.0,stable,ok
+13000,Georgia,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.6,6.4,6.8,854.0,stable,ok
+42000,Pennsylvania,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.5,6.4,6.7,1245.0,stable,ok
+10000,Delaware,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.5,6.0,7.2,102.0,stable,ok
+51000,Virginia,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.5,6.2,6.7,729.0,rising,ok
+04000,Arizona,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.4,6.2,6.6,657.0,stable,ok
+17000,Illinois,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.3,6.2,6.5,1045.0,stable,ok
+39000,Ohio,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.3,6.2,6.5,1038.0,stable,ok
+18000,Indiana,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.3,6.1,6.5,559.0,stable,ok
+24000,Maryland,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.2,6.0,6.5,507.0,stable,ok
+32000,Nevada,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.2,5.9,6.6,257.0,stable,ok
+46000,South Dakota,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.2,5.6,6.9,74.0,stable,ok
+25000,Massachusetts,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.1,5.9,6.3,589.0,stable,ok
+26000,Michigan,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.1,5.9,6.3,860.0,stable,ok
+20000,Kansas,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.1,5.7,6.4,232.0,stable,ok
+55000,Wisconsin,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.0,5.8,6.3,496.0,rising,ok
+12000,Florida,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,6.0,5.9,6.1,2140.0,falling,ok
+09000,Connecticut,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.8,5.5,6.2,302.0,rising,ok
+30000,Montana,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.8,5.3,6.4,97.0,rising,ok
+19000,Iowa,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.8,5.5,6.1,254.0,stable,ok
+16000,Idaho,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.7,5.3,6.2,142.0,stable,ok
+27000,Minnesota,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.7,5.5,6.0,426.0,rising,ok
+50000,Vermont,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.6,5.0,6.3,58.0,rising,ok
+33000,New Hampshire,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.6,5.1,6.0,121.0,rising,ok
+08000,Colorado,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.5,5.2,5.7,388.0,stable,ok
+34000,New Jersey,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.5,5.3,5.7,677.0,falling,ok
+31000,Nebraska,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.4,5.0,5.9,137.0,rising,ok
+56000,Wyoming,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.4,4.7,6.2,45.0,stable,ok
+49000,Utah,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.3,5.0,5.7,167.0,rising,ok
+36000,New York,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.2,5.1,5.3,1404.0,falling,ok
+23000,Maine,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.2,4.7,5.6,117.0,rising,ok
+38000,North Dakota,liver_biliary,035,"Liver & Bile Duct, 2020-2024",2020-2024,5.1,4.4,5.8,48.0,rising,ok
+23000,Maine,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,5.5,5.1,6.0,122.0,stable,ok
+10000,Delaware,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,5.4,4.9,6.0,78.0,stable,ok
+40000,Oklahoma,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,5.1,4.9,5.4,244.0,rising,ok
+54000,West Virginia,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,5.1,4.7,5.5,136.0,stable,ok
+21000,Kentucky,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,5.0,4.7,5.3,278.0,rising,ok
+44000,Rhode Island,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.8,4.3,5.3,74.0,falling,ok
+32000,Nevada,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.7,4.4,5.0,174.0,falling,ok
+18000,Indiana,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.7,4.5,4.9,390.0,stable,ok
+41000,Oregon,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.7,4.4,4.9,267.0,stable,ok
+39000,Ohio,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.6,4.5,4.8,721.0,falling,ok
+33000,New Hampshire,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.6,4.2,5.1,92.0,stable,ok
+26000,Michigan,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.6,4.4,4.8,617.0,stable,ok
+05000,Arkansas,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.5,4.2,4.8,176.0,stable,ok
+42000,Pennsylvania,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.5,4.3,4.6,840.0,falling,ok
+47000,Tennessee,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.4,4.2,4.7,380.0,stable,ok
+29000,Missouri,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.4,4.2,4.6,360.0,rising,ok
+45000,South Carolina,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.4,4.1,4.6,297.0,stable,ok
+31000,Nebraska,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.3,3.9,4.7,105.0,rising,ok
+09000,Connecticut,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.3,4.0,4.5,216.0,stable,ok
+13000,Georgia,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.2,4.1,4.4,490.0,falling,ok
+53000,Washington,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.2,4.0,4.4,383.0,falling,ok
+24000,Maryland,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.2,4.0,4.4,319.0,falling,ok
+37000,North Carolina,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.2,4.0,4.3,545.0,stable,ok
+51000,Virginia,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.2,4.0,4.4,439.0,stable,ok
+22000,Louisiana,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.2,3.9,4.4,229.0,stable,ok
+16000,Idaho,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.2,3.8,4.6,94.0,stable,ok
+30000,Montana,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.1,3.7,4.6,64.0,stable,ok
+28000,Mississippi,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.1,3.8,4.5,152.0,stable,ok
+55000,Wisconsin,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.1,3.9,4.3,323.0,falling,ok
+01000,Alabama,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.1,3.9,4.4,268.0,stable,ok
+56000,Wyoming,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.1,3.5,4.8,31.0,stable,ok
+12000,Florida,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.1,4.0,4.2,1483.0,falling,ok
+20000,Kansas,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.0,3.8,4.3,149.0,stable,ok
+25000,Massachusetts,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.0,3.8,4.2,376.0,falling,ok
+04000,Arizona,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.0,3.8,4.2,402.0,stable,ok
+19000,Iowa,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,4.0,3.7,4.2,176.0,falling,ok
+34000,New Jersey,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.9,3.8,4.1,474.0,falling,ok
+02900,Alaska,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.9,3.2,4.7,26.0,stable,ok
+08000,Colorado,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.9,3.6,4.1,242.0,stable,ok
+17000,Illinois,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.8,3.7,4.0,612.0,falling,ok
+50000,Vermont,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.8,3.3,4.4,37.0,falling,ok
+46000,South Dakota,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.8,3.3,4.3,45.0,stable,ok
+27000,Minnesota,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.7,3.5,3.9,270.0,falling,ok
+48000,Texas,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.7,3.6,3.8,1065.0,stable,ok
+06000,California,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.6,3.5,3.7,1652.0,falling,ok
+35000,New Mexico,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.6,3.3,3.9,105.0,stable,ok
+49000,Utah,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.5,3.2,3.9,98.0,stable,ok
+36000,New York,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,3.3,3.2,3.4,892.0,falling,ok
+38000,North Dakota,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,2.9,2.5,3.4,29.0,falling,ok
+11001,District of Columbia,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,2.8,2.2,3.4,19.0,falling,ok
+15000,Hawaii,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,2.4,2.2,2.8,56.0,stable,ok
+72001,Puerto Rico,bladder_urothelial,071,"Bladder, 2020-2024",2020-2024,2.1,1.9,2.3,128.0,stable,ok
+40000,Oklahoma,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.8,4.6,5.1,236.0,stable,ok
+22000,Louisiana,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.5,4.3,4.8,255.0,falling,ok
+46000,South Dakota,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.4,3.9,5.0,51.0,stable,ok
+21000,Kentucky,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.4,4.1,4.6,254.0,stable,ok
+48000,Texas,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.3,4.2,4.4,1330.0,falling,ok
+54000,West Virginia,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.2,3.8,4.5,111.0,stable,ok
+18000,Indiana,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.2,4.0,4.4,355.0,falling,ok
+29000,Missouri,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.2,4.0,4.4,341.0,falling,ok
+05000,Arkansas,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.2,3.9,4.5,163.0,falling,ok
+19000,Iowa,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.1,3.9,4.4,179.0,falling,ok
+28000,Mississippi,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.1,3.8,4.4,155.0,stable,ok
+47000,Tennessee,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.1,3.9,4.3,363.0,falling,ok
+38000,North Dakota,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,4.1,3.5,4.7,38.0,falling,ok
+35000,New Mexico,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.8,3.5,4.2,111.0,stable,ok
+55000,Wisconsin,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.8,3.6,4.0,306.0,falling,ok
+31000,Nebraska,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.8,3.4,4.1,92.0,falling,ok
+16000,Idaho,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.8,3.4,4.1,88.0,stable,ok
+39000,Ohio,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.7,3.6,3.9,587.0,falling,ok
+20000,Kansas,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.7,3.4,4.0,138.0,falling,ok
+41000,Oregon,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.7,3.4,3.9,211.0,stable,ok
+30000,Montana,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.7,3.2,4.1,58.0,falling,ok
+32000,Nevada,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.6,3.4,3.9,140.0,stable,ok
+01000,Alabama,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.6,3.4,3.8,238.0,falling,ok
+02900,Alaska,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.6,3.0,4.3,26.0,stable,ok
+37000,North Carolina,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.6,3.4,3.7,483.0,falling,ok
+45000,South Carolina,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.6,3.4,3.8,252.0,falling,ok
+56000,Wyoming,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.6,3.0,4.2,26.0,stable,ok
+27000,Minnesota,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.6,3.4,3.8,264.0,falling,ok
+10000,Delaware,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.5,3.1,4.0,52.0,stable,ok
+26000,Michigan,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.5,3.4,3.7,478.0,falling,ok
+17000,Illinois,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.5,3.3,3.6,558.0,falling,ok
+13000,Georgia,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.5,3.3,3.6,424.0,falling,ok
+53000,Washington,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.4,3.2,3.6,320.0,falling,ok
+04000,Arizona,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.3,3.1,3.5,334.0,falling,ok
+23000,Maine,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.3,2.9,3.6,73.0,falling,ok
+51000,Virginia,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.2,3.1,3.4,348.0,falling,ok
+42000,Pennsylvania,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.2,3.1,3.3,597.0,falling,ok
+24000,Maryland,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.2,3.0,3.3,246.0,falling,ok
+06000,California,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.1,3.0,3.2,1456.0,falling,ok
+08000,Colorado,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.1,2.9,3.3,205.0,falling,ok
+44000,Rhode Island,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.1,2.7,3.5,47.0,falling,ok
+50000,Vermont,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.0,2.5,3.6,30.0,stable,ok
+12000,Florida,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.0,2.9,3.1,1056.0,falling,ok
+49000,Utah,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,3.0,2.7,3.3,91.0,stable,ok
+33000,New Hampshire,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,2.8,2.5,3.2,58.0,falling,ok
+09000,Connecticut,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,2.7,2.5,2.9,135.0,falling,ok
+25000,Massachusetts,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,2.6,2.5,2.8,246.0,falling,ok
+15000,Hawaii,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,2.6,2.3,2.9,56.0,stable,ok
+34000,New Jersey,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,2.5,2.4,2.6,302.0,falling,ok
+11001,District of Columbia,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,2.4,1.9,3.0,17.0,falling,ok
+36000,New York,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,2.4,2.3,2.5,636.0,falling,ok
+72001,Puerto Rico,kidney,072,"Kidney & Renal Pelvis, 2020-2024",2020-2024,1.7,1.5,1.8,91.0,stable,ok
+33000,New Hampshire,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.3,4.8,5.8,102.0,stable,ok
+50000,Vermont,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.3,4.6,6.0,50.0,rising,ok
+20000,Kansas,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.2,4.8,5.5,181.0,stable,ok
+31000,Nebraska,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.2,4.7,5.6,122.0,stable,ok
+05000,Arkansas,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.1,4.8,5.5,195.0,stable,ok
+28000,Mississippi,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.1,4.8,5.5,183.0,stable,ok
+40000,Oklahoma,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.0,4.8,5.3,239.0,stable,ok
+30000,Montana,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,5.0,4.5,5.6,76.0,stable,ok
+01000,Alabama,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.9,4.6,5.1,312.0,stable,ok
+29000,Missouri,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.8,4.6,5.1,374.0,rising,ok
+49000,Utah,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.8,4.5,5.2,152.0,stable,ok
+21000,Kentucky,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.8,4.5,5.1,272.0,stable,ok
+46000,South Dakota,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.8,4.2,5.4,53.0,stable,ok
+53000,Washington,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.5,4.9,443.0,falling,ok
+18000,Indiana,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.5,5.0,388.0,stable,ok
+16000,Idaho,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.3,5.1,109.0,stable,ok
+26000,Michigan,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.5,4.9,609.0,stable,ok
+38000,North Dakota,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.1,5.4,42.0,stable,ok
+55000,Wisconsin,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.5,4.9,362.0,stable,ok
+41000,Oregon,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.4,4.9,260.0,stable,ok
+23000,Maine,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.7,4.2,5.1,97.0,falling,ok
+45000,South Carolina,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.6,4.4,4.9,320.0,stable,ok
+54000,West Virginia,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.6,4.2,5.1,115.0,stable,ok
+02900,Alaska,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.6,3.9,5.4,35.0,stable,ok
+27000,Minnesota,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.6,4.4,4.8,326.0,stable,ok
+09000,Connecticut,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.6,4.3,4.9,220.0,stable,ok
+47000,Tennessee,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.6,4.4,4.8,398.0,falling,ok
+25000,Massachusetts,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.6,4.4,4.8,418.0,rising,ok
+39000,Ohio,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.5,4.4,4.7,677.0,stable,ok
+42000,Pennsylvania,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.5,4.4,4.7,784.0,rising,ok
+19000,Iowa,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.5,4.2,4.8,180.0,falling,ok
+06000,California,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.5,4.4,4.6,2040.0,stable,ok
+56000,Wyoming,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.5,3.8,5.2,33.0,stable,ok
+51000,Virginia,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.4,4.2,4.6,465.0,rising,ok
+08000,Colorado,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.4,4.1,4.6,293.0,stable,ok
+22000,Louisiana,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.3,4.1,4.6,241.0,stable,ok
+17000,Illinois,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.3,4.2,4.5,672.0,rising,ok
+13000,Georgia,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.3,4.2,4.5,538.0,rising,ok
+44000,Rhode Island,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.3,3.8,4.8,66.0,stable,ok
+10000,Delaware,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.3,3.8,4.8,61.0,stable,ok
+37000,North Carolina,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.3,4.1,4.4,564.0,falling,ok
+12000,Florida,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.2,4.1,4.3,1346.0,stable,ok
+04000,Arizona,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.2,4.0,4.4,395.0,stable,ok
+48000,Texas,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.2,4.1,4.3,1310.0,stable,ok
+24000,Maryland,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,4.0,3.7,4.2,301.0,stable,ok
+32000,Nevada,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,3.9,3.6,4.2,152.0,stable,ok
+34000,New Jersey,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,3.9,3.7,4.0,454.0,stable,ok
+35000,New Mexico,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,3.9,3.5,4.2,106.0,stable,ok
+36000,New York,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,3.6,3.5,3.7,909.0,falling,ok
+11001,District of Columbia,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,2.8,2.2,3.4,19.0,*,ok
+15000,Hawaii,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,2.7,2.3,3.0,51.0,stable,ok
+72001,Puerto Rico,brain_cns,076,"Brain & ONS, 2020-2024",2020-2024,2.4,2.2,2.6,122.0,stable,ok
+11001,District of Columbia,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.7,5.6,8.0,26.0,stable,ok
+54000,West Virginia,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.6,6.0,7.3,90.0,falling,ok
+53000,Washington,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.4,6.1,6.7,327.0,falling,ok
+49000,Utah,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.3,5.7,6.9,102.0,falling,ok
+10000,Delaware,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.3,5.5,7.1,50.0,falling,ok
+40000,Oklahoma,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.2,5.8,6.7,160.0,falling,ok
+08000,Colorado,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.2,5.8,6.6,221.0,falling,ok
+33000,New Hampshire,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.1,5.4,6.8,65.0,falling,ok
+04000,Arizona,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.1,5.8,6.4,314.0,falling,ok
+06000,California,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.1,5.9,6.2,1519.0,falling,ok
+24000,Maryland,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.1,5.7,6.4,262.0,falling,ok
+26000,Michigan,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.1,5.8,6.3,441.0,falling,ok
+25000,Massachusetts,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.1,5.7,6.4,314.0,falling,ok
+47000,Tennessee,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.0,5.7,6.3,290.0,falling,ok
+23000,Maine,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.0,5.4,6.7,70.0,falling,ok
+20000,Kansas,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.0,5.5,6.5,116.0,falling,ok
+32000,Nevada,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.0,5.5,6.5,119.0,falling,ok
+56000,Wyoming,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.0,4.9,7.2,23.0,falling,ok
+41000,Oregon,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,6.0,5.6,6.4,186.0,falling,ok
+42000,Pennsylvania,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.9,5.7,6.2,590.0,falling,ok
+16000,Idaho,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.8,5.2,6.4,73.0,falling,ok
+30000,Montana,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.8,5.1,6.6,48.0,falling,ok
+19000,Iowa,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.8,5.3,6.3,131.0,falling,ok
+50000,Vermont,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.8,4.8,6.8,29.0,falling,ok
+51000,Virginia,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.7,5.4,6.0,337.0,falling,ok
+34000,New Jersey,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.6,5.4,5.9,375.0,falling,ok
+17000,Illinois,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.6,5.4,5.9,493.0,falling,ok
+48000,Texas,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.6,5.5,5.8,947.0,falling,ok
+55000,Wisconsin,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.6,5.3,5.9,240.0,falling,ok
+39000,Ohio,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.6,5.3,5.8,482.0,falling,ok
+01000,Alabama,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.6,5.2,5.9,201.0,falling,ok
+05000,Arkansas,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.5,5.1,6.0,118.0,falling,ok
+13000,Georgia,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.5,5.3,5.8,380.0,falling,ok
+18000,Indiana,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.5,5.2,5.8,257.0,falling,ok
+28000,Mississippi,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.5,5.0,6.0,113.0,falling,ok
+12000,Florida,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.5,5.3,5.7,1004.0,falling,ok
+36000,New York,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.5,5.3,5.6,792.0,falling,ok
+37000,North Carolina,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.4,5.2,5.7,401.0,falling,ok
+35000,New Mexico,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.3,4.8,5.9,81.0,falling,ok
+29000,Missouri,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.3,5.0,5.7,235.0,falling,ok
+27000,Minnesota,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.3,5.0,5.7,209.0,falling,ok
+02900,Alaska,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.3,4.3,6.5,20.0,*,ok
+09000,Connecticut,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.3,4.9,5.7,146.0,falling,ok
+46000,South Dakota,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.2,4.4,6.1,34.0,falling,ok
+22000,Louisiana,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.2,4.9,5.6,161.0,falling,ok
+31000,Nebraska,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.2,4.6,5.8,66.0,falling,ok
+21000,Kentucky,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.1,4.7,5.5,158.0,falling,ok
+44000,Rhode Island,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.0,4.3,5.7,41.0,falling,ok
+45000,South Carolina,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,5.0,4.6,5.3,192.0,falling,ok
+38000,North Dakota,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,4.8,4.0,5.8,25.0,falling,ok
+15000,Hawaii,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,4.6,4.1,5.3,51.0,falling,ok
+72001,Puerto Rico,gynecologic_ovary,061,"Ovary, 2020-2024",2020-2024,3.8,3.5,4.2,103.0,stable,ok
+11001,District of Columbia,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,9.3,8.0,10.8,36.0,stable,ok
+24000,Maryland,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,6.6,6.3,6.9,298.0,rising,ok
+17000,Illinois,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,6.1,5.9,6.3,551.0,rising,ok
+50000,Vermont,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,6.1,5.2,7.1,33.0,stable,ok
+26000,Michigan,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,6.0,5.7,6.2,451.0,rising,ok
+10000,Delaware,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,6.0,5.2,6.8,50.0,rising,ok
+36000,New York,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.9,5.7,6.1,885.0,stable,ok
+34000,New Jersey,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.9,5.6,6.1,403.0,rising,ok
+42000,Pennsylvania,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.8,5.6,6.0,607.0,rising,ok
+18000,Indiana,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.8,5.5,6.1,270.0,rising,ok
+15000,Hawaii,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.7,5.0,6.4,59.0,rising,ok
+55000,Wisconsin,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.7,5.4,6.0,249.0,rising,ok
+39000,Ohio,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.7,5.5,5.9,503.0,rising,ok
+51000,Virginia,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.6,5.3,5.9,340.0,rising,ok
+13000,Georgia,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.6,5.4,5.9,400.0,rising,ok
+31000,Nebraska,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.6,5.0,6.2,76.0,rising,ok
+41000,Oregon,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.6,5.2,6.0,174.0,rising,ok
+28000,Mississippi,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.5,5.1,6.0,116.0,rising,ok
+06000,California,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.5,5.4,5.6,1400.0,stable,ok
+37000,North Carolina,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.5,5.3,5.7,426.0,rising,ok
+29000,Missouri,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.5,5.2,5.8,247.0,rising,ok
+19000,Iowa,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.4,4.9,5.8,128.0,rising,ok
+23000,Maine,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.4,4.8,6.0,65.0,rising,ok
+72001,Puerto Rico,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.3,4.9,5.8,150.0,stable,ok
+48000,Texas,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.3,5.1,5.4,907.0,rising,ok
+40000,Oklahoma,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.2,4.9,5.7,140.0,rising,ok
+45000,South Carolina,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.2,4.9,5.6,213.0,rising,ok
+27000,Minnesota,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.2,4.9,5.6,211.0,rising,ok
+09000,Connecticut,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.1,4.8,5.5,144.0,rising,ok
+53000,Washington,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.1,4.8,5.4,262.0,rising,ok
+25000,Massachusetts,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.1,4.8,5.4,271.0,rising,ok
+33000,New Hampshire,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.1,4.5,5.7,58.0,rising,ok
+20000,Kansas,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.1,4.7,5.6,102.0,rising,ok
+54000,West Virginia,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.1,4.5,5.6,72.0,stable,ok
+35000,New Mexico,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.0,4.5,5.6,78.0,rising,ok
+49000,Utah,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,5.0,4.5,5.5,81.0,rising,ok
+12000,Florida,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.9,4.8,5.1,919.0,rising,ok
+22000,Louisiana,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.9,4.6,5.3,158.0,rising,ok
+47000,Tennessee,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.9,4.6,5.2,243.0,rising,ok
+44000,Rhode Island,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.8,4.2,5.6,42.0,stable,ok
+21000,Kentucky,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.8,4.5,5.2,155.0,rising,ok
+32000,Nevada,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.7,4.3,5.2,99.0,rising,ok
+04000,Arizona,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.6,4.3,4.8,243.0,rising,ok
+30000,Montana,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.5,3.9,5.2,38.0,stable,ok
+56000,Wyoming,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.5,3.6,5.6,18.0,stable,ok
+05000,Arkansas,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.4,4.0,4.9,97.0,rising,ok
+16000,Idaho,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.3,3.8,4.9,55.0,stable,ok
+01000,Alabama,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.3,4.0,4.6,160.0,rising,ok
+08000,Colorado,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.2,3.9,4.5,156.0,rising,ok
+46000,South Dakota,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.2,3.5,5.0,26.0,stable,ok
+38000,North Dakota,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,4.1,3.3,5.0,21.0,stable,ok
+02900,Alaska,gynecologic_uterus,058,"Uterus (Corpus & Uterus, NOS), 2020-2024",2020-2024,3.8,2.9,4.8,14.0,stable,small_numbers
+28000,Mississippi,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,3.6,3.2,4.0,64.0,stable,ok
+01000,Alabama,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,3.3,3.0,3.6,102.0,stable,ok
+05000,Arkansas,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,3.2,2.8,3.6,55.0,stable,ok
+40000,Oklahoma,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,3.2,2.8,3.5,69.0,stable,ok
+54000,West Virginia,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.8,2.4,3.4,31.0,stable,ok
+48000,Texas,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.8,2.7,2.9,442.0,stable,ok
+21000,Kentucky,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.8,2.5,3.1,73.0,stable,ok
+18000,Indiana,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.6,2.4,2.9,102.0,stable,ok
+12000,Florida,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.6,2.5,2.7,373.0,stable,ok
+45000,South Carolina,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.6,2.3,2.9,81.0,stable,ok
+47000,Tennessee,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.6,2.3,2.8,107.0,falling,ok
+22000,Louisiana,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.5,2.2,2.8,66.0,falling,ok
+32000,Nevada,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.5,2.2,2.8,44.0,stable,ok
+29000,Missouri,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.5,2.2,2.7,89.0,stable,ok
+13000,Georgia,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.4,2.2,2.6,150.0,falling,ok
+20000,Kansas,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.3,2.0,2.7,37.0,stable,ok
+39000,Ohio,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.3,2.1,2.5,160.0,falling,ok
+72001,Puerto Rico,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.2,1.9,2.6,49.0,stable,ok
+04000,Arizona,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.2,2.0,2.4,91.0,rising,ok
+56000,Wyoming,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.2,1.5,3.0,7.0,*,small_numbers
+17000,Illinois,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.1,2.0,2.3,164.0,falling,ok
+35000,New Mexico,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.1,1.7,2.5,26.0,stable,ok
+46000,South Dakota,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.1,1.5,2.7,10.0,*,small_numbers
+02900,Alaska,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.1,1.4,2.9,7.0,*,small_numbers
+26000,Michigan,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.0,1.9,2.2,119.0,stable,ok
+06000,California,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.0,1.9,2.1,451.0,falling,ok
+11001,District of Columbia,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,2.0,1.4,2.8,8.0,*,small_numbers
+42000,Pennsylvania,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.9,1.8,2.1,155.0,falling,ok
+37000,North Carolina,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.9,1.8,2.1,126.0,falling,ok
+51000,Virginia,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.9,1.7,2.1,95.0,falling,ok
+24000,Maryland,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.9,1.7,2.1,72.0,falling,ok
+10000,Delaware,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.8,1.3,2.3,12.0,*,small_numbers
+41000,Oregon,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.8,1.5,2.0,46.0,stable,ok
+15000,Hawaii,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.8,1.4,2.3,15.0,falling,small_numbers
+50000,Vermont,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.7,1.2,2.5,7.0,*,small_numbers
+49000,Utah,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.7,1.4,2.0,27.0,stable,ok
+31000,Nebraska,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.7,1.4,2.1,19.0,stable,ok
+34000,New Jersey,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.7,1.5,1.9,99.0,falling,ok
+36000,New York,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.7,1.6,1.8,216.0,falling,ok
+23000,Maine,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.7,1.3,2.1,16.0,*,ok
+53000,Washington,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.6,1.5,1.8,74.0,stable,ok
+16000,Idaho,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.5,1.2,1.9,16.0,stable,ok
+19000,Iowa,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.5,1.3,1.8,28.0,falling,ok
+08000,Colorado,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.5,1.3,1.7,49.0,stable,ok
+55000,Wisconsin,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.4,1.2,1.6,50.0,falling,ok
+27000,Minnesota,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.4,1.2,1.6,46.0,stable,ok
+30000,Montana,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.4,1.0,1.8,10.0,*,small_numbers
+38000,North Dakota,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.3,0.8,1.9,6.0,*,small_numbers
+09000,Connecticut,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.3,1.1,1.5,30.0,falling,ok
+44000,Rhode Island,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.2,0.9,1.7,9.0,*,small_numbers
+25000,Massachusetts,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.1,0.9,1.2,50.0,falling,ok
+33000,New Hampshire,gynecologic_cervix,057,"Cervix, 2020-2024",2020-2024,1.1,0.8,1.4,10.0,*,small_numbers
+28000,Mississippi,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.6,3.3,3.9,135.0,stable,ok
+50000,Vermont,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.6,3.0,4.2,35.0,stable,ok
+23000,Maine,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.5,3.2,3.9,80.0,rising,ok
+54000,West Virginia,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.5,3.2,3.8,94.0,rising,ok
+22000,Louisiana,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.4,3.2,3.6,198.0,stable,ok
+40000,Oklahoma,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.2,3.0,3.5,158.0,rising,ok
+05000,Arkansas,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.2,3.0,3.5,128.0,stable,ok
+21000,Kentucky,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.2,3.0,3.4,193.0,rising,ok
+47000,Tennessee,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.2,3.0,3.4,291.0,stable,ok
+10000,Delaware,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.1,2.7,3.6,46.0,stable,ok
+29000,Missouri,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.1,3.0,3.3,258.0,rising,ok
+33000,New Hampshire,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.1,2.7,3.4,64.0,rising,ok
+39000,Ohio,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.1,2.9,3.2,493.0,stable,ok
+01000,Alabama,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.0,2.9,3.2,206.0,stable,ok
+45000,South Carolina,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.0,2.9,3.2,223.0,stable,ok
+37000,North Carolina,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.0,2.9,3.2,417.0,rising,ok
+32000,Nevada,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.0,2.8,3.3,119.0,stable,ok
+41000,Oregon,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.0,2.8,3.2,177.0,rising,ok
+53000,Washington,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,3.0,2.8,3.1,285.0,stable,ok
+20000,Kansas,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.9,2.7,3.2,111.0,rising,ok
+18000,Indiana,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.9,2.7,3.1,250.0,rising,ok
+55000,Wisconsin,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.9,2.7,3.0,235.0,rising,ok
+26000,Michigan,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.8,2.7,2.9,389.0,rising,ok
+13000,Georgia,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.8,2.7,2.9,359.0,stable,ok
+02900,Alaska,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.8,2.2,3.4,22.0,stable,ok
+17000,Illinois,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.8,2.6,2.9,452.0,rising,ok
+48000,Texas,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.8,2.7,2.8,874.0,rising,ok
+12000,Florida,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.7,2.6,2.8,939.0,stable,ok
+15000,Hawaii,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.7,2.4,3.1,55.0,stable,ok
+31000,Nebraska,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.7,2.4,3.0,66.0,stable,ok
+42000,Pennsylvania,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.6,2.5,2.7,490.0,rising,ok
+30000,Montana,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.6,2.2,3.0,42.0,stable,ok
+19000,Iowa,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.6,2.4,2.8,111.0,rising,ok
+16000,Idaho,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.6,2.3,2.9,62.0,stable,ok
+51000,Virginia,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.6,2.4,2.7,284.0,rising,ok
+27000,Minnesota,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.5,2.4,2.7,190.0,rising,ok
+46000,South Dakota,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.5,2.1,3.0,30.0,stable,ok
+24000,Maryland,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.5,2.3,2.7,198.0,stable,ok
+25000,Massachusetts,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.5,2.3,2.6,237.0,stable,ok
+06000,California,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.5,2.4,2.5,1161.0,stable,ok
+35000,New Mexico,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.4,2.1,2.6,69.0,rising,ok
+56000,Wyoming,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.3,1.9,2.9,18.0,stable,ok
+04000,Arizona,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.3,2.2,2.5,235.0,rising,ok
+72001,Puerto Rico,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.2,2.0,2.4,120.0,stable,ok
+36000,New York,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.2,2.1,2.2,580.0,falling,ok
+08000,Colorado,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.1,2.0,2.3,145.0,stable,ok
+09000,Connecticut,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.1,1.9,2.3,106.0,stable,ok
+44000,Rhode Island,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,2.0,1.7,2.3,32.0,stable,ok
+34000,New Jersey,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,1.9,1.8,2.0,232.0,falling,ok
+11001,District of Columbia,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,1.8,1.4,2.3,12.0,*,small_numbers
+38000,North Dakota,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,1.8,1.4,2.2,17.0,falling,ok
+49000,Utah,head_neck,003,"Oral Cavity & Pharynx, 2020-2024",2020-2024,1.7,1.5,1.9,53.0,stable,ok
+56000,Wyoming,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.7,0.5,1.1,5.0,*,small_numbers
+49000,Utah,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.7,0.6,0.9,20.0,*,ok
+31000,Nebraska,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.7,0.5,0.8,16.0,*,ok
+15000,Hawaii,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.7,0.5,0.8,15.0,*,small_numbers
+02900,Alaska,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.4,1.0,5.0,*,small_numbers
+38000,North Dakota,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.4,0.9,6.0,*,small_numbers
+50000,Vermont,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.4,0.9,6.0,*,small_numbers
+06000,California,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.6,0.6,277.0,stable,ok
+53000,Washington,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.5,0.6,54.0,stable,ok
+30000,Montana,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.4,0.8,8.0,*,small_numbers
+35000,New Mexico,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.4,0.7,16.0,stable,ok
+55000,Wisconsin,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.5,0.6,44.0,stable,ok
+17000,Illinois,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.5,0.6,90.0,rising,ok
+05000,Arkansas,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.6,0.5,0.7,22.0,stable,ok
+20000,Kansas,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.7,21.0,stable,ok
+04000,Arizona,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.5,0.6,55.0,stable,ok
+27000,Minnesota,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.5,0.6,39.0,stable,ok
+41000,Oregon,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.5,0.6,31.0,stable,ok
+48000,Texas,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.5,0.6,166.0,stable,ok
+26000,Michigan,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.5,0.6,74.0,rising,ok
+40000,Oklahoma,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.6,25.0,stable,ok
+18000,Indiana,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.5,0.6,43.0,stable,ok
+51000,Virginia,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.5,0.6,55.0,rising,ok
+16000,Idaho,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.7,12.0,*,small_numbers
+29000,Missouri,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.6,41.0,stable,ok
+08000,Colorado,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.6,33.0,stable,ok
+24000,Maryland,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.6,38.0,stable,ok
+37000,North Carolina,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.5,64.0,stable,ok
+13000,Georgia,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.5,58.0,stable,ok
+42000,Pennsylvania,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.5,87.0,falling,ok
+19000,Iowa,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.6,19.0,*,ok
+39000,Ohio,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.5,73.0,stable,ok
+47000,Tennessee,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.5,40.0,stable,ok
+22000,Louisiana,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.5,26.0,stable,ok
+12000,Florida,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.5,0.4,0.5,156.0,stable,ok
+34000,New Jersey,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.4,0.5,55.0,stable,ok
+28000,Mississippi,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.4,0.6,17.0,stable,ok
+21000,Kentucky,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.4,0.5,26.0,stable,ok
+36000,New York,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.4,0.5,116.0,falling,ok
+45000,South Carolina,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.4,0.5,31.0,stable,ok
+32000,Nevada,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.5,17.0,stable,ok
+33000,New Hampshire,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.6,8.0,*,small_numbers
+01000,Alabama,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.4,0.5,27.0,stable,ok
+54000,West Virginia,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.6,11.0,*,small_numbers
+10000,Delaware,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.6,7.0,*,small_numbers
+09000,Connecticut,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.5,21.0,stable,ok
+25000,Massachusetts,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.5,38.0,falling,ok
+72001,Puerto Rico,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.5,23.0,stable,ok
+44000,Rhode Island,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.6,6.0,*,small_numbers
+23000,Maine,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.4,0.3,0.5,8.0,*,small_numbers
+46000,South Dakota,thyroid,080,"Thyroid, 2020-2024",2020-2024,0.3,0.2,0.5,4.0,*,small_numbers
+11001,District of Columbia,thyroid,080,"Thyroid, 2020-2024",2020-2024,,,,,*,suppressed_source
+54000,West Virginia,esophagus,017,"Esophagus, 2020-2024",2020-2024,5.4,5.0,5.8,143.0,rising,ok
+23000,Maine,esophagus,017,"Esophagus, 2020-2024",2020-2024,5.4,4.9,5.8,122.0,stable,ok
+50000,Vermont,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.9,4.3,5.6,49.0,stable,ok
+18000,Indiana,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.8,4.6,5.0,419.0,stable,ok
+56000,Wyoming,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.7,4.0,5.4,38.0,stable,ok
+19000,Iowa,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.6,4.3,4.9,200.0,stable,ok
+39000,Ohio,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.6,4.5,4.8,743.0,falling,ok
+29000,Missouri,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.5,4.3,4.7,375.0,stable,ok
+46000,South Dakota,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.5,3.9,5.1,53.0,stable,ok
+33000,New Hampshire,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.5,4.1,4.9,95.0,falling,ok
+31000,Nebraska,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.4,4.1,4.8,110.0,stable,ok
+40000,Oklahoma,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.4,4.2,4.7,222.0,stable,ok
+21000,Kentucky,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.4,4.2,4.7,260.0,stable,ok
+26000,Michigan,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.4,4.3,4.6,626.0,falling,ok
+42000,Pennsylvania,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.3,4.2,4.5,821.0,falling,ok
+30000,Montana,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.3,3.8,4.8,68.0,stable,ok
+41000,Oregon,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.3,4.1,4.5,253.0,falling,ok
+55000,Wisconsin,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.3,4.1,4.5,351.0,stable,ok
+20000,Kansas,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.2,3.9,4.6,158.0,rising,ok
+05000,Arkansas,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.2,3.9,4.5,170.0,stable,ok
+02900,Alaska,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.2,3.5,4.9,34.0,stable,ok
+47000,Tennessee,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.1,3.9,4.3,378.0,stable,ok
+25000,Massachusetts,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.0,3.8,4.2,383.0,falling,ok
+38000,North Dakota,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.0,3.4,4.6,39.0,stable,ok
+27000,Minnesota,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.0,3.8,4.2,298.0,falling,ok
+17000,Illinois,esophagus,017,"Esophagus, 2020-2024",2020-2024,4.0,3.8,4.1,654.0,falling,ok
+32000,Nevada,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.9,3.7,4.2,160.0,stable,ok
+53000,Washington,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.9,3.8,4.1,386.0,falling,ok
+45000,South Carolina,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.9,3.7,4.1,283.0,stable,ok
+28000,Mississippi,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.8,3.6,4.1,148.0,falling,ok
+16000,Idaho,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.8,3.5,4.2,93.0,stable,ok
+10000,Delaware,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.8,3.3,4.3,57.0,falling,ok
+44000,Rhode Island,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.6,3.2,4.1,56.0,falling,ok
+22000,Louisiana,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.6,3.4,3.8,211.0,falling,ok
+09000,Connecticut,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.5,3.3,3.8,180.0,falling,ok
+01000,Alabama,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.5,3.3,3.7,239.0,falling,ok
+51000,Virginia,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.4,3.3,3.6,380.0,falling,ok
+37000,North Carolina,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.4,3.3,3.6,481.0,falling,ok
+35000,New Mexico,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.4,3.1,3.7,99.0,stable,ok
+04000,Arizona,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.4,3.2,3.5,345.0,falling,ok
+13000,Georgia,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.3,3.2,3.5,431.0,falling,ok
+12000,Florida,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.3,3.2,3.4,1167.0,falling,ok
+08000,Colorado,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.2,3.1,3.4,225.0,falling,ok
+24000,Maryland,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.2,3.0,3.4,258.0,falling,ok
+48000,Texas,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.2,3.1,3.3,1010.0,falling,ok
+36000,New York,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.0,2.9,3.1,807.0,falling,ok
+34000,New Jersey,esophagus,017,"Esophagus, 2020-2024",2020-2024,3.0,2.8,3.1,365.0,falling,ok
+11001,District of Columbia,esophagus,017,"Esophagus, 2020-2024",2020-2024,2.9,2.3,3.5,20.0,falling,ok
+06000,California,esophagus,017,"Esophagus, 2020-2024",2020-2024,2.8,2.8,2.9,1351.0,falling,ok
+49000,Utah,esophagus,017,"Esophagus, 2020-2024",2020-2024,2.7,2.5,3.0,85.0,stable,ok
+15000,Hawaii,esophagus,017,"Esophagus, 2020-2024",2020-2024,2.5,2.2,2.8,53.0,stable,ok
+72001,Puerto Rico,esophagus,017,"Esophagus, 2020-2024",2020-2024,1.7,1.6,1.9,94.0,stable,ok
+02900,Alaska,stomach,018,"Stomach, 2020-2024",2020-2024,4.0,3.4,4.7,31.0,stable,ok
+06000,California,stomach,018,"Stomach, 2020-2024",2020-2024,3.7,3.6,3.8,1673.0,falling,ok
+28000,Mississippi,stomach,018,"Stomach, 2020-2024",2020-2024,3.5,3.2,3.8,129.0,falling,ok
+22000,Louisiana,stomach,018,"Stomach, 2020-2024",2020-2024,3.3,3.1,3.5,184.0,falling,ok
+11001,District of Columbia,stomach,018,"Stomach, 2020-2024",2020-2024,3.1,2.6,3.8,22.0,*,ok
+48000,Texas,stomach,018,"Stomach, 2020-2024",2020-2024,3.1,3.0,3.2,957.0,falling,ok
+10000,Delaware,stomach,018,"Stomach, 2020-2024",2020-2024,3.0,2.6,3.5,41.0,falling,ok
+15000,Hawaii,stomach,018,"Stomach, 2020-2024",2020-2024,3.0,2.6,3.3,64.0,falling,ok
+36000,New York,stomach,018,"Stomach, 2020-2024",2020-2024,2.9,2.8,3.0,746.0,falling,ok
+13000,Georgia,stomach,018,"Stomach, 2020-2024",2020-2024,2.9,2.8,3.0,355.0,falling,ok
+72001,Puerto Rico,stomach,018,"Stomach, 2020-2024",2020-2024,2.8,2.6,3.0,157.0,stable,ok
+24000,Maryland,stomach,018,"Stomach, 2020-2024",2020-2024,2.8,2.7,3.0,217.0,falling,ok
+17000,Illinois,stomach,018,"Stomach, 2020-2024",2020-2024,2.8,2.7,2.9,439.0,falling,ok
+35000,New Mexico,stomach,018,"Stomach, 2020-2024",2020-2024,2.8,2.5,3.1,79.0,falling,ok
+01000,Alabama,stomach,018,"Stomach, 2020-2024",2020-2024,2.8,2.6,2.9,178.0,falling,ok
+45000,South Carolina,stomach,018,"Stomach, 2020-2024",2020-2024,2.7,2.6,2.9,193.0,falling,ok
+34000,New Jersey,stomach,018,"Stomach, 2020-2024",2020-2024,2.7,2.6,2.9,320.0,falling,ok
+44000,Rhode Island,stomach,018,"Stomach, 2020-2024",2020-2024,2.7,2.3,3.1,39.0,falling,ok
+21000,Kentucky,stomach,018,"Stomach, 2020-2024",2020-2024,2.6,2.4,2.8,144.0,falling,ok
+37000,North Carolina,stomach,018,"Stomach, 2020-2024",2020-2024,2.6,2.4,2.7,339.0,falling,ok
+40000,Oklahoma,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.3,2.8,122.0,falling,ok
+09000,Connecticut,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.3,2.8,124.0,falling,ok
+51000,Virginia,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.4,2.7,268.0,falling,ok
+25000,Massachusetts,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.4,2.7,231.0,falling,ok
+47000,Tennessee,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.3,2.7,217.0,falling,ok
+05000,Arkansas,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.3,2.7,97.0,falling,ok
+50000,Vermont,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.0,3.0,23.0,stable,ok
+32000,Nevada,stomach,018,"Stomach, 2020-2024",2020-2024,2.5,2.2,2.7,93.0,falling,ok
+04000,Arizona,stomach,018,"Stomach, 2020-2024",2020-2024,2.4,2.3,2.5,229.0,falling,ok
+53000,Washington,stomach,018,"Stomach, 2020-2024",2020-2024,2.4,2.2,2.5,222.0,falling,ok
+23000,Maine,stomach,018,"Stomach, 2020-2024",2020-2024,2.4,2.1,2.7,51.0,stable,ok
+12000,Florida,stomach,018,"Stomach, 2020-2024",2020-2024,2.3,2.2,2.4,768.0,falling,ok
+20000,Kansas,stomach,018,"Stomach, 2020-2024",2020-2024,2.3,2.1,2.5,84.0,stable,ok
+27000,Minnesota,stomach,018,"Stomach, 2020-2024",2020-2024,2.3,2.1,2.5,168.0,stable,ok
+26000,Michigan,stomach,018,"Stomach, 2020-2024",2020-2024,2.3,2.2,2.4,305.0,falling,ok
+39000,Ohio,stomach,018,"Stomach, 2020-2024",2020-2024,2.2,2.1,2.3,343.0,falling,ok
+42000,Pennsylvania,stomach,018,"Stomach, 2020-2024",2020-2024,2.2,2.1,2.3,402.0,falling,ok
+55000,Wisconsin,stomach,018,"Stomach, 2020-2024",2020-2024,2.2,2.1,2.4,172.0,falling,ok
+41000,Oregon,stomach,018,"Stomach, 2020-2024",2020-2024,2.1,2.0,2.3,122.0,falling,ok
+08000,Colorado,stomach,018,"Stomach, 2020-2024",2020-2024,2.1,1.9,2.3,137.0,falling,ok
+18000,Indiana,stomach,018,"Stomach, 2020-2024",2020-2024,2.1,1.9,2.2,174.0,falling,ok
+29000,Missouri,stomach,018,"Stomach, 2020-2024",2020-2024,2.1,1.9,2.2,163.0,falling,ok
+31000,Nebraska,stomach,018,"Stomach, 2020-2024",2020-2024,2.0,1.7,2.3,47.0,falling,ok
+33000,New Hampshire,stomach,018,"Stomach, 2020-2024",2020-2024,2.0,1.7,2.3,38.0,stable,ok
+38000,North Dakota,stomach,018,"Stomach, 2020-2024",2020-2024,1.9,1.5,2.3,18.0,stable,ok
+49000,Utah,stomach,018,"Stomach, 2020-2024",2020-2024,1.8,1.6,2.1,55.0,falling,ok
+54000,West Virginia,stomach,018,"Stomach, 2020-2024",2020-2024,1.8,1.6,2.1,48.0,falling,ok
+30000,Montana,stomach,018,"Stomach, 2020-2024",2020-2024,1.8,1.5,2.2,27.0,falling,ok
+16000,Idaho,stomach,018,"Stomach, 2020-2024",2020-2024,1.8,1.5,2.0,39.0,falling,ok
+46000,South Dakota,stomach,018,"Stomach, 2020-2024",2020-2024,1.7,1.4,2.1,19.0,falling,ok
+19000,Iowa,stomach,018,"Stomach, 2020-2024",2020-2024,1.7,1.5,1.9,70.0,falling,ok
+56000,Wyoming,stomach,018,"Stomach, 2020-2024",2020-2024,1.6,1.2,2.1,12.0,*,small_numbers
