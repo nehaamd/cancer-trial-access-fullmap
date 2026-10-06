@@ -421,7 +421,7 @@
   const bvaDefinition = () => `High incidence = ${BSITE[incSite][1]} age-adjusted rate above the median of counties with a published rate (${BU ? BU.meta.medians[bvaSiteKey()] : '—'} per 100,000). Low access = at least ${bvaThr}% of residents 55+ have ${critLabel()} within 60 road-miles of home.`;
   const ACS_LABEL = {veh: 'Households without a vehicle (%)', bb: 'Households with a broadband subscription (%)', unins: 'Uninsured, all ages (%)', unins55: 'Uninsured, ages 55–64 (%)', pov: 'Poverty rate (%)'};
   const METRICS = {
-    short: {label: () => `Residents 55+ with fewer than 20 ${filtersActive() ? 'matching' : 'listed'} trials within 60 road-miles of home · circle size = number of residents · color = metro or nonmetro county`, get: () => 0, classes: () => [['', -1, 1, '#F3F0EA']], na: () => false},
+    short: {label: () => `Residents 55+ with fewer than 20 ${filtersActive() ? 'matching' : 'listed'} trials within 60 road-miles of home · circle size = number of residents · solid blue = metro county, orange ring = nonmetro`, get: () => 0, classes: () => [['', -1, 1, '#F3F0EA']], na: () => false},
     t:  {label: () => 'Recruiting trials with a site in the county' + (filtersActive() ? ' (filtered)' : ''), get: c => cnt[CI[c.k]], classes: () => [['0 trials',0,1,'#D6D2CA'],['1–19',1,20,'#B7D0E8'],['20–99 (limited menu)',20,100,'#6BA3D6'],['100 or more (broad menu)',100,1e9,'#0B3C5D']]},
     rn: {label: () => 'Road miles from the county population center to the nearest NCI-designated cancer center', get: c => c.rn, classes: () => DIST, na: c => c.rn === null},
     rb: {label: () => 'Road miles to the nearest county with 100 or more listed trials', get: c => c.rb, classes: () => [['in a broad-menu county',0,0.5,'#0B3C5D'],['under 60 road-mi',0.5,60,'#3F7FB5'],['60–120',60,120,'#9EC4E0'],['120–200',120,200,'#F2C48A'],['200–300',200,300,'#D98B4A'],['300 or more',300,1e9,'#8A3B1E']], na: c => c.rb === null},
@@ -478,16 +478,17 @@
     const u = BU && BU.county[k]; if (!u || u.l20 === null || u.l20 === undefined) return null; return { n: C[k].p * u.l20 / 100, s: u.l20, p: C[k].p }; }
   const isMetro = k => RU && RU.county[k] ? RU.county[k].c <= 3 : null;
   function shortTotals() { let all = 0, metro = 0, non = 0, pop = 0; for (const k of CK) { const v = shortOf(k); if (!v) continue; all += v.n; pop += v.p; const m = isMetro(k); if (m === true) metro += v.n; else if (m === false) non += v.n; } return pop ? { all, metro, nonmetro: non, pop } : null; }
-  const BUB_FILL = m => m === null ? 'rgba(120,120,120,.5)' : m ? 'rgba(63,127,181,.62)' : 'rgba(192,97,43,.58)', BUB_LINE = m => m === null ? '#555' : m ? '#1F4F7A' : '#7A2F12';
+  // metro: solid blue disc; nonmetro: orange ring (a different shape as well as a different color, so the two read apart at any size)
+  const BUB_FILL = m => m === null ? 'rgba(120,120,120,.55)' : m ? 'rgba(31,88,140,.8)' : 'rgba(233,160,96,.38)', BUB_LINE = m => m === null ? '#555' : m ? '#0B3C5D' : '#A8431A', BUB_W = m => m ? .5 : 1.3;
   function placeBubbles() { const k = curVB[2] / W, bs = Math.min(1, Math.max(k * 1.4, 0.16)); gB.selectAll('circle').attr('transform', d => `translate(${d.c}) scale(${bs})`); }
   function drawShort() {
     const data = metric === 'short' ? countyFeatures.map(f => { const k = f.properties.id, v = shortOf(k); return v && v.n >= 50 ? { k, c: path.centroid(f), n: v.n, m: isMetro(k) } : null; }).filter(d => d && isFinite(d.c[0])).sort((a, b) => b.n - a.n) : [];
-    gB.selectAll('circle').data(data, d => d.k).join('circle').attr('class', d => 'bub' + (INSET.has(C[d.k].s2) ? ' inset' : '')).classed('in-district', d => d.k === selectedC).attr('r', d => bubR(d.n)).attr('fill', d => BUB_FILL(d.m)).attr('stroke', d => BUB_LINE(d.m)).attr('stroke-width', .5)
+    gB.selectAll('circle').data(data, d => d.k).join('circle').attr('class', d => 'bub' + (INSET.has(C[d.k].s2) ? ' inset' : '')).classed('in-district', d => d.k === selectedC).attr('r', d => bubR(d.n)).attr('fill', d => BUB_FILL(d.m)).attr('stroke', d => BUB_LINE(d.m)).attr('stroke-width', d => BUB_W(d.m))
       .on('mousemove', (ev, d) => showTip(ev, C[d.k])).on('mouseleave', () => tip.style.display = 'none').on('click', (ev, d) => { if (coarse && !selectedState) window.__nav.selectState(C[d.k].s2); else selectCounty(d.k); });
     placeBubbles(); }
-  const circleSVG = (r, fill, stroke) => `<svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width=".7"/></svg>`;
+  const circleSVG = (r, fill, stroke, w) => `<svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${w || .7}"/></svg>`;
   function legendShort(lg) {
-    lg.append('span').html(circleSVG(6, BUB_FILL(true), BUB_LINE(true)) + 'in a metro county'); lg.append('span').html(circleSVG(6, BUB_FILL(false), BUB_LINE(false)) + 'in a nonmetro county');
+    lg.append('span').html(circleSVG(6, BUB_FILL(true), BUB_LINE(true), .8) + 'metro county (solid)'); lg.append('span').html(circleSVG(6, BUB_FILL(false), BUB_LINE(false), 1.6) + 'nonmetro county (ring)');
     [5000, 25000, 100000].forEach(n => lg.append('span').html(circleSVG(bubR(n) * 1.3, 'rgba(140,130,120,.3)', '#6B645B') + fmt(n) + ' residents 55+'));
     const t = shortTotals(); if (t) lg.append('span').attr('class', 'lg-note').text(`Nationally ${(t.all / 1e6).toFixed(1)} million residents 55+ (${pct(100 * t.all / t.pop)}%) have fewer than 20 ${filtersActive() ? 'matching' : 'listed'} trials within 60 road-miles: ${(t.nonmetro / 1e6).toFixed(1)} million in nonmetro counties, ${(t.metro / 1e6).toFixed(1)} million in metro counties.`); }
   function legendStar(lg) { if (document.getElementById('lyr-n').checked) lg.append('span').html('<svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><path d="' + d3.symbol().type(d3.symbolStar).size(60)() + '" fill="#F0B429" stroke="#3a2f00" stroke-width=".8"/></svg>NCI-designated cancer center'); }
