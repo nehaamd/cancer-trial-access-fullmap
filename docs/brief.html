@@ -84,7 +84,7 @@
   const TELE = (D.T && D.T.tele) || {}, nTele = Object.keys(TELE).filter(j => kind === 'nat' || TELE[j].includes(st)).length;
   const teleRow = nTele ? [[`Trials enrolling remotely${kind === 'nat' ? '' : ' in ' + esc(stName[st] || st)}, by telemedicine or a virtual site (not counted as sites)`, fmt(nTele)]] : [];
   document.documentElement.classList.add('k-' + kind);
-  document.getElementById('title').textContent = title; document.getElementById('member').textContent = member; document.getElementById('kicker').textContent = kicker;
+  document.getElementById('title').textContent = title; document.getElementById('member').textContent = member; document.getElementById('kicker').textContent = kicker + ' · Data as of ' + SITE.nice(SITE.dataDate(D.meta));
   if (p.get('filters')) { const n_ = document.createElement('span'); n_.className = 'filt-note'; n_.textContent = `Map filters not applied (${p.get('filters').slice(0, 120)}): every figure here counts all listed trials.`; document.getElementById('kicker').after(n_); }
   const S = document.getElementById('stats'); const period = String(D.meta.burden.period).replace('-', '–');
   if (kind === 'county') { const c = g.county; const b = c.b ? c.b[0] : null;
