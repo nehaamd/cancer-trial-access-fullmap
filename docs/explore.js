@@ -5,7 +5,7 @@ window.EXPLORE = (function () {
   const X = window.COMMUNITY, M = X.meta, CC = X.ccols, NAT = M.nat;
   const fmt = n => (n === null || n === undefined || isNaN(n)) ? '—' : Math.round(n).toLocaleString('en-US');
   const pct = v => (v === null || v === undefined || isNaN(v)) ? '—' : (Math.round(v * 10) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  const people = n => n === null || n === undefined ? '—' : n >= 1e6 ? (Math.round(n / 1e5) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' million' : n >= 10000 ? fmt(Math.round(n / 1000) * 1000) : fmt(n);
+  const people = n => n === null || n === undefined ? '—' : n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));   // the map's rule (index.html), so the same figure prints the same everywhere
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const cdLabel = cd => (cd === '0' || cd === '00' || cd === 0 || cd === 'AL') ? 'At large' : String(+cd);
   const stName = st => X.states[st] ? X.states[st].name : st;
@@ -32,12 +32,12 @@ window.EXPLORE = (function () {
 
   // ---- the local summary: a few plain sentences with their numbers (the same figures the map and brief show) ----
   function facts(pl) {
-    const F = []; const st = stateOf(pl); const n20 = pl.p * pl.l20 / 100, n0 = pl.p * pl.z60 / 100;
+    const F = []; const st = stateOf(pl); const n20 = pl.kind === 'nat' && pl.people_l20 ? pl.people_l20 : pl.p * pl.l20 / 100, n0 = pl.kind === 'nat' && pl.people_z60 ? pl.people_z60 : pl.p * pl.z60 / 100;   // nation: tract sums, as on the map
     const where = pl.kind === 'county' ? 'in ' + pl.n : pl.kind === 'district' ? 'in ' + pl.label : pl.kind === 'state' ? 'in ' + pl.name : 'in the United States';
     F.push({ id: 'short', num: pct(pl.l20), unit: '%', hot: pl.l20 >= 50,
-      text: `of residents 55 and older ${where} — about ${people(n20)} people — have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. ${n0 < 1 ? 'Everyone here has at least one listed trial within that distance.' : `${pct(pl.z60)}% (about ${people(n0)}) have none.`}`,
+      text: `of residents 55 and older ${where} — ${people(n20)} people — have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. ${n0 < 1 ? 'Everyone here has at least one listed trial within that distance.' : `${pct(pl.z60)}% (${people(n0)}) have none.`}`,
       cmp: pl.kind === 'nat' ? '' : `${st && pl.kind !== 'state' ? `${esc(st.name)}: ${pct(st.l20)}% · ` : ''}United States: ${pct(NAT.l20)}%`,
-      why: 'Twenty trials is the line this site uses for a reasonable choice: with fewer, a patient’s cancer type, stage and prior treatment usually leave nothing that fits. Sixty road-miles is about an hour and a half of driving in most places, each way, and trials often need repeated visits.' });
+      why: 'Twenty trials is an exploratory threshold chosen for this map, not a clinical cut-off: any one person qualifies for only some trials, so it asks whether there is some choice nearby. Distance is measured in road-miles; how long the drive takes varies with roads, traffic and where people live. Trials often need repeated visits.' });
     if (pl.kind === 'county') {
       F.push({ id: 'trials', num: fmt(pl.t), unit: pl.t === 1 ? ' trial' : ' trials', hot: pl.t === 0,
         text: pl.t ? `${pl.t === 1 ? 'has' : 'have'} a recruiting site in the county (${fmt(pl.f)} ${SITE.plural(pl.f, 'site')}); ${fmt(pl.t60)} within 60 road-miles of the county’s population center. The typical (median) resident 55+ has ${fmt(pl.tm)} within reach.` : `No listed trial has a recruiting site in the county. ${fmt(pl.t60)} ${SITE.plural(pl.t60, 'trial has', 'trials have')} a site within 60 road-miles of the county’s population center; the typical resident 55+ has ${fmt(pl.tm)} within reach.`,

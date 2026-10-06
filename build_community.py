@@ -61,6 +61,8 @@ def main():
     for d in districts.values(): d["ct"] = [d["ct"].get(t) for t in type_keys] if d["ct"] else None
     for g in states.values(): g["ct"] = [g["ct"].get(t) for t in type_keys] if g["ct"] else None
     nat["ct"] = [nat["ct"].get(t) for t in type_keys]
+    FI = load("findings.js")
+    if FI.get("meta", {}).get("pull") == meta.get("pull"): nat["people_l20"], nat["people_z60"] = FI["nat"].get("people_l20"), FI["nat"].get("people_z60")   # same tract sums the map's national card shows
     out = {"ccols": CCOLS, "meta": {"built": str(date.today()), "registry_data_timestamp": meta.get("registry_data_timestamp"), "pull": meta.get("pull"), "plan": meta.get("plan"), "trials": meta.get("trials"), "members_pull": meta.get("members_pull"),
                     "cosponsors_fetched": CO["meta"].get("fetched"), "cosponsors_note": CO["meta"].get("note"), "topics": CO["meta"].get("topics"), "inc_period": meta["burden"]["period"], "mort_period": MO["meta"]["period"],
                     "inc_median": BU["meta"]["median_all"], "mort_tertile": (MO["meta"].get("tertiles") or {}).get("all"), "types": types, "btypes": btypes, "nat": nat, "bills": bills, "roles": roles, "rucc_labels": RU["meta"]["labels"]},
