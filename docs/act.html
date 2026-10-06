@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What could help · Cancer Trial Access Map</title>
+<meta name="description" content="For any county, congressional district or state: what the data shows about access to cancer clinical trials, the policy proposals being discussed in plain language with their dated status and official sources, which barriers each would address, and ways to contribute.">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/act.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cancer Trial Access Map">
+<meta property="og:title" content="What could help · Cancer Trial Access Map">
+<meta property="og:description" content="Local findings, policy options in plain language with dated status and official links, and ways to contribute — for any county, district or state.">
+<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/act.html">
+<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  *{box-sizing:border-box} html{font-size:16px;scroll-behavior:smooth} html,body{margin:0;background:var(--paper);color:var(--ink);line-height:1.58;-webkit-font-smoothing:antialiased}
+  a{color:var(--gulf)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
+  main{max-width:1040px;margin:0 auto;padding:0 var(--gutter) 2rem;font-size:17px}
+  .hero{padding:2rem 0 1.2rem}
+  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
+  h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.025em;margin:0 0 .7rem;font-weight:700;max-width:26ch}
+  .lede{font-size:1.12rem;line-height:1.5;max-width:68ch;margin:0 0 1rem}
+  .search-wrap{position:relative;max-width:640px;margin:.4rem 0 0}
+  #q{width:100%;border:1.5px solid var(--rule-2);border-radius:999px;padding:.65rem 1rem .65rem 2.6rem;font-size:1rem;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%237C8794' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat .95rem center;color:var(--ink);font-family:inherit}
+  #q:focus{border-color:var(--gulf);outline:none;box-shadow:0 0 0 3px rgba(63,127,181,.18)}
+  #q-list{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule-2);border-radius:12px;box-shadow:0 12px 32px rgba(27,36,48,.18);z-index:30;overflow:hidden} #q-list[hidden]{display:none}
+  #q-list .opt{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.55rem .9rem;cursor:pointer;border-top:1px solid var(--rule)} #q-list .opt:first-child{border-top:0}
+  #q-list .opt.on,#q-list .opt:hover{background:#EEF4FA} #q-list .opt b{font-weight:600;display:block} #q-list .opt .sub{color:var(--ink-3);font-size:var(--fs-0);display:block} #q-list .none{padding:.7rem .9rem;color:var(--ink-2);font-size:var(--fs-1)}
+  .parts{display:flex;gap:.4rem;flex-wrap:wrap;margin:.8rem 0 0} .parts a{display:inline-block;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.3rem .8rem;font-size:var(--fs-0);color:var(--ink);text-decoration:none} .parts a:hover{border-color:var(--navy);color:var(--navy)}
+  section{padding:1.6rem 0 1rem;border-top:1px solid var(--rule)}
+  .label{display:inline-block;font-size:var(--fs-0);font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.15rem .6rem;border-radius:6px;margin:0 0 .5rem} .label.find{background:#E3ECF4;color:var(--navy)} .label.pol{background:#F3E9F7;color:#5B2A86} .label.act{background:#E8F3E8;color:#2F6B3A}
+  h2{font-size:var(--fs-4);line-height:1.15;letter-spacing:-.02em;margin:0 0 .5rem;font-weight:700;max-width:32ch}
+  h3{font-size:var(--fs-2);margin:1.2rem 0 .4rem;font-weight:700;letter-spacing:-.01em} h4{font-size:var(--fs-1);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin:.9rem 0 .3rem;font-weight:700}
+  p,li{max-width:72ch} ul,ol{padding-left:1.3rem} li{margin:.25rem 0}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.2rem;box-shadow:var(--shadow);margin:.8rem 0}
+  .facts{list-style:none;margin:0;padding:0} .facts li{display:grid;grid-template-columns:minmax(96px,auto) 1fr;gap:.1rem .9rem;align-items:baseline;padding:.55rem 0;border-top:1px solid var(--rule);max-width:none} .facts li:first-child{border-top:0;padding-top:0}
+  .facts .num{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;white-space:nowrap;line-height:1.1} .facts .num small{font-size:.85rem;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-left:.1rem} .facts li.hot .num{color:var(--rust)}
+  .facts p{margin:0;font-size:var(--fs-1)} .facts .cmp{color:var(--ink-3);font-size:var(--fs-0);margin-top:.15rem}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:.6rem 2rem;max-width:none} @media (max-width:760px){.two{grid-template-columns:1fr}} .two ul{margin:.2rem 0}
+  .bill{border-left:4px solid #5B2A86;padding-left:1rem} .bill .status{font-size:var(--fs-0);color:var(--ink-2);margin:.2rem 0 .6rem} .bill .status b{color:var(--ink)}
+  .chips{display:flex;gap:.4rem;flex-wrap:wrap;margin:.4rem 0} .chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.25rem .7rem;font-size:var(--fs-0);color:var(--ink);text-decoration:none} a.chip:hover{border-color:var(--navy);color:var(--navy)}
+  .role{font-size:var(--fs-0);font-weight:700;padding:.05rem .5rem;border-radius:999px;margin-left:.2rem} .role.yes{background:#E8F3E8;color:#2F6B3A} .role.no{background:var(--paper);color:var(--ink-3);border:1px solid var(--rule)}
+  .ind{display:inline-block;width:.6rem;height:.6rem;border-radius:50%}
+  .opt{border-top:1px solid var(--rule);padding:.9rem 0} .opt:first-of-type{border-top:0} .opt h3{margin:0 0 .2rem} .opt .meta{font-size:var(--fs-0);color:var(--ink-3);margin:0 0 .3rem}
+  .opt dl{display:grid;grid-template-columns:minmax(130px,max-content) 1fr;gap:.25rem 1rem;margin:.4rem 0 0;max-width:none} .opt dt{font-weight:700;font-size:var(--fs-1)} .opt dd{margin:0;font-size:var(--fs-1);color:var(--ink-2);max-width:70ch} @media (max-width:640px){.opt dl{grid-template-columns:1fr} .opt dd{margin-bottom:.3rem}}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.5rem 1rem;font-size:var(--fs-1);color:var(--ink);text-decoration:none;cursor:pointer;font-family:inherit;font-weight:600} .btn:hover{border-color:var(--navy);color:var(--navy)} .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)} .btn.primary:hover{background:#082B43;color:#fff}
+  .btns{display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0}
+  .aud{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:.9rem;max-width:none} .aud .card{margin:0} .aud h3{margin:0 0 .3rem;font-size:var(--fs-2)} .aud ul{margin:.3rem 0 0;padding-left:1.2rem} .aud li{font-size:var(--fs-1);max-width:none}
+  .small{font-size:var(--fs-0);color:var(--ink-2)} .note{font-size:var(--fs-0);color:var(--ink-3);max-width:80ch}
+  .ok{color:#2F6B3A;font-weight:600}
+  @media (max-width:640px){main{font-size:16px} .facts li{grid-template-columns:1fr}}
+  @media print{.search-wrap,.parts,.btns,.btn{display:none}}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="act.html" aria-current="page">What could help</a><a href="findings.html">Key findings</a><a href="find.html">Trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html#methods">Methods &amp; data</a></nav>
+</header>
+<main>
+  <div class="hero">
+    <p class="kicker" id="kicker">What could help, and what can I do?</p>
+    <h1 id="h1">What could help?</h1>
+    <p class="lede" id="lede">Three parts, kept separate so that you can form your own view: <b>what the data shows</b> for a place, with its sources and limits; <b>the policy options</b> being discussed, in plain language, with their dated status, official links, and the barriers each would and would not address; and <b>ways to contribute</b> for patients, clinicians and organizations.</p>
+    <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Change place: county, ZIP code, district (“KY-2”), state or member of Congress" aria-label="Find a place" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><div id="q-list" role="listbox" hidden></div></div>
+    <nav class="parts" aria-label="Parts of this page"><a href="#findings">1 · What the data shows</a><a href="#policy">2 · Policy options</a><a href="#contribute">3 · Ways to contribute</a></nav>
+  </div>
+  <section id="findings"><span class="label find">Part 1 · Findings · descriptive</span><div id="findings-body"></div></section>
+  <section id="policy"><span class="label pol">Part 2 · Policy options · proposals and arguments made by others</span><div id="policy-body"></div></section>
+  <section id="contribute"><span class="label act">Part 3 · Ways to contribute</span><div id="contribute-body"></div></section>
+</main>
+<footer class="site">
+<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<script src="site.js"></script>
+<script src="community.js"></script>
+<script src="explore.js"></script>
+<script>
+(function () {
+  const E = window.EXPLORE, X = E.X, M = E.M, NAT = E.NAT, esc = E.esc, fmt = E.fmt, pct = E.pct, people = E.people;
+  const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull }; document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
+  const p0 = new URLSearchParams(location.search); let place = E.fromParams(p0);
+  if (!place && /^\d{5}$/.test(p0.get('zip') || '')) E.loadZip().then(Z => { const cf = Z[p0.get('zip')]; if (cf && X.counties[cf]) { place = E.county(cf); render(); } });
+  E.wireSearch(document.getElementById('q'), document.getElementById('q-list'), e => { place = E.pickToPlace(e); const q = E.param(place); history.pushState(null, '', 'act.html' + (q ? '?' + q : '')); render(); document.getElementById('findings').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  window.addEventListener('popstate', () => { place = E.fromParams(new URLSearchParams(location.search)); render(); });
+  const party = p => p === 'R' ? 'var(--rep)' : p === 'D' ? 'var(--dem)' : 'var(--ind)';
+  const partyName = p => p === 'R' ? 'Republican' : p === 'D' ? 'Democrat' : p === 'I' ? 'Independent' : p || '';
+  const roleChip = r => r ? `<span class="role yes">${esc(E.ROLE[r] || r)}</span>` : `<span class="role no">not a cosponsor</span>`;
+  const bills = M.bills, HB = Object.keys(bills).filter(k => bills[k].type === 'hr'), SB = Object.keys(bills).filter(k => bills[k].type === 's');
+  const niceD = d => d ? SITE.nice(d, 'long') : '—';
+
+  function render() {
+    const pl = place || E.nation(); const L = E.links(pl); const where = pl.kind === 'county' ? pl.n : pl.kind === 'nat' ? 'the United States' : pl.label;
+    document.title = (place ? pl.label + ' · ' : '') + 'What could help · Cancer Trial Access Map';
+    document.getElementById('h1').textContent = place ? `What could help in ${pl.kind === 'district' ? pl.label : pl.label.replace(/, [A-Z]{2}$/, '')}?` : 'What could help?';
+    document.getElementById('kicker').textContent = place ? (pl.kind === 'county' ? `${/ County$/.test(pl.n) ? 'County' : 'County equivalent'} · ${E.stName(pl.st)}` : pl.kind === 'district' ? `Congressional district · ${M.plan}` : 'State') : 'What could help, and what can I do?';
+    // ---- Part 1 ----
+    const F = E.facts(pl);
+    document.getElementById('findings-body').innerHTML = `<h2>What the data shows for ${esc(where)}</h2>
+      <p class="small">Registry data as of ${SITE.nice(E.dataDate(), 'long')}. These are the same figures the map and the printable brief show. ${place ? `<a href="${L.community}">Your community</a> explains each measure; ` : ''}<a href="learn.html#measure">What this map measures</a>.</p>
+      <div class="card"><ul class="facts">${F.map(f => `<li class="${f.hot ? 'hot' : ''}"><div class="num">${f.num}<small>${f.unit}</small></div><div><p>${f.text}</p>${f.cmp ? `<p class="cmp">${f.cmp}</p>` : ''}</div></li>`).join('')}</ul></div>
+      <div class="two"><div><h4>Sources</h4><ul class="small">
+        <li>ClinicalTrials.gov (NIH/NLM), registry data of ${SITE.nice(E.dataDate())}: recruiting interventional treatment trials with a US site, open to some adults 55+.</li>
+        <li>US Census Bureau: American Community Survey 2023 five-year estimates (residents 55+ by census tract); TIGER/Line 2025 roads; 2020 tract-to-district relationship file (${esc(M.plan)}).</li>
+        <li>USDA Economic Research Service: Rural-Urban Continuum Codes, 2023.</li>
+        <li>NCI/CDC State Cancer Profiles: cancer death rates ${esc(M.mort_period)} and incidence ${esc(M.inc_period)}, age-adjusted.</li>
+        <li>National Cancer Institute: list of NCI-designated cancer centers.</li>
+        <li>Library of Congress bill-status data (govinfo) for cosponsors, fetched ${SITE.nice(M.cosponsors_fetched)}; unitedstates/congress-legislators for members.</li></ul></div>
+      <div><h4>Limits</h4><ul class="small">
+        <li>Trials are counted, not matched: nobody’s eligibility is assessed.</li>
+        <li>“Recruiting” is the registry’s own status, taken at its word; it can lag reality by months.</li>
+        <li>Distance is the only barrier measured. Cost, time, eligibility, referral and insurance are not in these figures. <a href="learn.html#leaves-out">What the map leaves out.</a></li>
+        <li>${pl.kind === 'county' ? 'County figures can turn on one trial: open or close one site and the share short can move by half the county.' : pl.kind === 'district' ? 'A district figure averages very different places; one trial opening or closing can move it by many points.' : 'State and national figures are stable from week to week; county and district figures can move when one trial opens or closes.'}</li>
+        <li>Site counts are distinct registry names; one hospital can appear under several.</li>
+        <li>Road distances are checked against published city-pair distances, not yet against an independent routing service.</li></ul></div></div>`;
+    // ---- Part 2 ----
+    const del = E.delegation(pl);
+    const delegation = del ? `<h4>Where ${pl.kind === 'state' ? esc(pl.name) + '’s' : 'your'} delegation stands · as of ${SITE.nice(M.cosponsors_fetched)}</h4>
+      <div class="chips">${del.house.map(d => HB.map(b => `<span class="chip"><span class="ind" style="background:${party(d.party)}"></span>${d.member ? esc(d.member) : 'vacant'} (${esc(d.label)}) ${d.member ? roleChip(E.roleOf(d.bio, b)) : ''}</span>`).join('')).join('')}${del.senators.map(s => SB.map(b => `<span class="chip"><span class="ind" style="background:${party(s.party)}"></span>Sen. ${esc(s.name)} ${roleChip(E.roleOf(s.bio, b))}</span>`).join('')).join('')}</div>
+      <p class="note">Cosponsorship as recorded in the Library of Congress bill-status feed on the date shown; members who withdrew are excluded. Verify on congress.gov before citing it in a meeting: ${HB.concat(SB).map(b => `<a href="${esc(bills[b].cosponsors_url)}" target="_blank" rel="noopener">${esc(bills[b].label)} cosponsors</a>`).join(' · ')}.</p>` : `<h4>In Congress</h4><p class="small">${HB.concat(SB).map(b => `${esc(bills[b].label)}: ${fmt(bills[b].n_cosponsors)} ${SITE.plural(bills[b].n_cosponsors, 'cosponsor')} (${bills[b].parties.D} D, ${bills[b].parties.R} R${bills[b].parties.I ? ', ' + bills[b].parties.I + ' I' : ''}) as of ${SITE.nice(M.cosponsors_fetched)}`).join(' · ')}. Choose a place above to see its delegation.</p>`;
+    const billCards = HB.concat(SB).map(b => { const B = bills[b]; return `<div class="status"><b>${esc(B.label)}</b> — introduced ${niceD(B.introduced)} by ${B.type === 'hr' ? 'Rep.' : 'Sen.'} ${esc(B.sponsor)}. Latest action, ${niceD(B.latest_action && B.latest_action.date)}: ${esc((B.latest_action && B.latest_action.text || '').replace(/, and in addition to the Committee on Ways and Means, for a period.*$/, ' and the Committee on Ways and Means').replace(/\.$/, ''))}. <b>${fmt(B.n_cosponsors)}</b> ${SITE.plural(B.n_cosponsors, 'cosponsor')} (${B.parties.D} Democrat${B.parties.D === 1 ? '' : 's'}, ${B.parties.R} Republican${B.parties.R === 1 ? '' : 's'}${B.parties.I ? `, ${B.parties.I} Independent` : ''}) as of ${SITE.nice(M.cosponsors_fetched)}. <a href="${esc(B.url)}" target="_blank" rel="noopener">Bill page on congress.gov</a> · <a href="https://www.congress.gov/bill/${B.congress}th-congress/${B.type === 'hr' ? 'house-bill' : 'senate-bill'}/${B.number}/text" target="_blank" rel="noopener">text</a></div>`; }).join('');
+    document.getElementById('policy-body').innerHTML = `<h2>Policy options being discussed</h2>
+      <p class="small">This section describes proposals and the arguments made for them, and lists the questions a reader might ask. It does not recommend any of them. Status lines carry the date they were checked.</p>
+      <div class="card bill"><h3 style="margin-top:0">The Clinical Trial Modernization Act · tracked by this site</h3>${billCards}
+        <div class="two"><div><h4>What it would do · in plain language</h4><ul>
+          <li><b>Grants for outreach.</b> Federal grants and contracts for community education, recruitment and outreach about drug and device trials, including training clinicians as investigators and partnering with community organizations; priority for multilingual materials and for areas such as tribal communities (section 3).</li>
+          <li><b>Let sponsors pay participants’ costs.</b> A safe harbor in the federal anti-kickback law so that a trial’s sponsor can reimburse travel, transportation and meals, and provide digital health tools, when offered to all participants alike (section 4).</li>
+          <li><b>Let sponsors cover cost-sharing.</b> Manufacturers could pay participants’ copayments and deductibles for trial-related care, with safeguards such as consent, ethics-board oversight and enrollment caps (section 5).</li>
+          <li><b>Tax treatment.</b> Up to $2,000 a year of payments to a trial participant would not count as taxable income (section 6).</li>
+          <li>It defines “underrepresented population” by NIH and FDA definitions (section 2) and keeps other anti-kickback protections in place (section 7).</li></ul>
+          <p class="small">Summary of the bill as introduced; the <a href="${esc(bills[HB[0]].url)}/text" target="_blank" rel="noopener">official text</a> governs.</p></div>
+        <div><h4>Which barriers it addresses</h4><ul>
+          <li><span class="ok">Cost of taking part</span> — travel, meals, lodging, copayments — by letting sponsors pay without legal exposure.</li>
+          <li><span class="ok">Repeated visits</span>, indirectly, through reimbursed travel and digital tools for remote check-ins.</li>
+          <li><span class="ok">Information and referral</span> in underserved and rural communities, through outreach grants.</li></ul>
+          <h4>Which it leaves</h4><ul>
+          <li><b>Distance itself.</b> It does not open new trial sites or fund research staff in nonmetro hospitals and practices; the map would look the same the day it passed.</li>
+          <li><b>Eligibility rules</b> and the accuracy of the registry’s “recruiting” status.</li>
+          <li><b>Time off work and caregivers</b>, beyond what reimbursement can buy.</li></ul>
+          <h4>Questions a reader might ask</h4><ul class="small">
+          <li>Does reimbursing costs change who enrolls, and by how much? What evidence is there from trials that already do it?</li>
+          <li>What would the grants and the tax exclusion cost, and who pays?</li>
+          <li>Does a safe harbor for payments risk inducing people to join a trial that is not right for them? What do the safeguards cover?</li>
+          <li>How would outreach grants reach communities that have no trial site at all?</li></ul></div></div>
+        ${delegation}</div>
+      <h3>Other approaches often discussed · not tracked as bills here</h3>
+      <div class="card">
+        <div class="opt"><h3>Bring trials to community hospitals and practices</h3><p class="meta">Ongoing federal program · NCI Community Oncology Research Program (NCORP), since 2014, and the National Clinical Trials Network</p>
+          <dl><dt>What it is</dt><dd>Federal funding for community sites, including rural ones, to open NCI-sponsored trials, with research staff and training. The approach the map most directly measures: a new site changes the picture.</dd>
+          <dt>Addresses</dt><dd>Distance and repeated visits (care closer to home); referral (local oncologists run the trials).</dd><dt>Leaves</dt><dd>Industry trials, which choose their own sites; eligibility; the cost of staff once a grant ends.</dd>
+          <dt>Read more</dt><dd><a href="https://ncorp.cancer.gov/" target="_blank" rel="noopener">ncorp.cancer.gov</a></dd></dl></div>
+        <div class="opt"><h3>Trials with decentralized elements</h3><p class="meta">FDA final guidance, September 2024 · “Conducting Clinical Trials With Decentralized Elements”</p>
+          <dl><dt>What it is</dt><dd>Guidance on running some trial visits by telehealth, at local clinics or laboratories, or at home, instead of at the research site.</dd>
+          <dt>Addresses</dt><dd>Repeated visits and distance for the parts of a trial that do not need the research site.</dd><dt>Leaves</dt><dd>Treatments that must be given at a specialized center; sponsor willingness; the registry still lists a site, so the map cannot see which trials allow this.</dd>
+          <dt>Read more</dt><dd><a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/conducting-clinical-trials-decentralized-elements" target="_blank" rel="noopener">FDA guidance page</a></dd></dl></div>
+        <div class="opt"><h3>Broader eligibility criteria</h3><p class="meta">FDA final guidance, December 2025 · “Enhancing Participation in Clinical Trials — Eligibility Criteria, Enrollment Practices, and Trial Designs”; recommendations from ASCO and Friends of Cancer Research</p>
+          <dl><dt>What it is</dt><dd>Encouraging sponsors to drop exclusions that are not scientifically or medically necessary — for example on age, prior cancers, HIV, or organ function — so that more of the people who have a disease can join its trials.</dd>
+          <dt>Addresses</dt><dd>Eligibility: the gap between “a trial nearby” and “a trial for me”.</dd><dt>Leaves</dt><dd>Distance, cost and referral; adoption is up to each sponsor and protocol.</dd>
+          <dt>Read more</dt><dd><a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/enhancing-diversity-clinical-trial-populations-eligibility-criteria-enrollment-practices-and-trial" target="_blank" rel="noopener">FDA guidance page</a></dd></dl></div>
+        <div class="opt"><h3>Coverage of routine costs</h3><p class="meta">In force · Medicare since 2000; state Medicaid programs since January 2022 (Consolidated Appropriations Act, 2021); most private plans under the Affordable Care Act</p>
+          <dl><dt>What it is</dt><dd>Insurers pay for the routine care a participant would have needed anyway — visits, standard drugs, scans — while the sponsor pays for the experimental treatment and research-only tests.</dd>
+          <dt>Addresses</dt><dd>Cost of medical care during a trial.</dd><dt>Leaves</dt><dd>Travel, lodging, meals and lost wages (which the tracked bill targets); whether a site is in-network; the uninsured.</dd>
+          <dt>Read more</dt><dd><a href="https://www.cancer.gov/research/participate/clinical-trials/paying" target="_blank" rel="noopener">NCI: paying for clinical trials</a> · <a href="https://www.congress.gov/bill/116th-congress/house-bill/133" target="_blank" rel="noopener">Consolidated Appropriations Act, 2021 (H.R. 133)</a></dd></dl></div>
+        <div class="opt"><h3>Navigation and referral</h3><p class="meta">Ongoing services · NCI Cancer Information Service; patient navigators at cancer programs</p>
+          <dl><dt>What it is</dt><dd>People whose job is to find trials a patient might fit, check eligibility with the study team, and work through logistics. The NCI’s service is free: 1-800-4-CANCER.</dd>
+          <dt>Addresses</dt><dd>Information and referral; some of the logistics.</dd><dt>Leaves</dt><dd>Whether a fitting trial exists within reach at all.</dd>
+          <dt>Read more</dt><dd><a href="https://www.cancer.gov/contact" target="_blank" rel="noopener">NCI Cancer Information Service</a> · <a href="https://www.cancer.gov/research/participate/clinical-trials-search" target="_blank" rel="noopener">NCI trial search</a></dd></dl></div>
+      </div>
+      <p class="note">Statuses were checked when this page was written (October 2026) and the bill lines are refreshed weekly from the Library of Congress feed. Anything else may have moved; the links go to the official sources.</p>`;
+    // ---- Part 3 ----
+    const house = del ? del.house.filter(d => d.member) : [];
+    document.getElementById('contribute-body').innerHTML = `<h2>Ways to contribute</h2>
+      <p class="small">The findings above are descriptive; the arguments in Part 2 are other people’s. What you do with them is yours. These are ways people have used material like this.</p>
+      <div class="aud">
+        <div class="card"><h3>Anyone</h3><ul>
+          <li><b>Contact your representatives.</b> ${house.length ? `Your House ${SITE.plural(house.length, 'member is', 'members are')} ${house.map(d => esc(d.member) + ' (' + esc(d.label) + ')').join(' and ')}${del.senators.length ? '; your senators are ' + del.senators.map(s => esc(s.name)).join(' and ') : ''}. ` : ''}<a href="https://www.house.gov/representatives/find-your-representative" target="_blank" rel="noopener">Find your representative</a> · <a href="https://www.senate.gov/senators/senators-contact.htm" target="_blank" rel="noopener">Contact a senator</a>. A short note that names your county and one figure from Part 1 is enough.</li>
+          <li><b>Bring the brief to a meeting.</b> <a href="${L.brief}">The one-page printable brief${place ? ' for ' + esc(where) : ''}</a> carries the figures, the map and an editable ask.</li>
+          <li><b>Share this page.</b> <button class="btn" type="button" id="copy">Copy link</button> <span id="copied" class="small"></span></li>
+          <li><b>Report something that looks wrong.</b> A trial that has closed, a site in the wrong county, a sentence that misleads: <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues/new?title=${encodeURIComponent('Possible error: ' + (place ? pl.label : 'general'))}" target="_blank" rel="noopener">open an issue</a>. Corrections change the data for everyone.</li></ul></div>
+        <div class="card"><h3>Patients and families</h3><ul>
+          <li>Ask your care team whether a trial might fit, and whether they refer to one. Bring NCT numbers from the <a href="find.html">ZIP finder</a>.</li>
+          <li>Call the NCI Cancer Information Service, <a href="tel:1-800-422-6237">1-800-4-CANCER</a>, which checks eligibility and logistics for free.</li>
+          <li>Ask a study team about travel, lodging and telehealth support before deciding; many trials and foundations help with costs.</li></ul></div>
+        <div class="card"><h3>Clinicians and practices</h3><ul>
+          <li>Ask every patient with a new diagnosis or a change in treatment whether a trial has been considered; most people join because their own oncologist mentioned one.</li>
+          <li>If your practice opens no trials, ask what it would take to affiliate with an <a href="https://ncorp.cancer.gov/" target="_blank" rel="noopener">NCORP</a> community site or a cooperative group.</li>
+          <li>If your practice runs trials, keep the site status on ClinicalTrials.gov current; this map, and patients, take it at its word.</li>
+          <li>Use the <a href="${L.map}">map</a> in tumor boards or teaching to show where your patients come from and what is within their reach.</li></ul></div>
+        <div class="card"><h3>Organizations, teachers and advocates</h3><ul>
+          <li>Run a session with the <a href="learn.html#explore">guided explorations</a>; every view has a “Copy link to this view” button so a group starts from the same picture.</li>
+          <li>Link to <a href="${L.community}">Your community</a> for your area rather than copying figures, so readers always see the current data and its date.</li>
+          <li>Ask for a check of your local figures by <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">opening an issue</a>; the method and every data file are public.</li>
+          <li>Keep descriptive findings and policy positions separate when you present them, as this page does.</li></ul></div>
+      </div>
+      <div class="btns"><a class="btn primary" href="${L.map}">Explore the map</a>${place ? `<a class="btn" href="${L.community}">Your community</a>` : '<a class="btn" href="community.html">Your community</a>'}<a class="btn" href="learn.html">Understand clinical trials</a></div>`;
+    document.getElementById('copy').addEventListener('click', () => { navigator.clipboard.writeText(location.href).then(() => { document.getElementById('copied').textContent = 'Copied.'; setTimeout(() => document.getElementById('copied').textContent = '', 2000); }).catch(() => { document.getElementById('copied').textContent = location.href; }); });
+  }
+  render();
+})();
+</script>
+</body></html>

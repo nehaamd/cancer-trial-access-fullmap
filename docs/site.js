@@ -41,7 +41,34 @@ window.SITE = (function () {
     const named = namedCancers(T, j); return primary + (named.length ? ': names ' + named.join(', ') : ' (cancers not named individually)');
   }
 
+const TEACH = {
+    breast: 'Breast cancer trials are usually written for one subtype — hormone-receptor-positive, HER2-positive or triple-negative — and for a stage or setting (before surgery, after surgery, or metastatic). A county with 20 breast trials may have none for a given person.',
+    lung: 'Lung cancer trials separate small-cell from non-small-cell disease and, within non-small-cell, often require a specific driver mutation (EGFR, ALK, KRAS G12C and others) or a PD-L1 level. Stage and prior treatment narrow the list further.',
+    colorectal: 'For colorectal cancer, stage, biomarkers such as mismatch-repair (MSI) status and RAS or BRAF mutations, and prior treatment lines determine which trials might be relevant. The count here is every colorectal trial, not the ones that would fit one patient.',
+    prostate: 'Prostate trials are divided by whether the cancer still responds to hormone therapy (castration-sensitive or castration-resistant), whether it has spread, and prior treatments. A local trial for one setting may not apply to another.',
+    leukemia: 'Leukemia trials depend on the type (acute or chronic, myeloid or lymphoid), genetic features of the disease and whether it is newly diagnosed or has relapsed. Many open only at centers with transplant programs.',
+    lymphoma: 'Lymphoma trials are written for specific subtypes (Hodgkin, diffuse large B-cell, follicular, mantle cell and others) and for newly diagnosed or relapsed disease. CAR-T and bispecific-antibody trials mostly open at large centers.',
+    myeloma: 'Myeloma trials specify how many prior lines of treatment a patient has had and which drug classes they have received. Early trials of cell therapies are concentrated at a few centers.',
+    pancreatic: 'Pancreatic cancer trials separate resectable from locally advanced and metastatic disease and often require good performance status. Many are early-phase studies at academic centers.',
+    melanoma_skin: 'Melanoma trials depend on stage, BRAF status and prior immunotherapy. Trials for non-melanoma skin cancers are fewer and usually for advanced disease.',
+    gynecologic: 'Ovarian, uterine and cervical cancers are different diseases with different trials; within ovarian cancer, BRCA status and platinum sensitivity decide eligibility for many studies.',
+    brain_cns: 'Brain tumor trials are written for a tumor type and grade (glioblastoma, lower-grade glioma, meningioma) and often for newly diagnosed or recurrent disease separately. Most open at neuro-oncology centers.',
+    mds_mpn: 'Myelodysplastic syndromes and myeloproliferative neoplasms are uncommon, and their trials are split by risk group and genetic features. Most open at academic centers, so distance matters more for these diseases.',
+    sarcoma: 'Sarcomas are dozens of rare diseases. A trial for one subtype rarely applies to another, and most open at a handful of referral centers.',
+    head_neck: 'Head and neck cancer trials depend on the site (mouth, throat, larynx), HPV status and whether the cancer is newly diagnosed, recurrent or metastatic.',
+    kidney: 'Kidney cancer trials depend on the cell type (clear cell or not), risk group and prior immunotherapy or targeted therapy.',
+    liver_biliary: 'Liver and bile-duct cancers are separate diseases; liver cancer trials also depend on how well the liver itself is working (Child-Pugh class) and on prior treatment.',
+    gastric_esophageal: 'Stomach and esophageal cancer trials depend on location, HER2 and PD-L1 status, and whether the cancer can be removed surgically.',
+    bladder_urothelial: 'Bladder cancer trials separate non-muscle-invasive from muscle-invasive and metastatic disease; some require specific genetic alterations (such as FGFR).',
+    neuroendocrine_endocrine: 'Neuroendocrine and endocrine cancers are uncommon and varied; trials often specify the organ of origin, grade and receptor imaging results.',
+    other_named: 'Rarer cancers have few trials each, and most open only at specialized centers, so the distance to one is often the whole story.',
+    multi: 'Basket and umbrella trials enroll several cancers that share a target or a biomarker. They widen what counts as “a trial near me”, but each still has its own eligibility rules.',
+    other_unclassified: 'A few studies name a condition the classifier could not place; treat their count with caution.'
+  };
+  const teach = type => TEACH[type] || 'Stage, biomarkers and prior treatment further determine which trials might be relevant; a count of trials is a count of doors, not of doors that will open for one person.';
+  // One sentence for the distance figures: a distance on the map is a trip that participation may require many times.
+  const TRIPS = 'Participation may require this trip many times: treatment trials often need visits every one to three weeks at first, plus extra scans and blood tests.';
   const plural = (n, one, many) => n === 1 ? one : (many || one + 's');
   function ordinal(n) { const v = n % 100, s = ['th', 'st', 'nd', 'rd']; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
-  return { USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, ordinal };
+  return { TEACH, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, ordinal };
 })();

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understand clinical trials · Cancer Trial Access Map</title>
+<meta name="description" content="What clinical trials are, what the phases mean, how a trial reaches a hospital, why “recruiting” is not the same as “available for me”, what this map measures and what it leaves out — as plain questions and answers, with guided explorations of the map.">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/learn.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cancer Trial Access Map">
+<meta property="og:title" content="Understand clinical trials · Cancer Trial Access Map">
+<meta property="og:description" content="Plain questions and answers about clinical trials, and guided explorations of where cancer research is and is not within reach.">
+<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/learn.html">
+<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  *{box-sizing:border-box} html{font-size:16px;scroll-behavior:smooth} html,body{margin:0;background:var(--paper);color:var(--ink);line-height:1.58;-webkit-font-smoothing:antialiased}
+  a{color:var(--gulf)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
+  main{max-width:1040px;margin:0 auto;padding:0 var(--gutter) 2rem;font-size:17px}
+  .hero{padding:2rem 0 1.2rem;border-bottom:1px solid var(--rule)}
+  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
+  h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.025em;margin:0 0 .7rem;font-weight:700;max-width:26ch}
+  .lede{font-size:1.15rem;line-height:1.5;max-width:66ch;margin:0 0 1rem}
+  .toc{display:flex;gap:.4rem;flex-wrap:wrap;margin:.2rem 0 0} .toc a{display:inline-block;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.3rem .8rem;font-size:var(--fs-0);color:var(--ink);text-decoration:none} .toc a:hover{border-color:var(--navy);color:var(--navy)}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:0 2.5rem;align-items:start} @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  section{padding:1.8rem 0 1rem;border-bottom:1px solid var(--rule)} section:last-of-type{border-bottom:0}
+  h2{font-size:var(--fs-4);line-height:1.15;letter-spacing:-.02em;margin:0 0 .6rem;font-weight:700;max-width:30ch} h2 .n{color:var(--ink-3);font-weight:500;margin-right:.3rem}
+  h3{font-size:var(--fs-1);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin:1.2rem 0 .4rem;font-weight:700}
+  p,li{max-width:70ch} ul,ol{padding-left:1.3rem} li{margin:.25rem 0}
+  .map-note{border-left:3px solid var(--sky);background:#EEF4FA;padding:.5rem .9rem;border-radius:0 8px 8px 0;margin:.9rem 0;font-size:var(--fs-1)} .map-note b{color:var(--navy)}
+  .aside{position:sticky;top:1rem;margin-top:1.8rem}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);margin:0 0 1rem} .card h4{margin:0 0 .4rem;font-size:var(--fs-2)} .card p{font-size:var(--fs-1);color:var(--ink-2);margin:.3rem 0} .card .btn{margin-top:.5rem}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.5rem 1rem;font-size:var(--fs-1);color:var(--ink);text-decoration:none;cursor:pointer;font-weight:600} .btn:hover{border-color:var(--navy);color:var(--navy)}
+  .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)} .btn.primary:hover{background:#082B43;color:#fff}
+  dl.gloss{display:grid;grid-template-columns:minmax(120px,max-content) 1fr;gap:.35rem 1rem;max-width:none} dl.gloss dt{font-weight:700} dl.gloss dd{margin:0;color:var(--ink-2);max-width:70ch} @media (max-width:640px){dl.gloss{grid-template-columns:1fr} dl.gloss dd{margin:0 0 .4rem}}
+  .phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:.7rem;margin:.8rem 0;max-width:none} .ph{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:.8rem .95rem;box-shadow:var(--shadow)} .ph b{display:block;font-size:var(--fs-2);margin-bottom:.2rem} .ph p{margin:0;font-size:var(--fs-0);color:var(--ink-2);max-width:none}
+  .tours{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:.9rem;margin:.8rem 0 0;max-width:none}
+  .tour{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.5rem;border-top:4px solid var(--navy)}
+  .tour h4{margin:0;font-size:var(--fs-2);line-height:1.3} .tour p{margin:0;font-size:var(--fs-1);color:var(--ink-2);max-width:none} .tour ol{margin:.2rem 0 0;padding-left:1.2rem;font-size:var(--fs-1)} .tour ol li{max-width:none} .tour .btn{align-self:flex-start;margin-top:auto}
+  .small{font-size:var(--fs-0);color:var(--ink-2)}
+  @media (max-width:640px){main{font-size:16px}}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="community.html">Your community</a><a href="learn.html" aria-current="page">Understand trials</a><a href="act.html">What could help</a><a href="findings.html">Key findings</a><a href="find.html">Trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html#methods">Methods &amp; data</a></nav>
+</header>
+<main>
+  <div class="hero">
+    <p class="kicker">Understand clinical trials</p>
+    <h1>Questions about clinical trials, answered plainly</h1>
+    <p class="lede">You do not need any of this to use the map. It is here for anyone who wants to know what the words mean, how a trial reaches a hospital or practice, and what this map does and does not measure. At the end are guided explorations that open the map on a view and suggest what to look for.</p>
+    <nav class="toc" aria-label="Questions on this page"><a href="#what">What is a clinical trial?</a><a href="#phases">What do the phases mean?</a><a href="#available">How does a trial reach a hospital?</a><a href="#recruiting">Why “recruiting” ≠ “available for me”</a><a href="#measure">What does this map measure?</a><a href="#leaves-out">Which barriers does it leave out?</a><a href="#words">What do these words mean?</a><a href="#explore">Guided explorations</a></nav>
+  </div>
+  <div class="grid">
+  <div>
+  <section id="what">
+    <h2>What is a clinical trial?</h2>
+    <p>A clinical trial is a research study in which people volunteer to help test a medical approach under a written plan, called a protocol, that an independent ethics board (an institutional review board, or IRB) has reviewed. The approach might be a new drug, a new combination or dose of existing drugs, a type of surgery or radiation, a device, or a different way of delivering care.</p>
+    <p>A <b>treatment trial</b> asks whether a new approach works as well as or better than the current standard treatment, and at what cost in side effects. In cancer, most treatment trials compare the new approach with the best standard treatment, or add it to the standard treatment. Trials in which some participants receive only a placebo are uncommon in cancer; when a placebo is used, it is usually given on top of standard care.</p>
+    <p>Taking part is voluntary. Participants sign an informed-consent form that explains the purpose, the schedule of visits and tests, the known risks, and the alternatives, and they can leave at any time. Every standard cancer treatment in use today was once tested this way, and for some people a trial is the only route to a treatment that is not yet approved.</p>
+    <div class="map-note"><b>On this map:</b> a trial counts if ClinicalTrials.gov lists it as an interventional study whose primary purpose is treatment, recruiting, with at least one US site, and open to at least some adults aged 55 or older. Observational studies, screening and prevention studies, and studies that do not accept anyone 55 or older are not counted. The registry’s own labels decide, and they are not perfect: a few supportive-care studies, such as trials of exercise or treatments for pain, carry the treatment label and are counted.</div>
+  </section>
+  <section id="phases">
+    <h2>What do the phases mean?</h2>
+    <p>Phases describe how far along a treatment is in testing, not how good it is. A later phase means more is known about it.</p>
+    <div class="phases">
+      <div class="ph"><b>Phase 1</b><p>First use in people. Small (often 20–100 participants), looking for a safe dose and the main side effects. Often open to several cancers at once. Mostly at academic centers.</p></div>
+      <div class="ph"><b>Phase 2</b><p>Does the treatment show activity against a specific cancer, and what are its side effects at the chosen dose? Dozens to a few hundred participants.</p></div>
+      <div class="ph"><b>Phase 3</b><p>Compared head-to-head with the standard treatment, usually by random assignment, in hundreds to thousands of people at many sites, including community practices. Results change standard care.</p></div>
+      <div class="ph"><b>Phase 4</b><p>After approval: longer-term safety and how the treatment works in everyday practice.</p></div>
+    </div>
+    <p>Many trials span two phases (“Phase 1/2”, “Phase 2/3”). Studies of procedures, devices, radiation techniques or behavioral programs are often “not phased”, because phases were defined for drugs.</p>
+    <div class="map-note"><b>On this map:</b> the phase filter under <em>Filter trials</em> recomputes every figure for the phases you keep. Early-phase trials are concentrated at large centers, so filtering to Phase 1 usually makes the map far emptier than filtering to Phase 3.</div>
+  </section>
+  <section id="available">
+    <h2>How does a trial become available at a hospital or practice?</h2>
+    <p>A trial begins with a <b>sponsor</b> — a pharmaceutical company, a National Cancer Institute cooperative group, a university, or a hospital — that writes the protocol and chooses where it will run. A hospital or practice becomes a <b>site</b> only after a good deal of work: a physician agrees to serve as investigator, research nurses or coordinators are assigned, the pharmacy and laboratory confirm they can handle the study drugs and tests, an ethics board approves the protocol, a contract and budget are signed, and staff are trained. Opening one trial at one site commonly takes months.</p>
+    <p>Sponsors choose sites differently. Companies tend to pick sites that can enroll quickly, which favors large centers in large cities. The National Cancer Institute runs networks built to spread trials more widely: the National Clinical Trials Network of cooperative groups, and the <b>NCI Community Oncology Research Program (NCORP)</b>, which funds community hospitals and practices, including rural ones, to open federally sponsored trials. Each site reports whether it is open to the sponsor, and the sponsor updates the public record on ClinicalTrials.gov.</p>
+    <p>This is why access is uneven. Research staff and infrastructure cost money that the income from patient care rarely covers. A small practice can keep only a few trials open. Trials for rare cancers gather where those patients are referred. And a site that opens a trial may still enroll no one for months.</p>
+    <div class="map-note"><b>On this map:</b> the stars are <em>NCI-designated cancer centers</em>, the places with the widest range of trials. “Where would a new site help?” is a research prototype that asks where a new site would bring the most people within reach; it is not linked from the menu while it is being reviewed.</div>
+  </section>
+  <section id="recruiting">
+    <h2>Why does “recruiting” differ from “available for me”?</h2>
+    <p><b>Recruiting</b> is a status in the public registry: the sponsor says the study is open and the site is enrolling. It is reported by the sponsor, it is not independently checked, and it can lag reality by months in either direction — a site may be listed as recruiting after it has filled its slots, or a new site may be open before the record catches up.</p>
+    <p><b>Available for me</b> asks much more. A trial is written for a cancer type and often a subtype; for a stage or setting (before surgery, after surgery, metastatic, relapsed); frequently for a biomarker (a mutation, a receptor, a protein level); and for a number of prior treatments. It requires organ function and general fitness within set limits, excludes some other medical conditions, and may have only a few open places in the right group. Then someone has to think of it — most people join a trial because their own oncologist mentioned one — and the visits have to be possible.</p>
+    <p>Eligibility rules are often written narrowly so that results are clear and participants are kept safe, and professional groups and the Food and Drug Administration have published recommendations to broaden them where the narrowness is not justified. Even so, a county with twenty trials within reach may have none that fit one particular person, which is why this site counts <em>a reasonable choice</em> of trials rather than any trial.</p>
+    <div class="map-note"><b>On this map:</b> when you choose a cancer type, a short note explains what else — stage, biomarkers, prior treatment — would narrow the list for one person. The ZIP finder lists trials with the study’s own contact so that a care team can check eligibility.</div>
+  </section>
+  <section id="measure">
+    <h2>What does this map measure?</h2>
+    <p>It measures <b>geographic availability</b>: how many recruiting cancer treatment trials have a site within driving distance of where people live. Nothing more.</p>
+    <ul>
+      <li><b>Which trials.</b> Recruiting, interventional, treatment-purpose studies on ClinicalTrials.gov with at least one US site, open to at least some adults aged 55 or older — <span data-f="trials"></span> on <span data-f="date"></span>. Each study is tagged with the cancers it names; about three in ten name several and are counted for each.</li>
+      <li><b>Where the trials are.</b> Every recruiting site is placed by its ZIP code. A row that names a telemedicine or virtual service rather than a clinic is shown separately and not counted as a place.</li>
+      <li><b>Where people live.</b> Each of the country’s <span data-f="tracts"></span> census tracts has a population center and a count of residents aged 55 and older. Distances run on the actual road network from that point to each site.</li>
+      <li><b>The figures.</b> For each tract: the number of trials with a site within 60 road-miles. For a county, district, state or the nation: the share of residents 55+ whose tract has fewer than 20 (short of a reasonable choice), or none, weighted by population. Also the distance to the nearest NCI-designated cancer center and to the nearest county with 100 or more trials (a “broad menu”).</li>
+      <li><b>Why 55 and older.</b> Most cancers are diagnosed after 55, and the Census Bureau publishes this age group by tract, so the figures describe the people most likely to need a trial.</li>
+      <li><b>Why 20 and 60.</b> With fewer than 20 trials, a person’s cancer type, stage and prior treatment usually leave nothing that fits. Sixty road-miles is roughly an hour and a half each way in most of the country. Both are conventions; the map exposes them and the Need-vs-access tab lets you change the threshold.</li>
+      <li><b>How often.</b> The registry is re-read every Monday; every page says which pull it shows. Figures for a district or county can move when a single trial opens or closes.</li>
+    </ul>
+    <p class="small">The full method, every data source and the validation record are in <a href="index.html#methods">Methods &amp; data</a> and on <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">GitHub</a>.</p>
+  </section>
+  <section id="leaves-out">
+    <h2>Which barriers does this map leave out?</h2>
+    <p>Most of them. Distance is the barrier that can be measured for every community from public data; the others decide, person by person, whether a nearby trial is really available.</p>
+    <ul id="barriers">
+      <li><b>Eligibility.</b> The map counts trials, not trials a given person would qualify for.</li>
+      <li><b>Whether a site is truly enrolling.</b> The registry’s “recruiting” status is taken at its word.</li>
+      <li><b>Repeated visits.</b> Treatment trials often require visits every one to three weeks at first, plus extra scans and blood tests. A drive that is possible once can be impossible weekly.</li>
+      <li><b>Cost and insurance.</b> Medicare and, since January 2022, state Medicaid programs cover the routine care costs of qualifying trials, and most private plans must do the same for in-network care; but travel, lodging, parking, meals and lost wages are usually the participant’s own, and whether a site is in-network matters.</li>
+      <li><b>Time, work and caregivers.</b> Someone has to take time off, and often someone else has to drive.</li>
+      <li><b>Transportation beyond distance.</b> A household without a car faces a different problem from one with a long drive; the map’s household layers show where that is common.</li>
+      <li><b>Referral.</b> Most people join a trial because their own oncologist mentioned one. A practice that opens no trials may also refer to none.</li>
+      <li><b>Language, culture and trust.</b> Consent forms, study materials and staff may be available in one language only; past harms shape who is asked and who agrees.</li>
+      <li><b>Telehealth.</b> Some trials now allow some visits by video or at local clinics, which the map cannot see except for fully remote studies, which it lists separately.</li>
+    </ul>
+    <p>The <a href="community.html">Your community</a> page asks these questions alongside the local figures, and the <a href="act.html">What could help</a> page says which of them each policy proposal would address.</p>
+  </section>
+  <section id="words">
+    <h2>What do these words mean?</h2>
+    <dl class="gloss">
+      <dt>NCT number</dt><dd>A study’s identifier on ClinicalTrials.gov, such as NCT01234567. Give it to a care team and they can find the study.</dd>
+      <dt>Sponsor</dt><dd>The organization responsible for a trial: a company, the National Cancer Institute, a cooperative group, a university or a hospital.</dd>
+      <dt>Site</dt><dd>A hospital or practice where a trial enrolls participants. One trial can have hundreds.</dd>
+      <dt>Eligibility criteria</dt><dd>The rules for who may join: cancer type and stage, biomarkers, prior treatments, organ function, other conditions, and sometimes age.</dd>
+      <dt>Biomarker</dt><dd>A measurable feature of a cancer or a person, such as a gene mutation or a protein level, that a trial may require or exclude.</dd>
+      <dt>Arm, cohort</dt><dd>A group within a trial that receives one treatment plan. Random assignment decides the arm in most Phase 3 trials.</dd>
+      <dt>Standard of care</dt><dd>The treatment that would be given outside a trial. New treatments are usually compared with it or added to it.</dd>
+      <dt>Informed consent</dt><dd>The process, and the document, by which a participant learns what a trial involves and agrees to join; it can be withdrawn at any time.</dd>
+      <dt>IRB</dt><dd>Institutional review board: the independent committee that reviews a protocol to protect participants.</dd>
+      <dt>NCI-designated cancer center</dt><dd>One of about 70 centers recognized by the National Cancer Institute for their research; they run the widest range of trials, including early-phase studies.</dd>
+      <dt>NCORP</dt><dd>The NCI Community Oncology Research Program: a network that funds community hospitals and practices to run federally sponsored trials.</dd>
+      <dt>Basket or umbrella trial</dt><dd>A trial that enrolls several cancers sharing a target or biomarker (basket), or tests several treatments within one cancer (umbrella). They widen what counts as “a trial near me”.</dd>
+      <dt>Road-miles</dt><dd>Distance along roads, measured on the Census Bureau’s road network, rather than in a straight line.</dd>
+      <dt>Population-weighted</dt><dd>A figure for a county, district or state that counts people, not land: each census tract contributes in proportion to its residents 55 and older.</dd>
+    </dl>
+  </section>
+  <section id="explore">
+    <h2>Guided explorations</h2>
+    <p>Each one opens the map on a view, keeps two or three prompts in a small box beside it, and lets you change every setting. They work for a teaching session, an advocacy meeting, or an hour on your own.</p>
+    <div class="tours">
+      <div class="tour"><h4>Compare a rural and an urban community</h4><p>Kentucky, on the default layer: solid blue discs are metro counties, orange rings nonmetro. Then open the Compare counties tab for the whole state.</p>
+        <ol><li>Which counties have the largest circles? Are they the ones with the fewest people, or the most?</li><li>Click Warren County (Bowling Green), then Jefferson (Louisville). What differs besides distance?</li><li>Switch the state to your own.</li></ol>
+        <a class="btn primary" href="index.html?s=KY&guide=rural-urban">Open this exploration</a></div>
+      <div class="tour"><h4>Explore access for a less common cancer</h4><p>The map filtered to sarcoma, a group of rare cancers whose trials gather at a few referral centers.</p>
+        <ol><li>How much of the country has no sarcoma trial within 60 road-miles? Compare with breast cancer, then with the multi-cancer basket trials.</li><li>Why might a basket trial count for sarcoma? Open a county’s trial list to see.</li><li>Try MDS &amp; MPN, or brain &amp; CNS.</li></ol>
+        <a class="btn primary" href="index.html?type=sarcoma&guide=rare">Open this exploration</a></div>
+      <div class="tour"><h4>Investigate your congressional district</h4><p>The map by district, colored by the share of residents 55+ short of trials. Search your district or your member of Congress.</p>
+        <ol><li>What share of your district’s residents 55+ are short of trials? How does that compare with the state and the nation?</li><li>Does your member cosponsor the tracked bill? Open the printable brief.</li><li>Which counties in the district drive the figure?</li></ol>
+        <a class="btn primary" href="index.html?u=district&guide=district">Open this exploration</a></div>
+      <div class="tour"><h4>Where cancer deaths are high and trials are far</h4><p>Two measures side by side, never combined: county cancer death rates and the share of residents short of trials.</p>
+        <ol><li>Where are the purple counties? Which states have the most?</li><li>Change the access threshold on the Need-vs-access tab. What moves?</li><li>What does this view <em>not</em> tell you about why?</li></ol>
+        <a class="btn primary" href="index.html?m=mva&guide=deaths">Open this exploration</a></div>
+    </div>
+  </section>
+  </div>
+  <aside class="aside">
+    <div class="card"><h4>Start with your own community</h4><p>Enter a county, ZIP code, district or state and get a short local summary with the numbers behind it.</p><a class="btn primary" href="community.html">Your community</a></div>
+    <div class="card"><h4>Looking for a trial now?</h4><p>The ZIP finder lists recruiting trials by distance, with each study’s own contact. Your care team decides eligibility; the NCI Cancer Information Service (1-800-4-CANCER) can help check it for free.</p><a class="btn" href="find.html">Find trials near a ZIP</a></div>
+    <div class="card"><h4>Teaching with this site</h4><p>The guided explorations open the map with prompts. Every view has a “Copy link to this view” button, so a class or a meeting can start from the same picture.</p><a class="btn" href="#explore">Guided explorations</a></div>
+  </aside>
+  </div>
+</main>
+<footer class="site">
+<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<script src="site.js"></script>
+<script src="community.js"></script>
+<script>
+(function () { const M = window.COMMUNITY.meta; const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull };
+  document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
+  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US') };
+  document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || ''); })();
+</script>
+</body></html>

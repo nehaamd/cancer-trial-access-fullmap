@@ -74,6 +74,8 @@ Registry pull 2026-10-05 (registry data of 2026-10-05); road graph TIGER 2025 (g
 | ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites | 7 site points within 60 est. road-mi | ✓ |  |
 | ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
 | Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
+| community.js reproduces data.js / burden.js for every county, district and state | 3143 counties (0 differ), 436 districts (0 differ), 51 states (0 differ); nation 12.0% vs 12.0% | ✓ | built by build_community.py from the same files the map reads; the Your community and What could help pages read this file |
+| community.js carries the tracked bills with the cosponsor fetch date | H.R. 3521: 24 cosponsors, S. 4440: 1 cosponsors; fetched 2026-10-05 | ✓ |  |
 
 ## Fresh-eyes review (Step 2)
 

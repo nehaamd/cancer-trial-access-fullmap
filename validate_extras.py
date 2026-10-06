@@ -97,6 +97,19 @@ def run(browser=False):
                   "the residual county is a 20-trial threshold effect: the browser pools the 3,915 located trials, the pipeline table counts 3,919 eligible trials")
         except Exception as e:
             check("Browser: in-page recomputation", f"skipped ({type(e).__name__}: {str(e)[:60]})", True)
+    # ---- community.js (the question-based pages): copied from the files above, so every figure must equal its source ----
+    CM = load_js("community.js", "window.COMMUNITY=")
+    if CM and BU and RU:
+        cols = CM["ccols"]; ci = {c: i for i, c in enumerate(cols)}; bad = []
+        for cf, a in CM["counties"].items():
+            c = D["counties"][cf]; u = BU["county"][cf]
+            if a[ci["p"]] != c["p"] or a[ci["t"]] != c["t"] or a[ci["t60"]] != c["t60"] or a[ci["l20"]] != u["l20"] or a[ci["z60"]] != u["z60"] or a[ci["tm"]] != u.get("t60m", u["t60"]) or a[ci["rn"]] != c["rn"]: bad.append(cf)
+        dbad = [k for k, d in CM["districts"].items() if d["l20"] != D["districts"][k]["l20"] or d["p"] != D["districts"][k]["p"] or d["member"] != D["districts"][k]["member"]]
+        sbad = [k for k, g in CM["states"].items() if g["l20"] != D["state_data"][k]["l20"] or g["p"] != D["state_data"][k]["p"]]
+        check("community.js reproduces data.js / burden.js for every county, district and state", f"{len(CM['counties'])} counties ({len(bad)} differ), {len(CM['districts'])} districts ({len(dbad)} differ), {len(CM['states'])} states ({len(sbad)} differ); nation {CM['meta']['nat']['l20']}% vs {nat['l20']}%",
+              len(CM["counties"]) == len(counties) and not bad and len(CM["districts"]) == len(D["districts"]) and not dbad and len(CM["states"]) == len(D["state_data"]) and not sbad and CM["meta"]["nat"]["l20"] == nat["l20"],
+              "built by build_community.py from the same files the map reads; the Your community and What could help pages read this file")
+        if CO: check("community.js carries the tracked bills with the cosponsor fetch date", ", ".join(f"{b['label']}: {b['n_cosponsors']} cosponsors" for b in CM["meta"]["bills"].values()) + f"; fetched {CM['meta']['cosponsors_fetched']}", set(CM["meta"]["bills"]) == set(CO["bills"]) and all(CM["meta"]["bills"][k]["n_cosponsors"] == CO["bills"][k]["n_cosponsors"] for k in CO["bills"]) and CM["meta"]["cosponsors_fetched"] == CO["meta"]["fetched"])
     return rows
 
 
