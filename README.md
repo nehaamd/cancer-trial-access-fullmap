@@ -23,7 +23,7 @@ Registry data as of 5 October 2026: 4,001 listed trials at about 9,600 registry-
 ## Site pages and shared assets
 | Page | Purpose |
 |---|---|
-| `index.html` | The map: counties (opening on residents 55+ short of trials, as circles sized by people and colored metro/nonmetro), districts and states; filters; Trials / Sites / Analysis tabs; every view has a shareable link |
+| `index.html` | The map: counties (opening on residents 55+ short of trials, as circles sized by people and colored metro/nonmetro), districts and states; a figures panel whose first card is the figure the map shows, with state and national comparisons; filters; Trials / Sites / Analysis tabs; every view has a shareable link |
 | `findings.html` | Key findings: the headline numbers, metro vs nonmetro, every state ranked, the districts with least access, need vs access, the tracked bills, methods in brief, how to cite. Reads `findings.js`, built by `build_findings.py` (in `run_refresh.sh`) |
 | `find.html` | ZIP-code trial finder for patients and navigators |
 | `brief.html` | Printable one-page brief for a county, district or state, with an editable ask |
