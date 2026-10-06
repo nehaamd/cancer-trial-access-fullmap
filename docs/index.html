@@ -112,12 +112,13 @@
   .layers{position:relative} .layers>div{position:absolute;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);z-index:20;padding:.5rem .8rem;display:grid;gap:.3rem;min-width:190px}
   .maptools .right{margin-left:auto}
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;font-size:var(--fs-0);color:var(--ink-2);margin:0 0 .5rem;min-height:1.6rem}
-  .legend .lg-title{font-weight:650;color:var(--ink)}
+  .legend .lg-title{font-weight:650;color:var(--ink)} .legend .lg-note{flex-basis:100%;color:var(--ink-2)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
   #map-wrap{position:relative}
   svg#map{width:100%;height:auto;display:block;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
   .county{stroke:#fff;stroke-width:.3;cursor:pointer;transition:opacity .15s} .county:hover{stroke:var(--ink);stroke-width:1.1}
-  .dim .county:not(.in-district){opacity:.32}
+  .dim .county:not(.in-district){opacity:.32} .dim .bub:not(.in-district){opacity:.35}
+  .bub{cursor:pointer}
   .district{fill:none;stroke:var(--ink);stroke-width:.55;pointer-events:none;opacity:.8}
   .unit-district .district.fillable{pointer-events:all;cursor:pointer;opacity:1;stroke:#fff;stroke-width:.6} .unit-district .district.fillable:hover{stroke:var(--ink);stroke-width:1.4}
   .unit-district .county,.unit-state .county{fill:#F4F2EC !important;pointer-events:none;stroke:#fff;stroke-width:.2}
@@ -152,6 +153,7 @@
 
   /* ---- right pane ---- */
   aside{border-left:1px solid var(--rule);background:var(--paper);padding:.9rem 1.25rem 1.5rem;overflow:auto;max-height:calc(100vh - 60px);position:sticky;top:0}
+  aside.more::after{content:'';position:sticky;bottom:0;display:block;height:36px;margin-top:-36px;background:linear-gradient(rgba(247,245,240,0),var(--paper) 75%);pointer-events:none}   /* a fade while more figures sit below the fold */
   .finder{margin:0 0 .8rem} .finder summary{cursor:pointer;font-size:var(--fs-0);color:var(--ink-2);list-style:none;display:inline-flex;align-items:center;gap:.3rem} .finder summary::-webkit-details-marker{display:none} .finder summary::before{content:"▸";font-size:.8em} .finder[open] summary::before{content:"▾"}
   .finder .grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.5rem} .finder .full{grid-column:1/-1}
   .finder select,.finder input{width:100%;background:var(--card);border:1px solid var(--rule-2);border-radius:8px;padding:.5rem .6rem;font-size:var(--fs-1)}
@@ -240,7 +242,7 @@
 <main>
   <div id="left">
   <div class="tabs" role="tablist">
-    <button role="tab" data-tab="map" aria-selected="true">Map</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button>
+    <button role="tab" data-tab="map" aria-selected="true">Overview</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button>
     <details class="menu" id="analysis-menu"><summary role="button" aria-haspopup="true">Analysis</summary><div>
       <button role="tab" data-tab="compare">Compare counties<span>Every county in a state, side by side</span></button>
       <button role="tab" data-tab="burden">Need vs access<span>Counties with high cancer incidence and low trial access</span></button>
@@ -302,6 +304,7 @@
     <div><b>Key terms</b><dl>
       <dt>Listed trial.</dt><dd> A recruiting, interventional cancer treatment trial on ClinicalTrials.gov with a US site, accepting some adults aged 55 or older. Listed does not mean a given patient qualifies.</dd>
       <dt>Road-miles.</dt><dd> The shortest driving route on the highway network from where people live (each census tract's population center). Trial sites are placed at the center of their ZIP code or city, so distances to them are approximate.</dd>
+      <dt>Residents short of trials (the map's default layer).</dt><dd> Each county's circle is sized by the number of residents 55+ with fewer than 20 listed trials within 60 road-miles of home, summed over the county's census tracts, and colored by the county's USDA rural-urban code (metro, codes 1–3; nonmetro, 4–9). Sizing by people rather than coloring land keeps the map in step with the headline: the counties where most residents are short cover about three fifths of the land but hold about a tenth of residents 55+. Filters recompute the circles from the census tracts.</dd>
       <dt>Broad menu.</dt><dd> A county with 100 or more listed trials, the cut-off ASCO's 2024 county analysis used for a “broad portfolio”.</dd>
       <dt>Limited menu.</dt><dd> A county with 20 to 99 listed trials. This line is the map's own; ASCO's “limited portfolio” was 1 to 99.</dd>
       <dt>NCI-designated center.</dt><dd> A cancer center designated by the National Cancer Institute that treats adult patients.<span id="nci-count"></span></dd>
@@ -373,7 +376,7 @@
     CK.forEach((k, i) => { const c = C[k]; let n = 0, nn = 0; for (const j of c.tr) if (pass[j]) { n++; if (typeIdx < 0 || T.ct[j] === typeIdx) nn++; } cnt[i] = n; cntNamed[i] = nn;
       gen++; let m = 0, mn = 0; for (const s of c.nb) for (const j of SP[s]) if (pass[j] && stamp[j] !== gen) { stamp[j] = gen; m++; if (typeIdx < 0 || T.ct[j] === typeIdx) mn++; } cnt60[i] = m; cnt60Named[i] = mn; });
     const total = pass.reduce((a, b) => a + b, 0), badge = document.getElementById('fbadge'); badge.hidden = !filtersActive(); badge.textContent = nActive();
-    document.getElementById('f-state').textContent = filtersActive() ? `${fmt(total)} of ${fmt(N)} listed trials match. County counts, trial lists, and the access figure for the nation, states and districts are recomputed; distance-to-menu and NCI-center figures depend on all trials and are tagged.` : '';
+    document.getElementById('f-state').textContent = filtersActive() ? `${fmt(total)} of ${fmt(N)} listed trials match. County counts, trial lists, the circles on the map and the access figures for the nation, states, districts and counties are recomputed; distance-to-menu and NCI-center figures depend on all trials and are tagged.` : '';
   }
   const fp = document.getElementById('f-phase'); T.phases.forEach(p => { const l = document.createElement('label'); l.className = 'chk'; const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.phase.add(p) : filt.phase.delete(p); update(); }); l.appendChild(i); l.appendChild(document.createTextNode(p === 'NA' ? 'N/A' : 'Ph ' + p)); l.title = p === 'NA' ? 'Not phased (device, surgery, radiation…)' : 'Phase ' + p; fp.appendChild(l); });
   const fs = document.getElementById('f-sponsor'); T.sponsors.forEach(([k, lab]) => { const l = document.createElement('label'); l.className = 'chk'; const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.sponsor.add(k) : filt.sponsor.delete(k); update(); }); l.appendChild(i); l.appendChild(document.createTextNode(lab)); fs.appendChild(l); });
@@ -390,8 +393,9 @@
   const RAMP = ['#F3E6E0','#C9DCEE','#9EC4E0','#6BA3D6','#3F7FB5','#0B3C5D'];
   let unit = 'county', metric = 't', incSite = 0, acsVar = 'veh', incClasses = [], acsClasses = [], selectedState = '', selectedD = null, selectedC = null;
   const PCT_CLASSES = [['under 10%',0,10,'#F3E6E0'],['10–25%',10,25,'#F2C48A'],['25–50%',25,50,'#D98B4A'],['50–75%',50,75,'#B8562E'],['75% or more',75,101,'#8A3B1E']];
-  const UNIT_METRICS = { county: ['t', 'rn', 'rb', 'inc', 'acs'].concat(RU ? ['rucc'] : []).concat(BU ? ['bva'] : []), district: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'].concat(HB.map(k => 'cos_' + k)), state: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'] };
-  const defaultMetric = () => unit === 'county' ? 't' : 'l20';
+  const SHORT_OK = !!(BU && RU);   // the default layer needs burden.js (county access shares) and rucc.js (metro / nonmetro)
+  const UNIT_METRICS = { county: (SHORT_OK ? ['short'] : []).concat(['t', 'rn', 'rb', 'inc', 'acs']).concat(RU ? ['rucc'] : []).concat(BU ? ['bva'] : []), district: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'].concat(HB.map(k => 'cos_' + k)), state: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'] };
+  const defaultMetric = () => unit === 'county' ? (SHORT_OK ? 'short' : 't') : 'l20'; metric = defaultMetric();
   const GEO_LABEL = { l20: 'Residents 55+ with fewer than 20 trials within 60 road-miles', z60: 'Residents 55+ with no trial within 60 road-miles', g60b: 'Residents 55+ more than 60 road-miles from a broad menu (100+ trials)', g60n: 'Residents 55+ more than 60 road-miles from an NCI center', medn: 'Median road miles to the nearest NCI center', ginc: 'Cancer incidence, all sites (age-adjusted, per 100,000)', gacs: 'Household context (ACS)',
     ...Object.fromEntries(HB.map(k => ['cos_' + k, `${billName(k)} — House member's cosponsorship`])) };
   const geoRec = k => unit === 'district' ? DI[k] : D.state_data[k];
@@ -417,7 +421,8 @@
   const bvaDefinition = () => `High incidence = ${BSITE[incSite][1]} age-adjusted rate above the median of counties with a published rate (${BU ? BU.meta.medians[bvaSiteKey()] : '—'} per 100,000). Low access = at least ${bvaThr}% of residents 55+ have ${critLabel()} within 60 road-miles of home.`;
   const ACS_LABEL = {veh: 'Households without a vehicle (%)', bb: 'Households with a broadband subscription (%)', unins: 'Uninsured, all ages (%)', unins55: 'Uninsured, ages 55–64 (%)', pov: 'Poverty rate (%)'};
   const METRICS = {
-    t:  {label: () => 'Recruiting trials with a site in the county' + (filtersActive() ? ' (filtered)' : ''), get: c => cnt[CI[c.k]], classes: () => [['0 trials',0,1,'#F6F1EC'],['1–19',1,20,'#B7D0E8'],['20–99 (limited menu)',20,100,'#6BA3D6'],['100 or more (broad menu)',100,1e9,'#0B3C5D']]},
+    short: {label: () => `Residents 55+ with fewer than 20 ${filtersActive() ? 'matching' : 'listed'} trials within 60 road-miles of home · circle size = number of residents · color = metro or nonmetro county`, get: () => 0, classes: () => [['', -1, 1, '#F3F0EA']], na: () => false},
+    t:  {label: () => 'Recruiting trials with a site in the county' + (filtersActive() ? ' (filtered)' : ''), get: c => cnt[CI[c.k]], classes: () => [['0 trials',0,1,'#D6D2CA'],['1–19',1,20,'#B7D0E8'],['20–99 (limited menu)',20,100,'#6BA3D6'],['100 or more (broad menu)',100,1e9,'#0B3C5D']]},
     rn: {label: () => 'Road miles from the county population center to the nearest NCI-designated cancer center', get: c => c.rn, classes: () => DIST, na: c => c.rn === null},
     rb: {label: () => 'Road miles to the nearest county with 100 or more listed trials', get: c => c.rb, classes: () => [['in a broad-menu county',0,0.5,'#0B3C5D'],['under 60 road-mi',0.5,60,'#3F7FB5'],['60–120',60,120,'#9EC4E0'],['120–200',120,200,'#F2C48A'],['200–300',200,300,'#D98B4A'],['300 or more',300,1e9,'#8A3B1E']], na: c => c.rb === null},
     inc: {label: () => 'Age-adjusted incidence per 100,000, ' + BSITE[incSite][1] + ', ' + D.meta.burden.period, get: c => c.b ? c.b[incSite][0] : null, classes: () => incClasses, na: c => !c.b || c.b[incSite][4] >= 2, caution: c => c.b && c.b[incSite][4] === 1},
@@ -430,7 +435,7 @@
     if (m.startsWith('cos_')) return cosRole(districtMember(k), m.slice(4));
     if (m === 'g60b' || m === 'g60n') return g[m]; if (m === 'medn') return g.medn; if (m === 'ginc') return g.ctx ? g.ctx.inc : null; if (m === 'gacs') return g.ctx ? g.ctx[acsVar] : null; return null; }
   function quantClasses(vals, unit) { const q = d3.scaleQuantile().domain(vals).range(RAMP); const e = [d3.min(vals)].concat(q.quantiles()).concat([d3.max(vals) + 1e-9]); return RAMP.map((col, i) => [`${Math.round(e[i]*10)/10}${i === RAMP.length-1 ? '+' : '–' + Math.round(e[i+1]*10)/10}${unit}`, e[i], e[i+1], col]); }
-  function fillMetricSelect() { const sel_ = document.getElementById('metric'); sel_.innerHTML = ''; const labels = { t: 'Trials in the county', rn: 'Road miles to nearest NCI center', rb: 'Road miles to a broad trial menu (100+ trials)', inc: 'Cancer incidence rate', acs: 'Household context (ACS)', rucc: 'Rural-urban continuum code (USDA)', bva: 'Cancer burden vs trial access', ...GEO_LABEL, ...Object.fromEntries(HB.map(k => ['cos_' + k, `Cosponsors of the ${billName(k)}`])) };
+  function fillMetricSelect() { const sel_ = document.getElementById('metric'); sel_.innerHTML = ''; const labels = { short: 'Residents short of trials (fewer than 20 within 60 road-miles)', t: 'Trials in the county', rn: 'Road miles to nearest NCI center', rb: 'Road miles to a broad trial menu (100+ trials)', inc: 'Cancer incidence rate', acs: 'Household context (ACS)', rucc: 'Rural-urban continuum code (USDA)', bva: 'Cancer burden vs trial access', ...GEO_LABEL, ...Object.fromEntries(HB.map(k => ['cos_' + k, `Cosponsors of the ${billName(k)}`])) };
     UNIT_METRICS[unit].forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = labels[m]; sel_.appendChild(o); }); if (!UNIT_METRICS[unit].includes(metric)) metric = defaultMetric(); sel_.value = metric; }
   let geoClasses = [];
   function rebuildDynamicClasses() {
@@ -448,9 +453,11 @@
   const HINT0 = coarse ? 'Tap a state to zoom in, then tap a county or district · “Reset view” zooms back out' : 'Hover for details · click to select · double-click the map to zoom back out';
   const countyFeatures = GEO.counties.features.filter(f => C[f.properties.id]);
   const counties = gC.selectAll('path').data(countyFeatures).join('path').attr('class', 'county').attr('d', path)
-    .on('mousemove', (ev, f) => { const c = C[f.properties.id]; tip.style.display = 'block'; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = tipHTML(c); })
+    .on('mousemove', (ev, f) => showTip(ev, C[f.properties.id]))
     .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { const k = f.properties.id; if (coarse && !selectedState) window.__nav.selectState(C[k].s2); else selectCounty(k); });
   const overlay = gC.append('g').attr('pointer-events', 'none');
+  const gB = svg.append('g').attr('class', 'bubbles');   // the default layer's circles: residents 55+ short of trials, one per county
+  function showTip(ev, c) { tip.style.display = 'block'; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = tipHTML(c); }
   const districtFeatures = GEO.districts.features;
   const dpaths = gD.selectAll('path').data(districtFeatures).join('path').attr('class', 'district').attr('d', path)
     .on('mousemove', (ev, f) => { if (unit !== 'district') return; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.display = 'block'; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = geoTip('district', f.properties.id); })
@@ -463,12 +470,33 @@
   const halo = gS.append('path').attr('class', 'district selected-halo'), sel = gS.append('path').attr('class', 'district selected');
   const chalo = gS.append('path').attr('class', 'csel-halo'), csel = gS.append('path').attr('class', 'csel');   // outline of the selected county
   const outlineCounty = k => { const f = k ? countyFeatures.find(f => f.properties.id === k) : null; chalo.attr('d', f ? path(f) : null); csel.attr('d', f ? path(f) : null); };
-  gN.selectAll('path').data(NCI).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(30)).attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
+  gN.selectAll('path').data(NCI).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(24)).attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
+  // ---- the default layer: residents 55+ with fewer than 20 trials within 60 road-miles, as circles sized by people ----
+  const bubR = d3.scaleSqrt().domain([0, 180000]).range([0, 17]);   // area ∝ residents; 180,000 (about the largest county) is a 17-unit radius on the 975-unit map
+  function shortOf(k) {   // {n: residents 55+ short, s: their share, p: residents 55+} for county k under the current filter, or null
+    const i = CI[k]; if (filtersActive()) { if (!FCo) return null; const sh = FCo.l20[i]; return isNaN(sh) ? null : { n: FCo.pop[i] * sh / 100, s: sh, p: FCo.pop[i] }; }
+    const u = BU && BU.county[k]; if (!u || u.l20 === null || u.l20 === undefined) return null; return { n: C[k].p * u.l20 / 100, s: u.l20, p: C[k].p }; }
+  const isMetro = k => RU && RU.county[k] ? RU.county[k].c <= 3 : null;
+  function shortTotals() { let all = 0, metro = 0, non = 0, pop = 0; for (const k of CK) { const v = shortOf(k); if (!v) continue; all += v.n; pop += v.p; const m = isMetro(k); if (m === true) metro += v.n; else if (m === false) non += v.n; } return pop ? { all, metro, nonmetro: non, pop } : null; }
+  const BUB_FILL = m => m === null ? 'rgba(120,120,120,.5)' : m ? 'rgba(63,127,181,.62)' : 'rgba(192,97,43,.58)', BUB_LINE = m => m === null ? '#555' : m ? '#1F4F7A' : '#7A2F12';
+  function placeBubbles() { const k = curVB[2] / W, bs = Math.min(1, Math.max(k * 1.4, 0.16)); gB.selectAll('circle').attr('transform', d => `translate(${d.c}) scale(${bs})`); }
+  function drawShort() {
+    const data = metric === 'short' ? countyFeatures.map(f => { const k = f.properties.id, v = shortOf(k); return v && v.n >= 50 ? { k, c: path.centroid(f), n: v.n, m: isMetro(k) } : null; }).filter(d => d && isFinite(d.c[0])).sort((a, b) => b.n - a.n) : [];
+    gB.selectAll('circle').data(data, d => d.k).join('circle').attr('class', d => 'bub' + (INSET.has(C[d.k].s2) ? ' inset' : '')).classed('in-district', d => d.k === selectedC).attr('r', d => bubR(d.n)).attr('fill', d => BUB_FILL(d.m)).attr('stroke', d => BUB_LINE(d.m)).attr('stroke-width', .5)
+      .on('mousemove', (ev, d) => showTip(ev, C[d.k])).on('mouseleave', () => tip.style.display = 'none').on('click', (ev, d) => { if (coarse && !selectedState) window.__nav.selectState(C[d.k].s2); else selectCounty(d.k); });
+    placeBubbles(); }
+  const circleSVG = (r, fill, stroke) => `<svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width=".7"/></svg>`;
+  function legendShort(lg) {
+    lg.append('span').html(circleSVG(6, BUB_FILL(true), BUB_LINE(true)) + 'in a metro county'); lg.append('span').html(circleSVG(6, BUB_FILL(false), BUB_LINE(false)) + 'in a nonmetro county');
+    [5000, 25000, 100000].forEach(n => lg.append('span').html(circleSVG(bubR(n) * 1.3, 'rgba(140,130,120,.3)', '#6B645B') + fmt(n) + ' residents 55+'));
+    const t = shortTotals(); if (t) lg.append('span').attr('class', 'lg-note').text(`Nationally ${(t.all / 1e6).toFixed(1)} million residents 55+ (${pct(100 * t.all / t.pop)}%) have fewer than 20 ${filtersActive() ? 'matching' : 'listed'} trials within 60 road-miles: ${(t.nonmetro / 1e6).toFixed(1)} million in nonmetro counties, ${(t.metro / 1e6).toFixed(1)} million in metro counties.`); }
+  function legendStar(lg) { if (document.getElementById('lyr-n').checked) lg.append('span').html('<svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><path d="' + d3.symbol().type(d3.symbolStar).size(60)() + '" fill="#F0B429" stroke="#3a2f00" stroke-width=".8"/></svg>NCI-designated cancer center'); }
   function tipHTML(c) { const i = CI[c.k], fa = filtersActive();
     const l1 = fa ? `${fmt(cnt[i])} of ${fmt(c.t)} trials match · ${fmt(c.f)} facilities` : `${fmt(c.t)} trial${c.t===1?'':'s'} · ${fmt(c.f)} facilit${c.f===1?'y':'ies'}`;
     const road = c.noroad === 'island' ? (c.rn !== null ? `${c.rn} road-mi to ${esc(c.nn)}<br>no road connection to a broad menu` : 'no road connection to a broad menu or NCI center') : c.noroad === 'off' ? 'population center >30 mi from any highway' : `${c.rn} road-mi to ${esc(c.nn)}<br>${c.rb ? c.rb + ' road-mi to a broad menu' : 'hosts a broad menu'}`;
     let extra = '';
     if (metric === 'inc') { const b = c.b ? c.b[incSite] : null; extra = '<br>' + (b && b[4] <= 1 ? `${BSITE[incSite][1]}: ${b[0]} per 100,000 (${b[3]} cases/yr)${b[4] === 1 ? ' — small numbers' : ''}` : b ? BSTATUS[b[4]] : 'no incidence data'); }
+    if (metric === 'short') { const v = shortOf(c.k), m = isMetro(c.k); extra = '<br>' + (v === null ? 'access share not available' : `<b>${fmt(Math.round(v.n))} residents 55+ (${pct(v.s)}%)</b> have fewer than 20 ${fa ? 'matching ' : ''}trials within 60 road-mi`) + (m === null ? '' : m ? ' · metro county' : ' · nonmetro county'); }
     if (metric === 'acs') { const v = c.acs ? c.acs[acsVar] : null; extra = '<br>' + ACS_LABEL[acsVar].replace(' (%)', '') + ': ' + (v === null ? 'no data' : v + '%'); }
     if (metric === 'rucc' && RU && RU.county[c.k]) extra = `<br>RUCC ${RU.county[c.k].c}: ${RUCC_SHORT[RU.county[c.k].c]}${RU.county[c.k].s === '2013' ? ' (2013 code)' : ''}`;
     if (metric === 'bva') { const q = bvaClass(c.k), b = c.b ? c.b[incSite] : null, a = accessShare(c.k); extra = '<br>' + (q === null ? 'not classified (incidence or access not available)' : `${BVA_CLASSES[q][0]}: ${b[0]} per 100,000${b[4] === 1 ? ' (small numbers)' : ''} · ${pct(a)}% have ${critLabel()} within 60 road-mi`); }
@@ -485,20 +513,23 @@
       if (unit === 'district') { dpaths.classed('fillable', true).style('fill', f => colOf(geoValue(metric, f.properties.id))); gD.raise(); gS.raise(); gL.raise(); gN.raise(); gStLine.style('display', null).raise(); }
       else { spaths.style('fill', f => colOf(geoValue(metric, f.properties.id))); gSt.raise(); gS.raise(); gL.raise(); gN.raise(); gStLine.style('display', 'none'); dpaths.classed('fillable', false).style('fill', null); }
       const lg = d3.select('#legend'); lg.html(''); lg.append('span').attr('class', 'lg-title').text((metric === 'gacs' ? ACS_LABEL[acsVar] + ', ACS 2023 5-year' : GEO_LABEL[metric]) + (filtersActive() && (metric === 'l20' || metric === 'z60') ? ' (filtered)' : '') + ' · by ' + (unit === 'district' ? 'district' : 'state'));
-      cls.forEach(k => lg.append('span').html(`<i style="background:${k[3]}"></i>${k[0]}`)); lg.append('span').html('<i style="background:var(--nodata)"></i>' + (metric.startsWith('cos_') ? `vacant seat · as of ${SITE.nice(CO.meta.fetched)}` : (metric === 'medn' || metric === 'g60b' || metric === 'g60n') ? 'no road route' : 'no data'));
+      cls.forEach(k => lg.append('span').html(`<i style="background:${k[3]}"></i>${k[0]}`)); legendStar(lg); drawShort(); lg.append('span').html('<i style="background:var(--nodata)"></i>' + (metric.startsWith('cos_') ? `vacant seat · as of ${SITE.nice(CO.meta.fetched)}` : (metric === 'medn' || metric === 'g60b' || metric === 'g60n') ? 'no road route' : 'no data'));
       document.getElementById('inc-site').style.display = 'none'; document.getElementById('acs-var').style.display = metric === 'gacs' ? '' : 'none'; return; }
-    dpaths.classed('fillable', false).style('fill', null); spaths.style('fill', null); gSt.lower(); gStLine.style('display', 'none'); gD.raise(); gS.raise(); gL.raise(); gN.raise();
+    dpaths.classed('fillable', false).style('fill', null); spaths.style('fill', null); gSt.lower(); gStLine.style('display', 'none'); gD.raise(); gB.raise(); gS.raise(); gL.raise(); gN.raise();
     if (metric === 'bva') { bvaAutoCrit(); if (bvaNeedsTracts()) { computeFilteredCounty(); return; } }
+    if (metric === 'short' && filtersActive() && !FCo) { computeFilteredCounty(); return; }   // the circles are recomputed from census tracts for the filtered trials
     if (metric === 'inc' || metric === 'acs') rebuildDynamicClasses();
-    counties.attr('fill', f => { const col = colorFor(metric, C[f.properties.id]); return col === null ? 'var(--nodata)' : col; });
+    counties.attr('fill', f => { const col = colorFor(metric, C[f.properties.id]); return col === null ? 'var(--nodata)' : col; }); drawShort();
     overlay.selectAll('path').data((metric === 'inc' || metric === 'bva') ? countyFeatures.filter(f => METRICS[metric].caution(C[f.properties.id])) : []).join('path').attr('d', path).attr('fill', 'url(#hatch)').attr('stroke', 'none');
     const lg = d3.select('#legend'); lg.html(''); lg.append('span').attr('class', 'lg-title').text(METRICS[metric].label());
-    METRICS[metric].classes().forEach(k => lg.append('span').html(`<i style="background:${k[3]}"></i>${k[0]}`));
-    if (metric === 'inc') { lg.append('span').html('<i class="hatch"></i>small numbers (under 16 cases/yr)'); lg.append('span').html('<i style="background:var(--nodata)"></i>suppressed, or not available (Kansas; 3 counties absent)'); }
+    METRICS[metric].classes().filter(k => k[0]).forEach(k => lg.append('span').html(`<i style="background:${k[3]}"></i>${k[0]}`));
+    if (metric === 'short') legendShort(lg);
+    else if (metric === 'inc') { lg.append('span').html('<i class="hatch"></i>small numbers (under 16 cases/yr)'); lg.append('span').html('<i style="background:var(--nodata)"></i>suppressed, or not available (Kansas; 3 counties absent)'); }
     else if (metric === 'bva') { lg.append('span').html('<i class="hatch"></i>incidence based on small numbers'); lg.append('span').html('<i style="background:var(--nodata)"></i>incidence not available'); lg.append('span').attr('class', 'lg-title').style('flex-basis', '100%').style('font-weight', '400').style('color', 'var(--ink-2)').text(bvaDefinition() + ' A cross-tabulation, not a combined score — the “Need vs access” tab (under Analysis) lists the counties.'); }
     else if (metric === 'rucc') lg.append('span').html('<i style="background:var(--nodata)"></i>no code');
     else if (metric === 'rn' || metric === 'rb') lg.append('span').html('<i style="background:var(--nodata)"></i>no road connection (AK, HI) or >30 mi from a highway');
     else if (metric === 'acs') lg.append('span').html('<i style="background:var(--nodata)"></i>no data');
+    legendStar(lg);
     document.getElementById('inc-site').style.display = (metric === 'inc' || metric === 'bva') ? '' : 'none'; document.getElementById('acs-var').style.display = metric === 'acs' ? '' : 'none';
   }
   const incSel = document.getElementById('inc-site'); BSITE.forEach(([k, lab], i) => { const o = document.createElement('option'); o.value = i; o.textContent = lab; incSel.appendChild(o); }); incSel.addEventListener('change', () => { incSite = +incSel.value; if ((metric === 'bva' || tab === 'burden') && BU) { const ty = BU.meta.site2type[BSITE[incSite][0]] || ''; if (ty !== filt.type) { filt.type = ty; ft.value = ty; update(); return; } } paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); refreshTab(); pushURL(); });
@@ -506,7 +537,7 @@
   document.getElementById('metric').addEventListener('change', e => { metric = e.target.value; paint(); pushURL(); });
   document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); paint(); pushURL(); });
   document.getElementById('lyr-d').addEventListener('change', e => gD.style('display', e.target.checked ? null : 'none'));
-  document.getElementById('lyr-n').addEventListener('change', e => gN.style('display', e.target.checked ? null : 'none'));
+  document.getElementById('lyr-n').addEventListener('change', e => { gN.style('display', e.target.checked ? null : 'none'); paint(); });
   let showLabels = true; document.getElementById('lyr-l').addEventListener('change', e => { showLabels = e.target.checked; refreshLabels(); });
   const stateBounds = {}; countyFeatures.forEach(f => { const c = C[f.properties.id]; const b = path.bounds(f); const cur = stateBounds[c.s2] || [Infinity, Infinity, -Infinity, -Infinity]; stateBounds[c.s2] = [Math.min(cur[0], b[0][0]), Math.min(cur[1], b[0][1]), Math.max(cur[2], b[1][0]), Math.max(cur[3], b[1][1])]; });
   let curVB = baseVB.slice();
@@ -527,7 +558,7 @@
     // label size follows the zoom (about 9-20 screen px); labels that would overlap a larger or selected district's label are left off
     // (those districts are still clickable and listed in the District picker). The selected district always keeps its label.
     const k = curVB[2] / W, fs = Math.min(9 / k, 20) * k;
-    gN.selectAll('path').attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p}) scale(${Math.min(1, Math.max(k * 1.4, 0.16))})` : 'translate(-100,-100)'; });
+    gN.selectAll('path').attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p}) scale(${Math.min(1, Math.max(k * 1.4, 0.16))})` : 'translate(-100,-100)'; }); placeBubbles();
     const inView = f => { const c = path.centroid(f); return c[0] >= curVB[0] && c[0] <= curVB[0] + curVB[2] && c[1] >= curVB[1] && c[1] <= curVB[1] + curVB[3]; };
     const cand = (showLabels && selectedState) ? districtFeatures.filter(f => f.properties.s === selectedState || (selectedD && svg.classed('dz') && inView(f) && !INSET.has(f.properties.s))) : [];
     const pri = f => f.properties.id === selectedD ? Infinity : path.area(f); const kept = [], boxes = [];
@@ -612,8 +643,8 @@
   function filteredCounty() {  // per-county shares of residents 55+ with < 20 / 0 matching trials within 60 road-miles, weighted over tracts (same definition as burden.js)
     if (FCo) return FCo; const { n, pop } = TB; const c = tractCounts(); const m = CK.length; const W = new Float64Array(m), z = new Float64Array(m), l = new Float64Array(m), s = new Float64Array(m);
     for (let i = 0; i < n; i++) { const g = TC[i], w = pop[i], k = c[i]; W[g] += w; if (k === 0) z[g] += w; if (k < 20) l[g] += w; s[g] += w * k; }
-    FCo = { l20: Float64Array.from(W, (w, i) => w ? 100 * l[i] / w : NaN), z60: Float64Array.from(W, (w, i) => w ? 100 * z[i] / w : NaN), t60: Float64Array.from(W, (w, i) => w ? s[i] / w : NaN) }; return FCo; }
-  function computeFilteredCounty() { d3.select('#legend').html('<span class="lg-title">Computing filtered county figures from census tracts…</span>'); loadTractsAll().then(() => { filteredCounty(); paint(); }).catch(() => { d3.select('#legend').html('<span class="lg-title">Filtered burden-vs-access maps need tracts60.bin and tract_county.bin (available on the published site, not when opened from disk).</span>'); }); }
+    FCo = { pop: W, l20: Float64Array.from(W, (w, i) => w ? 100 * l[i] / w : NaN), z60: Float64Array.from(W, (w, i) => w ? 100 * z[i] / w : NaN), t60: Float64Array.from(W, (w, i) => w ? s[i] / w : NaN) }; return FCo; }
+  function computeFilteredCounty() { d3.select('#legend').html('<span class="lg-title">Computing filtered county figures from census tracts…</span>'); loadTractsAll().then(() => { filteredCounty(); paint(); }).catch(() => { d3.select('#legend').html('<span class="lg-title">Filtered county maps need tracts60.bin and tract_county.bin (available on the published site, not when opened from disk).</span>'); }); }
   function filteredRural(kind, idx) {  // metro / nonmetro split of the filtered access figures for the nation or a state
     if (!FRu) FRu = {}; const key = kind + ':' + idx; if (FRu[key]) return FRu[key]; const { n, pop, st } = TB; const c = tractCounts(); const code = new Uint8Array(CK.length); CK.forEach((k, i) => code[i] = RU.county[k] ? RU.county[k].c : 0);
     const acc = { metro: { W: 0, z: 0, l: 0, s: 0 }, nonmetro: { W: 0, z: 0, l: 0, s: 0 } };
@@ -786,7 +817,7 @@
     pane.scrollTop = 0; wireShare(); wireLegislation(); facFilter = null; cmpSel = []; refreshTab(); pushURL(); }
   const hrs = h => h < 0.1 ? 'a few minutes' : 'about ' + h + ' h';
   function selectCounty(k) { doors(false); selectedC = k; selectedD = null; const c = C[k]; if (c.s2 !== selectedState || svg.classed('dz')) { selectedState = c.s2; pickS.value = c.s2; fillDistricts(c.s2); svg.classed('dz', false); zoomState(c.s2); refreshLabels(); }
-    counties.classed('in-district', f => f.properties.id === k); svg.classed('dim', true); halo.attr('d', null); sel.attr('d', null); outlineCounty(k); pickD.value = '';
+    counties.classed('in-district', f => f.properties.id === k); gB.selectAll('circle').classed('in-district', d => d.k === k); svg.classed('dim', true); halo.attr('d', null); sel.attr('d', null); outlineCounty(k); pickD.value = '';
     const i = CI[k], fa = filtersActive(), n = cnt[i], n60 = cnt60[i], nB = n - cntNamed[i], n60B = n60 - cnt60Named[i]; const nm = nearestMatching(k);
     const basket = (tot, b) => filt.type && tot ? ` <small style="font-size:.75em;color:var(--ink-2)">${fmt(tot - b)} named-only + ${fmt(b)} basket</small>` : '';
     const menu = c.t >= 100 ? 'Hosts a broad menu (100+ listed trials).' : c.t >= 20 ? 'Hosts a limited menu (20–99).' : c.t ? '' : 'No listed trial has a recruiting site here.';
@@ -919,6 +950,8 @@
   document.getElementById('tr-mode').addEventListener('change', e => { trMode = e.target.value; trShow = 100; renderTrials(); });
   document.getElementById('tr-q').addEventListener('input', e => { trQ = e.target.value; trShow = 100; renderTrials(); }); document.getElementById('si-q').addEventListener('input', e => { siQ = e.target.value; siShow = 150; renderSites(); });
   document.getElementById('tr-clearfac').addEventListener('click', () => { facFilter = null; renderTrials(); });
+  const asideEl = document.getElementById('pane'); const paneFade = () => asideEl.classList.toggle('more', asideEl.scrollHeight - asideEl.scrollTop - asideEl.clientHeight > 24);
+  asideEl.addEventListener('scroll', paneFade, { passive: true }); window.addEventListener('resize', paneFade); if (window.ResizeObserver) new ResizeObserver(paneFade).observe(document.getElementById('pane-body'));
   function setTab(t) { tab = t; document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t)); ['map', 'trials', 'sites', 'compare', 'burden', 'changes'].forEach(x => document.getElementById(x === 'map' ? 'map-wrap' : 'tab-' + x).hidden = x !== t);
     syncScope(); if (t === 'trials') renderTrials(); if (t === 'sites') renderSites(); if (t === 'compare') renderCompare(); if (t === 'burden') renderBurden(); if (t === 'changes') renderChanges(); pushURL(); }
   document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
