@@ -32,7 +32,7 @@
   main{max-width:1040px;margin:0 auto;padding:0 var(--gutter) 2rem}
   .hero{padding:2.2rem 0 1.4rem;border-bottom:1px solid var(--rule)}
   .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650;max-width:none}
-  h1{font-size:clamp(1.9rem,4.2vw,2.9rem);line-height:1.08;letter-spacing:-.025em;margin:0 0 .9rem;font-weight:700;max-width:24ch}
+  h1{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(1.9rem,4.2vw,2.9rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .9rem;font-weight:600;max-width:24ch}
   .lede{font-size:1.2rem;line-height:1.5;color:var(--ink);max-width:62ch;margin:0 0 1.2rem}
   .lede b{font-weight:700}
   figure{margin:0} figure img{width:100%;height:auto;display:block;border:1px solid var(--rule);border-radius:var(--r);background:#fff;box-shadow:var(--shadow)}
@@ -44,7 +44,7 @@
   .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:.8rem;margin:1rem 0 .4rem} @media (min-width:1000px){.kpis{grid-template-columns:repeat(5,1fr)} .kpi .v{font-size:2.2rem}}
   .kpi{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem .9rem;box-shadow:var(--shadow);border-top:4px solid var(--navy)}
   .kpi.hot{border-top-color:var(--rust)}
-  .kpi .v{font-size:2.5rem;font-weight:700;letter-spacing:-.03em;line-height:1;margin:0 0 .35rem} .kpi .v small{font-size:1rem;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-left:.15rem}
+  .kpi .v{font-family:"Source Serif 4",Georgia,serif;font-size:2.6rem;font-weight:600;letter-spacing:-.02em;line-height:1;margin:0 0 .35rem} .kpi .v small{font-size:1rem;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-left:.15rem}
   .kpi .l{font-size:var(--fs-1);color:var(--ink);margin:0;line-height:1.35} .kpi .s{font-size:var(--fs-0);color:var(--ink-3);margin:.35rem 0 0}
   .chart{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:1rem 1.1rem 1.1rem;margin:1rem 0 .5rem;position:relative}
   .chart h4{margin:0 0 .15rem;font-size:var(--fs-2);font-weight:700;letter-spacing:-.01em} .chart .sub{margin:0 0 .6rem;font-size:var(--fs-0);color:var(--ink-2)}
@@ -69,7 +69,7 @@
 <body>
 <header class="site">
   <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
-  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="act.html">What could help</a><a href="findings.html" aria-current="page">Key findings</a><a href="find.html">Trials near a ZIP</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html#methods">Methods &amp; data</a></nav>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html" aria-current="page">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
 <main>
   <div class="hero">
@@ -139,7 +139,7 @@
 
   <section id="policy">
     <h2>What would change this</h2>
-    <p>Distance is a cost: fuel, lodging, days away from work and family, often for a year or more of visits. Two bills in the 119th Congress address that cost directly. The <b>Clinical Trial Modernization Act</b> would let trial sponsors cover participants' travel, lodging and cost-sharing, exempt free digital health tools that enable remote participation from anti-kickback rules, exclude trial payments from taxable income, and fund outreach and recruitment in underserved and rural communities. The map shows, for every district and state, whether its members have signed on.</p>
+    <p>Distance is a cost: fuel, lodging, days away from work and family, often for a year or more of visits. One bill in the 119th Congress, introduced in both the House and the Senate, addresses that cost directly. The <b>Clinical Trial Modernization Act</b> would let trial sponsors cover participants' travel, lodging and cost-sharing, exempt free digital health tools that enable remote participation from anti-kickback rules, exclude trial payments from taxable income, and fund outreach and recruitment in underserved and rural communities. The map shows, for every district and state, whether its members have signed on.</p>
     <div class="two" id="bills"></div>
     <p class="small" style="margin-top:.8rem">Cosponsor lists from the Library of Congress bill-status feed as of <span data-f="cos_date"></span>. Cosponsorship is one signal of a member's position, not a vote; verify on congress.gov before citing.</p>
     <div class="actions"><a class="btn" href="index.html?u=district&m=cos_ctma_hr">Map House cosponsors</a><a class="btn" href="brief.html">Print a district brief</a></div>
