@@ -47,14 +47,14 @@
 
   /* ---- floating cards over the map ---- */
   .fcard{position:absolute;z-index:6;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px rgba(27,36,48,.10)}
-  .search-card{left:16px;top:16px;width:400px;max-width:calc(100% - 32px);padding:10px;display:flex;flex-direction:column;gap:8px}
+  .search-card{left:16px;top:16px;width:400px;max-width:calc(100% - 32px);padding:8px;display:flex;flex-direction:column;gap:6px}
   .drawer-open .legend-card,.drawer-open .map-hint{visibility:hidden}
   .search-wrap{position:relative}
-  #q{width:100%;border:1px solid var(--rule-2);border-radius:8px;padding:.6rem 2.4rem .6rem 2.4rem;font-size:var(--fs-1);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .75rem center}
+  #q{width:100%;border:1px solid var(--rule-2);border-radius:8px;padding:.5rem 2.4rem .5rem 2.4rem;font-size:var(--fs-1);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .75rem center}
   #q::-webkit-search-cancel-button,#q::-webkit-search-decoration{-webkit-appearance:none;display:none}
   #q:focus{border-color:var(--gulf);box-shadow:0 0 0 4px rgba(63,127,181,.15);outline:none}
   #q-clear{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--ink-3);font-size:1.3rem;line-height:1;cursor:pointer;padding:.2rem .5rem;border-radius:50%} #q-clear:hover{color:var(--ink);background:var(--paper)} #q-clear[hidden]{display:none}
-  .card-actions{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:6px}
+  .card-actions{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:4px}
   .tbtn{border:0;background:none;border-radius:8px;padding:.45rem .7rem;font-size:var(--fs-0);font-weight:600;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;line-height:1.2} .tbtn:hover{background:#EEF4FA}
   .tbtn[aria-expanded="true"]{background:var(--paper)} .tbtn[aria-expanded="true"] .chev{transform:rotate(180deg)} .tbtn .chev{transition:transform .15s}
   .ibtn{margin-left:auto;width:34px;height:34px;border:0;background:none;border-radius:8px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center} .ibtn:hover{background:#EEF4FA;color:var(--navy)}
@@ -88,8 +88,16 @@
   .layer-switch button{border:0;border-radius:999px;background:none;padding:.45rem .85rem;font-size:var(--fs-0);font-weight:600;color:var(--ink-2);cursor:pointer;white-space:nowrap} .layer-switch button:hover{background:var(--paper)}
   .layer-switch button[aria-pressed="true"]{background:var(--navy);color:#fff}
   .layer-switch[hidden]{display:none}
-  .legend-card{left:16px;top:auto;bottom:16px;width:320px;max-width:calc(100% - 32px);padding:10px 12px}
-  .zoomctl{right:16px;bottom:16px;display:flex;flex-direction:column;overflow:hidden;border-radius:8px}
+  .layer-switch .layer-more{position:relative} .layer-switch .layer-more>summary{list-style:none;cursor:pointer;border-radius:999px;padding:.45rem .85rem;font-size:var(--fs-0);font-weight:600;color:var(--ink-2);white-space:nowrap;display:inline-block} .layer-switch .layer-more>summary::-webkit-details-marker{display:none} .layer-switch .layer-more>summary::after{content:" ▾";font-size:.8em}
+  .layer-switch .layer-more>summary:hover,.layer-switch .layer-more[open]>summary{background:var(--paper);color:var(--navy)} .layer-switch.other .layer-more>summary{background:var(--navy);color:#fff}
+  .layer-list{position:absolute;right:0;top:calc(100% + 8px);min-width:300px;max-height:min(calc(100vh - 150px),640px);overflow:auto;background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);padding:.35rem;display:grid;gap:.05rem;z-index:30}
+  .layer-list .lh{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding:.5rem .7rem .2rem} .layer-list .lh:first-child{padding-top:.3rem}
+  .layer-list button{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;border:0;background:none;border-radius:6px;padding:.45rem .7rem;font:inherit;font-size:var(--fs-0);color:var(--ink);cursor:pointer;white-space:normal;line-height:1.3} .layer-list button:hover{background:#EEF4FA}
+  .layer-list button[aria-selected="true"]{background:#EEF4FA;color:var(--navy);font-weight:600}
+  .layer-list button .sw{flex:0 0 auto;display:inline-flex;gap:1px} .layer-list button .sw i{display:block;width:7px;height:12px;border-radius:1px} .layer-list button.sub{padding-left:1.6rem}
+  /* the legend is a strip across the bottom of the map area; the map is laid out above it (see layoutMap), so it never covers Alaska or Hawaii */
+  .legend-card{left:16px;right:16px;top:auto;bottom:16px;width:auto;max-width:none;padding:6px 14px}
+  .zoomctl{right:16px;bottom:calc(28px + var(--lgh,48px));display:flex;flex-direction:column;overflow:hidden;border-radius:8px}
   .zoomctl button{width:38px;height:38px;border:0;background:none;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center} .zoomctl button + button{border-top:1px solid var(--rule)} .zoomctl button:hover{background:var(--paper)}
   #q-list{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule-2);border-radius:12px;box-shadow:0 12px 32px rgba(27,36,48,.18);z-index:30;overflow:hidden;max-height:60vh;overflow-y:auto} #q-list[hidden]{display:none}
   #q-list .opt{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.55rem .9rem;cursor:pointer;border-top:1px solid var(--rule)} #q-list .opt:first-child{border-top:0}
@@ -119,15 +127,19 @@
   /* ---- the stage: a full-height map with the figures in a column on the right ---- */
   main.stage{display:flex;align-items:stretch;min-height:0;height:calc(100vh - 57px)}
   #left{flex:999 1 560px;min-width:0;position:relative;display:flex;flex-direction:column;min-height:0}
-  #map-wrap{position:relative;flex:1 1 auto;min-height:0;background:var(--paper);overflow:hidden}
+  /* one finger scrolls the page over the national map; once zoomed in, one finger pans the map and two fingers pinch */
+  #map-wrap{position:relative;flex:1 1 auto;min-height:0;background:var(--paper);overflow:hidden;touch-action:pan-y}
+  #map-wrap.zoomed{touch-action:none} #map-wrap.zoomed svg#map{cursor:grab} #map-wrap.dragging,#map-wrap.dragging *{cursor:grabbing !important}
   #map-wrap[hidden]{display:none}
-  svg#map{position:absolute;left:57%;top:53%;transform:translate(-50%,-50%);width:min(86%,calc((100vh - 57px) * 975 / 610 * .9));height:auto;max-height:92%;display:block}
+  /* the map's box is set by layoutMap(); this is the position before scripts run */
+  svg#map{position:absolute;left:57%;top:53%;transform:translate(-50%,-50%);width:min(86%,calc((100vh - 57px) * 975 / 610 * .9));height:auto;display:block;transition:left .35s,top .35s,width .35s}
+  @media (prefers-reduced-motion:reduce){svg#map{transition:none}}
   .panel[hidden]{display:none} .panel:not(#map-wrap){padding:.9rem var(--gutter) 1.2rem;overflow:auto;flex:1 1 auto;min-height:0;background:var(--paper)}
-  .map-hint{position:absolute;right:16px;bottom:102px;z-index:5;font-size:var(--fs-0);color:var(--ink-3);text-align:right;max-width:280px}
+  .map-hint{position:absolute;right:16px;top:70px;z-index:5;font-size:var(--fs-0);color:var(--ink-3);text-align:right;max-width:300px;transition:opacity .6s} .map-hint.gone{opacity:0;pointer-events:none}
   .map-hint .linkish{font-size:inherit}
   /* the legend inside its card */
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .8rem;font-size:var(--fs-0);color:var(--ink-2);min-height:1.2rem}
-  .legend .lg-title{font-weight:650;color:var(--ink);flex-basis:100%;line-height:1.3} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--gulf);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch;max-height:40vh;overflow:auto} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
+  .legend .lg-title{font-weight:650;color:var(--ink);flex-basis:auto;line-height:1.3;margin-right:.3rem} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--gulf);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch;max-height:40vh;overflow:auto} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
   /* tabs now sit at the top of the figures column */
   .tabs{display:flex;align-items:center;gap:.15rem;padding:0 1.25rem;border-bottom:1px solid var(--rule);background:var(--card);flex:0 0 auto}
@@ -234,7 +246,7 @@
     .map-hint{display:none}
     .legend-card{left:0;right:0;bottom:0;width:auto;max-width:none;border-radius:0;border:0;border-top:1px solid var(--rule);padding:6px 12px;box-shadow:none;background:rgba(255,255,255,.96)}
     .legend .lg-title{flex-basis:auto} .legend .lg-how p{max-height:30vh}
-    .zoomctl{bottom:118px;right:10px;flex-direction:row} .zoomctl button + button{border-top:0;border-left:1px solid var(--rule)}
+    .zoomctl{bottom:calc(10px + var(--lgh,60px));right:10px;flex-direction:row} .zoomctl button + button{border-top:0;border-left:1px solid var(--rule)}
     svg#map{left:50%;top:54%;width:100%}
   }
   @media (max-width:640px){
@@ -242,6 +254,9 @@
     .search-card{left:8px;top:8px;width:auto;max-width:calc(100% - 16px);padding:8px;gap:6px}
     .search-card .inv-toggle,.search-card .invite .x{display:none} .card-actions{padding-top:4px}
     .layer-switch{display:none}
+    .legend-card .layer-more{position:absolute;right:10px;top:5px} .legend-card .layer-more>summary{list-style:none;cursor:pointer;border:1px solid var(--rule-2);border-radius:999px;padding:.25rem .7rem;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:var(--card)} .legend-card .layer-more>summary::-webkit-details-marker{display:none} .legend-card .layer-more>summary::after{content:" ▾";font-size:.8em}
+    .legend-card .legend .lg-title{padding-right:84px} .legend-card .legend{gap:.25rem .7rem} .legend-card.menu-open{z-index:40}
+    .legend-card .layer-list{position:fixed;left:12px;right:12px;top:auto;bottom:12px;min-width:0;max-height:min(72vh,600px);box-shadow:0 -10px 40px rgba(27,36,48,.25)}
     .explore{max-height:calc(100vh - 170px)} .xrow .lab{flex-basis:100%}
     #map-wrap{height:min(56vh,480px)}
     .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 var(--gutter)} .tabs::-webkit-scrollbar{display:none}
@@ -254,6 +269,7 @@
     .tbar,.tbar>*{max-width:100%;min-width:0} .tbar .chk{flex-wrap:wrap}
     .rows li{flex-wrap:wrap} .rows li>span:last-child{white-space:normal}
   }
+  @media (max-width:640px) and (pointer:coarse){.zoomctl{display:none}}   /* on a phone, pinching replaces the zoom buttons, which would sit over Florida */
   @media (prefers-reduced-motion:reduce){.county{transition:none}#busy i{animation:none}}
 </style>
 </head>
@@ -326,12 +342,13 @@
     <!-- floating layer switch (county view): the two layers most people want, the rest under Explore the data -->
     <div class="fcard layer-switch" id="layer-switch" role="group" aria-label="Map layer">
       <button type="button" data-layer="short" aria-pressed="true">People far from trials</button><button type="button" data-layer="t" aria-pressed="false">Trials by county</button>
+      <details class="layer-more" id="layer-more"><summary aria-label="More layers">More layers</summary><div class="layer-list" id="layer-list" role="listbox" aria-label="All map layers"></div></details>
     </div>
 
     <div class="fcard legend-card"><div class="legend" id="legend" aria-live="polite"></div></div>
 
     <div class="fcard zoomctl"><button type="button" id="zoom-in" aria-label="Zoom in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" id="zoom-out" aria-label="Zoom out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button></div>
-    <div class="map-hint" id="map-hint">Hover for details · click to select · double-click the map to zoom back out</div>
+    <div class="map-hint" id="map-hint">Scroll to zoom · drag to pan · click a place for its figures · double-click to zoom back out</div>
   </div>
   <div id="tab-trials" class="panel" hidden>
     <div class="tbar"><span id="tr-scope" class="scope"></span>
@@ -471,7 +488,7 @@
   let unit = 'county', metric = 't', incSite = 0, acsVar = 'veh', incClasses = [], acsClasses = [], selectedState = '', selectedD = null, selectedC = null;
   const PCT_CLASSES = [['under 10%',0,10,'#F3E6E0'],['10–25%',10,25,'#F2C48A'],['25–50%',25,50,'#D98B4A'],['50–75%',50,75,'#B8562E'],['75% or more',75,101,'#8A3B1E']];
   const SHORT_OK = !!(BU && RU);   // the default layer needs burden.js (county access shares) and rucc.js (metro / nonmetro)
-  const UNIT_METRICS = { county: (SHORT_OK ? ['short'] : []).concat(['t', 'rn', 'rb', 'inc', 'acs']).concat(BU ? ['bva'] : []).concat(BU && MO ? ['mva'] : []), district: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'].concat(HB.map(k => 'cos_' + k)), state: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'] };
+  const UNIT_METRICS = { county: (SHORT_OK ? ['short'] : []).concat(['t', 'rn', 'rb', 'inc', 'acs']).concat(RU ? ['rucc'] : []).concat(BU ? ['bva'] : []).concat(BU && MO ? ['mva'] : []), district: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'].concat(HB.map(k => 'cos_' + k)), state: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'] };
   const defaultMetric = () => unit === 'county' ? (SHORT_OK ? 'short' : 't') : 'l20'; metric = defaultMetric();
   const GEO_LABEL = { l20: 'Residents 55+ with fewer than 20 trials within 60 road-miles', z60: 'Residents 55+ with no trial within 60 road-miles', g60b: 'Residents 55+ more than 60 road-miles from a broad menu (100+ trials)', g60n: 'Residents 55+ more than 60 road-miles from an NCI center', medn: 'Median road miles to the nearest NCI center', ginc: 'Cancer incidence, all sites (age-adjusted, per 100,000)', gacs: 'Household context (ACS)',
     ...Object.fromEntries(HB.map(k => ['cos_' + k, `${billName(k)} — House member's cosponsorship`])) };
@@ -543,18 +560,18 @@
   svg.append('defs').append('pattern').attr('id', 'hatch').attr('patternUnits', 'userSpaceOnUse').attr('width', 4).attr('height', 4).attr('patternTransform', 'rotate(45)').append('rect').attr('width', 1.5).attr('height', 4).attr('fill', '#9a9a9a');
   const tip = document.getElementById('tip'), wrap = document.getElementById('map-wrap'), baseVB = [0, 0, W, H]; svg.attr('viewBox', baseVB.join(' '));
   const coarse = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);   // a touch screen
-  const HINT0 = coarse ? 'Tap a state to zoom in, then tap a county or district · “Reset view” zooms back out' : 'Hover for details · click to select · double-click the map to zoom back out';
+  const HINT0 = coarse ? 'Pinch to zoom · tap a state, then a county or district · “Reset view” zooms back out' : 'Scroll to zoom · drag to pan · click a place for its figures · double-click to zoom back out';
   const countyFeatures = GEO.counties.features.filter(f => C[f.properties.id]);
   const counties = gC.selectAll('path').data(countyFeatures).join('path').attr('class', 'county').attr('d', path)
     .on('mousemove', (ev, f) => showTip(ev, C[f.properties.id]))
-    .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { const k = f.properties.id; if (coarse && !selectedState) window.__nav.selectState(C[k].s2); else selectCounty(k); });
+    .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { const k = f.properties.id; if (coarse && !selectedState && !freeZoom) window.__nav.selectState(C[k].s2); else selectCounty(k); });
   const overlay = gC.append('g').attr('pointer-events', 'none');
   const gB = svg.append('g').attr('class', 'bubbles');   // the default layer's circles: residents 55+ short of trials, one per county
   function showTip(ev, c) { tip.style.display = 'block'; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = tipHTML(c); }
   const districtFeatures = GEO.districts.features;
   const dpaths = gD.selectAll('path').data(districtFeatures).join('path').attr('class', 'district').attr('d', path)
     .on('mousemove', (ev, f) => { if (unit !== 'district') return; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.display = 'block'; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = geoTip('district', f.properties.id); })
-    .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { if (unit !== 'district') return; if (coarse && !selectedState && f.properties.s) window.__nav.selectState(f.properties.s); else selectDistrict(f.properties.id); });
+    .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { if (unit !== 'district') return; if (coarse && !selectedState && !freeZoom && f.properties.s) window.__nav.selectState(f.properties.s); else selectDistrict(f.properties.id); });
   const gSt = svg.insert('g', ':first-child'); const stateFeatures = (GEO.states || {features: []}).features;
   const spaths = gSt.selectAll('path').data(stateFeatures).join('path').attr('class', 'statefill').attr('d', path)
     .on('mousemove', (ev, f) => { if (unit !== 'state') return; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.display = 'block'; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = geoTip('state', f.properties.id); })
@@ -590,7 +607,7 @@
     const data = metric === 'short' ? countyFeatures.map(f => { const k = f.properties.id, v = shortOf(k); return v && v.n >= BUB_FLOOR ? { k, c: path.centroid(f), n: v.n, m: isMetro(k) } : null; }).filter(d => d && isFinite(d.c[0])).sort((a, b) => b.n - a.n) : [];
     bubR.domain([0, Math.max(BUB_DOMAIN_MAX, d3.max(data, d => d.n) || 0)]);   // the largest circle in view is never wider than the national maximum
     gB.selectAll('circle').data(data, d => d.k).join('circle').attr('class', d => 'bub' + (INSET.has(C[d.k].s2) ? ' inset' : '')).classed('in-district', d => d.k === selectedC).attr('r', d => bubR(d.n)).attr('fill', d => BUB_FILL(d.m)).attr('stroke', d => BUB_LINE(d.m)).attr('stroke-width', d => BUB_W(d.m))
-      .on('mousemove', (ev, d) => showTip(ev, C[d.k])).on('mouseleave', () => tip.style.display = 'none').on('click', (ev, d) => { if (coarse && !selectedState) window.__nav.selectState(C[d.k].s2); else selectCounty(d.k); });
+      .on('mousemove', (ev, d) => showTip(ev, C[d.k])).on('mouseleave', () => tip.style.display = 'none').on('click', (ev, d) => { if (coarse && !selectedState && !freeZoom) window.__nav.selectState(C[d.k].s2); else selectCounty(d.k); });
     placeBubbles(); }
   const circleSVG = (r, fill, stroke, w) => `<svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${w || .7}"/></svg>`;
   function legendShort(lg) {
@@ -636,7 +653,8 @@
     if (metric === 'short') legendShort(lg);
     else if (metric === 'inc') { lg.append('span').html('<i class="hatch"></i>small numbers (under 16 cases/yr)'); lg.append('span').html('<i style="background:var(--nodata)"></i>suppressed, or not available (Kansas; 3 counties absent)'); }
     else if (isBva(metric)) { lg.append('span').html(`<i class="hatch"></i>${measureNoun()} based on small numbers`); lg.append('span').html(`<i style="background:var(--nodata)"></i>${measureNoun()} not available`);
-      const tot = bvaTotals(CK); lg.append('span').attr('class', 'lg-title').style('flex-basis', '100%').style('font-weight', '400').style('color', 'var(--ink-2)').text((tot ? `${fmt(tot.n)} counties, home to ${people(tot.p)} residents 55+ and about ${fmt(tot.c)} ${countNoun()} a year, are in the "${BCLS()[0][0].toLowerCase()}" corner${filtersActive() ? ' (filtered)' : ''}. ` : '') + bvaDefinition() + ' A cross-tabulation, not a combined score — the “Need vs access” tab (under Analysis) lists the counties.'); }
+      const tot = bvaTotals(CK); const how = lg.append('details').attr('class', 'lg-how').property('open', howOpen).on('toggle', function () { howOpen = this.open; }); how.append('summary').text('How to read this map');
+      how.append('p').text((tot ? `${fmt(tot.n)} counties, home to ${people(tot.p)} residents 55+ and about ${fmt(tot.c)} ${countNoun()} a year, are in the "${BCLS()[0][0].toLowerCase()}" corner${filtersActive() ? ' (filtered)' : ''}. ` : '') + bvaDefinition() + ' A cross-tabulation, not a combined score — the “Need vs access” tab (under Analysis) lists the counties.'); }
     else if (metric === 'rucc') lg.append('span').html('<i style="background:var(--nodata)"></i>no code');
     else if (metric === 'rn' || metric === 'rb') lg.append('span').html('<i style="background:var(--nodata)"></i>no road connection (AK, HI) or >30 mi from a highway');
     else if (metric === 'acs') lg.append('span').html('<i style="background:var(--nodata)"></i>no data');
@@ -644,7 +662,7 @@
     document.getElementById('inc-site').style.display = (metric === 'inc' || isBva(metric)) ? '' : 'none'; document.getElementById('acs-var').style.display = metric === 'acs' ? '' : 'none';
   }
   const incSel = document.getElementById('inc-site'); BSITE.forEach(([k, lab], i) => { const o = document.createElement('option'); o.value = i; o.textContent = lab; incSel.appendChild(o); }); incSel.addEventListener('change', () => { incSite = +incSel.value; if ((metric === 'bva' || tab === 'burden') && BU) { const ty = BU.meta.site2type[BSITE[incSite][0]] || ''; if (ty !== filt.type) { filt.type = ty; ft.value = ty; update(); return; } } paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); refreshTab(); pushURL(); });
-  document.getElementById('acs-var').addEventListener('change', e => { acsVar = e.target.value; paint(); renderPane(); pushURL(); });
+  document.getElementById('acs-var').addEventListener('change', e => { acsVar = e.target.value; paint(); renderPane(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
   document.getElementById('metric').addEventListener('change', e => { metric = e.target.value; paint(); renderPane(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
   const renderPane = () => { const top = pane.scrollTop; if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); pane.scrollTop = top; };
   document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); paint(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
@@ -653,12 +671,17 @@
   document.getElementById('lyr-m').addEventListener('change', () => paint());   // metro vs rural: recolors the circles and the legend
   let showLabels = true; document.getElementById('lyr-l').addEventListener('change', e => { showLabels = e.target.checked; refreshLabels(); });
   const stateBounds = {}; countyFeatures.forEach(f => { const c = C[f.properties.id]; const b = path.bounds(f); const cur = stateBounds[c.s2] || [Infinity, Infinity, -Infinity, -Infinity]; stateBounds[c.s2] = [Math.min(cur[0], b[0][0]), Math.min(cur[1], b[0][1]), Math.max(cur[2], b[1][0]), Math.max(cur[3], b[1][1])]; });
-  let curVB = baseVB.slice();
-  function zoomTo(vb) { curVB = vb.slice(); svg.transition().duration(500).attr('viewBox', vb.join(' ')); if (vb === baseVB) svg.classed('dz', false); insetVisibility(); zoomStyles(); sizeLegendCircles(); }
+  let curVB = baseVB.slice(), freeZoom = false;   // freeZoom: the reader has zoomed or panned by hand (wheel, pinch, drag, the +/− buttons) since the last zoom to a place
+  function zoomTo(vb) { curVB = vb.slice(); freeZoom = false; svg.transition().duration(500).attr('viewBox', vb.join(' ')); if (vb === baseVB) svg.classed('dz', false); insetVisibility(); zoomStyles(); sizeLegendCircles(); if (window.__mapZoomSync) window.__mapZoomSync(); }
+  // is this projected bounding box (d3 path.bounds) inside the current view?
+  const boundsInView = b => b[0][0] >= curVB[0] && b[1][0] <= curVB[0] + curVB[2] && b[0][1] >= curVB[1] && b[1][1] <= curVB[1] + curVB[3];
   const INSET = new Set(['AK', 'HI']);
   counties.classed('inset', f => INSET.has(C[f.properties.id].s2)); dpaths.classed('inset', f => INSET.has(f.properties.s)); spaths.classed('inset', f => INSET.has(f.properties.id)); gStLine.selectAll('path').classed('inset', f => INSET.has(f.properties.id));
   gN.selectAll('path').classed('inset', n => n.lon < -140);
-  function insetVisibility() { svg.classed('no-inset', !!selectedState && !INSET.has(selectedState)); }
+  // Alaska and Hawaii are drawn as insets at the bottom left of the projection, so they are hidden when a state elsewhere is selected and,
+  // by hand, when the reader has zoomed in on a view whose centre is not over the insets (otherwise Hawaii would float beside south Texas)
+  function insetVisibility() { const zoomedIn = curVB[2] < W * 0.8, cx = curVB[0] + curVB[2] / 2, cy = curVB[1] + curVB[3] / 2, overInsets = cx < W * 0.4 && cy > H * 0.7;
+    svg.classed('no-inset', (!!selectedState && !INSET.has(selectedState)) || (zoomedIn && !overInsets)); }
   // zoom to one district, keeping some of the surrounding state in view (at least a quarter of the state's width)
   function zoomDistrict(k) { const f = districtFeatures.find(f => f.properties.id === k); if (!f) return; const b = path.bounds(f), sb = stateBounds[f.properties.s];
     let w = b[1][0] - b[0][0], h = b[1][1] - b[0][1]; const cx = (b[0][0] + b[1][0]) / 2, cy = (b[0][1] + b[1][1]) / 2;
@@ -936,8 +959,8 @@
     const rowsH = HB.map(b => `<li><span>${billLink(CO.bills[b])} ${esc(CO.bills[b].short)}<br><span class="sub">${bid ? esc(d.member) : 'seat vacant'}: ${cosText(bid, b)}</span></span><span>${roleChip(cosRole(bid, b))}</span></li>`).join('');
     const rowsS = sens.map(bid2 => { const m = CO.members[bid2]; return SB.map(b => `<li class="sub"><span>${billLink(CO.bills[b])} ${esc(CO.bills[b].short)} · ${esc(m.name)} (${m.party})<br><span class="sub">${cosText(bid2, b)}</span></span><span>${roleChip(cosRole(bid2, b))}</span></li>`).join(''); }).join('');
     return `<div class="card"><h3 style="margin-top:0">Legislation · this seat</h3><ul class="rows">${rowsH}</ul>${SB.length ? `<h3>Senators · ${esc(d.stname)}</h3><ul class="rows">${rowsS}</ul>` : ''}${cosNote()}</div>`; }
-  function wireLegislation() { pane.querySelectorAll('button[data-cosmap]').forEach(b => b.addEventListener('click', () => { unit = 'district'; document.getElementById('unit').value = unit; fillMetricSelect(); metric = b.dataset.cosmap; document.getElementById('metric').value = metric; setTab('map'); paint(); pushURL(); }));
-    pane.querySelectorAll('button[data-metric]').forEach(b => b.addEventListener('click', () => { unit = 'county'; document.getElementById('unit').value = unit; fillMetricSelect(); metric = b.dataset.metric; document.getElementById('metric').value = metric; setTab('map'); paint(); pushURL(); }));
+  function wireLegislation() { pane.querySelectorAll('button[data-cosmap]').forEach(b => b.addEventListener('click', () => { unit = 'district'; document.getElementById('unit').value = unit; fillMetricSelect(); metric = b.dataset.cosmap; document.getElementById('metric').value = metric; setTab('map'); paint(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); }));
+    pane.querySelectorAll('button[data-metric]').forEach(b => b.addEventListener('click', () => { unit = 'county'; document.getElementById('unit').value = unit; fillMetricSelect(); metric = b.dataset.metric; document.getElementById('metric').value = metric; setTab('map'); paint(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); }));
     pane.querySelectorAll('button[data-tabopen]').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tabopen))); }
 
   // ---------- burden vs access: pane card + tab ----------
@@ -975,7 +998,7 @@
       .on('click', (ev, r) => { selectCounty(r.k); setTab('map'); }).append('title').text(r => `${clabel(C[r.k])}: ${r.rate} per 100,000, ${fmt(r.cases || 0)} ${mort ? 'deaths' : 'cases'}/yr, ${pct(r.a)}% low access`);
     document.getElementById('bva-site').addEventListener('change', e => { incSite = +e.target.value; incSel.value = incSite; const ty = BU.meta.site2type[BSITE[incSite][0]] || ''; if (ty !== filt.type) { filt.type = ty; ft.value = ty; bvaCritUser = false; update(); } else renderBurden(); pushURL(); });
     document.getElementById('bva-thr').addEventListener('change', e => { bvaThr = +e.target.value; renderBurden(); if (isBva(metric)) paint(); pushURL(); }); document.getElementById('bva-crit').addEventListener('change', e => { bvaCrit = e.target.value; bvaCritUser = true; renderBurden(); if (isBva(metric)) paint(); pushURL(); });
-    const ms = document.getElementById('bva-measure'); if (ms) ms.addEventListener('change', e => { measure = e.target.value; if (isBva(metric)) { metric = measure === 'mort' ? 'mva' : 'bva'; document.getElementById('metric').value = metric; paint(); renderPane(); } renderBurden(); pushURL(); });
+    const ms = document.getElementById('bva-measure'); if (ms) ms.addEventListener('change', e => { measure = e.target.value; if (isBva(metric)) { metric = measure === 'mort' ? 'mva' : 'bva'; document.getElementById('metric').value = metric; paint(); renderPane(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); } renderBurden(); pushURL(); });
     document.getElementById('bva-all').addEventListener('change', e => { bvaShowAll = e.target.checked; renderBurden(); });
     el.querySelectorAll('th[data-k]').forEach(h => h.addEventListener('click', () => { const k = h.dataset.k; bvaSort = bvaSort[0] === k ? [k, -bvaSort[1]] : [k, (k === 'n' || k === 'st') ? 1 : -1]; renderBurden(); }));
     el.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => { selectCounty(b.dataset.open); setTab('map'); }));
@@ -1011,7 +1034,8 @@
     pane.querySelectorAll('[data-d]').forEach(b => b.addEventListener('click', () => selectDistrict(b.dataset.d))); wireChips(); wireShare(); wireMore(); wireLegislation(); fillFilteredRural('state', D.meta.state_order.indexOf(g.fips)); facFilter = null; cmpSel = []; refreshTab(); pane.querySelectorAll('button[data-open]').forEach(b => b.addEventListener('click', () => openTrials('in'))); pane.querySelectorAll('button[data-open-sites]').forEach(b => b.addEventListener('click', () => setTab('sites'))); }
   function selectDistrict(k) { doors(false); selectedD = k; selectedC = null; const d = DI[k];
     if (d.st !== selectedState) { selectedState = d.st; pickS.value = d.st; fillDistricts(d.st); }
-    zoomDistrict(k); refreshLabels();
+    { const f0 = districtFeatures.find(f => f.properties.id === k); if (freeZoom && f0 && boundsInView(path.bounds(f0))) { svg.classed('dz', true); insetVisibility(); } else zoomDistrict(k); }   // keep a hand-framed view that already holds the district
+    refreshLabels();
     pickD.value = k; const f = districtFeatures.find(f => f.properties.id === k); halo.attr('d', path(f)); sel.attr('d', path(f)); outlineCounty(null); svg.classed('dim', false); counties.classed('in-district', false);
     const bid = districtMember(k); const cos = CO ? (d.member ? HB.map(b => `${billName(b)}: ${cosText(bid, b)}`).join(' · ') : 'seat currently vacant') : (d.hr3521 === 'lead' ? 'original cosponsor of H.R. 3521' : d.member ? 'cosponsor status not tracked here — check congress.gov' : 'seat currently vacant');
     const ru = RU && RU.districts[k] ? `<span class="chip static" title="USDA Rural-Urban Continuum Codes, 2023: share of residents 55+ living in nonmetro counties (codes 4–9)">${pct(RU.districts[k].nonmetro_pct)}% in nonmetro counties</span>` : '';
@@ -1036,7 +1060,9 @@
     if (key === 'bva' && BU) { const q = bvaClass(k); const b = bRec(c); S.bva = stat({ num: q === null ? '—' : BCLS()[q][0].split(' · ')[0], unit: q === null ? '' : ' · ' + BCLS()[q][0].split(' · ')[1], text: q === null ? `Not classified: ${measureNoun()} or access share not available.` : `${siteName(incSite)} ${measureNoun()} ${b[0]} per 100,000 (${measurePeriod()}), ${highOf(measure, incSite, b[0]) ? '' : 'not '}${highText(measure, incSite)}; ${pct(accessShare(k))}% of residents 55+ have ${critLabel()} within 60 road-miles.`, chips: '<button type="button" class="chip" data-tabopen="burden">Open “Need vs access” →</button>', cls: q === 0 ? 'hot' : q === null ? 'na' : '', tag: tag('bva') }); }
     const first = S[key] ? key : (key === 'nci' || key === 'broad') ? 'road' : null;
     return (first ? [first] : []).concat(['trials', 't60', 'road', 'access'].filter(x => x !== first)).map(x => S[x] || '').join(''); }
-  function selectCounty(k) { doors(false); selectedC = k; selectedD = null; const c = C[k]; if (c.s2 !== selectedState || svg.classed('dz')) { selectedState = c.s2; pickS.value = c.s2; fillDistricts(c.s2); svg.classed('dz', false); zoomState(c.s2); refreshLabels(); }
+  function selectCounty(k) { doors(false); selectedC = k; selectedD = null; const c = C[k]; if (c.s2 !== selectedState || svg.classed('dz')) { selectedState = c.s2; pickS.value = c.s2; fillDistricts(c.s2); svg.classed('dz', false);
+      const f = countyFeatures.find(f => f.properties.id === k); if (freeZoom && f && boundsInView(path.bounds(f))) insetVisibility(); else zoomState(c.s2);   // a view the reader framed by hand is kept when the county is already in it
+      refreshLabels(); }
     counties.classed('in-district', f => f.properties.id === k); gB.selectAll('circle').classed('in-district', d => d.k === k); svg.classed('dim', true); halo.attr('d', null); sel.attr('d', null); outlineCounty(k); pickD.value = '';
     const i = CI[k], fa = filtersActive(), n = cnt[i], n60 = cnt60[i], nB = n - cntNamed[i], n60B = n60 - cnt60Named[i]; const nm = nearestMatching(k);
     const basket = (tot, b) => filt.type && tot ? ` <small style="font-size:.75em;color:var(--ink-2)">${fmt(tot - b)} named-only + ${fmt(b)} basket</small>` : '';
@@ -1200,12 +1226,85 @@
   // the two-way layer switch on the map (county view only); the full list of layers stays under "Color the map by"
   const lsw = document.getElementById('layer-switch');
   lsw.querySelectorAll('button[data-layer]').forEach(b => b.addEventListener('click', () => { if (unit !== 'county') return; const m = document.getElementById('metric'); m.value = b.dataset.layer; m.dispatchEvent(new Event('change')); }));
-  window.__syncLayerSwitch = () => { lsw.hidden = unit !== 'county'; lsw.querySelectorAll('button[data-layer]').forEach(b => b.setAttribute('aria-pressed', String(unit === 'county' && metric === b.dataset.layer))); };
-  window.__syncLayerSwitch();
+  // "More layers": every layer the drawer's "Color the map by" offers for the current unit, with a swatch of its colours; the household-context
+  // layer expands into its five variables so each is one click away. Choosing one sets the same controls the drawer uses.
+  const lmore = document.getElementById('layer-more'), llist = document.getElementById('layer-list');
+  const GROUP = { short: 'Access', t: 'Access', l20: 'Access', z60: 'Access', g60b: 'Distance', g60n: 'Distance', rn: 'Distance', rb: 'Distance', medn: 'Distance', inc: 'Cancer burden', ginc: 'Cancer burden', bva: 'Cancer burden', mva: 'Cancer burden', acs: 'Household context', gacs: 'Household context', rucc: 'Rural and urban' };
+  const swatch = m => { let cl = [];   // the layer's own colour classes; the quantile layers show the fixed ramp they are drawn from
+    try { if (unit === 'county') cl = m === 'short' ? [[null, 0, 0, BUB_ONE]] : (m === 'inc' || m === 'acs') ? RAMP.map(c => [null, 0, 0, c]) : (METRICS[m] && METRICS[m].classes && METRICS[m].classes()) || [];
+      else cl = (m === 'medn') ? DIST : m.startsWith('cos_') ? COS_CLASSES : (m === 'ginc' || m === 'gacs') ? RAMP.map(c => [null, 0, 0, c]) : PCT_CLASSES; } catch (e) { cl = []; }
+    return cl && cl.length ? `<span class="sw" aria-hidden="true">${cl.map(k => `<i style="background:${k[3]}"></i>`).join('')}</span>` : ''; };
+  const GROUP_ORDER = ['Access', 'Distance', 'Cancer burden', 'Household context', 'Rural and urban', 'Legislation', 'Other'];
+  function buildLayerMenu() { const sel = document.getElementById('metric'); const acsSel = document.getElementById('acs-var'); let html = '';
+    const groupOf = m => GROUP[m] || (m.startsWith('cos_') ? 'Legislation' : 'Other'); const opts = [...sel.options];
+    for (const g of GROUP_ORDER) { const inG = opts.filter(o => groupOf(o.value) === g); if (!inG.length) continue; html += `<div class="lh">${g}</div>`;   // grouped by what the layer shows, in the drawer's order within each group
+      for (const o of inG) { const m = o.value;
+        if (m === 'acs' || m === 'gacs') { for (const a of acsSel.options) html += `<button type="button" role="option" class="sub" data-m="${m}" data-acs="${a.value}" aria-selected="${String(metric === m && acsVar === a.value)}">${swatch(m)}${esc(a.textContent)}</button>`; }
+        else html += `<button type="button" role="option" data-m="${m}" aria-selected="${String(metric === m)}">${swatch(m)}${esc(o.textContent)}</button>`; } }
+    llist.innerHTML = html;
+    llist.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { lmore.open = false; if (b.dataset.acs) { acsVar = b.dataset.acs; acsSel.value = acsVar; } sel.value = b.dataset.m; sel.dispatchEvent(new Event('change')); })); }
+  // on a phone the layer switch is hidden for room, so the "Layers" menu moves into the legend strip and opens as a sheet
+  const phoneMQ = matchMedia('(max-width:640px)'); const legendHome = document.querySelector('.legend-card');
+  function placeLayerMenu() { const home = phoneMQ.matches ? legendHome : lsw; if (lmore.parentElement !== home) home.appendChild(lmore); lmore.querySelector('summary').textContent = phoneMQ.matches ? 'Layers' : 'More layers'; }
+  placeLayerMenu(); (phoneMQ.addEventListener ? phoneMQ.addEventListener('change', placeLayerMenu) : phoneMQ.addListener(placeLayerMenu));
+  document.addEventListener('click', e => { if (!lmore.contains(e.target)) lmore.open = false; }); document.addEventListener('keydown', e => { if (e.key === 'Escape') lmore.open = false; });
+  lmore.addEventListener('toggle', () => { if (lmore.open) buildLayerMenu(); legendHome.classList.toggle('menu-open', lmore.open); });   // rebuilt on opening, so the list always matches the unit and layer in force
+  window.__syncLayerSwitch = () => { const county = unit === 'county'; lsw.hidden = false; lsw.querySelectorAll('button[data-layer]').forEach(b => { b.hidden = !county; b.setAttribute('aria-pressed', String(county && metric === b.dataset.layer)); });
+    lsw.classList.toggle('other', !(county && (metric === 'short' || metric === 't'))); buildLayerMenu(); };
+  // first sync happens at the end of applyURL below, once the layer list for the unit has been filled
   // zoom buttons: step the view box in and out around its center; zooming all the way out restores the national view
-  const zoomStep = dir => { const [x, y, w, h] = curVB; if (dir > 0) { const nw = Math.max(w / 1.6, W / 12), nh = nw * H / W; zoomTo([x + (w - nw) / 2, y + (h - nh) / 2, nw, nh]); svg.classed('dz', true); }
-    else { const nw = w * 1.6; if (nw >= W * 0.95) { zoomTo(baseVB); svg.classed('dz', false); } else { const nh = nw * H / W; zoomTo([Math.max(0, Math.min(W - nw, x - (nw - w) / 2)), Math.max(0, Math.min(H - nh, y - (nh - h) / 2)), nw, nh]); } } };
+  const zoomStep = dir => { const [x, y, w, h] = curVB; if (dir > 0) { const nw = Math.max(w / 1.6, W / 12), nh = nw * H / W; zoomTo([x + (w - nw) / 2, y + (h - nh) / 2, nw, nh]); svg.classed('dz', true); freeZoom = true; }
+    else { const nw = w * 1.6; if (nw >= W * 0.95) { zoomTo(baseVB); svg.classed('dz', false); } else { const nh = nw * H / W; zoomTo([Math.max(0, Math.min(W - nw, x - (nw - w) / 2)), Math.max(0, Math.min(H - nh, y - (nh - h) / 2)), nw, nh]); freeZoom = true; } } hintUsed(); };
   document.getElementById('zoom-in').addEventListener('click', () => zoomStep(1)); document.getElementById('zoom-out').addEventListener('click', () => zoomStep(-1));
+
+  // ---------- map layout: the map sits below the search card and above the legend strip, as large as that space allows ----------
+  // Albers USA puts Washington at the top left and Alaska and Hawaii at the bottom left, so a card in either corner hides part of the
+  // country. Instead of covering the map the cards bound it: the top of the map clears the search card (Washington starts 4.1% down the
+  // map) and the bottom clears the legend (Alaska and Florida end 96% down). The width follows from the 975:610 aspect ratio.
+  const wrapEl = document.getElementById('map-wrap'), searchCard = document.getElementById('search-card'), legendCard = document.querySelector('.legend-card'), exploreEl = document.getElementById('explore');
+  let R = { left: 0, top: 0, w: W, h: H }, lastCardH = null;   // R: the svg's box inside #map-wrap, in CSS px
+  function layoutMap() {
+    const aw = wrapEl.clientWidth; let ah = wrapEl.clientHeight; if (!aw || !ah) return;
+    const narrow = matchMedia('(max-width:980px)').matches, m = narrow ? 8 : 16;
+    if (exploreEl.hidden) lastCardH = searchCard.offsetHeight; const cardH = lastCardH === null ? searchCard.offsetHeight : lastCardH;   // the open drawer overlaps the map on purpose; it does not move it
+    const lgH = legendCard.offsetHeight || 0; wrapEl.style.setProperty('--lgh', lgH + 'px');
+    const top0 = searchCard.offsetTop + cardH + 6;
+    if (!narrow && wrapEl.style.height) { wrapEl.style.height = ''; ah = wrapEl.clientHeight; }
+    if (narrow) {   // stacked layout: the map area is as tall as the card, a full-width map and the legend need, within most of the screen
+      const need = Math.ceil(top0 + 0.915 * (aw - 2 * m) * H / W + lgH + 12), wh = Math.min(need, Math.round(window.innerHeight * 0.8));
+      if (Math.abs(wh - ah) > 1) { wrapEl.style.height = wh + 'px'; ah = wh; } }
+    const bottom0 = ah - (narrow ? 0 : m) - lgH - 6;   // the band the map's content must stay inside
+    let h = Math.min((aw - 2 * m) * H / W, (bottom0 - top0) / (0.956 - 0.041)); let w = h * W / H;
+    if (w < 240) { w = 240; h = w * H / W; }   // never smaller than this; on a tiny screen the cards may then overlap it
+    const tMin = top0 - 0.041 * h, tMax = bottom0 - 0.956 * h;   // the map's top must lie between these for Washington to clear the card and Alaska the legend
+    const top = Math.max(tMin, Math.min(tMax, (ah - h) / 2)), left = (aw - w) / 2;   // centred when there is slack
+    R = { left, top, w, h }; const st = svg.node().style; st.left = left + 'px'; st.top = top + 'px'; st.width = w + 'px'; st.transform = 'none';
+    if (zoomBeh) { zoomBeh.translateExtent([[left, top], [left + w, top + h]]); window.__mapZoomSync(); }
+    sizeLegendCircles();
+  }
+  // ---------- zoom by hand: wheel, drag, pinch (d3-zoom), mapped onto the viewBox that the buttons and place-zooms already use ----------
+  // The behaviour is attached to the map's container, whose pixel coordinates are stable while the viewBox changes underneath.
+  // A transform (k, x, y) in container pixels and a viewBox are two names for the same view: vbFromT and tFromVb convert between them.
+  const vbFromT = t => { const s = Math.min(R.w / W, R.h / H), ox = (R.w - W * s) / 2, oy = (R.h - H * s) / 2; return [-((t.k - 1) * (R.left + ox) + t.x) / (t.k * s), -((t.k - 1) * (R.top + oy) + t.y) / (t.k * s), W / t.k, H / t.k]; };
+  const tFromVb = vb => { const s = Math.min(R.w / W, R.h / H), ox = (R.w - W * s) / 2, oy = (R.h - H * s) / 2, k = W / vb[2]; return d3.zoomIdentity.translate(-vb[0] * k * s - (k - 1) * (R.left + ox), -vb[1] * k * s - (k - 1) * (R.top + oy)).scale(k); };
+  const wrapSel = d3.select(wrapEl);
+  window.__mapZoomSync = () => { if (R.w > 0 && R.h > 0) wrapSel.property('__zoom', tFromVb(curVB)); wrapEl.classList.toggle('zoomed', curVB[2] < W * 0.999); };
+  const hintEl = document.getElementById('map-hint'); let hintTimer = setTimeout(() => hintEl.classList.add('gone'), 12000);
+  function hintUsed() { if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; } hintEl.classList.add('gone'); }
+  const zoomBeh = d3.zoom().scaleExtent([1, 12]).clickDistance(4).extent(() => [[R.left, R.top], [R.left + R.w, R.top + R.h]])
+    .filter(ev => { if (ev.target.closest && ev.target.closest('.fcard, #tip, .map-hint, .map-loading')) return false;   // the cards keep their own scrolling and clicks
+      if (ev.type === 'touchstart' && ev.touches.length === 1 && !wrapEl.classList.contains('zoomed')) return false;   // one finger on the national map scrolls the page
+      return (!ev.ctrlKey || ev.type === 'wheel') && !ev.button; })
+    .on('start', ev => { if (!ev.sourceEvent) return; gestureVB0 = curVB.slice(); tip.style.display = 'none'; if (ev.sourceEvent.type !== 'wheel') wrapEl.classList.add('dragging'); })
+    .on('zoom', ev => { if (!ev.sourceEvent) return; const vb = vbFromT(ev.transform); if (vb.every((v, i) => Math.abs(v - curVB[i]) < 1e-6)) return;   // a plain click or tap: nothing moved
+      svg.interrupt(); curVB = vb; svg.attr('viewBox', vb.join(' ')); wrapEl.classList.toggle('zoomed', vb[2] < W * 0.999); placeBubbles(); insetVisibility(); })
+    .on('end', ev => { wrapEl.classList.remove('dragging'); if (!ev.sourceEvent || !gestureVB0 || gestureVB0.every((v, i) => Math.abs(v - curVB[i]) < 1e-6)) return;
+      freeZoom = curVB[2] < W * 0.999; if (!freeZoom) { curVB = baseVB.slice(); svg.attr('viewBox', baseVB.join(' ')); window.__mapZoomSync(); } insetVisibility(); refreshLabels(); hintUsed(); });
+  let gestureVB0 = null;
+  wrapSel.call(zoomBeh).on('dblclick.zoom', null);   // double-click keeps its meaning: back to the national view
+  svg.node().addEventListener('transitionend', () => sizeLegendCircles());   // the box has finished moving: size the legend's sample circles to it
+  layoutMap(); window.addEventListener('resize', layoutMap);
+  if (window.ResizeObserver) { const ro = new ResizeObserver(() => layoutMap()); ro.observe(searchCard); ro.observe(legendCard); ro.observe(wrapEl); }
   window.__validate = { loadTractsAll, filteredCounty, filteredRural, filteredGeo, tractCounts, CK, bvaClass, accessShare };  // hooks for validate_v3.py (headless checks only)
   function applyURL(first) {
     restoring = true;
@@ -1217,7 +1316,7 @@
       if (u.d && DI[u.d]) selectDistrict(u.d); else if (u.c && C[u.c]) selectCounty(u.c); else if (u.s && stName[u.s]) window.__nav.selectState(u.s); else if (first) renderNational(); else clearSelection();
       if ((u.d || u.c || u.s) && !((u.d && DI[u.d]) || (u.c && C[u.c]) || (u.s && stName[u.s]))) pane.insertAdjacentHTML('afterbegin', `<p class="flag">The place in this link (${esc(u.d ? 'district ' + u.d : u.c ? 'county ' + u.c : 'state ' + u.s)}) was not found, so the map shows the national view. Search for the place above.</p>`);
       const t = ['trials', 'sites', 'compare', 'burden', 'changes'].includes(u.tab) ? u.tab : 'map'; if (!first || t !== 'map') setTab(t);
-    } finally { restoring = false; lastKey = placeKey(); syncHint(); }
+    } finally { restoring = false; lastKey = placeKey(); syncHint(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); }
   }
   window.addEventListener('popstate', () => applyURL(false));
   applyURL(true);
