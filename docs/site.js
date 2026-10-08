@@ -59,5 +59,23 @@ window.SITE = (function () {
     openHash(); window.addEventListener('hashchange', openHash); }
   const plural = (n, one, many) => n === 1 ? one : (many || one + 's');
   function ordinal(n) { const v = n % 100, s = ['th', 'st', 'nd', 'rd']; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+
+  // Header: on a phone the page links sit behind a Menu button (the links stay visible without JavaScript);
+  // on a laptop the two audience groups open as small menus, one at a time, and close on a click elsewhere or Escape.
+  document.documentElement.classList.add('js');
+  function wireHeader() {
+    const hdr = document.querySelector('header.site'), nav = hdr && hdr.querySelector('.hdr-links'); if (!hdr || !nav || hdr.querySelector('.hdr-menu-btn')) return;
+    if (!nav.id) nav.id = 'hdr-links';
+    const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'hdr-menu-btn'; btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', nav.id);
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menu';
+    btn.addEventListener('click', () => { const on = !hdr.classList.contains('nav-open'); hdr.classList.toggle('nav-open', on); btn.setAttribute('aria-expanded', String(on)); });
+    nav.parentNode.insertBefore(btn, nav);
+    const groups = Array.from(nav.querySelectorAll('details.hdr-group'));
+    groups.forEach(g => g.addEventListener('toggle', () => { if (g.open) groups.forEach(o => { if (o !== g) o.open = false; }); }));
+    document.addEventListener('click', e => { if (!hdr.contains(e.target)) groups.forEach(o => { o.open = false; }); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') groups.forEach(o => { o.open = false; }); });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireHeader); else wireHeader();
+
   return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, ordinal };
 })();
