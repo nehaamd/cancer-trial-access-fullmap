@@ -55,9 +55,9 @@
   #q:focus{border-color:var(--gulf);box-shadow:0 0 0 4px rgba(63,127,181,.15);outline:none}
   #q-clear{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--ink-3);font-size:1.3rem;line-height:1;cursor:pointer;padding:.2rem .5rem;border-radius:50%} #q-clear:hover{color:var(--ink);background:var(--paper)} #q-clear[hidden]{display:none}
   .card-actions{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:4px}
-  .tbtn{border:0;background:none;border-radius:8px;padding:.45rem .7rem;font-size:var(--fs-0);font-weight:600;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;line-height:1.2} .tbtn:hover{background:#EEF4FA}
+  .tbtn{border:0;background:none;border-radius:8px;padding:.45rem .55rem;font-size:var(--fs-0);font-weight:600;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;line-height:1.2} .tbtn:hover{background:#EEF4FA}
   .tbtn[aria-expanded="true"]{background:var(--paper)} .tbtn[aria-expanded="true"] .chev{transform:rotate(180deg)} .tbtn .chev{transition:transform .15s}
-  .ibtn{margin-left:auto;width:34px;height:34px;border:0;background:none;border-radius:8px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center} .ibtn:hover{background:#EEF4FA;color:var(--navy)}
+  .ibtn{margin-left:auto;width:32px;height:32px;border:0;background:none;border-radius:8px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center} .ibtn:hover{background:#EEF4FA;color:var(--navy)} .ibtn + .ibtn{margin-left:0} .ibtn[disabled]{opacity:.5;cursor:progress}
   .stamp{font-size:var(--fs-0);color:var(--ink-3);white-space:nowrap} .stamp.stale{color:var(--warn);font-weight:650}
   /* the example places and questions, shown on the national view */
   .invite{position:relative} .invite[hidden]{display:none}
@@ -141,6 +141,7 @@
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .8rem;font-size:var(--fs-0);color:var(--ink-2);min-height:1.2rem}
   .legend .lg-title{font-weight:650;color:var(--ink);flex-basis:auto;line-height:1.3;margin-right:.3rem} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--gulf);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch;max-height:40vh;overflow:auto} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
+  .legend .lg-shade{color:var(--navy);font-weight:600;padding:0;margin-left:.2rem} .legend .lg-shade input{margin:0 .1rem 0 0} .legend .lg-shade-k{color:var(--ink-2)}
   /* tabs now sit at the top of the figures column */
   .tabs{display:flex;align-items:center;gap:.15rem;padding:0 1.25rem;border-bottom:1px solid var(--rule);background:var(--card);flex:0 0 auto}
   .tabs button[data-tab]{white-space:nowrap;background:none;border:0;border-bottom:3px solid transparent;padding:.7rem .75rem .55rem;font-size:var(--fs-1);color:var(--ink-2);cursor:pointer;margin-bottom:-1px} .tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--navy);font-weight:650}
@@ -162,20 +163,21 @@
   .county{stroke:#fff;stroke-width:.3;cursor:pointer;transition:opacity .15s} .county:hover{stroke:var(--ink);stroke-width:1.1}
   .dim .county:not(.in-district){opacity:.72} .dim .bub:not(.in-district){opacity:.55}
   .bub{cursor:pointer}
-  .district{fill:none;stroke:#8E867C;stroke-width:.45;pointer-events:none;opacity:.7}
+  .district{fill:none;stroke:#9C948A;stroke-width:.4;pointer-events:none;opacity:.6}
   .unit-district .district.fillable{pointer-events:all;cursor:pointer;opacity:1;stroke:#fff;stroke-width:.6} .unit-district .district.fillable:hover{stroke:var(--ink);stroke-width:1.4}
   .unit-district .county,.unit-state .county{fill:#F4F2EC !important;pointer-events:none;stroke:#fff;stroke-width:.2}
   .statefill{fill:none;stroke:#fff;stroke-width:.8;pointer-events:none} .unit-state .statefill{pointer-events:all;cursor:pointer} .unit-state .statefill:hover{stroke:var(--ink);stroke-width:1.6}
   .unit-state .district{display:none} .unit-district .district:not(.fillable){display:none}
-  .stateline{fill:none;stroke:#5E554A;stroke-width:.75;pointer-events:none;opacity:.9}
+  .statecase{fill:none;stroke:#fff;stroke-width:2;pointer-events:none;opacity:.8}
+  .stateline{fill:none;stroke:#3F3831;stroke-width:.95;pointer-events:none;opacity:.95}
   .district.selected{stroke-width:2.6;stroke:var(--rust);opacity:1} .district.selected-halo{stroke:#fff;stroke-width:5.5;opacity:.95}
   .dlabel{font-size:9px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:2.5px;cursor:pointer}
   .dlabel.dsel{fill:var(--rust)}
   .csel{fill:none;stroke:var(--rust);stroke-width:2.4px;vector-effect:non-scaling-stroke;pointer-events:none} .csel-halo{fill:none;stroke:#fff;stroke-width:5.5px;vector-effect:non-scaling-stroke;pointer-events:none;opacity:.95}
   .map-loading{position:absolute;left:0;right:0;top:38%;text-align:center;color:var(--ink-2);font-size:var(--fs-2);pointer-events:none} .map-loading i{display:inline-block;width:.9rem;height:.9rem;border:2px solid var(--rule-2);border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-.1rem;margin-right:.5rem}
   .map-hint .linkish{font-size:inherit}
-  #map.dz .county,#map.dz .district,#map.dz .stateline,#map.dz .statefill,#map.dz .nci,#map.zm .county,#map.zm .district,#map.zm .stateline,#map.zm .statefill,#map.zm .nci{vector-effect:non-scaling-stroke}
-  #map.dz .county,#map.zm .county{stroke-width:.6px} #map.dz .district,#map.zm .district{stroke-width:1.2px} #map.dz .district.selected,#map.zm .district.selected{stroke-width:3px} #map.dz .district.selected-halo,#map.zm .district.selected-halo{stroke-width:7px} #map.dz .stateline,#map.zm .stateline{stroke-width:1.6px} #map.zm .statefill{stroke-width:1px}
+  #map.dz .county,#map.dz .district,#map.dz .stateline,#map.dz .statecase,#map.dz .statefill,#map.dz .nci,#map.zm .county,#map.zm .district,#map.zm .stateline,#map.zm .statecase,#map.zm .statefill,#map.zm .nci{vector-effect:non-scaling-stroke}
+  #map.dz .county,#map.zm .county{stroke-width:.6px} #map.dz .district,#map.zm .district{stroke-width:1.2px} #map.dz .district.selected,#map.zm .district.selected{stroke-width:3px} #map.dz .district.selected-halo,#map.zm .district.selected-halo{stroke-width:7px} #map.dz .stateline,#map.zm .stateline{stroke-width:1.5px} #map.dz .statecase,#map.zm .statecase{stroke-width:3.2px} #map.zm .statefill{stroke-width:1px}
   #map.zm .county:hover{stroke-width:1.6px}
   #map.no-inset .inset{display:none}
   .nci{fill:var(--navy);stroke:#fff;stroke-width:1;pointer-events:none}
@@ -312,13 +314,14 @@
         <button class="tbtn" id="btn-filters" type="button" aria-expanded="false" aria-controls="explore">Filter trials <span class="badge" id="fbadge" hidden>0</span></button>
         <button class="tbtn" id="btn-reset" type="button" title="Clear filters and go back to the national view">Reset view</button>
         <button class="ibtn" id="btn-share-top" type="button" aria-label="Copy link to this view" title="Copy link to this view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></button>
+        <button class="ibtn" id="btn-png" type="button" aria-label="Download this view as an image" title="Download this view as an image (PNG, with legend and data date)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M4 19h16"/></svg></button>
       </div>
 
       <div class="explore" id="explore" hidden>
         <div class="xsec maptools" role="group" aria-label="Map controls">
           <div class="xrow"><span class="lab">Show areas as</span><select class="sel" id="unit" aria-label="Map unit"><option value="county">Counties</option><option value="district">Congressional districts</option><option value="state">States</option></select></div>
           <div class="xrow"><span class="lab">Color the map by</span><span class="xsels"><select class="sel" id="metric" aria-label="Map variable"></select><select class="sel" id="inc-site" aria-label="Cancer site for the incidence layer" style="display:none"></select><select class="sel" id="acs-var" aria-label="ACS variable" style="display:none"><option value="veh">Households without a vehicle</option><option value="bb">Households with broadband</option><option value="unins">Uninsured (all ages)</option><option value="unins55">Uninsured, ages 55–64</option><option value="pov">Poverty rate</option></select></span></div>
-          <div class="xrow"><span class="lab">Also show</span><span class="xchecks" id="layers"><label class="chk"><input type="checkbox" id="lyr-n" checked> NCI-designated centers</label><label class="chk"><input type="checkbox" id="lyr-d" checked> District lines</label><label class="chk"><input type="checkbox" id="lyr-l" checked> District numbers</label><label class="chk"><input type="checkbox" id="lyr-m"> Metro vs rural (solid / ring)</label></span></div>
+          <div class="xrow"><span class="lab">Also show</span><span class="xchecks" id="layers"><label class="chk"><input type="checkbox" id="lyr-n" checked> NCI-designated centers</label><label class="chk"><input type="checkbox" id="lyr-d" checked> District lines</label><label class="chk"><input type="checkbox" id="lyr-l" checked> District numbers</label><label class="chk"><input type="checkbox" id="lyr-m"> Metro vs rural (solid / ring)</label><label class="chk"><input type="checkbox" id="lyr-t"> Trials in the county (under 20 / 20–99 / 100+)</label></span></div>
         </div>
         <div class="xsec filters" id="filters" role="group" aria-label="Trial filters: phase, sponsor, cancer type, patient age">
           <div class="xhead">Filter trials</div>
@@ -392,7 +395,7 @@
     <div><b>Key terms</b><dl>
       <dt>Listed trial.</dt><dd> A recruiting, interventional cancer treatment trial on ClinicalTrials.gov with a US site, accepting some adults aged 55 or older. Listed does not mean a given patient qualifies.</dd>
       <dt>Road-miles.</dt><dd> The shortest driving route on the highway network from where people live (each census tract's population center). Trial sites are placed at the center of their ZIP code or city, so distances to them are approximate.</dd>
-      <dt>Residents short of trials (the map's default layer).</dt><dd> Each county's circle is sized by the number of residents 55+ with fewer than 20 listed trials within 60 road-miles of home, summed over the county's census tracts; circles are drawn for counties with at least 500 such residents (99.8% of all such residents). Sizing by people rather than coloring land keeps the map in step with the headline: the counties where most residents are short cover about three fifths of the land but hold about a tenth of residents 55+. Counties are not shaded on this layer; the “Metro vs rural” layer colors the circles by the county's USDA rural-urban code (metro, codes 1–3, solid; nonmetro, 4–9, ring), and “Trials in the county” under Color by shows where trials are. Filters recompute the circles from the census tracts.</dd>
+      <dt>Residents short of trials (the map's default layer).</dt><dd> Each county's circle is sized by the number of residents 55+ with fewer than 20 listed trials within 60 road-miles of home, summed over the county's census tracts; circles are drawn for counties with at least 500 such residents (99.8% of all such residents). Sizing by people rather than coloring land keeps the map in step with the headline: the counties where most residents are short cover about three fifths of the land but hold about a tenth of residents 55+. Counties are not shaded on this layer unless “Shade counties by trials in the county” is on, which colors each county by the number of listed trials with a recruiting site in it (under 20; 20–99, a limited menu; 100 or more, a broad menu); the “Metro vs rural” layer colors the circles by the county's USDA rural-urban code (metro, codes 1–3, solid; nonmetro, 4–9, ring), and “Trials in the county” under Color by shows the trial counts on their own. Filters recompute the circles from the census tracts.</dd>
       <dt>Cancer deaths vs trial access.</dt><dd> County all-cancer death rates (NCI/CDC State Cancer Profiles, National Vital Statistics System, age-adjusted, five years) set against the share of residents 55+ with fewer than 20 trials within 60 road-miles. "High mortality" is the top third of counties with a published rate; "low access" is at least half of residents short. Counties with fewer than 16 deaths a year on average are classified but hatched; counties the source suppresses are grey. The two measures sit side by side and are never combined into a score. The incidence version of the same view uses the county median instead of the top third.</dd>
       <dt>Broad menu.</dt><dd> A county with 100 or more listed trials, the cut-off ASCO's 2024 county analysis used for a “broad portfolio”.</dd>
       <dt>Limited menu.</dt><dd> A county with 20 to 99 listed trials. This line is the map's own; ASCO's “limited portfolio” was 1 to 99.</dd>
@@ -527,7 +530,7 @@
   const bvaDefinition = () => `High ${measureNoun()} = ${siteName(incSite)} age-adjusted ${measure === 'mort' ? 'death rate' : 'incidence rate'} ${highText(measure, incSite)}. Low access = at least ${bvaThr}% of residents 55+ have ${critLabel()} within 60 road-miles of home.`;
   const ACS_LABEL = {veh: 'Households without a vehicle (%)', bb: 'Households with a broadband subscription (%)', unins: 'Uninsured, all ages (%)', unins55: 'Uninsured, ages 55–64 (%)', pov: 'Poverty rate (%)'};
   const METRICS = {
-    short: {label: () => `Residents 55+ short of ${filtersActive() ? 'matching' : 'listed'} trials, by county`, how: () => `<b>Circles</b> are residents 55+ with fewer than 20 ${filtersActive() ? 'matching' : 'listed'} trials within 60 road-miles of home; circle area = number of people${metroOn() ? ' (solid = metro county, ring = nonmetro county)' : ''}. A county with no circle has fewer than ${fmt(BUB_FLOOR)} residents 55+ short. Counties are not shaded on this layer; “Trials in the county” under Color by shows where trials are. Twenty trials and 60 road-miles are exploratory thresholds chosen for this map; <a href="learn.html#measure">what the map measures</a>.`,
+    short: {label: () => `Residents 55+ short of ${filtersActive() ? 'matching' : 'listed'} trials, by county`, how: () => `<b>Circles</b> are residents 55+ with fewer than 20 ${filtersActive() ? 'matching' : 'listed'} trials within 60 road-miles of home; circle area = number of people${metroOn() ? ' (solid = metro county, ring = nonmetro county)' : ''}. A county with no circle has fewer than ${fmt(BUB_FLOOR)} residents 55+ short. ${shadeOn() ? 'Counties are shaded by the number of listed trials with a recruiting site in the county: under 20, 20–99 (a limited menu), 100 or more (a broad menu).' : 'Counties are not shaded on this layer; “Shade counties by trials in the county” in the legend adds that, and “Trials in the county” under Color by shows it on its own.'} Twenty trials and 60 road-miles are exploratory thresholds chosen for this map; <a href="learn.html#measure">what the map measures</a>.`,
       get: c => { const i = CI[c.k]; if (filtersActive()) return FCo ? FCo.t60m[i] : null; const u = BU && BU.county[c.k]; return u ? (u.t60m ?? u.t60) : null; },   // median resident's trial count, shown in the tooltip
       base: '#EFEBE3',   // one neutral fill for every county: the circles are this layer's only encoding
       classes: () => [], na: c => !BU || !BU.county[c.k]},
@@ -576,7 +579,8 @@
   const spaths = gSt.selectAll('path').data(stateFeatures).join('path').attr('class', 'statefill').attr('d', path)
     .on('mousemove', (ev, f) => { if (unit !== 'state') return; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.display = 'block'; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = geoTip('state', f.properties.id); })
     .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { if (unit === 'state') { pickS.value = f.properties.id; pickS.dispatchEvent(new Event('change')); } });
-  const gStLine = svg.append('g'); gStLine.selectAll('path').data(stateFeatures).join('path').attr('class', 'stateline').attr('d', path).style('display', 'none');
+  // state borders above the counties and district lines: a white casing under a dark line, so they read as the strongest border on the map
+  const gStLine = svg.append('g').style('display', 'none'); gStLine.selectAll('path.statecase').data(stateFeatures).join('path').attr('class', 'statecase').attr('d', path); gStLine.selectAll('path.stateline').data(stateFeatures).join('path').attr('class', 'stateline').attr('d', path);
   const halo = gS.append('path').attr('class', 'district selected-halo'), sel = gS.append('path').attr('class', 'district selected');
   const chalo = gS.append('path').attr('class', 'csel-halo'), csel = gS.append('path').attr('class', 'csel');   // outline of the selected county
   const outlineCounty = k => { const f = k ? countyFeatures.find(f => f.properties.id === k) : null; chalo.attr('d', f ? path(f) : null); csel.attr('d', f ? path(f) : null); };
@@ -591,6 +595,10 @@
   // One color by default: every circle is the same rust, so the map carries a single encoding (circle area = people).
   // With the "Metro vs rural" layer on, metro counties are solid discs and nonmetro counties are rings (a different shape as well as a different color).
   const metroOn = () => !!(document.getElementById('lyr-m') && document.getElementById('lyr-m').checked);
+  // optional shading under the circles: the county's own trial count in the three menu classes the site uses everywhere (under 20 / 20–99 limited / 100+ broad)
+  const shadeOn = () => metric === 'short' && unit === 'county' && !!(document.getElementById('lyr-t') && document.getElementById('lyr-t').checked);
+  const SHADE_CLASSES = [['under 20 trials in the county', 0, 20, '#EFEBE3'], ['20–99 (limited menu)', 20, 100, '#6BA3D6'], ['100 or more (broad menu)', 100, 1e9, '#0B3C5D']];
+  const shadeColor = c => { const v = cnt[CI[c.k]]; const k = SHADE_CLASSES.find(k => v >= k[1] && v < k[2]); return k ? k[3] : SHADE_CLASSES[0][3]; };
   const BUB_ONE = 'rgba(200,98,42,.72)', BUB_ONE_LINE = '#FFFFFF';
   const BUB_FILL = m => !metroOn() ? BUB_ONE : m === null ? 'rgba(120,120,120,.55)' : m ? 'rgba(200,98,42,.8)' : 'rgba(200,98,42,.22)', BUB_LINE = m => !metroOn() ? BUB_ONE_LINE : m === null ? '#555' : m ? '#FFFFFF' : '#A8431A', BUB_W = m => !metroOn() ? .6 : m ? .6 : 1.3;
   const BUB_FLOOR = 500;        // circles are drawn for counties with at least this many residents 55+ short (99.8% of all such residents are drawn)
@@ -611,6 +619,10 @@
     placeBubbles(); }
   const circleSVG = (r, fill, stroke, w) => `<svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${w || .7}"/></svg>`;
   function legendShort(lg) {
+    const lab = lg.append('label').attr('class', 'chk lg-shade').attr('title', 'Shade each county by the number of listed trials with a recruiting site in it');
+    lab.append('input').attr('type', 'checkbox').property('checked', shadeOn()).on('change', function () { const t = document.getElementById('lyr-t'); t.checked = this.checked; t.dispatchEvent(new Event('change')); });
+    lab.append('span').text('Shade counties by trials in the county' + (filtersActive() ? ' (filtered)' : ''));
+    if (shadeOn()) SHADE_CLASSES.forEach(k => lg.append('span').attr('class', 'lg-shade-k').html(`<i style="background:${k[3]}"></i>${k[0]}`));
     if (metroOn()) { lg.append('span').html(circleSVG(6, BUB_FILL(true), BUB_LINE(true), .8) + 'metro county (solid)'); lg.append('span').html(circleSVG(6, BUB_FILL(false), BUB_LINE(false), 1.6) + 'nonmetro county (ring)'); }
     [5000, 25000, 100000].forEach(n => lg.append('span').attr('class', 'lg-size').attr('data-n', n).html(circleSVG(bubScreenR(n), BUB_ONE, BUB_ONE_LINE, .8) + fmt(n) + ' residents 55+'));
     const t = shortTotals(); const how = lg.append('details').attr('class', 'lg-how').property('open', howOpen).on('toggle', function () { howOpen = this.open; });
@@ -646,7 +658,7 @@
     if (isBva(metric)) { bvaAutoCrit(); if (bvaNeedsTracts()) { computeFilteredCounty(); return; } }
     if (metric === 'short' && filtersActive() && !FCo) { computeFilteredCounty(); return; }   // the circles are recomputed from census tracts for the filtered trials
     if (metric === 'inc' || metric === 'acs') rebuildDynamicClasses();
-    counties.attr('fill', f => { if (METRICS[metric].base) return METRICS[metric].base; const col = colorFor(metric, C[f.properties.id]); return col === null ? 'var(--nodata)' : col; }); drawShort();
+    counties.attr('fill', f => { if (METRICS[metric].base) return shadeOn() ? shadeColor(C[f.properties.id]) : METRICS[metric].base; const col = colorFor(metric, C[f.properties.id]); return col === null ? 'var(--nodata)' : col; }); drawShort();
     overlay.selectAll('path').data((metric === 'inc' || isBva(metric)) ? countyFeatures.filter(f => METRICS[metric].caution(C[f.properties.id])) : []).join('path').attr('d', path).attr('fill', 'url(#hatch)').attr('stroke', 'none');
     const lg = d3.select('#legend'); lg.html(''); lg.append('span').attr('class', 'lg-title').text(METRICS[metric].label());
     METRICS[metric].classes().filter(k => k[0]).forEach(k => lg.append('span').html(`<i style="background:${k[3]}"></i>${k[0]}`));
@@ -669,6 +681,7 @@
   document.getElementById('lyr-d').addEventListener('change', e => gD.style('display', e.target.checked ? null : 'none'));
   document.getElementById('lyr-n').addEventListener('change', e => { gN.style('display', e.target.checked ? null : 'none'); paint(); });
   document.getElementById('lyr-m').addEventListener('change', () => paint());   // metro vs rural: recolors the circles and the legend
+  document.getElementById('lyr-t').addEventListener('change', () => { paint(); pushURL(); });   // trial-count shading under the circles
   let showLabels = true; document.getElementById('lyr-l').addEventListener('change', e => { showLabels = e.target.checked; refreshLabels(); });
   const stateBounds = {}; countyFeatures.forEach(f => { const c = C[f.properties.id]; const b = path.bounds(f); const cur = stateBounds[c.s2] || [Infinity, Infinity, -Infinity, -Infinity]; stateBounds[c.s2] = [Math.min(cur[0], b[0][0]), Math.min(cur[1], b[0][1]), Math.max(cur[2], b[1][0]), Math.max(cur[3], b[1][1])]; });
   let curVB = baseVB.slice(), freeZoom = false;   // freeZoom: the reader has zoomed or panned by hand (wheel, pinch, drag, the +/− buttons) since the last zoom to a place
@@ -733,7 +746,7 @@
     el.querySelectorAll('[data-gact]').forEach(b => b.addEventListener('click', () => { const a = b.dataset.gact; if (a === 'compare') setTab('compare'); else if (a === 'burden') setTab('burden'); else if (a === 'filters') { window.__openFilters(); document.getElementById('f-type').focus(); } else if (a === 'search') { const q_ = document.getElementById('q'); q_.focus(); q_.scrollIntoView({ behavior: 'smooth', block: 'center' }); } else if (a === 'state') { const ps = document.getElementById('pick-s'); document.getElementById('finder').open = true; ps.focus(); } })); }
   // ---------- URL state (shareable views) ----------
   function pushURL() { const p = new URLSearchParams(); if (selectedD) p.set('d', selectedD); else if (selectedC) p.set('c', selectedC); else if (selectedState) p.set('s', selectedState); if (guideKey) p.set('guide', guideKey);
-    if (unit !== 'county') p.set('u', unit); if (metric !== defaultMetric()) p.set('m', metric); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if ((metric === 'acs' || metric === 'gacs') && acsVar !== 'veh') p.set('acs', acsVar);
+    if (unit !== 'county') p.set('u', unit); if (metric !== defaultMetric()) p.set('m', metric); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if ((metric === 'acs' || metric === 'gacs') && acsVar !== 'veh') p.set('acs', acsVar); if (shadeOn()) p.set('shade', 't');
     if (tab !== 'map') p.set('tab', tab); if (filt.type) p.set('type', filt.type); if (filt.age !== null) p.set('age', filt.age); if (filt.phase.size < T.phases.length) p.set('ph', filt.phase.size ? [...filt.phase].join(',') : 'none'); if (filt.sponsor.size < T.sponsors.length) p.set('sp', filt.sponsor.size ? [...filt.sponsor].join(',') : 'none');
     if ((isBva(metric) || tab === 'burden') && BU) { if (incSite) p.set('site', BSITE[incSite][0]); if (bvaCritUser) p.set('crit', bvaCrit); if (bvaThr !== 50) p.set('thr', bvaThr); if (tab === 'burden' && measure === 'mort' && !isBva(metric)) p.set('meas', 'mort'); }
     if (restoring) return; const q = p.toString(), url = q ? '?' + q : location.pathname, key = placeKey();
@@ -745,6 +758,7 @@
     if (p.get('m') && UNIT_METRICS[unit].includes(p.get('m'))) { metric = p.get('m'); document.getElementById('metric').value = metric; }
     if (p.get('site')) { const i = BSITE.findIndex(s => s[0] === p.get('site')); if (i >= 0) { incSite = i; incSel.value = i; } }
     if (ACS_LABEL[p.get('acs')]) { acsVar = p.get('acs'); document.getElementById('acs-var').value = acsVar; }
+    document.getElementById('lyr-t').checked = p.get('shade') === 't';
     if (p.get('type') && T.types.some(t => t[0] === p.get('type'))) { filt.type = p.get('type'); ft.value = filt.type; }
     const subset = (v, all) => { const got = v === 'none' ? [] : v.split(',').filter(x => all.includes(x)); return v !== 'none' && !got.length ? all : got; };   // unknown values are ignored, never applied
     if (p.get('ph')) { filt.phase = new Set(subset(p.get('ph'), T.phases)); [...fp.querySelectorAll('input')].forEach((i, k) => i.checked = filt.phase.has(T.phases[k])); }
@@ -1304,6 +1318,45 @@
   wrapSel.call(zoomBeh).on('dblclick.zoom', null);   // double-click keeps its meaning: back to the national view
   svg.node().addEventListener('transitionend', () => sizeLegendCircles());   // the box has finished moving: size the legend's sample circles to it
   layoutMap(); window.addEventListener('resize', layoutMap);
+  // ---------- "Download this view": the map exactly as drawn (current layer, zoom and selection), with its legend title, legend, the place and the data date ----------
+  // The SVG is serialised with the page's own stylesheet rules inside it, drawn to a canvas, and the legend is redrawn beside it from the legend's own entries.
+  async function downloadView() {
+    const btn = document.getElementById('btn-png'); if (btn.disabled) return; btn.disabled = true; busy(true, 'Preparing the image…');
+    try {
+      const S = 2, OW = 1600, pad = 36;   // output: 1600 logical px wide at 2× for sharp text
+      const mapW = OW - 2 * pad, mapH = Math.round(mapW * curVB[3] / curVB[2]);
+      const clone = svg.node().cloneNode(true); clone.removeAttribute('style'); clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); clone.setAttribute('width', mapW); clone.setAttribute('height', mapH); clone.setAttribute('viewBox', curVB.join(' '));
+      let css = ''; for (const sh of document.styleSheets) { try { for (const r of sh.cssRules) if (!(r instanceof CSSFontFaceRule)) css += r.cssText + '\n'; } catch (e) { /* cross-origin sheet: skip */ } }
+      const st = document.createElementNS('http://www.w3.org/2000/svg', 'style'); st.textContent = css + 'svg{font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif}';   // the page font is not reachable from inside the image
+      clone.insertBefore(st, clone.firstChild);
+      const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
+      const img = new Image(); await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('map image')); img.src = url; });
+      // the text around the map: the legend's title, the place, the legend entries, the source line
+      const lgEl = document.getElementById('legend'), title = (lgEl.querySelector('.lg-title') || {}).textContent || '', sc = scope();
+      const sub = sc.kind === 'nat' ? '' : (sc.kind === 'district' ? sc.label.replace(' (counties overlapping the district)', '') : sc.label) + (filtersActive() ? ' · ' + ((document.getElementById('fchip').textContent || '').replace(/×\s*$/, '').trim() || 'filtered') : '');
+      const entries = [...lgEl.children].filter(el => el.tagName === 'SPAN' && !el.classList.contains('lg-title') && el.textContent.trim()).map(el => { const sw = el.querySelector('i'), ci = el.querySelector('circle'), pa = el.querySelector('path');
+        return { text: el.textContent.trim(), kind: sw ? 'rect' : ci ? 'circle' : pa ? 'star' : 'none', color: sw ? getComputedStyle(sw).backgroundColor : ci ? ci.getAttribute('fill') : pa ? pa.getAttribute('fill') : null, hatch: !!(sw && sw.classList.contains('hatch')), r: ci ? (el.dataset.n ? Math.min(bubR(+el.dataset.n) * bubScale() * mapW / curVB[2], 26) : Math.min(+ci.getAttribute('r'), 14)) : 0, stroke: ci ? ci.getAttribute('stroke') : null }; });
+      const cv = document.createElement('canvas'), ctx = cv.getContext('2d'); const font = (w, px) => `${w} ${px}px "Source Sans 3", "Segoe UI", Arial, sans-serif`;
+      // measure the legend rows first so the canvas is exactly as tall as it needs to be
+      ctx.font = font(500, 22); const rows = []; let row = [], x = pad; const gapX = 28, rowH = 34;
+      for (const e of entries) { const iw = e.kind === 'none' ? 0 : e.kind === 'circle' ? 2 * e.r + 10 : 30; const w = iw + ctx.measureText(e.text).width; if (x + w > OW - pad && row.length) { rows.push(row); row = []; x = pad; } row.push({ ...e, w, iw }); x += w + gapX; } if (row.length) rows.push(row);
+      const titleH = 46 + (sub ? 30 : 0), legendH = rows.length * rowH + 18, footH = 44; cv.width = OW * S; cv.height = (pad + titleH + mapH + 14 + legendH + footH) * S; ctx.scale(S, S);
+      ctx.fillStyle = '#F7F5F0'; ctx.fillRect(0, 0, OW, cv.height / S); ctx.fillStyle = '#1B2430'; ctx.textBaseline = 'alphabetic';
+      ctx.font = font(600, 30); ctx.fillText(title, pad, pad + 28); if (sub) { ctx.font = font(500, 22); ctx.fillStyle = '#4B5563'; ctx.fillText(sub, pad, pad + 58); }
+      const mapY = pad + titleH; ctx.drawImage(img, pad, mapY, mapW, mapH);
+      let y = mapY + mapH + 14 + 24; for (const r of rows) { let x = pad; for (const e of r) { const cy = y - 8;
+          if (e.kind === 'rect') { if (e.hatch) { ctx.fillStyle = '#fff'; ctx.fillRect(x, cy - 10, 20, 20); ctx.save(); ctx.beginPath(); ctx.rect(x, cy - 10, 20, 20); ctx.clip(); ctx.strokeStyle = '#bbb'; ctx.lineWidth = 2; for (let d = -20; d < 40; d += 5) { ctx.beginPath(); ctx.moveTo(x + d, cy + 10); ctx.lineTo(x + d + 20, cy - 10); ctx.stroke(); } ctx.restore(); } else { ctx.fillStyle = e.color; ctx.fillRect(x, cy - 10, 20, 20); } ctx.strokeStyle = 'rgba(0,0,0,.12)'; ctx.lineWidth = 1; ctx.strokeRect(x + .5, cy - 9.5, 19, 19); }
+          else if (e.kind === 'circle') { ctx.beginPath(); ctx.arc(x + e.r + 2, cy, e.r, 0, 2 * Math.PI); ctx.fillStyle = e.color; ctx.fill(); ctx.strokeStyle = e.stroke || '#fff'; ctx.lineWidth = 1; ctx.stroke(); }
+          else if (e.kind === 'star') { ctx.save(); ctx.translate(x + 10, cy); ctx.scale(1.15, 1.15); const p = new Path2D(d3.symbol().type(d3.symbolStar).size(80)()); ctx.fillStyle = e.color || '#0B3C5D'; ctx.fill(p); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke(p); ctx.restore(); }
+          ctx.fillStyle = '#4B5563'; ctx.font = font(500, 22); ctx.fillText(e.text, x + e.iw, y); x += e.w + gapX; } y += rowH; }
+      ctx.font = font(400, 19); ctx.fillStyle = '#7C8794'; ctx.fillText(`Cancer Trial Access Map · ${location.host}${location.pathname} · ClinicalTrials.gov data as of ${dataDay} · counts are of listed trials, not trials a given patient qualifies for`, pad, cv.height / S - 16);
+      URL.revokeObjectURL(url);
+      const name = `cancer-trial-access-map_${metric}${sc.kind === 'nat' ? '' : '_' + sc.key}_${SITE.dataDate(D.meta)}.png`;
+      await new Promise(res => cv.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); res(); }, 500); }, 'image/png'));
+    } catch (e) { console.error(e); alert('The image could not be prepared in this browser. A screenshot of the map will work instead.'); }
+    finally { btn.disabled = false; busy(false); }
+  }
+  document.getElementById('btn-png').addEventListener('click', downloadView);
   if (window.ResizeObserver) { const ro = new ResizeObserver(() => layoutMap()); ro.observe(searchCard); ro.observe(legendCard); ro.observe(wrapEl); }
   window.__validate = { loadTractsAll, filteredCounty, filteredRural, filteredGeo, tractCounts, CK, bvaClass, accessShare };  // hooks for validate_v3.py (headless checks only)
   function applyURL(first) {
@@ -1311,7 +1364,7 @@
     try {
       if (!first) {   // back to defaults before reading the address again
         filt.phase = new Set(T.phases); filt.sponsor = new Set(T.sponsors.map(s => s[0])); filt.type = ''; ft.value = ''; filt.age = null; fage.value = ''; ageNote(null); document.querySelectorAll('#filters input[type=checkbox]').forEach(i => i.checked = true);
-        incSite = 0; incSel.value = 0; acsVar = 'veh'; document.getElementById('acs-var').value = 'veh'; bvaCritUser = false; bvaCrit = 'l20'; bvaThr = 50; unit = 'county'; document.getElementById('unit').value = 'county'; metric = defaultMetric(); facFilter = null; }   // back/forward returns to the default layer, as on first load
+        incSite = 0; incSel.value = 0; acsVar = 'veh'; document.getElementById('acs-var').value = 'veh'; document.getElementById('lyr-t').checked = false; bvaCritUser = false; bvaCrit = 'l20'; bvaThr = 50; unit = 'county'; document.getElementById('unit').value = 'county'; metric = defaultMetric(); facFilter = null; }   // back/forward returns to the default layer, as on first load
       fillMetricSelect(); const u = readURL(); fillMetricSelect(); recount(); paint();
       if (u.d && DI[u.d]) selectDistrict(u.d); else if (u.c && C[u.c]) selectCounty(u.c); else if (u.s && stName[u.s]) window.__nav.selectState(u.s); else if (first) renderNational(); else clearSelection();
       if ((u.d || u.c || u.s) && !((u.d && DI[u.d]) || (u.c && C[u.c]) || (u.s && stName[u.s]))) pane.insertAdjacentHTML('afterbegin', `<p class="flag">The place in this link (${esc(u.d ? 'district ' + u.d : u.c ? 'county ' + u.c : 'state ' + u.s)}) was not found, so the map shows the national view. Search for the place above.</p>`);
