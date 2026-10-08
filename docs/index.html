@@ -41,17 +41,56 @@
   a{color:var(--gulf)} a:hover{color:var(--navy)}
   button,select,input{font:inherit;color:inherit}
   :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
-  .app{display:grid;grid-template-rows:auto auto auto 1fr auto;min-height:100vh}
+  .app{display:flex;flex-direction:column;min-height:100vh}
 
   /* ---- header: shared with every page, styled in site.css ---- */
 
-  /* ---- search bar: one box for everything, filters behind a button ---- */
-  .searchbar{display:flex;align-items:center;gap:.6rem;padding:.75rem var(--gutter);background:var(--card);border-bottom:1px solid var(--rule);flex-wrap:wrap}
-  .search-wrap{position:relative;flex:1 1 420px;min-width:240px}
-  #q{width:100%;border:1.5px solid var(--rule-2);border-radius:999px;padding:.6rem 2.6rem .6rem 2.4rem;font-size:var(--fs-2);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .85rem center}
+  /* ---- floating cards over the map ---- */
+  .fcard{position:absolute;z-index:6;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px rgba(27,36,48,.10)}
+  .search-card{left:16px;top:16px;width:400px;max-width:calc(100% - 32px);padding:10px;display:flex;flex-direction:column;gap:8px}
+  .drawer-open .legend-card,.drawer-open .map-hint{visibility:hidden}
+  .search-wrap{position:relative}
+  #q{width:100%;border:1px solid var(--rule-2);border-radius:8px;padding:.6rem 2.4rem .6rem 2.4rem;font-size:var(--fs-1);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .75rem center}
   #q::-webkit-search-cancel-button,#q::-webkit-search-decoration{-webkit-appearance:none;display:none}
   #q:focus{border-color:var(--gulf);box-shadow:0 0 0 4px rgba(63,127,181,.15);outline:none}
-  #q-clear{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--ink-3);font-size:1.3rem;line-height:1;cursor:pointer;padding:.2rem .5rem;border-radius:50%} #q-clear:hover{color:var(--ink);background:var(--paper)} #q-clear[hidden]{display:none}
+  #q-clear{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--ink-3);font-size:1.3rem;line-height:1;cursor:pointer;padding:.2rem .5rem;border-radius:50%} #q-clear:hover{color:var(--ink);background:var(--paper)} #q-clear[hidden]{display:none}
+  .card-actions{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:6px}
+  .tbtn{border:0;background:none;border-radius:8px;padding:.45rem .7rem;font-size:var(--fs-0);font-weight:600;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem;line-height:1.2} .tbtn:hover{background:#EEF4FA}
+  .tbtn[aria-expanded="true"]{background:var(--paper)} .tbtn[aria-expanded="true"] .chev{transform:rotate(180deg)} .tbtn .chev{transition:transform .15s}
+  .ibtn{margin-left:auto;width:34px;height:34px;border:0;background:none;border-radius:8px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center} .ibtn:hover{background:#EEF4FA;color:var(--navy)}
+  .stamp{font-size:var(--fs-0);color:var(--ink-3);white-space:nowrap} .stamp.stale{color:var(--warn);font-weight:650}
+  /* the example places and questions, shown on the national view */
+  .invite{position:relative} .invite[hidden]{display:none}
+  .invite-row{display:flex;align-items:center;gap:.35rem .6rem;flex-wrap:wrap;padding-right:1.6rem}
+  .invite-lead{margin:0;font-size:var(--fs-0);color:var(--ink-3)} .invite-lead b{color:var(--ink-2);font-weight:600}
+  .invite-try{display:flex;gap:.3rem;flex-wrap:wrap} .invite-try .try{font-family:inherit;font-size:var(--fs-0);color:var(--navy);background:var(--paper);border:1px solid var(--rule-2);border-radius:999px;padding:.25rem .7rem;cursor:pointer;line-height:1.3} .invite-try .try:hover{border-color:var(--navy);background:#EEF4FA}
+  .inv-toggle{font-family:inherit;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+  .invite .invite-qs{display:none;margin-top:.4rem} .invite.open .invite-qs{display:flex}
+  .invite-qs{display:flex;gap:.3rem;flex-wrap:wrap}
+  .invite-qs a,.invite-qs button{font-family:inherit;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:#EEF4FA;border:1px solid #D5E3EF;border-radius:999px;padding:.3rem .7rem;text-decoration:none;cursor:pointer;line-height:1.3;text-align:left}
+  .invite-qs a:hover,.invite-qs button:hover{background:#E3ECF4;border-color:var(--gulf)}
+  .invite-qs a.quiet{background:none;border-color:var(--rule-2);color:var(--ink-2);font-weight:500}
+  .invite .x{position:absolute;right:-.2rem;top:-.1rem;border:0;background:none;color:var(--ink-3);font-size:1.2rem;cursor:pointer;padding:0 .3rem;border-radius:50%} .invite .x:hover{color:var(--ink);background:var(--paper)}
+  /* "Explore the data": every control, in one expandable drawer under the search box */
+  .explore{display:flex;flex-direction:column;gap:.6rem;border-top:1px solid var(--rule);padding-top:.6rem;max-height:calc(100vh - 290px);overflow:auto} .explore[hidden]{display:none}
+  .xsec{display:flex;flex-direction:column;gap:.4rem} .xsec + .xsec{border-top:1px solid var(--rule);padding-top:.6rem}
+  .xhead{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+  .xrow{display:flex;align-items:center;gap:.5rem .75rem;flex-wrap:wrap} .xrow .lab{flex:0 0 118px;font-size:var(--fs-0);font-weight:650;color:var(--ink-2)}
+  .xsels{display:flex;gap:.4rem;flex-wrap:wrap;flex:1 1 auto;min-width:0} .xsels .sel{max-width:100%}
+  .xchecks{display:flex;gap:.1rem .9rem;flex-wrap:wrap;flex:1 1 auto}
+  .finder>summary{cursor:pointer;font-size:var(--fs-0);font-weight:650;color:var(--ink-2);list-style:none;display:inline-flex;align-items:center;gap:.3rem} .finder>summary::-webkit-details-marker{display:none} .finder>summary::before{content:"▸";font-size:.8em} .finder[open]>summary::before{content:"▾"}
+  .finder .grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.4rem} .finder .full{grid-column:1/-1}
+  .finder select,.finder input{width:100%;background:var(--card);border:1px solid var(--rule-2);border-radius:8px;padding:.45rem .6rem;font-size:var(--fs-1)}
+  .xfoot{flex-direction:row;align-items:center;flex-wrap:wrap;gap:.5rem} .xfoot .chips{margin:0;flex:1 1 auto} .xfoot .primary{margin-left:auto}
+  .filters .factions{display:flex;gap:.5rem}
+  /* layer switch, legend and zoom: small cards on the map */
+  .layer-switch{right:16px;top:16px;display:flex;gap:2px;padding:3px;border-radius:999px}
+  .layer-switch button{border:0;border-radius:999px;background:none;padding:.45rem .85rem;font-size:var(--fs-0);font-weight:600;color:var(--ink-2);cursor:pointer;white-space:nowrap} .layer-switch button:hover{background:var(--paper)}
+  .layer-switch button[aria-pressed="true"]{background:var(--navy);color:#fff}
+  .layer-switch[hidden]{display:none}
+  .legend-card{left:16px;top:auto;bottom:16px;width:320px;max-width:calc(100% - 32px);padding:10px 12px}
+  .zoomctl{right:16px;bottom:16px;display:flex;flex-direction:column;overflow:hidden;border-radius:8px}
+  .zoomctl button{width:38px;height:38px;border:0;background:none;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center} .zoomctl button + button{border-top:1px solid var(--rule)} .zoomctl button:hover{background:var(--paper)}
   #q-list{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule-2);border-radius:12px;box-shadow:0 12px 32px rgba(27,36,48,.18);z-index:30;overflow:hidden;max-height:60vh;overflow-y:auto} #q-list[hidden]{display:none}
   #q-list .opt{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.55rem .9rem;cursor:pointer;border-top:1px solid var(--rule)} #q-list .opt:first-child{border-top:0}
   #q-list .opt.on,#q-list .opt:hover{background:#EEF4FA} #q-list .opt b{font-weight:600} #q-list .opt .k{font-size:var(--fs-0);color:var(--ink-3);white-space:nowrap} #q-list .opt .sub{color:var(--ink-2);font-size:var(--fs-0);display:block}
@@ -64,12 +103,7 @@
   .btn[aria-expanded="true"] .badge{background:#fff;color:var(--navy)}
   .fchip{display:inline-flex;align-items:center;gap:.4rem;background:#FFF3E8;border:1px solid #E7B892;color:var(--rust);border-radius:999px;padding:.3rem .5rem .3rem .8rem;font-size:var(--fs-0);max-width:100%} .fchip[hidden]{display:none}
   .fchip b{font-weight:650} .fchip button{border:0;background:none;color:var(--rust);cursor:pointer;font-size:1.05rem;line-height:1;padding:0 .2rem;border-radius:50%} .fchip button:hover{background:#F7DFCB}
-  .stamp{margin-left:auto;font-size:var(--fs-0);color:var(--ink-3);white-space:nowrap} .stamp.stale{color:var(--warn);font-weight:650}
   .num-in{background:var(--card);border:1px solid var(--rule-2);border-radius:8px;padding:.42rem .5rem;font-size:var(--fs-1);width:6.4rem}
-
-  /* ---- filter drawer (same controls as before, shown on demand) ---- */
-  .filters{background:#F1F5F9;border-bottom:1px solid var(--rule);padding:.8rem var(--gutter) .9rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.6rem}
-  .filters[hidden]{display:none}
   .teach{border-left:3px solid var(--sand);padding:.25rem .6rem;background:#FBF6EE;border-radius:0 6px 6px 0;font-size:var(--fs-0);color:var(--ink-2);display:block;margin:.5rem 0 0} .fnote .teach{display:inline-block;margin:0 0 .25rem}
   .teach-in{display:block;margin-top:.3rem;color:var(--ink-2)}
   .guide{position:relative;background:#FBF6EE;border:1px solid #EAD9BC;border-left:5px solid var(--clay);border-radius:var(--r);padding:.8rem 2.2rem .8rem 1rem;margin:0 0 .8rem;font-size:var(--fs-1)} .guide[hidden]{display:none}
@@ -78,45 +112,33 @@
   .guide .x{position:absolute;right:.5rem;top:.4rem;border:0;background:none;color:var(--ink-3);font-size:1.3rem;cursor:pointer;padding:0 .3rem;border-radius:50%} .guide .x:hover{color:var(--ink);background:var(--card)}
   .tb-group{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap}
   .tb-group > b{font-size:var(--fs-0);font-weight:650;color:var(--ink-2);letter-spacing:.02em}
-  .filters .fnote{font-size:var(--fs-0);color:var(--ink-3);flex-basis:100%} .filters .fstate{flex-basis:100%;font-size:var(--fs-0);color:var(--warn)}
-  .filters .factions{margin-left:auto;display:inline-flex;gap:.5rem}
   .sel{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234B5563' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right .6rem center;border:1px solid var(--rule-2);border-radius:8px;padding:.42rem 1.8rem .42rem .65rem;font-size:var(--fs-1);cursor:pointer;min-width:0;max-width:100%}
   .sel:hover{border-color:var(--ink-3)}
   .chk{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-0);color:var(--ink-2);cursor:pointer;padding:.15rem .1rem} .chk input{margin:0;accent-color:var(--navy);width:15px;height:15px}
 
-  /* ---- invitation strip (national view only) ---- */
-  .invite{position:relative;padding:.45rem calc(var(--gutter) + 1.6rem) .5rem var(--gutter);background:var(--card);border-bottom:1px solid var(--rule)}
-  .invite[hidden]{display:none}
-  .invite-row{display:flex;align-items:center;gap:.4rem .8rem;flex-wrap:wrap}
-  .invite-try{display:flex;gap:.35rem;flex-wrap:wrap} .invite-try .try{font-family:inherit;font-size:var(--fs-0);color:var(--navy);background:var(--paper);border:1px solid var(--rule-2);border-radius:999px;padding:.3rem .75rem;cursor:pointer;line-height:1.3} .invite-try .try:hover{border-color:var(--navy);background:#EEF4FA}
-  .inv-primary{display:inline-flex;align-items:center;background:var(--navy);color:#fff;border-radius:999px;padding:.45rem 1.05rem;font-weight:650;font-size:var(--fs-1);text-decoration:none;white-space:nowrap} .inv-primary:hover{background:#082B43;color:#fff}
-  .inv-toggle{font-family:inherit;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
-  .invite .invite-qs{display:none;margin-top:.55rem} .invite.open .invite-qs{display:flex}
-  .invite-lead{margin:0;font-size:var(--fs-1);color:var(--ink-2)} .invite-lead b{color:var(--ink)}
-  .invite-qs{display:flex;gap:.4rem;flex-wrap:wrap}
-  .invite-qs a,.invite-qs button{font-family:inherit;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:#EEF4FA;border:1px solid #D5E3EF;border-radius:999px;padding:.35rem .8rem;text-decoration:none;cursor:pointer;line-height:1.3}
-  .invite-qs a:hover,.invite-qs button:hover{background:#E3ECF4;border-color:var(--gulf)}
-  .invite-qs a.quiet{background:none;border-color:var(--rule-2);color:var(--ink-2);font-weight:500}
-  .invite .x{position:absolute;right:.6rem;top:.45rem;border:0;background:none;color:var(--ink-3);font-size:1.3rem;cursor:pointer;padding:0 .3rem;border-radius:50%} .invite .x:hover{color:var(--ink);background:var(--paper)}
-
-  /* ---- main: map + pane ---- */
-  main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(360px,500px);min-height:0}
-  #left{min-width:0}
-  .tabs{display:flex;align-items:center;gap:.15rem;padding:.55rem var(--gutter) 0;border-bottom:1px solid var(--rule);background:var(--card)}
-  .tabs button[data-tab]{white-space:nowrap;background:none;border:0;border-bottom:3px solid transparent;padding:.5rem .85rem;font-size:var(--fs-1);color:var(--ink-2);cursor:pointer;margin-bottom:-1px} .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--navy);font-weight:650}
-  .tabs .tabnote{margin-left:auto;font-size:var(--fs-0);color:var(--ink-3);padding-bottom:.3rem}
-  .menu{position:relative} .menu>summary{list-style:none;cursor:pointer;white-space:nowrap;padding:.5rem .85rem;font-size:var(--fs-1);color:var(--ink-2);border-bottom:3px solid transparent;margin-bottom:-1px;display:inline-block}
+  /* ---- the stage: a full-height map with the figures in a column on the right ---- */
+  main.stage{display:flex;align-items:stretch;min-height:0;height:calc(100vh - 57px)}
+  #left{flex:999 1 560px;min-width:0;position:relative;display:flex;flex-direction:column;min-height:0}
+  #map-wrap{position:relative;flex:1 1 auto;min-height:0;background:var(--paper);overflow:hidden}
+  #map-wrap[hidden]{display:none}
+  svg#map{position:absolute;left:57%;top:53%;transform:translate(-50%,-50%);width:min(86%,calc((100vh - 57px) * 975 / 610 * .9));height:auto;max-height:92%;display:block}
+  .panel[hidden]{display:none} .panel:not(#map-wrap){padding:.9rem var(--gutter) 1.2rem;overflow:auto;flex:1 1 auto;min-height:0;background:var(--paper)}
+  .map-hint{position:absolute;right:16px;bottom:102px;z-index:5;font-size:var(--fs-0);color:var(--ink-3);text-align:right;max-width:280px}
+  .map-hint .linkish{font-size:inherit}
+  /* the legend inside its card */
+  .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .8rem;font-size:var(--fs-0);color:var(--ink-2);min-height:1.2rem}
+  .legend .lg-title{font-weight:650;color:var(--ink);flex-basis:100%;line-height:1.3} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--gulf);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch;max-height:40vh;overflow:auto} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
+  .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
+  /* tabs now sit at the top of the figures column */
+  .tabs{display:flex;align-items:center;gap:.15rem;padding:0 1.25rem;border-bottom:1px solid var(--rule);background:var(--card);flex:0 0 auto}
+  .tabs button[data-tab]{white-space:nowrap;background:none;border:0;border-bottom:3px solid transparent;padding:.7rem .75rem .55rem;font-size:var(--fs-1);color:var(--ink-2);cursor:pointer;margin-bottom:-1px} .tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--navy);font-weight:650}
+  .tabnote{display:block;font-size:var(--fs-0);color:var(--ink-3);padding:.5rem 1.25rem 0} .tabnote:empty{display:none}
+  .menu{position:relative} .menu>summary{list-style:none;cursor:pointer;white-space:nowrap;padding:.7rem .75rem .55rem;font-size:var(--fs-1);color:var(--ink-2);border-bottom:3px solid transparent;margin-bottom:-1px;display:inline-block}
   .menu>summary::-webkit-details-marker{display:none} .menu>summary::after{content:" ▾";font-size:.8em}
-  .menu.on>summary{color:var(--ink);border-bottom-color:var(--navy);font-weight:650}
-  .menu>div{position:absolute;left:0;top:calc(100% + 2px);background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);z-index:20;min-width:240px;padding:.35rem}
+  .menu.on>summary{color:var(--navy);border-bottom-color:var(--navy);font-weight:650}
+  .menu>div{position:absolute;left:0;top:calc(100% + 2px);background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);z-index:20;min-width:260px;padding:.35rem}
   .menu>div button[data-tab]{display:block;width:100%;text-align:left;border:0 !important;border-radius:6px;padding:.5rem .7rem !important;margin:0 !important} .menu>div button[data-tab]:hover{background:#EEF4FA} .menu>div button[data-tab] span{display:block;color:var(--ink-3);font-size:var(--fs-0);font-weight:400}
   .menu>div button[aria-selected="true"]{background:#EEF4FA}
-  .panel[hidden]{display:none} .panel{padding:.75rem var(--gutter) 1rem}
-  .maptools{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.2rem;margin:0 0 .6rem}
-  .maptools .lab{font-size:var(--fs-0);font-weight:650;color:var(--ink-2)}
-  .layers>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-0);color:var(--ink-2);border:1px solid var(--rule-2);border-radius:999px;padding:.4rem .8rem;background:var(--card)} .layers>summary::-webkit-details-marker{display:none} .layers>summary:hover{border-color:var(--ink-3);color:var(--ink)}
-  .layers{position:relative} .layers>div{position:absolute;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);z-index:20;padding:.5rem .8rem;display:grid;gap:.3rem;min-width:190px}
-  .maptools .right{margin-left:auto}
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;font-size:var(--fs-0);color:var(--ink-2);margin:0 0 .5rem;min-height:1.6rem}
   .dev-limits{max-width:120ch;margin:0 0 1rem;padding:.7rem .9rem;border-left:3px solid var(--navy);background:var(--paper);border-radius:0 8px 8px 0} .dev-limits p{margin:.3rem 0}
   details.more-figs{margin:.6rem 0} details.more-figs>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:.6rem;padding:.6rem .9rem;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);color:var(--navy);font-weight:650} details.more-figs>summary::-webkit-details-marker{display:none}
@@ -125,8 +147,6 @@
   .about-est{font-size:var(--fs-0);color:var(--ink-2);margin:.6rem 0 0;padding:.5rem .75rem;background:var(--card);border:1px solid var(--rule);border-radius:8px;max-width:120ch} .about-est b{color:var(--ink)}
   .legend .lg-title{font-weight:650;color:var(--ink)} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--gulf);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
-  #map-wrap{position:relative}
-  svg#map{width:100%;height:auto;display:block;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
   .county{stroke:#fff;stroke-width:.3;cursor:pointer;transition:opacity .15s} .county:hover{stroke:var(--ink);stroke-width:1.1}
   .dim .county:not(.in-district){opacity:.72} .dim .bub:not(.in-district){opacity:.55}
   .bub{cursor:pointer}
@@ -147,7 +167,6 @@
   #map.zm .county:hover{stroke-width:1.6px}
   #map.no-inset .inset{display:none}
   .nci{fill:var(--navy);stroke:#fff;stroke-width:1;pointer-events:none}
-  .map-hint{font-size:var(--fs-0);color:var(--ink-3);margin:.45rem 0 0}
   #tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;padding:.55rem .7rem;border-radius:8px;font-size:var(--fs-0);line-height:1.4;max-width:300px;display:none;z-index:5;box-shadow:0 6px 18px rgba(0,0,0,.25)} #tip b{font-size:var(--fs-1)} #tip .muted{color:#c7d0da}
   #busy{position:fixed;left:50%;bottom:1.2rem;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.5rem .9rem;border-radius:999px;font-size:var(--fs-0);z-index:40;box-shadow:0 6px 18px rgba(0,0,0,.25);display:flex;align-items:center;gap:.5rem} #busy[hidden]{display:none}
   #busy i{width:.8rem;height:.8rem;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite} @keyframes spin{to{transform:rotate(360deg)}}
@@ -163,24 +182,26 @@
   .cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.6rem 0}
   @media (max-width:980px){.cmp-grid{grid-template-columns:1fr}}
 
-  /* ---- right pane ---- */
-  aside{border-left:1px solid var(--rule);background:var(--paper);padding:.9rem 1.25rem 1.5rem;overflow:auto;max-height:calc(100vh - 60px);position:sticky;top:0}
-  aside.more::after{content:'';position:sticky;bottom:0;display:block;height:36px;margin-top:-36px;background:linear-gradient(rgba(247,245,240,0),var(--paper) 75%);pointer-events:none}   /* a fade while more figures sit below the fold */
-  .finder{margin:0 0 .8rem} .finder summary{cursor:pointer;font-size:var(--fs-0);color:var(--ink-2);list-style:none;display:inline-flex;align-items:center;gap:.3rem} .finder summary::-webkit-details-marker{display:none} .finder summary::before{content:"▸";font-size:.8em} .finder[open] summary::before{content:"▾"}
-  .finder .grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.5rem} .finder .full{grid-column:1/-1}
-  .finder select,.finder input{width:100%;background:var(--card);border:1px solid var(--rule-2);border-radius:8px;padding:.5rem .6rem;font-size:var(--fs-1)}
-  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:1rem 1.15rem;margin-bottom:.8rem} .card.hero{border-color:var(--navy);border-top:4px solid var(--navy)}
-  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .15rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
-  h2{font-size:var(--fs-4);font-weight:700;margin:0 0 .2rem;letter-spacing:-.02em;line-height:1.1}
-  h3{font-size:var(--fs-0);font-weight:700;margin:1rem 0 .4rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+  /* ---- right column: the figures ---- */
+  aside{flex:1 1 400px;max-width:430px;min-width:0;border-left:1px solid var(--rule);background:var(--card);display:flex;flex-direction:column;min-height:0;overflow:auto}
+  aside.more::after{content:'';position:sticky;bottom:0;display:block;height:36px;margin-top:-36px;background:linear-gradient(rgba(255,255,255,0),var(--card) 75%);pointer-events:none;flex:0 0 auto}
+  #pane-body{padding:1rem 1.25rem 0}
+  .guide{margin:.9rem 1.25rem 0}
+  .card{background:none;border:0;border-radius:0;box-shadow:none;padding:0 0 1rem;margin:0 0 1rem;border-bottom:1px solid var(--rule)} .card.hero{border-top:0}
+  .card:last-child{border-bottom:0}
+  .kicker{color:var(--ink-3);font-size:.72rem;margin:0 0 .25rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+  h2{font-family:"Source Serif 4",Georgia,serif;font-size:var(--fs-4);font-weight:600;margin:0 0 .3rem;letter-spacing:-.015em;line-height:1.15}
+  h3{font-size:.72rem;font-weight:700;margin:1rem 0 .4rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+  .stat{margin:0;padding:.8rem 0} .stat + .stat{border-top:1px solid var(--rule)}
+  .stat .num{font-family:"Source Serif 4",Georgia,serif;font-size:3.4rem;font-weight:600;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;flex-wrap:wrap;gap:.1rem .4rem;color:var(--navy)}
+  .stat .num small{font-family:"Source Sans 3","Segoe UI",sans-serif;font-size:var(--fs-1);font-weight:500;color:var(--ink-2);letter-spacing:0} .stat .num.small{font-size:var(--fs-3)}
+  .stat.hot .num,.stat.on-map .num{color:#A6461C}
+  .stat.on-map{background:none} .maptag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);border:1px solid var(--navy);border-radius:3px;padding:.04rem .4rem;margin-bottom:.35rem}
+  .stat p{margin:.35rem 0 0;font-size:var(--fs-1);max-width:44ch;color:var(--ink);line-height:1.45}
+  .stat p.sub{color:var(--ink-2);font-size:var(--fs-0);margin-top:.35rem;max-width:48ch} .stat p.cmp{color:var(--ink-3);font-size:var(--fs-0);margin-top:.25rem;font-variant-numeric:tabular-nums}
+  .thin-tag{display:inline-block;margin:.4rem 0 0;padding:.3rem .6rem;border-left:3px solid #C8622A;background:#FBF4EE;font-size:var(--fs-0);color:var(--ink-2);border-radius:0 6px 6px 0} .thin-tag b{color:var(--ink)}
+  .about-est{font-size:var(--fs-0);color:var(--ink-2);margin:0;padding:.9rem 1.25rem 1.1rem;border-top:1px solid var(--rule);background:var(--card)} .about-est b{color:var(--ink)}
   .member{margin:0 0 .6rem;color:var(--ink-2);font-size:var(--fs-1)} .member .dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.3rem}
-  .stat{margin:0;padding:.75rem 0 .75rem 1rem;border-left:3px solid var(--rule-2)} .stat + .stat{border-top:1px solid var(--rule)}
-  .stat.hot{border-left-color:var(--rust)} .stat.na{border-left-color:var(--ink-3)}
-  .stat .num{font-size:var(--fs-5);font-weight:700;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;flex-wrap:wrap;gap:.1rem .35rem}
-  .stat .num small{font-size:var(--fs-1);font-weight:500;color:var(--ink-2);letter-spacing:0} .stat .num.small{font-size:var(--fs-3)}
-  .stat p{margin:.3rem 0 0;font-size:var(--fs-1);max-width:42ch;color:var(--ink)}
-  .stat p.sub{color:var(--ink-2);font-size:var(--fs-0);margin-top:.3rem;max-width:48ch} .stat p.cmp{color:var(--ink-3);font-size:var(--fs-0);margin-top:.25rem;font-variant-numeric:tabular-nums}
-  .stat.on-map{border-left-color:var(--navy);background:linear-gradient(90deg,#EEF4FA,rgba(238,244,250,0) 70%)} .maptag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);border:1px solid var(--navy);border-radius:3px;padding:.04rem .4rem;margin-bottom:.35rem}
   .stat .chips{margin-top:.45rem} .chips-lead{font-size:var(--fs-0);color:var(--ink-2);align-self:center} .stat .chip b{font-weight:650;margin-left:.25rem} .computing{color:var(--ink-3);font-size:var(--fs-0)}
   .rows{margin:.3rem 0 0;padding:0;list-style:none;font-size:var(--fs-1)}
   .rows li{display:flex;justify-content:space-between;gap:1rem;padding:.35rem 0;border-top:1px solid var(--rule)} .rows li:first-child{border-top:0}
@@ -204,16 +225,29 @@
   .foot-grid dl{margin:0} .foot-grid dt{font-weight:650;color:var(--ink);display:inline} .foot-grid dd{display:inline;margin:0} .foot-grid dd::after{content:"";display:block;margin-bottom:.25rem}
   footer details{max-width:140ch} footer summary{cursor:pointer;font-weight:650;color:var(--ink);padding:.2rem 0} footer p{margin:.4rem 0}
 
-  @media (max-width:980px){main{grid-template-columns:minmax(0,1fr)}aside{border-left:0;border-top:1px solid var(--rule);max-height:none;position:static}}
+  @media (max-width:980px){
+    main.stage{flex-direction:column;height:auto}
+    #left{flex:0 0 auto} #map-wrap{height:min(62vh,560px)} .panel:not(#map-wrap){min-height:50vh}
+    svg#map{width:100%;max-height:none}
+    aside{max-width:none;border-left:0;border-top:1px solid var(--rule);border-radius:16px 16px 0 0;margin-top:-14px;position:relative;z-index:7;box-shadow:0 -8px 24px rgba(27,36,48,.08);overflow:visible}
+    aside::before{content:"";display:block;width:36px;height:4px;border-radius:2px;background:var(--rule-2);margin:8px auto 0}
+    .map-hint{display:none}
+    .legend-card{left:0;right:0;bottom:0;width:auto;max-width:none;border-radius:0;border:0;border-top:1px solid var(--rule);padding:6px 12px;box-shadow:none;background:rgba(255,255,255,.96)}
+    .legend .lg-title{flex-basis:auto} .legend .lg-how p{max-height:30vh}
+    .zoomctl{bottom:118px;right:10px;flex-direction:row} .zoomctl button + button{border-top:0;border-left:1px solid var(--rule)}
+    svg#map{left:50%;top:54%;width:100%}
+  }
   @media (max-width:640px){
     :root{--gutter:16px}
-    .searchbar .stamp{margin-left:0;white-space:normal;flex-basis:100%}
-    .filters>*,.tb-group{max-width:100%;min-width:0} .filters .factions{margin-left:0}
-    .invite-lead{font-size:var(--fs-0);flex-basis:100%} .invite-qs a,.invite-qs button{padding:.3rem .65rem} .inv-more{display:none} .invite.open .inv-more{display:inline}
-    .doors{gap:.4rem;position:relative;padding-right:2.2rem} .doors .lead{flex-basis:100%;padding:0} .door{flex:1 1 auto;padding:.4rem .7rem} .door b{font-size:var(--fs-0)} .door span{display:none} .doors .x{position:absolute;right:8px;top:6px}
-    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none} .tabs::-webkit-scrollbar{display:none} .tabs .tabnote{display:none}
+    .search-card{left:8px;top:8px;width:auto;max-width:calc(100% - 16px);padding:8px;gap:6px}
+    .search-card .inv-toggle,.search-card .invite .x{display:none} .card-actions{padding-top:4px}
+    .layer-switch{display:none}
+    .explore{max-height:calc(100vh - 170px)} .xrow .lab{flex-basis:100%}
+    #map-wrap{height:min(56vh,480px)}
+    .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 var(--gutter)} .tabs::-webkit-scrollbar{display:none}
     .menu>div{position:fixed;left:16px;right:16px;top:auto}
-    .maptools .right{margin-left:0}
+    #pane-body{padding:.8rem var(--gutter) 0} .guide{margin:.8rem var(--gutter) 0} .about-est{padding:.8rem var(--gutter) 1rem}
+    .stat .num{font-size:2.6rem}
     #right,#pane-body{min-width:0}
     table{display:block;overflow-x:auto;max-width:100%}
     .foot-grid{grid-template-columns:1fr}
@@ -226,76 +260,78 @@
 <body>
 <div class="app">
 <header class="site">
-  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="stamp" id="stamp"></span></div>
   <nav class="hdr-links" aria-label="Pages"><a href="index.html" aria-current="page">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
-<div class="searchbar">
-  <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a city, ZIP code, county, congressional district, state or member of Congress" aria-label="Search places and members of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
-  <button class="btn" id="btn-filters" type="button" aria-expanded="false" aria-controls="filters">Filter trials <span class="badge" id="fbadge" hidden>0</span></button>
-  <span class="fchip" id="fchip" hidden></span>
-  <button class="btn" id="btn-reset" type="button" title="Clear filters and go back to the national view">Reset view</button>
-  <span class="stamp" id="stamp"></span>
-</div>
-<div class="filters" id="filters" role="group" aria-label="Trial filters: phase, sponsor, cancer type, patient age" hidden>
-  <div class="tb-group"><b>Phase</b><span id="f-phase"></span></div>
-  <div class="tb-group"><b>Sponsor</b><span id="f-sponsor"></span></div>
-  <div class="tb-group"><b>Cancer type</b><select class="sel" id="f-type"><option value="">All cancer types</option></select></div>
-  <div class="tb-group"><b>Patient age</b><input type="number" id="f-age" class="num-in" min="18" max="110" placeholder="Any 55+" aria-label="Patient age. Leave empty for every listed trial: each accepts some adults aged 55 or older"></div>
-  <span class="factions"><button class="btn" id="btn-clearf" type="button">Clear filters</button><button class="btn primary" id="btn-filters-done" type="button">Done</button></span>
-  <span class="fnote" id="f-type-note"></span><span class="fnote" id="f-age-note"></span>
-  <span class="fstate" id="f-state"></span>
-</div>
-<div class="invite" id="doors" hidden>
-  <div class="invite-row">
-    <p class="invite-lead"><b>Try</b></p>
-    <div class="invite-try" role="group" aria-label="Example places"><button type="button" class="try" data-try="c:48215">Hidalgo County, TX</button><button type="button" class="try" data-try="d:2102">KY-2</button><button type="button" class="try" data-try="s:ND">North Dakota</button></div>
-    <button type="button" class="inv-toggle" id="inv-toggle" aria-expanded="false" aria-controls="inv-qs">Questions to explore ▾</button>
-  </div>
-  <div class="invite-qs" id="inv-qs">
-    <a href="community.html">Start with your community: a short local summary and the numbers behind it</a>
-    <button type="button" id="inv-type">Would the picture change for a particular cancer?</button>
-    <a href="learn.html#barriers">Why can someone live near trials and still struggle to participate?</a>
-    <button type="button" id="inv-compare">How does my community compare?</button>
-    <a href="act.html">What could help, and what can I do?</a>
-    <a href="learn.html#research-teams">Planning where a trial runs? Tools for research teams</a>
-    <a href="learn.html" class="quiet">New to clinical trials? No background is needed — start with the questions page</a>
-  </div>
-  <button class="x" type="button" id="doors-x" aria-label="Hide this strip">×</button>
-</div>
-<main>
-  <div id="left">
-  <div class="tabs" role="tablist">
-    <button role="tab" data-tab="map" aria-selected="true">Overview</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button>
-    <details class="menu" id="analysis-menu"><summary role="button" aria-haspopup="true">Analysis</summary><div>
-      <button role="tab" data-tab="compare">Compare counties<span>Every county in a state, side by side</span></button>
-      <button role="tab" data-tab="burden">Need vs access<span>Counties with high cancer incidence and low trial access</span></button>
-      <button role="tab" data-tab="changes">Recent changes<span>What changed in the registry since the last refresh</span></button>
-    </div></details>
-    <span class="tabnote" id="scope-note"></span>
-  </div>
+<main class="stage">
+  <div id="left" class="stage-map">
   <div id="map-wrap" class="panel">
-    <div class="maptools" role="toolbar" aria-label="Map controls">
-      <div class="tb-group"><span class="lab">Show areas as</span>
-        <select class="sel" id="unit" aria-label="Map unit"><option value="county">Counties</option><option value="district">Congressional districts</option><option value="state">States</option></select></div>
-      <div class="tb-group"><span class="lab">Color by</span>
-        <select class="sel" id="metric" aria-label="Map variable"></select>
-        <select class="sel" id="inc-site" aria-label="Cancer site for the incidence layer" style="display:none"></select>
-        <select class="sel" id="acs-var" aria-label="ACS variable" style="display:none">
-          <option value="veh">Households without a vehicle</option><option value="bb">Households with broadband</option><option value="unins">Uninsured (all ages)</option><option value="unins55">Uninsured, ages 55–64</option><option value="pov">Poverty rate</option>
-        </select></div>
-      <details class="layers right" id="layers"><summary>Layers</summary><div>
-        <label class="chk"><input type="checkbox" id="lyr-d" checked> District lines</label>
-        <label class="chk"><input type="checkbox" id="lyr-n" checked> NCI-designated centers</label>
-        <label class="chk"><input type="checkbox" id="lyr-l" checked> District numbers</label>
-        <label class="chk"><input type="checkbox" id="lyr-m"> Metro vs rural (solid / ring)</label>
-      </div></details>
-    </div>
-    <div class="legend" id="legend" aria-live="polite"></div>
     <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Map of US counties with congressional district boundaries"></svg>
     <div class="map-loading" id="map-loading"><i></i>Loading map data…</div>
-    <div class="map-hint" id="map-hint">Hover for details · click to select · double-click the map to zoom back out</div>
-    <p class="about-est"><b>Not medical advice.</b> Counts are of listed trials, not trials a given patient qualifies for, and a listed trial may not be enrolling today. Road distances are calculated on the highway network to approximate trial-site locations. <a href="index.html#dev-limits">About these estimates, their sources and limits</a>.</p>
     <div id="tip" role="tooltip"></div>
+
+    <!-- floating search card: the search box, example places, and the "Explore the data" drawer with every control -->
+    <div class="fcard search-card" id="search-card">
+      <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="City, ZIP code, county, congressional district, state or member of Congress" aria-label="Search places and members of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
+      <div class="invite" id="doors" hidden>
+        <div class="invite-row">
+          <p class="invite-lead"><b>Try</b></p>
+          <div class="invite-try" role="group" aria-label="Example places"><button type="button" class="try" data-try="c:48215">Hidalgo County, TX</button><button type="button" class="try" data-try="d:2102">KY-2</button><button type="button" class="try" data-try="s:ND">North Dakota</button></div>
+          <button type="button" class="inv-toggle" id="inv-toggle" aria-expanded="false" aria-controls="inv-qs">Questions to explore ▾</button>
+          <button class="x" type="button" id="doors-x" aria-label="Hide the examples">×</button>
+        </div>
+        <div class="invite-qs" id="inv-qs">
+          <a href="community.html">Start with your community: a short local summary and the numbers behind it</a>
+          <button type="button" id="inv-type">Would the picture change for a particular cancer?</button>
+          <a href="learn.html#barriers">Why can someone live near trials and still struggle to participate?</a>
+          <button type="button" id="inv-compare">How does my community compare?</button>
+          <a href="act.html">What could help, and what can I do?</a>
+          <a href="learn.html#research-teams">Planning where a trial runs? Tools for research teams</a>
+          <a href="learn.html" class="quiet">New to clinical trials? No background is needed — start with the questions page</a>
+        </div>
+      </div>
+      <span class="fchip" id="fchip" hidden></span>
+      <div class="card-actions">
+        <button class="tbtn" id="btn-explore" type="button" aria-expanded="false" aria-controls="explore">Explore the data <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <button class="tbtn" id="btn-filters" type="button" aria-expanded="false" aria-controls="explore">Filter trials <span class="badge" id="fbadge" hidden>0</span></button>
+        <button class="tbtn" id="btn-reset" type="button" title="Clear filters and go back to the national view">Reset view</button>
+        <button class="ibtn" id="btn-share-top" type="button" aria-label="Copy link to this view" title="Copy link to this view"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></button>
+      </div>
+
+      <div class="explore" id="explore" hidden>
+        <div class="xsec maptools" role="group" aria-label="Map controls">
+          <div class="xrow"><span class="lab">Show areas as</span><select class="sel" id="unit" aria-label="Map unit"><option value="county">Counties</option><option value="district">Congressional districts</option><option value="state">States</option></select></div>
+          <div class="xrow"><span class="lab">Color the map by</span><span class="xsels"><select class="sel" id="metric" aria-label="Map variable"></select><select class="sel" id="inc-site" aria-label="Cancer site for the incidence layer" style="display:none"></select><select class="sel" id="acs-var" aria-label="ACS variable" style="display:none"><option value="veh">Households without a vehicle</option><option value="bb">Households with broadband</option><option value="unins">Uninsured (all ages)</option><option value="unins55">Uninsured, ages 55–64</option><option value="pov">Poverty rate</option></select></span></div>
+          <div class="xrow"><span class="lab">Also show</span><span class="xchecks" id="layers"><label class="chk"><input type="checkbox" id="lyr-n" checked> NCI-designated centers</label><label class="chk"><input type="checkbox" id="lyr-d" checked> District lines</label><label class="chk"><input type="checkbox" id="lyr-l" checked> District numbers</label><label class="chk"><input type="checkbox" id="lyr-m"> Metro vs rural (solid / ring)</label></span></div>
+        </div>
+        <div class="xsec filters" id="filters" role="group" aria-label="Trial filters: phase, sponsor, cancer type, patient age">
+          <div class="xhead">Filter trials</div>
+          <div class="xrow"><span class="lab">Cancer type</span><select class="sel" id="f-type"><option value="">All cancer types</option></select></div>
+          <div class="xrow"><span class="lab">Patient age</span><input type="number" id="f-age" class="num-in" min="18" max="110" placeholder="Any 55+" aria-label="Patient age. Leave empty for every listed trial: each accepts some adults aged 55 or older"></div>
+          <div class="xrow"><span class="lab">Phase</span><span class="xchecks" id="f-phase"></span></div>
+          <div class="xrow"><span class="lab">Sponsor</span><span class="xchecks" id="f-sponsor"></span></div>
+          <span class="fnote" id="f-type-note"></span><span class="fnote" id="f-age-note"></span>
+          <span class="fstate" id="f-state"></span>
+          <span class="factions"><button class="btn" id="btn-clearf" type="button">Clear filters</button></span>
+        </div>
+        <details class="xsec finder" id="finder"><summary>Browse by state, district or county</summary><div class="grid">
+          <select id="pick-s" aria-label="Zoom to a state"><option value="">State…</option></select>
+          <select id="pick-d" aria-label="Choose a congressional district" disabled><option value="">District…</option></select>
+          <input class="full" id="pick-c" list="county-list" placeholder="County (start typing)" aria-label="Find a county"><datalist id="county-list"></datalist>
+        </div></details>
+        <div class="xsec xfoot"><span class="xhead" style="margin:0">Analysis</span><span class="chips"><button type="button" class="chip" data-xtab="compare">Compare counties in a state</button><button type="button" class="chip" data-xtab="burden">Need vs access</button><button type="button" class="chip" data-xtab="changes">Recent registry changes</button></span><button class="btn primary" id="btn-filters-done" type="button">Done</button></div>
+      </div>
+    </div>
+
+    <!-- floating layer switch (county view): the two layers most people want, the rest under Explore the data -->
+    <div class="fcard layer-switch" id="layer-switch" role="group" aria-label="Map layer">
+      <button type="button" data-layer="short" aria-pressed="true">People far from trials</button><button type="button" data-layer="t" aria-pressed="false">Trials by county</button>
+    </div>
+
+    <div class="fcard legend-card"><div class="legend" id="legend" aria-live="polite"></div></div>
+
+    <div class="fcard zoomctl"><button type="button" id="zoom-in" aria-label="Zoom in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" id="zoom-out" aria-label="Zoom out"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button></div>
+    <div class="map-hint" id="map-hint">Hover for details · click to select · double-click the map to zoom back out</div>
   </div>
   <div id="tab-trials" class="panel" hidden>
     <div class="tbar"><span id="tr-scope" class="scope"></span>
@@ -313,13 +349,18 @@
   <div id="tab-changes" class="panel" hidden><div id="chg-body"></div></div>
   </div>
   <aside id="pane">
-    <details class="finder" id="finder"><summary>Browse by state, district or county</summary><div class="grid">
-      <select id="pick-s" aria-label="Zoom to a state"><option value="">State…</option></select>
-      <select id="pick-d" aria-label="Choose a congressional district" disabled><option value="">District…</option></select>
-      <input class="full" id="pick-c" list="county-list" placeholder="County (start typing)" aria-label="Find a county"><datalist id="county-list"></datalist>
-    </div></details>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="map" aria-selected="true">Overview</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button>
+      <details class="menu" id="analysis-menu"><summary role="button" aria-haspopup="true">Analysis</summary><div>
+        <button role="tab" data-tab="compare">Compare counties<span>Every county in a state, side by side</span></button>
+        <button role="tab" data-tab="burden">Need vs access<span>Counties with high cancer incidence and low trial access</span></button>
+        <button role="tab" data-tab="changes">Recent changes<span>What changed in the registry since the last refresh</span></button>
+      </div></details>
+    </div>
+    <span class="tabnote" id="scope-note"></span>
     <div class="guide" id="guide" hidden></div>
     <div id="pane-body"><div class="card hero"><p class="kicker">United States · residents 55 and older</p><p class="member">Loading the figures…</p><noscript><p class="member">This map needs JavaScript. The <a href="findings.html">key findings</a> page and the <a href="https://github.com/nehaamd/cancer-trial-access-fullmap">data files</a> do not.</noscript></div></div>
+    <p class="about-est"><b>Not medical advice.</b> Counts are of listed trials, not trials a given patient qualifies for, and a listed trial may not be enrolling today. Road distances are calculated on the highway network to approximate trial-site locations. <a href="index.html#dev-limits">About these estimates, their sources and limits</a>.</p>
   </aside>
 </main>
 <footer id="methods" class="site">
@@ -604,9 +645,9 @@
   }
   const incSel = document.getElementById('inc-site'); BSITE.forEach(([k, lab], i) => { const o = document.createElement('option'); o.value = i; o.textContent = lab; incSel.appendChild(o); }); incSel.addEventListener('change', () => { incSite = +incSel.value; if ((metric === 'bva' || tab === 'burden') && BU) { const ty = BU.meta.site2type[BSITE[incSite][0]] || ''; if (ty !== filt.type) { filt.type = ty; ft.value = ty; update(); return; } } paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); refreshTab(); pushURL(); });
   document.getElementById('acs-var').addEventListener('change', e => { acsVar = e.target.value; paint(); renderPane(); pushURL(); });
-  document.getElementById('metric').addEventListener('change', e => { metric = e.target.value; paint(); renderPane(); pushURL(); });
+  document.getElementById('metric').addEventListener('change', e => { metric = e.target.value; paint(); renderPane(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
   const renderPane = () => { const top = pane.scrollTop; if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); pane.scrollTop = top; };
-  document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); paint(); pushURL(); });
+  document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); paint(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
   document.getElementById('lyr-d').addEventListener('change', e => gD.style('display', e.target.checked ? null : 'none'));
   document.getElementById('lyr-n').addEventListener('change', e => { gN.style('display', e.target.checked ? null : 'none'); paint(); });
   document.getElementById('lyr-m').addEventListener('change', () => paint());   // metro vs rural: recolors the circles and the legend
@@ -745,7 +786,7 @@
   const pane = document.getElementById('pane-body');
   // ---------- hero figures: one number per card, the figure shown on the map first, comparisons on every figure ----------
   // stat({num, unit, text, cls, id, sub, cmp, chips, tag}): big number + one sentence; secondary figures in .sub (grey); comparisons in .cmp
-  const stat = o => `<div class="stat${o.cls ? ' ' + o.cls : ''}${o.tag ? ' on-map' : ''}"${o.id ? ` id="${o.id}"` : ''}>${o.tag ? `<span class="maptag">On the map · ${esc(o.tag)}</span>` : ''}<div class="num${String(o.num).replace(/<[^>]+>/g, '').length > 6 ? ' small' : ''}">${o.num}<small>${o.unit || ''}</small></div><p class="main">${o.text}</p>${o.sub ? `<p class="sub">${o.sub}</p>` : ''}${o.cmp ? `<p class="cmp">${o.cmp}</p>` : ''}${o.chips ? `<div class="chips">${o.chips}</div>` : ''}</div>`;
+  const stat = o => `<div class="stat${o.cls ? ' ' + o.cls : ''}${o.tag ? ' on-map' : ''}"${o.id ? ` id="${o.id}"` : ''}>${o.tag ? `<span class="maptag">On the map · ${esc(o.tag)}</span>` : ''}<div class="num${String(o.num).replace(/<[^>]+>/g, '').length > 6 ? ' small' : ''}">${o.num}<small>${o.unit || ''}</small></div><p class="main">${o.text}</p>${o.sub ? `<p class="sub">${o.sub}</p>` : ''}${o.cmp ? `<p class="cmp">${o.cmp}</p>` : ''}${o.thin ? `<p class="thin-tag"><b>Under the 20-trial line.</b> Between 10 and 19 trials within reach: on the map these residents count as short of trials, not as without them.</p>` : ''}${o.chips ? `<div class="chips">${o.chips}</div>` : ''}</div>`;
   const statHTML = (num, unit, text, cls, id) => stat({ num, unit, text, cls, id });
   const people = n => n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));
   const LAYER_SHORT = { mva: 'cancer deaths vs trial access', short: 'residents short of trials', t: 'trials in the county', rn: 'road-miles to an NCI center', rb: 'road-miles to a broad menu', inc: 'cancer incidence', acs: 'household context', rucc: 'rural-urban code', bva: 'burden vs access', l20: 'fewer than 20 trials within 60 road-miles', z60: 'no trial within 60 road-miles', g60b: 'beyond 60 road-miles of a broad menu', g60n: 'beyond 60 road-miles of an NCI center', medn: 'median road-miles to an NCI center', ginc: 'cancer incidence', gacs: 'household context' };
@@ -986,7 +1027,7 @@
     const g = D.state_data[c.s2];
     const S = {
       trials: stat({ num: `<button class="linkish" data-open="in" title="Open the list of these trials">${fa ? `${fmt(n)} <small>of ${fmt(c.t)}</small>` : fmt(c.t)}</button>${fa ? basket(n, nB) : ''}`, unit: fa ? '' : (c.t === 1 ? ' trial' : ' trials'), text: (fa ? 'listed trials in the county match the filters; ' : 'with a recruiting site in the county, accepting some adults 55+; ') + `<button class="linkish" data-open-sites="in">${fmt(c.f)} recruiting site${c.f === 1 ? '' : 's'}</button>` + ' (distinct registry names after removing sponsor site codes). ' + menu + (nm && (fa ? n : c.t) === 0 ? ` <b>Nearest site with a matching trial: ${nm.mi} road-miles — ${esc(nm.names)}.</b>` : ''), sub: g ? `State: ${fmt(g.counties_with_trials)} of ${fmt(g.counties)} counties have a trial · ${fmt(g.broad)} host a broad menu, ${fmt(g.limited)} a limited menu` : '', cls: c.t === 0 ? 'hot' : '', tag: tag('trials') }),
-      t60: stat({ num: `<button class="linkish" data-open="60" title="Open the list of these trials">${fa ? `${fmt(n60)} <small>of ${fmt(c.t60)}</small>` : fmt(c.t60)}</button>${fa ? basket(n60, n60B) : ''}`, unit: fa ? '' : (c.t60 === 1 ? ' trial' : ' trials'), text: ((fa ? n60 : c.t60) === 1 ? 'has' : 'have') + ' a recruiting site within 60 road-miles of the county population center (' + `<button class="linkish" data-open-sites="60">${fmt(c.f60)} site${c.f60 === 1 ? '' : 's'} in ${fmt(c.nb.length)} location${c.nb.length === 1 ? '' : 's'}</button>` + ').', cmp: g ? `<span data-cmp="state">State average ${fmt(g.t60)} trials within 60 road-miles of home</span> · <span data-cmp="nat">National ${fmt(D.meta.nat_core.t60)}</span>` : '', cls: (fa ? n60 : c.t60) < 20 ? 'hot' : '' }),
+      t60: stat({ num: `<button class="linkish" data-open="60" title="Open the list of these trials">${fa ? `${fmt(n60)} <small>of ${fmt(c.t60)}</small>` : fmt(c.t60)}</button>${fa ? basket(n60, n60B) : ''}`, unit: fa ? '' : (c.t60 === 1 ? ' trial' : ' trials'), text: ((fa ? n60 : c.t60) === 1 ? 'has' : 'have') + ' a recruiting site within 60 road-miles of the county population center (' + `<button class="linkish" data-open-sites="60">${fmt(c.f60)} site${c.f60 === 1 ? '' : 's'} in ${fmt(c.nb.length)} location${c.nb.length === 1 ? '' : 's'}</button>` + ').', cmp: g ? `<span data-cmp="state">State average ${fmt(g.t60)} trials within 60 road-miles of home</span> · <span data-cmp="nat">National ${fmt(D.meta.nat_core.t60)}</span>` : '', cls: (fa ? n60 : c.t60) < 20 ? 'hot' : '', thin: (fa ? n60 : c.t60) >= 10 && (fa ? n60 : c.t60) < 20 }),
       road: roadStat, access: countyAccessStat(k, c) };
     if (key === 'inc') { const b = c.b ? c.b[incSite] : null; const ok = b && b[4] <= 1 && b[0] !== null;
       S.inc = stat({ num: ok ? b[0] : '—', unit: ok ? ' per 100,000' : '', text: ok ? `age-adjusted incidence of ${esc(BSITE[incSite][1])}, ${D.meta.burden.period}${b[4] === 1 ? ' (small numbers)' : ''}.` : `${esc(BSITE[incSite][1])} incidence: ${b ? BSTATUS[b[4]] : 'no data for this county'}.`, sub: ok ? `95% CI ${b[1]}–${b[2]} · about ${fmt(b[3])} new cases a year` : '', cmp: g ? `<span data-cmp="state">State ${g.ctx && g.ctx.inc !== null ? g.ctx.inc : '—'} per 100,000</span> · <span data-cmp="nat">National ${D.meta.nat_ctx.inc}</span>` : '', cls: ok ? '' : 'na', tag: tag('inc') }); }
@@ -1156,6 +1197,15 @@
   ${BU ? `<p><strong>Burden vs access.</strong> A cross-tabulation of two published measures, never a combined score: county age-adjusted incidence for the chosen cancer site (State Cancer Profiles, ${D.meta.burden.period}) above or below the median of counties with a published rate, against the share of residents 55+ (population-weighted over the county's census tracts) with fewer than 20 — or, for a chosen cancer, no — recruiting trials within 60 road-miles, at a threshold the reader sets (default: at least half). Counties whose incidence rests on fewer than 16 average annual cases are classified but hatched; suppressed and unpublished counties (including all of Kansas) are not classified. Incidence and trial counts are for different periods and the incidence sites map only approximately onto the trial cancer-type categories.</p>` : ''}
   ${CO ? `<p><strong>Legislation.</strong> Sponsor and cosponsor lists for ${Object.keys(CO.bills).map(k => CO.bills[k].label).join(' / ')} (${[...new Set(Object.values(CO.meta.topics).map(t => t.name))].join('; ')}) from the Library of Congress bill-status feed (govinfo.gov BILLSTATUS; congress.gov API when a key is configured), as of ${SITE.nice(CO.meta.fetched)}; members matched to districts through unitedstates/congress-legislators. Withdrawn cosponsors are excluded. Cosponsorship is one signal of a member's position, not a vote; verify on congress.gov before citing.</p>` : ''}</details>`;
   window.__nav = { selectDistrict, selectCounty, selectState: st => { pickS.value = st; pickS.dispatchEvent(new Event('change')); }, clearSelection, setTab };
+  // the two-way layer switch on the map (county view only); the full list of layers stays under "Color the map by"
+  const lsw = document.getElementById('layer-switch');
+  lsw.querySelectorAll('button[data-layer]').forEach(b => b.addEventListener('click', () => { if (unit !== 'county') return; const m = document.getElementById('metric'); m.value = b.dataset.layer; m.dispatchEvent(new Event('change')); }));
+  window.__syncLayerSwitch = () => { lsw.hidden = unit !== 'county'; lsw.querySelectorAll('button[data-layer]').forEach(b => b.setAttribute('aria-pressed', String(unit === 'county' && metric === b.dataset.layer))); };
+  window.__syncLayerSwitch();
+  // zoom buttons: step the view box in and out around its center; zooming all the way out restores the national view
+  const zoomStep = dir => { const [x, y, w, h] = curVB; if (dir > 0) { const nw = Math.max(w / 1.6, W / 12), nh = nw * H / W; zoomTo([x + (w - nw) / 2, y + (h - nh) / 2, nw, nh]); svg.classed('dz', true); }
+    else { const nw = w * 1.6; if (nw >= W * 0.95) { zoomTo(baseVB); svg.classed('dz', false); } else { const nh = nw * H / W; zoomTo([Math.max(0, Math.min(W - nw, x - (nw - w) / 2)), Math.max(0, Math.min(H - nh, y - (nh - h) / 2)), nw, nh]); } } };
+  document.getElementById('zoom-in').addEventListener('click', () => zoomStep(1)); document.getElementById('zoom-out').addEventListener('click', () => zoomStep(-1));
   window.__validate = { loadTractsAll, filteredCounty, filteredRural, filteredGeo, tractCounts, CK, bvaClass, accessShare };  // hooks for validate_v3.py (headless checks only)
   function applyURL(first) {
     restoring = true;
@@ -1237,9 +1287,15 @@
   clr.addEventListener('click', () => { q.value = ''; clr.hidden = true; list.hidden = true; window.__nav.clearSelection(); q.focus(); });
   document.getElementById('btn-reset').addEventListener('click', () => { q.value = ''; clr.hidden = true; });
   // ---- filter drawer ----
-  const drawer = document.getElementById('filters'), fbtn = document.getElementById('btn-filters');
-  const setDrawer = on => { drawer.hidden = !on; fbtn.setAttribute('aria-expanded', String(on)); };
-  fbtn.addEventListener('click', () => setDrawer(drawer.hidden)); document.getElementById('btn-filters-done').addEventListener('click', () => setDrawer(false)); window.__openFilters = () => setDrawer(true);
+  const drawer = document.getElementById('explore'), fbtn = document.getElementById('btn-filters'), xbtn = document.getElementById('btn-explore');
+  const setDrawer = on => { drawer.hidden = !on; fbtn.setAttribute('aria-expanded', String(on)); xbtn.setAttribute('aria-expanded', String(on)); document.getElementById('map-wrap').classList.toggle('drawer-open', on); };
+  fbtn.addEventListener('click', () => { setDrawer(drawer.hidden || true); if (!drawer.hidden) document.getElementById('f-type').focus(); }); xbtn.addEventListener('click', () => setDrawer(drawer.hidden));
+  document.getElementById('btn-filters-done').addEventListener('click', () => setDrawer(false)); window.__openFilters = () => setDrawer(true);
+  document.querySelectorAll('#explore [data-xtab]').forEach(b => b.addEventListener('click', () => { setDrawer(false); window.__nav.setTab(b.dataset.xtab); }));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) setDrawer(false); });
+  // the link icon on the search card copies the same link as the panel's "Copy link to this view"
+  document.getElementById('btn-share-top').addEventListener('click', () => { const b = document.getElementById('btn-share'); if (b) b.click(); });
+
   // ---- active-filter chip, derived from the controls themselves ----
   const T = D.T, typeLabel = {}; T.types.forEach(([k, l]) => typeLabel[k] = l);
   function chip() { const parts = []; const ph = [...document.querySelectorAll('#f-phase input')]; const on = ph.filter(i => i.checked); const phName = i => i.parentNode.textContent.trim().replace('Ph ', ''); if (on.length < ph.length) { const off = ph.filter(i => !i.checked); parts.push(!on.length ? 'no phases' : off.length <= on.length ? 'not Phase ' + off.map(phName).join('/') : 'Phase ' + on.map(phName).join('/')); }
