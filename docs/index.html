@@ -163,7 +163,7 @@
   .dim .county:not(.in-district){opacity:.72} .dim .bub:not(.in-district){opacity:.55}
   .bub{cursor:pointer}
   .district{fill:none;stroke:#9C948A;stroke-width:.4;pointer-events:none;opacity:.6}
-  .unit-district .district.fillable{pointer-events:all;cursor:pointer;opacity:1;stroke:#fff;stroke-width:.6} .unit-district .district.fillable:hover{stroke:var(--ink);stroke-width:1.4}
+  .unit-district .district.fillable{pointer-events:all;cursor:pointer;opacity:1;stroke:#B9B1A6;stroke-width:.5} .unit-district .district.fillable:hover{stroke:var(--ink);stroke-width:1.4}
   .unit-district .county,.unit-state .county{fill:#F4F2EC !important;pointer-events:none;stroke:#fff;stroke-width:.2}
   .statefill{fill:none;stroke:#fff;stroke-width:.8;pointer-events:none} .unit-state .statefill{pointer-events:all;cursor:pointer} .unit-state .statefill:hover{stroke:var(--ink);stroke-width:1.6}
   .unit-state .district{display:none} .unit-district .district:not(.fillable){display:none}
@@ -254,11 +254,13 @@
   @media (max-width:640px){
     :root{--gutter:16px}
     .search-card{left:8px;top:8px;width:auto;max-width:calc(100% - 16px);padding:8px;gap:6px}
-    .search-card .inv-toggle,.search-card .invite .x{display:none} .card-actions{padding-top:4px}
+    .search-card .inv-toggle,.search-card .invite .x{display:none} .card-actions{padding-top:4px;gap:.1rem} .card-actions .tbtn{padding:.45rem .4rem;font-size:.8rem} .card-actions .ibtn{width:28px}
     .layer-switch{display:none}
     .legend-card .layer-more{position:absolute;right:10px;top:5px} .legend-card .layer-more>summary{list-style:none;cursor:pointer;border:1px solid var(--rule-2);border-radius:999px;padding:.25rem .7rem;font-size:var(--fs-0);font-weight:600;color:var(--navy);background:var(--card)} .legend-card .layer-more>summary::-webkit-details-marker{display:none} .legend-card .layer-more>summary::after{content:" ▾";font-size:.8em}
     .legend-card .legend .lg-title{padding-right:84px} .legend-card .legend{gap:.25rem .7rem} .legend-card.menu-open{z-index:40}
     .legend-card .layer-list{position:fixed;left:12px;right:12px;top:auto;bottom:12px;min-width:0;max-height:min(72vh,600px);box-shadow:0 -10px 40px rgba(27,36,48,.25)}
+    .legend-card .legend{padding-left:26px} .lg-fold{display:inline-flex;position:absolute;left:8px;top:7px;width:22px;height:22px;align-items:center;justify-content:center;border:0;border-radius:50%;background:var(--paper);color:var(--navy);cursor:pointer;font-size:.8rem;padding:0}
+    .legend-card.folded .legend > :not(.lg-title){display:none} .legend-card .legend .lg-title{cursor:pointer}
     .explore{max-height:calc(100vh - 170px)} .xrow .lab{flex-basis:100%}
     #map-wrap{height:min(56vh,480px)}
     .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 var(--gutter)} .tabs::-webkit-scrollbar{display:none}
@@ -421,7 +423,6 @@
   const HB = CO ? Object.keys(CO.bills).filter(k => CO.bills[k].type === 'hr') : [], SB = CO ? Object.keys(CO.bills).filter(k => CO.bills[k].type === 's') : [];  // tracked House / Senate bills
   const billName = k => `${CO.bills[k].short} (${CO.bills[k].label})`;
   const RUCC_SHORT = {1: 'Metro, 1 million+', 2: 'Metro, 250,000–1 million', 3: 'Metro, under 250,000', 4: 'Nonmetro, urban 20,000+, adjacent to metro', 5: 'Nonmetro, urban 20,000+, not adjacent', 6: 'Nonmetro, urban 5,000–20,000, adjacent', 7: 'Nonmetro, urban 5,000–20,000, not adjacent', 8: 'Nonmetro, urban under 5,000, adjacent', 9: 'Nonmetro, urban under 5,000, not adjacent'};
-  const RUCC_CLASSES = [[1, '#0B3C5D'], [2, '#3F7FB5'], [3, '#9EC4E0'], [4, '#F5D6A8'], [5, '#F2C48A'], [6, '#E4A464'], [7, '#D98B4A'], [8, '#B25F2E'], [9, '#8A3B1E']].map(([c, col]) => [`${c} · ${RUCC_SHORT[c]}`, c, c + 1, col]);
   const BVA_CLASSES = [['High incidence · low access', 0, 1, '#8A3B1E'], ['High incidence · access above threshold', 1, 2, '#F2C48A'], ['Lower incidence · low access', 2, 3, '#3F7FB5'], ['Lower incidence · access above threshold', 3, 4, '#E6EEF5']];
   // deaths vs access: one strong color for the corner that matters, the other three muted
   const MVA_CLASSES = [['High mortality · low access', 0, 1, '#5B2A86'], ['High mortality · access above threshold', 1, 2, '#D9C9EA'], ['Lower mortality · low access', 2, 3, '#C9D9EC'], ['Lower mortality · access above threshold', 3, 4, '#F3F1EC']];
@@ -491,7 +492,7 @@
   let unit = 'county', metric = 't', incSite = 0, acsVar = 'veh', incClasses = [], acsClasses = [], selectedState = '', selectedD = null, selectedC = null;
   const PCT_CLASSES = [['under 10%',0,10,'#F3E6E0'],['10–25%',10,25,'#F2C48A'],['25–50%',25,50,'#D98B4A'],['50–75%',50,75,'#B8562E'],['75% or more',75,101,'#8A3B1E']];
   const SHORT_OK = !!(BU && RU);   // the default layer needs burden.js (county access shares) and rucc.js (metro / nonmetro)
-  const UNIT_METRICS = { county: (SHORT_OK ? ['short', 'shortt'] : []).concat(['t', 'rn', 'rb', 'inc', 'acs']).concat(RU ? ['rucc'] : []).concat(BU ? ['bva'] : []).concat(BU && MO ? ['mva'] : []), district: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'].concat(HB.map(k => 'cos_' + k)), state: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'] };
+  const UNIT_METRICS = { county: (SHORT_OK ? ['short', 'shortt'] : []).concat(['t', 'rn', 'rb', 'inc', 'acs']).concat(BU ? ['bva'] : []).concat(BU && MO ? ['mva'] : []), district: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'].concat(HB.map(k => 'cos_' + k)), state: ['l20', 'z60', 'g60b', 'g60n', 'medn', 'ginc', 'gacs'] };
   const defaultMetric = () => unit === 'county' ? (SHORT_OK ? 'short' : 't') : 'l20'; metric = defaultMetric();
   const isShort = m => m === 'short' || m === 'shortt';   // the default layer and the 'Both' layer share the circles
   const GEO_LABEL = { l20: 'Residents 55+ with fewer than 20 trials within 60 road-miles', z60: 'Residents 55+ with no trial within 60 road-miles', g60b: 'Residents 55+ more than 60 road-miles from a broad menu (100+ trials)', g60n: 'Residents 55+ more than 60 road-miles from an NCI center', medn: 'Median road miles to the nearest NCI center', ginc: 'Cancer incidence, all sites (age-adjusted, per 100,000)', gacs: 'Household context (ACS)',
@@ -543,7 +544,6 @@
     rb: {label: () => 'Road miles to the nearest county with 100 or more listed trials', get: c => c.rb, classes: () => [['in a broad-menu county',0,0.5,'#0B3C5D'],['under 60 road-mi',0.5,60,'#3F7FB5'],['60–120',60,120,'#9EC4E0'],['120–200',120,200,'#F2C48A'],['200–300',200,300,'#D98B4A'],['300 or more',300,1e9,'#8A3B1E']], na: c => c.rb === null},
     inc: {label: () => 'Age-adjusted incidence per 100,000, ' + BSITE[incSite][1] + ', ' + D.meta.burden.period, get: c => c.b ? c.b[incSite][0] : null, classes: () => incClasses, na: c => !c.b || c.b[incSite][4] >= 2, caution: c => c.b && c.b[incSite][4] === 1},
     acs: {label: () => ACS_LABEL[acsVar] + ', ACS 2023 5-year', get: c => c.acs ? c.acs[acsVar] : null, classes: () => acsClasses, na: c => !c.acs || c.acs[acsVar] === null},
-    rucc: {label: () => 'Rural-Urban Continuum Code, USDA ERS 2023 (1–3 metro, 4–9 nonmetro)', get: c => RU && RU.county[c.k] ? RU.county[c.k].c : null, classes: () => RUCC_CLASSES, na: c => !RU || !RU.county[c.k]},
     bva: {label: () => `Cancer burden vs trial access · ${BSITE[incSite][1]} incidence (${D.meta.burden.period}) × ${critLabel()} within 60 road-miles` + (filtersActive() ? ' (filtered)' : ''), get: c => bvaClass(c.k), classes: () => BVA_CLASSES, na: c => bvaClass(c.k) === null, caution: c => { const b = bRec(c); return !!(b && b[4] === 1 && bvaClass(c.k) !== null); }},
     mva: {label: () => `Cancer deaths vs trial access · ${siteName(incSite)} death rate (${MO ? MO.meta.period : ''}) × ${critLabel()} within 60 road-miles` + (filtersActive() ? ' (filtered)' : ''), get: c => bvaClass(c.k), classes: () => MVA_CLASSES, na: c => bvaClass(c.k) === null, caution: c => { const b = bRec(c); return !!(b && b[4] === 1 && bvaClass(c.k) !== null); }}
   };
@@ -552,7 +552,7 @@
     if (m.startsWith('cos_')) return cosRole(districtMember(k), m.slice(4));
     if (m === 'g60b' || m === 'g60n') return g[m]; if (m === 'medn') return g.medn; if (m === 'ginc') return g.ctx ? g.ctx.inc : null; if (m === 'gacs') return g.ctx ? g.ctx[acsVar] : null; return null; }
   function quantClasses(vals, unit) { const q = d3.scaleQuantile().domain(vals).range(RAMP); const e = [d3.min(vals)].concat(q.quantiles()).concat([d3.max(vals) + 1e-9]); return RAMP.map((col, i) => [`${Math.round(e[i]*10)/10}${i === RAMP.length-1 ? '+' : '–' + Math.round(e[i+1]*10)/10}${unit}`, e[i], e[i+1], col]); }
-  function fillMetricSelect() { const sel_ = document.getElementById('metric'); sel_.innerHTML = ''; const labels = { short: 'Residents short of trials (fewer than 20 within 60 road-miles)', shortt: 'Residents short of trials, over trials in the county', t: 'Trials in the county', rn: 'Road miles to nearest NCI center', rb: 'Road miles to a broad trial menu (100+ trials)', inc: 'Cancer incidence rate', acs: 'Household context (ACS)', rucc: 'Rural-urban continuum code (USDA)', bva: 'Cancer incidence vs trial access', mva: 'Cancer deaths vs trial access', ...GEO_LABEL, ...Object.fromEntries(HB.map(k => ['cos_' + k, `Cosponsors of the ${billName(k)}`])) };
+  function fillMetricSelect() { const sel_ = document.getElementById('metric'); sel_.innerHTML = ''; const labels = { short: 'Residents short of trials (fewer than 20 within 60 road-miles)', shortt: 'Residents short of trials, over trials in the county', t: 'Trials in the county', rn: 'Road miles to nearest NCI center', rb: 'Road miles to a broad trial menu (100+ trials)', inc: 'Cancer incidence rate', acs: 'Household context (ACS)', bva: 'Cancer incidence vs trial access', mva: 'Cancer deaths vs trial access', ...GEO_LABEL, ...Object.fromEntries(HB.map(k => ['cos_' + k, `Cosponsors of the ${billName(k)}`])) };
     UNIT_METRICS[unit].forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = labels[m]; sel_.appendChild(o); }); if (!UNIT_METRICS[unit].includes(metric)) metric = defaultMetric(); sel_.value = metric; }
   let geoClasses = [];
   function rebuildDynamicClasses() {
@@ -634,7 +634,6 @@
     if (metric === 'inc') { const b = c.b ? c.b[incSite] : null; extra = '<br>' + (b && b[4] <= 1 ? `${BSITE[incSite][1]}: ${b[0]} per 100,000 (${b[3]} cases/yr)${b[4] === 1 ? ' — small numbers' : ''}` : b ? BSTATUS[b[4]] : 'no incidence data'); }
     if (isShort(metric)) { const v = shortOf(c.k), m = isMetro(c.k), t60 = METRICS.short.get(c); extra = '<br>' + (v === null ? 'access share not available' : `<b>${fmt(Math.round(v.n))} residents 55+ (${pct(v.s)}%)</b> have fewer than 20 ${fa ? 'matching ' : ''}trials within 60 road-mi${t60 !== null && !isNaN(t60) ? ` · the typical resident has ${fmt(Math.round(t60))} within reach` : ''}`) + (m === null ? '' : m ? ' · metro county' : ' · nonmetro county'); }
     if (metric === 'acs') { const v = c.acs ? c.acs[acsVar] : null; extra = '<br>' + ACS_LABEL[acsVar].replace(' (%)', '') + ': ' + (v === null ? 'no data' : v + '%'); }
-    if (metric === 'rucc' && RU && RU.county[c.k]) extra = `<br>RUCC ${RU.county[c.k].c}: ${RUCC_SHORT[RU.county[c.k].c]}${RU.county[c.k].s === '2013' ? ' (2013 code)' : ''}`;
     if (isBva(metric)) { const q = bvaClass(c.k), b = bRec(c), a = accessShare(c.k); extra = '<br>' + (q === null ? `not classified (${measureNoun()} or access not available)` : `${BCLS()[q][0]}: ${b[0]} per 100,000${b[4] === 1 ? ' (small numbers)' : ''} · ${pct(a)}% have ${critLabel()} within 60 road-mi`); }
     return `<b>${esc(clabel(c))}</b><br>${l1}<br><span class="muted">${fmt(c.p)} residents 55+ · ${fmt(fa ? cnt60[i] : c.t60)} trials within 60 road-mi</span><br>${road}${extra}`; }
   function geoTip(kind, k) { const g = kind === 'district' ? DI[k] : D.state_data[k]; if (!g) return ''; const fa = filtersActive(); const F = kind === 'district' ? FD : FS;
@@ -665,7 +664,6 @@
     else if (isBva(metric)) { lg.append('span').html(`<i class="hatch"></i>${measureNoun()} based on small numbers`); lg.append('span').html(`<i style="background:var(--nodata)"></i>${measureNoun()} not available`);
       const tot = bvaTotals(CK); const how = lg.append('details').attr('class', 'lg-how').property('open', howOpen).on('toggle', function () { howOpen = this.open; }); how.append('summary').text('How to read this map');
       how.append('p').text((tot ? `${fmt(tot.n)} counties, home to ${people(tot.p)} residents 55+ and about ${fmt(tot.c)} ${countNoun()} a year, are in the "${BCLS()[0][0].toLowerCase()}" corner${filtersActive() ? ' (filtered)' : ''}. ` : '') + bvaDefinition() + ' A cross-tabulation, not a combined score — the “Need vs access” tab (under Analysis) lists the counties.'); }
-    else if (metric === 'rucc') lg.append('span').html('<i style="background:var(--nodata)"></i>no code');
     else if (metric === 'rn' || metric === 'rb') lg.append('span').html('<i style="background:var(--nodata)"></i>no road connection (AK, HI) or >30 mi from a highway');
     else if (metric === 'acs') lg.append('span').html('<i style="background:var(--nodata)"></i>no data');
     legendStar(lg);
@@ -822,10 +820,10 @@
   const stat = o => `<div class="stat${o.cls ? ' ' + o.cls : ''}${o.tag ? ' on-map' : ''}"${o.id ? ` id="${o.id}"` : ''}>${o.tag ? `<span class="maptag">On the map · ${esc(o.tag)}</span>` : ''}<div class="num${String(o.num).replace(/<[^>]+>/g, '').length > 6 ? ' small' : ''}">${o.num}<small>${o.unit || ''}</small></div><p class="main">${o.text}</p>${o.sub ? `<p class="sub">${o.sub}</p>` : ''}${o.cmp ? `<p class="cmp">${o.cmp}</p>` : ''}${o.thin ? `<p class="thin-tag"><b>Under the 20-trial line.</b> Between 10 and 19 trials within reach: on the map these residents count as short of trials, not as without them.</p>` : ''}${o.chips ? `<div class="chips">${o.chips}</div>` : ''}</div>`;
   const statHTML = (num, unit, text, cls, id) => stat({ num, unit, text, cls, id });
   const people = n => n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));
-  const LAYER_SHORT = { mva: 'cancer deaths vs trial access', short: 'residents short of trials', shortt: 'residents short of trials, over trials in the county', t: 'trials in the county', rn: 'road-miles to an NCI center', rb: 'road-miles to a broad menu', inc: 'cancer incidence', acs: 'household context', rucc: 'rural-urban code', bva: 'burden vs access', l20: 'fewer than 20 trials within 60 road-miles', z60: 'no trial within 60 road-miles', g60b: 'beyond 60 road-miles of a broad menu', g60n: 'beyond 60 road-miles of an NCI center', medn: 'median road-miles to an NCI center', ginc: 'cancer incidence', gacs: 'household context' };
+  const LAYER_SHORT = { mva: 'cancer deaths vs trial access', short: 'residents short of trials', shortt: 'residents short of trials, over trials in the county', t: 'trials in the county', rn: 'road-miles to an NCI center', rb: 'road-miles to a broad menu', inc: 'cancer incidence', acs: 'household context', bva: 'burden vs access', l20: 'fewer than 20 trials within 60 road-miles', z60: 'no trial within 60 road-miles', g60b: 'beyond 60 road-miles of a broad menu', g60n: 'beyond 60 road-miles of an NCI center', medn: 'median road-miles to an NCI center', ginc: 'cancer incidence', gacs: 'household context' };
   const layerName = () => metric.startsWith('cos_') ? 'cosponsors of the ' + billName(metric.slice(4)) : metric === 'acs' || metric === 'gacs' ? ACS_LABEL[acsVar].replace(' (%)', '').toLowerCase() : LAYER_SHORT[metric] || metric;
   // which hero figure the current map layer corresponds to
-  const mapStatKey = () => { const m = metric; return (isShort(m) || m === 'l20' || m === 'z60') ? 'access' : (m === 'rb' || m === 'g60b') ? 'broad' : (m === 'rn' || m === 'g60n' || m === 'medn') ? 'nci' : (m === 'inc' || m === 'ginc') ? 'inc' : (m === 'acs' || m === 'gacs') ? 'acs' : m === 't' ? 'trials' : m === 'rucc' ? 'rural' : isBva(m) ? 'bva' : m.startsWith('cos_') ? 'cos' : 'access'; };
+  const mapStatKey = () => { const m = metric; return (isShort(m) || m === 'l20' || m === 'z60') ? 'access' : (m === 'rb' || m === 'g60b') ? 'broad' : (m === 'rn' || m === 'g60n' || m === 'medn') ? 'nci' : (m === 'inc' || m === 'ginc') ? 'inc' : (m === 'acs' || m === 'gacs') ? 'acs' : m === 't' ? 'trials' : isBva(m) ? 'bva' : m.startsWith('cos_') ? 'cos' : 'access'; };
   // comparison line: the same figure for the state and the nation (filled in again from the tracts when filters are on)
   const cmpLine = (level, st, f) => { const parts = []; if (level === 'dist' || level === 'county') { const g = D.state_data[st]; if (g) parts.push(`<span data-cmp="state">State ${f(g)}</span>`); } if (level !== 'nat') parts.push(`<span data-cmp="nat">National ${f(D.meta.nat_core)}</span>`); return parts.join(' · '); };
   const topShortChips = (keys, whole) => { const rows = keys.map(k => { const v = shortOf(k); return v && v.n >= 50 ? [k, v.n] : null; }).filter(Boolean).sort((a, b) => b[1] - a[1]).slice(0, 5);
@@ -942,7 +940,7 @@
       ${row('Fewer than 20 ' + (fa ? 'matching ' : '') + 'trials within 60 road-mi', fa ? '…' : pct(m.l20) + '%', fa ? '…' : pct(nm.l20) + '%', 'l20')}${row('No ' + (fa ? 'matching ' : '') + 'trial within 60 road-mi', fa ? '…' : pct(m.z60) + '%', fa ? '…' : pct(nm.z60) + '%', 'z60')}${row('Average number of trials within 60 road-mi', fa ? '…' : fmt(m.t60), fa ? '…' : fmt(nm.t60), 't60')}
       ${row('More than 60 road-mi from an NCI center ' + ut, pct(m.g60n) + '%', pct(nm.g60n) + '%')}${row('Median road-mi to an NCI center ' + ut, m.medn === null ? 'no route' : fmt(m.medn), nm.medn === null ? 'no route' : fmt(nm.medn))}${row('More than 60 road-mi from a broad menu ' + ut, pct(m.g60b) + '%', pct(nm.g60b) + '%')}</tbody></table>
       <details style="margin-top:.5rem"><summary style="cursor:pointer;font-size:var(--fs-0);color:var(--ink-2)">By code · share with fewer than 20 trials within 60 road-mi · residents 55+ ${ut}</summary><ul class="rows">${codes}</ul></details>
-      <p class="note">USDA ERS 2023 codes; Connecticut's eight legacy counties carry 2013 codes. Shares are weighted by residents 55+ over census tracts. <button class="linkish" data-metric="rucc">Map the codes</button></p></div>`; }
+      <p class="note">USDA ERS 2023 codes; Connecticut's eight legacy counties carry 2013 codes. Shares are weighted by residents 55+ over census tracts.</p></div>`; }
   function fillFilteredRural(kind, idx) { const el = document.getElementById('rural-card'); if (!el || !filtersActive()) return;
     loadTractsAll().then(() => { const r = filteredRural(kind, idx); const el2 = document.getElementById('rural-card'); if (!el2) return; const put = (id, a, b) => { const tr = el2.querySelector(`tr[data-row="${id}"]`); if (!tr) return; const td = tr.querySelectorAll('td'); td[1].innerHTML = a; td[2].innerHTML = b; };
       const f = x => x ? pct(x.l20) + '%' : '—', g = x => x ? pct(x.z60) + '%' : '—', h = x => x ? fmt(Math.round(x.t60)) : '—';
@@ -1239,12 +1237,12 @@
   // "More layers": every layer the drawer's "Color the map by" offers for the current unit, with a swatch of its colours; the household-context
   // layer expands into its five variables so each is one click away. Choosing one sets the same controls the drawer uses.
   const lmore = document.getElementById('layer-more'), llist = document.getElementById('layer-list');
-  const GROUP = { short: 'Access', shortt: 'Access', t: 'Access', l20: 'Access', z60: 'Access', g60b: 'Distance', g60n: 'Distance', rn: 'Distance', rb: 'Distance', medn: 'Distance', inc: 'Cancer burden', ginc: 'Cancer burden', bva: 'Cancer burden', mva: 'Cancer burden', acs: 'Household context', gacs: 'Household context', rucc: 'Rural and urban' };
+  const GROUP = { short: 'Access', shortt: 'Access', t: 'Access', l20: 'Access', z60: 'Access', g60b: 'Distance', g60n: 'Distance', rn: 'Distance', rb: 'Distance', medn: 'Distance', inc: 'Cancer burden', ginc: 'Cancer burden', bva: 'Cancer burden', mva: 'Cancer burden', acs: 'Household context', gacs: 'Household context' };
   const swatch = m => { let cl = [];   // the layer's own colour classes; the quantile layers show the fixed ramp they are drawn from
     try { if (unit === 'county') cl = m === 'short' ? [[null, 0, 0, BUB_ONE]] : m === 'shortt' ? [[null, 0, 0, BUB_ONE]].concat(SHADE_CLASSES.slice(1)) : (m === 'inc' || m === 'acs') ? RAMP.map(c => [null, 0, 0, c]) : (METRICS[m] && METRICS[m].classes && METRICS[m].classes()) || [];
       else cl = (m === 'medn') ? DIST : m.startsWith('cos_') ? COS_CLASSES : (m === 'ginc' || m === 'gacs') ? RAMP.map(c => [null, 0, 0, c]) : PCT_CLASSES; } catch (e) { cl = []; }
     return cl && cl.length ? `<span class="sw" aria-hidden="true">${cl.map(k => `<i style="background:${k[3]}"></i>`).join('')}</span>` : ''; };
-  const GROUP_ORDER = ['Access', 'Distance', 'Cancer burden', 'Household context', 'Rural and urban', 'Legislation', 'Other'];
+  const GROUP_ORDER = ['Access', 'Distance', 'Cancer burden', 'Household context', 'Legislation', 'Other'];
   function buildLayerMenu() { const sel = document.getElementById('metric'); const acsSel = document.getElementById('acs-var'); let html = '';
     const groupOf = m => GROUP[m] || (m.startsWith('cos_') ? 'Legislation' : 'Other'); const opts = [...sel.options];
     for (const g of GROUP_ORDER) { const inG = opts.filter(o => groupOf(o.value) === g); if (!inG.length) continue; html += `<div class="lh">${g}</div>`;   // grouped by what the layer shows, in the drawer's order within each group
@@ -1253,9 +1251,14 @@
         else html += `<button type="button" role="option" data-m="${m}" aria-selected="${String(metric === m)}">${swatch(m)}${esc(o.textContent)}</button>`; } }
     llist.innerHTML = html;
     llist.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { lmore.open = false; if (b.dataset.acs) { acsVar = b.dataset.acs; acsSel.value = acsVar; } sel.value = b.dataset.m; sel.dispatchEvent(new Event('change')); })); }
-  // on a phone the layer switch is hidden for room, so the "Layers" menu moves into the legend strip and opens as a sheet
-  const phoneMQ = matchMedia('(max-width:640px)'); const legendHome = document.querySelector('.legend-card');
-  function placeLayerMenu() { const home = phoneMQ.matches ? legendHome : lsw; if (lmore.parentElement !== home) home.appendChild(lmore); lmore.querySelector('summary').textContent = phoneMQ.matches ? 'Layers' : 'More layers'; }
+  // on a phone the layer switch is hidden for room, so the "Layers" menu moves into the legend strip and opens as a sheet;
+  // the strip itself starts folded to its title row and opens from the title or the chevron (long legends would otherwise push the figures far down)
+  const phoneMQ = matchMedia('(max-width:640px)'); const legendHome = document.querySelector('.legend-card'); let lgFolded = true;
+  const lgFold = document.createElement('button'); lgFold.type = 'button'; lgFold.className = 'lg-fold'; lgFold.setAttribute('aria-label', 'Show the legend'); lgFold.textContent = '▸'; lgFold.hidden = true; legendHome.insertBefore(lgFold, legendHome.firstChild);
+  function applyFold() { const on = phoneMQ.matches && lgFolded; legendHome.classList.toggle('folded', on); lgFold.hidden = !phoneMQ.matches; lgFold.textContent = on ? '▸' : '▾'; lgFold.setAttribute('aria-label', on ? 'Show the legend' : 'Hide the legend'); lgFold.setAttribute('aria-expanded', String(!on)); }
+  const toggleFold = () => { lgFolded = !lgFolded; applyFold(); }; lgFold.addEventListener('click', toggleFold);
+  legendHome.addEventListener('click', e => { if (phoneMQ.matches && e.target.closest('.lg-title')) toggleFold(); });
+  function placeLayerMenu() { const home = phoneMQ.matches ? legendHome : lsw; if (lmore.parentElement !== home) home.appendChild(lmore); lmore.querySelector('summary').textContent = phoneMQ.matches ? 'Layers' : 'More layers'; applyFold(); }
   placeLayerMenu(); (phoneMQ.addEventListener ? phoneMQ.addEventListener('change', placeLayerMenu) : phoneMQ.addListener(placeLayerMenu));
   document.addEventListener('click', e => { if (!lmore.contains(e.target)) lmore.open = false; }); document.addEventListener('keydown', e => { if (e.key === 'Escape') lmore.open = false; });
   lmore.addEventListener('toggle', () => { if (lmore.open) buildLayerMenu(); legendHome.classList.toggle('menu-open', lmore.open); });   // rebuilt on opening, so the list always matches the unit and layer in force
@@ -1316,6 +1319,9 @@
   layoutMap(); window.addEventListener('resize', layoutMap);
   // ---------- "Download this view": the map exactly as drawn (current layer, zoom and selection), with its legend title, legend, the place and the data date ----------
   // The SVG is serialised with the page's own stylesheet rules inside it, drawn to a canvas, and the legend is redrawn beside it from the legend's own entries.
+  let fontCss = null;   // the bold face used by the district numbers, as a data URL for the exported image (fetched once)
+  async function fontFace() { if (fontCss !== null) return fontCss; try { const buf = await (await fetch('assets/fonts/source-sans-3-latin-700-normal.woff2')).arrayBuffer(); let bin = ''; new Uint8Array(buf).forEach(b => bin += String.fromCharCode(b));
+      fontCss = `@font-face{font-family:"Source Sans 3";font-weight:700;src:url(data:font/woff2;base64,${btoa(bin)}) format("woff2")}`; } catch (e) { fontCss = ''; } return fontCss; }
   async function downloadView() {
     const btn = document.getElementById('btn-png'); if (btn.disabled) return; btn.disabled = true; busy(true, 'Preparing the image…');
     try {
@@ -1323,7 +1329,7 @@
       const mapW = OW - 2 * pad, mapH = Math.round(mapW * curVB[3] / curVB[2]);
       const clone = svg.node().cloneNode(true); clone.removeAttribute('style'); clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); clone.setAttribute('width', mapW); clone.setAttribute('height', mapH); clone.setAttribute('viewBox', curVB.join(' '));
       let css = ''; for (const sh of document.styleSheets) { try { for (const r of sh.cssRules) if (!(r instanceof CSSFontFaceRule)) css += r.cssText + '\n'; } catch (e) { /* cross-origin sheet: skip */ } }
-      const st = document.createElementNS('http://www.w3.org/2000/svg', 'style'); st.textContent = css + 'svg{font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif}';   // the page font is not reachable from inside the image
+      const st = document.createElementNS('http://www.w3.org/2000/svg', 'style'); st.textContent = css + (await fontFace()) + 'svg{font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif}';   // the page font, embedded: an image cannot fetch it
       clone.insertBefore(st, clone.firstChild);
       const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)], { type: 'image/svg+xml;charset=utf-8' }));
       const img = new Image(); await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('map image')); img.src = url; });
@@ -1331,20 +1337,20 @@
       const lgEl = document.getElementById('legend'), title = (lgEl.querySelector('.lg-title') || {}).textContent || '', sc = scope();
       const sub = sc.kind === 'nat' ? '' : (sc.kind === 'district' ? sc.label.replace(' (counties overlapping the district)', '') : sc.label) + (filtersActive() ? ' · ' + ((document.getElementById('fchip').textContent || '').replace(/×\s*$/, '').trim() || 'filtered') : '');
       const entries = [...lgEl.children].filter(el => el.tagName === 'SPAN' && !el.classList.contains('lg-title') && el.textContent.trim()).map(el => { const sw = el.querySelector('i'), ci = el.querySelector('circle'), pa = el.querySelector('path');
-        return { text: el.textContent.trim(), kind: sw ? 'rect' : ci ? 'circle' : pa ? 'star' : 'none', color: sw ? getComputedStyle(sw).backgroundColor : ci ? ci.getAttribute('fill') : pa ? pa.getAttribute('fill') : null, hatch: !!(sw && sw.classList.contains('hatch')), r: ci ? (el.dataset.n ? Math.min(bubR(+el.dataset.n) * bubScale() * mapW / curVB[2], 26) : Math.min(+ci.getAttribute('r'), 14)) : 0, stroke: ci ? ci.getAttribute('stroke') : null }; });
+        return { text: el.textContent.trim(), kind: sw ? 'rect' : ci ? 'circle' : pa ? 'star' : 'none', color: sw ? getComputedStyle(sw).backgroundColor : ci ? ci.getAttribute('fill') : pa ? pa.getAttribute('fill') : null, hatch: !!(sw && sw.classList.contains('hatch')), r: ci ? (el.dataset.n ? bubR(+el.dataset.n) * bubScale() * mapW / curVB[2] : Math.min(+ci.getAttribute('r'), 14)) : 0, stroke: ci ? ci.getAttribute('stroke') : null }; });
       const cv = document.createElement('canvas'), ctx = cv.getContext('2d'); const font = (w, px) => `${w} ${px}px "Source Sans 3", "Segoe UI", Arial, sans-serif`;
       // measure the legend rows first so the canvas is exactly as tall as it needs to be
-      ctx.font = font(500, 22); const rows = []; let row = [], x = pad; const gapX = 28, rowH = 34;
+      ctx.font = font(500, 22); const rows = []; let row = [], x = pad; const gapX = 28; const rowHOf = r => Math.max(34, ...r.map(e => e.kind === 'circle' ? 2 * e.r + 12 : 0));
       for (const e of entries) { const iw = e.kind === 'none' ? 0 : e.kind === 'circle' ? 2 * e.r + 10 : 30; const w = iw + ctx.measureText(e.text).width; if (x + w > OW - pad && row.length) { rows.push(row); row = []; x = pad; } row.push({ ...e, w, iw }); x += w + gapX; } if (row.length) rows.push(row);
-      const titleH = 46 + (sub ? 30 : 0), legendH = rows.length * rowH + 18, footH = 44; cv.width = OW * S; cv.height = (pad + titleH + mapH + 14 + legendH + footH) * S; ctx.scale(S, S);
+      const titleH = 46 + (sub ? 30 : 0), legendH = rows.reduce((a, r) => a + rowHOf(r), 0) + 18, footH = 44; cv.width = OW * S; cv.height = (pad + titleH + mapH + 14 + legendH + footH) * S; ctx.scale(S, S);
       ctx.fillStyle = '#F7F5F0'; ctx.fillRect(0, 0, OW, cv.height / S); ctx.fillStyle = '#1B2430'; ctx.textBaseline = 'alphabetic';
       ctx.font = font(600, 30); ctx.fillText(title, pad, pad + 28); if (sub) { ctx.font = font(500, 22); ctx.fillStyle = '#4B5563'; ctx.fillText(sub, pad, pad + 58); }
       const mapY = pad + titleH; ctx.drawImage(img, pad, mapY, mapW, mapH);
-      let y = mapY + mapH + 14 + 24; for (const r of rows) { let x = pad; for (const e of r) { const cy = y - 8;
+      let y = mapY + mapH + 14; for (const r of rows) { const rh = rowHOf(r); y += rh / 2 + 8; let x = pad; for (const e of r) { const cy = y - 8;
           if (e.kind === 'rect') { if (e.hatch) { ctx.fillStyle = '#fff'; ctx.fillRect(x, cy - 10, 20, 20); ctx.save(); ctx.beginPath(); ctx.rect(x, cy - 10, 20, 20); ctx.clip(); ctx.strokeStyle = '#bbb'; ctx.lineWidth = 2; for (let d = -20; d < 40; d += 5) { ctx.beginPath(); ctx.moveTo(x + d, cy + 10); ctx.lineTo(x + d + 20, cy - 10); ctx.stroke(); } ctx.restore(); } else { ctx.fillStyle = e.color; ctx.fillRect(x, cy - 10, 20, 20); } ctx.strokeStyle = 'rgba(0,0,0,.12)'; ctx.lineWidth = 1; ctx.strokeRect(x + .5, cy - 9.5, 19, 19); }
           else if (e.kind === 'circle') { ctx.beginPath(); ctx.arc(x + e.r + 2, cy, e.r, 0, 2 * Math.PI); ctx.fillStyle = e.color; ctx.fill(); ctx.strokeStyle = e.stroke || '#fff'; ctx.lineWidth = 1; ctx.stroke(); }
           else if (e.kind === 'star') { ctx.save(); ctx.translate(x + 10, cy); ctx.scale(1.15, 1.15); const p = new Path2D(d3.symbol().type(d3.symbolStar).size(80)()); ctx.fillStyle = e.color || '#0B3C5D'; ctx.fill(p); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke(p); ctx.restore(); }
-          ctx.fillStyle = '#4B5563'; ctx.font = font(500, 22); ctx.fillText(e.text, x + e.iw, y); x += e.w + gapX; } y += rowH; }
+          ctx.fillStyle = '#4B5563'; ctx.font = font(500, 22); ctx.fillText(e.text, x + e.iw, y); x += e.w + gapX; } y += rh / 2 - 8; }
       ctx.font = font(400, 19); ctx.fillStyle = '#7C8794'; ctx.fillText(`Cancer Trial Access Map · ${location.host}${location.pathname} · ClinicalTrials.gov data as of ${dataDay} · counts are of listed trials, not trials a given patient qualifies for`, pad, cv.height / S - 16);
       URL.revokeObjectURL(url);
       const name = `cancer-trial-access-map_${metric}${sc.kind === 'nat' ? '' : '_' + sc.key}_${SITE.dataDate(D.meta)}.png`;
