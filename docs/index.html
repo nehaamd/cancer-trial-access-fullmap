@@ -124,7 +124,7 @@
   .tb-group > b{font-size:var(--fs-0);font-weight:650;color:var(--ink-2);letter-spacing:.02em}
   .sel{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234B5563' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right .6rem center;border:1px solid var(--rule-2);border-radius:8px;padding:.42rem 1.8rem .42rem .65rem;font-size:var(--fs-1);cursor:pointer;min-width:0;max-width:100%}
   .sel:hover{border-color:var(--ink-3)}
-  .chk{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-0);color:var(--ink-2);cursor:pointer;padding:.15rem .1rem} .chk input{margin:0;accent-color:var(--navy);width:15px;height:15px}
+  .chk[hidden]{display:none} .chk{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-0);color:var(--ink-2);cursor:pointer;padding:.15rem .1rem} .chk input{margin:0;accent-color:var(--navy);width:15px;height:15px}
 
   /* ---- the stage: a full-height map with the figures in a column on the right ---- */
   main.stage{display:flex;align-items:stretch;min-height:0;height:calc(100vh - 57px)}
@@ -602,6 +602,10 @@
   // One color by default: every circle is the same rust, so the map carries a single encoding (circle area = people).
   // With the "Metro vs rural" layer on, metro counties are solid discs and nonmetro counties are rings (a different shape as well as a different color).
   const metroOn = () => !!(document.getElementById('lyr-m') && document.getElementById('lyr-m').checked);
+  // The solid / ring distinction is drawn on the circles, so the box is offered only on the two circle layers of the county map; on every
+  // other layer (and on the district and state maps) there are no circles for it to change, and it is hidden rather than left inert.
+  const metroApplies = () => unit === 'county' && isShort(metric);
+  function syncMetroBox() { const box = document.getElementById('lyr-m'); if (!box) return; const lab = box.closest('label'); if (lab) lab.hidden = !metroApplies(); }
   // optional shading under the circles: the county's own trial count in the three menu classes the site uses everywhere (under 20 / 20–99 limited / 100+ broad)
   const SHADE_CLASSES = [['under 20 trials in the county', 0, 20, '#EFEBE3'], ['20–99 (limited menu)', 20, 100, '#6BA3D6'], ['100 or more (broad menu)', 100, 1e9, '#0B3C5D']];
   const BUB_ONE = 'rgba(200,98,42,.72)', BUB_ONE_LINE = '#FFFFFF';
@@ -646,6 +650,7 @@
     return `<b>${name}</b><br>${fmt(g.p)} residents 55+<br>${pct(l20)}% have fewer than 20 ${fa ? 'matching ' : ''}trials within 60 road-mi; ${pct(z)}% have none; average ${fmt(Math.round(t60))}${fa ? ' <span class="muted">(filtered)</span>' : ''}<br><span class="muted">${pct(g.g60b)}% beyond 60 mi of a broad menu · median ${g.medn === null ? 'no route' : g.medn + ' mi'} to an NCI center${g.ctx && g.ctx.inc !== null ? ' · incidence ' + g.ctx.inc + '/100k' : ''}</span>${cos}`; }
   function paint() {
     if (isBva(metric)) measure = metric === 'mva' ? 'mort' : 'inc';   // the map layer decides the cross-tab's measure
+    syncMetroBox();
     svg.classed('unit-district', unit === 'district').classed('unit-state', unit === 'state');
     if (unit !== 'county') { if (filtersActive() && ((unit === 'district' && !FD) || (unit === 'state' && !FS))) { computeFilteredAll(); return; } rebuildDynamicClasses();
       const cls = geoClasses; const colOf = v => { if (v === null || v === undefined || isNaN(v)) return 'var(--nodata)'; const k = cls.find(k => v >= k[1] && v < k[2]); return k ? k[3] : '#ddd'; };
@@ -679,7 +684,7 @@
   document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); paint(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
   document.getElementById('lyr-d').addEventListener('change', e => gD.style('display', e.target.checked ? null : 'none'));
   document.getElementById('lyr-n').addEventListener('change', e => { gN.style('display', e.target.checked ? null : 'none'); paint(); });
-  document.getElementById('lyr-m').addEventListener('change', () => paint());   // metro vs rural: recolors the circles and the legend
+  document.getElementById('lyr-m').addEventListener('change', () => { paint(); pushURL(); });   // metro vs rural: recolors the circles and the legend; kept in the view's link
   let showLabels = true; document.getElementById('lyr-l').addEventListener('change', e => { showLabels = e.target.checked; refreshLabels(); });
   const stateBounds = {}; countyFeatures.forEach(f => { const c = C[f.properties.id]; const b = path.bounds(f); const cur = stateBounds[c.s2] || [Infinity, Infinity, -Infinity, -Infinity]; stateBounds[c.s2] = [Math.min(cur[0], b[0][0]), Math.min(cur[1], b[0][1]), Math.max(cur[2], b[1][0]), Math.max(cur[3], b[1][1])]; });
   let curVB = baseVB.slice(), freeZoom = false;   // freeZoom: the reader has zoomed or panned by hand (wheel, pinch, drag, the +/− buttons) since the last zoom to a place
@@ -734,7 +739,7 @@
 
   // ---------- guided explorations (opened from learn.html with ?guide=; the prompts stay while the reader changes settings) ----------
   const GUIDES = {
-    'rural-urban': { title: 'Compare a rural and an urban community', intro: 'Solid blue discs are metro counties, orange rings nonmetro; circle size is the number of residents 55+ short of trials.',
+    'rural-urban': { title: 'Compare a rural and an urban community', intro: 'Solid discs are metro counties, rings are nonmetro (the “Metro vs rural” box under Explore the data); circle size is the number of residents 55+ short of trials.',
       prompts: ['Which counties have the largest circles? Are they the ones with the fewest people, or the most?', 'Click Warren County (Bowling Green), then Jefferson (Louisville). What differs besides distance?', 'Open Compare counties for the whole state, then switch the state to your own.'], actions: [['compare', 'Open Compare counties'], ['state', 'Choose another state']] },
     rare: { title: 'Explore access for a less common cancer', intro: 'The map is filtered to one cancer type; every figure is recomputed for it.',
       prompts: ['How much of the country has no trial for this cancer within 60 road-miles? Switch to breast cancer, then to the multi-cancer basket trials.', 'Why might a basket trial count for a rare cancer? Click a county and open its trial list.', 'Try MDS & MPN, sarcoma, or brain & CNS.'], actions: [['filters', 'Change the cancer type']] },
@@ -749,7 +754,7 @@
     el.querySelectorAll('[data-gact]').forEach(b => b.addEventListener('click', () => { const a = b.dataset.gact; if (a === 'compare') setTab('compare'); else if (a === 'burden') setTab('burden'); else if (a === 'filters') { window.__openFilters(); document.getElementById('f-type').focus(); } else if (a === 'search') { const q_ = document.getElementById('q'); q_.focus(); q_.scrollIntoView({ behavior: 'smooth', block: 'center' }); } else if (a === 'state') { const ps = document.getElementById('pick-s'); document.getElementById('finder').open = true; ps.focus(); } })); }
   // ---------- URL state (shareable views) ----------
   function pushURL() { const p = new URLSearchParams(); if (selectedD) p.set('d', selectedD); else if (selectedC) p.set('c', selectedC); else if (selectedState) p.set('s', selectedState); if (guideKey) p.set('guide', guideKey);
-    if (unit !== 'county') p.set('u', unit); if (metric !== defaultMetric()) p.set('m', metric); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if ((metric === 'acs' || metric === 'gacs') && acsVar !== 'veh') p.set('acs', acsVar);
+    if (unit !== 'county') p.set('u', unit); if (metric !== defaultMetric()) p.set('m', metric); if (metroOn() && metroApplies()) p.set('rural', '1'); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if ((metric === 'acs' || metric === 'gacs') && acsVar !== 'veh') p.set('acs', acsVar);
     if (tab !== 'map') p.set('tab', tab); if (filt.type) p.set('type', filt.type); if (filt.age !== null) p.set('age', filt.age); if (filt.phase.size < T.phases.length) p.set('ph', filt.phase.size ? [...filt.phase].join(',') : 'none'); if (filt.sponsor.size < T.sponsors.length) p.set('sp', filt.sponsor.size ? [...filt.sponsor].join(',') : 'none');
     if ((isBva(metric) || tab === 'burden') && BU) { if (incSite) p.set('site', BSITE[incSite][0]); if (bvaCritUser) p.set('crit', bvaCrit); if (bvaThr !== 50) p.set('thr', bvaThr); if (tab === 'burden' && measure === 'mort' && !isBva(metric)) p.set('meas', 'mort'); }
     if (restoring) return; const q = p.toString(), url = q ? '?' + q : location.pathname, key = placeKey();
@@ -759,6 +764,7 @@
   function readURL() { const p = new URLSearchParams(location.search); guideKey = GUIDES[p.get('guide')] ? p.get('guide') : null; renderGuide();
     if (p.get('u') && ['county', 'district', 'state'].includes(p.get('u'))) { unit = p.get('u'); document.getElementById('unit').value = unit; fillMetricSelect(); }
     if (p.get('m') && UNIT_METRICS[unit].includes(p.get('m'))) { metric = p.get('m'); document.getElementById('metric').value = metric; }
+    if (p.get('rural') === '1' || guideKey === 'rural-urban') document.getElementById('lyr-m').checked = true;   // the rural-vs-urban exploration is about the solid / ring circles
     if (p.get('site')) { const i = BSITE.findIndex(s => s[0] === p.get('site')); if (i >= 0) { incSite = i; incSel.value = i; } }
     if (ACS_LABEL[p.get('acs')]) { acsVar = p.get('acs'); document.getElementById('acs-var').value = acsVar; }
     if (p.get('type') && T.types.some(t => t[0] === p.get('type'))) { filt.type = p.get('type'); ft.value = filt.type; }
