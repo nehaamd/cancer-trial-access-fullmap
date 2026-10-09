@@ -18,15 +18,15 @@
 <meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer trials within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Recruiting cancer trials by county · Cancer Trial Access Map">
 <meta name="twitter:description" content="Every recruiting cancer treatment trial and facility in a US county, with phase, sponsor and cancer-type filters.">
 <meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <style>
-  :root{--paper:#FAF8F4;--card:#FFFFFF;--ink:#1B2430;--ink-2:#4B5563;--ink-3:#7C8794;--rule:#E4E1DA;--rule-2:#CFCBC2;--navy:#0B3C5D;--gulf:#3F7FB5;--rust:#8A3B1E;--warn:#7A5A00;--r:8px;--shadow:0 1px 2px rgba(27,36,48,.06),0 4px 14px rgba(27,36,48,.05);--fs-0:.8rem;--fs-1:.92rem;--fs-3:1.3rem;--fs-4:1.75rem}
+  :root{--paper:#FAF8F4;--card:#FFFFFF;--ink:#1B2430;--ink-2:#4B5563;--ink-3:#5F6B78;--rule:#E4E1DA;--rule-2:#CFCBC2;--navy:#0B3C5D;--gulf:#3F7FB5; --link:#2F6A9C;--rust:#8A3B1E;--warn:#7A5A00;--r:8px;--shadow:0 1px 2px rgba(27,36,48,.06),0 4px 14px rgba(27,36,48,.05);--fs-0:.8rem;--fs-1:.92rem;--fs-3:1.3rem;--fs-4:1.75rem}
   *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.45;background:var(--paper);-webkit-font-smoothing:antialiased}
-  a{color:var(--gulf)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
+  a{color:var(--link)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
   header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding:1.1rem 1.5rem .8rem;border-bottom:1px solid var(--rule);background:var(--card)}
   header h1{font-size:var(--fs-4);margin:0;font-weight:650;letter-spacing:-.02em;line-height:1.15} header p{margin:.3rem 0 0;color:var(--ink-2);font-size:var(--fs-1);max-width:92ch}
   .hdr-links{display:flex;gap:.9rem;font-size:var(--fs-0);white-space:nowrap;align-self:flex-start;padding-top:.3rem} .hdr-links a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-2)} .hdr-links a:hover{color:var(--navy);border-color:var(--navy)}
@@ -60,7 +60,7 @@
 <div class="filters" role="group" aria-label="Trial filters">
   <span><b>Phase</b> <span id="f-phase"></span></span>
   <span><b>Lead sponsor</b> <span id="f-sponsor"></span></span>
-  <span><b>Cancer type</b> <select id="f-type" class="sel"><option value="">All types</option></select></span>
+  <span><b>Cancer type</b> <select id="f-type" class="sel" aria-label="Cancer type"><option value="">All types</option></select></span>
   <span class="state" id="f-state"></span>
 </div>
 <main>

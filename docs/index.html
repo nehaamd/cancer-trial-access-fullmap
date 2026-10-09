@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer trials within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cancer Trial Access Map">
 <meta name="twitter:description" content="How far are Americans from a cancer clinical trial? Recruiting cancer treatment trials by county, congressional district and state, in road miles from where people live.">
@@ -28,8 +28,8 @@
 <script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
   :root{
-    --paper:#F7F5F0; --card:#FFFFFF; --ink:#1B2430; --ink-2:#4B5563; --ink-3:#7C8794; --rule:#E6E2DA; --rule-2:#CFCBC2;
-    --navy:#0B3C5D; --gulf:#3F7FB5; --sky:#9EC4E0; --sand:#F2C48A; --clay:#D98B4A; --rust:#8A3B1E; --warn:#7A5A00; --nodata:#E9E7E1;
+    --paper:#F7F5F0; --card:#FFFFFF; --ink:#1B2430; --ink-2:#4B5563; --ink-3:#5F6B78; --rule:#E6E2DA; --rule-2:#CFCBC2;
+    --navy:#0B3C5D; --gulf:#3F7FB5; --link:#2F6A9C; --sky:#9EC4E0; --sand:#F2C48A; --clay:#D98B4A; --rust:#8A3B1E; --warn:#7A5A00; --nodata:#E9E7E1;
     --rep:#B22234; --dem:#2E5AAC; --ind:#7C8794;
     --r:10px; --shadow:0 1px 2px rgba(27,36,48,.05), 0 6px 18px rgba(27,36,48,.05);
     --fs-0:.84rem; --fs-1:.95rem; --fs-2:1.08rem; --fs-3:1.35rem; --fs-4:1.8rem; --fs-5:2.9rem;
@@ -38,7 +38,7 @@
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
-  a{color:var(--gulf)} a:hover{color:var(--navy)}
+  a{color:var(--link)} a:hover{color:var(--navy)}
   button,select,input{font:inherit;color:inherit}
   :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
   .app{display:flex;flex-direction:column;min-height:100vh}
@@ -49,6 +49,8 @@
   .fcard{position:absolute;z-index:6;background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:0 8px 24px rgba(27,36,48,.10)}
   .search-card{left:16px;top:16px;width:400px;max-width:calc(100% - 32px);padding:8px;display:flex;flex-direction:column;gap:6px}
   .drawer-open .legend-card,.drawer-open .map-hint{visibility:hidden}
+  .drawer-beside .legend-card{visibility:visible;left:calc(var(--card-right, 416px) + 16px);transition:left .35s}   /* the map sits beside the open drawer; the legend follows it */
+  @media (prefers-reduced-motion:reduce){.drawer-beside .legend-card{transition:none}}
   .search-wrap{position:relative}
   #q{width:100%;border:1px solid var(--rule-2);border-radius:8px;padding:.5rem 2.4rem .5rem 2.4rem;font-size:var(--fs-1);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .75rem center}
   #q::-webkit-search-cancel-button,#q::-webkit-search-decoration{-webkit-appearance:none;display:none}
@@ -139,10 +141,10 @@
   .map-hint .linkish{font-size:inherit}
   /* the legend inside its card */
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .8rem;font-size:var(--fs-0);color:var(--ink-2);min-height:1.2rem}
-  .legend .lg-title{font-weight:650;color:var(--ink);flex-basis:auto;line-height:1.3;margin-right:.3rem} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--gulf);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch;max-height:40vh;overflow:auto} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
+  .legend .lg-title{font-weight:650;color:var(--ink);flex-basis:auto;line-height:1.3;margin-right:.3rem} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--link);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch;max-height:40vh;overflow:auto} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
   /* tabs now sit at the top of the figures column */
-  .tabs{display:flex;align-items:center;gap:.15rem;padding:0 1.25rem;border-bottom:1px solid var(--rule);background:var(--card);flex:0 0 auto}
+  .tabs{display:flex;align-items:center;gap:.15rem;padding:0 1.25rem;border-bottom:1px solid var(--rule);background:var(--card);flex:0 0 auto} .tabs-main{display:contents}
   .tabs button[data-tab]{white-space:nowrap;background:none;border:0;border-bottom:3px solid transparent;padding:.7rem .75rem .55rem;font-size:var(--fs-1);color:var(--ink-2);cursor:pointer;margin-bottom:-1px} .tabs button[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--navy);font-weight:650}
   .tabnote{display:block;font-size:var(--fs-0);color:var(--ink-3);padding:.5rem 1.25rem 0} .tabnote:empty{display:none}
   .menu{position:relative} .menu>summary{list-style:none;cursor:pointer;white-space:nowrap;padding:.7rem .75rem .55rem;font-size:var(--fs-1);color:var(--ink-2);border-bottom:3px solid transparent;margin-bottom:-1px;display:inline-block}
@@ -150,14 +152,14 @@
   .menu.on>summary{color:var(--navy);border-bottom-color:var(--navy);font-weight:650}
   .menu>div{position:absolute;left:0;top:calc(100% + 2px);background:var(--card);border:1px solid var(--rule-2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16);z-index:20;min-width:260px;padding:.35rem}
   .menu>div button[data-tab]{display:block;width:100%;text-align:left;border:0 !important;border-radius:6px;padding:.5rem .7rem !important;margin:0 !important} .menu>div button[data-tab]:hover{background:#EEF4FA} .menu>div button[data-tab] span{display:block;color:var(--ink-3);font-size:var(--fs-0);font-weight:400}
-  .menu>div button[aria-selected="true"]{background:#EEF4FA}
+  .menu>div button[aria-checked="true"]{background:#EEF4FA}
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;font-size:var(--fs-0);color:var(--ink-2);margin:0 0 .5rem;min-height:1.6rem}
   .dev-limits{max-width:120ch;margin:0 0 1rem;padding:.7rem .9rem;border-left:3px solid var(--navy);background:var(--paper);border-radius:0 8px 8px 0} .dev-limits p{margin:.3rem 0}
   details.more-figs{margin:.6rem 0} details.more-figs>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:.6rem;padding:.6rem .9rem;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);color:var(--navy);font-weight:650} details.more-figs>summary::-webkit-details-marker{display:none}
   details.more-figs>summary::before{content:"+";font-weight:400;font-size:1.2em;line-height:1} details.more-figs[open]>summary::before{content:"\2212"} details.more-figs>summary small{font-weight:400;color:var(--ink-3);font-size:var(--fs-0)} details.more-figs>summary:hover{border-color:var(--navy)}
   details.more-figs[open]>summary{margin-bottom:.6rem}
   .about-est{font-size:var(--fs-0);color:var(--ink-2);margin:.6rem 0 0;padding:.5rem .75rem;background:var(--card);border:1px solid var(--rule);border-radius:8px;max-width:120ch} .about-est b{color:var(--ink)}
-  .legend .lg-title{font-weight:650;color:var(--ink)} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--gulf);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
+  .legend .lg-title{font-weight:650;color:var(--ink)} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--link);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
   .county{stroke:#fff;stroke-width:.3;cursor:pointer;transition:opacity .15s} .county:hover{stroke:var(--ink);stroke-width:1.1}
   .dim .county:not(.in-district){opacity:.72} .dim .bub:not(.in-district){opacity:.55}
@@ -189,7 +191,7 @@
   table.dt{border-collapse:collapse;width:100%;font-size:var(--fs-0);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)} .dt th,.dt td{text-align:left;vertical-align:top;padding:.45rem .6rem;border-top:1px solid var(--rule)} .dt th{border-top:0;background:var(--paper);color:var(--ink-2);font-weight:650;font-size:.74rem;cursor:pointer;white-space:nowrap;user-select:none} .dt th.on{color:var(--navy)}
 .dt.hist th{white-space:normal;cursor:default;vertical-align:bottom}.hist-wrap{overflow-x:auto}
   .dt td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap} .dt tr.exp td{background:#FCFBF8;border-top:0;padding-top:0} .dt .sub{color:var(--ink-2)} .dt .mono{font-variant-numeric:tabular-nums;white-space:nowrap}
-  .linkish{background:none;border:0;padding:0;color:var(--gulf);text-decoration:underline;cursor:pointer;font:inherit} .linkish:hover{color:var(--navy)}
+  .linkish{background:none;border:0;padding:0;color:var(--link);text-decoration:underline;cursor:pointer;font:inherit} .linkish:hover{color:var(--navy)}
   .num button.linkish{font-size:inherit;font-weight:inherit;color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--gulf)} .num button.linkish:hover{color:var(--navy)}
   .more{margin:.6rem 0} .empty{padding:1rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:70ch;background:var(--card)}
   .cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.6rem 0}
@@ -244,7 +246,7 @@
     svg#map{width:100%;max-height:none}
     aside{max-width:none;border-left:0;border-top:1px solid var(--rule);border-radius:16px 16px 0 0;margin-top:-14px;position:relative;z-index:7;box-shadow:0 -8px 24px rgba(27,36,48,.08);overflow:visible}
     aside::before{content:"";display:block;width:36px;height:4px;border-radius:2px;background:var(--rule-2);margin:8px auto 0}
-    .map-hint{display:none}
+    .map-hint{right:auto;left:8px;top:auto;bottom:calc(var(--lgh,60px) + 10px);max-width:calc(100% - 104px);text-align:left;background:rgba(255,255,255,.94);border:1px solid var(--rule);border-radius:10px;padding:.3rem .6rem;line-height:1.3;box-shadow:0 2px 8px rgba(27,36,48,.08)}   /* a short pill above the legend, clear of the zoom buttons */
     .layer-switch button[data-layer]{display:none}   /* beside a full-width search card only the menu fits; the quick pills are in it */
     .legend-card{left:0;right:0;bottom:0;width:auto;max-width:none;border-radius:0;border:0;border-top:1px solid var(--rule);padding:6px 12px;box-shadow:none;background:rgba(255,255,255,.96)}
     .legend .lg-title{flex-basis:auto} .legend .lg-how p{max-height:30vh}
@@ -292,7 +294,7 @@
 
     <!-- floating search card: the search box, example places, and the "Explore the data" drawer with every control -->
     <div class="fcard search-card" id="search-card">
-      <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="City, ZIP code, county, congressional district, state or member of Congress" aria-label="Search places and members of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
+      <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a place, ZIP code or member of Congress" aria-label="Search by city, ZIP code, county, congressional district, state or member of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
       <div class="invite" id="doors" hidden>
         <div class="invite-row">
           <p class="invite-lead"><b>Try</b></p>
@@ -371,12 +373,13 @@
   <div id="tab-changes" class="panel" hidden><div id="chg-body"></div></div>
   </div>
   <aside id="pane">
-    <div class="tabs" role="tablist">
-      <button role="tab" data-tab="map" aria-selected="true">Overview</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button>
-      <details class="menu" id="analysis-menu"><summary role="button" aria-haspopup="true">Analysis</summary><div>
-        <button role="tab" data-tab="compare">Compare counties<span>Every county in a state, side by side</span></button>
-        <button role="tab" data-tab="burden">Need vs access<span>Counties with high cancer incidence and low trial access</span></button>
-        <button role="tab" data-tab="changes">Recent changes<span>What changed in the registry since the last refresh</span></button>
+    <div class="tabs">
+      <div class="tabs-main" role="tablist" aria-label="Figures"><button role="tab" data-tab="map" aria-selected="true">Overview</button><button role="tab" data-tab="trials">Trials</button><button role="tab" data-tab="sites">Sites</button></div>
+      <!-- the three analysis views sit in a menu (menuitemradio + aria-checked), not in the tablist: a tablist may only hold tabs -->
+      <details class="menu" id="analysis-menu"><summary role="button" aria-haspopup="menu">Analysis</summary><div role="menu" aria-label="Analysis views">
+        <button type="button" role="menuitemradio" aria-checked="false" data-tab="compare">Compare counties<span>Every county in a state, side by side</span></button>
+        <button type="button" role="menuitemradio" aria-checked="false" data-tab="burden">Need vs access<span>Counties with high cancer incidence and low trial access</span></button>
+        <button type="button" role="menuitemradio" aria-checked="false" data-tab="changes">Recent changes<span>What changed in the registry since the last refresh</span></button>
       </div></details>
     </div>
     <span class="tabnote" id="scope-note"></span>
@@ -567,7 +570,7 @@
   svg.append('defs').append('pattern').attr('id', 'hatch').attr('patternUnits', 'userSpaceOnUse').attr('width', 4).attr('height', 4).attr('patternTransform', 'rotate(45)').append('rect').attr('width', 1.5).attr('height', 4).attr('fill', '#9a9a9a');
   const tip = document.getElementById('tip'), wrap = document.getElementById('map-wrap'), baseVB = [0, 0, W, H]; svg.attr('viewBox', baseVB.join(' '));
   const coarse = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);   // a touch screen
-  const HINT0 = coarse ? 'Pinch to zoom · tap a state, then a county or district · “Reset view” zooms back out' : 'Scroll to zoom · drag to pan · click a place for its figures · double-click to zoom back out';
+  const HINT0 = coarse ? 'Tap a state, then a county · pinch to zoom' : 'Scroll to zoom · drag to pan · click a place for its figures · double-click to zoom back out';
   const countyFeatures = GEO.counties.features.filter(f => C[f.properties.id]);
   const counties = gC.selectAll('path').data(countyFeatures).join('path').attr('class', 'county').attr('d', path)
     .on('mousemove', (ev, f) => showTip(ev, C[f.properties.id]))
@@ -697,7 +700,12 @@
     if (w / h > W / H) h = w * H / W; else w = h * W / H;   // keep the map's aspect ratio so nothing is letterboxed
     if (sb && w >= (sb[2] - sb[0]) * 0.9) { zoomState(f.properties.s); svg.classed('dz', false); return; }   // district is most of the state: the state view is the right frame
     zoomTo([cx - w / 2, cy - h / 2, w, h]); svg.classed('dz', true); }
-  function zoomState(st) { const b = stateBounds[st]; if (!b) { zoomTo(baseVB); return; } const pad = Math.max((b[2]-b[0]), (b[3]-b[1])) * 0.12 + 6; zoomTo([b[0]-pad, b[1]-pad, (b[2]-b[0])+2*pad, (b[3]-b[1])+2*pad]); }
+  // zoom to one state. The viewBox keeps the map's 975:610 aspect ratio: the svg's height follows its viewBox, so a taller box (Texas, Florida,
+  // California) would push the state's south end under the legend and off the bottom of the map area, hiding the county the reader just chose.
+  function zoomState(st) { const b = stateBounds[st]; if (!b) { zoomTo(baseVB); return; } const pad = Math.max((b[2]-b[0]), (b[3]-b[1])) * 0.12 + 6;
+    let w = (b[2]-b[0]) + 2*pad, h = (b[3]-b[1]) + 2*pad; const cx = (b[0]+b[2]) / 2, cy = (b[1]+b[3]) / 2;
+    if (w / h > W / H) h = w * H / W; else w = h * W / H;
+    zoomTo([cx - w/2, cy - h/2, w, h]); }
   function refreshLabels() {
     // label size follows the zoom (about 9-20 screen px); labels that would overlap a larger or selected district's label are left off
     // (those districts are still clickable and listed in the District picker). The selected district always keeps its label.
@@ -1210,12 +1218,12 @@
   document.getElementById('tr-clearfac').addEventListener('click', () => { facFilter = null; renderTrials(); });
   const asideEl = document.getElementById('pane'); const paneFade = () => asideEl.classList.toggle('more', asideEl.scrollHeight - asideEl.scrollTop - asideEl.clientHeight > 24);
   asideEl.addEventListener('scroll', paneFade, { passive: true }); window.addEventListener('resize', paneFade); if (window.ResizeObserver) new ResizeObserver(paneFade).observe(document.getElementById('pane-body'));
-  function setTab(t) { tab = t; document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t)); ['map', 'trials', 'sites', 'compare', 'burden', 'changes'].forEach(x => document.getElementById(x === 'map' ? 'map-wrap' : 'tab-' + x).hidden = x !== t);
+  function setTab(t) { tab = t; document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.setAttribute(b.getAttribute('role') === 'tab' ? 'aria-selected' : 'aria-checked', b.dataset.tab === t)); ['map', 'trials', 'sites', 'compare', 'burden', 'changes'].forEach(x => document.getElementById(x === 'map' ? 'map-wrap' : 'tab-' + x).hidden = x !== t);
     syncScope(); if (t === 'trials') renderTrials(); if (t === 'sites') renderSites(); if (t === 'compare') renderCompare(); if (t === 'burden') renderBurden(); if (t === 'changes') renderChanges(); pushURL(); }
   document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
   function openTrials(mode) { trMode = mode; document.getElementById('tr-mode').value = mode; facFilter = null; trShow = 100; setTab('trials'); }
   function syncHint() { const el = document.getElementById('map-hint'), sc = scope();   // on a narrow screen the figures sit below the map: say what is selected and offer a jump
-    if (sc.kind !== 'nat' && window.innerWidth <= 980) { el.innerHTML = `<b>${esc(sc.label)}</b> selected · <button class="linkish" type="button" id="to-pane">figures below ↓</button>`; document.getElementById('to-pane').addEventListener('click', () => document.getElementById('pane').scrollIntoView({ behavior: 'smooth', block: 'start' })); }
+    if (sc.kind !== 'nat' && window.innerWidth <= 980) { el.classList.remove('gone'); el.innerHTML = `<b>${esc(sc.label)}</b> selected · <button class="linkish" type="button" id="to-pane">figures below ↓</button>`; document.getElementById('to-pane').addEventListener('click', () => document.getElementById('pane').scrollIntoView({ behavior: 'smooth', block: 'start' })); }
     else el.textContent = HINT0; }
   function syncScope() { document.getElementById('scope-note').textContent = tab === 'map' ? '' : `Scope: ${scope().label} — change it with the search box or the map`; }
   function refreshTab() { syncScope(); syncHint(); if (tab === 'trials') renderTrials(); else if (tab === 'sites') renderSites(); else if (tab === 'compare') renderCompare(); else if (tab === 'burden') renderBurden(); }
@@ -1279,18 +1287,23 @@
   function layoutMap() {
     const aw = wrapEl.clientWidth; let ah = wrapEl.clientHeight; if (!aw || !ah) return;
     const narrow = matchMedia('(max-width:980px)').matches, m = narrow ? 8 : 16;
-    if (exploreEl.hidden) lastCardH = searchCard.offsetHeight; const cardH = lastCardH === null ? searchCard.offsetHeight : lastCardH;   // the open drawer overlaps the map on purpose; it does not move it
+    if (exploreEl.hidden) lastCardH = searchCard.offsetHeight; const cardH = lastCardH === null ? searchCard.offsetHeight : lastCardH;
+    // On a wide screen the open drawer ("Explore the data" / "Filter trials") moves the map beside it instead of covering the West Coast;
+    // the legend moves with it. On a narrow screen, or when there is no room beside the card, the drawer overlaps the map as before.
+    const cardRight = searchCard.offsetLeft + searchCard.offsetWidth, beside = !narrow && !exploreEl.hidden && aw - cardRight - 2 * m >= 420;
+    wrapEl.classList.toggle('drawer-beside', beside); wrapEl.style.setProperty('--card-right', cardRight + 'px');
     const lgH = legendCard.offsetHeight || 0; wrapEl.style.setProperty('--lgh', lgH + 'px');
-    const top0 = searchCard.offsetTop + cardH + 6;
+    const left0 = beside ? cardRight + m : 0, aw2 = aw - left0;   // the width the map may use
+    const top0 = beside ? Math.max(m, (document.getElementById('layer-switch').offsetHeight || 0) + 16 + 6) : searchCard.offsetTop + cardH + 6;
     if (!narrow && wrapEl.style.height) { wrapEl.style.height = ''; ah = wrapEl.clientHeight; }
     if (narrow) {   // stacked layout: the map area is as tall as the card, a full-width map and the legend need, within most of the screen
       const need = Math.ceil(top0 + 0.915 * (aw - 2 * m) * H / W + lgH + 12), wh = Math.min(need, Math.round(window.innerHeight * 0.8));
       if (Math.abs(wh - ah) > 1) { wrapEl.style.height = wh + 'px'; ah = wh; } }
     const bottom0 = ah - (narrow ? 0 : m) - lgH - 6;   // the band the map's content must stay inside
-    let h = Math.min((aw - 2 * m) * H / W, (bottom0 - top0) / (0.956 - 0.041)); let w = h * W / H;
+    let h = Math.min((aw2 - 2 * m) * H / W, (bottom0 - top0) / (0.956 - 0.041)); let w = h * W / H;
     if (w < 240) { w = 240; h = w * H / W; }   // never smaller than this; on a tiny screen the cards may then overlap it
     const tMin = top0 - 0.041 * h, tMax = bottom0 - 0.956 * h;   // the map's top must lie between these for Washington to clear the card and Alaska the legend
-    const top = Math.max(tMin, Math.min(tMax, (ah - h) / 2)), left = (aw - w) / 2;   // centred when there is slack
+    const top = Math.max(tMin, Math.min(tMax, (ah - h) / 2)), left = left0 + (aw2 - w) / 2;   // centred in its band when there is slack
     R = { left, top, w, h }; const st = svg.node().style; st.left = left + 'px'; st.top = top + 'px'; st.width = w + 'px'; st.transform = 'none';
     if (zoomBeh) { zoomBeh.translateExtent([[left, top], [left + w, top + h]]); window.__mapZoomSync(); }
     sizeLegendCircles();
@@ -1442,7 +1455,7 @@
   document.getElementById('btn-reset').addEventListener('click', () => { q.value = ''; clr.hidden = true; });
   // ---- filter drawer ----
   const drawer = document.getElementById('explore'), fbtn = document.getElementById('btn-filters'), xbtn = document.getElementById('btn-explore');
-  const setDrawer = on => { drawer.hidden = !on; fbtn.setAttribute('aria-expanded', String(on)); xbtn.setAttribute('aria-expanded', String(on)); document.getElementById('map-wrap').classList.toggle('drawer-open', on); };
+  const setDrawer = on => { drawer.hidden = !on; fbtn.setAttribute('aria-expanded', String(on)); xbtn.setAttribute('aria-expanded', String(on)); document.getElementById('map-wrap').classList.toggle('drawer-open', on); if (typeof layoutMap === 'function') layoutMap(); };
   fbtn.addEventListener('click', () => { setDrawer(drawer.hidden || true); if (!drawer.hidden) document.getElementById('f-type').focus(); }); xbtn.addEventListener('click', () => setDrawer(drawer.hidden));
   document.getElementById('btn-filters-done').addEventListener('click', () => setDrawer(false)); window.__openFilters = () => setDrawer(true);
   document.querySelectorAll('#explore [data-xtab]').forEach(b => b.addEventListener('click', () => { setDrawer(false); window.__nav.setTab(b.dataset.xtab); }));
@@ -1460,9 +1473,9 @@
   if (new URLSearchParams(location.search).has('type') || new URLSearchParams(location.search).has('ph') || new URLSearchParams(location.search).has('sp') || new URLSearchParams(location.search).has('age')) setDrawer(false);
   // ---- analysis menu: closes after a pick, shows which analysis tab is open ----
   const menu = document.getElementById('analysis-menu'); const menuTabs = ['compare', 'burden', 'changes']; const names = { compare: 'Compare counties', burden: 'Need vs access', changes: 'Recent changes' };
-  const syncMenu = () => { const on = menuTabs.find(t => document.querySelector(`.tabs button[data-tab="${t}"]`).getAttribute('aria-selected') === 'true'); menu.classList.toggle('on', !!on); menu.querySelector('summary').textContent = on ? names[on] : 'Analysis'; };
+  const syncMenu = () => { const on = menuTabs.find(t => document.querySelector(`.tabs button[data-tab="${t}"]`).getAttribute('aria-checked') === 'true'); menu.classList.toggle('on', !!on); menu.querySelector('summary').textContent = on ? names[on] : 'Analysis'; };
   menu.querySelectorAll('button[data-tab]').forEach(b => b.addEventListener('click', () => { menu.open = false; setTimeout(syncMenu, 0); }));
-  document.querySelectorAll('.tabs > button[data-tab]').forEach(b => b.addEventListener('click', () => setTimeout(syncMenu, 0))); syncMenu();
+  document.querySelectorAll('.tabs-main > button[data-tab]').forEach(b => b.addEventListener('click', () => setTimeout(syncMenu, 0))); syncMenu();
   document.addEventListener('click', ev => { if (!menu.contains(ev.target)) menu.open = false; const ly = document.getElementById('layers'); if (!ly.contains(ev.target)) ly.open = false; });
   // ---- plain-language tooltips on the first use of each term in the pane ----
   const G = [[/\b(broad menu)\b/i, 'A county with 100 or more listed trials (the cut-off ASCO\'s 2024 county analysis used for a “broad portfolio”).'], [/\b(limited menu)\b/i, 'A county with 20 to 99 listed trials (this map\'s own line).'], [/\b(road-miles|road miles|road-mi)\b/i, 'Shortest driving route on the highway network, measured from where people live (each census tract\'s population center), not straight-line distance. Trial sites are placed at the center of their ZIP code or city.'], [/\b(listed trials?)\b/i, 'Recruiting, interventional cancer treatment trials on ClinicalTrials.gov with a US site, accepting some adults aged 55 or older. Listed does not mean a given patient qualifies.'], [/\b(NCI-designated)\b/, 'Designated by the National Cancer Institute. Distances are measured to the centers that treat adults.'], [/\b(census tracts?)\b/i, 'Small Census Bureau areas of roughly 4,000 people; the map works out distances for each one.'], [/\b(nonmetro)\b/i, 'USDA Rural-Urban Continuum Codes 4–9: counties outside metropolitan areas.']];

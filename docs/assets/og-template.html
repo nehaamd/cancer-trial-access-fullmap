@@ -12,7 +12,7 @@ h1{font-size:44px;line-height:1.08;letter-spacing:-.02em;margin:18px 0 22px;font
 p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:440px}
 .bar{position:absolute;left:0;right:0;bottom:0;height:14px;background:#0B3C5D}
 .url{position:absolute;left:56px;bottom:34px;font-size:20px;color:#4B5563}
-.county{stroke:#fff;stroke-width:.35}.nci{fill:#0B3C5D;stroke:#fff;stroke-width:1}
+.county{fill:#EFEBE3;stroke:#fff;stroke-width:.35}.nci{fill:#0B3C5D;stroke:#fff;stroke-width:1}.bub{fill:rgba(200,98,42,.72);stroke:#fff;stroke-width:.6}
 </style></head><body>
 <div class="txt"><div class="brand">Cancer Trial Access Map</div>
 <h1>How far are Americans from a cancer clinical trial?</h1>
@@ -20,13 +20,20 @@ p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:440px}
 <p>Americans 55 and older have fewer than 20 recruiting cancer trials within 60 road-miles of home.</p></div>
 <svg id="map" viewBox="0 0 975 610"></svg>
 <div class="url">nehaamd.github.io/cancer-trial-access-fullmap</div><div class="bar"></div>
-<script src="../d3.v7.min.js"></script><script src="../data.js"></script><script src="../geo.js"></script>
+<script src="../d3.v7.min.js"></script><script src="../data.js"></script><script src="../geo.js"></script><script src="../burden.js"></script>
 <script>
 if (location.search.includes('plain')) document.body.classList.add('plain');
 const D=window.DATA,C=D.counties,G=window.GEO;document.getElementById('n').textContent=(Math.round(D.meta.nat_core.p*D.meta.nat_core.l20/100/1e5)/10).toLocaleString(undefined,{maximumFractionDigits:1});
 const proj=d3.geoAlbersUsa().fitSize([959,594],G.counties);proj.translate([proj.translate()[0]+8,proj.translate()[1]+8]);const path=d3.geoPath(proj);
-const col=t=>t>=100?'#0B3C5D':t>=20?'#6BA3D6':t>0?'#B7D0E8':'#F6F1EC';
-const svg=d3.select('#map');svg.append('g').selectAll('path').data(G.counties.features.filter(f=>C[f.properties.id])).join('path').attr('class','county').attr('d',path).attr('fill',f=>col(C[f.properties.id].t));
+// The same layer the map opens on: one neutral fill for every county, and a circle per county sized by residents 55+ with fewer than
+// 20 listed trials within 60 road-miles (area proportional to people; 180,000 residents is a 17-unit radius, as in index.html), drawn for
+// counties with at least 500 such residents. Keeping the findings page and the shared card on this encoding means a reader moving between
+// pages sees one story, not two colour schemes.
+const BU=window.BURDEN,bubR=d3.scaleSqrt().domain([0,180000]).range([0,17]);
+const shortOf=k=>{const u=BU&&BU.county[k];return u&&u.l20!==null&&u.l20!==undefined?C[k].p*u.l20/100:null;};
+const svg=d3.select('#map');svg.append('g').selectAll('path').data(G.counties.features.filter(f=>C[f.properties.id])).join('path').attr('class','county').attr('d',path);
 const gs=svg.append('g');gs.selectAll('path.c').data(G.states.features).join('path').attr('class','c').attr('d',path).attr('fill','none').attr('stroke','#fff').attr('stroke-width',2).attr('opacity',.8);gs.selectAll('path.l').data(G.states.features).join('path').attr('class','l').attr('d',path).attr('fill','none').attr('stroke','#3F3831').attr('stroke-width',.95).attr('opacity',.95);
+const bubs=G.counties.features.map(f=>{const k=f.properties.id,n=C[k]?shortOf(k):null;return n&&n>=500?{k,c:path.centroid(f),n}:null;}).filter(d=>d&&isFinite(d.c[0])).sort((a,b)=>b.n-a.n);
+svg.append('g').selectAll('circle').data(bubs).join('circle').attr('class','bub').attr('r',d=>bubR(d.n)).attr('transform',d=>`translate(${d.c})`);
 svg.append('g').selectAll('path').data(D.nci).join('path').attr('class','nci').attr('d',d3.symbol().type(d3.symbolStar).size(52)).attr('transform',n=>{const p=proj([n.lon,n.lat]);return p?`translate(${p})`:'translate(-100,-100)'});
 </script></body></html>
