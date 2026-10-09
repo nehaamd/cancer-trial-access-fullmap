@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer trials within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Key findings · Cancer Trial Access Map">
 <meta name="twitter:description" content="How many Americans 55 and older live far from a recruiting cancer clinical trial, in road miles: the headline numbers, the rural gap, the states most affected, and what would change it.">
@@ -28,7 +28,7 @@
 <script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
   *{box-sizing:border-box} html{font-size:16px} html,body{margin:0;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased} main{font-size:17px}
-  a{color:var(--gulf)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
+  a{color:var(--link)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
   main{max-width:1040px;margin:0 auto;padding:0 var(--gutter) 2rem}
   .hero{padding:2.2rem 0 1.4rem;border-bottom:1px solid var(--rule)}
   .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650;max-width:none}
@@ -80,7 +80,7 @@
   </div>
 
   <section id="numbers">
-    <figure><img src="assets/map-national.png" alt="Map of US counties shaded by the number of recruiting cancer treatment trials with a site in the county, from none to 100 or more; NCI-designated cancer centers marked with stars"><figcaption>Recruiting cancer treatment trials by county, open to patients 55 and older. Dark blue: 100 or more (a broad menu). Mid blue: 20–99 (a limited menu). Pale blue: 1–19. Cream: none. Stars: NCI-designated cancer centers. Registry data as of <span data-f="pull"></span>. <a href="index.html">Open the interactive map</a>.</figcaption></figure>
+    <figure><img src="assets/map-national.png" alt="Map of US counties, each with an orange circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; NCI-designated cancer centers marked with stars"><figcaption>Residents 55 and older short of recruiting cancer treatment trials, by county: each circle's area is the number of residents with fewer than 20 listed trials within 60 road-miles of home (the map's opening layer; counties with at least 500 such residents are drawn). Stars: NCI-designated cancer centers. Registry data as of <span data-f="pull"></span>. <a href="index.html">Open the interactive map</a>.</figcaption></figure>
     <h2 style="margin-top:1.6rem">Five numbers</h2>
     <div class="kpis">
       <div class="kpi hot"><p class="v"><span data-f="l20"></span><small>%</small></p><p class="l">of Americans 55+ have fewer than 20 recruiting trials within 60 road-miles of home</p><p class="s"><span data-f="people_l20_m"></span> million people</p></div>

@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Map of US counties shaded by the number of recruiting cancer trials, with the share of Americans 55 and older who have fewer than 20 trials within 60 road-miles of home">
+<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer trials within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Printable brief · Cancer Trial Access Map">
 <meta name="twitter:description" content="A one-page brief for any US county, congressional district or state: how far residents 55 and older live from recruiting cancer trials, cancer burden, household context and cosponsor status.">
@@ -25,12 +25,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
-  :root{--ink:#1B2430;--ink-2:#4B5563;--ink-3:#7C8794;--rule:#E4E1DA;--navy:#0B3C5D;--rust:#8A3B1E;--gulf:#3F7FB5}
+  :root{--ink:#1B2430;--ink-2:#4B5563;--ink-3:#5F6B78;--rule:#E4E1DA;--navy:#0B3C5D;--rust:#8A3B1E;--gulf:#3F7FB5}
   *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.45;background:#fff}
   .page{max-width:8.5in;margin:0 auto;padding:.7in .75in}
   .top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:2px solid var(--navy);padding-bottom:.5rem;margin-bottom:.9rem}
   h1{font-size:1.6rem;margin:0;letter-spacing:-.02em;line-height:1.15} .kicker{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--ink-3);font-weight:700;margin:0 0 .2rem}
-  .proto{border:1.5px solid var(--rust);color:var(--rust);border-radius:3px;padding:0 .4rem;margin-right:.55rem;white-space:nowrap} .member{color:var(--ink-2);margin:.2rem 0 0} .tools{font-size:.8rem;text-align:right} .tools a,.tools button{color:var(--gulf);font:inherit;background:none;border:0;cursor:pointer;text-decoration:underline;padding:0;margin-left:.6rem;white-space:nowrap}
+  .proto{color:var(--ink-3);font-weight:400;text-transform:none;letter-spacing:0;margin-left:.6rem;white-space:nowrap}   /* a quiet status line, not a warning box; delete the span when the figures are final */ .member{color:var(--ink-2);margin:.2rem 0 0} .tools{font-size:.8rem;text-align:right} .tools a,.tools button{color:var(--link);font:inherit;background:none;border:0;cursor:pointer;text-decoration:underline;padding:0;margin-left:.6rem;white-space:nowrap}
   .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;align-items:start}
   .stat{border-left:3px solid var(--rule);padding:.35rem 0 .35rem .7rem;margin:0 0 .6rem} .stat.hot{border-left-color:var(--rust)} .stat b{font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em} .stat p{margin:.15rem 0 0;font-size:.9rem;max-width:36ch}
   svg{width:100%;height:auto;display:block;border:1px solid var(--rule)} .c{fill:#F1EFEA;stroke:#fff;stroke-width:.4} .c.t{fill:#9EC4E0} .c.b{fill:#0B3C5D} .hi{fill:none;stroke:var(--rust);stroke-width:2.2;vector-effect:non-scaling-stroke} #map.dz .c,#map.dz path{vector-effect:non-scaling-stroke} .nci{fill:#F0B429;stroke:#3a2f00;stroke-width:.6}
@@ -58,7 +58,7 @@
   <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group on"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link" aria-current="page">Printable brief</a><a href="index.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
 <div class="page">
-<div class="top"><div><p class="kicker"><span class="proto">Prototype · figures under review</span><span id="kicker">Cancer clinical trial access brief</span></p><h1 id="title">…</h1><p class="member" id="member"></p></div><div class="tools"><button onclick="window.print()">Print / save as PDF</button><a id="back" href="index.html">Open in the map</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a></div></div>
+<div class="top"><div><p class="kicker"><span id="kicker">Cancer clinical trial access brief</span><span class="proto">Working draft · figures may be revised</span></p><h1 id="title">…</h1><p class="member" id="member"></p></div><div class="tools"><button onclick="window.print()">Print / save as PDF</button><a id="back" href="index.html">Open in the map</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a></div></div>
 <div class="ask" id="ask-box"><span class="ask-k">Our ask</span><p id="ask" contenteditable="true" spellcheck="true"></p><p id="from" contenteditable="true" spellcheck="true" data-ph="Add your name, title and institution (optional)"></p><p class="ask-hint">Click either line to edit it. Your wording is saved in this page's link, so copy the link after editing to share or reopen it.</p></div>
 <div class="grid"><div id="stats"></div><div><svg id="map" viewBox="0 0 480 300"></svg><p style="font-size:.74rem;color:var(--ink-3);margin:.3rem 0 0" id="maplegend"></p></div></div>
 <div id="extra"></div>

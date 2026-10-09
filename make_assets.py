@@ -24,7 +24,7 @@ finally:
     srv.terminate()
 try:  # shrink the two large PNGs to a small palette (flat colours; no visible loss)
     from PIL import Image
-    for n, k in (("og-image.png", 128), ("map-national.png", 64)):
+    for n, k in (("og-image.png", 128), ("map-national.png", 128)):
         f = DOCS / "assets" / n; Image.open(f).convert("P", palette=Image.ADAPTIVE, colors=k).save(f, optimize=True)
 except ImportError:
     pass

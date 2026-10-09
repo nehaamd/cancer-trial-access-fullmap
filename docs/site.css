@@ -8,8 +8,8 @@
 @font-face{font-family:"Source Serif 4";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/source-serif-4-latin-600-normal.woff2") format("woff2")}
 
 :root{
-  --paper:#F7F5F0; --card:#FFFFFF; --ink:#1B2430; --ink-2:#4B5563; --ink-3:#7C8794; --rule:#E6E2DA; --rule-2:#CFCBC2;
-  --navy:#0B3C5D; --gulf:#3F7FB5; --sky:#9EC4E0; --sand:#F2C48A; --clay:#D98B4A; --rust:#8A3B1E; --warn:#7A5A00; --nodata:#E9E7E1;
+  --paper:#F7F5F0; --card:#FFFFFF; --ink:#1B2430; --ink-2:#4B5563; --ink-3:#5F6B78; --rule:#E6E2DA; --rule-2:#CFCBC2;
+  --navy:#0B3C5D; --gulf:#3F7FB5; --link:#2F6A9C; --sky:#9EC4E0; --sand:#F2C48A; --clay:#D98B4A; --rust:#8A3B1E; --warn:#7A5A00; --nodata:#E9E7E1;
   --rep:#B22234; --dem:#2E5AAC; --ind:#7C8794;
   --r:10px; --shadow:0 1px 2px rgba(27,36,48,.05), 0 6px 18px rgba(27,36,48,.05);
   --fs-0:.84rem; --fs-1:.95rem; --fs-2:1.08rem; --fs-3:1.35rem; --fs-4:1.8rem; --fs-5:2.9rem;
@@ -51,7 +51,7 @@ footer.site .foot-grid b{color:var(--ink);display:block;margin-bottom:.2rem;font
 footer.site .foot-grid dl{margin:0} footer.site .foot-grid dt{font-weight:650;color:var(--ink);display:inline} footer.site .foot-grid dd{display:inline;margin:0} footer.site .foot-grid dd::after{content:"";display:block;margin-bottom:.25rem}
 footer.site details{max-width:140ch} footer.site summary{cursor:pointer;font-weight:650;color:var(--ink);padding:.2rem 0} footer.site p{margin:.4rem 0}
 footer.site .foot-line{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;align-items:center}
-footer.site .foot-line a{color:var(--gulf)}
+footer.site .foot-line a{color:var(--link)}
 
 abbr.g{text-decoration:none;border-bottom:1px dotted var(--gulf);cursor:help}
 
@@ -76,7 +76,7 @@ abbr.g{text-decoration:none;border-bottom:1px dotted var(--gulf);cursor:help}
 /* phone-only folding of long reading pages (SITE.foldOnPhone) */
 @media (max-width:640px){
   .fold > h2{cursor:pointer;position:relative;padding-right:1.8rem;margin-bottom:.2rem}
-  .fold > h2::after{content:"+";position:absolute;right:.1rem;top:0;font-weight:400;color:var(--gulf);font-size:1.4em;line-height:1}
+  .fold > h2::after{content:"+";position:absolute;right:.1rem;top:0;font-weight:400;color:var(--link);font-size:1.4em;line-height:1}
   .fold.open > h2::after{content:"\2212"}
   .fold:not(.open) > :not(h2){display:none}
 }
