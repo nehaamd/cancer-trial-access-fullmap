@@ -1,0 +1,467 @@
+{
+ "setup": [
+  {
+   "check": "seed / data date",
+   "value": "seed 1; registry data 2026-10-05T09:00:05; run 2026-10-09 06:13 UTC",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "trials.csv rows minus those with a maximum age under 55 equals the listed set",
+   "value": "4257 \u2212 256 = 4001 vs 4001",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "registry": [
+  {
+   "check": "listed trials found on ClinicalTrials.gov today",
+   "value": "4,001 of 4,001",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "payload (data.js) phase / sponsor class / minimum age equal the Oct 5 pull (trials.csv)",
+   "value": "0 / 0 / 0 mismatches",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "overall status today",
+   "value": {
+    "RECRUITING": 3986,
+    "ACTIVE_NOT_RECRUITING": 11,
+    "SUSPENDED": 1,
+    "ENROLLING_BY_INVITATION": 1,
+    "TERMINATED": 1,
+    "COMPLETED": 1
+   },
+   "ok": null,
+   "detail": "15 no longer Recruiting: NCT05787561 (ACTIVE_NOT_RECRUITING), NCT04712851 (ACTIVE_NOT_RECRUITING), NCT05482516 (ACTIVE_NOT_RECRUITING), NCT06389591 (ACTIVE_NOT_RECRUITING), NCT05663710 (SUSPENDED), NCT05918783 (ACTIVE_NOT_RECRUITING), NCT05336383 (ACTIVE_NOT_RECRUITING), NCT07429110 (ACTIVE_NOT_RECRUITING), NCT05185505 (ENROLLING_BY_INVITATION), NCT06568692 (TERMINATED), NCT06624085 (ACTIVE_NOT_RECRUITING), NCT04870762 (ACTIVE_NOT_RECRUITING), NCT03824652 (COMPLETED), NCT05394337 (ACTIVE_NOT_RECRUITING), NCT04145622 (ACTIVE_NOT_RECRUITING)"
+  },
+  {
+   "check": "still interventional with primary purpose Treatment",
+   "value": "4,001 of 4,001",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "age limits today still admit some adults 55+ (maximum age \u2265 55 or none \u2014 the site's rule)",
+   "value": "4,001 of 4,001",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "listed trials whose minimum age is 60 or more (open only to older adults; counted, not excluded)",
+   "value": "39 (CHANGES_v3 of 5 Oct: 39)",
+   "ok": true,
+   "detail": "NCT06594939 (70 Years), NCT06139107 (60 Years), NCT06765317 (65 Years), NCT07392242 (60 Years), NCT06309225 (65 Years), NCT02476786 (70 Years), NCT06507618 (65 Years), NCT07437950 (60 Years), NCT05684367 (60 Years), NCT06824818 (70 Years), NCT07125183 (65 Years), NCT01515527 (60 Years), NCT06897488 (60 Years), NCT07629206 (70 Years), NCT06195891 (60 Years), NCT06828991 (70 Years), NCT06377852 (60 Years), NCT07242118 (65 Years), NCT06998069 (65 Years), NCT07768436 (70 Years), NCT06835803 (65 Years), NCT06973668 (65 Years), NCT06799195 (60 Years), NCT05472792 (65 Years), NCT04305834 (70 Years), NCT06042569 (65 Years), NCT06096844 (70 Years), NCT06827860 (70 Years), NCT07068074 (75 Years), NCT06552416 (65 Years), NCT05976763 (60 Years), NCT05849207 (65 Years), NCT06679829 (60 Years), NCT05952024 (65 Years), NCT04892173 (60 Years), NCT05574127 (65 Years), NCT07321652 (65 Years), NCT07685717 (75 Years), NCT06105684 (60 Years)"
+  },
+  {
+   "check": "phase today vs the payload (differences are registry edits since Oct 5)",
+   "value": "1 changed",
+   "ok": null,
+   "detail": "(nct, live, payload): [('NCT06080061', 'NA', '1')]"
+  },
+  {
+   "check": "sponsor class today vs the payload",
+   "value": "0 changed",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "US sites listed as recruiting (city, state, ZIP) vs the Oct 5 pull",
+   "value": "50,225 unchanged, 226 added, 123 removed, across 132 trials with any change",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "listed trials with no US recruiting site today",
+   "value": "0",
+   "ok": null,
+   "detail": ""
+  },
+  {
+   "check": "trials that would leave the set at a refresh today (status, sites, age or type)",
+   "value": "15 of 4,001 (0.4%)",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "Oct 5 pull reconstructed: trials.csv + screen exclusions = trials with a US recruiting site in fetch_log",
+   "value": "4,257 + 217 = 4,474 vs 4474",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "data/raw/trials_raw.csv row count equals the Oct 5 pull (qc_us.py refreshes it by file date, which git does not keep)",
+   "value": "4294 rows vs 4474 in fetch_log / qc_log",
+   "ok": false,
+   "detail": "the committed trials_raw.csv is from an earlier pull; trials.csv and every published figure are from the Oct 5 pull"
+  },
+  {
+   "check": "the site's registry query re-run today",
+   "value": "4,538 studies (Oct 5: 4538); not in the Oct 5 pull: 79, of which 17 have a US recruiting site today and 15 of those also pass the age rule (1 first posted after Oct 5); in the Oct 5 pull but no longer returned: 15",
+   "ok": null,
+   "detail": "gone: NCT03824652, NCT04145622, NCT04712851, NCT04870762, NCT05185505, NCT05336383, NCT05394337, NCT05482516, NCT05663710, NCT05787561, NCT05918783, NCT06389591, NCT06568692, NCT06624085, NCT07429110"
+  },
+  {
+   "check": "seeded sample of 17 studies that would enter at a refresh today (for review: cancer treatment trials?)",
+   "value": "\n    NCT06590857 | Trial of 225Ac-DOTATATE (RYZ101) in Subjects With ER+, HER2-negative Unresectable or Metastatic Brea | Metastatic Breast Cancer; HER2-negative Breast Cancer; ER+ Breast Cancer; Advanced Breast Cancer; Me | US recruiting sites 1 | max age None | posted 2024-09-19\n    NCT07508995 | A Phase 2 Trial Of The Bruton Tyrosine Kinase Degrader BGB-16673 In Combination With BCL-2 Inhibitor | Chronic Lymphocytic Leukemia (CLL) | US recruiting sites 1 | max age None | posted 2026-04-03\n    NCT07680790 | Study of Izalontamab Brengitecan (BMS-986507) in Combination With Osimertinib Versus Osimertinib Mon | Non-Small Cell Lung Cancer | US recruiting sites 4 | max age None | posted 2026-07-02\n    NCT07862647 | TMZ + RT + 5-ALA + LIDU SDT System for Newly Diagnosed Butterfly Glioma | Glioblastom WHO Grade 4; GBM; bGBM; Butterfly GBM; Bihemispheric GBM; Glioblastoma | US recruiting sites 1 | max age 80 Years | posted 2026-10-07\n    NCT04810871 | Surgical Resection of Latent Brain Tumors Prior to Recurrence | Brain Neoplasm | US recruiting sites 1 | max age None | posted 2021-03-23\n    NCT05604560 | A Neoadjuvant Study of Tislelizumab and SX-682 for Resectable Pancreas Cancer | Pancreatic Cancer | US recruiting sites 1 | max age None | posted 2022-11-03\n    NCT02013336 | Phase 1 Dose-escalating Study of MM-398 (Irinotecan Sucrosofate Liposome Injection) Plus Intravenous | Recurrent or Refractory Solid Tumors; Ewing Sarcoma; Rhabdomyosarcoma; Neuroblastoma; Osteosarcoma | US recruiting sites 5 | max age 20 Years | posted 2013-12-17\n    NCT04404088 | Acalabrutinib, Lenalidomide, and Rituximab for the Treatment of CD20 Positive Stage III-IV, Grade 1- | Ann Arbor Stage III Grade 1 Follicular Lymphoma; Ann Arbor Stage III Grade 2 Follicular Lymphoma; An | US recruiting sites 1 | max age None | posted 2020-05-27\n    NCT07060001 | Efficacy of Hypomethylating Agents vs. Intensive Chemotherapy in Acute Myeloid Leukemia Using 5hmC a | Acute Myeloid Leukemia (AML); Acute Myeloid Leukaemia (AML) | US recruiting sites 1 | max age None | posted 2025-07-11\n    NCT06770855 | Consolidative Metastasis and Primary Directed Therapy (MPDT) for Renal Cell Carcinoma (RCC) | Renal Cell Carcinoma | US recruiting sites 1 | max age None | posted 2025-01-13\n    NCT07796061 | Blood-Brain Barrier Disruption Using Exablate Magnetic Resonance-Guided Low Intensity Focused Ultras | Pontine Diffuse Midline Glioma; Diffuse Intrinsic Pontine Glioma; Thalamic Diffuse Midline Glioma | US recruiting sites 1 | max age 25 Years | posted 2026-08-31\n    NCT07694726 | Preventing Lymphedema in Patients Undergoing Surgical Treatment for Head and Neck Cancer Through Vei | Head and Neck Cancer | US recruiting sites 1 | max age None | posted 2026-07-10\n    NCT07775287 | Study of Petosemtamab Plus Chemotherapy Versus Cetuximab or Bevacizumab Plus Chemotherapy in RAS and | Colorectal Cancer | US recruiting sites 3 | max age None | posted 2026-08-20\n    NCT07509008 | Phase 1/2 Window Of Opportunity Study Of TROP2 CAR/IL-15 TGFBR2 KO NK Cells Delivered Intraperitonea | Gastric Cancer, Metastatic | US recruiting sites 1 | max age None | posted 2026-04-03\n    NCT07672483 | IL-12 Genetically Engineered Myeloid Cells in Participants With Relapsed, Refractory Solid Tumors | Relapsed Solid Tumor Malignancies; Refractory Solid Tumor Malignancies | US recruiting sites 1 | max age 120 Years | posted 2026-06-29\n    NCT07355335 | Ziftomenib + Mezigdomide in Adolesc. and Adults w/ R/R AML | KMT2A-rearranged; NPM1-mutant Refractory or Relapsed AML | US recruiting sites 2 | max age None | posted 2026-01-21\n    NCT07768189 | A Study to Evaluate CRB-701 Compared to Investigator's Choice Therapy in Previously Treated Orophary | Oropharyngeal Carcinoma (OPC) | US recruiting sites 3 | max age None | posted 2026-08-17",
+   "ok": null,
+   "detail": null
+  }
+ ],
+ "coverage": [
+  {
+   "check": "broader search 'condition 'neoplasms' (MeSH tree)' with the same filters",
+   "value": "4,219 studies; 0 not returned by the site's keyword search",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "broader search 'condition 'oncology'' with the same filters",
+   "value": "4,219 studies; 0 not returned by the site's keyword search",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "broader search 'full text 'cancer OR tumor OR carcinoma OR lymphoma OR leukemia OR myeloma OR sarcoma OR melanoma OR malignant'' with the same filters",
+   "value": "4,856 studies; 396 not returned by the site's keyword search",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "seeded sample of 30 studies only the broader searches return (for review: are any cancer treatment trials?)",
+   "value": "\n    NCT05019495 | Optimizing Tobacco Treatment Delivery for People Living With HIV | Hiv; Smoking, Cigarette | ages 21 Years\u2013None\n    NCT07104565 | Study to Assess the Safety and Tolerability of Tafasitamab in Adult Participants With Primary Autoimmune Blood | Immune Thrombocytopenia | ages 18 Years\u2013None\n    NCT07767097 | Stiffness and Low Dose Irradiation RCT | Arthrofibrosis of Knee | ages 18 Years\u2013None\n    NCT03887715 | A Prospective, Multi-center, Randomized Controlled Blinded Trial Demonstrating the Safety and Effectiveness of | Treatment Resistant Depression | ages 18 Years\u2013None\n    NCT06056297 | A Study of Mavorixafor in Participants With Congenital and Acquired Primary Autoimmune and Idiopathic Chronic  | Neutropenia | ages 12 Years\u2013None\n    NCT04692493 | RA-PRO PRAGMATIC TRIAL | Rheumatoid Arthritis | ages 18 Years\u2013None\n    NCT06884865 | A Study to Assess Safety and Tolerability of PCRX-201 in Subjects With Painful Osteoarthritis of the Knee | Osteoarthritis (OA) of the Knee | ages 45 Years\u201380 Years\n    NCT07734064 | A Study About the Safety of a Single ASP2020 Eye Injection and if it Helps People With Vision Loss From Starga | Stargardt Disease; Stargardt Macular Dystrophy; Stargardt-like Macular Dystrophy | ages 6 Years\u2013None\n    NCT06701656 | JUST BREATHE, Breathing Life Into Innovative Therapies for ARDS- Cohort C: Bevacizumab | Acute Respiratory Distress Syndrome (ARDS); ARDS; ARDS (Acute Respiratory Distress Syndrome); Acute Respiratory Distress | ages 18 Years\u2013None\n    NCT06764966 | Statin and Beta Blocker Use in Patients With Decompensated Cirrhosis | Decompensated Liver Cirrhosis; Cirrhosis; Decompensated Cirrhosis of Liver; Decompensated Cirrhosis and Ascites | ages 18 Years\u2013None\n    NCT07296939 | Youth Emotional and Behavioral Treatment Study | Depression, Anxiety | ages 4 Years\u201317 Years\n    NCT06556654 | Tissue Reinforcement for Breast Reconstruction (TRBR) Pivotal Clinical Study (REDEFINE) | Breast Reconstruction Surgery | ages 22 Years\u2013None\n    NCT05800600 | Iron Replacement to Reduce Anemia During Neoadjuvant Chemotherapy | Anemia | ages 18 Years\u2013None\n    NCT04375657 | Thymus Regeneration, Immunorestoration, and Insulin Mitigation Extension Trial | Epigenetic Aging; Immunosenescence | ages 40 Years\u201380 Years\n    NCT06841705 | Early Vedolizumab as First-Line for Immune-Related Colitis Therapy Trial | Immune Checkpoint Inhibitor-Related Colitis | ages 18 Years\u2013None\n    NCT02898181 | Low Level Tragus Stimulation in Acute Decompensated Heart Failure | Acute Decompensated Heart Failure | ages 18 Years\u201380 Years\n    NCT06585774 | A Study to Evaluate Axatilimab and Corticosteroids as Initial Treatment for Chronic Graft-Versus-Host Disease | Chronic Graft-versus-host-disease | ages 12 Years\u2013None\n    NCT06663722 | Axatilimab in Combination With Extracorporeal Photopheresis (ECP) in Chronic Graft-versus-Host Disease | Chronic Graft Versus Host Disease; cGVHD | ages 12 Years\u2013None\n    NCT07209371 | Rifaximin Versus No Intervention for the Treatment of IgG/IgA (Non-IgM) Monoclonal Gammopathy of Undetermined  | IgA Monoclonal Gammopathy of Undetermined Significance; Non-IgM Monoclonal Gammopathy of Undetermined Significance | ages 18 Years\u2013None\n    NCT07734870 | Tirzepatide for Treatment of CCCA | Central Centrifugal Cicatricial Alopecia (CCCA) | ages 18 Years\u201380 Years\n    NCT07794956 | LpD3.5 Intervention Study in Older Adults- LISA-I Trial | Mild Cognitive Impairment (MCI); Cognition; Brain Aging; Microbiome Dysbiosis; Leaky Gut Syndrome; Gut Inflammation; Inf | ages 60 Years\u2013None\n    NCT01306019 | Lentiviral Gene Transfer for Treatment of Children Older Than Two Years of Age With X-Linked Severe Combined I | X-linked Severe Combined Immunodeficiency (XSCID) | ages 2 Years\u201350 Years\n    NCT07448038 | A Study to Evaluate the Efficacy, Safety, Pharmacodynamics (PD), and Pharmacokinetics (PK) of Selnoflast in Re | Atherosclerosis | ages 18 Years\u2013None\n    NCT06692426 | Trial of Cell Based Therapy for DMD | Duchenne Muscular Dystrophy | ages 18 Years\u2013None\n    NCT06100172 | Transcutaneous Auricular Neurostimulation After Lumbar Surgery | Pain, Postoperative; Opioid Use; Lumbar Spine Injury | ages 18 Years\u201385 Years\n    NCT07519902 | An Efficacy and Safety Study of Cenegermin Ophthalmic Solution Compared With Vehicle in the Treatment of PCED | Persistent Corneal Epithelial Defect | ages 18 Years\u2013None\n    NCT05922761 | BElumosudil for Bronchiolitis Obliterans Prevention/Therapy (BEBOP) | Bronchiolitis Obliterans Syndrome; Bronchiolitis Obliterans; Lung Diseases; Chronic Graft Versus Host Disease | ages 18 Years\u2013None\n    NCT07170917 | Brivekimig for the Treatment of Moderate to Severe Hidradenitis Suppurativa | Hidradenitis Suppurativa | ages 18 Years\u2013None\n    NCT04411225 | Effects of Cannabidiol (CBD) Versus Placebo as an Adjunct to Treatment in Early Psychosis | Early Psychosis | ages 16 Years\u201330 Years\n    NCT06292936 | RemI for Post-Bariatric Surgery Weight Regain | Obesity; Bariatric Surgery Candidate | ages 18 Years\u201370 Years",
+   "ok": null,
+   "detail": null
+  }
+ ],
+ "headline": [
+  {
+   "check": "p: recomputed from tracts vs data.js / findings.js",
+   "value": "98596429 vs 98596429 / 98596429",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "l20: recomputed from tracts vs data.js / findings.js",
+   "value": "12.0 vs 12.0 / 12.0",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "z60: recomputed from tracts vs data.js / findings.js",
+   "value": "4.2 vs 4.2 / 4.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "l100: recomputed from tracts vs data.js / findings.js",
+   "value": "34.2 vs 34.2 / 34.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "zc: recomputed from tracts vs data.js / findings.js",
+   "value": "21.0 vs 21.0 / 21.0",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g60b: recomputed from tracts vs data.js / findings.js",
+   "value": "38.1 vs 38.1 / 38.1",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g120b: recomputed from tracts vs data.js / findings.js",
+   "value": "18.4 vs 18.4 / 18.4",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g60l: recomputed from tracts vs data.js / findings.js",
+   "value": "14.1 vs 14.1 / 14.1",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g60n: recomputed from tracts vs data.js / findings.js",
+   "value": "43.7 vs 43.7 / 43.7",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g120n: recomputed from tracts vs data.js / findings.js",
+   "value": "20.8 vs 20.8 / 20.8",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nr: recomputed from tracts vs data.js / findings.js",
+   "value": "0.7 vs 0.7 / 0.7",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "medn: recomputed from tracts vs data.js / findings.js",
+   "value": "48 vs 48 / 48",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "medb: recomputed from tracts vs data.js / findings.js",
+   "value": "36 vs 37 / 37",
+   "ok": false,
+   "detail": "medians here exclude no-route tracts (the documented rule); see the medians check below"
+  },
+  {
+   "check": "t60: recomputed from tracts vs data.js / findings.js",
+   "value": "354 vs 354 / 354",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "t30: recomputed from tracts vs data.js / findings.js",
+   "value": "220 vs 220 / 220",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "t120: recomputed from tracts vs data.js / findings.js",
+   "value": "575 vs 575 / 575",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "people_l20: recomputed from tracts vs data.js / findings.js",
+   "value": "11847214 vs None / 11847214",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "people_z60: recomputed from tracts vs data.js / findings.js",
+   "value": "4155856 vs None / 4155856",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "medians: the documented rule excludes tracts with no road route (build_rucc.py); tract_metrics_us.py includes them as 999 \u2014 places where the two rules give different medians",
+   "value": "13",
+   "ok": false,
+   "detail": "state 02 medn: no tract has a road route (excluding rule gives no median; including rule gives 999); state 15 medn: 10 vs 16; nation medb: 36 excluding no-route tracts vs 37 including them (published 37); state 02 medb: no tract has a road route (excluding rule gives no median; including rule gives 999); state 15 medb: no tract has a road route (excluding rule gives no median; including rule gives 999); state 23 medb: 155 vs 156; district 0200 medn: no route for the median resident (published as no route); district 1502 medn: 15 vs 999; district 2302 medn: 211 vs 212; district 0200 medb: no route for the median resident (published as no route); district 0409 medb: 166 vs 171; district 1501 medb: no route for the median resident (published as no route); district 1502 medb: no route for the median resident (published as no route)"
+  },
+  {
+   "check": "counties without a 2023 rural-urban code (2013 fallback)",
+   "value": "8: 09001, 09003, 09005, 09007, 09009, 09011, 09013, 09015",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "metro p: recomputed vs findings.js",
+   "value": "82859109 vs 82859109",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro l20: recomputed vs findings.js",
+   "value": "6.1 vs 6.1",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro z60: recomputed vs findings.js",
+   "value": "1.2 vs 1.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro g60n: recomputed vs findings.js",
+   "value": "35.2 vs 35.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro g60b: recomputed vs findings.js",
+   "value": "28.8 vs 28.8",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro medn: recomputed vs findings.js",
+   "value": "35 vs 35",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro p: recomputed vs findings.js",
+   "value": "15737320 vs 15737320",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro l20: recomputed vs findings.js",
+   "value": "43.1 vs 43.1",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro z60: recomputed vs findings.js",
+   "value": "20.0 vs 20.0",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro g60n: recomputed vs findings.js",
+   "value": "88.9 vs 88.9",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro g60b: recomputed vs findings.js",
+   "value": "87.3 vs 87.3",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro medn: recomputed vs findings.js",
+   "value": "115 vs 115",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro share of residents 55+",
+   "value": "16.0% (README says 16.0%)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "broad-menu counties (100+), 20+ counties, counties with any trial",
+   "value": "83, 377, 838 (README: 83, 377; metrics_log: 838 with any)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "states with no broad-menu county",
+   "value": "15: AK, AR, DE, HI, ID, LA, ME, MS, ND, NH, NM, NV, VT, WV, WY (findings.js: 15)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "districts where every resident 55+ is beyond 60 road-miles of a broad menu",
+   "value": "73 (README: 73)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "README headline block carries the recomputed figures",
+   "value": "all present",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "roads": [
+  {
+   "check": "county \u2192 nearest NCI center: road miles shorter than straight-line (impossible; 3% tolerance for rounding/centroids)",
+   "value": "0 of 3,085 counties",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "road / straight-line ratio to the nearest NCI center",
+   "value": "median 1.17, p10 1.09, p90 1.32, max 5.15",
+   "ok": null,
+   "detail": "3 counties above 2.5: Island, Jefferson, Kitsap"
+  },
+  {
+   "check": "county \u2192 nearest broad menu: road miles shorter than straight-line",
+   "value": "0 of 3,023",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "road / straight-line ratio to the nearest broad menu",
+   "value": "median 1.18, p10 1.09, p90 1.34 (README: median 1.18, 1.09\u20131.34)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "counties with no road route to a broad menu",
+   "value": "35: 15, 2",
+   "ok": null,
+   "detail": "states (FIPS): 02, 15"
+  }
+ ],
+ "sites": [
+  {
+   "check": "sampled site rows whose ZIP center lies in the assigned county (or the Census ZCTA\u2192county agrees)",
+   "value": "140 of 140 (10 rows without a ZCTA center skipped)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "sampled site rows whose ZIP center is within 40 miles of the registry's stated city",
+   "value": "126 of 126 with a gazetteer match",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "cosponsors": [
+  {
+   "check": "H.R. 3521: cosponsors in cosponsors.js vs findings.js",
+   "value": "24 ({'R': 9, 'D': 15}) vs 24 ({'R': 9, 'D': 15, 'I': 0}); roles {'sponsor': 1, 'original': 1, 'cosponsor': 23}",
+   "ok": true,
+   "detail": "fetched 2026-10-05 from govinfo BILLSTATUS XML"
+  },
+  {
+   "check": "S. 4440: cosponsors in cosponsors.js vs findings.js",
+   "value": "1 ({'D': 1}) vs 1 ({'R': 0, 'D': 1, 'I': 0}); roles {'sponsor': 1, 'original': 1}",
+   "ok": true,
+   "detail": "fetched 2026-10-05 from govinfo BILLSTATUS XML"
+  }
+ ],
+ "zipfinder": [
+  {
+   "check": "find.html result equals the method recomputed in Python for 30 ZIP codes",
+   "value": "30 of 30 agree",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "ZIP estimate (straight-line \u00d7 1.2) vs the county's road-network trials-within-60 (informational; different methods)",
+   "value": "ratio median 1.00, p10 0.69, p90 1.34 over 29 ZIPs",
+   "ok": null,
+   "detail": "28169:190/193.1; 14712:41/90.1; 49659:51/51.0; 25030:21/21.0; 97204:309/308.9; 84743:0/0.0; 92321:438/666.8; 71369:3/3.0; 42321:8/7.3; 19954:36/90.1; 95638:168/168.4; 07012:1267/1257.9"
+  }
+ ],
+ "pages": [
+  {
+   "check": "figures agree across index / community / brief / act and with the tract recomputation (8 counties, 3 districts, 2 states: 13021, 01029, 29033, 17121, 47013, 48181, 20081, 28147, 2907, 3301, 4209, MS, WY)",
+   "value": "13 places; 0 disagreements",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "health": [
+  {
+   "check": "13 pages \u00d7 2 sizes: JavaScript errors",
+   "value": "0 pages with errors",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "horizontal overflow",
+   "value": "0 pages",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "axe-core WCAG 2 A/AA violations",
+   "value": "0",
+   "ok": true,
+   "detail": null
+  }
+ ]
+}
