@@ -34,6 +34,23 @@ for _h in ("Objective (primary).", "Output.", "This is not a recommendation"): M
 SITECODE = re.compile(r"\(?\s*(site|study site|local institution|investigative site|clinical site|id|site id|site number|site #)\s*[-#:]?\s*\d+[a-z]?\s*\)?|\(\s*\d{3,6}\s*\)|/\s*id#?\s*\d+|\bsite\s+\d{2,6}\b", re.I)
 def norm(x):
     y = SITECODE.sub(" ", str(x)); y = re.sub(r"[^a-z0-9 ]", " ", y.lower()); return re.sub(r"\s+", " ", y).strip()
+# Registry city spellings that are not the Census Gazetteer's: consolidated cities listed under their legal names, and common short forms.
+CITY_ALIAS = {("KY", "lexington"): "lexington-fayette", ("TN", "nashville"): "nashville-davidson", ("KY", "louisville"): "louisville/jefferson county",
+              ("HI", "honolulu"): "urban honolulu", ("GA", "augusta"): "augusta-richmond county", ("GA", "athens"): "athens-clarke county",
+              ("GA", "macon"): "macon-bibb county", ("MT", "butte"): "butte-silver bow", ("ID", "boise"): "boise city", ("CA", "ventura"): "san buenaventura (ventura)",
+              ("DC", "washington d.c"): "washington", ("DC", "washington dc"): "washington", ("DC", "washington, d.c"): "washington",
+              ("NY", "new york city"): "new york"}   # (the boroughs are not Gazetteer places and have no single county here, so they are left as written)
+def city_keys(state, city):
+    """Gazetteer keys to try for a registry city string, in order: as written (lower-cased, trailing punctuation dropped), the legal
+    name of a consolidated city, then Saint/St., Ft./Fort and Mt./Mount spelled the other way. The Gazetteer writes "St. Louis",
+    "Fort Worth" and "Mount Vernon"; the registry writes all of "Saint Louis", "St Louis" and "St. Louis"."""
+    c = re.sub(r"\s+", " ", str(city or "").strip().lower()).strip(" .,"); out = [c]
+    a = CITY_ALIAS.get((state, c))
+    if a: out.append(a)
+    for pat, rep in ((r"\bsaint ", "st. "), (r"\bst ", "st. "), (r"\bst\. ", "saint "), (r"\bft\.? ", "fort "), (r"\bfort ", "ft. "), (r"\bmt\.? ", "mount "), (r"\bmount ", "mt. ")):
+        d = re.sub(pat, rep, c)
+        if d != c and d not in out: out.append(d)
+    return out
 def to5070(lon, lat):
     p = gpd.GeoSeries(gpd.points_from_xy(lon, lat), crs=4326).to_crs(5070); return np.column_stack([p.x.values, p.y.values])
 
@@ -57,7 +74,10 @@ class SiteLocator:
         self.place = {(a, b): (float(c), float(d)) for a, b, c, d in zip(gz.state, gz.place, gz.lat, gz.lon)}
 
     def city(self, state, city):
-        return self.place.get((state, str(city).strip().lower()))
+        for k in city_keys(state, city):
+            v = self.place.get((state, k))
+            if v: return v
+        return None
 
     def by_zip(self, zip5, state, city):
         """(lat, lon, how) for a ZIP that has a centroid; how is "zip_centroid" or "city_centroid_large_zip". None if the ZIP is unknown."""
