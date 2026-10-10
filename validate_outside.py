@@ -7,7 +7,7 @@ What it checks (each pass; sampled checks use --seed so that repeated passes dra
   2. Coverage probe: a broader registry search (the MeSH-expanded condition "neoplasms", same filters) is compared with the site's
      keyword search; a seeded sample of the studies only the broader search returns is printed for review.
   3. Headline figures recomputed from out_adult55/tract_access.csv (population-weighted over census tracts) with the USDA rural-urban
-     codes joined from data/ref, and compared with data.js, findings.js, community.js and the README's headline block.
+     codes joined from data/ref, and compared with data.js, findings.js, community.js and the README's headline block; medians are over residents with a road route.
   4. Physical constraints on road distances: road miles to the nearest NCI center and broad menu must be at least the straight-line
      distance (never shorter); the road / straight-line ratio distribution.
   5. Site locations: a seeded sample of registry site rows; the ZIP's Census center must fall in the assigned county's polygon (or
@@ -210,7 +210,7 @@ def headline_recompute(D, FI, CM):
     for k, v in got.items():
         a = nat.get(k); b = fn.get(k)
         ok = (a is None or a == v) and (b is None or b == v)
-        rec("headline", f"{k}: recomputed from tracts vs data.js / findings.js", f"{v} vs {a} / {b}", ok, "medians here exclude no-route tracts (the documented rule); see the medians check below" if k in ("medn", "medb") and not ok else None)
+        rec("headline", f"{k}: recomputed from tracts vs data.js / findings.js", f"{v} vs {a} / {b}", ok)
     # rural / urban from the USDA file
     ru = pd.read_csv(REF / "Ruralurbancontinuumcodes2023.csv", dtype=str); ru = ru[ru.Attribute == "RUCC_2023"]; code = dict(zip(ru.FIPS, ru.Value.astype(int)))
     ru13 = pd.read_csv(REF / "ruralurbancodes2013.csv", dtype=str, encoding="latin-1") if (REF / "ruralurbancodes2013.csv").exists() else None
@@ -220,26 +220,28 @@ def headline_recompute(D, FI, CM):
         col = [c for c in ru13.columns if "RUCC" in c.upper()][0]; fcol = [c for c in ru13.columns if "FIPS" in c.upper()][0]
         code13 = dict(zip(ru13[fcol].str.zfill(5), pd.to_numeric(ru13[col], errors="coerce")))
         tr["rucc"] = tr.rucc.fillna(tr.county_fips.map(code13))
-    def wmed_all(c, frame):   # tract_metrics_us.py's definition: every tract, the 999 no-route sentinel included
-        s_ = frame.sort_values(c); cw = s_.pop55.cumsum(); return float(s_.loc[cw >= cw.iloc[-1] / 2, c].iloc[0])
+    # medians published for the nation, every state and every district must equal the rule used everywhere since 9 October 2026:
+    # population-weighted over residents with a road route; "no route" only when no resident has one (build_rucc.py and tract_metrics_us.py agree)
     diffs = []
-    for c, lab in (("road_mi_nci", "medn"), ("road_mi_broad", "medb")):
-        a, b = round(wmed(c)), round(wmed_all(c, tr))
-        if a != b: diffs.append(f"nation {lab}: {a} excluding no-route tracts vs {b} including them (published {nat.get(lab)})")
-        for stf, g in tr.groupby(tr.county_fips.str[:2]):
-            if (g[c] >= 999).any():
-                a, b = wmed(c, g), wmed_all(c, g)
-                if a != a: diffs.append(f"state {stf} {lab}: no tract has a road route (excluding rule gives no median; including rule gives {round(b)})"); continue
-                if round(a) != round(b): diffs.append(f"state {stf} {lab}: {round(a)} vs {round(b)}")
+    fips_of = {}
+    with open(REF / "Ruralurbancontinuumcodes2023.csv", newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f): fips_of[r["State"]] = r["FIPS"][:2]
+    for c, lab in (("road_mi_nci", "medn"), ("road_mi_broad", "medb"), ("road_mi_lim", "medl")):
+        v = wmed(c); exp = None if v != v else round(v)
+        if nat.get(lab) != exp: diffs.append(f"nation {lab}: published {nat.get(lab)}, rule gives {exp}")
+        for usps, g in D["state_data"].items():
+            t = tr[tr.county_fips.str[:2] == fips_of.get(usps, "??")]
+            if not len(t): continue
+            v = wmed(c, t); exp = None if v != v else round(v)
+            if g.get(lab) != exp: diffs.append(f"state {usps} {lab}: published {g.get(lab)}, rule gives {exp}")
     reld = pd.read_csv(REF / "tract_cd119.csv", dtype={"tract": str, "cd_geoid": str}); reld["share"] = reld.share.astype(float)
     md = reld.merge(tr, on="tract", how="inner"); md["pop55"] = md.pop55 * md.share
-    for c, lab in (("road_mi_nci", "medn"), ("road_mi_broad", "medb")):
+    for c, lab in (("road_mi_nci", "medn"), ("road_mi_broad", "medb"), ("road_mi_lim", "medl")):
         for cd, g in md.groupby("cd_geoid"):
-            if (g[c] >= 999).any() and g.pop55.sum() > 0:
-                a, b = wmed(c, g), wmed_all(c, g)
-                if a != a: diffs.append(f"district {cd} {lab}: no route for the median resident (published as no route)" if b >= 999 else f"district {cd} {lab}: no tract has a route vs {round(b)}"); continue
-                if round(a) != round(b): diffs.append(f"district {cd} {lab}: {round(a)} vs {round(b)}")
-    rec("headline", "medians: the documented rule excludes tracts with no road route (build_rucc.py); tract_metrics_us.py includes them as 999 — places where the two rules give different medians", f"{len(diffs)}", len(diffs) == 0, "; ".join(diffs))
+            if cd not in D["districts"] or g.pop55.sum() == 0: continue
+            v = wmed(c, g); exp = None if v != v else round(v)
+            if D["districts"][cd].get(lab) != exp: diffs.append(f"district {cd} {lab}: published {D['districts'][cd].get(lab)}, rule gives {exp}")
+    rec("headline", "medians published for the nation, 51 states and 436 districts equal the one rule (over residents with a road route) recomputed from tracts", f"{len(diffs)} differences", len(diffs) == 0, "; ".join(diffs[:20]))
     rec("headline", "counties without a 2023 rural-urban code (2013 fallback)", f"{len(missing)}: {', '.join(sorted(missing)[:12])}", None)
     metro = tr.rucc <= 3; nonm = tr.rucc >= 4
     def grp(m):

@@ -39,20 +39,20 @@ def main():
     districts = {}
     for k, d in DI.items():
         bid = CO["district_map"].get(k); ru = RU["districts"].get(k) or {}
-        districts[k] = {"st": d["st"], "cd": d["cd"], "p": d["p"], "l20": d["l20"], "z60": d["z60"], "t60": d["t60"], "g60n": d["g60n"], "g60b": d["g60b"], "medn": d["medn"], "medb": d["medb"],
+        districts[k] = {"st": d["st"], "cd": d["cd"], "p": d["p"], "l20": d["l20"], "z60": d["z60"], "t60": d["t60"], "g60n": d["g60n"], "g60b": d["g60b"], "medn": d["medn"], "medb": d["medb"], "nrn": d.get("nrn", 0),
                         "nr": d.get("nr", 0), "member": d["member"], "party": d["party"], "bio": bid, "nm": ru.get("nonmetro_pct"), "ct": (d.get("bd") or {}).get("ct"), "counties": d.get("counties", []),
                         "mnci": d.get("mnci"), "mbroad": d.get("mbroad")}
     states = {}
     for st, g in SD.items():
         ru = RU["states"].get(st) or {}; bs = BU["summary"]["states"].get(st) or {}; ms = (MO.get("summary") or {}).get("states", {}).get(st) or {}
         met, non = ru.get("metro") or {}, ru.get("nonmetro") or {}
-        states[st] = {"name": g["name"], "fips": g["fips"], "p": g["p"], "l20": g["l20"], "z60": g["z60"], "t60": g["t60"], "g60n": g["g60n"], "g60b": g["g60b"], "medn": g["medn"], "medb": g["medb"], "nr": g.get("nr", 0),
+        states[st] = {"name": g["name"], "fips": g["fips"], "p": g["p"], "l20": g["l20"], "z60": g["z60"], "t60": g["t60"], "g60n": g["g60n"], "g60b": g["g60b"], "medn": g["medn"], "medb": g["medb"], "nr": g.get("nr", 0), "nrn": g.get("nrn", 0),
                       "ndist": g["ndist"], "counties": g["counties"], "cwt": g["counties_with_trials"], "broad": g["broad"], "limited": g["limited"], "trials": g["trials"], "mnci": g.get("mnci"),
                       "ct": (g.get("bd") or {}).get("ct"), "rural": {"metro": [met.get("p"), met.get("l20"), met.get("z60")], "nonmetro": [non.get("p"), non.get("l20"), non.get("z60")]},
                       "burden": [bs.get("hb_la_counties"), bs.get("hb_la_pop55"), bs.get("counties_classified")], "mort": [ms.get("hh_counties"), ms.get("hh_pop55"), ms.get("hh_deaths")],
                       "senators": [{"name": name_of.get(b, b), "party": CO["members"][b]["party"], "bio": b} for b in CO["senators"].get(st, []) if b in CO["members"]]}
     bills = {k: {**{f: b.get(f) for f in ("congress", "type", "number", "label", "short", "title", "introduced", "latest_action", "n_cosponsors", "n_original", "parties", "url", "cosponsors_url", "topic")}, "sponsor": name_of.get(b.get("sponsor"), b.get("sponsor")), "sponsor_bio": b.get("sponsor")} for k, b in CO["bills"].items()}
-    nat = {**{k: meta["nat_core"][k] for k in ("p", "nt", "l20", "z60", "t60", "g60n", "g60b", "medn", "medb", "nr", "mnci", "mbroad")}, "ct": meta["nat_core"]["bd"]["ct"],
+    nat = {**{k: meta["nat_core"][k] for k in ("p", "nt", "l20", "z60", "t60", "g60n", "g60b", "medn", "medb", "nr", "nrn", "mnci", "mbroad")}, "ct": meta["nat_core"]["bd"]["ct"],
            "rural": {"metro": [RU["nat"]["metro"]["p"], RU["nat"]["metro"]["l20"], RU["nat"]["metro"]["z60"]], "nonmetro": [RU["nat"]["nonmetro"]["p"], RU["nat"]["nonmetro"]["l20"], RU["nat"]["nonmetro"]["z60"]]},
            "burden": [BU["summary"]["nat"]["hb_la_counties"], BU["summary"]["nat"]["hb_la_pop55"], BU["summary"]["nat"]["counties_classified"]],
            "mort": [MO["summary"]["nat"]["hh_counties"], MO["summary"]["nat"]["hh_pop55"], MO["summary"]["nat"]["hh_deaths"]]}
