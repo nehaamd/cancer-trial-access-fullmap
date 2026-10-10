@@ -58,10 +58,12 @@ def main():
         if z: lat.append(z[0]); lon.append(z[1]); how.append(z[2]); continue
         if c:
             if city_ok: lat.append(c[0]); lon.append(c[1]); how.append("city_centroid"); continue
-            lat.append(la0); lon.append(lo0); how.append("county_centroid_city_disagrees"); continue
+            # the city lies far from the assigned county: the row is not located (a point at the county center would be a phantom site)
+            lat.append(np.nan); lon.append(np.nan); how.append("unlocated_city_disagrees"); continue
         lat.append(la0); lon.append(lo0); how.append("county_centroid")
     sites["lat"], sites["lon"], sites["geocode"] = lat, lon, how
     log["site_rows"] = len(sites); log["geocode"] = sites.geocode.value_counts().to_dict()
+    unloc = sites.lat.isna(); log["unlocated_rows"] = int(unloc.sum()); sites = sites[~unloc].copy()   # rows with no defensible location carry no site point
     # merge coincident locations into site points
     sites["pt"] = (sites.lat.round(4).astype(str) + "," + sites.lon.round(4).astype(str))
     pts = sites.groupby("pt").agg(lat=("lat", "first"), lon=("lon", "first"), county_fips=("county_fips", "first"), geocode=("geocode", "first"),

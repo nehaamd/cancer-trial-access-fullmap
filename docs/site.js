@@ -49,15 +49,18 @@ window.SITE = (function () {
   // children are the heading (h2) and its content; keepOpen: indexes left open. Laptop and tablet layouts are untouched.
   function foldOnPhone(containers, keepOpen) {
     if (!window.matchMedia('(max-width:640px)').matches) return;
+    // the heading stays a heading for assistive technology; a button inside it carries the expanded state and the keyboard behaviour
+    const ensureBtn = (hh, on) => { let b = hh.querySelector(':scope > button.fold-btn'); if (!b) { b = document.createElement('button'); b.type = 'button'; b.className = 'fold-btn'; while (hh.firstChild) b.appendChild(hh.firstChild); hh.appendChild(b); } b.setAttribute('aria-expanded', String(on)); return b; };
     containers.forEach((box, i) => { const h = box.querySelector(':scope > h2'); if (!h || box.dataset.folded) return; box.dataset.folded = '1'; box.classList.add('fold');
-      if ((keepOpen || []).includes(i)) box.classList.add('open'); h.setAttribute('role', 'button'); h.setAttribute('tabindex', '0'); h.setAttribute('aria-expanded', String(box.classList.contains('open')));
+      if ((keepOpen || []).includes(i)) box.classList.add('open'); ensureBtn(h, box.classList.contains('open'));
       // delegated, so a page that re-renders the section's content keeps working
-      const flip = () => { const on = !box.classList.contains('open'); box.classList.toggle('open', on); const hh = box.querySelector(':scope > h2'); if (hh) { hh.setAttribute('role', 'button'); hh.setAttribute('tabindex', '0'); hh.setAttribute('aria-expanded', String(on)); } };
+      const flip = () => { const on = !box.classList.contains('open'); box.classList.toggle('open', on); const hh = box.querySelector(':scope > h2'); if (hh) ensureBtn(hh, on); };
       const isHead = t => { const hh = t.closest('h2'); return hh && hh.parentElement === box; };
-      box.addEventListener('click', e => { if (isHead(e.target)) flip(); }); box.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && isHead(e.target)) { e.preventDefault(); flip(); } }); });
-    const openHash = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); if (!t) return; const box = t.closest('.fold') || (t.querySelector && t.querySelector(':scope > .fold')); if (box && !box.classList.contains('open')) { box.classList.add('open'); const h = box.querySelector(':scope > h2'); if (h) h.setAttribute('aria-expanded', 'true'); } setTimeout(() => t.scrollIntoView({ block: 'start' }), 30); };
+      box.addEventListener('click', e => { if (isHead(e.target)) flip(); }); });
+    const openHash = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); if (!t) return; const box = t.closest('.fold') || (t.querySelector && t.querySelector(':scope > .fold')); if (box && !box.classList.contains('open')) { box.classList.add('open'); const h = box.querySelector(':scope > h2'); const b = h && h.querySelector(':scope > button.fold-btn'); if (b) b.setAttribute('aria-expanded', 'true'); } setTimeout(() => t.scrollIntoView({ block: 'start' }), 30); };
     openHash(); window.addEventListener('hashchange', openHash); }
   const plural = (n, one, many) => n === 1 ? one : (many || one + 's');
+  const listJoin = a => a.length <= 1 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "A, B and C"
   function ordinal(n) { const v = n % 100, s = ['th', 'st', 'nd', 'rd']; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
 
   // Header: on a phone the page links sit behind a Menu button (the links stay visible without JavaScript);
@@ -77,5 +80,5 @@ window.SITE = (function () {
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireHeader); else wireHeader();
 
-  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, ordinal };
+  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal };
 })();

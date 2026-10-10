@@ -344,6 +344,19 @@ def site_locations(D, GEO, F, seed, nsample):
             if d > 40: far_city.append((r.nct_id, r.facility[:40], r.city, r.state, r.zip, round(d), r.assign_method))
     rec("sites", f"sampled site rows whose ZIP center lies in the assigned county (or the Census ZCTA→county agrees)", f"{checked - len(out_poly)} of {checked} ({no_zcta} rows without a ZCTA center skipped)", len(out_poly) == 0, "outside: " + str(out_poly[:10]) if out_poly else None)
     rec("sites", "sampled site rows whose ZIP center is within 40 miles of the registry's stated city", f"{city_checked - len(far_city)} of {city_checked} with a gazetteer match", len(far_city) == 0, "far: " + str(far_city[:10]) if far_city else None)
+    # every row (not a sample) whose county came from the ZIP's first three digits: the stated city must lie within 40 miles of that
+    # county's population center. A row that fails was drawn at the county center by route_sites_us.py as a site that is not there
+    # (Tuscola County MI, Oct 2026: 31 trial rows for a Tawas City hospital listed with ZIP 48764); metrics_us.py now lets the city win.
+    z3 = qc[qc.assign_method.isin(("zip3", "city_over_zip3"))]; z3_far = []; z3_judged = 0
+    for r in z3.itertuples():
+        cands = gaz.get((r.state, r.city.lower().strip())) or []; c = cm.loc[r.county_fips] if r.county_fips in cm.index else None
+        if not cands or c is None: continue
+        z3_judged += 1; d = min(miles(g, (c.lat, c.lon)) for g in cands)
+        if d > 40: z3_far.append((r.nct_id, r.city, r.state, r.zip, r.county_fips, round(d)))
+    rec("sites", "rows assigned by the ZIP's first three digits whose stated city lies within 40 miles of the assigned county (all such rows)", f"{z3_judged - len(z3_far)} of {z3_judged} judged ({len(z3) - z3_judged} without a gazetteer match)", len(z3_far) == 0, ("far: " + str(sorted(z3_far, key=lambda x: -x[5])[:8]) + " — clears at the next refresh (metrics_us.py city_over_zip3)") if z3_far else None)
+    if (OUT / "site_geocode_qc.csv").exists():
+        gq = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); ncc = int((gq.geocode == "county_centroid_city_disagrees").sum())
+        rec("sites", "site rows drawn at a county center although the stated city lies elsewhere (phantom sites)", f"{ncc} rows; {int((gq.geocode == 'county_centroid').sum())} more at a county center because ZIP and city are both unknown", ncc == 0, "route_sites_us.py now leaves such rows unlocated; clears at the next refresh" if ncc else None)
 
 # ---------------------------------------------------------------- 6. ZIP finder ----------------------------------------------------------------
 def zip_finder(D, F, tr, seed, nzips, port, browser):

@@ -319,7 +319,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 10001,Kent,10,5,0.2,1,"Philadelphia, Pennsylvania",78.9,1.86,"Sussex, Delaware",40.6,0.95,Abramson Cancer Center (Penn),73.5,1.71,69.8,41.3,67.6,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
 10003,New Castle,10,85,0.3,1,"Philadelphia, Pennsylvania",37.6,0.94,"New Castle, Delaware",0.0,0.0,Abramson Cancer Center (Penn),32.2,0.8,41.5,0.0,36.2,Abramson Cancer Center (Penn)
 10005,Sussex,10,32,1.7,1,"Baltimore, Maryland",101.9,2.32,"Sussex, Delaware",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,100.5,2.29,99.0,0.0,96.7,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
-11001,District of Columbia,11,208,0.3,1,"District of Columbia, District of Columbia",0.0,0.0,"District of Columbia, District of Columbia",0.0,0.0,Georgetown Lombardi Comprehensive Cancer Center,6.3,0.15,0.0,0.0,5.0,Georgetown Lombardi Comprehensive Cancer Center
+11001,District of Columbia,11,208,0.3,1,"District of Columbia",0.0,0.0,"District of Columbia",0.0,0.0,Georgetown Lombardi Comprehensive Cancer Center,6.3,0.15,0.0,0.0,5.0,Georgetown Lombardi Comprehensive Cancer Center
 12001,Alachua,12,80,0.5,1,"Duval, Florida",74.8,1.65,"Alachua, Florida",0.0,0.0,University of Florida Health Cancer Institute,5.1,0.12,76.4,0.0,4.0,University of Florida Health Cancer Institute
 12003,Baker,12,0,1.0,1,"Duval, Florida",35.5,0.76,"Duval, Florida",35.5,0.76,Mayo Clinic Cancer Center – Jacksonville,46.4,1.0,40.4,40.4,51.8,Mayo Clinic Cancer Center – Jacksonville
 12005,Bay,12,1,0.1,1,"Duval, Florida",263.1,4.81,"Mobile, Alabama",169.2,3.46,University of Florida Health Cancer Institute,235.6,5.01,285.5,183.2,243.7,University of Florida Health Cancer Institute
@@ -1196,11 +1196,11 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 24001,Allegany,24,13,0.6,1,"Allegheny, Pennsylvania",104.5,2.49,"Monongalia, West Virginia",67.6,1.45,UPMC Hillman Cancer Center,102.6,2.26,99.8,72.6,98.2,UPMC Hillman Cancer Center
 24003,Anne Arundel,24,38,1.4,1,"Baltimore, Maryland",18.5,0.43,"Anne Arundel, Maryland",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,17.0,0.38,20.2,0.0,18.6,UM Greenebaum Comprehensive Cancer Center
 24005,Baltimore,24,50,0.3,1,"Baltimore, Maryland",4.3,0.09,"Baltimore, Maryland",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,6.0,0.13,4.5,0.0,6.1,UM Greenebaum Comprehensive Cancer Center
-24009,Calvert,24,0,0.4,1,"District of Columbia, District of Columbia",44.7,1.02,"Prince George's, Maryland",39.2,0.87,Georgetown Lombardi Comprehensive Cancer Center,49.2,1.12,42.5,37.1,46.6,Georgetown Lombardi Comprehensive Cancer Center
+24009,Calvert,24,0,0.4,1,"District of Columbia",44.7,1.02,"Prince George's, Maryland",39.2,0.87,Georgetown Lombardi Comprehensive Cancer Center,49.2,1.12,42.5,37.1,46.6,Georgetown Lombardi Comprehensive Cancer Center
 24011,Caroline,24,0,0.2,1,"Baltimore, Maryland",63.7,1.47,"Sussex, Delaware",38.7,0.85,UM Greenebaum Comprehensive Cancer Center,62.4,1.44,62.5,36.7,60.2,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
 24013,Carroll,24,10,0.1,1,"Baltimore, Maryland",29.6,0.68,"Baltimore, Maryland",28.8,0.68,UM Greenebaum Comprehensive Cancer Center,29.6,0.67,29.8,27.1,30.5,UM Greenebaum Comprehensive Cancer Center
 24015,Cecil,24,9,0.1,1,"Baltimore, Maryland",44.0,1.0,"New Castle, Delaware",19.0,0.39,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins),42.5,0.98,50.2,20.0,49.2,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
-24017,Charles,24,0,0.1,1,"District of Columbia, District of Columbia",29.3,0.7,"Prince George's, Maryland",28.3,0.69,Georgetown Lombardi Comprehensive Cancer Center,33.8,0.8,27.6,27.5,29.3,Georgetown Lombardi Comprehensive Cancer Center
+24017,Charles,24,0,0.1,1,"District of Columbia",29.3,0.7,"Prince George's, Maryland",28.3,0.69,Georgetown Lombardi Comprehensive Cancer Center,33.8,0.8,27.6,27.5,29.3,Georgetown Lombardi Comprehensive Cancer Center
 24019,Dorchester,24,0,1.1,1,"Baltimore, Maryland",81.2,1.82,"Sussex, Delaware",48.5,1.07,UM Greenebaum Comprehensive Cancer Center,79.8,1.8,70.6,44.7,70.9,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
 24021,Frederick,24,15,0.8,1,"Montgomery, Maryland",33.0,0.67,"Montgomery, Maryland",33.0,0.67,Georgetown Lombardi Comprehensive Cancer Center,44.9,0.88,33.4,33.4,46.7,Georgetown Lombardi Comprehensive Cancer Center
 24023,Garrett,24,0,0.9,1,"Allegheny, Pennsylvania",90.1,2.11,"Monongalia, West Virginia",46.2,0.93,UPMC Hillman Cancer Center,92.5,2.12,88.3,42.8,87.4,UPMC Hillman Cancer Center
@@ -1208,9 +1208,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 24027,Howard,24,33,0.2,1,"Baltimore, Maryland",17.3,0.42,"Howard, Maryland",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,15.6,0.39,17.2,0.0,16.2,UM Greenebaum Comprehensive Cancer Center
 24029,Kent,24,0,0.3,1,"Baltimore, Maryland",68.7,1.56,"New Castle, Delaware",44.1,0.9,UM Greenebaum Comprehensive Cancer Center,67.3,1.53,36.4,36.4,34.4,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
 24031,Montgomery,24,196,0.3,1,"Montgomery, Maryland",0.0,0.0,"Montgomery, Maryland",0.0,0.0,Georgetown Lombardi Comprehensive Cancer Center,16.3,0.4,0.0,0.0,14.2,Georgetown Lombardi Comprehensive Cancer Center
-24033,Prince George's,24,25,0.2,1,"District of Columbia, District of Columbia",9.9,0.21,"Prince George's, Maryland",0.0,0.0,Georgetown Lombardi Comprehensive Cancer Center,15.6,0.34,8.1,0.0,13.0,Georgetown Lombardi Comprehensive Cancer Center
+24033,Prince George's,24,25,0.2,1,"District of Columbia",9.9,0.21,"Prince George's, Maryland",0.0,0.0,Georgetown Lombardi Comprehensive Cancer Center,15.6,0.34,8.1,0.0,13.0,Georgetown Lombardi Comprehensive Cancer Center
 24035,Queen Anne's,24,0,1.2,1,"Baltimore, Maryland",47.1,1.08,"Anne Arundel, Maryland",37.3,0.8,UM Greenebaum Comprehensive Cancer Center,45.8,1.05,38.7,29.6,36.4,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
-24037,St. Mary's,24,0,0.9,1,"District of Columbia, District of Columbia",57.7,1.39,"Prince George's, Maryland",56.6,1.38,Georgetown Lombardi Comprehensive Cancer Center,62.1,1.49,57.4,53.8,60.5,Georgetown Lombardi Comprehensive Cancer Center
+24037,St. Mary's,24,0,0.9,1,"District of Columbia",57.7,1.39,"Prince George's, Maryland",56.6,1.38,Georgetown Lombardi Comprehensive Cancer Center,62.1,1.49,57.4,53.8,60.5,Georgetown Lombardi Comprehensive Cancer Center
 24039,Somerset,24,0,1.2,1,"Baltimore, Maryland",127.6,2.88,"Sussex, Delaware",55.2,1.23,UM Greenebaum Comprehensive Cancer Center,126.2,2.85,104.7,51.3,109.0,Georgetown Lombardi Comprehensive Cancer Center
 24041,Talbot,24,7,0.6,1,"Baltimore, Maryland",61.6,1.41,"Anne Arundel, Maryland",51.8,1.13,UM Greenebaum Comprehensive Cancer Center,60.3,1.38,56.3,41.2,54.2,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
 24043,Washington,24,0,0.1,1,"Montgomery, Maryland",53.1,1.09,"Montgomery, Maryland",53.1,1.09,Georgetown Lombardi Comprehensive Cancer Center,65.0,1.3,58.8,58.8,71.2,Georgetown Lombardi Comprehensive Cancer Center
@@ -2826,7 +2826,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 51007,Amelia,51,0,0.3,1,"Richmond, Virginia",37.6,0.82,"Chesterfield, Virginia",27.6,0.58,VCU Massey Comprehensive Cancer Center,36.8,0.81,37.1,28.3,39.5,VCU Massey Comprehensive Cancer Center
 51009,Amherst,51,0,0.6,1,"Charlottesville, Virginia",54.4,1.27,"Charlottesville, Virginia",54.4,1.27,University of Virginia Cancer Center,54.0,1.26,58.6,58.6,58.2,University of Virginia Cancer Center
 51011,Appomattox,51,0,0.3,1,"Charlottesville, Virginia",68.4,1.48,"Mecklenburg, Virginia",65.2,1.4,University of Virginia Cancer Center,68.9,1.49,60.3,60.3,59.9,University of Virginia Cancer Center
-51013,Arlington,51,10,0.2,1,"District of Columbia, District of Columbia",7.1,0.21,"District of Columbia, District of Columbia",7.1,0.21,Georgetown Lombardi Comprehensive Cancer Center,6.4,0.16,6.3,6.3,3.6,Georgetown Lombardi Comprehensive Cancer Center
+51013,Arlington,51,10,0.2,1,"District of Columbia",7.1,0.21,"District of Columbia",7.1,0.21,Georgetown Lombardi Comprehensive Cancer Center,6.4,0.16,6.3,6.3,3.6,Georgetown Lombardi Comprehensive Cancer Center
 51015,Augusta,51,5,0.1,1,"Charlottesville, Virginia",34.1,0.71,"Charlottesville, Virginia",34.1,0.71,University of Virginia Cancer Center,33.7,0.7,36.1,36.1,35.8,University of Virginia Cancer Center
 51017,Bath,51,0,1.5,1,"Charlottesville, Virginia",87.0,1.95,"Roanoke, Virginia",74.6,1.83,University of Virginia Cancer Center,86.6,1.94,82.9,62.8,82.5,University of Virginia Cancer Center
 51019,Bedford,51,0,0.1,1,"Charlottesville, Virginia",85.4,2.0,"Roanoke, Virginia",31.4,0.72,University of Virginia Cancer Center,85.0,1.99,88.1,31.5,87.7,University of Virginia Cancer Center
@@ -2868,7 +2868,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 51093,Isle of Wight,51,0,2.4,1,"Richmond, Virginia",77.3,1.63,"Norfolk, Virginia",35.9,0.83,VCU Massey Comprehensive Cancer Center,75.3,1.6,74.2,25.6,72.8,VCU Massey Comprehensive Cancer Center
 51095,James City,51,4,0.6,1,"Richmond, Virginia",49.2,1.1,"Norfolk, Virginia",44.6,0.9,VCU Massey Comprehensive Cancer Center,46.9,0.95,50.5,46.9,48.5,VCU Massey Comprehensive Cancer Center
 51097,King and Queen,51,0,0.2,1,"Richmond, Virginia",46.2,1.0,"Richmond, Virginia",46.2,1.0,VCU Massey Comprehensive Cancer Center,44.0,0.95,40.1,34.6,37.7,VCU Massey Comprehensive Cancer Center
-51099,King George,51,0,0.4,1,"District of Columbia, District of Columbia",59.2,1.34,"Hanover, Virginia",54.8,1.11,VCU Massey Comprehensive Cancer Center,63.1,1.39,46.4,46.4,52.2,Georgetown Lombardi Comprehensive Cancer Center
+51099,King George,51,0,0.4,1,"District of Columbia",59.2,1.34,"Hanover, Virginia",54.8,1.11,VCU Massey Comprehensive Cancer Center,63.1,1.39,46.4,46.4,52.2,Georgetown Lombardi Comprehensive Cancer Center
 51101,King William,51,0,0.4,1,"Richmond, Virginia",30.1,0.65,"Richmond, Virginia",30.1,0.65,VCU Massey Comprehensive Cancer Center,27.9,0.61,30.0,23.4,27.7,VCU Massey Comprehensive Cancer Center
 51103,Lancaster,51,0,1.4,1,"Richmond, Virginia",73.6,1.6,"Richmond, Virginia",73.6,1.6,VCU Massey Comprehensive Cancer Center,71.0,1.44,69.1,64.5,66.6,VCU Massey Comprehensive Cancer Center
 51105,Lee,51,0,0.5,1,"Fayette, Kentucky",161.2,3.57,"Knox, Tennessee",91.3,2.07,Markey Cancer Center (Kentucky),162.0,3.51,141.9,85.5,143.2,Markey Cancer Center (Kentucky)
@@ -2915,7 +2915,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 51195,Wise,51,2,0.1,1,"Fayette, Kentucky",169.0,4.13,"Knox, Tennessee",126.0,2.94,Markey Cancer Center (Kentucky),168.9,4.15,152.2,122.7,153.5,Markey Cancer Center (Kentucky)
 51197,Wythe,51,12,1.5,1,"Forsyth, North Carolina",86.7,1.81,"Roanoke, Virginia",76.2,1.39,Wake Forest Baptist Comprehensive Cancer Center,86.9,1.82,86.5,79.1,86.5,Wake Forest Baptist Comprehensive Cancer Center
 51199,York,51,0,0.7,1,"Richmond, Virginia",67.3,1.41,"Norfolk, Virginia",27.8,0.64,VCU Massey Comprehensive Cancer Center,65.0,1.1,70.7,27.8,68.7,VCU Massey Comprehensive Cancer Center
-51510,Alexandria,51,9,0.1,1,"District of Columbia, District of Columbia",8.7,0.26,"District of Columbia, District of Columbia",8.7,0.26,Georgetown Lombardi Comprehensive Cancer Center,9.0,0.23,9.0,9.0,8.1,Georgetown Lombardi Comprehensive Cancer Center
+51510,Alexandria,51,9,0.1,1,"District of Columbia",8.7,0.26,"District of Columbia",8.7,0.26,Georgetown Lombardi Comprehensive Cancer Center,9.0,0.23,9.0,9.0,8.1,Georgetown Lombardi Comprehensive Cancer Center
 51520,Bristol,51,3,0.3,1,"Forsyth, North Carolina",139.2,3.03,"Knox, Tennessee",116.1,2.03,Wake Forest Baptist Comprehensive Cancer Center,139.3,3.03,134.3,132.8,134.2,Wake Forest Baptist Comprehensive Cancer Center
 51530,Buena Vista,51,0,0.1,1,"Charlottesville, Virginia",67.1,1.24,"Roanoke, Virginia",52.9,1.09,University of Virginia Cancer Center,66.7,1.24,61.6,55.0,61.2,University of Virginia Cancer Center
 51540,Charlottesville,51,154,0.1,1,"Charlottesville, Virginia",0.0,0.0,"Charlottesville, Virginia",0.0,0.0,University of Virginia Cancer Center,0.8,0.02,0.0,0.0,0.4,University of Virginia Cancer Center

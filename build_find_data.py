@@ -6,8 +6,9 @@ pipeline uses to assign sites to counties), sitepoints.csv (site-point coordinat
 
 Writes docs/find_data.js (window.FIND): {zcta: {"77030": [lat, lon, "48201"], ...}, sp: [[lat, lon, "48201"], ...], meta},
 and docs/zip_county.json ({county: [its ZIP codes]}), which the map's search box loads the first time a ZIP code is typed.
-Distances on the page are straight-line from the ZCTA center to the site point, multiplied by 1.20 — the median road /
-straight-line ratio measured on this project's highway network (10th–90th percentile 1.10–1.38) — and labelled as estimates.
+Distances on the page are straight-line from the ZCTA center to the site point, multiplied by 1.20 — a rounded factor; the median
+road / straight-line ratio measured on this project's highway network is 1.18 (10th–90th percentile 1.09–1.34), and the page quotes
+the measured figure from route_log.json — and labelled as estimates.
 """
 import json
 from datetime import date

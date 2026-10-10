@@ -55,7 +55,9 @@ def main():
     nat = {**{k: meta["nat_core"][k] for k in ("p", "nt", "l20", "z60", "t60", "g60n", "g60b", "medn", "medb", "nr", "nrn", "mnci", "mbroad")}, "ct": meta["nat_core"]["bd"]["ct"],
            "rural": {"metro": [RU["nat"]["metro"]["p"], RU["nat"]["metro"]["l20"], RU["nat"]["metro"]["z60"]], "nonmetro": [RU["nat"]["nonmetro"]["p"], RU["nat"]["nonmetro"]["l20"], RU["nat"]["nonmetro"]["z60"]]},
            "burden": [BU["summary"]["nat"]["hb_la_counties"], BU["summary"]["nat"]["hb_la_pop55"], BU["summary"]["nat"]["counties_classified"]],
-           "mort": [MO["summary"]["nat"]["hh_counties"], MO["summary"]["nat"]["hh_pop55"], MO["summary"]["nat"]["hh_deaths"]]}
+           "mort": [MO["summary"]["nat"]["hh_counties"], MO["summary"]["nat"]["hh_pop55"], MO["summary"]["nat"]["hh_deaths"]],
+           "mort_rate": MO["meta"]["us"]["all"]["rate"], "mort_period": MO["meta"]["period"]}   # the US all-sites death rate the pages compare a county with
+    nci_meta = {k: meta["nci"].get(k) for k in ("centers", "locations")} if isinstance(meta.get("nci"), dict) else {}
     CCOLS = ["n", "st", "p", "t", "f", "t60", "f60", "l20", "z60", "tm", "zt", "rn", "nn", "rb", "nbm", "noroad", "ru", "inc", "mort", "d"]
     counties = {cf: [c[k] for k in CCOLS] for cf, c in counties.items()}
     for d in districts.values(): d["ct"] = [d["ct"].get(t) for t in type_keys] if d["ct"] else None
@@ -63,7 +65,7 @@ def main():
     nat["ct"] = [nat["ct"].get(t) for t in type_keys]
     FI = load("findings.js")
     if FI.get("meta", {}).get("pull") == meta.get("pull"): nat["people_l20"], nat["people_z60"] = FI["nat"].get("people_l20"), FI["nat"].get("people_z60")   # same tract sums the map's national card shows
-    out = {"ccols": CCOLS, "meta": {"built": str(date.today()), "registry_data_timestamp": meta.get("registry_data_timestamp"), "pull": meta.get("pull"), "plan": meta.get("plan"), "trials": meta.get("trials"), "members_pull": meta.get("members_pull"),
+    out = {"ccols": CCOLS, "meta": {"built": str(date.today()), "registry_data_timestamp": meta.get("registry_data_timestamp"), "pull": meta.get("pull"), "plan": meta.get("plan"), "trials": meta.get("trials"), "members_pull": meta.get("members_pull"), "nci": nci_meta, "pct_multi": meta.get("pct_multi"),
                     "cosponsors_fetched": CO["meta"].get("fetched"), "cosponsors_note": CO["meta"].get("note"), "topics": CO["meta"].get("topics"), "inc_period": meta["burden"]["period"], "mort_period": MO["meta"]["period"],
                     "inc_median": BU["meta"]["median_all"], "mort_tertile": (MO["meta"].get("tertiles") or {}).get("all"), "types": types, "btypes": btypes, "nat": nat, "bills": bills, "roles": roles, "rucc_labels": RU["meta"]["labels"]},
            "counties": counties, "districts": districts, "states": states}

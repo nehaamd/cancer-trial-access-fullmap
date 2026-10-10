@@ -23,7 +23,9 @@ def w(path, rows):
         wr = csv.DictWriter(f, fieldnames=list(rows[0].keys())); wr.writeheader(); wr.writerows(rows)
 
 
-PLACE_SUFFIXES = (" city", " town", " village", " cdp", " borough", " municipality", " (balance)", " consolidated government", " metro government", " urban county", " unified government", " metropolitan government")
+# legal suffixes stripped from Census place names, compound ones first: "Juneau city and borough" -> Juneau (not "Juneau city and"),
+# "Indianapolis city (balance)" -> Indianapolis, "Nashville-Davidson metropolitan government (balance)" -> Nashville-Davidson
+PLACE_SUFFIXES = (" city and borough", " municipality and borough", " city (balance)", " city", " town", " village", " cdp", " borough", " municipality", " (balance)", " consolidated government", " metro government", " urban county", " unified government", " metropolitan government")
 
 
 def build_gazetteer(s=None):
@@ -36,7 +38,7 @@ def build_gazetteer(s=None):
     for row in csv.DictReader(io.StringIO(zf.read(name).decode("utf-8-sig")), delimiter="\t"):
         row = {k.strip(): (v.strip() if isinstance(v, str) else v) for k, v in row.items()}
         disp = row["NAME"]; nm = disp.lower()
-        for suf in PLACE_SUFFIXES:
+        for suf in PLACE_SUFFIXES:   # in order, each at most once: a compound suffix is listed before its parts
             if nm.endswith(suf): nm = nm[: -len(suf)]; disp = disp[: len(nm)]
         gaz.append({"state": row["USPS"], "place": nm, "geoid": row["GEOID"], "lat": float(row["INTPTLAT"]), "lon": float(row["INTPTLONG"]), "name": disp, "aland_sqmi": float(row.get("ALAND_SQMI") or 0)})
     w(REF / "gazetteer_places.csv", gaz); return len(gaz)

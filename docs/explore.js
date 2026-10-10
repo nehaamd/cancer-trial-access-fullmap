@@ -7,7 +7,7 @@ window.EXPLORE = (function () {
   const pct = v => (v === null || v === undefined || isNaN(v)) ? '—' : (Math.round(v * 10) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const people = n => n === null || n === undefined ? '—' : n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));   // the map's rule (index.html), so the same figure prints the same everywhere
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  const cdLabel = cd => (cd === '0' || cd === '00' || cd === 0 || cd === 'AL') ? 'At large' : String(+cd);
+  const cdLabel = cd => (cd === '0' || cd === '00' || cd === 0 || cd === 'AL' || cd === '98') ? 'At large' : String(+cd);   // 98 is the registry code for DC's delegate seat
   const stName = st => X.states[st] ? X.states[st].name : st;
   const typeLabel = {}; M.types.forEach(([k, l]) => typeLabel[k] = l);
   const typeIndex = {}; M.types.forEach(([k], i) => typeIndex[k] = i);          // position in a by-type array (ct)
@@ -56,7 +56,7 @@ window.EXPLORE = (function () {
       const t = M.mort_tertile; const band = t ? (pl.mort[0] >= t[1] ? 'in the top third of US counties' : pl.mort[0] >= t[0] ? 'in the middle third of US counties' : 'in the bottom third of US counties') : '';
       F.push({ id: 'deaths', num: pl.mort[0], unit: ' per 100,000', hot: t && pl.mort[0] >= t[1] && pl.l20 >= 50,
         text: `age-adjusted cancer death rate, ${M.mort_period} (about ${fmt(pl.mort[1])} deaths a year)${band ? ', ' + band : ''}${pl.mort[2] === 1 ? ' — small numbers, interpret with caution' : ''}.${t && pl.mort[0] >= t[1] && pl.l20 >= 50 ? ' This county is one where cancer deaths are high and trials are far.' : ''}`,
-        cmp: `United States: 143.2 per 100,000`, why: 'A death rate says how heavy the burden of cancer is here; it does not say why. The two measures are shown side by side, never combined into a score.' });
+        cmp: `United States: ${NAT.mort_rate !== undefined ? NAT.mort_rate : '—'} per 100,000`, why: 'A death rate says how heavy the burden of cancer is here; it does not say why. The two measures are shown side by side, never combined into a score.' });
     }
     if (pl.kind !== 'county' && pl.rural) {
       const [mp, ml] = pl.rural.metro, [np_, nl] = pl.rural.nonmetro; if (np_ && mp) F.push({ id: 'rural', num: pct(nl), unit: '%', hot: nl >= 50,
@@ -82,17 +82,20 @@ window.EXPLORE = (function () {
   let IDX = null, PLACES = null, ZIP = null, PLp = null, ZIPp = null;
   function index() { if (IDX) return IDX; IDX = [];
     Object.keys(X.states).forEach(st => IDX.push({ t: 's', k: st, l: X.states[st].name, s: 'State', w: norm(X.states[st].name + ' ' + st), pri: 3 }));
-    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + cdLabel(d.cd) + ' ' + (d.member || '')), pri: 1 }); });
+    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + cdLabel(d.cd) + ' ' + (d.member || '')), m: d.member ? norm(d.member) : '', pri: 1 }); });
+    Object.keys(X.states).forEach(st => (X.states[st].senators || []).forEach(sn => IDX.push({ t: 's', k: st, l: sn.name + ' · ' + X.states[st].name, s: 'Senator (' + sn.party + ') · opens ' + X.states[st].name, w: norm(sn.name + ' ' + X.states[st].name + ' senator'), m: norm(sn.name), pri: 1 })));
     Object.keys(X.counties).forEach(cf => { const c = county(cf); IDX.push({ t: 'c', k: cf, l: c.n + ', ' + c.st, s: 'County · ' + stName(c.st), w: norm(c.n + ' ' + c.st + ' ' + stName(c.st)), pri: 0.6 }); });
     return IDX; }
   const loadPlaces = () => PLp || (PLp = fetch('places.json').then(r => r.ok ? r.json() : null).then(j => { PLACES = []; if (!j) return; Object.entries(j.places).forEach(([st, list]) => list.forEach(([name, cf, size]) => { if (!X.counties[cf]) return; PLACES.push({ t: 'p', k: cf, l: name + ', ' + st, s: 'City or town · opens ' + county(cf).n, w: norm(name + ' ' + st + ' ' + stName(st)), pri: 0.3 + (size || 0) / 10 }); })); }).catch(() => { PLACES = []; }));
   const loadZip = () => ZIPp || (ZIPp = fetch('zip_county.json').then(r => r.json()).then(j => { ZIP = {}; Object.entries(j).forEach(([cf, zs]) => zs.forEach(z => ZIP[z] = cf)); return ZIP; }));
   function search(text, limit) { const t = norm(text); if (!t) return []; const ws = t.split(' ');
-    const score = e => { let sc = 0; for (const w of ws) { if (e.w.split(' ').includes(w)) sc += 6; else if (e.w.includes(' ' + w) || e.w.startsWith(w)) sc += 4; else if (e.w.includes(w)) sc += 1; else return -1; } if (e.w === t || norm(e.l) === t || norm(e.l).startsWith(t)) sc += 10; return sc + e.pri; };
+    const score = e => { let sc = 0; for (const w of ws) { if (e.w.split(' ').includes(w)) sc += 6; else if (e.w.includes(' ' + w) || e.w.startsWith(w)) sc += 4; else if (e.w.includes(w)) sc += 1; else return -1; } if (e.w === t || norm(e.l) === t || norm(e.l).startsWith(t)) sc += 10;
+      if (e.m && ws.some(w => e.m.split(' ').includes(w))) sc += 8;   // a word of the query is a member's name: the seat outranks towns of the same name
+      return sc + e.pri; };
     return index().concat(PLACES || []).map(e => [score(e), e]).filter(x => x[0] > 0).sort((a, b) => b[0] - a[0] || a[1].l.localeCompare(b[1].l)).slice(0, limit || 8).map(x => x[1]); }
   // wire a search box: calls onPick({t,k,l}) with t in s|d|c|p|z (p and z resolve to a county)
   function wireSearch(input, listEl, onPick) { let opts = [], cur = -1;
-    const show = (items, note) => { opts = items; cur = -1; listEl.innerHTML = items.map((e, i) => `<div class="opt" role="option" data-i="${i}"><span><b>${esc(e.l)}</b><span class="sub">${esc(e.s)}</span></span></div>`).join('') + (note ? `<div class="none">${note}</div>` : ''); listEl.hidden = !items.length && !note; input.setAttribute('aria-expanded', String(!listEl.hidden)); listEl.querySelectorAll('.opt').forEach(o => o.addEventListener('mousedown', ev => { ev.preventDefault(); go(opts[+o.dataset.i]); })); };
+    const show = (items, note) => { opts = items; cur = -1; input.removeAttribute('aria-activedescendant'); listEl.innerHTML = items.map((e, i) => `<div class="opt" role="option" id="${input.id}-opt-${i}" aria-selected="false" data-i="${i}"><span><b>${esc(e.l)}</b><span class="sub">${esc(e.s)}</span></span></div>`).join('') + (note ? `<div class="none">${note}</div>` : ''); listEl.hidden = !items.length && !note; input.setAttribute('aria-expanded', String(!listEl.hidden)); listEl.querySelectorAll('.opt').forEach(o => o.addEventListener('mousedown', ev => { ev.preventDefault(); go(opts[+o.dataset.i]); })); };
     const go = e => { if (!e) return; listEl.hidden = true; input.value = e.l; onPick(e); };
     const lookup = () => { const v = input.value.trim();
       if (/^\d{5}$/.test(v)) { loadZip().then(Z => { if (input.value.trim() !== v) return; const cf = Z[v]; if (cf && X.counties[cf]) show([{ t: 'z', k: cf, l: 'ZIP ' + v + ' · ' + county(cf).label, s: 'County where most of this ZIP code’s residents live' }]); else show([], /^00[6-9]|^969/.test(v) ? 'That ZIP code is in a US territory; this site covers the 50 states and the District of Columbia.' : 'No county found for that ZIP code. Try the city or county name.'); }); return; }
@@ -101,7 +104,7 @@ window.EXPLORE = (function () {
     input.addEventListener('input', () => { const p = loadPlaces(); lookup(); p.then(() => { if (document.activeElement === input && !/^\d+$/.test(input.value.trim())) lookup(); }); });
     input.addEventListener('focus', loadPlaces, { once: true });
     input.addEventListener('keydown', ev => { if (listEl.hidden) { if (ev.key === 'Enter') { ev.preventDefault(); const r = search(input.value); if (r.length) go(r[0]); } return; }
-      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') { if (!opts.length) return; ev.preventDefault(); cur = (cur + (ev.key === 'ArrowDown' ? 1 : -1) + opts.length) % opts.length; listEl.querySelectorAll('.opt').forEach((o, i) => o.classList.toggle('on', i === cur)); }
+      if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') { if (!opts.length) return; ev.preventDefault(); cur = (cur + (ev.key === 'ArrowDown' ? 1 : -1) + opts.length) % opts.length; listEl.querySelectorAll('.opt').forEach((o, i) => { o.classList.toggle('on', i === cur); o.setAttribute('aria-selected', String(i === cur)); }); input.setAttribute('aria-activedescendant', `${input.id}-opt-${cur}`); }
       else if (ev.key === 'Enter') { ev.preventDefault(); go(opts[cur >= 0 ? cur : 0]); } else if (ev.key === 'Escape') listEl.hidden = true; });
     input.addEventListener('blur', () => setTimeout(() => { listEl.hidden = true; }, 120)); }
   const pickToPlace = e => e.t === 's' ? state(e.k) : e.t === 'd' ? district(e.k) : county(e.k);

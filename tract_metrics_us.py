@@ -110,6 +110,11 @@ def aggregate(tr):
     rel = pd.read_csv(REF / "tract_cd119.csv", dtype={"tract": str, "cd_geoid": str}); rel["share"] = rel.share.astype(float)
     m = rel.merge(tr, on="tract", how="inner"); m["w"] = m.pop55 * m.share
     tcols = [c for c in tr.columns if c.startswith("t60_")]
+    # each county's average annual cancer cases (State Cancer Profiles, a county figure) are apportioned to an area by the share of the
+    # county's residents 55+ who live in it, as build_tract_context.py does for the published ctx blocks: a district inside one big county
+    # gets its share of the county's cases, not the whole county's, and a county split between districts is counted once in total.
+    # For a state or the nation every tract of a county is present with share 1, so the apportioned sum is the county's own count.
+    cpop = tr.groupby("county_fips").pop55.sum().replace(0, np.nan)
 
     def agg(g):
         W = g.w.sum()
@@ -134,7 +139,7 @@ def aggregate(tr):
         def wm_avail(c):
             m = g[c].notna(); Wm = g.loc[m, "w"].sum(); return (round(float((g.loc[m, c] * g.loc[m, "w"]).sum() / Wm), 1) if Wm > 0 else None, round(100 * float(Wm / W), 1))
         for c in ("acs_no_vehicle", "acs_broadband", "acs_uninsured", "acs_uninsured_55_64", "acs_poverty", "inc_all_rate"): r[c], r[c + "_pop_covered_pct"] = wm_avail(c)
-        r["inc_all_cases_sum"] = int(g.drop_duplicates("county_fips").inc_all_cases.fillna(0).sum()) if "county_fips" in g else None
+        r["inc_all_cases_sum"] = int(round(float((g.inc_all_cases.fillna(0) * g.w / g.county_fips.map(cpop)).fillna(0).sum()))) if "county_fips" in g else None
         return pd.Series(r)
     dist = m.groupby("cd_geoid").apply(agg, include_groups=False).reset_index()
     dist["state_fips"] = dist.cd_geoid.str[:2]; dist["cd"] = dist.cd_geoid.str[2:]
