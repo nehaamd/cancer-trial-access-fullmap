@@ -4,7 +4,7 @@ Facility definition (Tier 1.1): a distinct recruiting facility = distinct (norma
 names are free text, so two spellings of one hospital can count twice and one name can cover two campuses; the count is
 therefore approximate and is labelled as "facilities (registry-listed, deduplicated by name)".
 """
-import json, re
+import gzip, json, re
 import config
 from pathlib import Path
 import numpy as np, pandas as pd, geopandas as gpd
@@ -23,6 +23,17 @@ NOROAD = 999.0
 # of meta.ctx_method. Change it with the year in those scripts' download URLs.
 ACS_RELEASE = {"label": "ACS 2023 5-year", "year": 2023, "span": "2019-2023"}
 SITECODE = re.compile(r"\(?\s*(site|study site|local institution|investigative site|clinical site|id|site id|site number|site #)\s*[-#:]?\s*\d+[a-z]?\s*\)?|\(\s*\d{3,6}\s*\)|/\s*id#?\s*\d+|\bsite\s+\d{2,6}\b", re.I)
+def write_gz(path, blob):
+    """<path>.gz beside <path>: the same bytes gzipped (mtime 0), which the map page fetches when the browser can decompress it (the 6.4 MB
+    tracts60.bin took 34 s on a phone profile). Left alone when it already decompresses to these bytes, so a different zlib elsewhere does
+    not rewrite an unchanged file. (The same function as build_rucc.write_gz, for tract_county.bin.)"""
+    gz = Path(str(path) + ".gz")
+    try:
+        if gzip.decompress(gz.read_bytes()) == blob: return
+    except Exception: pass
+    gz.write_bytes(gzip.compress(blob, compresslevel=9, mtime=0))
+
+
 def norm(x):
     """Facility key: lower-case, sponsor site codes removed ("( Site 0087)", "Local Institution - 0012", "/ID# 12345"), punctuation dropped."""
     y = SITECODE.sub(" ", str(x)); y = re.sub(r"[^a-z0-9 ]", " ", y.lower()); return re.sub(r"\s+", " ", y).strip()
@@ -101,7 +112,11 @@ def main():
         for r_ in pd.read_csv(REF / "site_aliases.csv", dtype=str).fillna("").itertuples(): ALIAS[(r_.county_fips, r_.alias_norm)] = r_.canonical_norm
     sites["fac"] = [ALIAS.get((c, f), f) for c, f in zip(sites.county_fips, sites.fac)]
     PLACEHOLDER = re.compile(r"^(research site|local institution|study site|clinical site|investigational site|investigative site|site|clinical research site|research facility|central recruiting site|recruiting site)$|^\s*$", re.I)
-    fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", lambda s: s.value_counts().index[0]), city=("city", lambda s: s.value_counts().index[0]), zip=("zip", lambda s: s[s.str.len() == 5].value_counts().index[0] if (s.str.len() == 5).any() else ""),
+    # A facility's own ZIP comes from rows that were placed at their own ZIP: a row whose ZIP was a typing error (zip_typo_corrected) or no
+    # usable place (facility_listing) was placed at another ZIP, and its own would print an address that is not there ("Albany Medical
+    # College, Albany" carried 10461, the Bronx ZIP of one mistyped row, until October 2026)
+    sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
+    fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", lambda s: s.value_counts().index[0]), city=("city", lambda s: s.value_counts().index[0]), zip=("zip_own", lambda s: s[s.str.len() == 5].value_counts().index[0] if (s.str.len() == 5).any() else ""),
                                                    trials=("nct_id", lambda s: sorted({j_of[n] for n in s})), n_rows=("nct_id", "size")).reset_index()
     fac["name"] = fac.name.map(clean_name)
     fac["unresolved"] = [int(bool(PLACEHOLDER.match(f)) or code_like(n)) for f, n in zip(fac.fac, fac.name)]
@@ -278,7 +293,7 @@ def main():
     def pad4(b): return b + b"\0" * ((4 - len(b) % 4) % 4)
     blob = struct.pack("<IIIII", 0x54524331, len(tr_), len(split), len(ps), len(state_order)) + tr_.pop55.values.astype("<u4").tobytes() + pad4(state_idx.tobytes()) + pad4(dist_idx.astype("<u2").tobytes())
     blob += b"".join(struct.pack("<IHH", a, b, c) for a, b, c in split) + offsets.astype("<u4").tobytes() + ps.astype("<u2").tobytes()
-    (DOCS / "tracts60.bin").write_bytes(blob); meta["state_order"] = state_order; meta["tracts_bin"] = {"file": "tracts60.bin", "bytes": len(blob), "tracts": int(len(tr_)), "pairs": int(len(ps)), "split_records": len(split)}
+    (DOCS / "tracts60.bin").write_bytes(blob); write_gz(DOCS / "tracts60.bin", blob); meta["state_order"] = state_order; meta["tracts_bin"] = {"file": "tracts60.bin", "bytes": len(blob), "tracts": int(len(tr_)), "pairs": int(len(ps)), "split_records": len(split)}
     data["meta"] = meta
     print("tracts60.bin MB:", round(len(blob) / 1e6, 1), "| pairs", len(ps), "| split", len(split))
     s = json.dumps(data, separators=(",", ":"), ensure_ascii=False); (DOCS / "data.js").write_text("window.DATA=" + s + ";", encoding="utf-8")

@@ -35,6 +35,18 @@ def run(browser=False):
         check("RUCC: nonmetro '<20 within 60 road-mi' share recomputed independently from tract_access.csv", f"{nonmetro_l20:.1f}% vs rucc.js {nm['l20']}%; metro {m['l20']}% (nonmetro / metro ratio {nm['l20'] / m['l20']:.1f}×)", abs(nonmetro_l20 - nm["l20"]) < 0.06)
         sums = {st: g["metro"]["p"] + (g["nonmetro"]["p"] if g["nonmetro"] else 0) for st, g in RU["states"].items() if g["metro"]}; bad = [st for st, p in sums.items() if p != D["state_data"][st]["p"]]
         check("RUCC: state metro + nonmetro populations equal state totals", f"{len(bad)} mismatches" + (f" ({bad})" if bad else ""), not bad)
+        # exact counts behind the shares (n_l20 / n_z60, build_rucc.py), which the map prints as numbers of people instead of share x population
+        pw = tr.pop55.values.astype(float); mt = (code <= 3).values; l20m = (tr.trials_within_60rdmi < 20).values; z60m = (tr.trials_within_60rdmi == 0).values; stf = tr.county_fips.str[:2].values
+        badn, ngroups = [], 0
+        for st, g in [("US", RU["nat"])] + list(RU["states"].items()):
+            sm = np.ones(len(tr), bool) if st == "US" else stf == D["state_data"][st]["fips"]
+            for kind, km in (("metro", mt), ("nonmetro", ~mt)):
+                grp = g.get(kind)
+                if grp is None: continue
+                ngroups += 1
+                if (grp.get("n_l20"), grp.get("n_z60")) != (int(round(pw[sm & km & l20m].sum())), int(round(pw[sm & km & z60m].sum()))): badn.append(f"{st} {kind}")
+        check("RUCC: exact residents 55+ with fewer than 20 / no trials within 60 road-mi (n_l20, n_z60) on every metro and nonmetro group, recounted from tract_access.csv",
+              f"{ngroups} groups, {len(badn)} differ" + (f" ({badn[:6]})" if badn else f"; nation {m.get('n_l20', 0) + nm.get('n_l20', 0):,} short of trials ({nm.get('n_l20', 0):,} nonmetro + {m.get('n_l20', 0):,} metro)"), not badn)
         p = find("tract_county.bin"); buf = p.read_bytes(); magic, n = struct.unpack("<II", buf[:8]); idx = np.frombuffer(buf, "<u2", n, 8); order = RU["meta"]["county_order"]
         back = np.array(order)[idx]; agree = int((back == tr.county_fips.values).sum())
         check("tract_county.bin: every tract maps back to its own county through meta.county_order", f"{agree:,} of {n:,} tracts; {len(order)} counties in order list", magic == 0x54524332 and n == len(tr) and agree == n and len(order) == len(counties))

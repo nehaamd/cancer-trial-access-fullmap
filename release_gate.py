@@ -15,7 +15,7 @@ Checks
      data file built from this pull, changes.js included)
     python3 release_gate.py
 """
-import json, os, subprocess, sys
+import gzip, json, os, subprocess, sys
 from pathlib import Path
 import pandas as pd
 
@@ -113,6 +113,18 @@ pulls = {"data.js": meta.get("pull_utc", "")[:16], "changes.js": CH.get("current
          "community.js": js("community.js")["meta"].get("pull"), "find_data.js": js("find_data.js")["meta"].get("registry_pull")}
 stale = {k: v for k, v in pulls.items() if v != (pull_min if len(v or "") > 10 else pull_min[:10])}
 check("Every page's data file is from this pull (data.js, changes.js, findings.js, community.js, find_data.js)", f"pull {pull_min} UTC" + ("; from another pull: " + ", ".join(f"{k} {v}" for k, v in stale.items()) if stale else "; all agree") + f"; changes.js compares with the pull of {CH.get('previous_pull', '?')[:10]}", not stale and CH.get("trials_current") == meta["trials"])
+# the map page fetches the gzipped tract files first and checks the decompressed length against data.js / rucc.js: each .gz must decompress
+# to its .bin byte for byte, and each .bin must have the length the page expects (a stale .gz would serve the previous refresh's tracts)
+gzn = []
+for name, want in (("tracts60.bin", meta.get("tracts_bin", {}).get("bytes")), ("tract_county.bin", js("rucc.js")["meta"].get("tract_county_bin", {}).get("bytes"))):
+    b_, g_ = find(name, required=False), find(name + ".gz", required=False)
+    if b_ is None or g_ is None: gzn.append(f"{name}{'' if b_ else ' missing'}{'' if g_ else ': no .gz'}"); continue
+    raw = b_.read_bytes()
+    try: same = gzip.decompress(g_.read_bytes()) == raw
+    except Exception: same = False
+    if not same: gzn.append(f"{name}.gz does not decompress to {name}")
+    if len(raw) != want: gzn.append(f"{name} is {len(raw):,} bytes, the payload says {want}")
+check("Compressed tract files (tracts60.bin.gz, tract_county.bin.gz) decompress to the plain files, whose lengths match data.js and rucc.js", "; ".join(gzn) if gzn else "both match", not gzn)
 
 ok = all(r[2] for r in rows)
 md = ["# Release gate", "", f"**{'PASS' if ok else 'FAIL'}** — {sum(1 for r in rows if r[2])}/{len(rows)} checks pass", "", "| Check | Detail | Result |", "|---|---|---|"] + [f"| {n} | {d} | {'✓' if o else '✗'} |" for n, d, o in rows] + [""]

@@ -1,6 +1,6 @@
 # Release gate
 
-**PASS** — 26/26 checks pass
+**PASS** — 27/27 checks pass
 
 | Check | Detail | Result |
 |---|---|---|
@@ -30,3 +30,4 @@
 | Every district's household and incidence figures come from tract tables (build_tract_context.py ran) | 436/436 districts marked ctx_src = tract | ✓ |
 | Published district cancer-case counts equal the apportioned counts in district_metrics_v3.csv | 0 districts differ | ✓ |
 | Every page's data file is from this pull (data.js, changes.js, findings.js, community.js, find_data.js) | pull 2026-10-11 02:41 UTC; all agree; changes.js compares with the pull of 2026-10-05 | ✓ |
+| Compressed tract files (tracts60.bin.gz, tract_county.bin.gz) decompress to the plain files, whose lengths match data.js and rucc.js | both match | ✓ |
