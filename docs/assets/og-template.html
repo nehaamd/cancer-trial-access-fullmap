@@ -20,10 +20,14 @@ p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:440px}
 <p>Americans 55 and older have fewer than 20 recruiting cancer trials within 60 road-miles of home.</p></div>
 <svg id="map" viewBox="0 0 975 610"></svg>
 <div class="url">nehaamd.github.io/cancer-trial-access-fullmap</div><div class="bar"></div>
-<script src="../d3.v7.min.js"></script><script src="../data.js"></script><script src="../geo.js"></script><script src="../burden.js"></script>
+<script src="../d3.v7.min.js"></script><script src="../data.js"></script><script src="../geo.js"></script><script src="../burden.js"></script><script src="../findings.js"></script>
 <script>
 if (location.search.includes('plain')) document.body.classList.add('plain');
-const D=window.DATA,C=D.counties,G=window.GEO;document.getElementById('n').textContent=(Math.round(D.meta.nat_core.p*D.meta.nat_core.l20/100/1e5)/10).toLocaleString(undefined,{maximumFractionDigits:1});
+const D=window.DATA,C=D.counties,G=window.GEO;
+// The headline number is the one the map and the Key findings page print: the tract sum in findings.js (residents 55+ whose own
+// tract has fewer than 20 trials within 60 road-miles), not the rounded national share times the population, which can differ by 0.1 million.
+const FN=window.FINDINGS&&window.FINDINGS.meta&&window.FINDINGS.meta.pull===D.meta.pull?window.FINDINGS.nat:null;
+document.getElementById('n').textContent=((FN&&FN.people_l20?FN.people_l20:D.meta.nat_core.p*D.meta.nat_core.l20/100)/1e6).toFixed(1);
 const proj=d3.geoAlbersUsa().fitSize([959,594],G.counties);proj.translate([proj.translate()[0]+8,proj.translate()[1]+8]);const path=d3.geoPath(proj);
 // The same layer the map opens on: one neutral fill for every county, and a circle per county sized by residents 55+ with fewer than
 // 20 listed trials within 60 road-miles (area proportional to people; 180,000 residents is a 17-unit radius, as in index.html), drawn for

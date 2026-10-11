@@ -27,8 +27,10 @@ window.EXPLORE = (function () {
   function stateOf(pl) { return pl.kind === 'state' ? pl : pl.kind === 'nat' ? null : state(pl.st); }
   // rank of a county's share-short among the counties of its state (1 = most residents short)
   function countyRank(c) { const rows = Object.keys(X.counties).filter(k => k.slice(0, 2) === c.k.slice(0, 2)).map(k => county(k)).filter(x => x.l20 !== null && x.l20 !== undefined); rows.sort((a, b) => b.l20 - a.l20); const i = rows.findIndex(x => x.k === c.k); return { rank: i + 1, of: rows.length, above: rows.filter(x => x.l20 > c.l20).length }; }
-  function districtRank(d) { const rows = Object.keys(X.districts).map(k => district(k)); rows.sort((a, b) => b.l20 - a.l20); const i = rows.findIndex(x => x.k === d.k); const inState = rows.filter(x => x.st === d.st); return { rank: i + 1, of: rows.length, stRank: inState.findIndex(x => x.k === d.k) + 1, stOf: inState.length }; }
-  function stateRank(s) { const rows = Object.keys(X.states).map(k => state(k)); rows.sort((a, b) => b.l20 - a.l20); return { rank: rows.findIndex(x => x.k === s.k) + 1, of: rows.length }; }
+  // ranks count only places with a larger share, so places with the same share share a rank (231 districts are at 0.0%)
+  const rankIn = (rows, v) => ({ rank: 1 + rows.filter(x => x.l20 > v).length, of: rows.length, ties: rows.filter(x => x.l20 === v).length - 1 });
+  function districtRank(d) { const rows = Object.keys(X.districts).map(k => district(k)); const r = rankIn(rows, d.l20), s = rankIn(rows.filter(x => x.st === d.st), d.l20); return { ...r, stRank: s.rank, stOf: s.of, stTies: s.ties }; }
+  function stateRank(s) { return rankIn(Object.keys(X.states).map(k => state(k)), s.l20); }
 
   // ---- the local summary: a few plain sentences with their numbers (the same figures the map and brief show) ----
   function facts(pl) {
@@ -79,18 +81,19 @@ window.EXPLORE = (function () {
   const teach = SITE.teach;
   // ---- search over counties, districts, states and members (cities and ZIP codes loaded on demand) ----
   const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 -]/g, ' ').replace(/\s+/g, ' ').trim();
+  const surname = n => { const p = norm(n).split(' ').filter(x => x && !/^(jr|sr|ii|iii|iv)$/.test(x)); return p.length ? p[p.length - 1] : ''; };   // "Sanford D. Bishop, Jr." -> "bishop"
   let IDX = null, PLACES = null, ZIP = null, PLp = null, ZIPp = null;
   function index() { if (IDX) return IDX; IDX = [];
-    Object.keys(X.states).forEach(st => IDX.push({ t: 's', k: st, l: X.states[st].name, s: 'State', w: norm(X.states[st].name + ' ' + st), pri: 3 }));
-    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + cdLabel(d.cd) + ' ' + (d.member || '')), m: d.member ? norm(d.member) : '', pri: 1 }); });
-    Object.keys(X.states).forEach(st => (X.states[st].senators || []).forEach(sn => IDX.push({ t: 's', k: st, l: sn.name + ' · ' + X.states[st].name, s: 'Senator (' + sn.party + ') · opens ' + X.states[st].name, w: norm(sn.name + ' ' + X.states[st].name + ' senator'), m: norm(sn.name), pri: 1 })));
+    Object.keys(X.states).forEach(st => IDX.push({ t: 's', k: st, l: X.states[st].name, s: 'State', w: norm(X.states[st].name + ' ' + st), code: st.toLowerCase(), pri: 3 }));
+    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + cdLabel(d.cd) + ' ' + (d.member || '') + (cdLabel(d.cd) === 'At large' ? ' ' + d.st + '-AL' : '')), m: d.member ? surname(d.member) : '', pri: 1 }); });
+    Object.keys(X.states).forEach(st => (X.states[st].senators || []).forEach(sn => IDX.push({ t: 's', k: st, l: sn.name + ' · ' + X.states[st].name, s: 'Senator (' + sn.party + ') · opens ' + X.states[st].name, w: norm(sn.name + ' ' + X.states[st].name + ' senator'), m: surname(sn.name), pri: 1 })));
     Object.keys(X.counties).forEach(cf => { const c = county(cf); IDX.push({ t: 'c', k: cf, l: c.n + ', ' + c.st, s: 'County · ' + stName(c.st), w: norm(c.n + ' ' + c.st + ' ' + stName(c.st)), pri: 0.6 }); });
     return IDX; }
   const loadPlaces = () => PLp || (PLp = fetch('places.json').then(r => r.ok ? r.json() : null).then(j => { PLACES = []; if (!j) return; Object.entries(j.places).forEach(([st, list]) => list.forEach(([name, cf, size]) => { if (!X.counties[cf]) return; PLACES.push({ t: 'p', k: cf, l: name + ', ' + st, s: 'City or town · opens ' + county(cf).n, w: norm(name + ' ' + st + ' ' + stName(st)), pri: 0.3 + (size || 0) / 10 }); })); }).catch(() => { PLACES = []; }));
   const loadZip = () => ZIPp || (ZIPp = fetch('zip_county.json').then(r => r.json()).then(j => { ZIP = {}; Object.entries(j).forEach(([cf, zs]) => zs.forEach(z => ZIP[z] = cf)); return ZIP; }));
   function search(text, limit) { const t = norm(text); if (!t) return []; const ws = t.split(' ');
-    const score = e => { let sc = 0; for (const w of ws) { if (e.w.split(' ').includes(w)) sc += 6; else if (e.w.includes(' ' + w) || e.w.startsWith(w)) sc += 4; else if (e.w.includes(w)) sc += 1; else return -1; } if (e.w === t || norm(e.l) === t || norm(e.l).startsWith(t)) sc += 10;
-      if (e.m && ws.some(w => e.m.split(' ').includes(w))) sc += 8;   // a word of the query is a member's name: the seat outranks towns of the same name
+    const score = e => { let sc = 0; for (const w of ws) { if (e.w.split(' ').includes(w)) sc += 6; else if (e.w.includes(' ' + w) || e.w.startsWith(w)) sc += 4; else if (e.w.includes(w)) sc += 1; else return -1; } if (e.w === t || norm(e.l) === t || norm(e.l).startsWith(t) || e.code === t) sc += 10;
+      if (e.m && ws.includes(e.m)) sc += 12;   // a word of the query is a member's surname: the seat outranks places of the same name ("Bergman" is MI-1, not Bergman, AR)
       return sc + e.pri; };
     return index().concat(PLACES || []).map(e => [score(e), e]).filter(x => x[0] > 0).sort((a, b) => b[0] - a[0] || a[1].l.localeCompare(b[1].l)).slice(0, limit || 8).map(x => x[1]); }
   // wire a search box: calls onPick({t,k,l}) with t in s|d|c|p|z (p and z resolve to a county)
