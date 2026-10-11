@@ -165,6 +165,8 @@ def assign_sites(sites, cent):
         ar = pd.read_csv(REF / "zcta_land_area.csv", dtype={"zcta": str}); radius = {z: float(np.sqrt(a / np.pi)) for z, a in zip(ar.zcta, ar.land_sqmi.astype(float))}
     if cent is None: cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str, "state_fips": str})   # diff_snapshots.py passes None
     cxy = {f: (float(a), float(b)) for f, a, b in zip(cent.county_fips, cent.lat, cent.lon)}
+    known = set(cxy)   # the 3,143 counties of the 50 states and DC: a row placed anywhere else (Puerto Rico is in the Gazetteer and the
+    # county file) gets no county, so nothing downstream looks it up (route_sites_us.py reads the county's population centre)
     gazetteer_points()   # city points and their counties (tier4_covering): one source for this script and route_sites_us.py
     # A ZIP that spans counties: zcta_county.csv gives the county with most of its land. Where most of the ZIP's residents 55+
     # live in a different county (zcta_county_parts.csv), the site goes to that county instead - unless the site's own city is
@@ -231,6 +233,7 @@ def assign_sites(sites, cent):
             if s.Index in listed and (listed[s.Index][2] or m == "unassigned"):
                 nt1, zf1, _ = listed[s.Index]; m1, c1 = by_zip(zf1, z2c[zf1], s.state, s.city)
                 if c1 != c: m, c, nt, zf = "facility_listing", c1, nt1, zf1
+        if c and c not in known: m, c, zf, nt = "outside_50_states_dc", None, "", ""
         method.append(m); county.append(c); fixz.append(zf if m in ("zip_typo_corrected", "facility_listing") else ""); note.append(nt if m in ("zip_typo_corrected", "facility_listing") else "")
     sites = sites.copy(); sites["county_fips"] = county; sites["assign_method"] = method
     sites["assign_note"] = note

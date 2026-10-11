@@ -6,14 +6,18 @@ build_geo_us.py), the Census county boundary files in data/geo/ (the same ones t
 estimate each place's size), and docs/data.js for the list of counties the map carries. Run after build_webapp_data_v3.py:
     python3 build_places.py
 
-A place is assigned to the county that contains its Census internal point, so a city that spans county lines opens the county
-its centre is in. The short list of extra names below covers what people type that the Gazetteer does not carry under that name.
+A place is assigned to the county that contains its Census internal point (tier4_covering.gazetteer_frame, the same table the
+pipeline assigns trial sites by), so a city that spans county lines opens the county its centre is in. A place whose point lies
+in no county's land - the Census point of a coastal place can be in the water - takes the nearest county: until October 2026
+San Francisco, Portland ME, Santa Monica, Monterey and 19 others were missing from the search box, so "Portland" found only
+Oregon. The short list of extra names below covers what people type that the Gazetteer does not carry under that name.
 """
 import json
 from datetime import date
 from pathlib import Path
 import geopandas as gpd, numpy as np, pandas as pd
 from scipy.spatial import cKDTree
+from tier4_covering import gazetteer_frame
 
 REF, DOCS = Path("data/ref"), Path("docs")
 # (state, name people type) -> county FIPS. New York City's boroughs are counties under other names; consolidated city-counties
@@ -29,13 +33,9 @@ SHORT = {("TN", "Nashville-Davidson"): "Nashville", ("KY", "Louisville/Jefferson
 
 def main():
     D = json.loads((DOCS / "data.js").read_text(encoding="utf-8").split("=", 1)[1].strip().rstrip(";")); have = set(D["counties"])
-    gaz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str, "geoid": str})
+    gaz = gazetteer_frame().copy()   # one row per Gazetteer name; a Massachusetts "X Town city" has two rows (X, X Town) with one GEOID
     if "name" not in gaz.columns: gaz["name"] = gaz.place.str.title()   # an older reference file: lower-case names only
-    counties = gpd.read_file("zip://data/geo/cb.zip")[["STATEFP", "GEOID", "geometry"]]
-    ct2021 = gpd.read_file("zip://data/geo/cb500_2021.zip"); ct2021 = ct2021[ct2021.STATEFP == "09"][["STATEFP", "GEOID", "geometry"]].to_crs(counties.crs)   # Connecticut: the eight legacy counties, as everywhere else in the pipeline
-    counties = gpd.GeoDataFrame(pd.concat([counties[counties.STATEFP != "09"], ct2021], ignore_index=True), geometry="geometry", crs=ct2021.crs)[["GEOID", "geometry"]].to_crs(4326)
-    pts = gpd.GeoDataFrame(gaz, geometry=gpd.points_from_xy(gaz.lon, gaz.lat), crs=4326)
-    j = gpd.sjoin(pts, counties, how="left", predicate="within"); j = j[~j.index.duplicated(keep="first")]
+    j = gaz.rename(columns={"county_fips": "GEOID"}).drop_duplicates("geoid", keep="first")
     j = j[j.GEOID.isin(have)]
     # Size of each place, for ranking search results: residents 55+ in the census tracts centred within the place's radius
     # (the radius of a circle of the place's land area, at least one mile). The search box shows the larger place first.

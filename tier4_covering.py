@@ -102,7 +102,26 @@ def gazetteer_points():
     which puts San Francisco 1.1 miles from UCSF Parnassus. The point and county of each place are computed once per run."""
     global _GAZ
     if _GAZ is not None: return _GAZ
-    gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str})
+    gz = gazetteer_frame(); out = {}
+    for s, p, la, lo, cf, ar in zip(gz.state, gz.place, gz.lat, gz.lon, gz.county_fips, gz.aland_sqmi):
+        out.setdefault((s, p), []).append((float(la), float(lo), cf if isinstance(cf, str) else "", float(ar)))
+    cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str}).set_index("county_fips")
+    for (s, k), cf in CITY_COUNTY.items():
+        if cf in cent.index: out[(s, k)] = [(float(cent.lat[cf]), float(cent.lon[cf]), cf, 0.0)]
+    _GAZ = out
+    return out
+
+
+_GAZ_FRAME = None
+
+
+def gazetteer_frame():
+    """data/ref/gazetteer_places.csv as a DataFrame (state, place, geoid, lat, lon, name, aland_sqmi) with `county_fips` added:
+    the county of each place's point, by the rules in gazetteer_points() (a point off any county's land takes the nearest county;
+    one more than OFFSHORE_MI out to sea is moved to its county's residents). build_places.py reads this for the search box."""
+    global _GAZ_FRAME
+    if _GAZ_FRAME is not None: return _GAZ_FRAME
+    gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str, "geoid": str})
     gz["aland_sqmi"] = pd.to_numeric(gz["aland_sqmi"], errors="coerce").fillna(0.0) if "aland_sqmi" in gz.columns else 0.0
     co = county_polygons()
     pts = gpd.GeoDataFrame(gz[["lat", "lon"]], geometry=gpd.points_from_xy(gz.lon, gz.lat), crs=4326)
@@ -122,14 +141,8 @@ def gazetteer_points():
                 d = np.hypot((t.lat.values - gz.at[i, "lat"]) * 69.0, (t.lon.values - gz.at[i, "lon"]) * 69.0 * np.cos(np.radians(gz.at[i, "lat"])))
                 sel = d <= d.min() + max(1.0, float(np.sqrt(gz.at[i, "aland_sqmi"] / np.pi))); w = t.pop55.values[sel].astype(float)
                 gz.at[i, "lat"] = float((t.lat.values[sel] * w).sum() / w.sum()); gz.at[i, "lon"] = float((t.lon.values[sel] * w).sum() / w.sum())
-    out = {}
-    for s, p, la, lo, cf, ar in zip(gz.state, gz.place, gz.lat, gz.lon, gz.county_fips, gz.aland_sqmi):
-        out.setdefault((s, p), []).append((float(la), float(lo), cf if isinstance(cf, str) else "", float(ar)))
-    cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str}).set_index("county_fips")
-    for (s, k), cf in CITY_COUNTY.items():
-        if cf in cent.index: out[(s, k)] = [(float(cent.lat[cf]), float(cent.lon[cf]), cf, 0.0)]
-    _GAZ = out
-    return out
+    _GAZ_FRAME = gz
+    return gz
 
 
 def find_place(state, city, near=None):
