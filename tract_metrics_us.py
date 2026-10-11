@@ -5,9 +5,12 @@ Writes out_adult55/tract_access.csv, district_metrics_v3.csv, state_metrics_v3.c
 
 District weights: each tract-district record carries weight = tract pop 55+ x land-area share of the tract inside the district
 (Census 2020 tract->CD119 relationship file). Tracts wholly inside one district (the vast majority) have share 1.
-A tract with no road route to a target is treated as beyond every distance threshold and counted in pct_no_road_route_*.
+A tract with no road route to a target is treated as beyond every distance threshold and counted in pct_no_road_route_*;
+medians are over residents with a road route (the same rule as build_rucc.py), and a median is NOROAD only when no resident has one.
+    python3 tract_metrics_us.py                      full run (needs data/roads/route_cache.npz)
+    python3 tract_metrics_us.py --from-tract-access  recompute the district / state / national files from out_adult55/tract_access.csv
 """
-import json
+import json, sys
 import config
 from pathlib import Path
 import numpy as np, pandas as pd
@@ -98,18 +101,30 @@ def main():
     tr["inc_all_cases"] = tr.county_fips.map(inc.avg_annual_count.where(inc.status.isin(["ok", "small_numbers"])))
     tr["on_main_road_network"] = (z["t_component"] == int(z["main_component"])).astype(int)
     tr.to_csv(OUT / "tract_access.csv", index=False)
+    aggregate(tr)
 
+
+def aggregate(tr):
+    """District, state and national metrics from the tract table (tract_access.csv)."""
     # ---- district metrics ----
     rel = pd.read_csv(REF / "tract_cd119.csv", dtype={"tract": str, "cd_geoid": str}); rel["share"] = rel.share.astype(float)
     m = rel.merge(tr, on="tract", how="inner"); m["w"] = m.pop55 * m.share
     tcols = [c for c in tr.columns if c.startswith("t60_")]
+    # each county's average annual cancer cases (State Cancer Profiles, a county figure) are apportioned to an area by the share of the
+    # county's residents 55+ who live in it, as build_tract_context.py does for the published ctx blocks: a district inside one big county
+    # gets its share of the county's cases, not the whole county's, and a county split between districts is counted once in total.
+    # For a state or the nation every tract of a county is present with share 1, so the apportioned sum is the county's own count.
+    cpop = tr.groupby("county_fips").pop55.sum().replace(0, np.nan)
 
     def agg(g):
         W = g.w.sum()
         if W == 0: return pd.Series({"pop55": 0})
         wm = lambda c: float((g[c] * g.w).sum() / W); pct = lambda mask: round(100 * float(g.loc[mask, "w"].sum() / W), 1)
-        def wmed(c):
-            s = g.sort_values(c); return float(s.loc[s.w.cumsum() >= W / 2, c].iloc[0])
+        def modal(g_, name, dist):   # the target most residents with a road route are nearest to; the no-route label only when nobody has a route
+            h = g_[g_[dist] < NOROAD]; return (h if len(h) else g_).groupby(name).w.sum().idxmax()
+        def wmed(c):   # population-weighted median over residents with a road route; NOROAD when no resident has one
+            s = g[g[c] < NOROAD].sort_values(c); Wr = s.w.sum()
+            return float(s.loc[s.w.cumsum() >= Wr / 2, c].iloc[0]) if Wr > 0 else NOROAD
         r = {"pop55": int(round(W)), "n_tracts": len(g),
              "pct_zero_trials_within_60rdmi": pct(g.trials_within_60rdmi == 0), "pct_lt20_trials_within_60rdmi": pct(g.trials_within_60rdmi < 20),
              "pct_lt100_trials_within_60rdmi": pct(g.trials_within_60rdmi < 100), "pct_in_zero_trial_county": pct(g.trials_in_own_county == 0),
@@ -119,12 +134,12 @@ def main():
              "median_road_mi_nci": round(wmed("road_mi_nci"), 0), "median_road_mi_broad_menu": round(wmed("road_mi_broad"), 0), "median_road_mi_limited_menu": round(wmed("road_mi_lim"), 0),
              "wmean_trials_within_60rdmi": round(wm("trials_within_60rdmi"), 0), "wmean_trials_within_30rdmi": round(wm("trials_within_30rdmi"), 0),
              "wmean_trials_within_120rdmi": round(wm("trials_within_120rdmi"), 0), "wmean_trials_in_own_county": round(wm("trials_in_own_county"), 0),
-             "modal_nearest_nci": g.groupby("nearest_nci").w.sum().idxmax(), "modal_nearest_broad": g.groupby("nearest_broad").w.sum().idxmax()}
+             "modal_nearest_nci": modal(g, "nearest_nci", "road_mi_nci"), "modal_nearest_broad": modal(g, "nearest_broad", "road_mi_broad")}
         for c in tcols: r["wmean_" + c] = round(wm(c), 0)
         def wm_avail(c):
             m = g[c].notna(); Wm = g.loc[m, "w"].sum(); return (round(float((g.loc[m, c] * g.loc[m, "w"]).sum() / Wm), 1) if Wm > 0 else None, round(100 * float(Wm / W), 1))
         for c in ("acs_no_vehicle", "acs_broadband", "acs_uninsured", "acs_uninsured_55_64", "acs_poverty", "inc_all_rate"): r[c], r[c + "_pop_covered_pct"] = wm_avail(c)
-        r["inc_all_cases_sum"] = int(g.drop_duplicates("county_fips").inc_all_cases.fillna(0).sum()) if "county_fips" in g else None
+        r["inc_all_cases_sum"] = int(round(float((g.inc_all_cases.fillna(0) * g.w / g.county_fips.map(cpop)).fillna(0).sum()))) if "county_fips" in g else None
         return pd.Series(r)
     dist = m.groupby("cd_geoid").apply(agg, include_groups=False).reset_index()
     dist["state_fips"] = dist.cd_geoid.str[:2]; dist["cd"] = dist.cd_geoid.str[2:]
@@ -151,4 +166,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--from-tract-access" in sys.argv:
+        aggregate(pd.read_csv(OUT / "tract_access.csv", dtype={"tract": str, "county_fips": str}))
+    else:
+        main()

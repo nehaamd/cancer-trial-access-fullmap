@@ -47,14 +47,14 @@
   table{display:block;overflow-x:auto;max-width:100%}
   section,main,.wrap{min-width:0;max-width:100%}
   .kpi>div{min-width:0;flex:1 1 100%}
-  body{overflow-wrap:anywhere}
+  a,.mono,.nct{overflow-wrap:anywhere} th{white-space:nowrap}   /* long tokens wrap; table columns do not shrink to one letter per line */
 }
 </style>
 </head>
 <body>
 <header class="site">
   <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
-  <nav class="hdr-links" aria-label="Pages"><a href="index.html" aria-current="page">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="index.html#methods">Methods &amp; data</a></nav>
+  <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
 <div class="page-head"><p class="kicker">County trial list</p><h1 id="title">Trials in this county</h1><p id="sub"></p></div>
 <div class="filters" role="group" aria-label="Trial filters">
@@ -98,10 +98,10 @@
     const bucket = filt.type === 'multi' || filt.type === 'other_unclassified';
     const rows = c.tr.filter(j => filt.phase.has(T.phases[T.ph[j]]) && filt.sponsor.has(T.sponsors[T.sp[j]][0]) && (ti < 0 || (bucket ? T.ct[j] === ti : T.cats[j].includes(ti)))).sort((a, b) => T.title[a].localeCompare(T.title[b]));
     const active = filt.phase.size < T.phases.length || filt.sponsor.size < T.sponsors.length || !!filt.type;
-    document.getElementById('f-state').textContent = active ? `Showing ${rows.length} of ${c.tr.length} trials` : `${c.tr.length} trials`;
+    document.getElementById('f-state').textContent = active ? `Showing ${rows.length.toLocaleString()} of ${c.tr.length.toLocaleString()} ${SITE.plural(c.tr.length, 'trial')}` : `${c.tr.length.toLocaleString()} ${SITE.plural(c.tr.length, 'trial')}`;
     const el = document.getElementById('list');
     if (!c.tr.length) { el.innerHTML = '<div class="empty">No listed trial (recruiting cancer treatment trials accepting some adults 55+) has a site in this county in the registry data of ' + dataDay + '. Nearby counties may host trials — the map shows trials within 60 road-miles.</div>'; return; }
-    if (!rows.length) { el.innerHTML = '<div class="empty">No trials in this county match the current filters. Clear a filter to see the ' + c.tr.length + ' listed trials.</div>'; return; }
+    if (!rows.length) { el.innerHTML = '<div class="empty">No trials in this county match the current filters. Clear a filter to see the ' + c.tr.length.toLocaleString() + ' listed ' + SITE.plural(c.tr.length, 'trial') + '.</div>'; return; }
     el.innerHTML = `<table><thead><tr><th>NCT ID</th><th>Title</th><th>Phase</th><th>Lead sponsor</th><th>Cancer type (assigned)</th><th class="f">Facilities in county</th></tr></thead><tbody>` +
       rows.map(j => { const facs = (c.fac || []).filter(f => f[3].includes(j)).map(f => f[0]);
         const named = SITE.namedCancers(T, j);

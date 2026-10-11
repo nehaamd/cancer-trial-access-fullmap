@@ -1,5 +1,7 @@
 """Automated validation for v3 -> VALIDATION_v3.md. Re-runs the checks that can be re-run and reads the logs of stages already run.
 Usage: python validate_v3.py [--no-registry]   (registry re-check needs clinicaltrials.gov)
+Exits 1 when a check fails, so run_refresh.sh stops before the release gate; a failure marked known=True (a documented limitation,
+e.g. the Tier 4 candidate universe) is reported but does not stop the refresh.
 """
 import json, random, re, sys, time
 from pathlib import Path
@@ -7,8 +9,10 @@ import numpy as np, pandas as pd, requests
 import config
 
 REF, OUT, RAW, ROADS = Path("data/ref"), Path("out_adult55"), Path("data/raw"), Path("data/roads")
-rows = []
-def check(name, result, ok, note=""): rows.append((name, result, "✓" if ok else "✗", note)); print(("PASS " if ok else "FAIL ") + name + ": " + str(result))
+rows = []; KNOWN = set()   # names of checks whose failure is a documented limitation, not a reason to stop a refresh
+def check(name, result, ok, note="", known=False):
+    rows.append((name, result, "✓" if ok else "✗", note)); print(("PASS " if ok else "FAIL ") + name + ": " + str(result))
+    if known: KNOWN.add(name)
 
 
 def age_years(s):
@@ -200,7 +204,7 @@ def main():
         t4 = json.load(open(OUT / "tier4_log.json")); rk = pd.read_csv(OUT / "tier4_candidates_ranked.csv"); gs = pd.read_csv(OUT / "tier4_greedy_sequence.csv")
         v = int((rk.county_trials >= 20).sum()); check("Tier 4: no evaluated candidate sits in a county with a limited menu", f"{v} of {len(rk)} candidates in a county with ≥20 trials", v == 0)
         mono = bool((gs.pop55_newly_covered.diff().dropna() <= 0).all()); check("Tier 4: greedy marginal gains are non-increasing", f"{len(gs)} picks; first {int(gs.pop55_newly_covered.iloc[0]):,}, last {int(gs.pop55_newly_covered.iloc[-1]):,}; {gs.pct_of_uncovered_pop55.iloc[-1]}% of uncovered reached", mono)
-        check("Tier 4: candidate universe is the intended one (CoC + NCORP)", f"universe = {t4['universe_label']}", "stand-in" not in t4["universe_label"], "registry-derived stand-in used because www.facs.org / ncorp.cancer.gov were not reachable; results are labelled a research prototype in the UI until the intended universe is substituted")
+        check("Tier 4: candidate universe is the intended one (CoC + NCORP)", f"universe = {t4['universe_label']}", "stand-in" not in t4["universe_label"], "registry-derived stand-in used because www.facs.org / ncorp.cancer.gov were not reachable; results are labelled a research prototype in the UI until the intended universe is substituted", known=True)
         check("Tier 4: plausibility read of top picks", "; ".join(f"{g['city']} {g['state']}" for g in t4["greedy"][:10]), True, "same-session read: all known rural/remote gaps; not independently reviewed")
     # 12 v3.3 additions (rural/urban codes, cosponsors, burden vs access, ZIP lookup) — see validate_extras.py
     if Path("validate_extras.py").exists():
@@ -212,8 +216,11 @@ def main():
           "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
     text = "\n".join(md) + "\n" + (("\n" + Path("VALIDATION_review.md").read_text()) if Path("VALIDATION_review.md").exists() else "")
     (OUT / "VALIDATION_v3.md").write_text(text); Path("VALIDATION_v3.md").write_text(text)
-    print(f"\n{sum(1 for r in rows if r[2]=='✓')}/{len(rows)} checks pass")
+    failed = [n for n, _, p, _ in rows if p == "✗" and n not in KNOWN]
+    print(f"\n{sum(1 for r in rows if r[2]=='✓')}/{len(rows)} checks pass" + (f"; {len(failed)} unexpected failure(s): " + "; ".join(failed) if failed else ""))
+    return failed
 
 
 if __name__ == "__main__":
-    main()
+    # a failing check stops the refresh (run_refresh.sh runs the stages with &&); a documented limitation (known=True) does not
+    sys.exit(1 if main() else 0)

@@ -4,6 +4,7 @@ import argparse, collections, json, re
 from pathlib import Path
 import geopandas as gpd, numpy as np, pandas as pd
 import config
+from tier4_covering import city_keys
 
 RAW, REF = Path("data/raw"), Path("data/ref")
 R_MI = 3958.8
@@ -80,6 +81,11 @@ def zip_typos(sites):
     return out
 
 
+# A Census place that spans several counties has one internal point (New York's is in Brooklyn); a row in such a place keeps its
+# ZIP-prefix county when that county is one the place covers ("New York, NY 100xx" stays in Manhattan).
+MULTI_COUNTY_PLACE = {("NY", "new york"): {"36005", "36047", "36061", "36081", "36085"}, ("NY", "new york city"): {"36005", "36047", "36061", "36081", "36085"}}
+
+
 def assign_sites(sites, cent):
     z2c = dict(pd.read_csv(REF / "zcta_county.csv", dtype=str).values)
     z3 = dict(pd.read_csv(REF / "zip3_county.csv", dtype=str).values)
@@ -102,9 +108,8 @@ def assign_sites(sites, cent):
         pp = pd.read_csv(REF / "zcta_county_parts.csv", dtype={"zcta": str, "county_fips": str}); pp = pp[pp.pop55_share.notna()]
         zpop = pp.sort_values("pop55_share", ascending=False).drop_duplicates("zcta").set_index("zcta").county_fips.to_dict()
 
-    def city_county(state, city):
-        city = (city or "").strip().lower()
-        for cand in (city, city.replace("saint ", "st. "), city.replace("st ", "st. "), city.replace("ft. ", "fort ").replace("ft ", "fort ")):
+    def city_county(state, city):   # the same spellings route_sites_us.py tries when it places the site (tier4_covering.city_keys)
+        for cand in city_keys(state, city):
             cc = city2c.get((state, cand))
             if cc: return cc
         return None
@@ -126,8 +131,15 @@ def assign_sites(sites, cent):
             if cp and cp != c and cp[:2] == st and city_county(s.state, s.city) != c: method.append("zip_pop"); county.append(cp); continue
             method.append("zip"); county.append(c); continue
         c3 = z3.get(z[:3]) if len(z) >= 3 and z[:3].isdigit() else None
-        if c3 and c3[:2] == st: method.append("zip3"); county.append(c3); continue
         cc = city_county(s.state, s.city)
+        if c3 and c3[:2] == st:
+            # A ZIP with no Census area (a PO box, a unique institutional ZIP, or a typing error) says only which three-digit region the
+            # row is in; the row's own city is the more specific statement, so when the city is a known place in the state its county
+            # wins. "Trinity Health Ann Arbor, 48106" was counted in Wayne County instead of Washtenaw; "Mary Crowley Cancer Research,
+            # Dallas, 75521" went to Cass County and "MyMichigan Medical Center Tawas, Tawas City, 48764" to Tuscola County, 60 miles
+            # from the hospital, where route_sites_us.py then drew them at the county center as phantom sites.
+            if cc and cc[:2] == st and cc != c3 and c3 not in MULTI_COUNTY_PLACE.get((s.state, (s.city or "").strip().lower()), ()): method.append("city_over_zip3"); county.append(cc); continue
+            method.append("zip3"); county.append(c3); continue
         if cc and cc[:2] == st: method.append("city_gazetteer"); county.append(cc); continue
         method.append("unassigned"); county.append(None)
     sites = sites.copy(); sites["county_fips"] = county; sites["assign_method"] = method

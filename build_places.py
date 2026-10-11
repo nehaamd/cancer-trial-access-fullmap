@@ -23,7 +23,7 @@ EXTRA = [("NY", "New York City", "36061"), ("NY", "Manhattan", "36061"), ("NY", 
 # A city spread over several counties opens the county people mean by its name, not the one its geometric centre falls in.
 CENTRE = {("NY", "New York"): "36061"}
 SHORT = {("TN", "Nashville-Davidson"): "Nashville", ("KY", "Louisville/Jefferson County"): "Louisville", ("KY", "Lexington-Fayette"): "Lexington", ("HI", "Urban Honolulu"): "Honolulu",
-         ("ID", "Boise City"): "Boise", ("CA", "San Buenaventura (Ventura)"): "Ventura", ("IN", "Indianapolis city"): "Indianapolis", ("GA", "Athens-Clarke County"): "Athens",
+         ("ID", "Boise City"): "Boise", ("CA", "San Buenaventura (Ventura)"): "Ventura", ("GA", "Athens-Clarke County"): "Athens",
          ("GA", "Augusta-Richmond County"): "Augusta", ("GA", "Macon-Bibb County"): "Macon", ("MT", "Butte-Silver Bow"): "Butte", ("MT", "Anaconda-Deer Lodge County"): "Anaconda"}
 
 

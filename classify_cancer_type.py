@@ -63,8 +63,18 @@ PRECEDENCE = [
  (r"esthesioneuroblastom|olfactory neuroblastom", {"head_neck"}),       # sinonasal tumour, not a childhood neuroblastoma
  (r"ganglioneuroblastom", {"other_named"}),                              # neuroblastic tumour (contains "glio")
  (r"leukoplakia|erythroplakia", {"head_neck"}),                          # oral premalignant lesions (the leukaemia stem "leuk" is excluded from them)
- (r"preleukemi", {"mds_mpn"}),                                           # preleukaemia is an MDS term                                          # mucosal melanomas (anorectal, sinonasal, vulvar, oral) are melanoma, not the organ cancer: "Anorectal Melanoma" must not reach the colorectal filter
- (r"lung metasta|pulmonary metasta|endobronchial metasta|brain metasta|cns metasta|leptomening|liver metasta|hepatic metasta|bone metasta|peritoneal metasta|carcinomatosis|spinal metasta|spine metasta|vertebral metasta|metastatic bone disease|metastatic disease to", set()),  # metastatic *site*, not a primary
+ (r"preleukemi", {"mds_mpn"}),                                           # preleukaemia is an MDS term
+]
+# metastatic *site*, not a primary: the organ named as the site of spread is dropped from the string, the primary (if the string names one)
+# is kept — "Breast Cancer Brain Metastases" is a breast trial, not a brain one and not an unspecified one. Until Oct 2026 the whole string
+# was emptied, so such trials fell to "unspecified solid / hematologic" unless another condition string named the primary.
+MET_SITE = [
+ (r"lung metasta|pulmonary metasta|endobronchial metasta", {"lung"}),
+ (r"brain metasta|cns metasta|leptomening|spinal metasta|spine metasta|vertebral metasta|intracranial metasta|cerebral metasta", {"brain_cns"}),
+ (r"liver metasta|hepatic metasta", {"liver_biliary"}),
+ (r"bone metasta|osseous metasta|metastatic bone disease|skeletal metasta", {"sarcoma"}),
+ (r"peritoneal metasta|carcinomatosis|pleural metasta", {"other_named", "lung"}),
+ (r"metastatic disease to|metastas[ei]s to the", {"lung", "brain_cns", "liver_biliary", "sarcoma", "other_named"}),
 ]
 GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced cancer|advanced malignan|metastatic cancer|metastatic malignan|^cancers?$|^neoplasms?$|^tumou?rs?$|^malignan(t|cy|cies)|malignan(t|cy|cies)$|"
                      r"hematologic(al)? (malignan|cancer|neoplasm)|blood cancer|^carcinoma$|^adenocarcinoma$|^metasta(tic|sis|ses)$|refractory cancer|recurrent cancer|rare (cancer|tumou?r|disease)|"
@@ -74,6 +84,7 @@ GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced canc
                      r"^(cancer|malignan|neoplasm|tumou?r)[a-z]* (of|in) (the )?(elderly|adult|child|older)", I)
 CATRX = {k: re.compile(v, I) for k, v in CATS.items()}
 PRERX = [(re.compile(p, I), keep) for p, keep in PRECEDENCE]
+METRX = [(re.compile(p, I), drop) for p, drop in MET_SITE]
 CASE_SENS = {"leukemia": re.compile(r"\bB-ALL\b|\bT-ALL\b|\bALL\b(?![a-z])"), "lymphoma": re.compile(r"\bHL\b|\bFL\b|\bMZL\b"),
              "myeloma": re.compile(r"\bMM\b"), "kidney": re.compile(r"\bRCC\b"), "gynecologic": re.compile(r"\bOC\b"), "neuroendocrine_endocrine": re.compile(r"\bNET\b")}
 LABEL = {"breast": "Breast", "lung": "Lung & thoracic", "colorectal": "Colorectal", "prostate": "Prostate", "melanoma_skin": "Melanoma & skin",
@@ -88,6 +99,8 @@ def cats_in(s):
     s = s.strip()
     if not s: return set()
     found = {k for k, rx in CATRX.items() if rx.search(s)} | {k for k, rx in CASE_SENS.items() if rx.search(s)}
+    for rx, drop in METRX:
+        if rx.search(s): found -= drop
     for rx, keep in PRERX:
         if rx.search(s): found &= keep; break
     return found

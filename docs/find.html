@@ -59,13 +59,13 @@
   <p style="font-size:var(--fs-0)">Your ZIP code stays in your browser — this page has no server, accounts or tracking.</p>
 </div></div>
 <div class="wrap">
-<form class="f" id="f" autocomplete="off">
-  <label>ZIP code<input id="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="e.g. 79901" required aria-describedby="zip-help"></label>
-  <label>Cancer type<select id="type"><option value="">Any cancer</option></select></label>
-  <label>Patient age (optional)<input id="age" type="number" inputmode="numeric" min="18" max="110" placeholder="any"></label>
-  <label>Within<select id="rad"><option value="30">30 miles</option><option value="60" selected>60 miles</option><option value="120">120 miles</option><option value="200">200 miles</option><option value="400">400 miles</option></select></label>
+<form class="f" id="f" autocomplete="off" onsubmit="return !!window.__findReady">
+  <label>ZIP code<input id="zip" name="zip" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="e.g. 79901" required aria-describedby="zip-help"></label>
+  <label>Cancer type<select id="type" name="type"><option value="">Any cancer</option></select></label>
+  <label>Patient age (optional)<input id="age" name="age" type="number" inputmode="numeric" min="18" max="110" placeholder="any"></label>
+  <label>Within<select id="rad" name="mi"><option value="30">30 miles</option><option value="60" selected>60 miles</option><option value="120">120 miles</option><option value="200">200 miles</option><option value="400">400 miles</option></select></label>
   <details class="more"><summary>More filters (phase, sponsor)</summary><div class="chks" id="ph"></div><div class="chks" id="sp"></div></details>
-  <div class="full" style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><button class="btn" type="submit">Find trials</button><span id="zip-help" class="sub">Five digits. Results appear below.</span></div>
+  <div class="full" style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap"><button class="btn" type="submit" id="go" disabled>Find trials</button><span id="zip-help" class="sub" role="status">Loading the trial list…</span></div>
 </form>
 <div id="out"><div class="empty" id="loading">Loading the trial list (about 2 MB, once)…</div></div>
 <div class="next" id="next" hidden>
@@ -91,7 +91,8 @@
   const ph = document.getElementById('ph'), sp = document.getElementById('sp'); const phase = new Set(T.phases), sponsor = new Set(T.sponsors.map(s => s[0]));
   T.phases.forEach(p => { const l = document.createElement('label'); l.className = 'chk'; const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? phase.add(p) : phase.delete(p); }); l.appendChild(i); l.appendChild(document.createTextNode(p === 'NA' ? 'Not phased' : 'Phase ' + p)); ph.appendChild(l); });
   T.sponsors.forEach(([k, lab]) => { const l = document.createElement('label'); l.className = 'chk'; const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? sponsor.add(k) : sponsor.delete(k); }); l.appendChild(i); l.appendChild(document.createTextNode(lab)); sp.appendChild(l); });
-  const out = document.getElementById('out'); document.getElementById('loading').remove(); out.innerHTML = '';
+  const out = document.getElementById('out'); document.getElementById('loading').remove(); out.innerHTML = ''; out.setAttribute('aria-live', 'polite');
+  window.__findReady = true; document.getElementById('go').disabled = false; document.getElementById('zip-help').textContent = 'Five digits. Results appear below.';
   const R = 3958.8, rad = x => x * Math.PI / 180;
   function miles(a, b) { const dLat = rad(b[0] - a[0]), dLon = rad(b[1] - a[1]); const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a[0])) * Math.cos(rad(b[0])) * Math.sin(dLon / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); }
   const ageTxt = j => (T.amin[j] === null && T.amax[j] === null) ? 'age not stated' : `ages ${T.amin[j] === null ? 'any' : T.amin[j]}–${T.amax[j] === null ? 'no cap' : T.amax[j]}`;
@@ -99,8 +100,10 @@
   function run(e) { if (e) e.preventDefault(); const zip = document.getElementById('zip').value.trim(); const z = F.zcta[zip];
     if (!/^\d{5}$/.test(zip)) { out.innerHTML = '<div class="empty err">Enter a five-digit ZIP code.</div>'; return; }
     const type = typeSel.value, age = parseInt(document.getElementById('age').value) || null, radius = +radSel.value || 60;
-    history.replaceState(null, '', '?' + new URLSearchParams({ zip, ...(type ? { type } : {}), ...(age ? { age } : {}), ...(radius !== 60 ? { mi: radius } : {}) }));
-    if (!z) { last = null; document.getElementById('next').hidden = true; out.innerHTML = `<div class="empty">ZIP ${esc(zip)} is not in the Census ZIP Code Tabulation Areas this page uses (PO-box-only ZIPs, some new ZIPs, and ZIP codes outside the 50 states and DC are not). Try a neighbouring ZIP code.</div>`; return; }
+    history.replaceState(null, '', '?' + new URLSearchParams({ zip, ...(type ? { type } : {}), ...(age ? { age } : {}), ...(radius !== 60 ? { mi: radius } : {}), ...(phase.size < T.phases.length ? { ph: phase.size ? [...phase].join(',') : 'none' } : {}), ...(sponsor.size < T.sponsors.length ? { sp: sponsor.size ? [...sponsor].join(',') : 'none' } : {}) }));
+    if (!z) { last = null; document.getElementById('next').hidden = true; out.innerHTML = `<div class="empty">ZIP ${esc(zip)} is not in the Census ZIP Code Tabulation Areas this page uses (PO-box-only ZIPs, some new ZIPs, and ZIP codes outside the 50 states and DC are not). Try a neighboring ZIP code.</div>`;
+      // a ZIP the county table knows (its residents live in a county) but with no Census population center: offer the county's road-network figures
+      fetch('zip_county.json').then(r => r.json()).then(j => { const cf = Object.keys(j).find(k => j[k].includes(zip)); if (cf && C[cf] && document.getElementById('zip').value.trim() === zip) out.insertAdjacentHTML('beforeend', `<p class="note">This ZIP code is in ${esc(SITE.countyLabel(C[cf], cf))}: <a href="index.html?c=${cf}">road-network figures for the county →</a></p>`); }).catch(() => {}); return; }
     const ti = type ? T.types.findIndex(t => t[0] === type) : -1, bucket = type === 'multi' || type === 'other_unclassified';
     const pass = j => phase.has(T.phases[T.ph[j]]) && sponsor.has(T.sponsors[T.sp[j]][0]) && (ti < 0 || (bucket ? T.ct[j] === ti : T.cats[j].includes(ti))) && (age === null || ((T.amin[j] === null || T.amin[j] <= age) && (T.amax[j] === null || T.amax[j] >= age)));
     const near = []; F.sp.forEach((p, s) => { const mi = Math.round(miles(z, p) * F.meta.road_factor); if (mi <= radius) near.push([s, mi]); }); near.sort((a, b) => a[1] - b[1]);
@@ -152,7 +155,11 @@
   document.getElementById('rf-head').textContent = ` (straight-line distance × ${F.meta.road_factor})`;
   document.getElementById('f').addEventListener('submit', run);
   document.getElementById('foot').innerHTML = `<b>How this works.</b> Trials: ClinicalTrials.gov API v2, interventional studies with status Recruiting and primary purpose Treatment for an oncology condition, with at least one US site listed as recruiting, and open to at least one patient aged 55 or older (${fmt(D.meta.trials)} trials in the registry data of ${dataDay}; trials open only to younger patients are not included). "Any cancer" includes basket and multi-cancer trials; choosing a cancer also returns basket trials that name it. Sites are placed at the center of their ZIP code (the center of their city where the ZIP code is very large), so a site in your own ZIP code shows as under 1 mile. A registry row that names a telemedicine or virtual service instead of a clinic is not a place; a trial listed that way for your state appears after the list, without a distance. <b>Distance</b> is the straight-line distance from the center of your ZIP code to the center of the site's, multiplied by ${F.meta.road_factor} (${F.meta.road_factor_note}); real driving distance can be shorter or longer. The county and district map uses full highway routing instead. <b>Not medical advice.</b> A trial appearing here does not mean you are eligible, that it is enrolling today, or that it is right for you; registry status can lag. Nothing you type is sent anywhere. Sources and code: <a href="index.html#methods">methods</a>.`;
-  const q = new URLSearchParams(location.search); if (q.get('zip')) { document.getElementById('zip').value = q.get('zip'); if (T.types.some(t => t[0] === q.get('type'))) typeSel.value = q.get('type'); if (+q.get('age') >= 18 && +q.get('age') <= 110) document.getElementById('age').value = q.get('age'); if ([...radSel.options].some(o => o.value === q.get('mi'))) radSel.value = q.get('mi'); run(); }
+  const q = new URLSearchParams(location.search); if (q.get('zip')) { document.getElementById('zip').value = q.get('zip'); if (T.types.some(t => t[0] === q.get('type'))) typeSel.value = q.get('type'); if (+q.get('age') >= 18 && +q.get('age') <= 110) document.getElementById('age').value = q.get('age'); if ([...radSel.options].some(o => o.value === q.get('mi'))) radSel.value = q.get('mi');
+    const subset = (v, all) => { const got = v === 'none' ? [] : v.split(',').filter(x => all.includes(x)); return v !== 'none' && !got.length ? all : got; };   // unknown values are ignored, never applied
+    if (q.get('ph')) { const keep = new Set(subset(q.get('ph'), T.phases)); phase.clear(); keep.forEach(x => phase.add(x)); [...ph.querySelectorAll('input')].forEach((i, k) => i.checked = keep.has(T.phases[k])); }
+    if (q.get('sp')) { const keep = new Set(subset(q.get('sp'), T.sponsors.map(x => x[0]))); sponsor.clear(); keep.forEach(x => sponsor.add(x)); [...sp.querySelectorAll('input')].forEach((i, k) => i.checked = keep.has(T.sponsors[k][0])); }
+    if (q.get('ph') || q.get('sp')) document.querySelector('details.more').open = true; run(); }
 })();
 </script>
 </body></html>

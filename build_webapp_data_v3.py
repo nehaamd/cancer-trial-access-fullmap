@@ -66,10 +66,19 @@ def main():
     def age_years(x):
         m = re.match(r"([\d.]+)\s*(Year|Month|Week|Day)", str(x or ""), re.I)
         return None if not m else round(float(m.group(1)) / {"year": 1, "month": 12, "week": 52, "day": 365}[m.group(2).lower()], 1)
+    def contact_short(x, n=200):
+        """The central contacts (fetch_us.py joins them with "; ") cut at a contact boundary, never mid-email: whole contacts while they
+        fit in n characters; if the first alone is longer it is cut at a word and marked. The page links to the full list on ClinicalTrials.gov."""
+        parts = [p.strip() for p in str(x or "").split("; ") if p.strip()]; out = []
+        for p in parts:
+            if len("; ".join(out + [p])) <= n: out.append(p)
+            else: break
+        if not out and parts: return parts[0][:n].rsplit(" ", 1)[0] + " …"
+        return "; ".join(out)
     T = {"id": trials.nct_id.tolist(), "title": trials.brief_title.tolist(), "ph": [phases.index(p) for p in trials.phase], "sp": [sponsors.index(s) for s in trials.sponsor],
          "spn": trials.get("lead_sponsor", pd.Series([""] * len(trials))).fillna("").tolist(), "iv": [x[:160] for x in trials.intervention_names.fillna("")], "ivt": trials.intervention_types.fillna("").tolist(),
          "amin": [age_years(x) for x in trials.minimum_age], "amax": [age_years(x) for x in trials.maximum_age], "start": trials.start_date.fillna("").tolist(),
-         "upd": trials.get("last_update_posted", pd.Series([""] * len(trials))).fillna("").tolist(), "cc": [x[:140] for x in trials.get("central_contact", pd.Series([""] * len(trials))).fillna("")],
+         "upd": trials.get("last_update_posted", pd.Series([""] * len(trials))).fillna("").tolist(), "cc": [contact_short(x) for x in trials.get("central_contact", pd.Series([""] * len(trials))).fillna("")],
          "ct": [t_idx[c] for c in trials.cancer_type], "cats": [cats_for(n, c) for n, c in zip(trials.nct_id, trials.cancer_type)],
          "multi": [ctype.multi_subtype.get(n, "") if ctype.cancer_type.get(n) == "multi" else "" for n in trials.nct_id],
          "types": [[c, CT_LABEL[c]] for c in types], "named_types": named_types, "phases": phases, "sponsors": [["industry", "Industry"], ["academic_other", "Academic / other"], ["nih_federal", "NIH / federal"]]}

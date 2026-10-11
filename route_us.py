@@ -154,7 +154,7 @@ def main():
         return dist, hr, src
 
     Db, Hb, Sb = nearest(broad_src, "broad menu"); Dl, Hl, Sl = nearest(lim_src, "limited menu"); Dn, Hn, Sn = nearest(n_node, "NCI centers")
-    cname = {c: f"{r.county_name}, {r.state_name}" for c, r in zip(c_node, cent.itertuples())}; nname = dict(zip(n_node, nci.name))
+    cname = {c: (r.county_name if r.county_name == r.state_name else f"{r.county_name}, {r.state_name}") for c, r in zip(c_node, cent.itertuples())}; nname = dict(zip(n_node, nci.name))   # "District of Columbia", not "District of Columbia, District of Columbia"
 
     def county_row(k):
         node = c_node[k]; f = fips[k]; r = {"county_fips": f, "county_name": cent.county_name.iat[k], "state_fips": cent.state_fips.iat[k], "trials_in_county": int(trials[k]),

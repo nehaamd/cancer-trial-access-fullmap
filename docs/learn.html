@@ -100,8 +100,8 @@
     <p>It measures <b>geographic availability</b>: how many recruiting cancer treatment trials have a site within driving distance of where people live. Nothing more.</p>
     <ul>
       <li><b>Which trials.</b> Recruiting, interventional, treatment-purpose studies on ClinicalTrials.gov with at least one US site, open to at least some adults aged 55 or older — <span data-f="trials"></span> on <span data-f="date"></span>. Each study is tagged with the cancers it names; about three in ten name several and are counted for each.</li>
-      <li><b>Where the trials are.</b> Every recruiting site is placed by its ZIP code. A row that names a telemedicine or virtual service rather than a clinic is shown separately and not counted as a place.</li>
-      <li><b>Where people live.</b> Each of the country’s <span data-f="tracts"></span> census tracts has a population center and a count of residents aged 55 and older. Distances run on the actual road network from that point to each site.</li>
+      <li><b>Where the trials are.</b> Every recruiting site is placed at the center of its ZIP code (or at its city for the very large rural ZIP codes). A row that names a telemedicine or virtual service rather than a clinic is shown separately and not counted as a place.</li>
+      <li><b>Where people live.</b> Each of the country’s <span data-f="tracts"></span> census tracts has a population center and a count of residents aged 55 and older. Distances run on the highway network from that point to each site.</li>
       <li><b>The figures.</b> For each tract: the number of trials with a site within 60 road-miles. For a county, district, state or the nation: the share of residents 55+ whose tract has fewer than 20 (the map’s exploratory threshold), or none, weighted by population. Also the distance to the nearest NCI-designated cancer center and to the nearest county with 100 or more trials (a “broad menu”).</li>
       <li><b>Why 55 and older.</b> Most cancers are diagnosed after 55, and the Census Bureau publishes this age group by tract, so the figures describe the people most likely to need a trial.</li>
       <li><b>Why 20 and 60.</b> Both are exploratory thresholds chosen for this map, not clinical cut-offs. Twenty trials is a way of asking whether there is some choice nearby, since any one person qualifies for only some trials; this analysis has not established how many nearby trials a given patient needs. Sixty is measured in road-miles; how long that drive takes varies with roads, traffic and where people live. The Need-vs-access tab lets you change the access threshold.</li>
@@ -137,7 +137,7 @@
       <dt>Standard of care</dt><dd>The treatment that would be given outside a trial. New treatments are usually compared with it or added to it.</dd>
       <dt>Informed consent</dt><dd>The process, and the document, by which a participant learns what a trial involves and agrees to join; it can be withdrawn at any time.</dd>
       <dt>IRB</dt><dd>Institutional review board: the independent committee that reviews a protocol to protect participants.</dd>
-      <dt>NCI-designated cancer center</dt><dd>One of about 70 centers recognized by the National Cancer Institute for their research; they run the widest range of trials, including early-phase studies.</dd>
+      <dt>NCI-designated cancer center</dt><dd>One of <span data-f="nci">about 70</span> centers recognized by the National Cancer Institute for their research; they run the widest range of trials, including early-phase studies.</dd>
       <dt>NCORP</dt><dd>The NCI Community Oncology Research Program: a network that funds community hospitals and practices to run federally sponsored trials.</dd>
       <dt>Basket or umbrella trial</dt><dd>A trial that enrolls several cancers sharing a target or biomarker (basket), or tests several treatments within one cancer (umbrella). They widen what counts as “a trial near me”.</dd>
       <dt>Road-miles</dt><dd>Distance along roads, measured on the Census Bureau’s road network, rather than in a straight line.</dd>
@@ -191,7 +191,7 @@
 <script>
 (function () { const M = window.COMMUNITY.meta; const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull };
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
-  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US') };
+  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? M.nci.centers + ' adult' : 'about 70' };
   document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || '');
   SITE.foldOnPhone([...document.querySelectorAll('main section')], [0]); })();
 </script>

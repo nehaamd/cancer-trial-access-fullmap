@@ -53,7 +53,7 @@
   .tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;padding:.45rem .65rem;border-radius:8px;font-size:var(--fs-0);line-height:1.4;max-width:280px;display:none;z-index:5;box-shadow:0 6px 18px rgba(0,0,0,.25)}
   .axis text{font-size:12px;fill:var(--ink-2)} .axis line,.axis path{stroke:var(--rule);shape-rendering:crispEdges} .grid line{stroke:var(--rule);shape-rendering:crispEdges} .grid path{display:none}
   .lab{font-size:12px;fill:var(--ink-2)} .lab.strong{fill:var(--ink);font-weight:600;font-size:13px;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round} .val{font-size:12px;fill:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
-  details.tbl{margin:.9rem 0 0;font-size:var(--fs-0)} details.tbl summary{cursor:pointer;color:var(--ink-2)} table{border-collapse:collapse;width:100%;font-size:var(--fs-0);margin-top:.5rem} th,td{text-align:left;padding:.3rem .5rem;border-top:1px solid var(--rule)} th{color:var(--ink-2);font-weight:650} td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+  details.tbl{margin:.9rem 0 0;font-size:var(--fs-0)} details.tbl>div,details.tbl>table{overflow-x:auto;max-width:100%;display:block} details.tbl summary{cursor:pointer;color:var(--ink-2)} table{border-collapse:collapse;width:100%;font-size:var(--fs-0);margin-top:.5rem} th,td{text-align:left;padding:.3rem .5rem;border-top:1px solid var(--rule)} th{color:var(--ink-2);font-weight:650} td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 2.5rem;align-items:start} @media (max-width:760px){.two{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow)}
   .bill{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;align-items:baseline;font-size:var(--fs-1)} .bill b{font-weight:700} .bill .n{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;line-height:1}
@@ -89,7 +89,7 @@
       <div class="kpi"><p class="v"><span data-f="medn"></span><small> miles</small></p><p class="l">median road distance to the nearest NCI-designated cancer center</p><p class="s"><span data-f="g60n"></span>% are more than 60 road-miles from one</p></div>
       <div class="kpi"><p class="v"><span data-f="states_no_broad"></span><small> states</small></p><p class="l">have no county with a broad menu of trials</p><p class="s"><span data-f="districts_all_beyond"></span> congressional districts where every resident 55+ is more than 60 road-miles from one</p></div>
     </div>
-    <p class="small">Distances are shortest driving routes on the highway network from each census tract's population center, weighted by residents 55 and older. <a href="#how">How it was measured</a>.</p>
+    <p class="small">Distances are shortest driving routes on the highway network from each census tract's population center, weighted by residents 55 and older; medians are over residents with a road route (those without one, in Alaska and on the Hawaiian islands beyond Oahu, are counted in the no-road-route shares). <a href="#how">How it was measured</a>.</p>
   </section>
 
   <section id="rural">
@@ -152,7 +152,7 @@
       <li><b>People.</b> Residents 55 and older in each of <span data-f="n_tracts"></span> census tracts (ACS 2023 5-year), located at the tract's population center, so distances are measured from where people live rather than from county boundaries.</li>
       <li><b>Roads.</b> Shortest routes on the Census Bureau's primary and secondary road network for all 50 states and DC, checked against published city-pair driving distances (mean difference <span data-f="router_mean"></span>%).</li>
       <li><b>Access.</b> For each tract, the number of distinct trials with a recruiting site within 30, 60 and 120 road-miles; the road distance to the nearest county with 20 or 100 trials and to the nearest NCI-designated center that treats adults (<span data-f="nci_text"></span>). District, state and national figures weight tracts by residents 55+.</li>
-      <li><b>Limits.</b> Counts are of trials, not of trials a given patient is eligible for. Registry status lags real enrollment. Sites are located by ZIP code. Districts are the <span data-f="plan"></span>; several states have redrawn for 2026.</li>
+      <li><b>Limits.</b> Counts are of trials, not of trials a given patient is eligible for. Registry status lags real enrollment. Sites are placed at the center of their ZIP code (or their city for very large rural ZIP codes). Districts are the <span data-f="plan"></span>; several states have redrawn for 2026.</li>
     </ul>
     <p class="small">Full methods, validation and every data file: <a href="index.html#methods">Methods &amp; data</a> · <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">GitHub repository</a>.</p>
   </section>
@@ -203,35 +203,43 @@
   const tipOff = tipEl => () => tipEl.style.display = 'none';
 
   // ---- chart 1: metro vs nonmetro (grouped horizontal bars, two fixed hues, values labelled, table view) ----
+  // charts are drawn in CSS pixels at the card's width (and redrawn when it changes), so labels keep their size on a phone
+  const cardW = wrap => Math.max(320, Math.round(wrap.clientWidth - 2 * 17.6));
+  const onResize = (() => { const fns = []; let last = 0; window.addEventListener('resize', () => { const w = window.innerWidth; if (Math.abs(w - last) < 24) return; last = w; fns.forEach(f => f()); }); return f => fns.push(f); })();
   (function () {
     const rows = [['Fewer than 20 trials within 60 road-miles', 'l20'], ['No trial within 60 road-miles', 'z60'], ['More than 60 road-miles from an NCI-designated center', 'g60n'], ['More than 60 road-miles from a broad menu (100+ trials)', 'g60b']];
     const series = [['Metro', 'metro', '#3F7FB5'], ['Nonmetro', 'nonmetro', '#D98B4A']];
-    const W = 900, ml = 8, mr = 56, rowH = 70, barH = 18, gap = 2, mt = 18, H = mt + rows.length * rowH + 8; const x = d3.scaleLinear().domain([0, 100]).range([ml, W - mr]);
-    const svg = d3.select('#svg-rural').attr('viewBox', `0 0 ${W} ${H}`); const wrap = document.getElementById('chart-rural'), tip = document.getElementById('tip-rural'); const on = tipOn(tip, wrap), off = tipOff(tip);
-    svg.append('g').attr('class', 'grid').attr('transform', `translate(0,${H - 8})`).call(d3.axisTop(x).ticks(5).tickSize(H - 8 - mt + 14).tickFormat(''));
-    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 8})`).call(d3.axisBottom(x).ticks(5).tickFormat(v => v + '%').tickSize(0)).select('.domain').remove();
+    const wrap = document.getElementById('chart-rural'), tip = document.getElementById('tip-rural'); const on = tipOn(tip, wrap), off = tipOff(tip);
+    function draw() { const W = cardW(wrap), ml = 14, mr = 52, rowH = W < 520 ? 86 : 70, barH = 18, gap = 2, mt = 18, mb = 22, H = mt + rows.length * rowH + mb; const x = d3.scaleLinear().domain([0, 100]).range([ml, W - mr]);
+    const svg = d3.select('#svg-rural').attr('viewBox', `0 0 ${W} ${H}`); svg.selectAll(':not(title)').remove();   // the accessible <title> stays through redraws
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(0,${H - mb})`).call(d3.axisTop(x).ticks(5).tickSize(H - mb - mt + 14).tickFormat(''));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - mb})`).call(d3.axisBottom(x).ticks(5).tickFormat(v => v + '%').tickSize(0)).select('.domain').remove();
     rows.forEach(([label, key], i) => { const y0 = mt + i * rowH;
-      svg.append('text').attr('class', 'lab strong').attr('x', ml).attr('y', y0 + 6).text(label);
-      series.forEach(([name, k, col], j) => { const v = R[k][key]; const y = y0 + 14 + j * (barH + gap); const w = Math.max(0, x(v) - x(0));
+      const two = W < 520 && label.length > 34;   // on a phone a long label wraps to two lines and the bars move down a line
+      const lab = svg.append('text').attr('class', 'lab strong').attr('x', ml).attr('y', y0 + 6); if (two) { const cut = label.lastIndexOf(' ', 34); lab.append('tspan').attr('x', ml).text(label.slice(0, cut)); lab.append('tspan').attr('x', ml).attr('dy', 14).text(label.slice(cut + 1)); } else lab.text(label);
+      series.forEach(([name, k, col], j) => { const v = R[k][key]; const y = y0 + 14 + (two ? 14 : 0) + j * (barH + gap); const w = Math.max(0, x(v) - x(0));
         svg.append('path').attr('d', `M${x(0)},${y}h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z`).attr('fill', col)
           .on('mousemove', ev => on(ev, `<b>${name} counties</b><br>${label}: ${pct(v)}%<br><span style="color:#c7d0da">${fmt(R[k].p)} residents 55+ in ${fmt(R[k].n)} counties</span>`)).on('mouseleave', off);
-        svg.append('text').attr('class', 'val').attr('x', x(v) + 6).attr('y', y + barH / 2 + 4).text(pct(v) + '%'); }); });
+        svg.append('text').attr('class', 'val').attr('x', x(v) + 6).attr('y', y + barH / 2 + 4).text(pct(v) + '%'); }); }); }
+    draw(); onResize(draw);
     document.getElementById('tbl-rural').innerHTML = `<table><thead><tr><th>Measure</th><th class="n">Metro</th><th class="n">Nonmetro</th></tr></thead><tbody>${rows.map(([l, k]) => `<tr><td>${l}</td><td class="n">${pct(R.metro[k])}%</td><td class="n">${pct(R.nonmetro[k])}%</td></tr>`).join('')}<tr><td>Median road-miles to an NCI-designated center</td><td class="n">${fmt(R.metro.medn)}</td><td class="n">${fmt(R.nonmetro.medn)}</td></tr><tr><td>Residents 55+</td><td class="n">${fmt(R.metro.p)}</td><td class="n">${fmt(R.nonmetro.p)}</td></tr></tbody></table>`;
   })();
 
   // ---- chart 2: every state ranked (single hue; value at each bar tip because the chart is a ranked list; click opens the map) ----
   (function () {
-    const S = F.states; const W = 900, ml = 150, mr = 60, rowH = 17, barH = 12, mt = 6, H = mt + S.length * rowH + 22; const x = d3.scaleLinear().domain([0, 100]).range([ml, W - mr]);
-    const svg = d3.select('#svg-states').attr('viewBox', `0 0 ${W} ${H}`); const wrap = document.getElementById('chart-states'), tip = document.getElementById('tip-states'); const on = tipOn(tip, wrap), off = tipOff(tip);
+    const S = F.states; const wrap = document.getElementById('chart-states'), tip = document.getElementById('tip-states'); const on = tipOn(tip, wrap), off = tipOff(tip);
+    function draw() { const W = cardW(wrap), narrow = W < 560, ml = narrow ? 48 : 150, mr = narrow ? 48 : 60, rowH = 17, barH = 12, mt = 6, H = mt + S.length * rowH + 22; const x = d3.scaleLinear().domain([0, 100]).range([ml, W - mr]);
+    const svg = d3.select('#svg-states').attr('viewBox', `0 0 ${W} ${H}`); svg.selectAll(':not(title)').remove();   // the accessible <title> stays through redraws
     svg.append('g').attr('class', 'grid').attr('transform', `translate(0,${H - 18})`).call(d3.axisTop(x).ticks(5).tickSize(H - 18 - mt).tickFormat(''));
     svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 18})`).call(d3.axisBottom(x).ticks(5).tickFormat(v => v + '%').tickSize(0)).select('.domain').remove();
     const g = svg.append('g').selectAll('g').data(S).join('g').attr('transform', (d, i) => `translate(0,${mt + i * rowH})`).style('cursor', 'pointer')
       .on('click', (ev, d) => location.href = `index.html?s=${d.usps}`)
       .on('mousemove', (ev, d) => on(ev, `<b>${esc(d.name)}</b><br>${pct(d.l20)}% have fewer than 20 trials within 60 road-miles; ${pct(d.z60)}% have none<br><span style="color:#c7d0da">${d.broad} broad-menu and ${d.limited} limited-menu counties of ${d.counties} · median ${d.medn === null ? 'no road route' : d.medn + ' road-mi'} to an NCI center · ${fmt(d.pop55)} residents 55+</span>`)).on('mouseleave', off);
     g.append('rect').attr('x', 0).attr('y', 0).attr('width', W).attr('height', rowH).attr('fill', 'transparent');
-    g.append('text').attr('class', 'lab').attr('x', ml - 8).attr('y', barH).attr('text-anchor', 'end').text(d => d.name + (d.broad === 0 ? ' ◇' : ''));
+    g.append('text').attr('class', 'lab').attr('x', ml - 8).attr('y', barH).attr('text-anchor', 'end').text(d => (narrow ? d.usps : d.name) + (d.broad === 0 ? ' ◇' : ''));
     g.append('path').attr('d', d => { const w = Math.max(0, x(d.l20) - x(0)); return `M${x(0)},1h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z`; }).attr('fill', '#3F7FB5');
-    g.append('text').attr('class', 'val').attr('x', d => x(d.l20) + 5).attr('y', barH).text(d => pct(d.l20) + '%');
+    g.append('text').attr('class', 'val').attr('x', d => x(d.l20) + 5).attr('y', barH).text(d => pct(d.l20) + '%'); }
+    draw(); onResize(draw);
     document.getElementById('tbl-states').innerHTML = `<table><thead><tr><th>State</th><th class="n">Fewer than 20 within 60 mi</th><th class="n">None within 60 mi</th><th class="n">Median mi to NCI center</th><th class="n">Broad-menu counties</th><th class="n">Residents 55+</th></tr></thead><tbody>${S.map(d => `<tr><td><a href="index.html?s=${d.usps}">${esc(d.name)}</a></td><td class="n">${pct(d.l20)}%</td><td class="n">${pct(d.z60)}%</td><td class="n">${d.medn === null ? 'no route' : fmt(d.medn)}</td><td class="n">${d.broad}</td><td class="n">${fmt(d.pop55)}</td></tr>`).join('')}</tbody></table>`;
   })();
 
@@ -239,7 +247,7 @@
   document.getElementById('worst-districts').innerHTML = `<table><thead><tr><th>District</th><th>Member</th><th class="n">Fewer than 20 within 60 mi</th><th class="n">None within 60 mi</th><th class="n">Median mi to NCI center</th><th></th></tr></thead><tbody>${F.districts.worst.map(d => `<tr><td><a href="index.html?d=${d.k}">${d.label}</a></td><td>${d.member ? esc(d.member) + (d.party ? ` (${d.party})` : '') : 'vacant'}</td><td class="n">${pct(d.l20)}%</td><td class="n">${pct(d.z60)}%</td><td class="n">${d.medn === null ? 'no route' : fmt(d.medn)}</td><td><a href="brief.html?d=${d.k}">brief</a></td></tr>`).join('')}</tbody></table>`;
 
   // ---- bills ----
-  document.getElementById('bills').innerHTML = F.bills.map(b => `<div class="card"><p class="kicker" style="margin-bottom:.2rem">${b.chamber} · introduced ${nice(b.introduced)}</p><div class="bill"><span class="n">${fmt(b.n_cosponsors)}</span><span><b>cosponsor${b.n_cosponsors === 1 ? '' : 's'}</b> of <a href="${b.url}" target="_blank" rel="noopener">${b.label}</a>, the ${esc(b.short)}<br><span class="small">${b.parties.R} Republican${b.parties.R === 1 ? '' : 's'}, ${b.parties.D} Democrat${b.parties.D === 1 ? '' : 's'}${b.parties.I ? `, ${b.parties.I} independent` : ''} · sponsor ${esc(b.sponsor)}</span></span></div><p class="small" style="margin:.6rem 0 0">Latest action: ${esc(b.latest_action.text.slice(0, 140))}${b.latest_action.text.length > 140 ? '…' : ''} (${b.latest_action.date})</p></div>`).join('');
+  document.getElementById('bills').innerHTML = F.bills.map(b => `<div class="card"><p class="kicker" style="margin-bottom:.2rem">${b.chamber} · introduced ${nice(b.introduced)}</p><div class="bill"><span class="n">${fmt(b.n_cosponsors)}</span><span><b>cosponsor${b.n_cosponsors === 1 ? '' : 's'}</b> of <a href="${b.url}" target="_blank" rel="noopener">${b.label}</a>, the ${esc(b.short)}<br><span class="small">${b.parties.R} Republican${b.parties.R === 1 ? '' : 's'}, ${b.parties.D} Democrat${b.parties.D === 1 ? '' : 's'}${b.parties.I ? `, ${b.parties.I} independent` : ''} · sponsor ${esc(b.sponsor)}</span></span></div><p class="small" style="margin:.6rem 0 0">Latest action: ${esc(b.latest_action.text.slice(0, 140))}${b.latest_action.text.length > 140 ? '…' : ''} (${nice(b.latest_action.date)})</p></div>`).join('');
 })();
 </script>
 </body>

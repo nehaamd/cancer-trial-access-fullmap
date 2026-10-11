@@ -86,7 +86,7 @@ NCI_OVERRIDE = {"la jolla": (32.875, -117.236), "bronx": (40.880, -73.879), "man
 
 ONC = re.compile(r"cancer|neoplas|carcinom|lymphom|leuka?emi|leukoplaki|myelom|sarcom|melanom|malignan|tumou?r|gliom|mesotheliom|blastom|adenoma|myelodysplas|metasta|oncolog|hodgkin|"
                  r"waldenstr|myelofibrosis|polycythemia|thrombocythemia|\bmds\b|\baml\b|\bcll\b|\bcml\b|nsclc|sclc|\bgist\b|\bmpn\b|\bhcc\b|\brcc\b|\bcrc\b|pdac|\bgbm\b|dlbcl|tnbc|"
-                 r"meningiom|ependymom|germinom|craniopharyngiom|schwannom|neurofibrom|mycosis fungoides|sezary|amyloidosis|lymphoproliferative|mastocytosis|(?<!lympho)histiocyt|"
+                 r"meningiom|leptomening|ependymom|germinom|craniopharyngiom|schwannom|neurofibrom|mycosis fungoides|sezary|amyloidosis|lymphoproliferative|mastocytosis|(?<!lympho)histiocyt|"
                  r"castleman|paragangliom|pheochromocytom|desmoid|chordom|thymom|wilms|trophoblastic|plasmacytom|macroglobulinemia|\bptld\b|graft.versus.host|gvhd|\bctcl\b|\bptcl\b|\b[bt]-all\b|plasma cell|\bmgus\b|smoldering|hairy cell", re.I)
 # Wording that contains a cancer word and is not about cancer. It is blanked before ONC is applied, so a study is kept only if it
 # names a cancer somewhere else: "... Who Cannot Tolerate Tumor Necrosis Factor Inhibitors" (rheumatoid arthritis), "Non-Malignant
@@ -166,8 +166,10 @@ def main():
     rows = write_nci_centers()
 
     # fetch_us.py writes the raw pull to trials.csv / us_sites.csv; keep a *_raw copy of THIS pull (always refresh — an older copy
-    # left over from a previous pull would silently be QC'd instead of the new data)
-    if (RAW / "fetch_log.json").stat().st_mtime > (RAW / "trials_raw.csv").stat().st_mtime if (RAW / "trials_raw.csv").exists() else True:
+    # left over from a previous pull would silently be QC'd instead of the new data). Whether trials.csv is a fresh pull is read from
+    # its content, not from file times (a git checkout gives every file the same time): a QC'd file carries the oral_route column.
+    with open(RAW / "trials.csv", newline="") as fh: fresh_pull = "oral_route" not in next(csv.reader(fh))
+    if fresh_pull or not (RAW / "trials_raw.csv").exists():
         shutil.copy(RAW / "trials.csv", RAW / "trials_raw.csv"); shutil.copy(RAW / "us_sites.csv", RAW / "us_sites_raw.csv")
     raw = {}
     with open(RAW / "studies_raw.jsonl") as fh:

@@ -7,7 +7,10 @@ Checks
      (a jump means the registry pull or a pipeline stage broke, not that access changed in a week)
   2b. The road network still routes short local trips sensibly and has not invented water crossings (route_us.py LOCAL_CHECKS),
       and few residents have a site nearby in a straight line but none by road (route_sites_us.py)
-  3. The published payload is internally consistent (trial count, county / district / state counts, no NaN in headline fields)
+  2c. No site row is drawn at a county center when its stated city lies elsewhere (such rows are left unlocated), and no county's
+      only located sites sit at the county center (route_sites_us.py)
+  3. The published payload is internally consistent (trial count, county / district / state counts, no NaN in headline fields,
+     every district's context block from tract tables, district case counts equal to the apportioned metrics file)
     python3 release_gate.py
 """
 import json, subprocess, sys
@@ -59,6 +62,15 @@ sl = json.load(open(find("route_sites_log.json"))).get("screen_site_near_in_stra
 if sl: check("Residents 55+ with a site within 20 straight-line miles but none within 60 road-miles (ceiling 100,000; water barriers explain the rest)", f"{sl['pop55']:,} in {sl['tracts']:,} tracts; largest: " + ", ".join(f"{c['county']} {c['pop55']:,}" for c in sl["largest_counties"][:4]), sl["pop55"] <= 100_000)
 else: check("Near-in-a-straight-line, far-by-road screen", "route_sites_log.json has no screen (route_sites_us.py not re-run?)", False)
 rv = rl["router_validation"]; check("Router vs published city-pair distances (mean difference below 5%, every pair routable)", f"{rv['pairs']} pairs, mean {rv['mean_abs_pct_diff']}%, max {rv['max_abs_pct_diff']}%, unroutable {rv['unroutable_pairs']}", rv["mean_abs_pct_diff"] < 5 and rv["unroutable_pairs"] == 0)
+# 2c. site placement: a row whose city lies far from the county its ZIP gave it is not located at all (route_sites_us.py); a point at the
+# county center would be a phantom site that counts as "a trial within 60 road-miles" for residents who have none (Tuscola County MI, Oct 2026)
+slog = json.load(open(find("route_sites_log.json"))); gc = slog.get("geocode", {})
+if "unlocated_rows" in slog:
+    check("No site row drawn at a county center when its stated city lies elsewhere", f"{slog['unlocated_rows']} rows left unlocated and dropped; county-center placements: {gc.get('county_centroid', 0)}", "county_centroid_city_disagrees" not in gc and slog["unlocated_rows"] <= 200)
+else: check("No site row drawn at a county center when its stated city lies elsewhere", "route_sites_log.json predates this rule (route_sites_us.py not re-run?)", False)
+gq = pd.read_csv(find("site_geocode_qc.csv"), dtype=str).fillna("")
+only_cc = gq.groupby("county_fips").geocode.apply(lambda s: (s == "county_centroid").all()); only_cc = only_cc[only_cc].index.tolist()
+check("No county whose only located sites sit at the county center (ZIP and city both unknown)", f"{int((gq.geocode == 'county_centroid').sum())} such rows; counties with nothing else: {len(only_cc)}" + (" (" + ", ".join(only_cc[:6]) + ")" if only_cc else ""), not only_cc and (gq.geocode == "county_centroid").sum() <= 100)
 
 # 3. payload consistency
 T = D["T"]; check("data.js trial list matches meta.trials", f"{len(T['id']):,} vs {meta['trials']:,}", len(T["id"]) == meta["trials"])
@@ -68,6 +80,11 @@ bad = [k for k, d in D["districts"].items() if any(d[f] is None or d[f] != d[f] 
 check("No district with a missing headline figure", f"{len(bad)} missing", not bad)
 nm = sum(1 for d in D["districts"].values() if not d.get("member")); check("Vacant seats are few (member list loaded)", f"{nm} districts without a member", nm <= 8)
 st = pd.read_csv(find("state_metrics_v3.csv")); check("Every state has residents 55+ and a finite access share", f"{len(st)} rows", len(st) == 51 and st.pct_lt20_trials_within_60rdmi.notna().all())
+nt = sum(1 for d in D["districts"].values() if (d.get("ctx") or {}).get("ctx_src") == "tract")
+check("Every district's household and incidence figures come from tract tables (build_tract_context.py ran)", f"{nt}/{len(D['districts'])} districts marked ctx_src = tract", nt == len(D["districts"]))
+dm = pd.read_csv(find("district_metrics_v3.csv"), dtype={"cd_geoid": str}).set_index("cd_geoid")
+off = [k for k, d in D["districts"].items() if k in dm.index and d["ctx"].get("cases") is not None and abs(d["ctx"]["cases"] - dm.loc[k, "inc_all_cases_sum"]) > 1]
+check("Published district cancer-case counts equal the apportioned counts in district_metrics_v3.csv", f"{len(off)} districts differ" + (": " + ", ".join(off[:6]) if off else ""), not off)
 
 ok = all(r[2] for r in rows)
 md = ["# Release gate", "", f"**{'PASS' if ok else 'FAIL'}** — {sum(1 for r in rows if r[2])}/{len(rows)} checks pass", "", "| Check | Detail | Result |", "|---|---|---|"] + [f"| {n} | {d} | {'✓' if o else '✗'} |" for n, d, o in rows] + [""]

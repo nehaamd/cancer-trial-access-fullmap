@@ -92,11 +92,18 @@ def main():
         params, total = {"note": "reused existing studies_raw.jsonl"}, None
     else:
         params, total, _ = fetch()
-    trials, sites = [], []
+    trials, sites, seen, dup, fetched = [], [], set(), 0, 0
     with open(RAW / "studies_raw.jsonl") as f:
         for line in f:
-            t, sr = flatten(json.loads(line)["protocolSection"])
+            ps = json.loads(line)["protocolSection"]; fetched += 1
+            nct = dig(ps, "identificationModule", "nctId")
+            # a study can appear on two pages when the registry re-sorts between page requests; the first copy is kept
+            if nct in seen: dup += 1; continue
+            seen.add(nct)
+            t, sr = flatten(ps)
             if sr: trials.append(t); sites.extend(sr)
+    if total is not None and abs(fetched - total) > max(5, 0.01 * total):
+        print(f"WARNING: fetched {fetched} studies but the registry reported totalCount {total}; the pull may have skipped a page", flush=True)
     with open(RAW / "trials.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(trials[0].keys())); w.writeheader(); w.writerows(trials)
     with open(RAW / "us_sites.csv", "w", newline="") as f:
@@ -104,7 +111,7 @@ def main():
     try: ver = requests.get(config.CTGOV_BASE.rsplit("/studies", 1)[0] + "/version", timeout=60, headers={"User-Agent": "us-trial-access-snapshot/0.1 (research)"}).json()
     except Exception as e: ver = {"error": repr(e)}
     log = {"timestamp_utc": datetime.now(timezone.utc).isoformat(), "registry_data_timestamp": ver.get("dataTimestamp"), "registry_api_version": ver.get("apiVersion"), "params": params, "api_total_count": total,
-           "trials_with_us_recruiting_site": len(trials), "us_site_rows": len(sites)}
+           "studies_fetched": fetched, "duplicate_study_rows_dropped": dup, "trials_with_us_recruiting_site": len(trials), "us_site_rows": len(sites)}
     json.dump(log, open(RAW / "fetch_log.json", "w"), indent=2); print(json.dumps({k: v for k, v in log.items() if k != "params"}, indent=2))
 
 

@@ -42,7 +42,7 @@
   h2:first-child{margin-top:0}
   table{border-collapse:collapse;width:100%;font-size:var(--fs-0);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden} th,td{text-align:left;vertical-align:top;padding:.4rem .55rem;border-top:1px solid var(--rule)} th{font-weight:650;color:var(--ink-2);border-top:0;background:var(--paper);text-transform:uppercase;letter-spacing:.05em;font-size:.72rem}
   td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap} td.ph{color:var(--warn)}
-  svg{width:100%;height:auto;display:block} .county{fill:#EEF0F2;stroke:#fff;stroke-width:.25} .county.zero{fill:#F3E6E0} .st{fill:none;stroke:var(--ink-3);stroke-width:.5}
+  svg#curve,svg#map{width:100%;height:auto;display:block} .county{fill:#EEF0F2;stroke:#fff;stroke-width:.25} .county.zero{fill:#F3E6E0} .st{fill:none;stroke:var(--ink-3);stroke-width:.5}
   #map{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow)}
   .cand{fill:var(--gulf);stroke:#fff;stroke-width:.6;opacity:.75} .pick{fill:var(--rust);stroke:#fff;stroke-width:.8}
   .plabel{font-size:8px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:2.2px}
@@ -55,7 +55,7 @@
   table{display:block;overflow-x:auto;max-width:100%}
   section,main,.wrap{min-width:0;max-width:100%}
   .kpi>div{min-width:0;flex:1 1 100%}
-  body{overflow-wrap:anywhere}
+  a,.mono{overflow-wrap:anywhere} th{white-space:nowrap}
 }
 </style>
 </head>
@@ -72,10 +72,10 @@
     <div class="kpi" id="kpi"></div>
     <h2>Greedy sequence: each pick removes the residents it covers before the next is chosen</h2>
     <svg id="curve" viewBox="0 0 560 170" class="curve" role="img" aria-label="Cumulative population newly covered by successive picks"></svg>
-    <table id="greedy"><thead><tr><th>Pick</th><th>Facility</th><th>County</th><th>Residents 55+ newly covered</th><th>Cumulative</th><th>% of uncovered</th></tr></thead><tbody></tbody></table>
+    <table id="greedy" tabindex="0"><thead><tr><th>Pick</th><th>Facility</th><th>County</th><th>Residents 55+ newly covered</th><th>Cumulative</th><th>% of uncovered</th></tr></thead><tbody></tbody></table>
     <h2>All candidates, ranked individually (top 200 shown; <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/blob/main/out_adult55/tier4_candidates_ranked.csv" target="_blank" rel="noopener">full list as a CSV file</a>)</h2>
     <p style="font-size:var(--fs-0);color:var(--ink-2);max-width:90ch">Individual rankings overlap: two facilities 20 miles apart cover mostly the same people. Use the greedy sequence above for a set; use this table to see the alternatives near each pick. "Trials in county" is the county's current count of listed trials (all below 20 by construction).</p>
-    <table id="ranked"><thead><tr><th>#</th><th>Facility</th><th>County</th><th>Newly covered (no trial within 60 mi)</th><th>Newly covered (fewer than 20)</th><th>Tracts within 60 mi</th><th>Trials in county</th></tr></thead><tbody></tbody></table>
+    <table id="ranked" tabindex="0"><thead><tr><th>#</th><th>Facility</th><th>County</th><th>Newly covered (no trial within 60 mi)</th><th>Newly covered (fewer than 20)</th><th>Tracts within 60 mi</th><th>Trials in county</th></tr></thead><tbody></tbody></table>
   </section>
   <aside>
     <h2>Map</h2>
