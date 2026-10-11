@@ -8,6 +8,7 @@ Checks re-run by `validate_extras.py` on 2026-10-11 (UTC).
 | RUCC: metro + nonmetro residents 55+ equal the national total; their weighted <20 / none shares reproduce the national figures | 98,596,429 vs 98,596,429; weighted <20 12.07% vs 12.0%; none 4.32% vs 4.3% | ✓ |  |
 | RUCC: nonmetro '<20 within 60 road-mi' share recomputed independently from tract_access.csv | 43.0% vs rucc.js 43.0%; metro 6.2% (nonmetro / metro ratio 6.9×) | ✓ |  |
 | RUCC: state metro + nonmetro populations equal state totals | 0 mismatches | ✓ |  |
+| RUCC: exact residents 55+ with fewer than 20 / no trials within 60 road-mi (n_l20, n_z60) on every metro and nonmetro group, recounted from tract_access.csv | 101 groups, 0 differ; nation 11,879,390 short of trials (6,760,543 nonmetro + 5,118,847 metro) | ✓ |  |
 | tract_county.bin: every tract maps back to its own county through meta.county_order | 84,396 of 84,396 tracts; 3143 counties in order list | ✓ |  |
 | Cosponsors: every sponsor / cosponsor bioguide ID resolves to a current member of Congress | 33 members on 2 bills; unresolved: none | ✓ |  |
 | Cosponsors: the tracked bills are the Clinical Trial Modernization Act only (Ruiz H.R. 3521, Scott S. 4440) | H.R. 3521 Raul Ruiz (30 cosponsors); S. 4440 Tim Scott (1 cosponsors) | ✓ |  |
@@ -25,7 +26,8 @@ Checks re-run by `validate_extras.py` on 2026-10-11 (UTC).
 | ZIP lookup: every ZCTA's county exists in the payload | 0 bad | ✓ |  |
 | ZIP lookup: spot check — nearest site point to ZIP 77030 (Texas Medical Center) is in Harris County within ~2 miles | 0.2 mi; facilities there include ['Site-104', '014', '069'] | ✓ |  |
 | ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites | 7 site points within 60 est. road-mi | ✓ |  |
-| ZIP lookup: large ZIP code areas measure from their residents (99701 Fairbanks, 99503 Anchorage, 83716 Boise each have a site point within 10 miles) | all three within 10 miles | ✓ | population-weighted ZCTA centers (build_zcta_centers.py: 26,794 of 33,640 from tract population centers, the rest Census internal points) |
+| ZIP lookup: large ZIP code areas measure from their residents (99701 Fairbanks, 99503 Anchorage, 83716 Boise each have a site point within 10 miles) | all three within 10 miles | ✓ | population-weighted ZCTA centers (build_zcta_centers.py: 23,889 of 33,640 from tract population centers, the rest Census internal points) |
+| ZIP lookup: every population-weighted ZIP center lies within a mile of its own ZIP area and passes the coverage test; find_data.js uses those centers | 23,889 weighted centers: 0 outside their ZIP area (or not tested), 0 outside the coverage band; 0 of 33,640 finder ZIPs not at their center | ✓ |  |
 | ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
 | Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
 | community.js reproduces data.js / burden.js for every county, district and state | 3143 counties (0 differ), 436 districts (0 differ), 51 states (0 differ); nation 12.0% vs 12.0% | ✓ | built by build_community.py from the same files the map reads; the Your community and What could help pages read this file |
