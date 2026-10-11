@@ -193,7 +193,7 @@
 <script>
 (function () { const M = window.COMMUNITY.meta; const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull };
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
-  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? String(M.nci.centers) : 'about 70',
+  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta)), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? String(M.nci.centers) : 'about 70',
     multi: M.pct_multi ? `About ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][Math.round(M.pct_multi / 10)]} in ten (${M.pct_multi}%)` : 'About three in ten' };   // community.js meta.pct_multi, the share the map's Methods quotes
   document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || '');
   SITE.foldOnPhone([...document.querySelectorAll('main section')], [0]); })();

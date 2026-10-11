@@ -124,9 +124,10 @@
   svg.append('g').selectAll('path').data(GEO.districts.features).join('path').attr('class', 'st').attr('d', path).style('display', 'none');
   svg.append('g').selectAll('circle').data(T4.ranked).join('circle').attr('class', 'cand').attr('r', 2.2).attr('transform', r => { const p = proj([r[11], r[10]]); return p ? `translate(${p})` : 'translate(-100,-100)'; });   // ranked rows end ..., trials in county [9], latitude [10], longitude [11]
   const gp = svg.append('g'); gp.selectAll('circle').data(T4.greedy).join('circle').attr('class', 'pick').attr('r', 5).attr('transform', g => { const p = proj([g.lon, g.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
-  gp.selectAll('text').data(T4.greedy).join('text').attr('class', 'plabel').attr('text-anchor', 'middle').attr('dy', -7).attr('transform', g => { const p = proj([g.lon, g.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; }).text(g => g.step);
+  gp.selectAll('text').data(T4.greedy.slice().sort((a, b) => b.step - a.step)).join('text')   /* later picks first, so pick 1 is drawn on top where labels meet */
+  .attr('class', 'plabel').attr('text-anchor', 'middle').attr('dy', -7).attr('transform', g => { const p = proj([g.lon, g.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; }).text(g => g.step);
   // the pick numbers are sized in map units: keep them about 12 px whatever the drawn width (the CSS size is in viewBox units)
-  function fitText() { const kM = 975 / Math.max(1, document.getElementById('map').getBoundingClientRect().width); gp.selectAll('text').style('font-size', Math.max(8, 12 * kM) + 'px').style('stroke-width', 3 * kM + 'px'); }
+  function fitText() { const kM = 975 / Math.max(1, document.getElementById('map').getBoundingClientRect().width); const px = window.innerWidth < 600 ? 10 : 12; gp.selectAll('text').style('font-size', Math.max(8, px * kM) + 'px').style('stroke-width', 3 * kM + 'px'); }
   fitText(); let lastW = window.innerWidth; window.addEventListener('resize', () => { if (Math.abs(window.innerWidth - lastW) < 24) return; lastW = window.innerWidth; drawCurve(); fitText(); });
 })();
 </script>
