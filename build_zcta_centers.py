@@ -7,7 +7,7 @@ in the Bethel Census Area that puts its point 274 miles west; 83716 (Boise) is 4
 from every populated tract center of their county.
 
 Method: the Census 2020 ZCTA-to-tract relationship file gives, for every tract a ZCTA overlaps, the land area of the overlap. Each
-tract's residents 55+ (data/ref/tracts_us.csv, ACS 2023 5-year) are split in proportion to the tract's land area inside the ZCTA
+tract's residents 55+ (data/ref/tracts_us.csv, ACS 5-year (config.ACS_YEAR)) are split in proportion to the tract's land area inside the ZCTA
 (the same apportionment build_geo_us.py uses for zcta_county_parts.csv), and the ZCTA's center is the mean of its tracts' population
 centers weighted by the residents so attributed (a mean on the sphere, so the Aleutian ZCTAs across the 180th meridian are right).
 For a ZCTA made of small urban tracts the result is within a mile of the internal point; for a ZCTA that is mostly empty land it

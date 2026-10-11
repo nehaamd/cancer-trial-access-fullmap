@@ -62,7 +62,7 @@
   },
   "tracts_off_road_network_gt30mi": {
     "n": 54,
-    "pop55": 32452,
+    "pop55": 32530,
     "of_which_alaska": 39
   },
   "tract_access_mi": {
@@ -113,14 +113,14 @@
       "Maui (15)"
     ]
   },
-  "tracts": 84396,
+  "tracts": 84397,
   "tract_no_road_route": {
     "broad": 649,
     "limited": 194,
     "nci": 321,
-    "pop55_no_route_to_broad": 661727
+    "pop55_no_route_to_broad": 668701
   },
-  "tract_pairs_within_120rdmi": 1488196,
+  "tract_pairs_within_120rdmi": 1488228,
   "county_pairs_within_120rdmi": 36123,
   "router_validation": {
     "pairs": 38,
@@ -153,5 +153,5 @@
     "counties_where_x1_2_underestimated": 1271,
     "counties_compared": 3026
   },
-  "seconds": 165
+  "seconds": 195
 }

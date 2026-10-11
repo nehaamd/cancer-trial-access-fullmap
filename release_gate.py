@@ -126,6 +126,32 @@ for name, want in (("tracts60.bin", meta.get("tracts_bin", {}).get("bytes")), ("
     if len(raw) != want: gzn.append(f"{name} is {len(raw):,} bytes, the payload says {want}")
 check("Compressed tract files (tracts60.bin.gz, tract_county.bin.gz) decompress to the plain files, whose lengths match data.js and rucc.js", "; ".join(gzn) if gzn else "both match", not gzn)
 
+# Newer yearly sources (information only; never stops a refresh). The Census and State Cancer Profiles publish once a year and
+# are re-run by hand (config.ACS_YEAR; fetch_cancer_burden.py), so nothing else says when the site falls a release behind.
+def newer_sources():
+    import re, urllib.request, config
+    notes = []
+    try:
+        req = urllib.request.Request(config.acs_url("b01001", config.ACS_YEAR + 1), method="HEAD")
+        with urllib.request.urlopen(req, timeout=30) as r: newer = r.status == 200
+    except Exception as e:
+        newer = None if not getattr(e, "code", None) == 404 else False
+    notes.append(f"ACS {config.ACS_YEAR + 1} 5-year is published: re-run the Census steps with config.ACS_YEAR = {config.ACS_YEAR + 1}" if newer
+                 else f"ACS {config.ACS_YEAR} 5-year is the newest" if newer is False else "ACS: could not check")
+    try:
+        have = json.load(open(ROOT / "data/ref/cancer_burden_log.json"))["sites"]["all"]["title"].split(", ")[-1]
+        url = "https://statecancerprofiles.cancer.gov/incidencerates/index.php?age=001&areatype=state&cancer=001&race=00&sex=0&stage=999&stateFIPS=00&type=incd&year=0&output=1"
+        txt = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "us-trial-access-map/3.0 (research)"}), timeout=60).read().decode("utf-8", "replace")
+        m = re.search(r"(\d{4}-\d{4})", txt[:2000]); live = m.group(1) if m else None
+        notes.append(f"incidence {live} is published (site uses {have}): re-run fetch_cancer_burden.py" if live and live != have
+                     else f"incidence {have} is the newest" if live else "incidence: could not check")
+    except Exception:
+        notes.append("incidence: could not check")
+    for n in notes:
+        if "is published" in n: print(f"::warning title=Newer source data::{n}")
+    return "; ".join(notes)
+check("Newer yearly sources (information only)", newer_sources(), True)
+
 ok = all(r[2] for r in rows)
 md = ["# Release gate", "", f"**{'PASS' if ok else 'FAIL'}** — {sum(1 for r in rows if r[2])}/{len(rows)} checks pass", "", "| Check | Detail | Result |", "|---|---|---|"] + [f"| {n} | {d} | {'✓' if o else '✗'} |" for n, d, o in rows] + [""]
 (ROOT / "RELEASE_GATE.md").write_text("\n".join(md)); print(f"\nrelease gate: {'PASS' if ok else 'FAIL — nothing will be published'}"); sys.exit(0 if ok else 1)

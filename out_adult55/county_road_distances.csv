@@ -2912,7 +2912,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 51187,Warren,51,0,0.7,1,"Fairfax, Virginia",55.1,1.08,"Fairfax, Virginia",55.1,1.08,Georgetown Lombardi Comprehensive Cancer Center,67.1,1.32,59.7,59.7,70.2,Georgetown Lombardi Comprehensive Cancer Center
 51191,Washington,51,0,0.1,1,"Forsyth, North Carolina",127.3,3.15,"Roanoke, Virginia",127.0,2.46,Wake Forest Baptist Comprehensive Cancer Center,127.5,3.15,124.7,124.7,124.6,Wake Forest Baptist Comprehensive Cancer Center
 51193,Westmoreland,51,0,0.8,1,"Richmond, Virginia",72.8,1.58,"Hanover, Virginia",66.9,1.43,VCU Massey Comprehensive Cancer Center,70.6,1.53,62.5,53.9,63.7,VCU Massey Comprehensive Cancer Center
-51195,Wise,51,2,0.1,1,"Fayette, Kentucky",169.0,4.13,"Knox, Tennessee",126.0,2.94,Markey Cancer Center (Kentucky),168.9,4.15,152.2,122.7,153.5,Markey Cancer Center (Kentucky)
+51195,Wise,51,0,0.1,1,"Fayette, Kentucky",169.0,4.13,"Knox, Tennessee",126.0,2.94,Markey Cancer Center (Kentucky),168.9,4.15,152.2,122.7,153.5,Markey Cancer Center (Kentucky)
 51197,Wythe,51,12,1.5,1,"Forsyth, North Carolina",86.7,1.81,"Roanoke, Virginia",76.2,1.39,Wake Forest Baptist Comprehensive Cancer Center,86.9,1.82,86.5,79.1,86.5,Wake Forest Baptist Comprehensive Cancer Center
 51199,York,51,0,0.7,1,"Richmond, Virginia",67.3,1.41,"Norfolk, Virginia",27.8,0.64,VCU Massey Comprehensive Cancer Center,65.0,1.1,70.7,27.8,68.7,VCU Massey Comprehensive Cancer Center
 51510,Alexandria,51,9,0.1,1,District of Columbia,8.7,0.26,District of Columbia,8.7,0.26,Georgetown Lombardi Comprehensive Cancer Center,9.0,0.23,9.0,9.0,8.1,Georgetown Lombardi Comprehensive Cancer Center
@@ -2939,7 +2939,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 51690,Martinsville,51,1,0.2,1,"Forsyth, North Carolina",54.5,1.21,"Roanoke, Virginia",53.4,1.3,Wake Forest Baptist Comprehensive Cancer Center,54.6,1.22,54.7,49.8,54.9,Wake Forest Baptist Comprehensive Cancer Center
 51700,Newport News,51,7,0.3,1,"Richmond, Virginia",68.2,1.44,"Norfolk, Virginia",24.4,0.54,VCU Massey Comprehensive Cancer Center,65.8,1.12,73.9,22.4,72.0,VCU Massey Comprehensive Cancer Center
 51710,Norfolk,51,65,0.2,1,"Richmond, Virginia",89.4,1.82,"Norfolk, Virginia",0.0,0.0,VCU Massey Comprehensive Cancer Center,87.1,1.5,95.6,0.0,93.9,VCU Massey Comprehensive Cancer Center
-51720,Norton,51,0,0.1,1,"Fayette, Kentucky",170.3,4.18,"Knox, Tennessee",124.8,2.89,Markey Cancer Center (Kentucky),170.2,4.2,152.3,121.4,153.6,Markey Cancer Center (Kentucky)
+51720,Norton,51,2,0.1,1,"Fayette, Kentucky",170.3,4.18,"Knox, Tennessee",124.8,2.89,Markey Cancer Center (Kentucky),170.2,4.2,152.3,121.4,153.6,Markey Cancer Center (Kentucky)
 51730,Petersburg,51,1,0.1,1,"Richmond, Virginia",25.1,0.55,"Chesterfield, Virginia",20.4,0.46,VCU Massey Comprehensive Cancer Center,24.3,0.53,27.4,20.3,27.6,VCU Massey Comprehensive Cancer Center
 51735,Poquoson,51,0,0.5,1,"Richmond, Virginia",73.5,1.54,"Norfolk, Virginia",21.5,0.51,VCU Massey Comprehensive Cancer Center,71.1,1.23,79.0,21.1,77.0,VCU Massey Comprehensive Cancer Center
 51740,Portsmouth,51,3,0.3,1,"Richmond, Virginia",89.9,1.84,"Norfolk, Virginia",8.8,0.24,VCU Massey Comprehensive Cancer Center,87.5,1.53,93.8,8.0,92.2,VCU Massey Comprehensive Cancer Center

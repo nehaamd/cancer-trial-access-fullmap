@@ -255,6 +255,13 @@ METHOD_CHANGES = [
         "myeloid sarcoma and histiocytic sarcomas are blood cancers, not Sarcoma; 'metastatic ... in the lung' and 'brain tumor - metastatic' no longer tag Lung or Brain; "
         "renal medullary carcinoma, sinonasal cancers, ETMR, ATRT, pineoblastoma, familial adenomatous polyposis, anal HSIL, misspelt 'hepatocellular' and HER2-expressing baskets are recognised. "
         "Other / unclassified 38 to 23 trials; the multi-cancer share 27.9% to 28.1%. No county's trial count and no access share moves from the screen or the classifier.")},
+    {"version": 6, "date": "2026-10-11", "note": (
+        "Not a change of method: the yearly sources were updated. Residents 55+ and household figures now come from the ACS 2020-2024 "
+        "5-year release (was 2019-2023), and cancer incidence from State Cancer Profiles 2019-2023 (was 2018-2022), which for the first "
+        "time includes Kansas counties. Measured on the same registry data (Oct 9, 2026) and the same rules: residents 55+ 98,596,429 to 100,019,672; "
+        "fewer than 20 trials within 60 road-miles 12.0% (11.88 to 11.98 million people); none within 60 road-miles 4.4% to 4.3% (4.31 to 4.34 million); "
+        "beyond 60 road-miles of a broad menu 38.1% to 38.0%; of an NCI center 43.7% (unchanged); no state moved more than half a point and no district a full point. "
+        "Counties with a published or small-numbers incidence rate 3,026 to 3,130 (Kansas); high-incidence, low-access counties 495 to 492.")},
 ]
 METHOD_VERSION = METHOD_CHANGES[-1]["version"]
 
@@ -264,3 +271,23 @@ def method_of(stamp, pull_date):
     METHOD_CHANGES entry whose first_pull is on or before the pull's date (YYYY-MM-DD...), whichever is later."""
     late = [m["version"] for m in METHOD_CHANGES if m.get("first_pull") and str(pull_date)[:10] >= m["first_pull"]]
     return max([int(stamp or 1)] + late)
+
+# ---- American Community Survey release used for every Census table (population 55+, household context, ZIP-code tables) ----
+# One value, so a new release is one edit. The 5-year files appear in the Census Bureau's summary-file folder under the end
+# year; release_gate.py reports when a newer release than this one is published.
+ACS_YEAR = 2024
+ACS_SPAN = f"{ACS_YEAR - 4}-{ACS_YEAR}"
+ACS_LABEL = f"ACS {ACS_YEAR} 5-year"
+def acs_url(table, year=None):
+    y = year or ACS_YEAR
+    return f"https://www2.census.gov/programs-surveys/acs/summary_file/{y}/table-based-SF/data/5YRData/acsdt5y{y}-{table}.dat"
+def acs_cache_ok(path):
+    """True when a saved ACS extract exists and came from the configured release (its sidecar <file>.acs names the year).
+    A cache without the sidecar, or from another release, is rebuilt: in October 2026 build_tracts_us.py silently reused
+    2023 tract counts after ACS_YEAR moved to 2024."""
+    from pathlib import Path
+    path = Path(path); mark = path.with_name(path.name + ".acs")
+    return path.exists() and mark.exists() and mark.read_text().strip() == str(ACS_YEAR)
+def acs_cache_mark(path):
+    from pathlib import Path
+    path = Path(path); path.with_name(path.name + ".acs").write_text(str(ACS_YEAR) + "\n")
