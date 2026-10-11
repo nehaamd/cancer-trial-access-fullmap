@@ -1,12 +1,20 @@
+# 11 Oct 2026, registry review: accepted after reading each trial.
+#   colorectal / Familial Adenomatous Polyposis (with and without "(FAP)"): the hereditary colorectal polyposis syndrome; the trials treat polyp
+#   burden (NCT05552755, NCT06950385, NCT05919264), so the colorectal filter is right; "polyp" only reads as benign to the audit.
+#   brain_cns / Benign Centrally-Located Intracranial Tumors: intracranial tumours (hypothalamic hamartoma, NCT03028246, ages up to 22, not
+#   listed); "benign" reads as non-neoplastic to the audit, and the CNS category is the right one.
 bladder_urothelial	Urinary Tract Infection
 brain_cns	Anaplastic Oligoastrocytoma
 brain_cns	Anaplastic Pleomorphic Xanthoastrocytoma
+brain_cns	Benign Centrally-Located Intracranial Tumors
 brain_cns	Ganglioglioma
 brain_cns	Oligoastrocytoma
 brain_cns	Pleomorphic Xanthoastrocytoma
 breast	Breast Cancer Survivor
 breast	Lymphedema, Breast Cancer
 colorectal	Anorectal Cancer
+colorectal	Familial Adenomatous Polyposis
+colorectal	Familial Adenomatous Polyposis (FAP)
 gastric_esophageal	Barretts Esophagus With Dysplasia
 gynecologic	Endometrial Hyperplasia
 gynecologic	HPV-Related Endocervical Adenocarcinoma
