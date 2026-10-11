@@ -1,7 +1,10 @@
-pandas>=2.0
-numpy>=1.26
-scipy>=1.11
-geopandas>=1.0
-shapely>=2.0
-pyogrio>=0.9
-requests>=2.31
+# The weekly refresh installs these unattended, so each is capped below its next major version: a new major release (pandas 4,
+# numpy 3, ...) can change results or break a stage without anyone watching. Raise a cap deliberately, after a refresh run by hand.
+# On 11 October 2026 the latest releases under these caps were pandas 3.0.6, numpy 2.5.4, geopandas 1.2.0, shapely 2.2.0 and pyogrio 0.13.0.
+pandas>=2.0,<4
+numpy>=1.26,<3
+scipy>=1.11,<2
+geopandas>=1.0,<2
+shapely>=2.0,<3
+pyogrio>=0.9,<1
+requests>=2.31,<3

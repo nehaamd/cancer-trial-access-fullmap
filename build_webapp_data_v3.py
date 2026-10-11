@@ -172,6 +172,10 @@ def main():
                        "hn": None if r.road_mi_nci >= NOROAD else round(float(r.drive_hr_nci), 1), "nn": r.nearest_nci, "nbm": r.nearest_broad,
                        "noroad": ("off" if "OFF ROAD" in str(r.nearest_nci) else "island" if "NO ROAD" in str(r.nearest_nci) or "NO ROAD" in str(r.nearest_broad) else ""),
                        "sl": {"b": round(float(c.dist_to_broad_mi)), "n": round(float(c.dist_to_nci_mi))},
+                       # straight-line "access" miles from the county population center to the nearest highway node (route_us.py); the road
+                       # miles and drive times above include it, at 35 mph. On an island with no highway of its own it crosses water as if
+                       # by bridge (Nantucket 27 mi, San Juan WA 15, Dukes MA 9), so the page can say so (deferred on 10 Oct 2026 for want of it)
+                       "am": None if float(r.access_mi) >= NOROAD else round(float(r.access_mi), 1),
                        "acs": None if v is None else {"veh": None if pd.isna(v.pct_hh_no_vehicle) else round(float(v.pct_hh_no_vehicle), 1), "net": None if pd.isna(v.pct_hh_no_internet) else round(float(v.pct_hh_no_internet), 1),
                                                      "bb": None if pd.isna(v.hh_broadband) or pd.isna(v.hh_total) or v.hh_total == 0 else round(100 * float(v.hh_broadband) / float(v.hh_total), 1),
                                                      "unins": None if pd.isna(v.uninsured_rate) else round(float(v.uninsured_rate), 1), "unins55": None if pd.isna(v.uninsured_rate_55_64) else round(float(v.uninsured_rate_55_64), 1),

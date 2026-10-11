@@ -2,7 +2,7 @@
 deployed layout or the pipeline layout. Standalone: writes VALIDATION_extras.md; validate_v3.py also folds these rows in.
 Usage: python validate_extras.py [--browser]   (--browser re-runs the in-page tract recomputation with Playwright, if installed)
 """
-import json, math, sys, struct, time
+import calendar, json, math, sys, struct, time
 from pathlib import Path
 import numpy as np, pandas as pd
 
@@ -51,7 +51,7 @@ def run(browser=False):
         ns = sum(len(v) for v in CO["senators"].values()); check("Cosponsors: 100 senators mapped to states", f"{ns} senators across {len(CO['senators'])} states", ns == 100)
         chamber_ok = all(CO["members"][m]["chamber"] == ("rep" if b[k]["type"] == "hr" else "sen") for k in b for m in [b[k]["sponsor"]] + [x for x in CO["by_member"] if k in CO["by_member"][x]])
         check("Cosponsors: House bills carry only representatives, Senate bills only senators", "chambers consistent" if chamber_ok else "MISMATCH", chamber_ok)
-        age = (time.time() - time.mktime(time.strptime(CO["meta"]["fetched"], "%Y-%m-%d"))) / 86400; check("Cosponsors: freshness of the pull", f"fetched {CO['meta']['fetched']} ({age:.0f} days ago) from {CO['meta']['source'][:40]}…", age < 45, "re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date")
+        age = (time.time() - calendar.timegm(time.strptime(CO["meta"]["fetched"], "%Y-%m-%d"))) / 86400; check("Cosponsors: freshness of the pull", f"fetched {CO['meta']['fetched']} ({int(age)} days ago) from {CO['meta']['source'][:40]}…", age < 45, "re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date")
     # ---- burden vs access ----
     if BU:
         w = tr.pop55.astype(float); g = tr.groupby("county_fips"); W = g.pop55.sum().astype(float)
@@ -113,10 +113,16 @@ def run(browser=False):
     return rows
 
 
+def write_md(rs):
+    """VALIDATION_extras.md from the rows of run(). validate_v3.py calls this too: the refresh runs these checks only through validate_v3.py,
+    and until October 2026 the file was written only by a standalone run, so the copy the refresh committed stayed at 6 October."""
+    md = ["# Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)", "", f"Checks re-run by `validate_extras.py` on {time.strftime('%Y-%m-%d', time.gmtime())} (UTC).", "", "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rs]
+    Path("VALIDATION_extras.md").write_text("\n".join(md) + "\n")
+
+
 def main():
     run("--browser" in sys.argv)
-    md = ["# Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)", "", f"Checks re-run by `validate_extras.py` on {time.strftime('%Y-%m-%d')}.", "", "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
-    Path("VALIDATION_extras.md").write_text("\n".join(md) + "\n"); n_ok = sum(1 for r in rows if r[2] == '✓'); print(f"\n{n_ok}/{len(rows)} checks pass"); sys.exit(0 if n_ok == len(rows) else 1)
+    write_md(rows); n_ok = sum(1 for r in rows if r[2] == '✓'); print(f"\n{n_ok}/{len(rows)} checks pass"); sys.exit(0 if n_ok == len(rows) else 1)
 
 
 if __name__ == "__main__":
