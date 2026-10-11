@@ -103,15 +103,19 @@ ONC = re.compile(r"cancer|neoplas|carcinom|lymphom|leuka?emi|leukoplaki|myelom|s
 # (spina bifida). "leuk" alone also matched interleukin, leukocyte and leukodystrophy, and "histiocyt" matched hemophagocytic
 # lymphohistiocytosis; ONC now asks for leukemia / leukaemia / leukoplakia and for histiocytosis that is not "lympho-".
 NOT_ONC = re.compile(r"tumou?r[ -]necrosis[ -]factor|non[- ]?oncolog\w*(?:\s+plasma[- ]cell)?|non[- ]?malignan\w*|non[- ]?cancer\w*|myelomeningocele|myeloschisis|"
-                     r"\bmcl (?:tear|injur\w*|sprain|rupture|reconstruct\w*|repair)", re.I)   # MCL is also the medial collateral ligament
+                     r"\bmcl[- ]?(?:tear|injur\w*|sprain|rupture|reconstruct\w*|repair)", re.I)   # MCL is also the medial collateral ligament (see is_onc)
+# Wording that marks a study as about the knee's medial collateral ligament: then "MCL" is the ligament, not mantle cell lymphoma.
+LIGAMENT = re.compile(r"ligament|\bknee|\bacl\b|collateral", re.I)
 
 
 def is_onc(conditions, title):
     """True when the registry conditions or the brief title name a cancer (after blanking the NOT_ONC wording)."""
     mecp2 = "mecp2" in f"{conditions} {title}".lower()   # there "MDS" is MECP2 duplication syndrome, not myelodysplastic syndrome
+    knee = bool(LIGAMENT.search(f"{conditions} {title}"))  # there "MCL" is the medial collateral ligament, not mantle cell lymphoma
     for s in (conditions, title):
         s = NOT_ONC.sub(" ", s or "")
         if mecp2: s = re.sub(r"\bmds\b", " ", s, flags=re.I)
+        if knee: s = re.sub(r"\bmcl\b", " ", s, flags=re.I)
         if ONC.search(s): return True
     return False
 
