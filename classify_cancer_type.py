@@ -71,16 +71,18 @@ PRECEDENCE = [
  (r"leukoplakia|erythroplakia", {"head_neck"}),                          # oral premalignant lesions (the leukaemia stem "leuk" is excluded from them)
  (r"preleukemi", {"mds_mpn"}),                                           # preleukaemia is an MDS term
 ]
-# metastatic *site*, not a primary: the organ named as the site of spread is dropped from the string, the primary (if the string names one)
-# is kept — "Breast Cancer Brain Metastases" is a breast trial, not a brain one and not an unspecified one. Until Oct 2026 the whole string
-# was emptied, so such trials fell to "unspecified solid / hematologic" unless another condition string named the primary.
+# metastatic *site*, not a primary: the phrase that names the site of spread is blanked from the string and the rest is matched, so
+# "Breast Cancer Brain Metastases" is a breast trial (not a brain one, not an unspecified one) and "Lung Cancer With Pleural Metastases"
+# stays a lung trial. Until Oct 2026 the whole string was emptied, so such trials fell to "unspecified solid / hematologic" unless another
+# condition string named the primary; from 10 Oct the site's category was removed from the whole string, which would also have removed a
+# primary that shares the organ (none among the strings in the data then, but "lung cancer with pleural metastases" would lose "lung").
 MET_SITE = [
- (r"lung metasta|pulmonary metasta|endobronchial metasta|neoplasm in the lung|metasta\w* (in|to) (the )?lungs?\b", {"lung"}),   # NCI term "Metastatic Malignant Neoplasm in the Lung"
- (r"brain metasta|cns metasta|leptomening|spinal metasta|spine metasta|vertebral metasta|intracranial metasta|cerebral metasta|metastatic brain tumou?r|brain tumou?rs?\W+metastatic|metasta\w* (in|to) (the )?brain|secondary brain", {"brain_cns"}),
- (r"liver metasta|hepatic metasta|metasta\w* (in|to) (the )?liver", {"liver_biliary"}),
- (r"bone metasta|osseous metasta|metastatic bone disease|skeletal metasta", {"sarcoma"}),
- (r"peritoneal metasta|carcinomatosis|pleural metasta", {"other_named", "lung"}),
- (r"metastatic disease to|metastas[ei]s to the", {"lung", "brain_cns", "liver_biliary", "sarcoma", "other_named"}),
+ r"lung metasta|pulmonary metasta|endobronchial metasta|neoplasm in the lung|metasta\w* (in|to) (the )?lungs?\b",   # NCI term "Metastatic Malignant Neoplasm in the Lung"
+ r"brain metasta|cns metasta|leptomening\w*|spinal metasta|spine metasta|vertebral metasta|intracranial metasta|cerebral metasta|metastatic brain tumou?r|brain tumou?rs?\W+metastatic|metasta\w* (in|to) (the )?brain|neoplasm (in|to) (the )?brain|secondary brain",
+ r"liver metasta|hepatic metasta|metasta\w* (in|to) (the )?liver|neoplasm (in|to) (the )?liver",
+ r"bone metasta|osseous metasta|metastatic bone disease|skeletal metasta",
+ r"peritoneal metasta|carcinomatosis|pleural metasta",
+ r"metastatic disease to|metastas[ei]s to the",
 ]
 GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced cancer|advanced malignan|metastatic cancer|metastatic malignan|^cancers?$|^neoplasms?$|^tumou?rs?$|^malignan(t|cy|cies)|malignan(t|cy|cies)$|"
                      r"hematologic(al)? (malignan|cancer|neoplasm)|blood cancer|^carcinoma$|^adenocarcinoma$|^metasta(tic|sis|ses)$|refractory cancer|recurrent cancer|rare (cancer|tumou?r|disease)|"
@@ -91,7 +93,7 @@ GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced canc
                      r"^(cancer|malignan|neoplasm|tumou?r)[a-z]* (of|in) (the )?(elderly|adult|child|older)", I)
 CATRX = {k: re.compile(v, I) for k, v in CATS.items()}
 PRERX = [(re.compile(p, I), keep) for p, keep in PRECEDENCE]
-METRX = [(re.compile(p, I), drop) for p, drop in MET_SITE]
+METRX = [re.compile(p, I) for p in MET_SITE]
 CASE_SENS = {"leukemia": re.compile(r"\bB-ALL\b|\bT-ALL\b|\bALL\b(?![a-z])"), "lymphoma": re.compile(r"\bHL\b|\bFL\b|\bMZL\b"),
              "myeloma": re.compile(r"\bMM\b"), "kidney": re.compile(r"\bRCC\b"), "gynecologic": re.compile(r"\bOC\b"), "neuroendocrine_endocrine": re.compile(r"\bNET\b")}
 LABEL = {"breast": "Breast", "lung": "Lung & thoracic", "colorectal": "Colorectal", "prostate": "Prostate", "melanoma_skin": "Melanoma & skin",
@@ -105,10 +107,10 @@ LABEL = {"breast": "Breast", "lung": "Lung & thoracic", "colorectal": "Colorecta
 def cats_in(s):
     s = s.strip()
     if not s: return set()
-    found = {k for k, rx in CATRX.items() if rx.search(s)} | {k for k, rx in CASE_SENS.items() if rx.search(s)}
     met = False
-    for rx, drop in METRX:
-        if rx.search(s): found -= drop; met = True
+    for rx in METRX:                       # blank the metastatic-site phrase, keep whatever else the string names
+        s, n = rx.subn(" ", s); met = met or n > 0
+    found = {k for k, rx in CATRX.items() if rx.search(s)} | {k for k, rx in CASE_SENS.items() if rx.search(s)}
     for rx, keep in PRERX:
         if rx.search(s):
             hit = found & keep
