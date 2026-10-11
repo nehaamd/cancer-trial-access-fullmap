@@ -83,6 +83,15 @@ PHASE_MAP = {("PHASE1",): "1", ("PHASE1", "PHASE2"): "1-2", ("PHASE2",): "2", ("
 SPONSOR_MAP = lambda c: "industry" if c == "INDUSTRY" else "nih_federal" if c in ("NIH", "FED") else "academic_other"
 SITE_STATUS_KEEP = {"RECRUITING", None, ""}
 STATE_NAMES = None
+# A county with no road route to an NCI center (the 999 sentinel in county_road_distances.csv and tract_access.csv) is shown on every page
+# with a sentence, not a number; the cross-page check reads these as 999 so that the pages are compared with the file on the same footing:
+#   index.html, community.html: "No road connection from this county to any broad menu or NCI center" / "... to any NCI-designated cancer
+#     center or broad menu of trials (island or disconnected network)"; the map's hover label "no road connection to a broad menu or NCI center"
+#   index.html, community.html, a population center more than 30 miles from any road: "... no road distance is reported"
+#   brief.html: "No road route to an NCI-designated center (island or off the highway network)"
+# A county that reaches an NCI center but no broad menu (Honolulu) says "No road connection from this county to a broad menu ...; the nearest
+# NCI-designated center is ..., 7 road-miles": that is not a sentinel, and the number is read.
+NOROUTE_RE = re.compile(r"no road connection[^.;]*? to (?:any |a )?(?:broad menu or NCI|NCI)|no road route to an NCI|no road distance is reported", re.I)
 
 # ---------------------------------------------------------------- 1. live registry ----------------------------------------------------------------
 def live_registry(D, seed):
@@ -371,11 +380,25 @@ def site_locations(D, GEO, F, seed, nsample):
     with open(REF / "gazetteer_places.csv", newline="", encoding="utf-8") as f:
         for r in csv.DictReader(f): gaz[(r["state"], r["place"])].append((float(r["lat"]), float(r["lon"])))
     cm = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str}).set_index("county_fips")
+    usps_of = {}
+    with open(REF / "Ruralurbancontinuumcodes2023.csv", newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f): usps_of[r["FIPS"][:2]] = r["State"]
+    # The row's state for a city lookup. metrics_us.py (October 2026) assigns a row whose ZIP is a Census ZIP area of another state, and
+    # whose city or facility is listed there, to the ZIP's state ("Mayo Clinic_Rochester, Rochester, New York, 55905" is Rochester MN):
+    # assign_method zip_state_corrected. Its city is looked up in the assigned county's state, not the registry's.
+    row_state = lambda r: usps_of.get(r.county_fips[:2], r.state) if r.assign_method == "zip_state_corrected" else r.state
+    # Rows the pipeline places at a ZIP other than the registry's (column zip_fix): a typing error (zip_typo_corrected), or a ZIP with no
+    # Census area whose facility the registry lists in the same city at another ZIP (facility_listing, e.g. the Anschutz campus in Aurora,
+    # listed at 80045 in Adams County while most of Aurora is in Arapahoe). Both are judged at that ZIP's center; a row the pipeline
+    # placed by its city alone (city_gazetteer) is judged at the city's point.
+    AT_ZIP_FIX = ("zip_typo_corrected", "facility_listing")
     out_poly = []; far_city = []; no_zcta = 0; checked = 0; city_checked = 0
     for r in s.itertuples():
-        z = F["zcta"].get(r.zip[:5]) if r.zip else None
-        cands = gaz.get((r.state, re.sub(r"[^a-z]", "", r.city.lower()))) or gaz.get((r.state, r.city.lower())) or []
-        if r.assign_method in ("city_gazetteer", "zip_typo_corrected"):   # the pipeline set the ZIP aside (wrong state, or a typing error): judge the city instead
+        z = F["zcta"].get(r.zip[:5]) if r.zip else None; st_ = row_state(r)
+        cands = gaz.get((st_, re.sub(r"[^a-z]", "", r.city.lower()))) or gaz.get((st_, r.city.lower())) or []
+        zfix = F["zcta"].get((getattr(r, "zip_fix", "") or "")[:5]) if r.assign_method in AT_ZIP_FIX else None
+        if r.assign_method in AT_ZIP_FIX and zfix: z = zfix   # judged where the pipeline put it
+        elif r.assign_method in ("city_gazetteer",) + AT_ZIP_FIX:   # the pipeline set the ZIP aside: judge the city's point instead
             c = cm.loc[r.county_fips] if r.county_fips in cm.index else None
             g = min(cands, key=lambda q: miles(q, (c.lat, c.lon))) if (cands and c is not None) else None
             if g is None: no_zcta += 1; continue
@@ -412,9 +435,10 @@ def site_locations(D, GEO, F, seed, nsample):
     # (the link check of 5 Oct 2026 found seven: Chatham NC, Gage NE, Mitchell NC, Ashtabula OH, Brazos TX, Halifax NC, Skamania WA).
     # A row counts as far only if the stated city also lies outside the assigned county: a very large ZIP area (Fairbanks 99701, Cody 82414)
     # has its center far from its town although ZIP, city and county agree.
-    zr = qc[qc.assign_method.isin(("zip", "zip_pop"))]; far25 = []; judged_all = 0; ok_rows = defaultdict(set); all_rows = defaultdict(set)
+    ZIP_PLACED = ("zip", "zip_pop", "zip_state_corrected")
+    zr = qc[qc.assign_method.isin(ZIP_PLACED)]; far25 = []; judged_all = 0; ok_rows = defaultdict(set); all_rows = defaultdict(set)
     for r in zr.itertuples():
-        z = F["zcta"].get(r.zip[:5]); cands = gaz.get((r.state, r.city.lower().strip())) or []
+        z = F["zcta"].get(r.zip[:5]); cands = gaz.get((row_state(r), r.city.lower().strip())) or []
         all_rows[r.county_fips].add(r.nct_id)
         if not z or not cands: ok_rows[r.county_fips].add(r.nct_id); continue
         judged_all += 1; d = min(miles((z[0], z[1]), g) for g in cands)
@@ -422,7 +446,7 @@ def site_locations(D, GEO, F, seed, nsample):
         city_in = any(inside(r.county_fips, g) or (c is not None and miles(g, (c.lat, c.lon)) < 6) for g in cands)
         if d > 25 and not city_in: far25.append((r.nct_id, r.facility[:40], r.city, r.state, r.zip, r.county_fips, round(d)))
         else: ok_rows[r.county_fips].add(r.nct_id)
-    for r in qc[~qc.assign_method.isin(("zip", "zip_pop", "virtual_site", "unassigned"))].itertuples(): all_rows[r.county_fips].add(r.nct_id); ok_rows[r.county_fips].add(r.nct_id)
+    for r in qc[~qc.assign_method.isin(ZIP_PLACED + ("virtual_site", "unassigned"))].itertuples(): all_rows[r.county_fips].add(r.nct_id); ok_rows[r.county_fips].add(r.nct_id)
     rest = sorted((f, cm.loc[f, "county_name"] if f in cm.index else "?", len(all_rows[f])) for f in all_rows if all_rows[f] and not ok_rows[f])
     rec("sites", "every row placed by its ZIP: ZIP center more than 25 miles from the stated city, which lies outside the assigned county; counties whose whole trial count rests on such rows", f"{len(far25):,} of {judged_all:,} rows (> 40 mi: {sum(1 for x in far25 if x[-1] > 40):,}); {len(rest)} counties rest entirely on them: " + ", ".join(f"{n} {f} ({k} trial{'s' if k != 1 else ''})" for f, n, k in rest), None,
         "rows behind those counties: " + str([x for x in far25 if x[5] in {f for f, _, _ in rest}][:20]))
@@ -495,12 +519,7 @@ def cross_page(D, CO, FI, tr, seed, port, ncounty=8, ndist=3, nstate=2):
         for r in csv.DictReader(f): fips_of[r["State"]] = r["FIPS"][:2]
     cm = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str}).set_index("county_fips")
     pct_re = re.compile(r"(\d{1,3}\.\d)\s*%")
-    # a county with no road route to an NCI center (the 999 sentinel in county_road_distances.csv) is shown with a sentence, not a number:
-    # "No road connection from this county to any ... NCI ..." (index, community), "No road route to an NCI-designated center" (brief), or,
-    # for a population center more than 30 miles from any road, "no road distance is reported" (index, community)
-    # (an island county that does reach an NCI center, Honolulu, is "No road connection from this county to a broad menu of trials; the nearest
-    # NCI-designated center is ..., 7 road-miles" on community.html: that number is read, and the sentence is not taken as "no route")
-    noroute = lambda t: 999 if re.search(r"No road connection from this county to any (?:broad menu or NCI|NCI)|No road route to an NCI|no road distance is reported", t) else None
+    noroute = lambda t: 999 if NOROUTE_RE.search(t) else None   # the pages' sentinel wording for "no road route to an NCI center" (one rule, every page)
     def grab(pg, url, sel):
         pg.goto(f"{BASE}/{url}", wait_until="networkidle"); pg.wait_for_timeout(1500)
         return pg.inner_text(sel) if pg.locator(sel).count() else pg.inner_text("body")

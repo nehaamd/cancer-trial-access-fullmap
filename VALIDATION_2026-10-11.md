@@ -6,7 +6,7 @@ One pass of `validate_outside.py` (seed 4; 102 checks) against the figures publi
 
 - Tuscola County went from 31 trials to 2, not to 0. The 2 that remain are at Caro Cancer Center, which is in Tuscola.
 - The seven counties from the 5 October link check are unchanged. The new city rule does not reach them.
-- The registry figures in sections 1–2 of the 9 October note are from that day's first run, not from the re-runs saved in the result files.
+- The registry figures in sections 1–2 of the 9 October note were from that day's first run, not from the re-runs saved in the result files; the note was corrected on 11 October.
 
 ## 1. Live registry (all 4,007 listed trials, looked up on 11 October)
 
@@ -34,7 +34,7 @@ What this means: on 11 October the registry was still serving the data of Friday
 - **Of the 23 predicted to enter, 22 entered.** The refresh's pull, read from the same snapshot, holds the same counts: 25 studies not in the 5 October pull with a US recruiting site, 23 of them passing the age rule. All 22 were last updated 6–9 October. 21 are cancer treatment trials; the 22nd is NCT07694726, the lymphoedema-prevention study filed as Treatment, which the 9 October note said would be kept. The one that did not enter, NCT07729137, a corneal-oedema study, was excluded by the oncology screen, correctly.
 - **The 23rd trial to enter**, NCT07814352 (SX-682 with proton craniospinal irradiation for leptomeningeal disease), was in the 5 October pull but excluded by the screen. It returned because pull request #25 made the screen recognise leptomeningeal disease, so it entered by a method change, not a registry change.
 
-The tables in sections 1 and 2 of `VALIDATION_2026-10-09.md` give the first run of 9 October, 06:13 UTC, on an earlier registry snapshot. That run found 4,538 studies, 15 leaving and 17 new with a US site, 15 of them passing the age rule, and its full-text probe returned 4,856 studies. The committed result files are the re-runs and say 4,543, 17, 25, 23 and 4,860. The shares in that note are unaffected.
+As committed on 9 October, the tables in sections 1 and 2 of `VALIDATION_2026-10-09.md` gave the first run of 9 October, 06:13 UTC, on an earlier registry snapshot (4,538 studies, 15 leaving, 17 new with a US site, 15 of them passing the age rule, 4,856 in the full-text probe), while the committed result files are the re-runs (4,543, 17, 25, 23 and 4,860). On 11 October the note was corrected to the re-runs' figures; the shares in it were never affected.
 
 ## 2. What the registry search can and cannot see
 
@@ -173,6 +173,7 @@ The Library of Congress bill-status XML on govinfo, read on 11 October through a
   - Every ZIP-placed row's ZIP center against its stated city, with the counties that rest on such rows.
   - The ZIP finder against the nearest tract's road figure.
   - sites.html in page health.
+- **Later the same day (for the geo agent's placement rules, which take effect at the next refresh).** Rows the pipeline places at a ZIP other than the registry's (`zip_typo_corrected`, and the new `facility_listing`) are judged at that ZIP's center rather than at the city's point; a row whose ZIP is a Census ZIP area of another state (`zip_state_corrected`) has its city looked up in the assigned county's state. Checked on the geo agent's dry run of those rules on this pull: all 51 such rows pass, where the earlier script flagged 4 as outside the county and 14 as more than 40 miles from the city. The "no road route" wording is one rule (`NOROUTE_RE`) for every page.
 - **Changed wording or rules.**
   - The two pull request #25 checks no longer say "clears at the next refresh" and now list the rows still at a county center.
   - The "first posted after" count now counts only studies that would enter.
