@@ -162,8 +162,9 @@ def aggregate(tr):
             prev = json.load(open(OUT / "national_metrics_v3.json")).get("method_version", 1)
             pulled = json.load(open("data/raw/fetch_log.json")).get("timestamp_utc", "")
             nat["method_version"] = config.method_of(prev, pulled)
-        except (OSError, ValueError):
-            pass
+        except (OSError, ValueError) as e:   # no stamp to keep: say so, since the current version may postdate this tract table's rules
+            print(f"WARNING: --from-tract-access could not read the existing method stamp ({type(e).__name__}: {e}); national_metrics_v3.json is "
+                  f"stamped with the current METHOD_VERSION {config.METHOD_VERSION}, which may be later than the rules this tract table was calculated with", flush=True)
     json.dump(nat, open(OUT / "national_metrics_v3.json", "w"), indent=2, default=str)
     # invariants
     inv = {"tract_pool_monotone_violations": int(((tr.trials_within_30rdmi > tr.trials_within_60rdmi) | (tr.trials_within_60rdmi > tr.trials_within_120rdmi)).sum()),

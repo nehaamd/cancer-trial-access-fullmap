@@ -10,6 +10,8 @@ on:
     - cron: "0 11 * * 1"   # Mondays 11:00 UTC
 permissions:
   contents: write
+# Both workflows push to main on Mondays (registry 11:00 UTC, cosponsors 12:17 UTC): one waits for the other instead of racing it to the push.
+concurrency: { group: publish-main, cancel-in-progress: false }
 jobs:
   refresh:
     runs-on: ubuntu-24.04   # pinned: the ubuntu-latest label moves to Ubuntu 26 from 19 October 2026 (a Monday, the scheduled day); move deliberately, after a run by hand

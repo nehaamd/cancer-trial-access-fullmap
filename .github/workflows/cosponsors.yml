@@ -10,6 +10,8 @@ on:
     - cron: "17 12 * * 1"   # Mondays 12:17 UTC
 permissions:
   contents: write
+# Both workflows push to main on Mondays (registry 11:00 UTC, cosponsors 12:17 UTC): one waits for the other instead of racing it to the push.
+concurrency: { group: publish-main, cancel-in-progress: false }
 jobs:
   cosponsors:
     runs-on: ubuntu-24.04   # pinned, as in refresh.yml: the ubuntu-latest label moves to Ubuntu 26 from 19 October 2026
@@ -26,7 +28,7 @@ jobs:
       # both are rebuilt from the files already in the repository, so every page shows the same pull. Without this step validate_extras.py
       # stopped the workflow on any day other than a registry-refresh day (community.js kept the older fetch date), and nothing was published.
       - name: Carry the new counts into the findings and community pages
-        run: pip install -q pandas numpy && python build_findings.py && python build_community.py
+        run: pip install -q -r requirements.txt && python build_findings.py && python build_community.py   # the same capped versions as the registry refresh
       - name: Check the result (every ID resolves to a sitting member, chambers match, seats mapped, every page carries the same pull)
         run: python validate_extras.py
       - name: Commit and publish
