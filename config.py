@@ -29,6 +29,12 @@ CONDITION_QUERY += (
     " OR \"Langerhans cell histiocytosis\" OR metastasis OR metastases OR metastatic OR oligometastatic OR oligometastasis OR hepatocellular"
     " OR AML OR MDS OR HCC OR PDAC OR NSCLC OR macroglobulinemia"
 )
+# Added 11 Oct 2026 after a check against every recruiting US treatment study (registry data of 9 Oct 2026): light-chain (AL) amyloidosis,
+# a plasma-cell disorder already counted with myeloma (12 such trials were in the data, one with 12 US sites was not), post-transplant
+# lymphoproliferative disorder (a lymphoma) and mantle cell lymphoma written only as "MCL" were not found by the terms above. Each phrase
+# adds only those studies; "amyloidosis" or "lymphoproliferative" alone would also return transthyretin amyloidosis and autoimmune
+# lymphoproliferative syndrome trials, which are not cancer.
+CONDITION_QUERY += ' OR "light chain amyloidosis" OR "AL amyloidosis" OR "post-transplant lymphoproliferative" OR "posttransplant lymphoproliferative" OR PTLD OR MCL'
 
 # Overall study status to include. Add "NOT_YET_RECRUITING" for a sensitivity analysis.
 OVERALL_STATUS = ["RECRUITING"]
@@ -64,7 +70,11 @@ SITE_STATUS_KEEP = {"RECRUITING", None, ""}
 # group of its own, labelled Telemedicine, for the states it names: panels, trial lists, briefs and the ZIP finder (DATA.T.tele).
 # Set VIRTUAL_SITES_ARE_LOCATIONS = True to count these rows as ordinary sites again.
 # ---------------------------------------------------------------------------
-VIRTUAL_SITE_PATTERN = r"\btele-?(?:medicine|health)\b|\bvirtual\b|\bdecentrali[sz]ed\b|\bremote (?:site|enrol\w*|participation|study)\b|\bonline study\b"
+# Science 37 runs a "virtual clinical metasite" listed at its offices (Morrisville NC, Culver City CA); 4 of its 9 listings among recruiting
+# US treatment studies on 9 Oct 2026 did not say "virtual" ("Science 37", "Science 37, Inc.", "Science 37 (at-home option)"), nor did
+# "This is an At-Home Study - no travel or on-site visits are needed at all". None is in the cancer data yet.
+VIRTUAL_SITE_PATTERN = (r"\btele-?(?:medicine|health)\b|\bvirtual\b|\bdecentrali[sz]ed\b|\bremote (?:site|enrol\w*|participation|study)\b|\bonline study\b"
+                        r"|\bscience ?37\b|\bat-?home (?:study|option|trial)\b")
 VIRTUAL_SITES_ARE_LOCATIONS = False
 
 # ---------------------------------------------------------------------------

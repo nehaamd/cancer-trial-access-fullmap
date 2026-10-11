@@ -87,13 +87,18 @@ NCI_OVERRIDE = {"la jolla": (32.875, -117.236), "bronx": (40.880, -73.879), "man
 ONC = re.compile(r"cancer|neoplas|carcinom|lymphom|leuka?emi|leukoplaki|myelom|sarcom|melanom|malignan|tumou?r|gliom|mesotheliom|blastom|adenoma|myelodysplas|metasta|oncolog|hodgkin|"
                  r"waldenstr|myelofibrosis|polycythemia|thrombocythemia|\bmds\b|\baml\b|\bcll\b|\bcml\b|nsclc|sclc|\bgist\b|\bmpn\b|\bhcc\b|\brcc\b|\bcrc\b|pdac|\bgbm\b|dlbcl|tnbc|"
                  r"meningiom|leptomening|ependymom|germinom|craniopharyngiom|schwannom|neurofibrom|mycosis fungoides|sezary|amyloidosis|lymphoproliferative|mastocytosis|(?<!lympho)histiocyt|"
-                 r"castleman|paragangliom|pheochromocytom|desmoid|chordom|thymom|wilms|trophoblastic|plasmacytom|macroglobulinemia|\bptld\b|graft.versus.host|gvhd|\bctcl\b|\bptcl\b|\b[bt]-all\b|plasma cell|\bmgus\b|smoldering|hairy cell", re.I)
+                 r"castleman|paragangliom|pheochromocytom|desmoid|chordom|thymom|wilms|trophoblastic|plasmacytom|macroglobulinemia|\bptld\b|graft.versus.host|gvhd|\bctcl\b|\bptcl\b|\b[bt]-all\b|plasma cell|\bmgus\b|smoldering|hairy cell|"
+                 r"\bn?mibc\b|\bmcl\b|hemangioendotheliom", re.I)
+# Abbreviations and names added 11 Oct 2026 after a hand review of the exclusions: "NMIBC" (non-muscle-invasive bladder cancer, NCT06800963),
+# "MCL" (mantle cell lymphoma, NCT07257055, whose conditions and titles say only "MCL") and epithelioid hemangioendothelioma (a vascular
+# sarcoma, SARC046, NCT07104331) had excluded real cancer treatment trials.
 # Wording that contains a cancer word and is not about cancer. It is blanked before ONC is applied, so a study is kept only if it
 # names a cancer somewhere else: "... Who Cannot Tolerate Tumor Necrosis Factor Inhibitors" (rheumatoid arthritis), "Non-Malignant
 # Disorders" and "Non-oncology Plasma Cell-related Diseases" (transplant and CAR-T studies for other diseases), myelomeningocele
 # (spina bifida). "leuk" alone also matched interleukin, leukocyte and leukodystrophy, and "histiocyt" matched hemophagocytic
 # lymphohistiocytosis; ONC now asks for leukemia / leukaemia / leukoplakia and for histiocytosis that is not "lympho-".
-NOT_ONC = re.compile(r"tumou?r[ -]necrosis[ -]factor|non[- ]?oncolog\w*(?:\s+plasma[- ]cell)?|non[- ]?malignan\w*|non[- ]?cancer\w*|myelomeningocele|myeloschisis", re.I)
+NOT_ONC = re.compile(r"tumou?r[ -]necrosis[ -]factor|non[- ]?oncolog\w*(?:\s+plasma[- ]cell)?|non[- ]?malignan\w*|non[- ]?cancer\w*|myelomeningocele|myeloschisis|"
+                     r"\bmcl (?:tear|injur\w*|sprain|rupture|reconstruct\w*|repair)", re.I)   # MCL is also the medial collateral ligament
 
 
 def is_onc(conditions, title):
