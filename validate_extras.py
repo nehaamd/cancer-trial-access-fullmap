@@ -76,6 +76,13 @@ def run(browser=False):
         check("ZIP lookup: spot check — nearest site point to ZIP 77030 (Texas Medical Center) is in Harris County within ~2 miles", f"{near[0][0]:.1f} mi; facilities there include {names}", bool(near) and near[0][0] < 2.5 and FI["sp"][near[0][1]][2] == "48201")
         z2 = FI["zcta"].get("79901"); n2 = sum(1 for p in FI["sp"] if mi(z2[:2], p[:2]) * FI["meta"]["road_factor"] <= 60) if z2 else 0
         check("ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites", f"{n2} site points within 60 est. road-mi", 0 < n2 < 40)
+        # large or split ZIP code areas measure from where their residents live (build_zcta_centers.py), not from the Census internal point:
+        # 99701's point was 183 miles north of Fairbanks, 99503's 278 miles west of Anchorage, 83716's 48 miles from Boise (October 2026)
+        far = {}
+        for z_, town in (("99701", "Fairbanks"), ("99503", "Anchorage"), ("83716", "Boise")):
+            zz = FI["zcta"].get(z_); near_ = min(mi(zz[:2], p[:2]) for p in FI["sp"]) if zz else None
+            if near_ is None or near_ > 10: far[z_] = (town, None if near_ is None else round(near_, 1))
+        check("ZIP lookup: large ZIP code areas measure from their residents (99701 Fairbanks, 99503 Anchorage, 83716 Boise each have a site point within 10 miles)", "all three within 10 miles" if not far else "far: " + str(far), not far, FI["meta"].get("zcta_centers", "centers: zcta_pop55.csv internal points"))
         ui = (find("find.html") or Path("find.html")).read_text(encoding="utf-8"); check("ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present)", "all phrases present" if all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]) else "MISSING", all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]))
     ui = (find("index.html") or Path("index.html")).read_text(encoding="utf-8")
     check("Map page loads the three new data files and states the burden view is a cross-tabulation, not a score", "rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present" if all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]) else "MISSING", all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]))

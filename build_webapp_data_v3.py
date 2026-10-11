@@ -18,6 +18,10 @@ STFIPS = {"AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08"
           "OK": "40", "OR": "41", "PA": "42", "RI": "44", "SC": "45", "SD": "46", "TN": "47", "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53", "WV": "54", "WI": "55", "WY": "56"}
 INV = {v: k for k, v in STFIPS.items()}
 NOROAD = 999.0
+# The ACS release behind the population 55+ (build_tracts_us.py, B01001), the household context (build_covariates.py, build_tract_context.py:
+# the 2023 5-year summary files) and the ZIP-code tables: one name for every page (meta.acs), instead of each page's own wording or a parse
+# of meta.ctx_method. Change it with the year in those scripts' download URLs.
+ACS_RELEASE = {"label": "ACS 2023 5-year", "year": 2023, "span": "2019-2023"}
 SITECODE = re.compile(r"\(?\s*(site|study site|local institution|investigative site|clinical site|id|site id|site number|site #)\s*[-#:]?\s*\d+[a-z]?\s*\)?|\(\s*\d{3,6}\s*\)|/\s*id#?\s*\d+|\bsite\s+\d{2,6}\b", re.I)
 def norm(x):
     """Facility key: lower-case, sponsor site codes removed ("( Site 0087)", "Local Institution - 0012", "/ID# 12345"), punctuation dropped."""
@@ -244,7 +248,7 @@ def main():
     meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2024 election maps)", "virtual_sites": {"rows": int(len(virt)), "trials": int(virt.nct_id.nunique())}, "zip_typos": n_typo, "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
             "router": {"pairs": rlog["router_validation"]["pairs"], "mean_pct": rlog["router_validation"]["mean_abs_pct_diff"], "max_pct": rlog["router_validation"]["max_abs_pct_diff"],
                        **({"local": {"pairs": lc["routes"], "failed": lc["failed"], "note": ("all within tolerance" if not lc["failed"] else f"{lc['failed']} outside tolerance: " + "; ".join(lc["failed_routes"]))}} if lc else {})},
-            "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(),
+            "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(), "acs": ACS_RELEASE["label"], "acs_year": ACS_RELEASE["year"], "acs_span": ACS_RELEASE["span"],
             "burden": {"period": btitle["all"].split(", ")[-1], "pulled": blog["pulled"], "small_threshold": 16, "sites": [[s, btitle[s].split(" (All")[0]] for s in bsites], "not_available_states": ["KS"]},
             "sitepoints": int(SM.shape[0]), "pct_multi": cts["pct_multi_55plus"], "pct_unclassified": cts["pct_unclassified_55plus"], "national": {k: nat[k] for k in ("pop55", "pct_zero_trials_within_60rdmi", "pct_lt20_trials_within_60rdmi", "pct_in_zero_trial_county", "pct_gt60rdmi_broad_menu", "pct_gt120rdmi_broad_menu", "pct_gt60rdmi_nci", "median_road_mi_nci", "pct_no_road_route_broad")},
             "vacant": [k for k, v in districts.items() if not v["member"]]}

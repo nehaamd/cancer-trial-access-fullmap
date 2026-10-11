@@ -1,0 +1,58 @@
+{
+ "built_utc": "2026-10-11T05:01+00:00",
+ "relationship_file": "/tmp/claude-0/-home-claude/f109253a-edb9-5cbc-9b7b-3e7c82b37905/scratchpad/pipeline/dl/zcta_tract.txt",
+ "zctas": 33772,
+ "tract_weighted": 26794,
+ "internal_point_kept": 6978,
+ "internal_point_kept_coverage_outside_band": 5748,
+ "shift_mi": {
+  "median": 1.5,
+  "p90": 5.93,
+  "p99": 17.281399999999994,
+  "max": 278.04
+ },
+ "moved_over_5_mi": 3503,
+ "moved_over_30_mi": 75,
+ "largest_moves": [
+  {
+   "zcta": "99503",
+   "shift_mi": 278.04,
+   "pop55_weighted": 3003
+  },
+  {
+   "zcta": "99701",
+   "shift_mi": 183.86,
+   "pop55_weighted": 3951
+  },
+  {
+   "zcta": "99640",
+   "shift_mi": 182.75,
+   "pop55_weighted": 24
+  },
+  {
+   "zcta": "99691",
+   "shift_mi": 110.14,
+   "pop55_weighted": 44
+  },
+  {
+   "zcta": "99651",
+   "shift_mi": 105.73,
+   "pop55_weighted": 4
+  },
+  {
+   "zcta": "99730",
+   "shift_mi": 101.32,
+   "pop55_weighted": 59
+  },
+  {
+   "zcta": "99627",
+   "shift_mi": 90.78,
+   "pop55_weighted": 64
+  },
+  {
+   "zcta": "99756",
+   "shift_mi": 90.23,
+   "pop55_weighted": 25
+  }
+ ]
+}
