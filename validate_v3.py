@@ -73,9 +73,19 @@ def main():
         t = pd.read_csv(RAW / "trials.csv", dtype=str, keep_default_na=False); t = t[pd.to_numeric(t.max_age_years, errors="coerce").fillna(999) >= 55]
         sites = pd.read_csv(RAW / "us_sites.csv", dtype=str).fillna("")
         random.seed(20260909); samp = t.sample(25, random_state=20260909)
-        res = []; s = requests.Session()
+        res = []; s = requests.Session(); unreachable = []
+        def fetch_live(nct):   # three tries; None if the registry does not return the study (withdrawn since the pull, or the request kept failing)
+            for k in range(3):
+                try:
+                    q = s.get(f"https://clinicaltrials.gov/api/v2/studies/{nct}", params={"fields": "NCTId,OverallStatus,DesignPrimaryPurpose,Phase,MaximumAge,LocationCountry,LocationState,LocationStatus"}, timeout=60)
+                    if q.status_code == 404: return None
+                    q.raise_for_status(); return q.json()["protocolSection"]
+                except (requests.RequestException, ValueError, KeyError): time.sleep(3 * (k + 1))
+            return None
         for r in samp.itertuples():
-            j = s.get(f"https://clinicaltrials.gov/api/v2/studies/{r.nct_id}", params={"fields": "NCTId,OverallStatus,DesignPrimaryPurpose,Phase,MaximumAge,LocationCountry,LocationState,LocationStatus"}, timeout=60).json()["protocolSection"]
+            j = fetch_live(r.nct_id)
+            if j is None:
+                unreachable.append(r.nct_id); res.append({"nct_id": r.nct_id, "match": False}); continue
             live_sites = [l for l in j.get("contactsLocationsModule", {}).get("locations", []) if (l.get("country") in ("United States", None)) and (l.get("status") in ("RECRUITING", None, ""))]
             live_us = sum(1 for l in live_sites if l.get("state"))
             live = {"status": j["statusModule"]["overallStatus"], "purpose": j["designModule"].get("designInfo", {}).get("primaryPurpose"), "phase": ";".join(j["designModule"].get("phases", [])),
@@ -85,8 +95,9 @@ def main():
             match = all(eq(live[k], stored[k]) for k in ("status", "purpose", "phase", "n_us_sites")) and (eq(live["max_age"], stored["max_age"]) or (live["max_age"] is not None and stored["max_age"] is not None and abs(live["max_age"] - stored["max_age"]) < 0.01))
             res.append({"nct_id": r.nct_id, **{f"stored_{k}": v for k, v in stored.items()}, **{f"live_{k}": v for k, v in live.items()}, "match": match}); time.sleep(0.4)
         rdf = pd.DataFrame(res); rdf.to_csv(OUT / "qc_spotcheck_25_trials_v3.csv", index=False); n_ok = int(rdf.match.sum())
-        mism = rdf[~rdf.match]; note = "; ".join(f"{r.nct_id}: " + ", ".join(f"{k} {getattr(r, 'stored_'+k)}→{getattr(r, 'live_'+k)}" for k in ("status", "purpose", "phase", "max_age", "n_us_sites") if getattr(r, 'stored_'+k) != getattr(r, 'live_'+k)) for r in mism.itertuples())
-        check("Registry re-check: 25 random trials re-fetched individually (status, purpose, phase, max age, US recruiting-site count)", f"{n_ok}/25 match", n_ok >= 24, note or f"re-fetched {time.strftime('%Y-%m-%d')}, pull was {json.load(open(RAW/'fetch_log.json'))['timestamp_utc'][:10]}")
+        mism = rdf[~rdf.match & ~rdf.nct_id.isin(unreachable)]; note = "; ".join(f"{r.nct_id}: " + ", ".join(f"{k} {getattr(r, 'stored_'+k)}→{getattr(r, 'live_'+k)}" for k in ("status", "purpose", "phase", "max_age", "n_us_sites") if getattr(r, 'stored_'+k) != getattr(r, 'live_'+k)) for r in mism.itertuples())
+        if unreachable: note = "; ".join(x for x in (note, "not returned by the registry: " + ", ".join(unreachable)) if x)
+        check("Registry re-check: 25 random trials re-fetched individually (status, purpose, phase, max age, US recruiting-site count)", f"{n_ok}/25 match", n_ok >= 24, note or f"re-fetched {time.strftime('%Y-%m-%d', time.gmtime())}, pull was {json.load(open(RAW/'fetch_log.json'))['timestamp_utc'][:10]} (UTC)")
     # 7 cancer-type classification
     hc = pd.read_csv(OUT / "qc_cancer_type_selfcheck_50.csv") if (OUT / "qc_cancer_type_selfcheck_50.csv").exists() else None
     if hc is not None:
@@ -198,7 +209,9 @@ def main():
     check("Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted)", f"{bad_idx} bad facility trial indices; {sp_bad} bad sitepoint→facility refs; {nbd_unsorted} unsorted nearby lists; sponsor names {sum(1 for x in T2['spn'] if x):,}/{N2:,}, last-update dates {sum(1 for x in T2['upd'] if x):,}/{N2:,}", bad_idx == 0 and sp_bad == 0 and nbd_unsorted == 0 and sum(1 for x in T2['spn'] if x) == N2)
     if (OUT / "refresh_diff.json").exists():
         rd_ = json.load(open(OUT / "refresh_diff.json"))["summary"]
-        check("Refresh diff: previous and current pulls compared", f"{rd_['previous_pull'][:10]} → {rd_['current_pull'][:10]}: {rd_['trials_previous']:,} → {rd_['trials_current']:,} trials; {rd_['trials_new']} new, {rd_['trials_no_longer_listed']} no longer listed, {rd_['sites_new_at_existing_trials']} sites added / {rd_['sites_removed_at_existing_trials']} removed at continuing trials; {rd_.get('counties_with_changed_trial_count', 0)} counties changed count", rd_["trials_current"] > 0, "registry data timestamp " + str(rd_.get("current_registry_data")))
+        this_pull = rd_["current_pull"][:19] == flog["timestamp_utc"][:19] and rd_["trials_current"] == N2
+        check("Refresh diff: previous and current pulls compared (changes.js describes this pull)", f"{rd_['previous_pull'][:10]} → {rd_['current_pull'][:10]}: {rd_['trials_previous']:,} → {rd_['trials_current']:,} trials; {rd_['trials_new']} new, {rd_['trials_no_longer_listed']} no longer listed, {rd_['sites_new_at_existing_trials']} sites added / {rd_['sites_removed_at_existing_trials']} removed at continuing trials; {rd_.get('counties_with_changed_trial_count', 0)} counties changed count",
+              this_pull and rd_["trials_previous"] > 0, "registry data timestamp " + str(rd_.get("current_registry_data")) + ("" if this_pull else f"; STALE: the diff is for the pull of {rd_['current_pull'][:16]}, this pull is {flog['timestamp_utc'][:16]} with {N2:,} trials (diff_snapshots.py must run before validate_v3.py)"))
     # 11 Tier 4 prototype
     if (OUT / "tier4_log.json").exists():
         t4 = json.load(open(OUT / "tier4_log.json")); rk = pd.read_csv(OUT / "tier4_candidates_ranked.csv"); gs = pd.read_csv(OUT / "tier4_greedy_sequence.csv")
@@ -209,10 +222,10 @@ def main():
     # 12 v3.3 additions (rural/urban codes, cosponsors, burden vs access, ZIP lookup) — see validate_extras.py
     if Path("validate_extras.py").exists():
         try:
-            from validate_extras import run as extras; rows.extend(extras("--browser" in sys.argv))
+            from validate_extras import run as extras, write_md as extras_md; ex = extras("--browser" in sys.argv); rows.extend(ex); extras_md(ex)
         except Exception as e: check("v3.3 extras", f"validate_extras.py failed: {type(e).__name__} {e}", False)
     # write report
-    md = ["# Validation — National Cancer Trial Access Map v3", "", f"Registry pull {flog['timestamp_utc'][:10]}" + (f" (registry data of {flog['registry_data_timestamp'][:10]})" if flog.get("registry_data_timestamp") else "") + f"; road graph TIGER 2025 (graph version {glog.get('graph_version', 1)}); ACS 2023 5-year; State Cancer Profiles 2018–2022. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d')}.", "",
+    md = ["# Validation — National Cancer Trial Access Map v3", "", f"Registry pull {flog['timestamp_utc'][:10]}" + (f" (registry data of {flog['registry_data_timestamp'][:10]})" if flog.get("registry_data_timestamp") else "") + f"; road graph TIGER 2025 (graph version {glog.get('graph_version', 1)}); ACS 2023 5-year; State Cancer Profiles 2018–2022. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d', time.gmtime())} (UTC).", "",
           "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
     text = "\n".join(md) + "\n" + (("\n" + Path("VALIDATION_review.md").read_text()) if Path("VALIDATION_review.md").exists() else "")
     (OUT / "VALIDATION_v3.md").write_text(text); Path("VALIDATION_v3.md").write_text(text)

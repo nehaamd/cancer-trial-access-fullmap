@@ -84,7 +84,10 @@ def main():
         d = z[f"t_{lab}"]; h = z[f"t_{lab}_hr"]
         tr[f"road_mi_{lab}"] = np.where(np.isfinite(d), np.round(d, 1), NOROAD); tr[f"drive_hr_{lab}"] = np.where(np.isfinite(h), np.round(h, 2), NOROAD)
     cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str}); nci = config.nci_targets()
-    cname = (cent.county_name + ", " + cent.state_name).values
+    # "District of Columbia" once (until October 2026 the tract labels, and from them the "most often" broad menu of DC, DC-98, MD-4 and MD-5
+    # on the pages, read "District of Columbia, District of Columbia"). Only DC: seven counties share their state's name (Oklahoma County,
+    # New York County, Utah County, ...) and keep the state ("Oklahoma, Oklahoma"), or the label would read as the state.
+    cname = np.where(cent.state_fips.astype(str).str.zfill(2) == "11", cent.county_name, cent.county_name + ", " + cent.state_name)
     tr["nearest_broad"] = np.where(z["t_broad_src"] >= 0, cname[np.clip(z["t_broad_src"], 0, None)], "NO ROAD CONNECTION")
     tr["nearest_nci"] = np.where(z["t_nci_src"] >= 0, nci.name.values[np.clip(z["t_nci_src"], 0, None)], "NO ROAD CONNECTION")
     tr.loc[tr.road_mi_broad == 0, "nearest_broad"] = cname[tr.loc[tr.road_mi_broad == 0, "county_fips"].map(k_of).values]
