@@ -23,8 +23,9 @@ Checks re-run by `validate_extras.py` on 2026-10-11 (UTC).
 | Burden: cancer-type-specific 'none within 60 road-mi' shares present for every named type | 20 types × 3143 counties | ✓ |  |
 | ZIP lookup: site points match the payload one-to-one; ZCTAs cover the 50 states + DC | 2438 site points vs 2438 in DATA.SP; 33,640 ZCTAs, 51 states | ✓ |  |
 | ZIP lookup: every ZCTA's county exists in the payload | 0 bad | ✓ |  |
-| ZIP lookup: spot check — nearest site point to ZIP 77030 (Texas Medical Center) is in Harris County within ~2 miles | 0.0 mi; facilities there include ['Site-104', '014', '069'] | ✓ |  |
+| ZIP lookup: spot check — nearest site point to ZIP 77030 (Texas Medical Center) is in Harris County within ~2 miles | 0.2 mi; facilities there include ['Site-104', '014', '069'] | ✓ |  |
 | ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites | 7 site points within 60 est. road-mi | ✓ |  |
+| ZIP lookup: large ZIP code areas measure from their residents (99701 Fairbanks, 99503 Anchorage, 83716 Boise each have a site point within 10 miles) | all three within 10 miles | ✓ | population-weighted ZCTA centers (build_zcta_centers.py: 26,794 of 33,640 from tract population centers, the rest Census internal points) |
 | ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
 | Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
 | community.js reproduces data.js / burden.js for every county, district and state | 3143 counties (0 differ), 436 districts (0 differ), 51 states (0 differ); nation 12.0% vs 12.0% | ✓ | built by build_community.py from the same files the map reads; the Your community and What could help pages read this file |
