@@ -42,7 +42,7 @@ Herbert Irving Comprehensive Cancer Center (Columbia),manhattan,NY,Comprehensive
 Perlmutter Cancer Center (NYU Langone),manhattan,NY,Comprehensive,40.7452,-73.9781,zip_centroid_10016,Perlmutter Cancer Center (NYU Langone),1
 Memorial Sloan Kettering Cancer Center,manhattan,NY,Comprehensive,40.7647,-73.9633,zip_centroid_10065,Memorial Sloan Kettering Cancer Center,1
 Roswell Park Comprehensive Cancer Center,buffalo,NY,Comprehensive,42.8925,-78.8597,gazetteer_place_centroid,Roswell Park Comprehensive Cancer Center,1
-Mount Sinai Tisch Cancer Center,manhattan,NY,Clinical,40.7922,-73.9473,zip_centroid_10029,Mount Sinai Tisch Cancer Center,1
+Mount Sinai Tisch Cancer Center,manhattan,NY,Comprehensive,40.7922,-73.9473,zip_centroid_10029,Mount Sinai Tisch Cancer Center,1
 Wilmot Cancer Institute (Rochester),rochester,NY,Clinical,43.1228,-77.6251,zip_centroid_14642,Wilmot Cancer Institute (Rochester),1
 Duke Cancer Institute,durham,NC,Comprehensive,36.0251,-78.9821,zip_centroid_27705,Duke Cancer Institute,1
 UNC Lineberger Comprehensive Cancer Center,chapel hill,NC,Comprehensive,35.904,-79.0521,zip_centroid_27599,UNC Lineberger Comprehensive Cancer Center,1

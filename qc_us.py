@@ -8,6 +8,11 @@ import config
 RAW, REF, OUT = Path("data/raw"), Path("data/ref"), Path("out")
 
 # --- NCI-designated treating centers (Comprehensive + Clinical), cancer.gov list updated 2026-06-10 ---
+# Checked 2026-10-11 against cancer.gov/research/infrastructure/cancer-centers/find and NCI's Office of Cancer Centers list
+# (cancercenters.cancer.gov/cancer-centers: 74 centers = 58 Comprehensive + 8 Clinical + 8 Basic Laboratory). The 8 basic-laboratory
+# centers (Salk, Sanford Burnham Prebys, Cancer Center at Illinois, Purdue, Jackson Laboratory, Koch Institute at MIT, Cold Spring
+# Harbor, Wistar) do not treat patients and are deliberately not listed. Tiers follow the Office of Cancer Centers list: Mount Sinai
+# Tisch became Comprehensive in October 2025 (Mount Sinai release of 22 Oct 2025), which cancer.gov's page still shows as Clinical.
 NCI = [
  ("O'Neal Comprehensive Cancer Center (UAB)", "birmingham", "AL", "Comprehensive"),
  ("University of Arizona Cancer Center", "tucson", "AZ", "Comprehensive"), ("Mayo Clinic Cancer Center – Phoenix", "phoenix", "AZ", "Comprehensive"),
@@ -32,7 +37,7 @@ NCI = [
  ("UNM Comprehensive Cancer Center", "albuquerque", "NM", "Comprehensive"),
  ("Montefiore Einstein Cancer Center", "bronx", "NY", "Comprehensive"), ("Herbert Irving Comprehensive Cancer Center (Columbia)", "manhattan", "NY", "Comprehensive"),
  ("Perlmutter Cancer Center (NYU Langone)", "manhattan", "NY", "Comprehensive"), ("Memorial Sloan Kettering Cancer Center", "manhattan", "NY", "Comprehensive"),
- ("Roswell Park Comprehensive Cancer Center", "buffalo", "NY", "Comprehensive"), ("Mount Sinai Tisch Cancer Center", "manhattan", "NY", "Clinical"),
+ ("Roswell Park Comprehensive Cancer Center", "buffalo", "NY", "Comprehensive"), ("Mount Sinai Tisch Cancer Center", "manhattan", "NY", "Comprehensive"),
  ("Wilmot Cancer Institute (Rochester)", "rochester", "NY", "Clinical"),
  ("Duke Cancer Institute", "durham", "NC", "Comprehensive"), ("UNC Lineberger Comprehensive Cancer Center", "chapel hill", "NC", "Comprehensive"),
  ("Wake Forest Baptist Comprehensive Cancer Center", "winston-salem", "NC", "Comprehensive"),
