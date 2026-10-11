@@ -91,7 +91,7 @@
       <div class="kpi"><p class="v"><span data-f="medn"></span><small> miles</small></p><p class="l">median road distance to the nearest NCI-designated cancer center</p><p class="s"><span data-f="g60n"></span>% are more than 60 road-miles from one</p></div>
       <div class="kpi"><p class="v"><span data-f="states_no_broad"></span><small> states</small></p><p class="l">have no county with a broad menu of trials</p><p class="s"><span data-f="districts_all_beyond"></span> congressional districts where every resident 55+ is more than 60 road-miles from one</p></div>
     </div>
-    <p class="small">Distances are shortest driving routes on the highway network from each census tract's population center, weighted by residents 55 and older; medians are over residents with a road route (those without one, in Alaska and on the Hawaiian islands beyond Oahu, are counted in the no-road-route shares). <a href="#how">How it was measured</a>.</p>
+    <p class="small">Distances are shortest driving routes on the highway network from each census tract's central point (the Census internal point), weighted by residents 55 and older; medians are over residents with a road route (those without one, in Alaska and on the Hawaiian islands beyond Oahu, are counted in the no-road-route shares). <a href="#how">How it was measured</a>.</p>
   </section>
 
   <section id="rural">
@@ -151,7 +151,7 @@
     <h2>How it was measured</h2>
     <ul class="plain">
       <li><b>Trials.</b> Every interventional cancer treatment trial listed as Recruiting on ClinicalTrials.gov with a US site and open to at least one patient aged 55 or older: <span data-f="trials"></span> trials at <span data-f="facilities"></span> registry-listed facilities in the registry data of <span data-f="pull"></span>.</li>
-      <li><b>People.</b> Residents 55 and older in each of <span data-f="n_tracts"></span> census tracts (ACS 2023 5-year), located at the tract's population center, so distances are measured from where people live rather than from county boundaries.</li>
+      <li><b>People.</b> Residents 55 and older in each of <span data-f="n_tracts"></span> census tracts (ACS 2023 5-year), located at the tract's central point (the Census internal point), so distances are measured from where people live rather than from county boundaries.</li>
       <li><b>Roads.</b> Shortest routes on the Census Bureau's primary and secondary road network for all 50 states and DC, checked against published city-pair driving distances (mean difference <span data-f="router_mean"></span>%).</li>
       <li><b>Access.</b> For each tract, the number of distinct trials with a recruiting site within 30, 60 and 120 road-miles; the road distance to the nearest county with 20 or 100 trials and to the nearest NCI-designated center that treats adults (<span data-f="nci_text"></span>). District, state and national figures weight tracts by residents 55+.</li>
       <li><b>Limits.</b> Counts are of trials, not of trials a given patient is eligible for. Registry status lags real enrollment. Sites are placed at the center of their ZIP code (or their city for very large rural ZIP codes). Districts are the <span data-f="plan"></span>; several states have redrawn for 2026.</li>
