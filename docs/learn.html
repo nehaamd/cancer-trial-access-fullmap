@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Understand clinical trials · Cancer Trial Access Map</title>
 <meta name="description" content="What clinical trials are, what the phases mean, how a trial reaches a hospital, why “recruiting” is not the same as “available for me”, what this map measures and what it leaves out — as plain questions and answers, with guided explorations of the map.">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -36,16 +38,16 @@
   p,li{max-width:70ch} ul,ol{padding-left:1.3rem} li{margin:.25rem 0}
   .map-note{border-left:3px solid var(--sky);background:#EEF4FA;padding:.5rem .9rem;border-radius:0 8px 8px 0;margin:.9rem 0;font-size:var(--fs-1)} .map-note b{color:var(--navy)}
   .aside{position:sticky;top:1rem;margin-top:1.8rem}
-  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);margin:0 0 1rem} .card h4{margin:0 0 .4rem;font-size:var(--fs-2)} .card p{font-size:var(--fs-1);color:var(--ink-2);margin:.3rem 0} .card .btn{margin-top:.5rem}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);margin:0 0 1rem} .card h3{margin:0 0 .4rem;font-size:var(--fs-2);text-transform:none;letter-spacing:normal;color:var(--ink);font-weight:700} .card p{font-size:var(--fs-1);color:var(--ink-2);margin:.3rem 0} .card .btn{margin-top:.5rem}
   .btn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.5rem 1rem;font-size:var(--fs-1);color:var(--ink);text-decoration:none;cursor:pointer;font-weight:600} .btn:hover{border-color:var(--navy);color:var(--navy)}
   .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)} .btn.primary:hover{background:#082B43;color:#fff}
   dl.gloss{display:grid;grid-template-columns:minmax(120px,max-content) 1fr;gap:.35rem 1rem;max-width:none} dl.gloss dt{font-weight:700} dl.gloss dd{margin:0;color:var(--ink-2);max-width:70ch} @media (max-width:640px){dl.gloss{grid-template-columns:1fr} dl.gloss dd{margin:0 0 .4rem}}
   .phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:.7rem;margin:.8rem 0;max-width:none} .ph{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:.8rem .95rem;box-shadow:var(--shadow)} .ph b{display:block;font-size:var(--fs-2);margin-bottom:.2rem} .ph p{margin:0;font-size:var(--fs-0);color:var(--ink-2);max-width:none}
   .tours{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:.9rem;margin:.8rem 0 0;max-width:none}
   .tour{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.5rem;border-top:4px solid var(--navy)}
-  .tour h4{margin:0;font-size:var(--fs-2);line-height:1.3} .tour p{margin:0;font-size:var(--fs-1);color:var(--ink-2);max-width:none} .tour ol{margin:.2rem 0 0;padding-left:1.2rem;font-size:var(--fs-1)} .tour ol li{max-width:none} .tour .btn{align-self:flex-start;margin-top:auto}
+  .tour h3{margin:0;font-size:var(--fs-2);line-height:1.3;text-transform:none;letter-spacing:normal;color:var(--ink);font-weight:700} .tour p{margin:0;font-size:var(--fs-1);color:var(--ink-2);max-width:none} .tour ol{margin:.2rem 0 0;padding-left:1.2rem;font-size:var(--fs-1)} .tour ol li{max-width:none} .tour .btn{align-self:flex-start;margin-top:auto}
   .small{font-size:var(--fs-0);color:var(--ink-2)}
-  @media (max-width:640px){main{font-size:16px}}
+  @media (max-width:640px){main{font-size:16px} .toc a{min-height:40px;display:inline-flex;align-items:center}}
 </style>
 </head>
 <body>
@@ -137,7 +139,7 @@
       <dt>Standard of care</dt><dd>The treatment that would be given outside a trial. New treatments are usually compared with it or added to it.</dd>
       <dt>Informed consent</dt><dd>The process, and the document, by which a participant learns what a trial involves and agrees to join; it can be withdrawn at any time.</dd>
       <dt>IRB</dt><dd>Institutional review board: the independent committee that reviews a protocol to protect participants.</dd>
-      <dt>NCI-designated cancer center</dt><dd>One of <span data-f="nci">about 70</span> centers recognized by the National Cancer Institute for their research; they run the widest range of trials, including early-phase studies.</dd>
+      <dt>NCI-designated cancer center</dt><dd>One of <span data-f="nci">about 70</span> centers that treat adults and are recognized by the National Cancer Institute for their research; they run the widest range of trials, including early-phase studies.</dd>
       <dt>NCORP</dt><dd>The NCI Community Oncology Research Program: a network that funds community hospitals and practices to run federally sponsored trials.</dd>
       <dt>Basket or umbrella trial</dt><dd>A trial that enrolls several cancers sharing a target or biomarker (basket), or tests several treatments within one cancer (umbrella). They widen what counts as “a trial near me”.</dd>
       <dt>Road-miles</dt><dd>Distance along roads, measured on the Census Bureau’s road network, rather than in a straight line.</dd>
@@ -160,30 +162,30 @@
     <h2>Guided explorations</h2>
     <p>Each one opens the map on a view, keeps two or three prompts in a small box beside it, and lets you change every setting. They work for a teaching session, an advocacy meeting, or an hour on your own.</p>
     <div class="tours">
-      <div class="tour"><h4>Compare a rural and an urban community</h4><p>Kentucky, on the default layer with the metro-vs-rural option on: solid discs are metro counties, rings nonmetro. Then open the Compare counties tab for the whole state.</p>
+      <div class="tour"><h3>Compare a rural and an urban community</h3><p>Kentucky, on the default layer with the metro-vs-rural option on: solid discs are metro counties, rings nonmetro. Then open the Compare counties tab for the whole state.</p>
         <ol><li>Which counties have the largest circles? Are they the ones with the fewest people, or the most?</li><li>Click Warren County (Bowling Green), then Jefferson (Louisville). What differs besides distance?</li><li>Switch the state to your own.</li></ol>
         <a class="btn primary" href="index.html?s=KY&rural=1&guide=rural-urban">Open this exploration</a></div>
-      <div class="tour"><h4>Explore access for a less common cancer</h4><p>The map filtered to sarcoma, a group of rare cancers whose trials gather at a few referral centers.</p>
+      <div class="tour"><h3>Explore access for a less common cancer</h3><p>The map filtered to sarcoma, a group of rare cancers whose trials gather at a few referral centers.</p>
         <ol><li>How much of the country has no sarcoma trial within 60 road-miles? Compare with breast cancer, then with the multi-cancer basket trials.</li><li>Why might a basket trial count for sarcoma? Open a county’s trial list to see.</li><li>Try MDS &amp; MPN, or brain &amp; CNS.</li></ol>
         <a class="btn primary" href="index.html?type=sarcoma&guide=rare">Open this exploration</a></div>
-      <div class="tour"><h4>Investigate your congressional district</h4><p>The map by district, colored by the share of residents 55+ short of trials. Search your district or your member of Congress.</p>
+      <div class="tour"><h3>Investigate your congressional district</h3><p>The map by district, colored by the share of residents 55+ short of trials. Search your district or your member of Congress.</p>
         <ol><li>What share of your district’s residents 55+ are short of trials? How does that compare with the state and the nation?</li><li>Does your member cosponsor the tracked bill? Open the printable brief.</li><li>Which counties in the district drive the figure?</li></ol>
         <a class="btn primary" href="index.html?u=district&guide=district">Open this exploration</a></div>
-      <div class="tour"><h4>Where cancer deaths are high and trials are far</h4><p>Two measures side by side, never combined: county cancer death rates and the share of residents short of trials.</p>
+      <div class="tour"><h3>Where cancer deaths are high and trials are far</h3><p>Two measures side by side, never combined: county cancer death rates and the share of residents short of trials.</p>
         <ol><li>Where are the purple counties? Which states have the most?</li><li>Change the access threshold on the Need-vs-access tab. What moves?</li><li>What does this view <em>not</em> tell you about why?</li></ol>
         <a class="btn primary" href="index.html?m=mva&guide=deaths">Open this exploration</a></div>
     </div>
   </section>
   </div>
   <aside class="aside">
-    <div class="card"><h4>Start with your own community</h4><p>Enter a county, ZIP code, district or state and get a short local summary with the numbers behind it.</p><a class="btn primary" href="community.html">Your community</a></div>
-    <div class="card"><h4>Looking for a trial now?</h4><p>The ZIP finder lists recruiting trials by distance, with each study’s own contact. Your care team decides eligibility; the NCI Cancer Information Service (1-800-4-CANCER, option 2) runs a free trial search tailored to your diagnosis that you can take to your care team.</p><a class="btn" href="find.html">Find trials near a ZIP</a></div>
-    <div class="card"><h4>Research teams</h4><p>Filters by phase, sponsor and cancer type, downloadable tables, and the full method for planning where trials run.</p><a class="btn" href="#research-teams">Tools for research teams</a></div>
-    <div class="card"><h4>Teaching with this site</h4><p>The guided explorations open the map with prompts. Every view has a “Copy link to this view” button, so a class or a meeting can start from the same picture.</p><a class="btn" href="#explore">Guided explorations</a></div>
+    <div class="card"><h3>Start with your own community</h3><p>Enter a county, ZIP code, district or state and get a short local summary with the numbers behind it.</p><a class="btn primary" href="community.html">Your community</a></div>
+    <div class="card"><h3>Looking for a trial now?</h3><p>The ZIP finder lists recruiting trials by distance, with each study’s own contact. Your care team decides eligibility; the NCI Cancer Information Service (1-800-4-CANCER, option 2) runs a free trial search tailored to your diagnosis that you can take to your care team.</p><a class="btn" href="find.html">Find trials near a ZIP</a></div>
+    <div class="card"><h3>Research teams</h3><p>Filters by phase, sponsor and cancer type, downloadable tables, and the full method for planning where trials run.</p><a class="btn" href="#research-teams">Tools for research teams</a></div>
+    <div class="card"><h3>Teaching with this site</h3><p>The guided explorations open the map with prompts. Every view has a “Copy link to this view” button, so a class or a meeting can start from the same picture.</p><a class="btn" href="#explore">Guided explorations</a></div>
   </aside>
   </div>
+  <p class="about-est" style="margin:1.2rem 0 0;padding:.6rem 0;font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 </main>
-<p class="about-est" style="max-width:1040px;margin:0 auto 1rem;padding:.6rem var(--gutter);font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 <footer class="site">
 <p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
@@ -191,7 +193,7 @@
 <script>
 (function () { const M = window.COMMUNITY.meta; const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull };
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
-  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? M.nci.centers + ' adult' : 'about 70',
+  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? String(M.nci.centers) : 'about 70',
     multi: M.pct_multi ? `About ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][Math.round(M.pct_multi / 10)]} in ten (${M.pct_multi}%)` : 'About three in ten' };   // community.js meta.pct_multi, the share the map's Methods quotes
   document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || '');
   SITE.foldOnPhone([...document.querySelectorAll('main section')], [0]); })();

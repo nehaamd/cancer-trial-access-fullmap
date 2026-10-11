@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Printable brief · Cancer Trial Access Map</title>
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -22,15 +24,13 @@
 <meta name="twitter:title" content="Printable brief · Cancer Trial Access Map">
 <meta name="twitter:description" content="A one-page brief for any US county, congressional district or state: how far residents 55 and older live from recruiting cancer trials, cancer burden, household context and cosponsor status.">
 <meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script>if (!window.d3) document.write('<script src="d3.v7.min.js"><\/script>');</script>
 <style>
-  :root{--ink:#1B2430;--ink-2:#4B5563;--ink-3:#5F6B78;--rule:#E4E1DA;--navy:#0B3C5D;--rust:#8A3B1E;--gulf:#3F7FB5}
-  *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.45;background:#fff}
+  :root{--ink:#1B2430;--ink-2:#4B5563;--ink-3:#5F6B78;--navy:#0B3C5D;--rust:#8A3B1E;--gulf:#3F7FB5}
+  *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;line-height:1.45;background:#fff} html{font-size:16px} body{font-size:15px}
   .page{max-width:8.5in;margin:0 auto;padding:.7in .75in}
-  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:2px solid var(--navy);padding-bottom:.5rem;margin-bottom:.9rem}
+  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;border-bottom:2px solid var(--navy);padding-bottom:.5rem;margin-bottom:.9rem} .top>div:first-child{min-width:0}
   h1{font-size:1.6rem;margin:0;letter-spacing:-.02em;line-height:1.15} .kicker{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--ink-3);font-weight:700;margin:0 0 .2rem}
-  .proto{display:block;color:var(--ink-3);font-weight:400;text-transform:none;letter-spacing:0;margin:.1rem 0 0;white-space:nowrap} #kicker{white-space:nowrap}   /* a quiet status line, not a warning box; delete the span when the figures are final */ .member{color:var(--ink-2);margin:.2rem 0 0} .tools{font-size:.8rem;text-align:right} .tools a,.tools button{color:var(--link);font:inherit;background:none;border:0;cursor:pointer;text-decoration:underline;padding:0;margin-left:.6rem;white-space:nowrap}
+  .proto{display:block;color:var(--ink-3);font-weight:400;text-transform:none;letter-spacing:0;margin:.1rem 0 0;white-space:nowrap}   /* a quiet status line, not a warning box; delete the span when the figures are final */ .member{color:var(--ink-2);margin:.2rem 0 0} .tools{font-size:.8rem;text-align:right} .tools a,.tools button{color:var(--link);font:inherit;background:none;border:0;cursor:pointer;text-decoration:underline;padding:0;margin-left:.6rem;white-space:nowrap}
   .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;align-items:start}
   .stat{border-left:3px solid var(--rule);padding:.35rem 0 .35rem .7rem;margin:0 0 .6rem} .stat.hot{border-left-color:var(--rust)} .stat b{font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em} .stat p{margin:.15rem 0 0;font-size:.9rem;max-width:36ch}
   svg{width:100%;height:auto;display:block;border:1px solid var(--rule)} .c{fill:#EFEBE3;stroke:#fff;stroke-width:.4} .bub{fill:rgba(200,98,42,.72);stroke:#fff;stroke-width:.5} .hi{fill:none;stroke:var(--rust);stroke-width:2.2;vector-effect:non-scaling-stroke} #map.dz .c,#map.dz path{vector-effect:non-scaling-stroke} .nci{fill:#F0B429;stroke:#3a2f00;stroke-width:.6}
@@ -44,7 +44,8 @@
   #ask:focus,#from:focus{outline:2px dashed var(--gulf);outline-offset:2px}
   #from:empty::before{content:attr(data-ph);color:var(--ink-3);font-style:italic}
   .ask-hint{font-size:.72rem;color:var(--ink-3);margin:.3rem 0 0}
-  @media (max-width:640px){.page{padding:1rem 16px} .top{flex-direction:column} #kicker,.proto{white-space:normal} .tools{text-align:left} .tools a,.tools button{margin:0 .8rem 0 0} .grid{grid-template-columns:1fr} .defs{columns:1}}
+  @media screen{.kicker,.ask-k,.ask-hint,.foot{font-size:.8rem} #maplegend{font-size:.8rem !important}}   /* at least 12 px on screen; print keeps its smaller sizes */
+  @media (max-width:640px){.page{padding:1rem 16px} .top{flex-direction:column} .proto{white-space:normal} .tools{text-align:left} .tools a,.tools button{margin:0 .8rem 0 0;display:inline-block;padding:.7rem 0} .grid{grid-template-columns:1fr} .defs{columns:1} ul.rows li span:last-child{white-space:normal;text-align:right}}
   h2{break-after:avoid} ul.rows,.stat,.ask{break-inside:avoid}
   @media print{html{font-size:10.5px} html.k-district,html.k-county{font-size:11.5px} body{font-size:1rem;line-height:1.32} #ask,#from{outline:none !important;caret-color:transparent} .tools,.ask-hint{display:none} #from:empty{display:none} .ask{background:none;margin-bottom:.6rem;padding:.4rem .7rem} .page{padding:0;max-width:none}
     .top{margin-bottom:.5rem;padding-bottom:.3rem} .proto{display:inline;margin:0 0 0 .6rem} .stat{margin-bottom:.3rem;padding:.15rem 0 .15rem .6rem} .stat b{font-size:1.7rem} .stat p{max-width:44ch} h2{margin:.55rem 0 .15rem} ul.rows li{padding:.1rem 0} .grid{grid-template-columns:1.25fr 1fr;gap:.8rem} .defs{columns:3;column-gap:1.1rem;font-size:.78rem} .defs p{margin-bottom:.25rem} .foot{margin-top:.4rem;padding-top:.25rem} @page{size:letter;margin:.5in}}
@@ -57,7 +58,7 @@
   <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
   <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group on"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link" aria-current="page">Printable brief</a><a href="index.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
-<div class="page">
+<main class="page">
 <div class="top"><div><p class="kicker"><span id="kicker">Cancer clinical trial access brief</span><span class="proto">Working draft · figures may be revised</span></p><h1 id="title">…</h1><p class="member" id="member"></p></div><div class="tools"><button onclick="window.print()">Print / save as PDF</button><a id="back" href="index.html">Open in the map</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a></div></div>
 <div class="ask" id="ask-box"><span class="ask-k">Our ask</span><p id="ask" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Our ask (editable)" aria-describedby="ask-hint"></p><p id="from" contenteditable="true" spellcheck="true" role="textbox" aria-multiline="true" aria-label="Your name, title and institution (editable, optional)" aria-describedby="ask-hint" data-ph="Add your name, title and institution (optional)"></p><p class="ask-hint" id="ask-hint">Click either line to edit it. Your wording is saved in this page's link, so copy the link after editing to share or reopen it.</p></div>
 <div class="grid"><div id="stats"></div><div><svg id="map" viewBox="0 0 480 300" aria-hidden="true"></svg><p style="font-size:.74rem;color:var(--ink-3);margin:.3rem 0 0" id="maplegend"></p></div></div>
@@ -65,8 +66,8 @@
 <h2>Definitions</h2>
 <div class="defs" id="defs"></div>
 <div class="foot" id="foot"></div>
-</div>
-<script src="site.js"></script><script src="data.js"></script><script src="geo.js"></script><script src="rucc.js"></script><script src="cosponsors.js"></script><script src="burden.js"></script>
+</main>
+<script src="d3.v7.min.js"></script><script src="site.js"></script><script src="data.js"></script><script src="geo.js"></script><script src="rucc.js"></script><script src="cosponsors.js"></script><script src="burden.js"></script>
 <script>
 (function(){
   const D = window.DATA, GEO = window.GEO, C = D.counties, DI = D.districts, p = new URLSearchParams(location.search); const fmt = d3.format(','), pct = v => (Math.round(v*10)/10).toLocaleString(undefined,{minimumFractionDigits:1,maximumFractionDigits:1});
@@ -86,20 +87,20 @@
   document.documentElement.classList.add('k-' + kind);
   document.getElementById('title').textContent = title; document.getElementById('member').textContent = member; document.getElementById('kicker').textContent = kicker + ' · Data as of ' + SITE.nice(SITE.dataDate(D.meta));
   if (p.get('filters')) { const n_ = document.createElement('span'); n_.className = 'filt-note'; n_.textContent = `Map filters not applied (${p.get('filters').slice(0, 120)}): every figure here counts all listed trials.`; document.getElementById('kicker').after(n_); }
-  const S = document.getElementById('stats'); const period = String(D.meta.burden.period).replace('-', '–');
+  const S = document.getElementById('stats'); const period = SITE.period(D.meta.burden.period);
   if (kind === 'county') { const c = g.county; const b = c.b ? c.b[0] : null;
     S.innerHTML = stat(fmt(c.t), c.t === 1 ? 'recruiting trial' : 'recruiting trials', `with a site in the county, accepting some adults 55+, at ${fmt(c.f)} recruiting site${c.f === 1 ? '' : 's'}. ${c.t >= 100 ? 'A broad menu (100+).' : c.t >= 20 ? 'A limited menu (20–99).' : c.t ? '' : 'No listed trial has a recruiting site here.'}`, c.t === 0)
       + stat(fmt(c.t60), c.t60 === 1 ? 'trial' : 'trials', `${c.t60 === 1 ? 'has' : 'have'} a recruiting site within 60 road-miles of the county population center (${fmt(c.f60)} site${c.f60 === 1 ? '' : 's'}).`, c.t60 < 20)
       + (c.rn === null ? stat('—', '', 'No road route to an NCI-designated center (island or off the highway network).') : stat(fmt(c.rn), 'road-mi', `to the nearest NCI-designated cancer center, ${esc(c.nn)}${c.hn !== null ? `; ${SITE.driveTime(c.hn)} by road` : ''}.`, c.rn >= 150))
-      + (c.rb === null ? '' : stat(c.rb === 0 ? '0' : fmt(c.rb), 'road-mi', c.rb === 0 ? 'This county is itself a broad menu.' : `to the nearest county with 100+ trials (${esc(c.nbm)}).`, c.rb >= 120));
-    document.getElementById('extra').innerHTML = `<h2>Cancer burden and household context</h2>` + rows([['Residents 55+', fmt(c.p)], ...teleRow, [`All-sites cancer incidence, age-adjusted per 100,000 (${period})`, b && b[4] <= 1 ? `${b[0]}${b[4] === 1 ? ' (small numbers)' : ''}` : 'not available'], ['Average annual new cancer cases', b && b[4] <= 1 ? fmt(b[3]) : 'not available'], ['Listed trials within 60 road-miles per 100 annual diagnoses', b && b[4] === 0 && b[3] ? (100 * c.t60 / b[3]).toFixed(1) : '—'], ['Households without a vehicle', c.acs && c.acs.veh !== null ? c.acs.veh + '%' : '—'], ['Households with broadband', c.acs && c.acs.bb !== null ? c.acs.bb + '%' : '—'], ['Uninsured, ages 55–64', c.acs && c.acs.unins55 !== null ? c.acs.unins55 + '%' : '—'], ['Poverty rate', c.acs && c.acs.pov !== null ? c.acs.pov + '%' : '—']]); }
+      + (c.rb === null ? stat('—', '', 'No road route to a county with 100+ trials (island or off the highway network).' + (c.t >= 20 ? ' The county itself hosts a limited menu.' : '')) : stat(c.rb === 0 ? '0' : fmt(c.rb), 'road-mi', c.rb === 0 ? 'This county is itself a broad menu.' : `to the nearest county with 100+ trials (${esc(c.nbm)}).`, c.rb >= 120));
+    document.getElementById('extra').innerHTML = `<h2>Cancer burden and household context</h2>` + rows([['Residents 55+', fmt(c.p)], ...teleRow, [`All-sites cancer incidence, age-adjusted per 100,000 (${period})`, b && b[4] <= 1 ? `${SITE.rate(b[0])}${b[4] === 1 ? ' (small numbers)' : ''}` : 'not available'], ['Average annual new cancer cases', b && b[4] <= 1 ? fmt(b[3]) : 'not available'], ['Listed trials within 60 road-miles per 100 annual diagnoses', b && b[4] === 0 && b[3] ? (100 * c.t60 / b[3]).toFixed(1) : '—'], ['Households without a vehicle', c.acs && c.acs.veh !== null ? SITE.rate(c.acs.veh) + '%' : '—'], ['Households with broadband', c.acs && c.acs.bb !== null ? SITE.rate(c.acs.bb) + '%' : '—'], ['Uninsured, ages 55–64', c.acs && c.acs.unins55 !== null ? SITE.rate(c.acs.unins55) + '%' : '—'], ['Poverty rate', c.acs && c.acs.pov !== null ? SITE.rate(c.acs.pov) + '%' : '—']]); }
   else { const x = g.ctx || {}; const binc = kind === 'state' ? g.binc : kind === 'nat' ? D.meta.nat_binc : null, pub = binc && binc.all ? binc.all : null;
     S.innerHTML = stat(pct(g.l20), '%', `of residents 55+ have fewer than 20 listed trials within 60 road-miles of home; ${pct(g.z60)}% have none. Residents 55+ have an average of ${fmt(g.t60)} within 60 road-miles.`, g.l20 >= 50)
-      + stat(pct(g.g60b), '%', `live more than 60 road-miles from a broad menu (a county with 100+ trials); ${pct(g.g120b)}% more than 120.`, g.g60b >= 50)
+      + stat(pct(g.g60b), '%', `live more than 60 road-miles from a broad menu (a county with 100+ trials); ${pct(g.g120b)}% more than 120.${g.nr >= 1 ? ` ${pct(g.nr)}% have no road route to one.` : ''}`, g.g60b >= 50)
       + (g.medn === null ? stat('—', '', `No census tract here has a road route to an NCI-designated cancer center; ${pct(g.g60n)}% of residents 55+ are more than 60 road-miles from one or have no road route.`) : stat(fmt(g.medn), 'road-mi', `median road distance to the nearest NCI-designated cancer center${g.nrn >= 1 ? ` among the ${pct(100 - g.nrn)}% of residents with a road route (${pct(g.nrn)}% have none)` : ''}; ${pct(g.g60n)}% are more than 60 road-miles from one.`, g.medn >= 150));
     document.getElementById('extra').innerHTML = `<h2>Cancer burden and household context</h2>` + rows([['Residents 55+', fmt(g.p)], [kind === 'state' ? 'Recruiting trials with a site in the state · sites' : kind === 'district' ? 'Census tracts' : 'Recruiting trials · sites', kind === 'state' ? `${fmt(g.trials)} · ${fmt(g.fac)}` : kind === 'district' ? fmt(g.nt) : `${fmt(D.meta.trials)} · ${fmt(D.meta.facilities)}`], ...teleRow,
-      [`All-sites cancer incidence, age-adjusted per 100,000 (${period})` + (pub && pub[0] !== null ? '' : ', residents-weighted county mean'), pub && pub[0] !== null ? pub[0] : x.inc !== null && x.inc !== undefined ? x.inc : 'not available'], [kind === 'district' ? 'Estimated average annual new cancer cases (county counts shared out by residents 55+)' : 'Average annual new cancer cases', pub && pub[1] ? fmt(pub[1]) : x.cases ? (kind === 'district' ? 'about ' : '') + fmt(x.cases) : '—'],
-      ['Households without a vehicle', x.veh != null ? x.veh + '%' : '—'], ['Households with broadband', x.bb != null ? x.bb + '%' : '—'], ['Uninsured, all ages', x.unins != null ? x.unins + '%' : '—'], ['Uninsured, ages 55–64', x.unins55 != null ? x.unins55 + '%' : '—'], ['Poverty rate', x.pov != null ? x.pov + '%' : '—']]); }
+      [`All-sites cancer incidence, age-adjusted per 100,000 (${period})` + (pub && pub[0] !== null ? '' : ', residents-weighted county mean'), pub && pub[0] !== null ? SITE.rate(pub[0]) : x.inc !== null && x.inc !== undefined ? SITE.rate(x.inc) : 'not available'], [kind === 'district' ? 'Estimated average annual new cancer cases (county counts shared out by residents 55+)' : 'Average annual new cancer cases', pub && pub[1] ? fmt(pub[1]) : x.cases ? (kind === 'district' ? 'about ' : '') + fmt(x.cases) : '—'],
+      ['Households without a vehicle', x.veh != null ? SITE.rate(x.veh) + '%' : '—'], ['Households with broadband', x.bb != null ? SITE.rate(x.bb) + '%' : '—'], ['Uninsured, all ages', x.unins != null ? SITE.rate(x.unins) + '%' : '—'], ['Uninsured, ages 55–64', x.unins55 != null ? SITE.rate(x.unins55) + '%' : '—'], ['Poverty rate', x.pov != null ? SITE.rate(x.pov) + '%' : '—']]); }
   // rural / urban, cosponsorship and burden-vs-access lines (each only when its data file is present)
   const RU = window.RUCC || null, CO = window.COSPONSORS || null, BU = window.BURDEN || null; const RUCC_SHORT = {1: 'metro, 1 million+', 2: 'metro, 250,000–1 million', 3: 'metro, under 250,000', 4: 'nonmetro, urban 20,000+, adjacent to metro', 5: 'nonmetro, urban 20,000+, not adjacent', 6: 'nonmetro, urban 5,000–20,000, adjacent', 7: 'nonmetro, urban 5,000–20,000, not adjacent', 8: 'nonmetro, urban under 5,000, adjacent', 9: 'nonmetro, urban under 5,000, not adjacent'};
   let more = '';

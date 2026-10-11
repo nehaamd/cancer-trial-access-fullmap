@@ -9,13 +9,15 @@
 
 :root{
   --paper:#F7F5F0; --card:#FFFFFF; --ink:#1B2430; --ink-2:#4B5563; --ink-3:#5F6B78; --rule:#E6E2DA; --rule-2:#CFCBC2;
-  --navy:#0B3C5D; --gulf:#3F7FB5; --link:#2F6A9C; --sky:#9EC4E0; --sand:#F2C48A; --clay:#D98B4A; --rust:#8A3B1E; --warn:#7A5A00; --nodata:#E9E7E1;
+  --navy:#0B3C5D; --gulf:#3F7FB5; --link:#2F6A9C; --sky:#9EC4E0; --sand:#F2C48A; --clay:#D98B4A; --rust:#8A3B1E; --warn:#7A5A00; --nodata:#BDB8AE;
   --rep:#B22234; --dem:#2E5AAC; --ind:#7C8794;
   --r:10px; --shadow:0 1px 2px rgba(27,36,48,.05), 0 6px 18px rgba(27,36,48,.05);
   --fs-0:.84rem; --fs-1:.95rem; --fs-2:1.08rem; --fs-3:1.35rem; --fs-4:1.8rem; --fs-5:2.9rem;
   --gutter:1.5rem;
 }
 html,body{font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif}
+:focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---- header shared by every page ---- */
 header.site{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.55rem var(--gutter);background:var(--card);color:var(--ink);border:0;border-bottom:1px solid var(--rule);margin:0;min-height:57px;box-sizing:border-box}
@@ -34,7 +36,7 @@ header.site .hdr-group>div a{display:block;color:var(--ink);border:0;border-radi
 header.site .hdr-group>div a:hover{background:#EEF4FA;color:var(--navy)}
 header.site .hdr-group>div a[aria-current="page"]{background:#EEF4FA;color:var(--navy);font-weight:600;border-bottom:0;border-radius:6px}
 /* phone menu button, added by site.js; without JavaScript the links simply show */
-header.site .hdr-menu-btn{display:none;margin-left:auto;color:var(--navy);background:none;border:1px solid var(--rule-2);border-radius:8px;padding:.4rem .7rem;font:inherit;font-size:var(--fs-0);font-weight:600;cursor:pointer;align-items:center;gap:.4rem}
+header.site .hdr-menu-btn{display:none;min-height:40px;margin-left:auto;color:var(--navy);background:none;border:1px solid var(--rule-2);border-radius:8px;padding:.4rem .7rem;font:inherit;font-size:var(--fs-0);font-weight:600;cursor:pointer;align-items:center;gap:.4rem}
 header.site .hdr-menu-btn svg{display:block}
 
 /* ---- page title block used by the secondary pages ---- */
