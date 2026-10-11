@@ -246,12 +246,18 @@ def main():
         c = loc.city(r.state, r.city)
         if c: lat.append(c[0]); lon.append(c[1]); how.append("city"); continue
         lat.append(np.nan); lon.append(np.nan); how.append("none")
-    cand["lat"], cand["lon"], cand["geocode"] = lat, lon, how; log["geocode"] = cand.geocode.value_counts().to_dict(); cand = cand[cand.geocode != "none"].copy()
+    cand["lat"], cand["lon"], cand["geocode"] = lat, lon, how; log["geocode"] = cand.geocode.value_counts().to_dict()
+    n_none = int((cand.geocode == "none").sum()); cand = cand[cand.geocode != "none"].copy()
     cxy = to5070(cand.lon.values, cand.lat.values); cd, ci = tree.query(cxy); ci = aidx[ci]; c_acc = cd * M2MI
+    n_off = int((c_acc > MAX_ACCESS_MI).sum())
     cand = cand[c_acc <= MAX_ACCESS_MI].copy(); ci = ci[c_acc <= MAX_ACCESS_MI]; cxy = cxy[c_acc <= MAX_ACCESS_MI]; c_acc = c_acc[c_acc <= MAX_ACCESS_MI]
     # prefilter: only candidates within 70 straight-line miles of some under-served tract (secondary objective superset)
     ut = cKDTree(txy[lt20]); dmin, _ = ut.query(cxy); keep = dmin * M2MI <= 70
     cand = cand[keep].reset_index(drop=True); ci, c_acc = ci[keep], c_acc[keep]; log["candidates_evaluated"] = len(cand); print(f"candidates to evaluate: {len(cand)}", flush=True)
+    # the last exclusion bucket, so that read - excluded - evaluated closes exactly (sites.html prints the four buckets)
+    log["excluded_unlocated_or_far"] = n_none + n_off + int((~keep).sum())
+    log["excluded_unlocated_or_far_detail"] = {"not_geocoded": n_none, f"more_than_{MAX_ACCESS_MI:g}_mi_from_a_road": n_off, "more_than_70_mi_from_an_underserved_tract": int((~keep).sum())}
+    assert log["candidates_read"] - log["excluded_not_a_place_or_mistyped_zip"] - log["excluded_county_has_limited_menu"] - log["excluded_facility_already_recruiting"] - log["excluded_unlocated_or_far"] == log["candidates_evaluated"]
     # ---- one bounded Dijkstra per candidate ----
     cutoff = BAND + float(np.nanmax(t_acc[np.isfinite(t_acc)])) + float(c_acc.max()) + 0.01
     prim, sec, ntr, cover_zero = np.zeros(len(cand), np.int64), np.zeros(len(cand), np.int64), np.zeros(len(cand), np.int32), []
@@ -284,10 +290,10 @@ def main():
     log["seconds"] = round(time.time() - t0); json.dump(log, open(OUT / "tier4_log.json", "w"), indent=2)
     # web payload (top 200 ranked + greedy + method)
     top = ranked.head(200)[["rank_zero", "name", "name_is_placeholder", "city", "state", "county_name", "pop55_newly_covered_zero", "pop55_newly_covered_lt20", "tracts_within_60rdmi", "county_trials", "lat", "lon"]]
-    web = {"label": a.label, "method": METHOD, "generated": time.strftime("%Y-%m-%d"), "uncovered": log["uncovered_pop55"], "counts": {k: log[k] for k in ("candidates_read", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "candidates_evaluated")},
+    web = {"label": a.label, "method": METHOD, "generated": time.strftime("%Y-%m-%d"), "uncovered": log["uncovered_pop55"], "counts": {k: log[k] for k in ("candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "excluded_unlocated_or_far", "candidates_evaluated")},
            "ranked": [[int(r.rank_zero), r.name, int(r.name_is_placeholder), r.city, r.state, r.county_name, int(r.pop55_newly_covered_zero), int(r.pop55_newly_covered_lt20), int(r.tracts_within_60rdmi), int(r.county_trials), round(float(r.lat), 3), round(float(r.lon), 3)] for r in top.itertuples()], "greedy": seq}
     (DOCS / "tier4.js").write_text("window.TIER4=" + json.dumps(web, separators=(",", ":"), ensure_ascii=False) + ";", encoding="utf-8")
-    pd.set_option("display.width", 220); print(pd.DataFrame(seq)[["step", "name", "city", "state", "pop55_newly_covered", "cumulative_pop55_covered", "pct_of_uncovered_pop55"]].to_string(index=False)); print(json.dumps({k: log[k] for k in ("uncovered_pop55", "candidates_read", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "geocode", "candidates_evaluated", "seconds")}, indent=1))
+    pd.set_option("display.width", 220); print(pd.DataFrame(seq)[["step", "name", "city", "state", "pop55_newly_covered", "cumulative_pop55_covered", "pct_of_uncovered_pop55"]].to_string(index=False)); print(json.dumps({k: log[k] for k in ("uncovered_pop55", "candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "geocode", "excluded_unlocated_or_far", "excluded_unlocated_or_far_detail", "candidates_evaluated", "seconds")}, indent=1))
 
 
 if __name__ == "__main__":
