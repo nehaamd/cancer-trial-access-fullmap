@@ -1,18 +1,32 @@
 {
- "built_utc": "2026-10-11T05:01+00:00",
- "relationship_file": "/tmp/claude-0/-home-claude/f109253a-edb9-5cbc-9b7b-3e7c82b37905/scratchpad/pipeline/dl/zcta_tract.txt",
+ "built_utc": "2026-10-11T16:58+00:00",
+ "relationship_file": "https://www2.census.gov/geo/docs/maps-data/data/rel2020/zcta520/tab20_zcta520_tract20_natl.txt",
+ "zcta_polygons": "https://www2.census.gov/geo/tiger/GENZ2020/shp/cb_2020_us_zcta520_500k.zip",
+ "read_from_local_copies": [
+  "--rel",
+  "--shp"
+ ],
  "zctas": 33772,
- "tract_weighted": 26794,
- "internal_point_kept": 6978,
- "internal_point_kept_coverage_outside_band": 5748,
+ "tract_weighted": 23889,
+ "internal_point_kept": 9883,
+ "internal_point_kept_because": {
+  "no_tract_rows": 185,
+  "coverage_outside_0.5_2": 6793,
+  "center_more_than_1_mi_outside_its_zcta": 2905,
+  "no_zcta_polygon": 0
+ },
+ "centers_outside_their_zcta_before_the_place_test": {
+  "over_1_mi": 2905,
+  "over_5_mi": 683
+ },
  "shift_mi": {
-  "median": 1.5,
-  "p90": 5.93,
-  "p99": 17.281399999999994,
+  "median": 1.27,
+  "p90": 4.16,
+  "p99": 10.39239999999998,
   "max": 278.04
  },
- "moved_over_5_mi": 3503,
- "moved_over_30_mi": 75,
+ "moved_over_5_mi": 1545,
+ "moved_over_30_mi": 8,
  "largest_moves": [
   {
    "zcta": "99503",
@@ -25,34 +39,34 @@
    "pop55_weighted": 3951
   },
   {
-   "zcta": "99640",
-   "shift_mi": 182.75,
-   "pop55_weighted": 24
+   "zcta": "99557",
+   "shift_mi": 48.74,
+   "pop55_weighted": 257
   },
   {
-   "zcta": "99691",
-   "shift_mi": 110.14,
-   "pop55_weighted": 44
+   "zcta": "83716",
+   "shift_mi": 48.26,
+   "pop55_weighted": 5773
   },
   {
-   "zcta": "99651",
-   "shift_mi": 105.73,
-   "pop55_weighted": 4
+   "zcta": "99588",
+   "shift_mi": 47.46,
+   "pop55_weighted": 353
   },
   {
-   "zcta": "99730",
-   "shift_mi": 101.32,
-   "pop55_weighted": 59
+   "zcta": "89406",
+   "shift_mi": 44.69,
+   "pop55_weighted": 5172
   },
   {
-   "zcta": "99627",
-   "shift_mi": 90.78,
-   "pop55_weighted": 64
+   "zcta": "85365",
+   "shift_mi": 34.49,
+   "pop55_weighted": 18297
   },
   {
-   "zcta": "99756",
-   "shift_mi": 90.23,
-   "pop55_weighted": 25
+   "zcta": "99712",
+   "shift_mi": 34.1,
+   "pop55_weighted": 3762
   }
  ]
 }

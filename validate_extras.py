@@ -83,6 +83,18 @@ def run(browser=False):
             zz = FI["zcta"].get(z_); near_ = min(mi(zz[:2], p[:2]) for p in FI["sp"]) if zz else None
             if near_ is None or near_ > 10: far[z_] = (town, None if near_ is None else round(near_, 1))
         check("ZIP lookup: large ZIP code areas measure from their residents (99701 Fairbanks, 99503 Anchorage, 83716 Boise each have a site point within 10 miles)", "all three within 10 miles" if not far else "far: " + str(far), not far, FI["meta"].get("zcta_centers", "centers: zcta_pop55.csv internal points"))
+        # a population-weighted center is used only inside (or within a mile of) its own ZIP area and when the tract apportionment covers
+        # half to twice the ZIP's residents (build_zcta_centers.py); until 11 Oct 2026 2,905 centers lay outside their ZIP (97904: 54 miles)
+        pcf = find("zcta_popcenter.csv")
+        if pcf is not None:
+            pc = pd.read_csv(pcf, dtype={"zcta": str}).set_index("zcta"); wt = pc[pc.source == "tract_weighted"]
+            bad_place = int((wt.outside_mi.isna() | (wt.outside_mi > 1.0)).sum()) if "outside_mi" in pc.columns else len(wt)
+            bad_cov = int((~wt.coverage.between(0.5, 2.0)).sum())
+            used = {z: (round(float(pc.lat[z]), 3), round(float(pc.lon[z]), 3)) for z in FI["zcta"] if z in pc.index}
+            off = [z for z, ll in used.items() if (FI["zcta"][z][0], FI["zcta"][z][1]) != ll]
+            check("ZIP lookup: every population-weighted ZIP center lies within a mile of its own ZIP area and passes the coverage test; find_data.js uses those centers",
+                  f"{len(wt):,} weighted centers: {bad_place} outside their ZIP area (or not tested), {bad_cov} outside the coverage band; {len(off)} of {len(used):,} finder ZIPs not at their center" + (f" (e.g. {off[:5]})" if off else ""),
+                  bad_place == 0 and bad_cov == 0 and not off)
         ui = (find("find.html") or Path("find.html")).read_text(encoding="utf-8"); check("ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present)", "all phrases present" if all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]) else "MISSING", all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]))
     ui = (find("index.html") or Path("index.html")).read_text(encoding="utf-8")
     check("Map page loads the three new data files and states the burden view is a cross-tabulation, not a score", "rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present" if all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]) else "MISSING", all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]))

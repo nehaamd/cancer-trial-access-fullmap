@@ -7,10 +7,11 @@ Census internal points of zcta_pop55.csv are used, which for a large or split ZI
 file the pipeline uses to assign sites to counties), sitepoints.csv (site-point coordinates from route_sites_us.py; order = DATA.SP).
 
 Writes docs/find_data.js (window.FIND): {zcta: {"77030": [lat, lon, "48201"], ...}, sp: [[lat, lon, "48201"], ...], meta},
-docs/zip_county.json ({county: [its ZIP codes]}), which the map's search box loads the first time a ZIP code is typed, and
-docs/zip3_county.json ({"487": "26157", ...}: the county most of a three-digit prefix's ZIP code areas lie in, from zip3_county.csv),
-so a page can offer an approximate county for a ZIP code that is no Census area (a post-office-box or single-building ZIP such as
-48764 or 48106, which zip_county.json cannot hold); the page must label it approximate.
+and docs/zip_county.json ({county: [its ZIP codes]}), which the map's search box loads the first time a ZIP code is typed.
+A ZIP code that is no Census area (a post-office-box or single-building ZIP such as 48764 or 48106) has no county here. A county
+guessed from the ZIP's first three digits is not offered: prefix 487 is mostly Tuscola County, while 48764 (Tawas City) is in Iosco
+County (a prefix file, zip3_county.json, was written on 10-11 October 2026 and removed for that reason; the pages send such a ZIP to
+the city search instead).
 Distances on the page are straight-line from the ZCTA center to the site point, multiplied by 1.20 — a rounded factor; the median
 road / straight-line ratio measured on this project's highway network is 1.18 (10th–90th percentile 1.09–1.34), and the page quotes
 the measured figure from route_log.json — and labelled as estimates.
@@ -46,8 +47,6 @@ def main():
     for zip5, cf in sorted(zc.items()):
         if cf in counties: by_county.setdefault(cf, []).append(zip5)
     (docs_dir() / "zip_county.json").write_text(json.dumps(dict(sorted(by_county.items())), separators=(",", ":")), encoding="utf-8")
-    z3 = pd.read_csv(find("zip3_county.csv"), dtype=str); z3 = {r.zip3: r.county_fips for r in z3.itertuples() if r.county_fips in counties}
-    (docs_dir() / "zip3_county.json").write_text(json.dumps(dict(sorted(z3.items())), separators=(",", ":")), encoding="utf-8")
     z["county"] = z.zcta.map(zc); z = z[z.county.isin(counties) & z.lat.notna()]
     center_src = "Census ZCTA internal points"
     try:
@@ -66,7 +65,7 @@ def main():
     out = {"meta": {"built": str(date.today()), "zctas": len(zcta), "sitepoints": len(pts), "road_factor": 1.2, "road_factor_note": road_note, "zcta_centers": center_src,
                     "registry_pull": D["meta"]["pull"], "trials": D["meta"]["trials"]}, "zcta": zcta, "sp": pts}
     s = json.dumps(out, separators=(",", ":")); (docs_dir() / "find_data.js").write_text("window.FIND=" + s + ";", encoding="utf-8")
-    print("find_data.js KB", len(s) // 1024, "| ZCTAs", len(zcta), "| site points", len(pts), "| ZIP centers:", center_src, "| zip3 prefixes", len(z3))
+    print("find_data.js KB", len(s) // 1024, "| ZCTAs", len(zcta), "| site points", len(pts), "| ZIP centers:", center_src)
 
 
 if __name__ == "__main__":
