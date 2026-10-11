@@ -167,7 +167,11 @@ def nci_summary(path="data/ref/nci_centers.csv"):
 # Method changes that move the published figures (newest last). tract_metrics_us.py stamps METHOD_VERSION into
 # national_metrics_v3.json, and every archived pull keeps that file, so the release gate does not mistake a change of
 # method for a broken refresh, and the "Recent changes" tab says which rows were calculated differently.
-# Add an entry (and so bump the version) whenever a change to the pipeline is expected to move the headline shares.
+# Add an entry (and so bump the version) whenever a change to the pipeline is expected to move the headline shares, in the
+# same commit as the change. An entry registered only after a refresh has already used the new rules also names that pull
+# in "first_pull" (the pull's UTC date, as in its fetch_log.json): that pull and every later one count as calculated with the
+# new method although their files carry the older stamp (method_of below). Version 4 is such an entry: the rules of
+# 10 October 2026 were first used by the pull of 11 October, whose files say version 3.
 # ---------------------------------------------------------------------------
 METHOD_CHANGES = [
     {"version": 1, "date": "2026-09-09", "note": "First national release."},
@@ -190,5 +194,26 @@ METHOD_CHANGES = [
         "On the same registry data (Sep 30, 2026) the telemedicine, ZIP and screening rules moved the national figures as follows: "
         "none within 60 miles 3.8% to 4.2%; fewer than 20 trials within 60 miles 11.8% to 12.0%; counties with any trial 848 to 833; "
         "distances to broad menus and NCI centers did not move. The wider search then added trials without moving these shares.")},
+    {"version": 4, "date": "2026-10-10", "first_pull": "2026-10-11", "note": (
+        "Where a registry row is counted and drawn. A row whose ZIP code has no Census area (a PO box or a hospital's own ZIP) took the county of the ZIP's first three digits "
+        "even when its own city lay in another county, and was drawn at that county's center: 58 rows sat 43 to 251 miles from their city "
+        "(31 Tawas City, Michigan rows in Tuscola County; Liberal, Kansas in Morton County; Pueblo in Conejos County, Colorado; Omaha in Lincoln County, Nebraska; Dallas in Cass County, Texas). "
+        "The row's own city now decides the county and the row is drawn there; one spelling rule for city names (Saint/St., Fort/Ft., Lexington-Fayette, Nashville-Davidson) puts 21 more rows at their city. "
+        "A trial for spread from a named cancer (to the brain, liver or peritoneum) is classified with that cancer (6 trials), and leptomeningeal disease counts as cancer "
+        "(NCT07814352, which was in the Oct 5 pull but appears among the trials newly listed between Oct 5 and Oct 9). "
+        "First used for the registry data of Oct 9, 2026 (pulled Oct 11). On the same registry data (Oct 5, 2026) these rules moved 194 site rows of 100 trials to another county "
+        "and changed the trial count of 69 counties (Tuscola, Michigan 31 to 2; Iosco 0 to 31; Midland 1 to 12; Washtenaw 233 to 240; Stanly, North Carolina 2 to 9; "
+        "Union, New Jersey 29 to 36; Pueblo, Colorado and Hudson, New Jersey 19 to 20); counties with any trial 838 to 833; "
+        "none within 60 road-miles 4.2% to 4.3% (76,538 more residents 55+: 92 census tracts around Texarkana, North Platte, the San Luis Valley, northeast Alabama "
+        "and the Oklahoma Panhandle lost a trial that existed only at a misplaced point, and 17 tracts gained one); fewer than 20 trials within 60 road-miles 12.0%, unchanged; "
+        "distances to broad menus and NCI centers did not move. The registry's own changes between Oct 5 and Oct 9 moved no one across 'none within 60 road-miles' "
+        "and added 57,428 residents 55+ to 'fewer than 20' (still 12.0%).")},
 ]
 METHOD_VERSION = METHOD_CHANGES[-1]["version"]
+
+
+def method_of(stamp, pull_date):
+    """The method version a pull was calculated with: the version stamped in its national_metrics_v3.json, or the newest
+    METHOD_CHANGES entry whose first_pull is on or before the pull's date (YYYY-MM-DD...), whichever is later."""
+    late = [m["version"] for m in METHOD_CHANGES if m.get("first_pull") and str(pull_date)[:10] >= m["first_pull"]]
+    return max([int(stamp or 1)] + late)
