@@ -1,10 +1,10 @@
 # Validation — National Cancer Trial Access Map v3
 
-Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (graph version 2); ACS 2023 5-year; State Cancer Profiles 2018–2022. Checks re-run by `validate_v3.py` on 2026-10-11 (UTC).
+Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (graph version 2); ACS 2024 5-year; State Cancer Profiles 2019-2023. Checks re-run by `validate_v3.py` on 2026-10-11 (UTC).
 
 | Check | Result | Pass | Context |
 |---|---|---|---|
-| Tract pop 55+ sums equal county ACS totals (3,143 counties) | 0 mismatches; tract total 100,019,672 = county total 100,019,672 | ✓ | Exact after raking Suffolk NY (×1.03856) and Ulster NY (×None): ACS publishes fewer tracts than the 2020 geography in Suffolk (371 of 385 in the 2023 release); the absent tracts' 18,235 residents are in no tract row. Connecticut counties are ACS-2023 tract sums on legacy counties (replaces 2021 PEP). |
+| Tract pop 55+ sums equal county ACS totals (3,143 counties) | 0 mismatches; tract total 100,019,672 = county total 100,019,672 | ✓ | Exact after raking Suffolk NY (×1.03856; 18,651 residents 55+ in tracts ACS does not publish). Connecticut counties are ACS 2024 5-year tract sums on legacy counties. |
 | State tract sums equal state county sums (51) | 0 mismatches | ✓ |  |
 | District pop 55+ total vs tract total | 100,019,672 vs 100,019,672 (difference +0) | ✓ | per-district integer rounding; 3 zero-population water tracts have no district row |
 | Every tract's district shares sum to 1.000 | 0 of 84,394 tracts off | ✓ |  |
@@ -28,8 +28,8 @@ Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (g
 | Cancer-type classifier: same-session self-consistency read of 50 sampled trials (NOT independent validation) | 50/50 agree | ✓ | The builder re-read titles/conditions; this checks the rules were applied as intended, not that the rules are right. The 200-trial file qc_cancer_type_sample_200.csv is left for a blind hand check. |
 | Cancer-type classifier: multi-cancer bucket and unclassified share reported | 28.1% multi/basket ({'multiple named cancers': 614, 'unspecified solid / hematologic': 460, 'basket with a named cohort': 36, 'unspecified (title)': 10, 'multiple named cancers (title/keywords)': 6, 'title names additional cancers': 1}); 0.6% unclassified | ✓ |  |
 | Cancer burden: county counts vs state-published counts (all sites, 50 states) | median |diff| 0.01%, max 1.27% (state 02) | ✓ | Alaska's max reflects the 2019 Chugach/Copper River split not in the registry file |
-| Cancer burden: county sum vs source's own US line (all sites) | 1,871,438 of 1,872,272 avg annual cases (100.0%) | ✓ | shortfall = counties the source suppresses or does not release (Kansas withheld all its counties through the 2018-2022 release). External headline: CDC USCS reports about 1.8 M new cases per year (2021: ~1.78 M) — consistent in magnitude; cdc.gov was not reachable to fetch the exact figure |
-| Cancer burden: 'not available for this state' vs small-number flag kept distinct | KS = not_available_state (None counties); small numbers 130; source-suppressed 11; absent from source 2 | ✓ | Indiana IS present in this release (the prompt expected it absent) |
+| Cancer burden: county sum vs source's own US line (all sites) | 1,871,438 of 1,872,272 avg annual cases (100.0%) | ✓ | shortfall = counties the source suppresses or does not release (Kansas withheld all its counties through the 2018-2022 release; none is withheld in the current release). External headline: CDC USCS reports about 1.8 M new cases per year (2021: ~1.78 M) — consistent in magnitude; cdc.gov was not reachable to fetch the exact figure |
+| Cancer burden: 'not available for this state' vs small-number flag kept distinct | withheld by state: 0 counties; small numbers 130; source-suppressed 11; absent from source 2 | ✓ | Indiana IS present in this release (the prompt expected it absent) |
 | Cancer deaths: county counts vs state-published counts (all sites) | median |diff| 0.01%, max 2.21% (state 02) | ✓ | Alaska's max reflects the 2019 Chugach/Copper River split |
 | Cancer deaths: county sum vs source's own US line (all sites) | 609,725 of 609,828 avg annual deaths (100.0%) | ✓ |  |
 | Cancer deaths: every county has a record; the high-mortality & low-access count matches a recount | 3143 counties; recount 477 vs summary 477; cut-off 172.6 per 100,000 (2020-2024) | ✓ |  |

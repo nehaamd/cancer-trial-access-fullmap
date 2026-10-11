@@ -1,4 +1,4 @@
-"""Connecticut fix for the ACS context layers: county_covariates.csv (from build_covariates.py) is keyed on ACS 2023 county rows,
+"""Connecticut fix for the ACS context layers: county_covariates.csv (from build_covariates.py) is keyed on ACS county rows (config.ACS_YEAR),
 which for Connecticut are the nine planning regions (091xx). The map, ZIP and population files use the eight legacy counties, so
 the four household layers were silently missing for all of Connecticut. This aggregates the tract-level ACS 5-year (config.ACS_YEAR) tables
 (B17001 poverty, B27001 insurance, B28002 internet, B08201 vehicles) to legacy counties via the 6-digit tract code (see build_tracts_us.py)

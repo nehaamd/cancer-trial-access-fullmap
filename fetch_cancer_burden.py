@@ -4,7 +4,7 @@ One request per cancer site (parameterised URL, all US counties in one response)
   ok                      rate published
   small_numbers           rate published but average annual count < 16 (our reliability threshold; shown with a caution, never hidden)
   suppressed_source       source suppressed the rate ("*": fewer than 16 records in the 5-year period)
-  not_available_state     source carries the row but no data ("[P1 note]": state law prohibits county-level release) — Kansas
+  not_available_state     source carries the row but no data ("[P1 note]": state law prohibits county-level release) — Kansas through 2018-2022; none in 2019-2023
   not_available_county    county in our geography but absent from the source (e.g. Alaska's 2019 Chugach / Copper River split)
 Outputs: data/ref/cancer_incidence_county.csv (long), data/ref/cancer_incidence_state.csv, data/ref/cancer_burden_log.json
 """

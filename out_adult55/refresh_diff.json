@@ -1,24 +1,24 @@
 {
   "summary": {
-    "previous_pull": "2026-10-11T18:42:11Z",
+    "previous_pull": "2026-10-11T02:41:02Z",
     "current_pull": "2026-10-11T18:42:11Z",
     "previous_registry_data": "2026-10-09T09:00:05",
     "current_registry_data": "2026-10-09T09:00:05",
-    "trials_previous": 4013,
+    "trials_previous": 4007,
     "trials_current": 4013,
-    "trials_new": 0,
+    "trials_new": 6,
     "trials_no_longer_listed": 0,
     "field_changes": 0,
-    "recruiting_sites_previous": 54062,
+    "recruiting_sites_previous": 54035,
     "recruiting_sites_current": 54062,
     "sites_new_at_existing_trials": 0,
     "sites_removed_at_existing_trials": 0,
-    "sites_of_new_trials": 0,
+    "sites_of_new_trials": 27,
     "sites_of_removed_trials": 0,
-    "counties_with_changed_trial_count": 0,
+    "counties_with_changed_trial_count": 22,
     "counties_crossing_a_menu_threshold": 0,
     "method_version": 6,
-    "previous_method_version": 5
+    "previous_method_version": 4
   },
   "history": [
     {
@@ -69,17 +69,6 @@
       "pull": "2026-10-11",
       "registry_data": "2026-10-09",
       "trials": 4013,
-      "method": 5,
-      "l20": 12.0,
-      "z60": 4.4,
-      "g60b": 38.1,
-      "g60n": 43.7,
-      "medn": 48.0
-    },
-    {
-      "pull": "2026-10-11",
-      "registry_data": "2026-10-09",
-      "trials": 4013,
       "method": 6,
       "l20": 12.0,
       "z60": 4.3,
@@ -114,13 +103,189 @@
     {
       "version": 6,
       "date": "2026-10-11",
-      "note": "Not a change of method: the yearly sources were updated. Residents 55+ and household figures now come from the ACS 2020-2024 5-year release (was 2019-2023), and cancer incidence from State Cancer Profiles 2019-2023 (was 2018-2022), which for the first time includes Kansas counties. Measured on the same registry data (Oct 9, 2026) and the same rules: residents 55+ 98,596,429 to 100,019,672; fewer than 20 trials within 60 road-miles 12.0% (11.88 to 11.98 million people); none within 60 road-miles 4.4% to 4.3% (4.31 to 4.34 million); beyond 60 road-miles of a broad menu 38.1% to 38.0%; of an NCI center 43.7% (unchanged); no state moved more than half a point and no district a full point. Counties with a published or small-numbers incidence rate 3,026 to 3,130 (Kansas); high-incidence, low-access counties 495 to 492."
+      "note": "Not a change of method: the yearly sources were updated. Residents 55+ and household figures now come from the ACS 2020-2024 5-year release (was 2019-2023), and cancer incidence from State Cancer Profiles 2019-2023 (was 2018-2022), which, unlike the 2018-2022 release, includes Kansas counties. Measured on the same registry data (Oct 9, 2026) and the same rules: residents 55+ 98,596,429 to 100,019,672; fewer than 20 trials within 60 road-miles 12.0% (11.88 to 11.98 million people); none within 60 road-miles 4.4% to 4.3% (4.31 to 4.34 million); beyond 60 road-miles of a broad menu 38.1% to 38.0%; of an NCI center 43.7% (unchanged); no state moved more than half a point; no district's share beyond 60 road-miles moved a full point before rounding (AZ-9 and TX-36 show 1.0 after rounding), and in VA-9 the share living in a county with no trial site rose 80.2% to 84.0%. The new population split moved ZIP 24273 from Wise County to Norton city, Virginia, so two Ballad Health Norton site listings now count in Norton (0 to 2) instead of Wise (2 to 0). Counties with a published or small-numbers incidence rate 3,026 to 3,130 (Kansas); high-incidence, low-access counties 495 to 492."
     }
   ],
-  "new_trials": [],
+  "new_trials": [
+    {
+      "nct_id": "NCT05786040",
+      "title": "Tafasitamab and Rituximab for Front-Line Treatment of Post-Transplant Lymphoproliferative Disorder",
+      "phase": "PHASE2",
+      "sponsor": "Timothy Voorhees",
+      "n_us_sites": 4
+    },
+    {
+      "nct_id": "NCT06158854",
+      "title": "A Study to Assess Change in Disease Activity and Adverse Events (AE)s in Adult Participants With Immunoglobulin Light Chain (AL) Amyloidosis Receiving Etentamig (ABBV-383) as an Intravenous (IV) Infusion",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "AbbVie",
+      "n_us_sites": 12
+    },
+    {
+      "nct_id": "NCT06420167",
+      "title": "DapagliFLOzin in Renal AL Amyloidosis (FLORAL)",
+      "phase": "PHASE2",
+      "sponsor": "Barbara Ann Karmanos Cancer Institute",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT06800963",
+      "title": "ResQ133A-NMIBC: Intravesical Recombinant Mycobacterium (rMBCG) in Participants With NMIBC Eligible to Receive Intravesical Tice BCG",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "ImmunityBio, Inc.",
+      "n_us_sites": 5
+    },
+    {
+      "nct_id": "NCT07104331",
+      "title": "SARC046: A Phase II Trial of Nab-Sirolimus in Patients With Progressing or Symptomatic Epithelioid Hemangioendothelioma",
+      "phase": "PHASE2",
+      "sponsor": "Sarcoma Alliance for Research through Collaboration",
+      "n_us_sites": 4
+    },
+    {
+      "nct_id": "NCT07257055",
+      "title": "Phase 2 Study of BTKi-Rituximab Induction Followed by Glofitamab Consolidation in High Risk Untreated MCL Patients - WINDOW-4 Study",
+      "phase": "PHASE2",
+      "sponsor": "M.D. Anderson Cancer Center",
+      "n_us_sites": 1
+    }
+  ],
   "no_longer_listed": [],
   "field_changes": [],
   "sites_new_at_existing_trials": [],
   "sites_removed_at_existing_trials": [],
-  "county_changes": []
+  "county_changes": [
+    {
+      "county": "New York County, New York",
+      "fips": "36061",
+      "from": 958,
+      "to": 960
+    },
+    {
+      "county": "Suffolk County, Massachusetts",
+      "fips": "25025",
+      "from": 636,
+      "to": 638
+    },
+    {
+      "county": "Davidson County, Tennessee",
+      "fips": "47037",
+      "from": 551,
+      "to": 553
+    },
+    {
+      "county": "Harris County, Texas",
+      "fips": "48201",
+      "from": 1052,
+      "to": 1053
+    },
+    {
+      "county": "Franklin County, Ohio",
+      "fips": "39049",
+      "from": 402,
+      "to": 403
+    },
+    {
+      "county": "King County, Washington",
+      "fips": "53033",
+      "from": 386,
+      "to": 387
+    },
+    {
+      "county": "Miami-Dade County, Florida",
+      "fips": "12086",
+      "from": 368,
+      "to": 369
+    },
+    {
+      "county": "Salt Lake County, Utah",
+      "fips": "49035",
+      "from": 331,
+      "to": 332
+    },
+    {
+      "county": "DeKalb County, Georgia",
+      "fips": "13089",
+      "from": 313,
+      "to": 314
+    },
+    {
+      "county": "Wayne County, Michigan",
+      "fips": "26163",
+      "from": 301,
+      "to": 302
+    },
+    {
+      "county": "Olmsted County, Minnesota",
+      "fips": "27109",
+      "from": 298,
+      "to": 299
+    },
+    {
+      "county": "Multnomah County, Oregon",
+      "fips": "41051",
+      "from": 271,
+      "to": 272
+    },
+    {
+      "county": "Santa Clara County, California",
+      "fips": "06085",
+      "from": 219,
+      "to": 220
+    },
+    {
+      "county": "Milwaukee County, Wisconsin",
+      "fips": "55079",
+      "from": 217,
+      "to": 218
+    },
+    {
+      "county": "Middlesex County, New Jersey",
+      "fips": "34023",
+      "from": 205,
+      "to": 206
+    },
+    {
+      "county": "Orange County, North Carolina",
+      "fips": "37135",
+      "from": 182,
+      "to": 183
+    },
+    {
+      "county": "Mecklenburg County, North Carolina",
+      "fips": "37119",
+      "from": 161,
+      "to": 162
+    },
+    {
+      "county": "St. Louis County, Missouri",
+      "fips": "29189",
+      "from": 160,
+      "to": 161
+    },
+    {
+      "county": "Sacramento County, California",
+      "fips": "06067",
+      "from": 158,
+      "to": 159
+    },
+    {
+      "county": "Oakland County, Michigan",
+      "fips": "26125",
+      "from": 117,
+      "to": 118
+    },
+    {
+      "county": "Forsyth County, North Carolina",
+      "fips": "37067",
+      "from": 110,
+      "to": 111
+    },
+    {
+      "county": "Montgomery County, Pennsylvania",
+      "fips": "42091",
+      "from": 65,
+      "to": 66
+    }
+  ]
 }

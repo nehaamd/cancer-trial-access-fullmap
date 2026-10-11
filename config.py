@@ -257,10 +257,11 @@ METHOD_CHANGES = [
         "Other / unclassified 38 to 23 trials; the multi-cancer share 27.9% to 28.1%. No county's trial count and no access share moves from the screen or the classifier.")},
     {"version": 6, "date": "2026-10-11", "note": (
         "Not a change of method: the yearly sources were updated. Residents 55+ and household figures now come from the ACS 2020-2024 "
-        "5-year release (was 2019-2023), and cancer incidence from State Cancer Profiles 2019-2023 (was 2018-2022), which for the first "
-        "time includes Kansas counties. Measured on the same registry data (Oct 9, 2026) and the same rules: residents 55+ 98,596,429 to 100,019,672; "
+        "5-year release (was 2019-2023), and cancer incidence from State Cancer Profiles 2019-2023 (was 2018-2022), which, unlike "
+        "the 2018-2022 release, includes Kansas counties. Measured on the same registry data (Oct 9, 2026) and the same rules: residents 55+ 98,596,429 to 100,019,672; "
         "fewer than 20 trials within 60 road-miles 12.0% (11.88 to 11.98 million people); none within 60 road-miles 4.4% to 4.3% (4.31 to 4.34 million); "
-        "beyond 60 road-miles of a broad menu 38.1% to 38.0%; of an NCI center 43.7% (unchanged); no state moved more than half a point and no district a full point. "
+        "beyond 60 road-miles of a broad menu 38.1% to 38.0%; of an NCI center 43.7% (unchanged); no state moved more than half a point; no district's share beyond 60 road-miles moved a full point before rounding (AZ-9 and TX-36 show 1.0 after rounding), and in VA-9 the share living in a county with no trial site rose 80.2% to 84.0%. "
+        "The new population split moved ZIP 24273 from Wise County to Norton city, Virginia, so two Ballad Health Norton site listings now count in Norton (0 to 2) instead of Wise (2 to 0). "
         "Counties with a published or small-numbers incidence rate 3,026 to 3,130 (Kansas); high-incidence, low-access counties 495 to 492.")},
 ]
 METHOD_VERSION = METHOD_CHANGES[-1]["version"]

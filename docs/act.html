@@ -114,7 +114,7 @@
       <div class="card"><ul class="facts">${F.map(f => `<li class="${f.hot ? 'hot' : ''}"><div class="num">${f.num}<small>${f.unit}</small></div><div><p>${f.text}</p>${f.cmp ? `<p class="cmp">${f.cmp}</p>` : ''}</div></li>`).join('')}</ul></div>
       <div class="two"><div><h3 class="h4">Sources</h3><ul class="small">
         <li>ClinicalTrials.gov (NIH/NLM), registry data of ${SITE.nice(E.dataDate())}: recruiting interventional treatment trials with a US site, open to some adults 55+.</li>
-        <li>US Census Bureau: American Community Survey 2023 five-year estimates (residents 55+ by census tract); TIGER/Line 2025 roads; 2020 tract-to-district relationship file (${esc(M.plan)}).</li>
+        <li>US Census Bureau: American Community Survey ${M.acs_span ? esc(SITE.period(M.acs_span)) + ' ' : ''}five-year estimates (residents 55+ by census tract); TIGER/Line 2025 roads; 2020 tract-to-district relationship file (${esc(M.plan)}).</li>
         <li>USDA Economic Research Service: Rural-Urban Continuum Codes, 2023.</li>
         <li>NCI/CDC State Cancer Profiles: cancer death rates ${esc(SITE.period(M.mort_period))} and incidence ${esc(SITE.period(M.inc_period))}, age-adjusted.</li>
         <li>National Cancer Institute: list of NCI-designated cancer centers.</li>
