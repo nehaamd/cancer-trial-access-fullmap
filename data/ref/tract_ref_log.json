@@ -8,7 +8,7 @@
   "tract_cd_rows": 89398,
   "tracts_without_cd_row": 3,
   "cd_count": 436,
-  "connecticut_pop55_old_pep2021": {
+  "connecticut_pop55_acs_planning_regions": {
     "09110": 308613,
     "09120": 98179,
     "09130": 67399,
@@ -19,7 +19,7 @@
     "09180": 95006,
     "09190": 199659
   },
-  "connecticut_pop55_new_acs2023_tract_sum": {
+  "connecticut_pop55_acs_tract_sum_legacy_counties": {
     "09001": 302511,
     "09003": 281279,
     "09005": 73300,

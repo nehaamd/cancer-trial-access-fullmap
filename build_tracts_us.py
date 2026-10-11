@@ -4,10 +4,10 @@ centroids (2024 Gazetteer), and the Census 2020 tract -> 119th Congressional Dis
 Outputs
   data/ref/tracts_us.csv       tract (11-digit 2020 GEOID, legacy-county form for Connecticut), county_fips, lat, lon, pop55
   data/ref/tract_cd119.csv     tract, cd_geoid, share (land-area share of the tract inside the district; ZZ = unassigned water dropped)
-  data/ref/county_pop55.csv    rewritten: Connecticut's 8 legacy counties now = sum of ACS 2023 tract pop 55+ (was 2021 PEP)
+  data/ref/county_pop55.csv    rewritten: Connecticut's 8 legacy counties now = sum of ACS tract pop 55+ (config.ACS_YEAR release)
   data/ref/tract_ref_log.json
 
-Connecticut: ACS 2023 and the 2024 gazetteer key CT tracts by planning region (county codes 091xx); the 2020 relationship
+Connecticut: ACS (2022 release onward) and the 2024 gazetteer key CT tracts by planning region (county codes 091xx); the 2020 relationship
 file keys them by legacy county (090xx). The 6-digit tract code is unchanged, so tracts are re-keyed to the legacy form
 through the relationship file (the mapping is checked to be one-to-one before use).
 """
@@ -79,13 +79,13 @@ def main():
     cp = cp[cp.county_fips.str[:2] != "09"]
     cp = pd.concat([cp, pd.DataFrame({"county_fips": ct_new.index, "pop55": ct_new.values})], ignore_index=True).sort_values("county_fips")
     cp.to_csv(REF / "county_pop55.csv", index=False)
-    log["connecticut_pop55_old_pep2021"] = ct_old; log["connecticut_pop55_new_acs2023_tract_sum"] = {k: int(v) for k, v in ct_new.items()}
+    log["connecticut_pop55_acs_planning_regions"] = ct_old; log["connecticut_pop55_acs_tract_sum_legacy_counties"] = {k: int(v) for k, v in ct_new.items()}
     # --- reconciliation: tract sums vs county ACS (must be exact outside CT; CT is exact by construction) ---
     cs = tr.groupby("county_fips").pop55.sum(); cpi = cp.set_index("county_fips").pop55
     diff = (cs.reindex(cpi.index).fillna(0) - cpi)
     log["counties_with_tract_sum_mismatch_before_raking"] = int((diff != 0).sum())
     log["mismatch_before_raking"] = {k: {"tract_sum": int(cs.get(k, 0)), "county_acs": int(cpi[k]), "diff": int(v)} for k, v in diff[diff != 0].items()}
-    # Known source inconsistency (ACS 2023 publishes fewer tracts than the 2020 geography in Suffolk and Ulster NY; the absent
+    # Known source inconsistency (ACS can publish fewer tracts than the 2020 geography in a county — Suffolk and Ulster NY in the 2023 release, Suffolk only in 2024; the absent
     # tracts' residents are in no tract row). Rake those counties' tract populations to the county total so district weights
     # sum to the county ACS figure; assumes the unlocated residents are distributed like the located ones. Factor is logged.
     log["raking_factors"] = {}

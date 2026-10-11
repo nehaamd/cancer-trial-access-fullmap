@@ -3,7 +3,7 @@ location ("site point") in the web payload. Nothing here is personal data; the p
 
 Sources: zcta_popcenter.csv (each ZIP code area's population-weighted center, build_zcta_centers.py; where that file is absent the
 Census internal points of zcta_pop55.csv are used, which for a large or split ZIP code lie far from its residents: 183 miles for
-99701, Fairbanks), zcta_pop55.csv (the ZIP code areas and their residents 55+, ACS 2023), zcta_county.csv (ZCTA -> county, the same
+99701, Fairbanks), zcta_pop55.csv (the ZIP code areas and their residents 55+, config.ACS_YEAR release), zcta_county.csv (ZCTA -> county, the same
 file the pipeline uses to assign sites to counties), sitepoints.csv (site-point coordinates from route_sites_us.py; order = DATA.SP).
 
 Writes docs/find_data.js (window.FIND): {zcta: {"77030": [lat, lon, "48201"], ...}, sp: [[lat, lon, "48201"], ...], meta},

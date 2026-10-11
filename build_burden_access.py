@@ -42,6 +42,8 @@ def docs_dir():
 
 
 def main():
+    # the incidence period, from the fetched release (the title ends ", 2019-2023"), never typed in
+    INC_PERIOD = json.loads(find("cancer_burden_log.json").read_text())["sites"]["all"]["title"].split(", ")[-1]
     tr = pd.read_csv(find("tract_access.csv"), dtype={"tract": str, "county_fips": str})
     tcols = [c for c in tr.columns if c.startswith("t60_cancer_type_") and not c.endswith(("_multi", "_other_unclassified"))]
     types = [c.replace("t60_cancer_type_", "") for c in tcols]
@@ -78,7 +80,7 @@ def main():
     summary = {"nat": summ(df), "states": {st: summ(d) for st, d in df.groupby("st")}}
     meta = {"built": str(date.today()), "types": types, "medians": medians, "median_all": med, "definition": {"high_burden": "all-sites age-adjusted incidence above the median of counties with a published rate",
             "low_access": "at least 50% of residents 55+ have fewer than 20 recruiting trials within 60 road-miles (with a cancer type selected: no trial for that cancer within 60 road-miles)", "threshold_pct": 50, "menu_threshold": 20},
-            "site2type": SITE2TYPE, "note": "County shares are population-weighted over census tracts; incidence is NCI/CDC State Cancer Profiles 2018-2022. The two measures are cross-tabulated, never combined into a score."}
+            "site2type": SITE2TYPE, "note": f"County shares are population-weighted over census tracts; incidence is NCI/CDC State Cancer Profiles {INC_PERIOD}. The two measures are cross-tabulated, never combined into a score."}
     out = {"meta": meta, "county": county, "summary": summary}
     s = json.dumps(out, separators=(",", ":")); (docs_dir() / "burden.js").write_text("window.BURDEN=" + s + ";", encoding="utf-8")
     n = summary["nat"]
