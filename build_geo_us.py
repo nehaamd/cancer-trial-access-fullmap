@@ -31,14 +31,19 @@ PLACE_SUFFIXES = (" city and borough", " municipality and borough", " city (bala
 def build_gazetteer(s=None):
     """Census Gazetteer places -> data/ref/gazetteer_places.csv. `place` is the lower-case matching key (used to place registry sites
     by city name); `name` is the same name as the Census writes it, for display in the map's search box; `aland_sqmi` (land area)
-    lets build_places.py estimate how big a place is. The legal suffix ("city", "town", "CDP", ...) is removed from both names."""
+    lets build_places.py estimate how big a place is. The legal suffix ("city", "town", "CDP", ...) is removed from both names.
+    A place with no legal description (LSAD 00) carries none in its name, so only a "(balance)" ending is removed there: "Carson
+    City" is the name of Nevada's capital, not "Carson" + "city" (the key was "carson" until October 2026, so "Carson City, NV"
+    matched nothing)."""
     s = s or requests.Session(); r = s.get(U["gaz"], timeout=300); r.raise_for_status()
     zf = zipfile.ZipFile(io.BytesIO(r.content)); name = [n for n in zf.namelist() if n.endswith(".txt")][0]
     gaz = []
     for row in csv.DictReader(io.StringIO(zf.read(name).decode("utf-8-sig")), delimiter="\t"):
         row = {k.strip(): (v.strip() if isinstance(v, str) else v) for k, v in row.items()}
         disp = row["NAME"]; nm = disp.lower()
-        for suf in PLACE_SUFFIXES:   # in order, each at most once: a compound suffix is listed before its parts
+        if row.get("LSAD") == "00" and not nm.endswith("(balance)"): suffixes = ()
+        else: suffixes = PLACE_SUFFIXES
+        for suf in suffixes:   # in order, each at most once: a compound suffix is listed before its parts
             if nm.endswith(suf): nm = nm[: -len(suf)]; disp = disp[: len(nm)]
         gaz.append({"state": row["USPS"], "place": nm, "geoid": row["GEOID"], "lat": float(row["INTPTLAT"]), "lon": float(row["INTPTLONG"]), "name": disp, "aland_sqmi": float(row.get("ALAND_SQMI") or 0)})
     w(REF / "gazetteer_places.csv", gaz); return len(gaz)
