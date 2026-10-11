@@ -67,7 +67,7 @@
     "inc_all_rate": 450.1,
     "inc_all_rate_pop_covered_pct": 99.1,
     "inc_all_cases_sum": 1803830,
-    "method_version": 3
+    "method_version": 4
   },
   "invariants": {
     "tract_pool_monotone_violations": 0,
