@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recruiting cancer trials by county · Cancer Trial Access Map</title>
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -24,7 +26,6 @@
 <meta name="twitter:description" content="Every recruiting cancer treatment trial and facility in a US county, with phase, sponsor and cancer-type filters.">
 <meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
 <style>
-  :root{--paper:#FAF8F4;--card:#FFFFFF;--ink:#1B2430;--ink-2:#4B5563;--ink-3:#5F6B78;--rule:#E4E1DA;--rule-2:#CFCBC2;--navy:#0B3C5D;--gulf:#3F7FB5; --link:#2F6A9C;--rust:#8A3B1E;--warn:#7A5A00;--r:8px;--shadow:0 1px 2px rgba(27,36,48,.06),0 4px 14px rgba(27,36,48,.05);--fs-0:.8rem;--fs-1:.92rem;--fs-3:1.3rem;--fs-4:1.75rem}
   *{box-sizing:border-box} html,body{margin:0;color:var(--ink);font-family:"Source Sans 3","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.45;background:var(--paper);-webkit-font-smoothing:antialiased}
   a{color:var(--link)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
   header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding:1.1rem 1.5rem .8rem;border-bottom:1px solid var(--rule);background:var(--card)}
@@ -37,7 +38,7 @@
   h2{font-size:var(--fs-3);font-weight:650;margin:1.2rem 0 .4rem;letter-spacing:-.015em}
   .filters{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;padding:.55rem 1.5rem;border-bottom:1px solid var(--rule);background:var(--card);font-size:var(--fs-0);color:var(--ink-2)}
   .filters b{color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em;font-size:var(--fs-0);margin-right:.2rem} .filters .state{margin-left:auto;color:var(--warn)}
-  main{padding:1rem 1.5rem 2rem;max-width:1400px}
+  .tmain{padding:1rem 1.5rem 2rem;max-width:1400px}
   table{border-collapse:collapse;width:100%;font-size:var(--fs-1);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)} th,td{text-align:left;vertical-align:top;padding:.5rem .65rem;border-top:1px solid var(--rule)} th{font-weight:650;color:var(--ink-2);font-size:var(--fs-0);text-transform:uppercase;letter-spacing:.05em;border-top:0;background:var(--paper)}
   tbody tr:hover{background:#FCFBF8} td.n{white-space:nowrap;font-variant-numeric:tabular-nums} td.f{color:var(--ink-2);font-size:var(--fs-0)}
   .empty{padding:1.2rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:60ch;background:var(--card)}
@@ -45,7 +46,8 @@
   @media (max-width:800px){ul.fac{columns:1} td.f{display:none}}
 @media (max-width:640px){
   table{display:block;overflow-x:auto;max-width:100%}
-  section,main,.wrap{min-width:0;max-width:100%}
+  section,main,.tmain,.wrap{min-width:0;max-width:100%}
+  .filters label{display:inline-flex;align-items:center;gap:.3rem;min-height:40px}   /* 40 px touch targets */
   .kpi>div{min-width:0;flex:1 1 100%}
   a,.mono,.nct{overflow-wrap:anywhere} th{white-space:nowrap}   /* long tokens wrap; table columns do not shrink to one letter per line */
 }
@@ -56,6 +58,7 @@
   <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
   <nav class="hdr-links" aria-label="Pages"><a href="index.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="index.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="index.html#methods">Methods &amp; data</a></nav>
 </header>
+<main>
 <div class="page-head"><p class="kicker">County trial list</p><h1 id="title">Trials in this county</h1><p id="sub"></p></div>
 <div class="filters" role="group" aria-label="Trial filters">
   <span><b>Phase</b> <span id="f-phase"></span></span>
@@ -63,11 +66,13 @@
   <span><b>Cancer type</b> <select id="f-type" class="sel" aria-label="Cancer type"><option value="">All types</option></select></span>
   <span class="state" id="f-state"></span>
 </div>
-<main>
+<div class="tmain">
   <div id="list"></div>
   <h2 id="fac-h">Recruiting facilities listed in this county</h2>
   <p id="fac-note" style="color:var(--ink-2);font-size:var(--fs-0);max-width:70ch"></p>
   <ul class="fac" id="fac"></ul>
+</div>
+<p class="about-est" style="max-width:1040px;margin:0 auto 1rem;padding:.6rem var(--gutter);font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 </main>
 <script src="site.js"></script>
 <script src="data.js"></script>
@@ -88,7 +93,7 @@
       const stn = (D.states.find(x => x[0] === st) || [st, st])[1], one = tele.length === 1;
       tp.innerHTML = `<b>Telemedicine.</b> ${tele.length} more trial${one ? ' enrolls' : 's enroll'} remotely in ${stn.replace(/&/g, '&amp;').replace(/</g, '&lt;')}: ${tele.slice(0, 5).map(j => `<a href="https://clinicaltrials.gov/study/${T.id[j]}" target="_blank" rel="noopener">${T.id[j]}</a>`).join(', ')}${tele.length > 5 ? ` and ${tele.length - 5} more` : ''}. The registry lists a telemedicine or virtual service for ${one ? 'it' : 'them'}, not a clinic, so ${one ? 'it is' : 'they are'} not in the list below.`; pp.after(tp); } }
   const filt = { phase: new Set(T.phases), sponsor: new Set(T.sponsors.map(s => s[0])), type: (new URLSearchParams(location.search).get('type') || '') };
-  const fp = document.getElementById('f-phase'); T.phases.forEach(p => { const l = document.createElement('label'); const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.phase.add(p) : filt.phase.delete(p); render(); }); l.appendChild(i); l.appendChild(document.createTextNode(p === 'NA' ? 'N/A (not phased)' : 'Phase ' + p)); fp.appendChild(l); });
+  const fp = document.getElementById('f-phase'); T.phases.forEach(p => { const l = document.createElement('label'); const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.phase.add(p) : filt.phase.delete(p); render(); }); l.appendChild(i); l.appendChild(document.createTextNode(SITE.phaseLabel(p))); fp.appendChild(l); });
   const fs = document.getElementById('f-sponsor'); T.sponsors.forEach(([k, lab]) => { const l = document.createElement('label'); const i = document.createElement('input'); i.type = 'checkbox'; i.checked = true; i.addEventListener('change', () => { i.checked ? filt.sponsor.add(k) : filt.sponsor.delete(k); render(); }); l.appendChild(i); l.appendChild(document.createTextNode(lab)); fs.appendChild(l); });
   const ft = document.getElementById('f-type'); T.types.forEach(([k, lab]) => { const o = document.createElement('option'); o.value = k; o.textContent = lab; ft.appendChild(o); }); ft.value = filt.type; ft.addEventListener('change', () => { filt.type = ft.value; render(); });
   const ftNote = document.createElement('span'); ftNote.style.color = 'var(--ink-3)'; ftNote.textContent = ' (includes basket trials naming this cancer)'; ft.after(ftNote);
@@ -107,7 +112,7 @@
         const named = SITE.namedCancers(T, j);
         const ct = T.ct[j] < 0 || !T.types[T.ct[j]] ? '' : T.types[T.ct[j]][1];
         const ctCell = T.multi[j] ? `${esc(ct)}<br><span class="f">${named.length ? 'names ' + esc(named.join(', ')) : 'cancers not named individually'}</span>` : esc(ct);
-        return `<tr><td class="n"><a href="https://clinicaltrials.gov/study/${T.id[j]}" target="_blank" rel="noopener">${T.id[j]}</a></td><td>${esc(T.title[j])}</td><td class="n">${T.phases[T.ph[j]] === 'NA' ? 'Not phased' : T.phases[T.ph[j]]}</td><td>${spLabel[T.sponsors[T.sp[j]][0]]}</td><td>${ctCell}</td><td class="f">${esc(facs.join('; '))}</td></tr>`; }).join('') + '</tbody></table>';
+        return `<tr><td class="n"><a href="https://clinicaltrials.gov/study/${T.id[j]}" target="_blank" rel="noopener">${T.id[j]}</a></td><td>${esc(T.title[j])}</td><td class="n">${SITE.phaseLabel(T.phases[T.ph[j]])}</td><td>${spLabel[T.sponsors[T.sp[j]][0]]}</td><td>${ctCell}</td><td class="f">${esc(facs.join('; '))}</td></tr>`; }).join('') + '</tbody></table>';
   }
   const fl = document.getElementById('fac'); const facs = c.fac || [];
   document.getElementById('fac-note').textContent = facs.length ? 'Facility names are as listed in the registry (one line per distinct name in this county); a hospital with two spellings may appear twice.' : 'No facilities listed.';
@@ -121,7 +126,6 @@
   render();
 })();
 </script>
-<p class="about-est" style="max-width:1040px;margin:0 auto 1rem;padding:.6rem var(--gutter);font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 <footer class="site">
 <p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="findings.html">Key findings</a><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script>try{document.querySelectorAll('[data-site-date]').forEach(function(e){e.textContent=SITE.stampText(window.DATA.meta);});}catch(e){}</script>
