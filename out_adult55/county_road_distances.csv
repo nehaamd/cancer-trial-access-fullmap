@@ -195,7 +195,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 06013,Contra Costa,06,51,1.9,1,"San Francisco, California",31.8,0.64,"Contra Costa, California",0.0,0.0,UCSF Helen Diller Family Comprehensive Cancer Center,38.2,0.77,30.6,0.0,31.7,UCSF Helen Diller Family Comprehensive Cancer Center
 06015,Del Norte,06,0,0.0,1,"Multnomah, Oregon",325.7,6.51,"Lane, Oregon",218.2,4.53,Knight Cancer Institute (OHSU),320.0,6.23,320.1,196.9,318.7,UC Davis Comprehensive Cancer Center
 06017,El Dorado,06,14,0.7,1,"Sacramento, California",39.0,0.72,"Placer, California",36.8,0.9,UC Davis Comprehensive Cancer Center,43.2,0.79,42.6,29.4,47.7,UC Davis Comprehensive Cancer Center
-06019,Fresno,06,41,0.6,1,"Santa Clara, California",150.1,2.98,"Fresno, California",0.0,0.0,Stanford Cancer Institute,167.9,3.41,149.7,0.0,169.3,Stanford Cancer Institute
+06019,Fresno,06,42,0.6,1,"Santa Clara, California",150.1,2.98,"Fresno, California",0.0,0.0,Stanford Cancer Institute,167.9,3.41,149.7,0.0,169.3,Stanford Cancer Institute
 06021,Glenn,06,0,1.3,1,"Sacramento, California",104.4,1.77,"Yolo, California",86.2,1.44,UC Davis Comprehensive Cancer Center,100.2,1.7,104.5,93.0,103.5,UC Davis Comprehensive Cancer Center
 06023,Humboldt,06,1,3.8,1,"San Francisco, California",297.5,6.45,"Sonoma, California",243.5,5.38,UC Davis Comprehensive Cancer Center,294.3,6.05,250.6,213.2,248.4,UC Davis Comprehensive Cancer Center
 06025,Imperial,06,0,1.7,1,"San Diego, California",118.3,2.04,"San Diego, California",118.3,2.04,Moores Comprehensive Cancer Center (UCSD),124.8,2.15,109.6,109.6,118.2,Moores Comprehensive Cancer Center (UCSD)
@@ -204,7 +204,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 06031,Kings,06,0,3.4,1,"Santa Clara, California",172.3,3.2,"Fresno, California",40.2,0.76,Stanford Cancer Institute,190.1,3.63,169.7,40.8,189.6,Stanford Cancer Institute
 06033,Lake,06,0,0.7,1,"San Francisco, California",109.3,2.38,"Sonoma, California",79.7,1.65,UCSF Helen Diller Family Comprehensive Cancer Center,112.4,2.49,93.7,46.8,89.7,UC Davis Comprehensive Cancer Center
 06035,Lassen,06,0,0.7,1,"Sacramento, California",200.7,4.09,"Washoe, Nevada",81.8,1.6,UC Davis Comprehensive Cancer Center,196.5,4.02,159.7,87.2,162.7,UC Davis Comprehensive Cancer Center
-06037,Los Angeles,06,950,0.2,1,"Los Angeles, California",0.0,0.0,"Los Angeles, California",0.0,0.0,USC Norris Comprehensive Cancer Center,3.0,0.09,0.0,0.0,2.7,USC Norris Comprehensive Cancer Center
+06037,Los Angeles,06,949,0.2,1,"Los Angeles, California",0.0,0.0,"Los Angeles, California",0.0,0.0,USC Norris Comprehensive Cancer Center,3.0,0.09,0.0,0.0,2.7,USC Norris Comprehensive Cancer Center
 06039,Madera,06,3,1.2,1,"Santa Clara, California",127.3,2.64,"Fresno, California",41.7,0.73,Stanford Cancer Institute,145.2,3.07,127.7,29.2,146.6,Stanford Cancer Institute
 06041,Marin,06,36,0.9,1,"San Francisco, California",22.0,0.47,"Marin, California",0.0,0.0,UCSF Helen Diller Family Comprehensive Cancer Center,18.9,0.41,20.1,0.0,19.4,UCSF Helen Diller Family Comprehensive Cancer Center
 06043,Mariposa,06,0,1.3,1,"Sacramento, California",140.8,3.17,"Fresno, California",75.8,1.62,UC Davis Comprehensive Cancer Center,141.8,3.2,125.9,65.1,128.6,UC Davis Comprehensive Cancer Center
@@ -219,16 +219,16 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 06061,Placer,06,60,1.5,1,"Sacramento, California",32.3,0.6,"Placer, California",0.0,0.0,UC Davis Comprehensive Cancer Center,28.1,0.52,25.4,0.0,29.2,UC Davis Comprehensive Cancer Center
 06063,Plumas,06,0,3.7,1,"Sacramento, California",160.0,3.47,"Washoe, Nevada",78.1,1.57,UC Davis Comprehensive Cancer Center,155.7,3.4,122.5,75.3,125.4,UC Davis Comprehensive Cancer Center
 06065,Riverside,06,49,4.0,1,"San Diego, California",69.0,1.35,"Riverside, California",0.0,0.0,Chao Family Comprehensive Cancer Center (UC Irvine),68.4,1.32,54.2,0.0,55.1,Chao Family Comprehensive Cancer Center (UC Irvine)
-06067,Sacramento,06,158,0.7,1,"Sacramento, California",0.0,0.0,"Sacramento, California",0.0,0.0,UC Davis Comprehensive Cancer Center,5.5,0.11,0.0,0.0,5.1,UC Davis Comprehensive Cancer Center
+06067,Sacramento,06,159,0.7,1,"Sacramento, California",0.0,0.0,"Sacramento, California",0.0,0.0,UC Davis Comprehensive Cancer Center,5.5,0.11,0.0,0.0,5.1,UC Davis Comprehensive Cancer Center
 06069,San Benito,06,0,0.7,1,"Santa Clara, California",47.9,0.95,"Santa Clara, California",47.9,0.95,Stanford Cancer Institute,65.7,1.38,51.6,51.6,70.7,Stanford Cancer Institute
 06071,San Bernardino,06,58,0.1,1,"Orange, California",56.7,0.98,"San Bernardino, California",0.0,0.0,City of Hope,39.4,0.68,51.2,0.0,41.3,City of Hope
-06073,San Diego,06,255,0.1,1,"San Diego, California",0.0,0.0,"San Diego, California",0.0,0.0,Moores Comprehensive Cancer Center (UCSD),12.7,0.25,0.0,0.0,8.6,Moores Comprehensive Cancer Center (UCSD)
-06075,San Francisco,06,251,1.0,1,"San Francisco, California",0.0,0.0,"San Francisco, California",0.0,0.0,UCSF Helen Diller Family Comprehensive Cancer Center,9.3,0.21,0.0,0.0,1.4,UCSF Helen Diller Family Comprehensive Cancer Center
+06073,San Diego,06,256,0.1,1,"San Diego, California",0.0,0.0,"San Diego, California",0.0,0.0,Moores Comprehensive Cancer Center (UCSD),12.7,0.25,0.0,0.0,8.6,Moores Comprehensive Cancer Center (UCSD)
+06075,San Francisco,06,252,1.0,1,"San Francisco, California",0.0,0.0,"San Francisco, California",0.0,0.0,UCSF Helen Diller Family Comprehensive Cancer Center,9.3,0.21,0.0,0.0,1.4,UCSF Helen Diller Family Comprehensive Cancer Center
 06077,San Joaquin,06,25,0.4,1,"Sacramento, California",54.7,0.91,"San Joaquin, California",0.0,0.0,UC Davis Comprehensive Cancer Center,50.5,0.84,53.6,0.0,52.9,UC Davis Comprehensive Cancer Center
 06079,San Luis Obispo,06,33,1.9,1,"Santa Clara, California",179.2,3.44,"San Luis Obispo, California",0.0,0.0,Jonsson Comprehensive Cancer Center (UCLA),184.5,3.82,183.6,0.0,184.5,Jonsson Comprehensive Cancer Center (UCLA)
 06081,San Mateo,06,44,0.5,1,"San Francisco, California",19.6,0.42,"San Mateo, California",0.0,0.0,Stanford Cancer Institute,14.2,0.3,17.5,0.0,15.3,Stanford Cancer Institute
 06083,Santa Barbara,06,35,0.6,1,"Los Angeles, California",124.3,2.64,"Santa Barbara, California",0.0,0.0,Jonsson Comprehensive Cancer Center (UCLA),116.5,2.41,135.8,0.0,123.2,Jonsson Comprehensive Cancer Center (UCLA)
-06085,Santa Clara,06,219,0.1,1,"Santa Clara, California",0.0,0.0,"Santa Clara, California",0.0,0.0,Stanford Cancer Institute,19.4,0.41,0.0,0.0,19.9,Stanford Cancer Institute
+06085,Santa Clara,06,220,0.1,1,"Santa Clara, California",0.0,0.0,"Santa Clara, California",0.0,0.0,Stanford Cancer Institute,19.4,0.41,0.0,0.0,19.9,Stanford Cancer Institute
 06087,Santa Cruz,06,16,0.2,1,"Santa Clara, California",32.4,0.75,"Santa Clara, California",32.4,0.75,Stanford Cancer Institute,44.9,1.01,27.4,27.4,40.2,Stanford Cancer Institute
 06089,Shasta,06,0,1.0,1,"Sacramento, California",170.5,3.25,"Yolo, California",154.5,2.54,UC Davis Comprehensive Cancer Center,166.3,3.18,176.7,160.4,176.6,UC Davis Comprehensive Cancer Center
 06091,Sierra,06,0,0.1,1,"Sacramento, California",132.9,2.31,"Washoe, Nevada",57.7,1.09,UC Davis Comprehensive Cancer Center,128.7,2.24,106.0,40.6,110.1,UC Davis Comprehensive Cancer Center
@@ -239,14 +239,14 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 06101,Sutter,06,0,0.3,1,"Sacramento, California",52.8,1.08,"Placer, California",43.5,0.93,UC Davis Comprehensive Cancer Center,48.6,1.01,50.1,37.9,50.1,UC Davis Comprehensive Cancer Center
 06103,Tehama,06,0,0.1,1,"Sacramento, California",134.5,2.23,"Yolo, California",116.3,1.9,UC Davis Comprehensive Cancer Center,130.2,2.16,139.0,124.3,138.6,UC Davis Comprehensive Cancer Center
 06105,Trinity,06,0,3.4,1,"Sacramento, California",222.6,4.57,"Yolo, California",206.5,3.85,UC Davis Comprehensive Cancer Center,218.3,4.5,203.0,185.4,201.7,UC Davis Comprehensive Cancer Center
-06107,Tulare,06,2,3.0,1,"Los Angeles, California",179.7,3.34,"Fresno, California",54.7,0.99,Jonsson Comprehensive Cancer Center (UCLA),175.3,3.2,193.3,53.9,188.8,Jonsson Comprehensive Cancer Center (UCLA)
+06107,Tulare,06,1,3.0,1,"Los Angeles, California",179.7,3.34,"Fresno, California",54.7,0.99,Jonsson Comprehensive Cancer Center (UCLA),175.3,3.2,193.3,53.9,188.8,Jonsson Comprehensive Cancer Center (UCLA)
 06109,Tuolumne,06,0,0.6,1,"Sacramento, California",90.9,1.98,"Stanislaus, California",57.3,1.18,UC Davis Comprehensive Cancer Center,91.9,2.0,84.7,50.7,87.9,UC Davis Comprehensive Cancer Center
 06111,Ventura,06,8,0.8,1,"Los Angeles, California",52.3,1.13,"Los Angeles, California",52.3,1.13,Jonsson Comprehensive Cancer Center (UCLA),44.5,0.9,55.4,55.4,42.4,Jonsson Comprehensive Cancer Center (UCLA)
 06113,Yolo,06,24,2.6,1,"Sacramento, California",30.8,0.57,"Yolo, California",0.0,0.0,UC Davis Comprehensive Cancer Center,26.6,0.5,22.0,0.0,17.4,UC Davis Comprehensive Cancer Center
 06115,Yuba,06,10,2.9,1,"Sacramento, California",49.5,1.03,"Placer, California",40.2,0.87,UC Davis Comprehensive Cancer Center,45.3,0.95,47.5,31.5,48.3,UC Davis Comprehensive Cancer Center
-08001,Adams,08,207,0.6,1,"Adams, Colorado",0.0,0.0,"Adams, Colorado",0.0,0.0,University of Colorado Cancer Center,19.5,0.43,0.0,0.0,12.0,University of Colorado Cancer Center
+08001,Adams,08,210,0.6,1,"Adams, Colorado",0.0,0.0,"Adams, Colorado",0.0,0.0,University of Colorado Cancer Center,19.5,0.43,0.0,0.0,12.0,University of Colorado Cancer Center
 08003,Alamosa,08,0,0.9,1,"Denver, Colorado",219.8,4.48,"Pueblo, Colorado",124.7,2.41,UNM Comprehensive Cancer Center,202.7,4.02,195.4,103.5,199.5,University of Colorado Cancer Center
-08005,Arapahoe,08,55,0.5,1,"Denver, Colorado",9.4,0.21,"Arapahoe, Colorado",0.0,0.0,University of Colorado Cancer Center,8.8,0.16,9.6,0.0,8.3,University of Colorado Cancer Center
+08005,Arapahoe,08,52,0.5,1,"Denver, Colorado",9.4,0.21,"Arapahoe, Colorado",0.0,0.0,University of Colorado Cancer Center,8.8,0.16,9.6,0.0,8.3,University of Colorado Cancer Center
 08007,Archuleta,08,0,0.4,1,"Denver, Colorado",281.8,5.76,"Bernalillo, New Mexico",207.3,4.21,UNM Comprehensive Cancer Center,209.4,4.33,248.4,179.5,181.4,UNM Comprehensive Cancer Center
 08009,Baca,08,0,1.1,1,"Denver, Colorado",257.1,4.99,"Pueblo, Colorado",175.3,3.71,University of Colorado Cancer Center,250.7,4.86,250.5,157.2,247.4,University of Colorado Cancer Center
 08011,Bent,08,0,1.2,1,"Denver, Colorado",195.3,3.73,"Pueblo, Colorado",90.1,1.95,University of Colorado Cancer Center,199.0,3.77,178.9,97.9,175.7,University of Colorado Cancer Center
@@ -317,9 +317,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 09013,Tolland,09,0,1.0,1,"Providence, Rhode Island",54.0,1.17,"Hartford, Connecticut",22.4,0.52,Yale Cancer Center,53.1,1.14,51.1,22.4,56.2,Yale Cancer Center
 09015,Windham,09,1,1.3,1,"Providence, Rhode Island",33.3,0.74,"New London, Connecticut",30.6,0.71,Yale Cancer Center,68.3,1.57,33.9,30.7,70.9,Dana-Farber/Harvard Cancer Center
 10001,Kent,10,5,0.2,1,"Philadelphia, Pennsylvania",78.9,1.86,"Sussex, Delaware",40.6,0.95,Abramson Cancer Center (Penn),73.5,1.71,69.8,41.3,67.6,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
-10003,New Castle,10,86,0.3,1,"Philadelphia, Pennsylvania",37.6,0.94,"New Castle, Delaware",0.0,0.0,Abramson Cancer Center (Penn),32.2,0.8,41.5,0.0,36.2,Abramson Cancer Center (Penn)
+10003,New Castle,10,87,0.3,1,"Philadelphia, Pennsylvania",37.6,0.94,"New Castle, Delaware",0.0,0.0,Abramson Cancer Center (Penn),32.2,0.8,41.5,0.0,36.2,Abramson Cancer Center (Penn)
 10005,Sussex,10,32,1.7,1,"Baltimore, Maryland",101.9,2.32,"Sussex, Delaware",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,100.5,2.29,99.0,0.0,96.7,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
-11001,District of Columbia,11,207,0.3,1,District of Columbia,0.0,0.0,District of Columbia,0.0,0.0,Georgetown Lombardi Comprehensive Cancer Center,6.3,0.15,0.0,0.0,5.0,Georgetown Lombardi Comprehensive Cancer Center
+11001,District of Columbia,11,209,0.3,1,District of Columbia,0.0,0.0,District of Columbia,0.0,0.0,Georgetown Lombardi Comprehensive Cancer Center,6.3,0.15,0.0,0.0,5.0,Georgetown Lombardi Comprehensive Cancer Center
 12001,Alachua,12,80,0.5,1,"Duval, Florida",74.8,1.65,"Alachua, Florida",0.0,0.0,University of Florida Health Cancer Institute,5.1,0.12,76.4,0.0,4.0,University of Florida Health Cancer Institute
 12003,Baker,12,0,1.0,1,"Duval, Florida",35.5,0.76,"Duval, Florida",35.5,0.76,Mayo Clinic Cancer Center – Jacksonville,46.4,1.0,40.4,40.4,51.8,Mayo Clinic Cancer Center – Jacksonville
 12005,Bay,12,1,0.1,1,"Duval, Florida",263.1,4.81,"Mobile, Alabama",169.2,3.46,University of Florida Health Cancer Institute,235.6,5.01,285.5,183.2,243.7,University of Florida Health Cancer Institute
@@ -362,7 +362,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 12081,Manatee,12,8,1.1,1,"Hillsborough, Florida",42.2,0.94,"Sarasota, Florida",25.3,0.46,Moffitt Cancer Center,50.1,1.13,41.5,24.2,47.8,Moffitt Cancer Center
 12083,Marion,12,19,1.0,1,"Orange, Florida",71.1,1.46,"Alachua, Florida",43.5,0.83,University of Florida Health Cancer Institute,40.8,0.91,73.7,47.9,44.7,University of Florida Health Cancer Institute
 12085,Martin,12,5,0.1,1,"Broward, Florida",73.9,1.19,"Palm Beach, Florida",41.4,0.69,Sylvester Comprehensive Cancer Center (Miami),97.1,1.7,83.8,44.5,112.7,Sylvester Comprehensive Cancer Center (Miami)
-12086,Miami-Dade,12,368,0.1,1,"Miami-Dade, Florida",0.0,0.0,"Miami-Dade, Florida",0.0,0.0,Sylvester Comprehensive Cancer Center (Miami),7.4,0.15,0.0,0.0,7.3,Sylvester Comprehensive Cancer Center (Miami)
+12086,Miami-Dade,12,369,0.1,1,"Miami-Dade, Florida",0.0,0.0,"Miami-Dade, Florida",0.0,0.0,Sylvester Comprehensive Cancer Center (Miami),7.4,0.15,0.0,0.0,7.3,Sylvester Comprehensive Cancer Center (Miami)
 12087,Monroe,12,0,4.5,1,"Miami-Dade, Florida",117.9,2.48,"Miami-Dade, Florida",117.9,2.48,Sylvester Comprehensive Cancer Center (Miami),122.1,2.56,110.4,110.4,116.2,Sylvester Comprehensive Cancer Center (Miami)
 12089,Nassau,12,0,0.7,1,"Duval, Florida",23.7,0.51,"Duval, Florida",23.7,0.51,Mayo Clinic Cancer Center – Jacksonville,31.4,0.58,25.7,25.7,30.7,Mayo Clinic Cancer Center – Jacksonville
 12091,Okaloosa,12,0,1.7,1,"Jefferson, Alabama",236.1,4.81,"Mobile, Alabama",119.5,2.06,O'Neal Comprehensive Cancer Center (UAB),235.3,4.86,246.5,115.4,245.8,O'Neal Comprehensive Cancer Center (UAB)
@@ -430,7 +430,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 13083,Dade,13,0,0.3,1,"Fulton, Georgia",119.1,2.8,"Hamilton, Tennessee",26.9,0.62,Winship Cancer Institute (Emory),123.2,2.89,115.1,26.7,120.7,Winship Cancer Institute (Emory)
 13085,Dawson,13,0,0.3,1,"Fulton, Georgia",49.8,0.98,"Fulton, Georgia",49.8,0.98,Winship Cancer Institute (Emory),52.4,1.13,51.2,49.2,52.5,Winship Cancer Institute (Emory)
 13087,Decatur,13,0,0.1,1,"Duval, Florida",201.0,3.75,"Alachua, Florida",179.7,3.62,University of Florida Health Cancer Institute,183.5,3.81,216.1,186.1,190.1,University of Florida Health Cancer Institute
-13089,DeKalb,13,312,0.1,1,"DeKalb, Georgia",0.0,0.0,"DeKalb, Georgia",0.0,0.0,Winship Cancer Institute (Emory),9.7,0.25,0.0,0.0,5.4,Winship Cancer Institute (Emory)
+13089,DeKalb,13,314,0.1,1,"DeKalb, Georgia",0.0,0.0,"DeKalb, Georgia",0.0,0.0,Winship Cancer Institute (Emory),9.7,0.25,0.0,0.0,5.4,Winship Cancer Institute (Emory)
 13091,Dodge,13,0,0.6,1,"DeKalb, Georgia",140.2,2.83,"Richmond, Georgia",118.4,2.61,Winship Cancer Institute (Emory),139.8,2.76,150.6,127.5,153.7,Winship Cancer Institute (Emory)
 13093,Dooly,13,0,0.4,1,"DeKalb, Georgia",128.3,2.31,"Coweta, Georgia",126.5,2.65,Winship Cancer Institute (Emory),128.0,2.25,138.2,120.2,139.9,Winship Cancer Institute (Emory)
 13095,Dougherty,13,9,0.1,1,"Fulton, Georgia",171.4,4.13,"Coweta, Georgia",146.3,3.3,Winship Cancer Institute (Emory),169.6,4.02,183.8,154.6,184.4,Winship Cancer Institute (Emory)
@@ -446,7 +446,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 13115,Floyd,13,0,0.3,1,"Fulton, Georgia",64.3,1.57,"Cobb, Georgia",49.7,1.24,Winship Cancer Institute (Emory),68.4,1.67,64.5,50.2,70.3,Winship Cancer Institute (Emory)
 13117,Forsyth,13,1,0.4,1,"Fulton, Georgia",31.1,0.63,"Fulton, Georgia",31.1,0.63,Winship Cancer Institute (Emory),33.8,0.77,33.9,33.9,35.0,Winship Cancer Institute (Emory)
 13119,Franklin,13,0,1.5,1,"DeKalb, Georgia",80.7,1.56,"Oconee, South Carolina",33.3,0.74,Winship Cancer Institute (Emory),83.3,1.45,87.7,30.1,92.0,Winship Cancer Institute (Emory)
-13121,Fulton,13,166,0.5,1,"Fulton, Georgia",0.0,0.0,"Fulton, Georgia",0.0,0.0,Winship Cancer Institute (Emory),7.4,0.21,0.0,0.0,5.8,Winship Cancer Institute (Emory)
+13121,Fulton,13,165,0.5,1,"Fulton, Georgia",0.0,0.0,"Fulton, Georgia",0.0,0.0,Winship Cancer Institute (Emory),7.4,0.21,0.0,0.0,5.8,Winship Cancer Institute (Emory)
 13123,Gilmer,13,0,0.2,1,"Fulton, Georgia",69.7,1.45,"Cobb, Georgia",59.6,1.23,Winship Cancer Institute (Emory),72.8,1.52,70.1,59.8,73.8,Winship Cancer Institute (Emory)
 13125,Glascock,13,0,0.4,1,"DeKalb, Georgia",115.9,2.1,"Richmond, Georgia",42.2,0.92,Winship Cancer Institute (Emory),122.7,2.31,122.2,41.8,127.3,Winship Cancer Institute (Emory)
 13127,Glynn,13,0,0.1,1,"Duval, Florida",71.0,1.31,"Chatham, Georgia",68.8,1.2,Mayo Clinic Cancer Center – Jacksonville,78.7,1.37,75.6,73.9,77.3,Mayo Clinic Cancer Center – Jacksonville
@@ -741,10 +741,10 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 18083,Knox,18,0,1.6,1,"Jefferson, Kentucky",116.5,2.59,"Effingham, Illinois",82.4,1.7,IU Simon Comprehensive Cancer Center,116.0,2.53,122.0,79.3,122.4,IU Simon Comprehensive Cancer Center
 18085,Kosciusko,18,0,0.6,1,"Marion, Indiana",115.9,2.49,"Allen, Indiana",41.5,0.9,University of Chicago Comprehensive Cancer Center,108.3,2.32,124.1,46.1,118.0,University of Chicago Comprehensive Cancer Center
 18087,LaGrange,18,0,0.6,1,"Kent, Michigan",108.4,2.01,"Allen, Indiana",49.6,1.04,University of Michigan Rogel Cancer Center,119.1,2.49,110.6,49.0,119.6,University of Michigan Rogel Cancer Center
-18089,Lake,18,60,2.4,1,"Cook, Illinois",42.3,0.95,"Lake, Indiana",0.0,0.0,University of Chicago Comprehensive Cancer Center,29.5,0.66,36.3,0.0,25.0,University of Chicago Comprehensive Cancer Center
+18089,Lake,18,61,2.4,1,"Cook, Illinois",42.3,0.95,"Lake, Indiana",0.0,0.0,University of Chicago Comprehensive Cancer Center,29.5,0.66,36.3,0.0,25.0,University of Chicago Comprehensive Cancer Center
 18091,LaPorte,18,1,0.1,1,"Cook, Illinois",63.8,1.33,"Porter, Indiana",23.3,0.45,University of Chicago Comprehensive Cancer Center,51.0,1.03,63.0,21.8,51.8,University of Chicago Comprehensive Cancer Center
 18093,Lawrence,18,0,0.1,1,"Jefferson, Kentucky",73.6,1.62,"Jefferson, Kentucky",73.6,1.62,IU Simon Comprehensive Cancer Center,78.0,1.74,75.0,75.0,80.5,IU Simon Comprehensive Cancer Center
-18095,Madison,18,0,0.8,1,"Marion, Indiana",40.2,0.85,"Hamilton, Indiana",23.0,0.51,IU Simon Comprehensive Cancer Center,39.1,0.83,38.2,24.0,39.7,IU Simon Comprehensive Cancer Center
+18095,Madison,18,1,0.8,1,"Marion, Indiana",40.2,0.85,"Hamilton, Indiana",23.0,0.51,IU Simon Comprehensive Cancer Center,39.1,0.83,38.2,24.0,39.7,IU Simon Comprehensive Cancer Center
 18097,Marion,18,164,0.2,1,"Marion, Indiana",0.0,0.0,"Marion, Indiana",0.0,0.0,IU Simon Comprehensive Cancer Center,1.7,0.03,0.0,0.0,1.7,IU Simon Comprehensive Cancer Center
 18099,Marshall,18,0,0.1,1,"Cook, Illinois",96.8,2.11,"Porter, Indiana",49.3,1.07,University of Chicago Comprehensive Cancer Center,84.0,1.81,101.8,53.5,90.1,University of Chicago Comprehensive Cancer Center
 18101,Martin,18,0,0.4,1,"Jefferson, Kentucky",78.1,1.73,"Jefferson, Kentucky",78.1,1.73,IU Simon Comprehensive Cancer Center,102.4,2.23,85.4,85.4,101.7,IU Simon Comprehensive Cancer Center
@@ -1194,7 +1194,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 23029,Washington,23,0,2.0,1,"Suffolk, Massachusetts",307.0,6.45,"Penobscot, Maine",110.0,2.52,Dana-Farber/Harvard Cancer Center,307.2,6.44,301.4,78.5,301.8,Dana-Farber/Harvard Cancer Center
 23031,York,23,17,1.6,1,"Suffolk, Massachusetts",86.2,1.58,"Cumberland, Maine",33.3,0.58,Dana-Farber/Harvard Cancer Center,86.3,1.58,93.9,33.6,93.5,Dana-Farber/Harvard Cancer Center
 24001,Allegany,24,13,0.6,1,"Allegheny, Pennsylvania",104.5,2.49,"Monongalia, West Virginia",67.6,1.45,UPMC Hillman Cancer Center,102.6,2.26,99.8,72.6,98.2,UPMC Hillman Cancer Center
-24003,Anne Arundel,24,38,1.4,1,"Baltimore, Maryland",18.5,0.43,"Anne Arundel, Maryland",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,17.0,0.38,20.2,0.0,18.6,UM Greenebaum Comprehensive Cancer Center
+24003,Anne Arundel,24,39,1.4,1,"Baltimore, Maryland",18.5,0.43,"Anne Arundel, Maryland",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,17.0,0.38,20.2,0.0,18.6,UM Greenebaum Comprehensive Cancer Center
 24005,Baltimore,24,50,0.3,1,"Baltimore, Maryland",4.3,0.09,"Baltimore, Maryland",0.0,0.0,UM Greenebaum Comprehensive Cancer Center,6.0,0.13,4.5,0.0,6.1,UM Greenebaum Comprehensive Cancer Center
 24009,Calvert,24,0,0.4,1,District of Columbia,44.7,1.02,"Prince George's, Maryland",39.2,0.87,Georgetown Lombardi Comprehensive Cancer Center,49.2,1.12,42.5,37.1,46.6,Georgetown Lombardi Comprehensive Cancer Center
 24011,Caroline,24,0,0.2,1,"Baltimore, Maryland",63.7,1.47,"Sussex, Delaware",38.7,0.85,UM Greenebaum Comprehensive Cancer Center,62.4,1.44,62.5,36.7,60.2,Sidney Kimmel Comprehensive Cancer Center (Johns Hopkins)
@@ -1227,9 +1227,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 25015,Hampshire,25,0,0.3,1,"New Haven, Connecticut",78.7,1.77,"Hartford, Connecticut",46.8,1.06,Yale Cancer Center,78.9,1.74,78.7,46.6,86.3,Yale Cancer Center
 25017,Middlesex,25,42,0.1,1,"Suffolk, Massachusetts",14.5,0.32,"Middlesex, Massachusetts",0.0,0.0,Dana-Farber/Harvard Cancer Center,12.6,0.31,14.3,0.0,12.5,Dana-Farber/Harvard Cancer Center
 25019,Nantucket,25,0,27.4,1,"Suffolk, Massachusetts",99.3,2.38,"Norfolk, Massachusetts",95.6,2.28,Dana-Farber/Harvard Cancer Center,99.8,2.39,97.6,94.8,109.3,Dana-Farber/Harvard Cancer Center
-25021,Norfolk,25,31,0.2,1,"Suffolk, Massachusetts",12.4,0.31,"Norfolk, Massachusetts",0.0,0.0,Dana-Farber/Harvard Cancer Center,14.1,0.34,11.9,0.0,12.3,Dana-Farber/Harvard Cancer Center
+25021,Norfolk,25,30,0.2,1,"Suffolk, Massachusetts",12.4,0.31,"Norfolk, Massachusetts",0.0,0.0,Dana-Farber/Harvard Cancer Center,14.1,0.34,11.9,0.0,12.3,Dana-Farber/Harvard Cancer Center
 25023,Plymouth,25,6,0.7,1,"Suffolk, Massachusetts",29.9,0.72,"Norfolk, Massachusetts",23.9,0.55,Dana-Farber/Harvard Cancer Center,30.4,0.72,29.3,23.2,30.9,Dana-Farber/Harvard Cancer Center
-25025,Suffolk,25,635,0.4,1,"Suffolk, Massachusetts",0.0,0.0,"Suffolk, Massachusetts",0.0,0.0,Dana-Farber/Harvard Cancer Center,2.4,0.05,0.0,0.0,1.9,Dana-Farber/Harvard Cancer Center
+25025,Suffolk,25,638,0.4,1,"Suffolk, Massachusetts",0.0,0.0,"Suffolk, Massachusetts",0.0,0.0,Dana-Farber/Harvard Cancer Center,2.4,0.05,0.0,0.0,1.9,Dana-Farber/Harvard Cancer Center
 25027,Worcester,25,53,0.1,1,"Providence, Rhode Island",39.1,0.86,"Worcester, Massachusetts",0.0,0.0,Dana-Farber/Harvard Cancer Center,39.0,0.83,42.9,0.0,43.0,Dana-Farber/Harvard Cancer Center
 26001,Alcona,26,0,0.9,1,"Oakland, Michigan",188.0,3.65,"Iosco, Michigan",48.0,1.11,University of Michigan Rogel Cancer Center,201.1,3.79,172.8,26.1,194.0,Karmanos Cancer Institute (Wayne State)
 26003,Alger,26,0,0.8,1,"Milwaukee, Wisconsin",280.3,5.79,"Delta, Michigan",54.4,1.14,UW Carbone Cancer Center,300.6,6.1,287.6,52.4,317.5,UW Carbone Cancer Center
@@ -1293,7 +1293,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 26119,Montmorency,26,0,0.7,1,"Oakland, Michigan",194.7,3.63,"Iosco, Michigan",94.6,2.04,University of Michigan Rogel Cancer Center,207.8,3.77,191.0,63.6,226.9,University of Michigan Rogel Cancer Center
 26121,Muskegon,26,25,0.5,1,"Kent, Michigan",43.3,0.74,"Muskegon, Michigan",0.0,0.0,University of Michigan Rogel Cancer Center,165.7,2.85,42.7,0.0,140.8,Robert H. Lurie Comprehensive Cancer Center (Northwestern)
 26123,Newaygo,26,0,1.7,1,"Kent, Michigan",43.6,0.97,"Muskegon, Michigan",39.2,0.82,University of Michigan Rogel Cancer Center,166.0,3.07,43.3,30.5,160.4,University of Michigan Rogel Cancer Center
-26125,Oakland,26,117,1.6,1,"Oakland, Michigan",0.0,0.0,"Oakland, Michigan",0.0,0.0,Karmanos Cancer Institute (Wayne State),24.0,0.52,0.0,0.0,25.2,Karmanos Cancer Institute (Wayne State)
+26125,Oakland,26,118,1.6,1,"Oakland, Michigan",0.0,0.0,"Oakland, Michigan",0.0,0.0,Karmanos Cancer Institute (Wayne State),24.0,0.52,0.0,0.0,25.2,Karmanos Cancer Institute (Wayne State)
 26127,Oceana,26,0,4.2,1,"Kent, Michigan",76.9,1.35,"Muskegon, Michigan",34.7,0.64,University of Michigan Rogel Cancer Center,199.3,3.46,69.1,32.7,164.7,Robert H. Lurie Comprehensive Cancer Center (Northwestern)
 26129,Ogemaw,26,2,0.1,1,"Oakland, Michigan",135.4,2.35,"Iosco, Michigan",35.4,0.75,University of Michigan Rogel Cancer Center,148.6,2.49,142.0,35.8,168.4,University of Michigan Rogel Cancer Center
 26131,Ontonagon,26,0,4.6,1,"Dane, Wisconsin",288.9,5.56,"Oneida, Wisconsin",102.7,2.24,UW Carbone Cancer Center,290.5,5.6,262.8,84.4,269.9,Masonic Cancer Center (Minnesota)
@@ -1312,7 +1312,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 26157,Tuscola,26,2,1.5,1,"Oakland, Michigan",67.7,1.46,"Saginaw, Michigan",31.5,0.69,Karmanos Cancer Institute (Wayne State),85.2,1.81,70.3,34.0,92.6,Karmanos Cancer Institute (Wayne State)
 26159,Van Buren,26,0,2.9,1,"Kent, Michigan",69.0,1.34,"Kalamazoo, Michigan",26.1,0.58,University of Michigan Rogel Cancer Center,122.5,2.21,62.5,25.5,103.8,Robert H. Lurie Comprehensive Cancer Center (Northwestern)
 26161,Washtenaw,26,240,0.7,1,"Washtenaw, Michigan",0.0,0.0,"Washtenaw, Michigan",0.0,0.0,University of Michigan Rogel Cancer Center,1.9,0.04,0.0,0.0,1.6,University of Michigan Rogel Cancer Center
-26163,Wayne,26,300,0.1,1,"Wayne, Michigan",0.0,0.0,"Wayne, Michigan",0.0,0.0,Karmanos Cancer Institute (Wayne State),9.8,0.22,0.0,0.0,10.3,Karmanos Cancer Institute (Wayne State)
+26163,Wayne,26,302,0.1,1,"Wayne, Michigan",0.0,0.0,"Wayne, Michigan",0.0,0.0,Karmanos Cancer Institute (Wayne State),9.8,0.22,0.0,0.0,10.3,Karmanos Cancer Institute (Wayne State)
 26165,Wexford,26,0,1.7,1,"Kent, Michigan",102.8,1.73,"Grand Traverse, Michigan",40.2,0.9,University of Michigan Rogel Cancer Center,194.8,3.62,112.1,29.6,199.1,University of Michigan Rogel Cancer Center
 27001,Aitkin,27,11,2.6,1,"Ramsey, Minnesota",134.0,2.72,"Crow Wing, Minnesota",42.9,0.92,Masonic Cancer Center (Minnesota),133.3,2.77,132.5,37.9,133.4,Masonic Cancer Center (Minnesota)
 27003,Anoka,27,70,1.7,1,"Ramsey, Minnesota",20.4,0.39,"Anoka, Minnesota",0.0,0.0,Masonic Cancer Center (Minnesota),19.7,0.45,18.9,0.0,18.3,Masonic Cancer Center (Minnesota)
@@ -1368,7 +1368,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 27103,Nicollet,27,0,1.6,1,"Hennepin, Minnesota",71.6,1.55,"Scott, Minnesota",50.8,1.1,Masonic Cancer Center (Minnesota),76.1,1.54,71.9,51.1,76.3,Masonic Cancer Center (Minnesota)
 27105,Nobles,27,11,0.2,1,"Minnehaha, South Dakota",57.2,0.92,"Minnehaha, South Dakota",57.2,0.92,Mayo Clinic Cancer Center – Rochester,178.4,2.88,64.4,64.4,182.0,Masonic Cancer Center (Minnesota)
 27107,Norman,27,0,0.9,1,"Hennepin, Minnesota",252.5,4.37,"Cass, North Dakota",50.6,1.06,Masonic Cancer Center (Minnesota),258.5,4.54,263.7,43.5,268.8,Masonic Cancer Center (Minnesota)
-27109,Olmsted,27,296,0.6,1,"Olmsted, Minnesota",0.0,0.0,"Olmsted, Minnesota",0.0,0.0,Mayo Clinic Cancer Center – Rochester,1.8,0.04,0.0,0.0,0.9,Mayo Clinic Cancer Center – Rochester
+27109,Olmsted,27,299,0.6,1,"Olmsted, Minnesota",0.0,0.0,"Olmsted, Minnesota",0.0,0.0,Mayo Clinic Cancer Center – Rochester,1.8,0.04,0.0,0.0,0.9,Mayo Clinic Cancer Center – Rochester
 27111,Otter Tail,27,0,5.2,1,"Hennepin, Minnesota",183.7,3.26,"Cass, North Dakota",91.9,1.7,Masonic Cancer Center (Minnesota),189.7,3.43,184.0,71.5,189.7,Masonic Cancer Center (Minnesota)
 27113,Pennington,27,10,0.2,1,"Hennepin, Minnesota",291.1,5.85,"Beltrami, Minnesota",94.4,1.97,Masonic Cancer Center (Minnesota),295.8,6.04,304.0,83.4,307.9,Masonic Cancer Center (Minnesota)
 27115,Pine,27,54,1.3,1,"Ramsey, Minnesota",76.6,1.26,"Pine, Minnesota",0.0,0.0,Masonic Cancer Center (Minnesota),82.4,1.37,86.9,0.0,89.7,Masonic Cancer Center (Minnesota)
@@ -1529,7 +1529,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 29087,Holt,29,0,0.3,1,"Johnson, Kansas",95.9,1.55,"Buchanan, Missouri",34.3,0.63,University of Kansas Cancer Center,86.6,1.47,100.3,36.2,92.9,University of Kansas Cancer Center
 29089,Howard,29,0,0.8,1,"Jackson, Missouri",116.9,2.03,"Boone, Missouri",30.0,0.63,University of Kansas Cancer Center,120.5,2.11,112.5,29.0,122.8,University of Kansas Cancer Center
 29091,Howell,29,0,1.2,1,"Shelby, Tennessee",189.9,3.98,"Phelps, Missouri",95.0,2.0,Siteman Cancer Center (WashU),195.7,3.8,181.8,95.8,184.9,Siteman Cancer Center (WashU)
-29093,Iron,29,1,2.2,1,"St. Louis, Missouri",100.1,2.1,"St. Francois, Missouri",41.7,0.92,Siteman Cancer Center (WashU),104.2,2.17,90.9,25.9,91.6,Siteman Cancer Center (WashU)
+29093,Iron,29,0,2.2,1,"St. Louis, Missouri",100.1,2.1,"St. Francois, Missouri",41.7,0.92,Siteman Cancer Center (WashU),104.2,2.17,90.9,25.9,91.6,Siteman Cancer Center (WashU)
 29095,Jackson,29,107,1.8,1,"Jackson, Missouri",0.0,0.0,"Jackson, Missouri",0.0,0.0,University of Kansas Cancer Center,13.0,0.34,0.0,0.0,11.3,University of Kansas Cancer Center
 29097,Jasper,29,0,0.1,1,"Johnson, Kansas",140.9,2.62,"Newton, Missouri",15.2,0.27,University of Kansas Cancer Center,150.4,2.58,150.1,17.3,160.1,University of Kansas Cancer Center
 29099,Jefferson,29,1,1.7,1,"St. Louis, Missouri",28.1,0.57,"St. Louis, Missouri",28.1,0.57,Siteman Cancer Center (WashU),32.3,0.64,25.8,25.8,27.2,Siteman Cancer Center (WashU)
@@ -1681,13 +1681,13 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 31049,Deuel,31,0,0.1,1,"Adams, Colorado",179.9,3.07,"Larimer, Colorado",174.2,3.65,University of Colorado Cancer Center,190.9,3.26,191.5,167.8,193.2,University of Colorado Cancer Center
 31051,Dixon,31,0,0.8,1,"Douglas, Nebraska",112.3,2.4,"Douglas, Nebraska",112.3,2.4,Fred & Pamela Buffett Cancer Center (UNMC),117.8,2.56,93.2,93.2,112.5,Fred & Pamela Buffett Cancer Center (UNMC)
 31053,Dodge,31,1,0.4,1,"Douglas, Nebraska",33.9,0.64,"Douglas, Nebraska",33.9,0.64,Fred & Pamela Buffett Cancer Center (UNMC),41.4,0.83,33.4,33.4,40.0,Fred & Pamela Buffett Cancer Center (UNMC)
-31055,Douglas,31,213,0.1,1,"Douglas, Nebraska",0.0,0.0,"Douglas, Nebraska",0.0,0.0,Fred & Pamela Buffett Cancer Center (UNMC),7.9,0.18,0.0,0.0,6.8,Fred & Pamela Buffett Cancer Center (UNMC)
+31055,Douglas,31,214,0.1,1,"Douglas, Nebraska",0.0,0.0,"Douglas, Nebraska",0.0,0.0,Fred & Pamela Buffett Cancer Center (UNMC),7.9,0.18,0.0,0.0,6.8,Fred & Pamela Buffett Cancer Center (UNMC)
 31057,Dundy,31,0,3.6,1,"Adams, Colorado",202.0,3.97,"Buffalo, Nebraska",168.5,3.51,University of Colorado Cancer Center,210.4,4.22,211.7,168.3,207.8,University of Colorado Cancer Center
 31059,Fillmore,31,0,0.4,1,"Douglas, Nebraska",112.4,2.28,"Hall, Nebraska",67.2,1.23,Fred & Pamela Buffett Cancer Center (UNMC),117.4,2.36,111.9,59.0,116.7,Fred & Pamela Buffett Cancer Center (UNMC)
 31061,Franklin,31,0,0.1,1,"Douglas, Nebraska",201.7,4.12,"Buffalo, Nebraska",47.5,1.02,Fred & Pamela Buffett Cancer Center (UNMC),206.8,4.21,202.0,46.4,207.2,Fred & Pamela Buffett Cancer Center (UNMC)
 31063,Frontier,31,0,3.8,1,"Douglas, Nebraska",264.3,5.42,"Buffalo, Nebraska",101.8,2.06,Fred & Pamela Buffett Cancer Center (UNMC),270.5,4.74,276.5,84.1,282.6,Fred & Pamela Buffett Cancer Center (UNMC)
 31065,Furnas,31,0,1.9,1,"Douglas, Nebraska",239.9,4.94,"Buffalo, Nebraska",77.5,1.62,Fred & Pamela Buffett Cancer Center (UNMC),245.0,5.02,256.7,67.7,262.5,Fred & Pamela Buffett Cancer Center (UNMC)
-31067,Gage,31,1,1.1,1,"Douglas, Nebraska",92.8,1.95,"Lancaster, Nebraska",47.1,1.07,Fred & Pamela Buffett Cancer Center (UNMC),97.8,2.03,90.8,43.1,92.4,Fred & Pamela Buffett Cancer Center (UNMC)
+31067,Gage,31,0,1.1,1,"Douglas, Nebraska",92.8,1.95,"Lancaster, Nebraska",47.1,1.07,Fred & Pamela Buffett Cancer Center (UNMC),97.8,2.03,90.8,43.1,92.4,Fred & Pamela Buffett Cancer Center (UNMC)
 31069,Garden,31,0,2.0,1,"Adams, Colorado",204.7,3.58,"Buffalo, Nebraska",198.2,3.72,University of Colorado Cancer Center,215.8,3.78,208.0,180.7,211.0,University of Colorado Cancer Center
 31071,Garfield,31,0,0.2,1,"Douglas, Nebraska",184.7,3.79,"Hall, Nebraska",85.3,1.8,Fred & Pamela Buffett Cancer Center (UNMC),192.3,3.98,193.6,86.3,200.4,Fred & Pamela Buffett Cancer Center (UNMC)
 31073,Gosper,31,0,0.2,1,"Douglas, Nebraska",224.9,4.59,"Buffalo, Nebraska",62.4,1.23,Fred & Pamela Buffett Cancer Center (UNMC),231.1,3.91,241.8,48.9,247.8,Fred & Pamela Buffett Cancer Center (UNMC)
@@ -1780,18 +1780,18 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 34007,Camden,34,58,0.3,1,"Philadelphia, Pennsylvania",14.7,0.34,"Camden, New Jersey",0.0,0.0,Sidney Kimmel Cancer Center (Jefferson),10.8,0.26,13.7,0.0,11.2,Sidney Kimmel Cancer Center (Jefferson)
 34009,Cape May,34,2,0.1,1,"Philadelphia, Pennsylvania",78.7,1.56,"Gloucester, New Jersey",61.1,1.14,Sidney Kimmel Cancer Center (Jefferson),74.4,1.49,78.1,49.5,74.4,Sidney Kimmel Cancer Center (Jefferson)
 34011,Cumberland,34,1,1.6,1,"Philadelphia, Pennsylvania",46.4,0.83,"Gloucester, New Jersey",26.1,0.44,Sidney Kimmel Cancer Center (Jefferson),42.0,0.76,47.5,26.4,43.3,Sidney Kimmel Cancer Center (Jefferson)
-34013,Essex,34,43,0.1,1,"New York, New York",16.2,0.34,"Essex, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),15.5,0.34,15.6,0.0,15.1,Perlmutter Cancer Center (NYU Langone)
+34013,Essex,34,42,0.1,1,"New York, New York",16.2,0.34,"Essex, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),15.5,0.34,15.6,0.0,15.1,Perlmutter Cancer Center (NYU Langone)
 34015,Gloucester,34,26,0.4,1,"Philadelphia, Pennsylvania",21.1,0.42,"Gloucester, New Jersey",0.0,0.0,Sidney Kimmel Cancer Center (Jefferson),16.8,0.35,21.1,0.0,16.9,Sidney Kimmel Cancer Center (Jefferson)
 34017,Hudson,34,20,0.1,1,"New York, New York",7.8,0.18,"Hudson, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),7.2,0.19,6.6,0.0,5.2,Perlmutter Cancer Center (NYU Langone)
 34019,Hunterdon,34,5,1.8,1,"Somerset, New Jersey",24.0,0.52,"Somerset, New Jersey",24.0,0.52,Rutgers Cancer Institute of New Jersey,36.3,0.78,20.0,20.0,29.5,Rutgers Cancer Institute of New Jersey
 34021,Mercer,34,24,0.2,1,"Middlesex, New Jersey",25.6,0.51,"Mercer, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,21.9,0.47,26.4,0.0,24.9,Rutgers Cancer Institute of New Jersey
-34023,Middlesex,34,205,0.5,1,"Middlesex, New Jersey",0.0,0.0,"Middlesex, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,4.5,0.1,0.0,0.0,3.4,Rutgers Cancer Institute of New Jersey
-34025,Monmouth,34,235,0.6,1,"Monmouth, New Jersey",0.0,0.0,"Monmouth, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,25.0,0.46,0.0,0.0,24.5,Rutgers Cancer Institute of New Jersey
+34023,Middlesex,34,206,0.5,1,"Middlesex, New Jersey",0.0,0.0,"Middlesex, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,4.5,0.1,0.0,0.0,3.4,Rutgers Cancer Institute of New Jersey
+34025,Monmouth,34,237,0.6,1,"Monmouth, New Jersey",0.0,0.0,"Monmouth, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,25.0,0.46,0.0,0.0,24.5,Rutgers Cancer Institute of New Jersey
 34027,Morris,34,61,0.3,1,"Bergen, New Jersey",26.6,0.53,"Morris, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),32.5,0.73,25.3,0.0,31.3,Rutgers Cancer Institute of New Jersey
 34029,Ocean,34,36,0.2,1,"Monmouth, New Jersey",24.8,0.46,"Ocean, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,40.3,0.84,26.3,0.0,44.3,Rutgers Cancer Institute of New Jersey
 34031,Passaic,34,5,1.0,1,"Bergen, New Jersey",8.3,0.15,"Bergen, New Jersey",8.3,0.15,Herbert Irving Comprehensive Cancer Center (Columbia),16.5,0.42,8.4,8.4,17.0,Herbert Irving Comprehensive Cancer Center (Columbia)
 34033,Salem,34,0,0.2,1,"Philadelphia, Pennsylvania",34.8,0.75,"Gloucester, New Jersey",18.3,0.38,Sidney Kimmel Cancer Center (Jefferson),30.5,0.69,34.7,17.0,29.7,Abramson Cancer Center (Penn)
-34035,Somerset,34,224,0.7,1,"Somerset, New Jersey",0.0,0.0,"Somerset, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,13.6,0.3,0.0,0.0,10.6,Rutgers Cancer Institute of New Jersey
+34035,Somerset,34,225,0.7,1,"Somerset, New Jersey",0.0,0.0,"Somerset, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,13.6,0.3,0.0,0.0,10.6,Rutgers Cancer Institute of New Jersey
 34037,Sussex,34,2,0.3,1,"Bergen, New Jersey",45.9,0.87,"Morris, New Jersey",24.9,0.55,Perlmutter Cancer Center (NYU Langone),53.5,1.12,40.1,21.5,49.2,Herbert Irving Comprehensive Cancer Center (Columbia)
 34039,Union,34,36,0.1,1,"Middlesex, New Jersey",15.0,0.28,"Union, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,16.3,0.33,15.7,0.0,17.3,Rutgers Cancer Institute of New Jersey
 34041,Warren,34,2,1.2,1,"Somerset, New Jersey",34.8,0.78,"Northampton, Pennsylvania",27.9,0.59,Rutgers Cancer Institute of New Jersey,46.6,1.04,33.6,20.8,44.3,Rutgers Cancer Institute of New Jersey
@@ -1830,7 +1830,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 35061,Valencia,35,0,0.0,1,"Pima, Arizona",411.1,7.34,"Bernalillo, New Mexico",26.5,0.51,UNM Comprehensive Cancer Center,24.8,0.5,360.6,30.2,27.6,UNM Comprehensive Cancer Center
 36001,Albany,36,32,0.5,1,"New Haven, Connecticut",113.2,2.55,"Albany, New York",0.0,0.0,Yale Cancer Center,119.9,2.67,119.2,0.0,123.1,Dartmouth Cancer Center
 36003,Allegany,36,0,0.4,1,"Erie, New York",70.9,1.53,"Erie, New York",70.9,1.53,Roswell Park Comprehensive Cancer Center,74.6,1.63,72.4,72.4,75.2,Roswell Park Comprehensive Cancer Center
-36005,Bronx,36,153,0.5,1,"Bronx, New York",0.0,0.0,"Bronx, New York",0.0,0.0,Montefiore Einstein Cancer Center,2.1,0.05,0.0,0.0,2.2,Montefiore Einstein Cancer Center
+36005,Bronx,36,154,0.5,1,"Bronx, New York",0.0,0.0,"Bronx, New York",0.0,0.0,Montefiore Einstein Cancer Center,2.1,0.05,0.0,0.0,2.2,Montefiore Einstein Cancer Center
 36007,Broome,36,1,0.3,1,"Monroe, New York",134.8,2.8,"Lackawanna, Pennsylvania",58.6,1.14,Wilmot Cancer Institute (Rochester),134.3,2.79,134.0,59.3,132.4,Wilmot Cancer Institute (Rochester)
 36009,Cattaraugus,36,0,0.8,1,"Erie, New York",54.8,1.09,"Erie, New York",54.8,1.09,Roswell Park Comprehensive Cancer Center,57.3,1.19,56.5,56.5,57.5,Roswell Park Comprehensive Cancer Center
 36011,Cayuga,36,1,0.2,1,"Monroe, New York",62.1,1.19,"Onondaga, New York",26.0,0.54,Wilmot Cancer Institute (Rochester),61.6,1.18,66.7,26.1,66.3,Wilmot Cancer Institute (Rochester)
@@ -1851,19 +1851,19 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 36041,Hamilton,36,0,1.3,1,"Monroe, New York",197.0,3.67,"Albany, New York",92.4,2.0,Dartmouth Cancer Center,156.7,3.54,198.4,84.7,128.0,Dartmouth Cancer Center
 36043,Herkimer,36,0,0.2,1,"Monroe, New York",149.2,2.52,"Onondaga, New York",67.8,1.17,Wilmot Cancer Institute (Rochester),148.7,2.5,159.0,71.0,159.3,Wilmot Cancer Institute (Rochester)
 36045,Jefferson,36,0,0.3,1,"Monroe, New York",131.1,2.68,"Onondaga, New York",71.1,1.18,Wilmot Cancer Institute (Rochester),132.9,2.7,125.7,80.6,127.8,Wilmot Cancer Institute (Rochester)
-36047,Kings,36,45,0.1,1,"New York, New York",12.6,0.32,"Kings, New York",0.0,0.0,Perlmutter Cancer Center (NYU Langone),9.6,0.22,10.4,0.0,7.9,Perlmutter Cancer Center (NYU Langone)
+36047,Kings,36,42,0.1,1,"New York, New York",12.6,0.32,"Kings, New York",0.0,0.0,Perlmutter Cancer Center (NYU Langone),9.6,0.22,10.4,0.0,7.9,Perlmutter Cancer Center (NYU Langone)
 36049,Lewis,36,0,1.6,1,"Monroe, New York",148.1,3.14,"Onondaga, New York",85.3,1.69,Wilmot Cancer Institute (Rochester),149.9,3.16,140.5,73.8,142.1,Wilmot Cancer Institute (Rochester)
 36051,Livingston,36,3,0.8,1,"Monroe, New York",30.0,0.62,"Monroe, New York",30.0,0.62,Wilmot Cancer Institute (Rochester),27.2,0.55,33.6,33.6,30.5,Wilmot Cancer Institute (Rochester)
 36053,Madison,36,1,5.2,1,"Monroe, New York",113.8,2.33,"Onondaga, New York",33.0,0.75,Wilmot Cancer Institute (Rochester),113.4,2.32,115.9,27.9,116.0,Wilmot Cancer Institute (Rochester)
-36055,Monroe,36,118,0.2,1,"Monroe, New York",0.0,0.0,"Monroe, New York",0.0,0.0,Wilmot Cancer Institute (Rochester),3.5,0.1,0.0,0.0,3.2,Wilmot Cancer Institute (Rochester)
+36055,Monroe,36,116,0.2,1,"Monroe, New York",0.0,0.0,"Monroe, New York",0.0,0.0,Wilmot Cancer Institute (Rochester),3.5,0.1,0.0,0.0,3.2,Wilmot Cancer Institute (Rochester)
 36057,Montgomery,36,1,0.3,1,"New Haven, Connecticut",147.8,3.22,"Albany, New York",36.6,0.64,Dartmouth Cancer Center,149.4,3.43,153.8,38.6,139.0,Dartmouth Cancer Center
 36059,Nassau,36,401,0.1,1,"Nassau, New York",0.0,0.0,"Nassau, New York",0.0,0.0,Memorial Sloan Kettering Cancer Center,21.1,0.48,0.0,0.0,21.4,Montefiore Einstein Cancer Center
-36061,New York,36,958,1.1,1,"New York, New York",0.0,0.0,"New York, New York",0.0,0.0,Memorial Sloan Kettering Cancer Center,3.8,0.13,0.0,0.0,1.0,Memorial Sloan Kettering Cancer Center
+36061,New York,36,960,1.1,1,"New York, New York",0.0,0.0,"New York, New York",0.0,0.0,Memorial Sloan Kettering Cancer Center,3.8,0.13,0.0,0.0,1.0,Memorial Sloan Kettering Cancer Center
 36063,Niagara,36,0,0.6,1,"Erie, New York",20.6,0.42,"Erie, New York",20.6,0.42,Roswell Park Comprehensive Cancer Center,20.8,0.43,20.5,20.5,20.1,Roswell Park Comprehensive Cancer Center
 36065,Oneida,36,14,1.3,1,"Monroe, New York",125.4,2.11,"Onondaga, New York",43.9,0.76,Wilmot Cancer Institute (Rochester),124.9,2.09,136.9,49.5,137.3,Wilmot Cancer Institute (Rochester)
 36067,Onondaga,36,81,0.0,1,"Monroe, New York",83.8,1.45,"Onondaga, New York",0.0,0.0,Wilmot Cancer Institute (Rochester),83.4,1.44,88.2,0.0,88.4,Wilmot Cancer Institute (Rochester)
 36069,Ontario,36,5,0.2,1,"Monroe, New York",28.4,0.59,"Monroe, New York",28.4,0.59,Wilmot Cancer Institute (Rochester),28.0,0.57,30.2,30.2,28.4,Wilmot Cancer Institute (Rochester)
-36071,Orange,36,3,2.1,1,"Bergen, New Jersey",43.2,0.97,"Bergen, New Jersey",43.2,0.97,Herbert Irving Comprehensive Cancer Center (Columbia),52.1,1.17,41.6,41.6,50.6,Montefiore Einstein Cancer Center
+36071,Orange,36,2,2.1,1,"Bergen, New Jersey",43.2,0.97,"Bergen, New Jersey",43.2,0.97,Herbert Irving Comprehensive Cancer Center (Columbia),52.1,1.17,41.6,41.6,50.6,Montefiore Einstein Cancer Center
 36073,Orleans,36,0,0.7,1,"Monroe, New York",34.8,0.78,"Monroe, New York",34.8,0.78,Wilmot Cancer Institute (Rochester),37.0,0.81,37.3,37.3,37.7,Wilmot Cancer Institute (Rochester)
 36075,Oswego,36,13,2.1,1,"Monroe, New York",81.3,1.77,"Onondaga, New York",29.2,0.54,Wilmot Cancer Institute (Rochester),83.1,1.78,81.2,28.3,82.4,Wilmot Cancer Institute (Rochester)
 36077,Otsego,36,3,0.1,1,"Westchester, New York",165.1,3.87,"Albany, New York",83.0,1.51,Wilmot Cancer Institute (Rochester),169.3,3.46,148.4,76.8,158.2,Montefiore Einstein Cancer Center
@@ -1923,7 +1923,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 37061,Duplin,37,1,0.1,1,"Durham, North Carolina",102.8,2.12,"Sampson, North Carolina",32.1,0.73,UNC Lineberger Comprehensive Cancer Center,108.8,2.3,109.1,32.3,110.4,UNC Lineberger Comprehensive Cancer Center
 37063,Durham,37,252,0.1,1,"Durham, North Carolina",0.0,0.0,"Durham, North Carolina",0.0,0.0,Duke Cancer Institute,7.6,0.15,0.0,0.0,6.3,Duke Cancer Institute
 37065,Edgecombe,37,0,0.7,1,"Durham, North Carolina",76.5,1.51,"Pitt, North Carolina",35.3,0.71,Duke Cancer Institute,83.3,1.65,83.9,32.7,89.6,Duke Cancer Institute
-37067,Forsyth,37,109,0.4,1,"Forsyth, North Carolina",0.0,0.0,"Forsyth, North Carolina",0.0,0.0,Wake Forest Baptist Comprehensive Cancer Center,1.0,0.03,0.0,0.0,0.2,Wake Forest Baptist Comprehensive Cancer Center
+37067,Forsyth,37,111,0.4,1,"Forsyth, North Carolina",0.0,0.0,"Forsyth, North Carolina",0.0,0.0,Wake Forest Baptist Comprehensive Cancer Center,1.0,0.03,0.0,0.0,0.2,Wake Forest Baptist Comprehensive Cancer Center
 37069,Franklin,37,0,0.4,1,"Durham, North Carolina",35.7,0.74,"Wake, North Carolina",30.4,0.69,Duke Cancer Institute,42.4,0.88,37.0,30.1,42.1,Duke Cancer Institute
 37071,Gaston,37,15,0.1,1,"Mecklenburg, North Carolina",20.2,0.47,"Mecklenburg, North Carolina",20.2,0.47,Wake Forest Baptist Comprehensive Cancer Center,95.2,1.78,22.8,22.8,91.2,Wake Forest Baptist Comprehensive Cancer Center
 37073,Gates,37,0,1.1,1,"Richmond, Virginia",109.9,2.35,"Norfolk, Virginia",50.9,1.15,VCU Massey Comprehensive Cancer Center,108.9,2.29,102.0,46.5,101.3,VCU Massey Comprehensive Cancer Center
@@ -1931,7 +1931,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 37077,Granville,37,0,0.6,1,"Durham, North Carolina",22.8,0.41,"Durham, North Carolina",22.8,0.41,Duke Cancer Institute,28.0,0.51,25.5,25.5,27.3,Duke Cancer Institute
 37079,Greene,37,0,0.1,1,"Durham, North Carolina",89.6,1.84,"Pitt, North Carolina",19.4,0.44,Duke Cancer Institute,96.4,1.98,93.7,21.1,100.0,Duke Cancer Institute
 37081,Guilford,37,17,0.1,1,"Forsyth, North Carolina",25.4,0.52,"Forsyth, North Carolina",25.4,0.52,Wake Forest Baptist Comprehensive Cancer Center,25.6,0.52,27.7,27.7,27.9,Wake Forest Baptist Comprehensive Cancer Center
-37083,Halifax,37,1,0.1,1,"Durham, North Carolina",84.3,1.71,"Mecklenburg, Virginia",58.7,1.21,VCU Massey Comprehensive Cancer Center,89.2,1.56,87.9,50.9,91.9,Duke Cancer Institute
+37083,Halifax,37,0,0.1,1,"Durham, North Carolina",84.3,1.71,"Mecklenburg, Virginia",58.7,1.21,VCU Massey Comprehensive Cancer Center,89.2,1.56,87.9,50.9,91.9,Duke Cancer Institute
 37085,Harnett,37,0,1.0,1,"Durham, North Carolina",50.3,1.1,"Wake, North Carolina",40.5,0.83,UNC Lineberger Comprehensive Cancer Center,54.8,1.19,52.5,38.7,47.3,UNC Lineberger Comprehensive Cancer Center
 37087,Haywood,37,2,0.6,1,"Mecklenburg, North Carolina",133.1,3.05,"Pickens, South Carolina",70.0,1.96,Winship Cancer Institute (Emory),164.7,3.72,145.6,61.6,171.2,Winship Cancer Institute (Emory)
 37089,Henderson,37,16,0.2,1,"Mecklenburg, North Carolina",103.0,2.15,"Greenville, South Carolina",43.2,1.0,Wake Forest Baptist Comprehensive Cancer Center,158.0,3.08,112.2,42.3,161.6,Wake Forest Baptist Comprehensive Cancer Center
@@ -1949,7 +1949,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 37113,Macon,37,0,0.5,1,"DeKalb, Georgia",121.6,2.58,"Oconee, South Carolina",50.0,1.32,Winship Cancer Institute (Emory),123.8,2.66,128.0,45.2,130.2,Winship Cancer Institute (Emory)
 37115,Madison,37,0,1.1,1,"Mecklenburg, North Carolina",132.0,3.13,"Spartanburg, South Carolina",82.7,1.67,Wake Forest Baptist Comprehensive Cancer Center,160.8,3.23,132.7,84.1,160.9,Wake Forest Baptist Comprehensive Cancer Center
 37117,Martin,37,0,0.1,1,"Durham, North Carolina",109.3,2.06,"Pitt, North Carolina",33.3,0.7,Duke Cancer Institute,116.0,2.19,121.9,28.5,127.6,Duke Cancer Institute
-37119,Mecklenburg,37,161,0.5,1,"Mecklenburg, North Carolina",0.0,0.0,"Mecklenburg, North Carolina",0.0,0.0,Wake Forest Baptist Comprehensive Cancer Center,80.6,1.56,0.0,0.0,81.9,Wake Forest Baptist Comprehensive Cancer Center
+37119,Mecklenburg,37,162,0.5,1,"Mecklenburg, North Carolina",0.0,0.0,"Mecklenburg, North Carolina",0.0,0.0,Wake Forest Baptist Comprehensive Cancer Center,80.6,1.56,0.0,0.0,81.9,Wake Forest Baptist Comprehensive Cancer Center
 37121,Mitchell,37,1,0.2,1,"Mecklenburg, North Carolina",109.7,2.45,"Spartanburg, South Carolina",83.5,1.78,Wake Forest Baptist Comprehensive Cancer Center,127.8,2.49,106.4,82.9,124.8,Wake Forest Baptist Comprehensive Cancer Center
 37123,Montgomery,37,0,0.4,1,"Mecklenburg, North Carolina",59.4,1.38,"Moore, North Carolina",33.7,0.71,Wake Forest Baptist Comprehensive Cancer Center,67.0,1.45,63.5,31.9,67.9,Wake Forest Baptist Comprehensive Cancer Center
 37125,Moore,37,41,0.4,1,"Orange, North Carolina",64.0,1.44,"Moore, North Carolina",0.0,0.0,UNC Lineberger Comprehensive Cancer Center,57.9,1.29,66.1,0.0,61.1,UNC Lineberger Comprehensive Cancer Center
@@ -1957,19 +1957,19 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 37129,New Hanover,37,7,0.1,1,"Durham, North Carolina",149.5,3.21,"Onslow, North Carolina",51.4,1.12,UNC Lineberger Comprehensive Cancer Center,154.0,3.26,162.8,54.2,161.5,UNC Lineberger Comprehensive Cancer Center
 37131,Northampton,37,0,0.9,1,"Richmond, Virginia",94.3,1.87,"Mecklenburg, Virginia",74.5,1.6,VCU Massey Comprehensive Cancer Center,93.3,1.82,90.8,61.4,91.3,VCU Massey Comprehensive Cancer Center
 37133,Onslow,37,23,0.7,1,"Durham, North Carolina",140.1,3.08,"Onslow, North Carolina",0.0,0.0,UNC Lineberger Comprehensive Cancer Center,146.4,3.09,145.0,0.0,147.7,UNC Lineberger Comprehensive Cancer Center
-37135,Orange,37,182,0.5,1,"Orange, North Carolina",0.0,0.0,"Orange, North Carolina",0.0,0.0,UNC Lineberger Comprehensive Cancer Center,6.4,0.16,0.0,0.0,6.6,UNC Lineberger Comprehensive Cancer Center
+37135,Orange,37,183,0.5,1,"Orange, North Carolina",0.0,0.0,"Orange, North Carolina",0.0,0.0,UNC Lineberger Comprehensive Cancer Center,6.4,0.16,0.0,0.0,6.6,UNC Lineberger Comprehensive Cancer Center
 37137,Pamlico,37,0,2.8,1,"Durham, North Carolina",152.8,3.28,"Onslow, North Carolina",59.1,1.27,UNC Lineberger Comprehensive Cancer Center,159.3,3.27,160.7,52.2,166.9,Duke Cancer Institute
 37139,Pasquotank,37,1,0.0,1,"Richmond, Virginia",131.4,2.79,"Norfolk, Virginia",49.3,1.08,VCU Massey Comprehensive Cancer Center,130.4,2.72,130.9,49.9,129.8,VCU Massey Comprehensive Cancer Center
 37141,Pender,37,0,0.2,1,"Durham, North Carolina",137.0,2.62,"Onslow, North Carolina",45.0,0.97,UNC Lineberger Comprehensive Cancer Center,142.9,2.81,147.1,35.9,146.9,UNC Lineberger Comprehensive Cancer Center
 37143,Perquimans,37,0,1.9,1,"Richmond, Virginia",130.7,2.81,"Norfolk, Virginia",60.8,1.29,VCU Massey Comprehensive Cancer Center,129.7,2.74,132.0,60.3,131.1,VCU Massey Comprehensive Cancer Center
 37145,Person,37,0,0.3,1,"Durham, North Carolina",30.4,0.66,"Durham, North Carolina",30.4,0.66,Duke Cancer Institute,33.0,0.73,32.3,32.3,28.8,Duke Cancer Institute
-37147,Pitt,37,33,0.1,1,"Durham, North Carolina",98.6,2.01,"Pitt, North Carolina",0.0,0.0,Duke Cancer Institute,105.4,2.15,107.6,0.0,113.8,Duke Cancer Institute
+37147,Pitt,37,34,0.1,1,"Durham, North Carolina",98.6,2.01,"Pitt, North Carolina",0.0,0.0,Duke Cancer Institute,105.4,2.15,107.6,0.0,113.8,Duke Cancer Institute
 37149,Polk,37,0,0.2,1,"Mecklenburg, North Carolina",81.0,1.66,"Spartanburg, South Carolina",25.4,0.42,Wake Forest Baptist Comprehensive Cancer Center,138.5,2.5,91.9,27.0,146.8,Wake Forest Baptist Comprehensive Cancer Center
 37151,Randolph,37,6,0.1,1,"Forsyth, North Carolina",37.9,0.79,"Forsyth, North Carolina",37.9,0.79,Wake Forest Baptist Comprehensive Cancer Center,38.1,0.79,40.2,40.2,40.2,Wake Forest Baptist Comprehensive Cancer Center
 37153,Richmond,37,0,0.7,1,"Mecklenburg, North Carolina",71.5,1.49,"Moore, North Carolina",32.9,0.71,UNC Lineberger Comprehensive Cancer Center,87.4,1.95,77.2,31.7,92.1,UNC Lineberger Comprehensive Cancer Center
 37155,Robeson,37,0,1.2,1,"Durham, North Carolina",110.9,2.3,"Moore, North Carolina",52.0,1.15,UNC Lineberger Comprehensive Cancer Center,106.4,2.39,108.0,52.1,101.8,UNC Lineberger Comprehensive Cancer Center
 37157,Rockingham,37,7,0.1,1,"Forsyth, North Carolina",42.0,0.97,"Forsyth, North Carolina",42.0,0.97,Wake Forest Baptist Comprehensive Cancer Center,42.2,0.97,40.7,40.7,40.9,Wake Forest Baptist Comprehensive Cancer Center
-37159,Rowan,37,11,0.4,1,"Mecklenburg, North Carolina",38.4,0.8,"Cabarrus, North Carolina",19.2,0.5,Wake Forest Baptist Comprehensive Cancer Center,43.2,0.94,38.5,19.8,43.7,Wake Forest Baptist Comprehensive Cancer Center
+37159,Rowan,37,10,0.4,1,"Mecklenburg, North Carolina",38.4,0.8,"Cabarrus, North Carolina",19.2,0.5,Wake Forest Baptist Comprehensive Cancer Center,43.2,0.94,38.5,19.8,43.7,Wake Forest Baptist Comprehensive Cancer Center
 37161,Rutherford,37,7,0.1,1,"Mecklenburg, North Carolina",65.0,1.46,"Spartanburg, South Carolina",37.4,0.8,Wake Forest Baptist Comprehensive Cancer Center,124.2,2.19,73.7,32.9,126.6,Wake Forest Baptist Comprehensive Cancer Center
 37163,Sampson,37,22,1.7,1,"Durham, North Carolina",81.3,1.79,"Sampson, North Carolina",0.0,0.0,UNC Lineberger Comprehensive Cancer Center,85.8,1.85,85.8,0.0,84.4,UNC Lineberger Comprehensive Cancer Center
 37165,Scotland,37,0,0.3,1,"Mecklenburg, North Carolina",90.2,1.94,"Moore, North Carolina",33.6,0.71,UNC Lineberger Comprehensive Cancer Center,88.1,1.95,98.4,37.6,97.0,UNC Lineberger Comprehensive Cancer Center
@@ -2046,7 +2046,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 39001,Adams,39,0,1.6,1,"Hamilton, Ohio",69.5,1.53,"Hamilton, Ohio",69.5,1.53,Markey Cancer Center (Kentucky),86.6,2.06,69.4,66.5,93.5,Markey Cancer Center (Kentucky)
 39003,Allen,39,6,0.3,1,"Franklin, Ohio",90.5,1.73,"Miami, Ohio",54.2,0.89,OSU Comprehensive Cancer Center – James,88.8,1.68,95.1,59.8,93.4,OSU Comprehensive Cancer Center – James
 39005,Ashland,39,0,0.2,1,"Cuyahoga, Ohio",58.6,1.22,"Richland, Ohio",15.9,0.33,Case Comprehensive Cancer Center,64.2,1.36,62.1,17.8,68.6,Case Comprehensive Cancer Center
-39007,Ashtabula,39,1,0.3,1,"Cuyahoga, Ohio",61.8,1.22,"Lake, Ohio",37.2,0.75,Case Comprehensive Cancer Center,53.8,1.02,63.1,35.2,57.0,Case Comprehensive Cancer Center
+39007,Ashtabula,39,0,0.3,1,"Cuyahoga, Ohio",61.8,1.22,"Lake, Ohio",37.2,0.75,Case Comprehensive Cancer Center,53.8,1.02,63.1,35.2,57.0,Case Comprehensive Cancer Center
 39009,Athens,39,10,0.8,1,"Franklin, Ohio",75.0,1.46,"Franklin, Ohio",75.0,1.46,OSU Comprehensive Cancer Center – James,76.7,1.53,78.9,78.9,80.6,OSU Comprehensive Cancer Center – James
 39011,Auglaize,39,0,1.3,1,"Franklin, Ohio",90.4,1.71,"Miami, Ohio",43.9,0.71,OSU Comprehensive Cancer Center – James,88.7,1.66,92.7,41.3,90.8,OSU Comprehensive Cancer Center – James
 39013,Belmont,39,0,1.2,1,"Allegheny, Pennsylvania",68.5,1.75,"Washington, Pennsylvania",50.8,0.91,UPMC Hillman Cancer Center,71.0,1.82,67.3,49.3,69.7,UPMC Hillman Cancer Center
@@ -2054,7 +2054,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 39017,Butler,39,46,0.1,1,"Hamilton, Ohio",19.1,0.42,"Butler, Ohio",0.0,0.0,OSU Comprehensive Cancer Center – James,96.5,1.74,19.0,0.0,106.3,OSU Comprehensive Cancer Center – James
 39019,Carroll,39,0,0.5,1,"Allegheny, Pennsylvania",74.5,1.65,"Stark, Ohio",25.8,0.57,UPMC Hillman Cancer Center,77.0,1.72,73.2,25.7,75.6,UPMC Hillman Cancer Center
 39021,Champaign,39,0,0.3,1,"Franklin, Ohio",46.7,0.94,"Miami, Ohio",30.6,0.65,OSU Comprehensive Cancer Center – James,46.3,0.93,49.5,30.8,47.6,OSU Comprehensive Cancer Center – James
-39023,Clark,39,13,0.1,1,"Franklin, Ohio",47.0,1.04,"Montgomery, Ohio",25.8,0.52,OSU Comprehensive Cancer Center – James,46.7,1.02,53.7,26.9,51.9,OSU Comprehensive Cancer Center – James
+39023,Clark,39,12,0.1,1,"Franklin, Ohio",47.0,1.04,"Montgomery, Ohio",25.8,0.52,OSU Comprehensive Cancer Center – James,46.7,1.02,53.7,26.9,51.9,OSU Comprehensive Cancer Center – James
 39025,Clermont,39,10,1.0,1,"Hamilton, Ohio",24.5,0.53,"Hamilton, Ohio",24.5,0.53,Markey Cancer Center (Kentucky),98.0,1.95,20.0,20.0,91.0,Markey Cancer Center (Kentucky)
 39027,Clinton,39,3,0.2,1,"Hamilton, Ohio",47.0,0.98,"Warren, Ohio",26.7,0.58,OSU Comprehensive Cancer Center – James,65.3,1.17,46.8,25.7,71.9,OSU Comprehensive Cancer Center – James
 39029,Columbiana,39,0,0.3,1,"Allegheny, Pennsylvania",55.2,1.3,"Stark, Ohio",40.4,0.85,UPMC Hillman Cancer Center,57.7,1.38,55.2,41.6,57.1,UPMC Hillman Cancer Center
@@ -2067,7 +2067,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 39043,Erie,39,9,0.1,1,"Cuyahoga, Ohio",53.9,1.1,"Lorain, Ohio",30.2,0.59,Case Comprehensive Cancer Center,56.3,1.18,59.2,32.2,64.0,Case Comprehensive Cancer Center
 39045,Fairfield,39,17,1.3,1,"Franklin, Ohio",25.7,0.56,"Franklin, Ohio",25.7,0.56,OSU Comprehensive Cancer Center – James,27.4,0.63,26.3,26.3,28.1,OSU Comprehensive Cancer Center – James
 39047,Fayette,39,0,0.2,1,"Franklin, Ohio",42.7,0.95,"Franklin, Ohio",42.7,0.95,OSU Comprehensive Cancer Center – James,42.4,0.93,47.3,47.3,46.5,OSU Comprehensive Cancer Center – James
-39049,Franklin,39,401,0.3,1,"Franklin, Ohio",0.0,0.0,"Franklin, Ohio",0.0,0.0,OSU Comprehensive Cancer Center – James,6.5,0.16,0.0,0.0,1.9,OSU Comprehensive Cancer Center – James
+39049,Franklin,39,403,0.3,1,"Franklin, Ohio",0.0,0.0,"Franklin, Ohio",0.0,0.0,OSU Comprehensive Cancer Center – James,6.5,0.16,0.0,0.0,1.9,OSU Comprehensive Cancer Center – James
 39051,Fulton,39,0,0.3,1,"Washtenaw, Michigan",64.3,1.32,"Lucas, Ohio",27.9,0.6,University of Michigan Rogel Cancer Center,64.9,1.33,60.7,30.1,62.1,University of Michigan Rogel Cancer Center
 39053,Gallia,39,0,0.1,1,"Franklin, Ohio",101.7,2.04,"Kanawha, West Virginia",59.8,1.26,OSU Comprehensive Cancer Center – James,103.0,2.09,107.3,55.7,108.5,OSU Comprehensive Cancer Center – James
 39055,Geauga,39,10,1.5,1,"Cuyahoga, Ohio",32.0,0.71,"Lake, Ohio",23.1,0.48,Case Comprehensive Cancer Center,27.0,0.57,28.4,17.4,23.8,Case Comprehensive Cancer Center
@@ -2118,8 +2118,8 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 39145,Scioto,39,11,0.1,1,"Franklin, Ohio",97.0,2.1,"Kanawha, West Virginia",89.7,1.88,OSU Comprehensive Cancer Center – James,98.3,2.15,101.2,90.3,101.7,OSU Comprehensive Cancer Center – James
 39147,Seneca,39,1,1.0,1,"Franklin, Ohio",85.6,1.8,"Marion, Ohio",42.5,0.9,OSU Comprehensive Cancer Center – James,84.7,1.78,94.3,45.5,93.7,OSU Comprehensive Cancer Center – James
 39149,Shelby,39,0,0.6,1,"Franklin, Ohio",78.2,1.61,"Miami, Ohio",21.4,0.34,OSU Comprehensive Cancer Center – James,77.8,1.61,80.6,23.3,78.7,OSU Comprehensive Cancer Center – James
-39151,Stark,39,89,0.5,1,"Cuyahoga, Ohio",53.0,0.96,"Stark, Ohio",0.0,0.0,Case Comprehensive Cancer Center,56.3,1.08,53.8,0.0,57.0,Case Comprehensive Cancer Center
-39153,Summit,39,17,0.8,1,"Cuyahoga, Ohio",32.4,0.63,"Stark, Ohio",23.3,0.42,Case Comprehensive Cancer Center,34.7,0.69,29.4,24.3,32.8,Case Comprehensive Cancer Center
+39151,Stark,39,90,0.5,1,"Cuyahoga, Ohio",53.0,0.96,"Stark, Ohio",0.0,0.0,Case Comprehensive Cancer Center,56.3,1.08,53.8,0.0,57.0,Case Comprehensive Cancer Center
+39153,Summit,39,18,0.8,1,"Cuyahoga, Ohio",32.4,0.63,"Stark, Ohio",23.3,0.42,Case Comprehensive Cancer Center,34.7,0.69,29.4,24.3,32.8,Case Comprehensive Cancer Center
 39155,Trumbull,39,8,0.1,1,"Cuyahoga, Ohio",56.5,1.23,"Lake, Ohio",54.2,1.12,Case Comprehensive Cancer Center,56.7,1.11,59.7,50.7,57.0,Case Comprehensive Cancer Center
 39157,Tuscarawas,39,0,0.3,1,"Cuyahoga, Ohio",74.0,1.47,"Stark, Ohio",28.8,0.52,Case Comprehensive Cancer Center,78.7,1.62,81.3,29.9,85.3,Case Comprehensive Cancer Center
 39159,Union,39,9,0.0,1,"Franklin, Ohio",29.8,0.53,"Delaware, Ohio",23.0,0.51,OSU Comprehensive Cancer Center – James,28.1,0.48,29.5,20.6,27.8,OSU Comprehensive Cancer Center – James
@@ -2136,7 +2136,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 40005,Atoka,40,0,1.6,1,"Dallas, Texas",127.3,2.4,"Dallas, Texas",127.3,2.4,Harold C. Simmons Comprehensive Cancer Center (UTSW),132.2,2.76,134.8,134.8,134.8,Stephenson Cancer Center (Oklahoma)
 40007,Beaver,40,0,5.4,1,"Oklahoma, Oklahoma",234.1,4.88,"Ellis, Kansas",194.7,4.07,Stephenson Cancer Center (Oklahoma),235.7,4.77,235.5,190.5,238.0,Stephenson Cancer Center (Oklahoma)
 40009,Beckham,40,0,0.3,1,"Oklahoma, Oklahoma",118.9,2.06,"Comanche, Oklahoma",106.6,2.29,Stephenson Cancer Center (Oklahoma),120.6,1.95,135.7,95.6,136.0,Stephenson Cancer Center (Oklahoma)
-40011,Blaine,40,1,0.5,1,"Oklahoma, Oklahoma",70.8,1.45,"Oklahoma, Oklahoma",70.8,1.45,Stephenson Cancer Center (Oklahoma),72.4,1.35,68.5,68.5,70.9,Stephenson Cancer Center (Oklahoma)
+40011,Blaine,40,0,0.5,1,"Oklahoma, Oklahoma",70.8,1.45,"Oklahoma, Oklahoma",70.8,1.45,Stephenson Cancer Center (Oklahoma),72.4,1.35,68.5,68.5,70.9,Stephenson Cancer Center (Oklahoma)
 40013,Bryan,40,0,0.2,1,"Dallas, Texas",90.1,1.67,"Dallas, Texas",90.1,1.67,Harold C. Simmons Comprehensive Cancer Center (UTSW),94.9,2.03,101.0,101.0,101.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 40015,Caddo,40,0,4.5,1,"Oklahoma, Oklahoma",68.1,1.48,"Comanche, Oklahoma",53.7,1.18,Stephenson Cancer Center (Oklahoma),66.0,1.39,63.0,45.3,61.7,Stephenson Cancer Center (Oklahoma)
 40017,Canadian,40,0,0.2,1,"Oklahoma, Oklahoma",17.2,0.39,"Oklahoma, Oklahoma",17.2,0.39,Stephenson Cancer Center (Oklahoma),17.2,0.29,17.3,17.3,17.8,Stephenson Cancer Center (Oklahoma)
@@ -2227,13 +2227,13 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 41033,Josephine,41,3,0.8,1,"Multnomah, Oregon",251.6,5.01,"Lane, Oregon",144.1,3.02,Knight Cancer Institute (OHSU),246.0,4.72,262.5,136.5,259.2,Knight Cancer Institute (OHSU)
 41035,Klamath,41,0,4.1,1,"Multnomah, Oregon",285.0,5.71,"Deschutes, Oregon",142.0,3.02,Knight Cancer Institute (OHSU),279.3,5.43,272.9,151.8,271.8,Knight Cancer Institute (OHSU)
 41037,Lake,41,0,9.1,1,"Multnomah, Oregon",305.0,6.56,"Deschutes, Oregon",153.1,3.27,Knight Cancer Institute (OHSU),308.9,6.66,281.8,142.8,282.4,Knight Cancer Institute (OHSU)
-41039,Lane,41,74,0.6,1,"Multnomah, Oregon",115.9,2.18,"Lane, Oregon",0.0,0.0,Knight Cancer Institute (OHSU),110.3,1.9,126.5,0.0,122.9,Knight Cancer Institute (OHSU)
+41039,Lane,41,75,0.6,1,"Multnomah, Oregon",115.9,2.18,"Lane, Oregon",0.0,0.0,Knight Cancer Institute (OHSU),110.3,1.9,126.5,0.0,122.9,Knight Cancer Institute (OHSU)
 41041,Lincoln,41,0,2.8,1,"Multnomah, Oregon",120.6,2.82,"Yamhill, Oregon",83.4,2.0,Knight Cancer Institute (OHSU),113.5,2.66,106.1,66.9,100.2,Knight Cancer Institute (OHSU)
-41043,Linn,41,2,0.8,1,"Multnomah, Oregon",82.5,1.68,"Lane, Oregon",45.5,0.77,Knight Cancer Institute (OHSU),76.9,1.4,82.6,43.9,79.0,Knight Cancer Institute (OHSU)
+41043,Linn,41,1,0.8,1,"Multnomah, Oregon",82.5,1.68,"Lane, Oregon",45.5,0.77,Knight Cancer Institute (OHSU),76.9,1.4,82.6,43.9,79.0,Knight Cancer Institute (OHSU)
 41045,Malheur,41,39,0.9,1,"Multnomah, Oregon",374.8,6.68,"Malheur, Oregon",0.0,0.0,Knight Cancer Institute (OHSU),380.5,6.83,349.8,0.0,354.5,Knight Cancer Institute (OHSU)
 41047,Marion,41,10,0.7,1,"Multnomah, Oregon",50.9,1.07,"Yamhill, Oregon",34.9,0.78,Knight Cancer Institute (OHSU),46.1,0.83,50.9,25.5,46.6,Knight Cancer Institute (OHSU)
 41049,Morrow,41,0,6.3,1,"Multnomah, Oregon",169.8,3.01,"Benton, Washington",57.2,1.19,Knight Cancer Institute (OHSU),175.4,3.16,173.4,45.2,179.4,Knight Cancer Institute (OHSU)
-41051,Multnomah,41,270,0.6,1,"Multnomah, Oregon",0.0,0.0,"Multnomah, Oregon",0.0,0.0,Knight Cancer Institute (OHSU),8.1,0.2,0.0,0.0,6.2,Knight Cancer Institute (OHSU)
+41051,Multnomah,41,272,0.6,1,"Multnomah, Oregon",0.0,0.0,"Multnomah, Oregon",0.0,0.0,Knight Cancer Institute (OHSU),8.1,0.2,0.0,0.0,6.2,Knight Cancer Institute (OHSU)
 41053,Polk,41,0,0.9,1,"Multnomah, Oregon",60.1,1.3,"Yamhill, Oregon",25.7,0.57,Knight Cancer Institute (OHSU),53.2,1.04,61.2,26.7,56.0,Knight Cancer Institute (OHSU)
 41055,Sherman,41,0,1.4,1,"Multnomah, Oregon",114.0,2.2,"Multnomah, Oregon",114.0,2.2,Knight Cancer Institute (OHSU),119.6,2.36,108.6,102.2,114.4,Knight Cancer Institute (OHSU)
 41057,Tillamook,41,0,0.7,1,"Multnomah, Oregon",80.5,1.79,"Washington, Oregon",65.7,1.46,Knight Cancer Institute (OHSU),75.1,1.69,73.8,46.2,67.9,Knight Cancer Institute (OHSU)
@@ -2283,13 +2283,13 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 42073,Lawrence,42,15,0.4,1,"Allegheny, Pennsylvania",49.8,1.14,"Allegheny, Pennsylvania",49.8,1.14,UPMC Hillman Cancer Center,52.3,1.22,50.2,50.2,51.1,UPMC Hillman Cancer Center
 42075,Lebanon,42,18,0.1,1,"Philadelphia, Pennsylvania",79.3,1.75,"Dauphin, Pennsylvania",23.7,0.58,Abramson Cancer Center (Penn),76.3,1.68,85.8,22.5,85.0,Abramson Cancer Center (Penn)
 42077,Lehigh,42,46,0.4,1,"Philadelphia, Pennsylvania",51.4,0.92,"Lehigh, Pennsylvania",0.0,0.0,Fox Chase Cancer Center,48.9,1.11,54.5,0.0,52.2,Fox Chase Cancer Center
-42079,Luzerne,42,54,0.4,1,"Somerset, New Jersey",103.9,2.18,"Luzerne, Pennsylvania",0.0,0.0,Fox Chase Cancer Center,105.3,1.98,99.7,0.0,108.2,Fox Chase Cancer Center
+42079,Luzerne,42,53,0.4,1,"Somerset, New Jersey",103.9,2.18,"Luzerne, Pennsylvania",0.0,0.0,Fox Chase Cancer Center,105.3,1.98,99.7,0.0,108.2,Fox Chase Cancer Center
 42081,Lycoming,42,11,0.1,1,"Philadelphia, Pennsylvania",155.7,3.58,"Union, Pennsylvania",28.1,0.61,Fox Chase Cancer Center,153.5,3.61,155.2,23.2,155.0,Fox Chase Cancer Center
 42083,McKean,42,0,0.5,1,"Erie, New York",83.6,1.69,"Erie, New York",83.6,1.69,Roswell Park Comprehensive Cancer Center,86.0,1.8,86.0,86.0,86.8,Roswell Park Comprehensive Cancer Center
 42085,Mercer,42,18,0.6,1,"Allegheny, Pennsylvania",66.0,1.44,"Allegheny, Pennsylvania",66.0,1.44,UPMC Hillman Cancer Center,68.5,1.52,71.4,68.7,71.9,UPMC Hillman Cancer Center
 42087,Mifflin,42,4,0.1,1,"Baltimore, Maryland",126.9,2.83,"Union, Pennsylvania",57.6,1.22,UM Greenebaum Comprehensive Cancer Center,126.8,2.82,124.3,46.7,125.6,UM Greenebaum Comprehensive Cancer Center
 42089,Monroe,42,25,0.0,1,"Somerset, New Jersey",61.5,1.39,"Monroe, Pennsylvania",0.0,0.0,Rutgers Cancer Institute of New Jersey,73.2,1.65,60.5,0.0,71.1,Rutgers Cancer Institute of New Jersey
-42091,Montgomery,42,65,0.5,1,"Philadelphia, Pennsylvania",18.3,0.38,"Montgomery, Pennsylvania",0.0,0.0,Fox Chase Cancer Center,15.9,0.35,17.7,0.0,17.4,Fox Chase Cancer Center
+42091,Montgomery,42,66,0.5,1,"Philadelphia, Pennsylvania",18.3,0.38,"Montgomery, Pennsylvania",0.0,0.0,Fox Chase Cancer Center,15.9,0.35,17.7,0.0,17.4,Fox Chase Cancer Center
 42093,Montour,42,46,0.2,1,"Philadelphia, Pennsylvania",126.2,2.92,"Montour, Pennsylvania",0.0,0.0,Fox Chase Cancer Center,124.0,2.95,125.0,0.0,124.7,Abramson Cancer Center (Penn)
 42095,Northampton,42,49,0.5,1,"Somerset, New Jersey",46.3,1.0,"Northampton, Pennsylvania",0.0,0.0,Fox Chase Cancer Center,56.0,1.23,48.1,0.0,55.1,Fox Chase Cancer Center
 42097,Northumberland,42,0,1.1,1,"Philadelphia, Pennsylvania",121.9,2.81,"Montour, Pennsylvania",21.5,0.49,Fox Chase Cancer Center,119.6,2.84,121.3,10.7,120.7,Abramson Cancer Center (Penn)
@@ -2325,7 +2325,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 45013,Beaufort,45,14,3.8,1,"Charleston, South Carolina",75.6,1.62,"Chatham, Georgia",39.9,0.89,Hollings Cancer Center (MUSC),76.1,1.65,70.5,33.5,70.3,Hollings Cancer Center (MUSC)
 45015,Berkeley,45,0,0.0,1,"Charleston, South Carolina",17.9,0.41,"Charleston, South Carolina",17.9,0.41,Hollings Cancer Center (MUSC),21.3,0.49,19.8,19.8,23.5,Hollings Cancer Center (MUSC)
 45017,Calhoun,45,0,0.3,1,"Charleston, South Carolina",81.5,1.74,"Richmond, Georgia",79.4,1.81,Hollings Cancer Center (MUSC),84.8,1.82,91.7,87.5,95.7,Hollings Cancer Center (MUSC)
-45019,Charleston,45,128,0.7,1,"Charleston, South Carolina",0.0,0.0,"Charleston, South Carolina",0.0,0.0,Hollings Cancer Center (MUSC),6.4,0.16,0.0,0.0,3.9,Hollings Cancer Center (MUSC)
+45019,Charleston,45,129,0.7,1,"Charleston, South Carolina",0.0,0.0,"Charleston, South Carolina",0.0,0.0,Hollings Cancer Center (MUSC),6.4,0.16,0.0,0.0,3.9,Hollings Cancer Center (MUSC)
 45021,Cherokee,45,14,0.2,1,"Mecklenburg, North Carolina",51.9,1.05,"Spartanburg, South Carolina",23.9,0.4,Wake Forest Baptist Comprehensive Cancer Center,120.7,2.33,57.4,26.3,126.2,Wake Forest Baptist Comprehensive Cancer Center
 45023,Chester,45,0,1.9,1,"Mecklenburg, North Carolina",46.4,0.87,"Mecklenburg, North Carolina",46.4,0.87,Wake Forest Baptist Comprehensive Cancer Center,124.0,2.34,47.7,47.7,129.6,Wake Forest Baptist Comprehensive Cancer Center
 45025,Chesterfield,45,0,0.6,1,"Mecklenburg, North Carolina",64.4,1.42,"Mecklenburg, North Carolina",64.4,1.42,Wake Forest Baptist Comprehensive Cancer Center,114.9,2.56,64.1,64.1,118.1,Wake Forest Baptist Comprehensive Cancer Center
@@ -2446,7 +2446,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 47031,Coffee,47,0,1.6,1,"Davidson, Tennessee",64.6,1.13,"Davidson, Tennessee",64.6,1.13,Vanderbilt-Ingram Cancer Center,68.1,1.23,70.4,69.2,73.2,Vanderbilt-Ingram Cancer Center
 47033,Crockett,47,0,0.1,1,"Shelby, Tennessee",70.8,1.52,"Shelby, Tennessee",70.8,1.52,Vanderbilt-Ingram Cancer Center,145.6,2.48,75.1,75.1,158.3,Vanderbilt-Ingram Cancer Center
 47035,Cumberland,47,0,0.4,1,"Davidson, Tennessee",109.0,2.3,"Knox, Tennessee",68.3,1.18,Vanderbilt-Ingram Cancer Center,112.9,2.4,116.8,68.9,120.7,Vanderbilt-Ingram Cancer Center
-47037,Davidson,47,548,0.3,1,"Davidson, Tennessee",0.0,0.0,"Davidson, Tennessee",0.0,0.0,Vanderbilt-Ingram Cancer Center,4.5,0.12,0.0,0.0,3.9,Vanderbilt-Ingram Cancer Center
+47037,Davidson,47,553,0.3,1,"Davidson, Tennessee",0.0,0.0,"Davidson, Tennessee",0.0,0.0,Vanderbilt-Ingram Cancer Center,4.5,0.12,0.0,0.0,3.9,Vanderbilt-Ingram Cancer Center
 47039,Decatur,47,0,0.2,1,"Davidson, Tennessee",101.9,1.84,"Davidson, Tennessee",101.9,1.84,Vanderbilt-Ingram Cancer Center,98.5,1.75,102.6,102.6,99.3,Vanderbilt-Ingram Cancer Center
 47041,DeKalb,47,0,0.5,1,"Davidson, Tennessee",59.4,1.22,"Davidson, Tennessee",59.4,1.22,Vanderbilt-Ingram Cancer Center,63.2,1.32,62.5,62.5,66.4,Vanderbilt-Ingram Cancer Center
 47043,Dickson,47,3,1.5,1,"Davidson, Tennessee",41.3,0.94,"Davidson, Tennessee",41.3,0.94,Vanderbilt-Ingram Cancer Center,37.9,0.85,40.2,40.2,36.4,Vanderbilt-Ingram Cancer Center
@@ -2508,7 +2508,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 47155,Sevier,47,0,0.7,1,"Mecklenburg, North Carolina",193.5,4.69,"Knox, Tennessee",28.7,0.65,Markey Cancer Center (Kentucky),196.1,3.46,177.3,28.9,178.9,Winship Cancer Institute (Emory)
 47157,Shelby,47,118,1.0,1,"Shelby, Tennessee",0.0,0.0,"Shelby, Tennessee",0.0,0.0,Vanderbilt-Ingram Cancer Center,199.0,3.24,0.0,0.0,224.1,Vanderbilt-Ingram Cancer Center
 47159,Smith,47,0,0.8,1,"Davidson, Tennessee",48.8,0.91,"Davidson, Tennessee",48.8,0.91,Vanderbilt-Ingram Cancer Center,52.6,1.01,52.7,52.7,56.4,Vanderbilt-Ingram Cancer Center
-47161,Stewart,47,1,1.1,1,"Davidson, Tennessee",81.3,1.74,"Davidson, Tennessee",81.3,1.74,Vanderbilt-Ingram Cancer Center,80.9,1.8,76.4,76.4,72.6,Vanderbilt-Ingram Cancer Center
+47161,Stewart,47,0,1.1,1,"Davidson, Tennessee",81.3,1.74,"Davidson, Tennessee",81.3,1.74,Vanderbilt-Ingram Cancer Center,80.9,1.8,76.4,76.4,72.6,Vanderbilt-Ingram Cancer Center
 47163,Sullivan,47,4,0.2,1,"Forsyth, North Carolina",150.4,3.22,"Knox, Tennessee",102.0,1.76,Wake Forest Baptist Comprehensive Cancer Center,150.6,3.23,147.2,116.2,147.0,Wake Forest Baptist Comprehensive Cancer Center
 47165,Sumner,47,4,0.9,1,"Davidson, Tennessee",27.5,0.56,"Davidson, Tennessee",27.5,0.56,Vanderbilt-Ingram Cancer Center,27.5,0.58,25.6,25.6,27.5,Vanderbilt-Ingram Cancer Center
 47167,Tipton,47,0,0.2,1,"Shelby, Tennessee",36.3,0.74,"Shelby, Tennessee",36.3,0.74,Vanderbilt-Ingram Cancer Center,183.1,3.22,30.0,30.0,205.8,Vanderbilt-Ingram Cancer Center
@@ -2579,7 +2579,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48107,Crosby,48,0,0.8,1,"Tarrant, Texas",275.7,5.67,"Lubbock, Texas",36.1,0.77,Harold C. Simmons Comprehensive Cancer Center (UTSW),291.1,6.06,294.6,38.1,303.1,Stephenson Cancer Center (Oklahoma)
 48109,Culberson,48,0,0.5,1,"Bexar, Texas",426.0,6.85,"El Paso, Texas",122.4,2.24,UNM Comprehensive Cancer Center,385.2,7.13,443.6,124.6,356.5,UNM Comprehensive Cancer Center
 48111,Dallam,48,0,0.4,1,"Oklahoma, Oklahoma",313.2,6.07,"Lubbock, Texas",201.9,4.17,UNM Comprehensive Cancer Center,272.3,5.0,338.1,216.5,287.7,UNM Comprehensive Cancer Center
-48113,Dallas,48,437,0.3,1,"Dallas, Texas",0.0,0.0,"Dallas, Texas",0.0,0.0,Harold C. Simmons Comprehensive Cancer Center (UTSW),6.1,0.13,0.0,0.0,3.9,Harold C. Simmons Comprehensive Cancer Center (UTSW)
+48113,Dallas,48,438,0.3,1,"Dallas, Texas",0.0,0.0,"Dallas, Texas",0.0,0.0,Harold C. Simmons Comprehensive Cancer Center (UTSW),6.1,0.13,0.0,0.0,3.9,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48115,Dawson,48,0,0.1,1,"Tarrant, Texas",285.0,5.9,"Lubbock, Texas",62.1,1.31,Harold C. Simmons Comprehensive Cancer Center (UTSW),310.9,6.45,327.8,67.9,356.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48117,Deaf Smith,48,0,0.2,1,"Oklahoma, Oklahoma",302.4,5.23,"Lubbock, Texas",104.1,2.17,UNM Comprehensive Cancer Center,279.5,4.78,336.3,112.0,289.1,UNM Comprehensive Cancer Center
 48119,Delta,48,0,0.1,1,"Dallas, Texas",80.9,1.51,"Dallas, Texas",80.9,1.51,Harold C. Simmons Comprehensive Cancer Center (UTSW),84.1,1.59,88.6,88.6,91.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
@@ -2615,7 +2615,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48179,Gray,48,0,0.2,1,"Oklahoma, Oklahoma",200.4,3.77,"Lubbock, Texas",182.3,3.56,Stephenson Cancer Center (Oklahoma),202.1,3.66,231.3,176.5,232.0,Stephenson Cancer Center (Oklahoma)
 48181,Grayson,48,12,0.7,1,"Dallas, Texas",62.2,1.06,"Dallas, Texas",62.2,1.06,Harold C. Simmons Comprehensive Cancer Center (UTSW),67.1,1.4,70.1,70.1,70.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48183,Gregg,48,11,0.1,1,"Dallas, Texas",122.8,2.51,"Smith, Texas",36.9,0.87,Harold C. Simmons Comprehensive Cancer Center (UTSW),125.9,2.59,141.7,38.5,145.6,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48185,Grimes,48,1,1.3,1,"Harris, Texas",71.1,1.5,"Montgomery, Texas",52.3,1.05,MD Anderson Cancer Center,81.1,1.73,66.4,42.7,74.8,Dan L Duncan Comprehensive Cancer Center (Baylor)
+48185,Grimes,48,0,1.3,1,"Harris, Texas",71.1,1.5,"Montgomery, Texas",52.3,1.05,MD Anderson Cancer Center,81.1,1.73,66.4,42.7,74.8,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48187,Guadalupe,48,0,0.2,1,"Bexar, Texas",37.6,0.68,"Bexar, Texas",37.6,0.68,Mays Cancer Center (UT Health San Antonio),38.7,0.71,32.2,32.2,34.8,Mays Cancer Center (UT Health San Antonio)
 48189,Hale,48,0,0.3,1,"Oklahoma, Oklahoma",323.9,6.4,"Lubbock, Texas",47.5,0.86,UNM Comprehensive Cancer Center,312.3,6.08,309.8,50.1,308.9,Stephenson Cancer Center (Oklahoma)
 48191,Hall,48,0,2.7,1,"Oklahoma, Oklahoma",220.4,4.36,"Comanche, Oklahoma",132.3,2.78,Stephenson Cancer Center (Oklahoma),218.3,4.28,220.8,128.4,220.1,Stephenson Cancer Center (Oklahoma)
@@ -2623,7 +2623,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48195,Hansford,48,0,1.1,1,"Oklahoma, Oklahoma",261.9,5.38,"Lubbock, Texas",222.5,4.35,Stephenson Cancer Center (Oklahoma),263.6,5.28,258.9,224.7,260.5,Stephenson Cancer Center (Oklahoma)
 48197,Hardeman,48,0,0.1,1,"Oklahoma, Oklahoma",184.0,3.58,"Comanche, Oklahoma",95.9,1.99,Stephenson Cancer Center (Oklahoma),181.9,3.49,180.9,92.3,179.1,Stephenson Cancer Center (Oklahoma)
 48199,Hardin,48,0,0.8,1,"Harris, Texas",100.0,2.06,"Montgomery, Texas",100.0,2.12,MD Anderson Cancer Center,102.8,2.2,92.9,86.5,95.8,Dan L Duncan Comprehensive Cancer Center (Baylor)
-48201,Harris,48,1051,0.3,1,"Harris, Texas",0.0,0.0,"Harris, Texas",0.0,0.0,MD Anderson Cancer Center,14.1,0.31,0.0,0.0,9.4,Dan L Duncan Comprehensive Cancer Center (Baylor)
+48201,Harris,48,1053,0.3,1,"Harris, Texas",0.0,0.0,"Harris, Texas",0.0,0.0,MD Anderson Cancer Center,14.1,0.31,0.0,0.0,9.4,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48203,Harrison,48,0,0.1,1,"Dallas, Texas",144.3,2.99,"Caddo, Louisiana",38.6,0.72,Harold C. Simmons Comprehensive Cancer Center (UTSW),147.4,3.07,166.3,44.3,170.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48205,Hartley,48,0,2.1,1,"Oklahoma, Oklahoma",306.0,5.93,"Lubbock, Texas",194.7,4.03,UNM Comprehensive Cancer Center,275.4,5.07,337.9,206.7,289.6,UNM Comprehensive Cancer Center
 48207,Haskell,48,0,1.1,1,"Tarrant, Texas",166.2,3.41,"Taylor, Texas",61.0,1.29,Harold C. Simmons Comprehensive Cancer Center (UTSW),192.1,3.96,178.4,63.0,205.4,Harold C. Simmons Comprehensive Cancer Center (UTSW)
@@ -2692,7 +2692,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48333,Mills,48,0,0.4,1,"Travis, Texas",103.6,2.11,"Bell, Texas",78.0,1.62,Mays Cancer Center (UT Health San Antonio),156.4,3.1,113.6,77.5,164.0,Mays Cancer Center (UT Health San Antonio)
 48335,Mitchell,48,0,0.1,1,"Tarrant, Texas",221.8,3.81,"Taylor, Texas",68.7,1.24,Harold C. Simmons Comprehensive Cancer Center (UTSW),247.7,4.36,254.5,76.8,283.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48337,Montague,48,0,0.6,1,"Tarrant, Texas",78.9,1.69,"Tarrant, Texas",78.9,1.69,Harold C. Simmons Comprehensive Cancer Center (UTSW),93.7,2.03,80.3,80.3,93.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48339,Montgomery,48,67,0.2,1,"Harris, Texas",30.5,0.54,"Montgomery, Texas",0.0,0.0,MD Anderson Cancer Center,40.4,0.77,34.3,0.0,43.6,Dan L Duncan Comprehensive Cancer Center (Baylor)
+48339,Montgomery,48,66,0.2,1,"Harris, Texas",30.5,0.54,"Montgomery, Texas",0.0,0.0,MD Anderson Cancer Center,40.4,0.77,34.3,0.0,43.6,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48341,Moore,48,0,1.2,1,"Oklahoma, Oklahoma",274.3,5.28,"Lubbock, Texas",177.8,3.42,Stephenson Cancer Center (Oklahoma),275.9,5.18,300.8,194.9,301.9,Stephenson Cancer Center (Oklahoma)
 48343,Morris,48,0,0.3,1,"Dallas, Texas",135.6,2.38,"Smith, Texas",71.2,1.53,Harold C. Simmons Comprehensive Cancer Center (UTSW),138.7,2.46,145.3,73.9,149.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48345,Motley,48,0,0.2,1,"Oklahoma, Oklahoma",262.6,5.23,"Lubbock, Texas",84.7,1.75,Stephenson Cancer Center (Oklahoma),260.5,5.14,259.2,81.9,257.7,Stephenson Cancer Center (Oklahoma)
@@ -2794,14 +2794,14 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 49029,Morgan,49,0,0.2,1,"Salt Lake, Utah",48.7,0.95,"Salt Lake, Utah",48.7,0.95,Huntsman Cancer Institute (Utah),42.7,0.86,39.0,39.0,27.4,Huntsman Cancer Institute (Utah)
 49031,Piute,49,0,0.5,1,"Salt Lake, Utah",190.2,3.65,"Salt Lake, Utah",190.2,3.65,Huntsman Cancer Institute (Utah),200.7,3.95,196.6,196.6,207.7,Huntsman Cancer Institute (Utah)
 49033,Rich,49,0,2.6,1,"Salt Lake, Utah",131.4,2.8,"Salt Lake, Utah",131.4,2.8,Huntsman Cancer Institute (Utah),125.4,2.7,102.5,102.5,90.7,Huntsman Cancer Institute (Utah)
-49035,Salt Lake,49,330,0.2,1,"Salt Lake, Utah",0.0,0.0,"Salt Lake, Utah",0.0,0.0,Huntsman Cancer Institute (Utah),13.8,0.32,0.0,0.0,11.8,Huntsman Cancer Institute (Utah)
+49035,Salt Lake,49,332,0.2,1,"Salt Lake, Utah",0.0,0.0,"Salt Lake, Utah",0.0,0.0,Huntsman Cancer Institute (Utah),13.8,0.32,0.0,0.0,11.8,Huntsman Cancer Institute (Utah)
 49037,San Juan,49,0,2.8,1,"Salt Lake, Utah",309.9,6.25,"Mesa, Colorado",191.1,3.77,UNM Comprehensive Cancer Center,305.5,6.36,300.5,145.7,279.9,UNM Comprehensive Cancer Center
 49039,Sanpete,49,0,1.1,1,"Salt Lake, Utah",107.0,2.14,"Salt Lake, Utah",107.0,2.14,Huntsman Cancer Institute (Utah),117.6,2.45,106.0,106.0,115.5,Huntsman Cancer Institute (Utah)
 49041,Sevier,49,0,0.1,1,"Salt Lake, Utah",149.6,2.89,"Salt Lake, Utah",149.6,2.89,Huntsman Cancer Institute (Utah),160.1,3.2,155.0,155.0,165.8,Huntsman Cancer Institute (Utah)
 49043,Summit,49,0,1.0,1,"Salt Lake, Utah",32.0,0.67,"Salt Lake, Utah",32.0,0.67,Huntsman Cancer Institute (Utah),25.1,0.53,29.6,29.6,23.5,Huntsman Cancer Institute (Utah)
 49045,Tooele,49,0,0.2,1,"Salt Lake, Utah",37.9,0.82,"Salt Lake, Utah",37.9,0.82,Huntsman Cancer Institute (Utah),40.1,0.79,28.0,28.0,36.6,Huntsman Cancer Institute (Utah)
 49047,Uintah,49,0,0.6,1,"Salt Lake, Utah",169.2,3.47,"Mesa, Colorado",143.9,3.07,Huntsman Cancer Institute (Utah),162.3,3.33,148.3,129.0,144.5,Huntsman Cancer Institute (Utah)
-49049,Utah,49,4,1.0,1,"Salt Lake, Utah",31.3,0.57,"Salt Lake, Utah",31.3,0.57,Huntsman Cancer Institute (Utah),41.8,0.87,31.9,31.9,40.8,Huntsman Cancer Institute (Utah)
+49049,Utah,49,3,1.0,1,"Salt Lake, Utah",31.3,0.57,"Salt Lake, Utah",31.3,0.57,Huntsman Cancer Institute (Utah),41.8,0.87,31.9,31.9,40.8,Huntsman Cancer Institute (Utah)
 49051,Wasatch,49,0,0.1,1,"Salt Lake, Utah",46.7,0.91,"Salt Lake, Utah",46.7,0.91,Huntsman Cancer Institute (Utah),39.9,0.77,34.1,34.1,34.2,Huntsman Cancer Institute (Utah)
 49053,Washington,49,8,0.0,1,"Salt Lake, Utah",289.9,4.71,"Clark, Nevada",124.1,2.21,Huntsman Cancer Institute (Utah),300.4,5.01,308.6,135.9,305.2,Mayo Clinic Cancer Center – Phoenix
 49055,Wayne,49,0,3.9,1,"Salt Lake, Utah",196.3,3.91,"Salt Lake, Utah",196.3,3.91,Huntsman Cancer Institute (Utah),206.8,4.22,191.0,191.0,200.7,Huntsman Cancer Institute (Utah)
@@ -2945,7 +2945,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 51740,Portsmouth,51,3,0.3,1,"Richmond, Virginia",89.9,1.84,"Norfolk, Virginia",8.8,0.24,VCU Massey Comprehensive Cancer Center,87.5,1.53,93.8,8.0,92.2,VCU Massey Comprehensive Cancer Center
 51750,Radford,51,0,0.6,1,"Forsyth, North Carolina",97.3,2.1,"Roanoke, Virginia",39.8,0.8,Wake Forest Baptist Comprehensive Cancer Center,97.5,2.1,87.2,41.5,87.3,Wake Forest Baptist Comprehensive Cancer Center
 51760,Richmond,51,154,0.7,1,"Richmond, Virginia",0.0,0.0,"Richmond, Virginia",0.0,0.0,VCU Massey Comprehensive Cancer Center,2.9,0.08,0.0,0.0,2.5,VCU Massey Comprehensive Cancer Center
-51770,Roanoke,51,39,0.4,1,"Forsyth, North Carolina",106.1,2.45,"Roanoke, Virginia",0.0,0.0,Wake Forest Baptist Comprehensive Cancer Center,106.3,2.46,99.3,0.0,99.5,Wake Forest Baptist Comprehensive Cancer Center
+51770,Roanoke,51,38,0.4,1,"Forsyth, North Carolina",106.1,2.45,"Roanoke, Virginia",0.0,0.0,Wake Forest Baptist Comprehensive Cancer Center,106.3,2.46,99.3,0.0,99.5,Wake Forest Baptist Comprehensive Cancer Center
 51775,Salem,51,13,0.0,1,"Forsyth, North Carolina",108.6,2.49,"Roanoke, Virginia",6.4,0.17,Wake Forest Baptist Comprehensive Cancer Center,108.8,2.49,98.9,6.4,99.1,Wake Forest Baptist Comprehensive Cancer Center
 51790,Staunton,51,0,0.0,1,"Charlottesville, Virginia",37.4,0.8,"Charlottesville, Virginia",37.4,0.8,University of Virginia Cancer Center,37.0,0.79,39.7,39.7,39.3,University of Virginia Cancer Center
 51800,Suffolk,51,1,1.0,1,"Richmond, Virginia",85.5,1.86,"Norfolk, Virginia",21.4,0.5,VCU Massey Comprehensive Cancer Center,84.5,1.79,87.0,21.5,85.7,VCU Massey Comprehensive Cancer Center
@@ -2958,7 +2958,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 53005,Benton,53,28,1.7,1,"King, Washington",203.7,3.61,"Benton, Washington",0.0,0.0,Fred Hutch/UW/Seattle Children's Cancer Consortium,210.5,3.78,200.0,0.0,206.4,Knight Cancer Institute (OHSU)
 53007,Chelan,53,3,1.9,1,"King, Washington",139.7,2.89,"Snohomish, Washington",127.7,2.7,Fred Hutch/UW/Seattle Children's Cancer Consortium,138.6,3.01,105.6,105.6,112.2,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53009,Clallam,53,0,0.9,1,"King, Washington",137.7,2.79,"Pierce, Washington",112.1,2.27,Fred Hutch/UW/Seattle Children's Cancer Consortium,140.1,2.91,80.9,70.6,71.9,Fred Hutch/UW/Seattle Children's Cancer Consortium
-53011,Clark,53,47,0.5,1,"Multnomah, Oregon",13.7,0.27,"Clark, Washington",0.0,0.0,Knight Cancer Institute (OHSU),18.5,0.4,13.6,0.0,17.5,Knight Cancer Institute (OHSU)
+53011,Clark,53,48,0.5,1,"Multnomah, Oregon",13.7,0.27,"Clark, Washington",0.0,0.0,Knight Cancer Institute (OHSU),18.5,0.4,13.6,0.0,17.5,Knight Cancer Institute (OHSU)
 53013,Columbia,53,0,0.1,1,"Multnomah, Oregon",262.2,4.85,"Benton, Washington",70.7,1.43,Knight Cancer Institute (OHSU),267.8,5.0,261.4,74.9,269.9,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53015,Cowlitz,53,17,0.2,1,"Multnomah, Oregon",49.1,0.81,"Clark, Washington",40.7,0.67,Knight Cancer Institute (OHSU),49.2,0.86,54.1,42.3,54.8,Knight Cancer Institute (OHSU)
 53017,Douglas,53,0,4.7,1,"King, Washington",145.9,3.05,"Snohomish, Washington",133.9,2.86,Fred Hutch/UW/Seattle Children's Cancer Consortium,144.8,3.17,114.9,114.9,121.7,Fred Hutch/UW/Seattle Children's Cancer Consortium
@@ -2969,7 +2969,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 53027,Grays Harbor,53,18,0.7,1,"King, Washington",106.0,2.04,"Thurston, Washington",51.9,1.07,Fred Hutch/UW/Seattle Children's Cancer Consortium,108.4,2.16,98.1,52.7,95.9,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53029,Island,53,0,2.5,1,"King, Washington",109.7,2.1,"Whatcom, Washington",72.0,1.55,Fred Hutch/UW/Seattle Children's Cancer Consortium,103.2,2.06,57.7,31.6,49.4,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53031,Jefferson,53,2,0.5,1,"King, Washington",105.6,2.06,"Pierce, Washington",80.0,1.55,Fred Hutch/UW/Seattle Children's Cancer Consortium,108.0,2.18,50.4,35.7,41.1,Fred Hutch/UW/Seattle Children's Cancer Consortium
-53033,King,53,386,1.7,1,"King, Washington",0.0,0.0,"King, Washington",0.0,0.0,Fred Hutch/UW/Seattle Children's Cancer Consortium,15.0,0.34,0.0,0.0,9.3,Fred Hutch/UW/Seattle Children's Cancer Consortium
+53033,King,53,387,1.7,1,"King, Washington",0.0,0.0,"King, Washington",0.0,0.0,Fred Hutch/UW/Seattle Children's Cancer Consortium,15.0,0.34,0.0,0.0,9.3,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53035,Kitsap,53,18,0.2,1,"King, Washington",66.7,1.31,"Pierce, Washington",41.1,0.79,Fred Hutch/UW/Seattle Children's Cancer Consortium,69.1,1.43,23.1,23.1,16.1,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53037,Kittitas,53,0,0.2,1,"King, Washington",97.5,1.65,"King, Washington",97.5,1.65,Fred Hutch/UW/Seattle Children's Cancer Consortium,104.3,1.82,99.0,99.0,107.6,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53039,Klickitat,53,0,1.2,1,"Multnomah, Oregon",90.3,1.94,"Clark, Washington",89.6,1.91,Knight Cancer Institute (OHSU),95.1,2.08,86.9,82.5,93.1,Knight Cancer Institute (OHSU)
@@ -2982,7 +2982,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 53053,Pierce,53,59,1.3,1,"King, Washington",35.8,0.75,"Pierce, Washington",0.0,0.0,Fred Hutch/UW/Seattle Children's Cancer Consortium,38.2,0.87,32.5,0.0,37.7,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53055,San Juan,53,0,14.7,1,"King, Washington",100.2,2.0,"Whatcom, Washington",62.5,1.46,Fred Hutch/UW/Seattle Children's Cancer Consortium,93.7,1.97,94.6,33.9,85.8,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53057,Skagit,53,18,0.3,1,"King, Washington",69.2,1.2,"Whatcom, Washington",29.1,0.64,Fred Hutch/UW/Seattle Children's Cancer Consortium,62.8,1.17,76.2,30.7,69.3,Fred Hutch/UW/Seattle Children's Cancer Consortium
-53059,Skamania,53,1,1.5,1,"Multnomah, Oregon",44.9,0.92,"Clark, Washington",44.2,0.89,Knight Cancer Institute (OHSU),49.7,1.05,40.7,36.4,46.9,Knight Cancer Institute (OHSU)
+53059,Skamania,53,0,1.5,1,"Multnomah, Oregon",44.9,0.92,"Clark, Washington",44.2,0.89,Knight Cancer Institute (OHSU),49.7,1.05,40.7,36.4,46.9,Knight Cancer Institute (OHSU)
 53061,Snohomish,53,58,0.4,1,"King, Washington",30.1,0.55,"Snohomish, Washington",0.0,0.0,Fred Hutch/UW/Seattle Children's Cancer Consortium,23.6,0.52,31.3,0.0,26.1,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53063,Spokane,53,59,0.9,1,"King, Washington",279.5,4.51,"Spokane, Washington",0.0,0.0,Fred Hutch/UW/Seattle Children's Cancer Consortium,286.3,4.67,271.9,0.0,277.9,Fred Hutch/UW/Seattle Children's Cancer Consortium
 53065,Stevens,53,0,2.5,1,"King, Washington",318.4,6.01,"Spokane, Washington",59.8,1.28,Fred Hutch/UW/Seattle Children's Cancer Consortium,324.3,6.97,252.7,55.3,257.3,Fred Hutch/UW/Seattle Children's Cancer Consortium
@@ -3011,7 +3011,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 54033,Harrison,54,14,0.4,1,"Allegheny, Pennsylvania",100.1,2.37,"Monongalia, West Virginia",38.3,0.69,UPMC Hillman Cancer Center,102.6,2.45,99.0,37.9,100.0,UPMC Hillman Cancer Center
 54035,Jackson,54,0,0.6,1,"Franklin, Ohio",124.1,2.46,"Kanawha, West Virginia",40.7,0.68,OSU Comprehensive Cancer Center – James,125.8,2.53,126.4,39.7,128.0,OSU Comprehensive Cancer Center – James
 54037,Jefferson,54,0,0.1,1,"Fairfax, Virginia",53.0,1.11,"Fairfax, Virginia",53.0,1.11,Georgetown Lombardi Comprehensive Cancer Center,53.4,1.15,50.1,50.1,58.7,Georgetown Lombardi Comprehensive Cancer Center
-54039,Kanawha,54,21,0.3,1,"Franklin, Ohio",159.6,3.17,"Kanawha, West Virginia",0.0,0.0,OSU Comprehensive Cancer Center – James,160.9,3.21,160.6,0.0,162.0,OSU Comprehensive Cancer Center – James
+54039,Kanawha,54,22,0.3,1,"Franklin, Ohio",159.6,3.17,"Kanawha, West Virginia",0.0,0.0,OSU Comprehensive Cancer Center – James,160.9,3.21,160.6,0.0,162.0,OSU Comprehensive Cancer Center – James
 54041,Lewis,54,0,0.2,1,"Allegheny, Pennsylvania",123.1,2.89,"Monongalia, West Virginia",56.8,1.05,UPMC Hillman Cancer Center,125.6,2.97,121.4,59.7,122.5,UPMC Hillman Cancer Center
 54043,Lincoln,54,0,3.8,1,"Fayette, Kentucky",157.8,2.91,"Kanawha, West Virginia",31.9,0.84,Markey Cancer Center (Kentucky),157.7,2.92,159.1,29.7,159.9,Markey Cancer Center (Kentucky)
 54045,Logan,54,0,0.9,1,"Fayette, Kentucky",175.7,4.16,"Kanawha, West Virginia",57.4,1.37,Markey Cancer Center (Kentucky),175.6,4.17,165.5,46.8,166.4,Markey Cancer Center (Kentucky)
@@ -3087,7 +3087,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 55075,Marinette,55,34,5.2,1,"Milwaukee, Wisconsin",180.9,3.73,"Marinette, Wisconsin",0.0,0.0,UW Carbone Cancer Center,201.2,4.05,181.5,0.0,201.0,UW Carbone Cancer Center
 55077,Marquette,55,0,1.4,1,"Dane, Wisconsin",59.8,1.3,"Portage, Wisconsin",55.6,0.94,UW Carbone Cancer Center,61.3,1.34,61.0,57.1,60.9,UW Carbone Cancer Center
 55078,Menominee,55,0,0.7,1,"Milwaukee, Wisconsin",152.7,2.85,"Oconto, Wisconsin",38.1,0.81,UW Carbone Cancer Center,157.5,3.2,158.9,28.8,159.4,UW Carbone Cancer Center
-55079,Milwaukee,55,217,0.1,1,"Milwaukee, Wisconsin",0.0,0.0,"Milwaukee, Wisconsin",0.0,0.0,UW Carbone Cancer Center,77.6,1.39,0.0,0.0,89.2,UW Carbone Cancer Center
+55079,Milwaukee,55,218,0.1,1,"Milwaukee, Wisconsin",0.0,0.0,"Milwaukee, Wisconsin",0.0,0.0,UW Carbone Cancer Center,77.6,1.39,0.0,0.0,89.2,UW Carbone Cancer Center
 55081,Monroe,55,0,0.2,1,"Olmsted, Minnesota",102.2,1.8,"La Crosse, Wisconsin",30.3,0.51,Mayo Clinic Cancer Center – Rochester,101.0,1.78,103.9,34.4,102.3,UW Carbone Cancer Center
 55083,Oconto,55,31,0.9,1,"Milwaukee, Wisconsin",147.3,2.99,"Oconto, Wisconsin",0.0,0.0,UW Carbone Cancer Center,164.0,3.36,154.9,0.0,169.1,UW Carbone Cancer Center
 55085,Oneida,55,52,1.0,1,"Dane, Wisconsin",203.1,3.69,"Oneida, Wisconsin",0.0,0.0,UW Carbone Cancer Center,204.6,3.73,218.6,0.0,218.4,UW Carbone Cancer Center

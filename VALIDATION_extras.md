@@ -5,7 +5,7 @@ Checks re-run by `validate_extras.py` on 2026-10-11 (UTC).
 | Check | Result | Pass | Context |
 |---|---|---|---|
 | RUCC: every county carries a code; 2013 fallback limited to Connecticut | 3143 coded, 0 missing; 2013 fallback: 8 (09001, 09003, 09005, 09007, 09009, 09011, 09013, 09015) | ✓ |  |
-| RUCC: metro + nonmetro residents 55+ equal the national total; their weighted <20 / none shares reproduce the national figures | 98,596,429 vs 98,596,429; weighted <20 12.07% vs 12.0%; none 4.32% vs 4.3% | ✓ |  |
+| RUCC: metro + nonmetro residents 55+ equal the national total; their weighted <20 / none shares reproduce the national figures | 98,596,429 vs 98,596,429; weighted <20 12.07% vs 12.0%; none 4.38% vs 4.4% | ✓ |  |
 | RUCC: nonmetro '<20 within 60 road-mi' share recomputed independently from tract_access.csv | 43.0% vs rucc.js 43.0%; metro 6.2% (nonmetro / metro ratio 6.9×) | ✓ |  |
 | RUCC: state metro + nonmetro populations equal state totals | 0 mismatches | ✓ |  |
 | RUCC: exact residents 55+ with fewer than 20 / no trials within 60 road-mi (n_l20, n_z60) on every metro and nonmetro group, recounted from tract_access.csv | 101 groups, 0 differ; nation 11,879,390 short of trials (6,760,543 nonmetro + 5,118,847 metro) | ✓ |  |
@@ -22,7 +22,7 @@ Checks re-run by `validate_extras.py` on 2026-10-11 (UTC).
 | Burden: the four cells partition the classified counties | 495 + 986 + 768 + 777 = 3026 vs 3026 | ✓ |  |
 | Burden: plausibility read of the largest high-burden/low-access counties by annual diagnoses | Leon (12); Lafayette (22); Butte (06); Harrison (28); Bay (12) | ✓ | same-session read; mid-sized metros without a trial hub within 60 road-miles — not independently reviewed |
 | Burden: cancer-type-specific 'none within 60 road-mi' shares present for every named type | 20 types × 3143 counties | ✓ |  |
-| ZIP lookup: site points match the payload one-to-one; ZCTAs cover the 50 states + DC | 2438 site points vs 2438 in DATA.SP; 33,640 ZCTAs, 51 states | ✓ |  |
+| ZIP lookup: site points match the payload one-to-one; ZCTAs cover the 50 states + DC | 2422 site points vs 2422 in DATA.SP; 33,640 ZCTAs, 51 states | ✓ |  |
 | ZIP lookup: every ZCTA's county exists in the payload | 0 bad | ✓ |  |
 | ZIP lookup: spot check — nearest site point to ZIP 77030 (Texas Medical Center) is in Harris County within ~2 miles | 0.2 mi; facilities there include ['Site-104', '014', '069'] | ✓ |  |
 | ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites | 7 site points within 60 est. road-mi | ✓ |  |

@@ -971,6 +971,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 12086,33136,sylvester cancer center,university of miami miller school of medicine sylvester cancer center,university of miami miller school of medicine sylvester cancer center
 12086,33136,sylvester cancer center,university of miami sylvester cancer center,university of miami sylvester cancer center
 12086,33136,sylvester comprehensive cancer center,sylvester comprehensive cancer center miami,sylvester comprehensive cancer center miami
+12086,33136,sylvester comprehensive cancer center,sylvester comprehensive cancer center university of miami,sylvester comprehensive cancer center university of miami
 12086,33136,sylvester comprehensive cancer center,sylvester comprehensive cancer center university of miami health system,sylvester comprehensive cancer center university of miami health system
 12086,33136,sylvester comprehensive cancer center,sylvester comprehensive cancer center university of miami hospital and clinics,sylvester comprehensive cancer center university of miami hospital and clinics
 12086,33136,sylvester comprehensive cancer center,sylvester comprehensive cancer center university of miami miller school of medicine,sylvester comprehensive cancer center university of miami miller school of medicine
@@ -981,7 +982,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 12086,33136,sylvester comprehensive cancer center,university of miami school of medicine sylvester comprehensive cancer center sccc,university of miami school of medicine sylvester comprehensive cancer center sccc
 12086,33136,sylvester comprehensive cancer center,university of miami sylvester comprehensive cancer center,university of miami sylvester comprehensive cancer center
 12086,33136,sylvester comprehensive cancer center miami,university of miami health system sylvester comprehensive cancer center miami,university of miami health system sylvester comprehensive cancer center miami
+12086,33136,sylvester comprehensive cancer center university of miami,sylvester comprehensive cancer center university of miami health system,sylvester comprehensive cancer center university of miami health system
+12086,33136,sylvester comprehensive cancer center university of miami,sylvester comprehensive cancer center university of miami hospital and clinics,sylvester comprehensive cancer center university of miami hospital and clinics
+12086,33136,sylvester comprehensive cancer center university of miami,sylvester comprehensive cancer center university of miami miller school of medicine,sylvester comprehensive cancer center university of miami miller school of medicine
 12086,33136,university of miami,sylvester cancer center university of miami,sylvester cancer center university of miami
+12086,33136,university of miami,sylvester comprehensive cancer center university of miami,sylvester comprehensive cancer center university of miami
 12086,33136,university of miami,sylvester comprehensive cancer center university of miami health system,sylvester comprehensive cancer center university of miami health system
 12086,33136,university of miami,sylvester comprehensive cancer center university of miami hospital and clinics,sylvester comprehensive cancer center university of miami hospital and clinics
 12086,33136,university of miami,sylvester comprehensive cancer center university of miami miller school of medicine,sylvester comprehensive cancer center university of miami miller school of medicine
@@ -1980,7 +1985,9 @@ county_fips,zip,shorter,longer,suggested_canonical
 26125,48073,oakland medical group,profound research llc mhp medonc royal oak oakland medical group location,profound research llc mhp medonc royal oak oakland medical group location
 26125,48084,michigan institute of urology,michigan institute of urology pc,michigan institute of urology pc
 26125,48084,michigan institute of urology,michigan institute of urology solaris,michigan institute of urology solaris
+26125,48084,michigan institute of urology,michigan institute of urology solaris health,michigan institute of urology solaris health
 26125,48084,michigan institute of urology,michigan institute of urology town center,michigan institute of urology town center
+26125,48084,michigan institute of urology solaris,michigan institute of urology solaris health,michigan institute of urology solaris health
 26125,48334,karmanos cancer institute,karmanos cancer institute weisberg cancer treatment center,karmanos cancer institute weisberg cancer treatment center
 26125,48334,weisberg cancer treatment center,karmanos cancer institute weisberg cancer treatment center,karmanos cancer institute weisberg cancer treatment center
 26125,48341,saint joseph mercy oakland,trinity health saint joseph mercy oakland hospital,trinity health saint joseph mercy oakland hospital
@@ -2418,7 +2425,6 @@ county_fips,zip,shorter,longer,suggested_canonical
 34023,08903,cancer institute of new jersey,rutgers cancer institute of new jersey,rutgers cancer institute of new jersey
 34023,08903,cancer institute of new jersey,rutgers cancer institute of new jersey robert wood johnson university hospital,rutgers cancer institute of new jersey robert wood johnson university hospital
 34023,08903,rutgers cancer institute of new jersey,rutgers cancer institute of new jersey robert wood johnson university hospital,rutgers cancer institute of new jersey robert wood johnson university hospital
-34023,08903,rwjbarnabas health robert wood johnson university hospita,rwjbarnabas health robert wood johnson university hospital somerset,rwjbarnabas health robert wood johnson university hospital somerset
 34025,07740,monmouth medical center,rwjbarnabas health monmouth medical center,rwjbarnabas health monmouth medical center
 34025,07748,memoral sloan kettering monmouth,memoral sloan kettering monmouth consent only,memoral sloan kettering monmouth consent only
 34025,07748,memorial sloan kettering monmouth,memorial sloan kettering monmouth all protocol activities,memorial sloan kettering monmouth all protocol activities
@@ -3742,6 +3748,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,research,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
 47037,37203,research,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,research,sarah cannon research institute usa tn,sarah cannon research institute usa tn
+47037,37203,research,sarah cannon research scri tennessee,sarah cannon research scri tennessee
 47037,37203,research,sarah canon research institute scri oncology partners,sarah canon research institute scri oncology partners
 47037,37203,research,tennessee oncology greco hainsworth center for research,tennessee oncology greco hainsworth center for research
 47037,37203,research,tennessee oncology nashville sarah cannon research institute,tennessee oncology nashville sarah cannon research institute
@@ -3772,6 +3779,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,sarah cannon,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
 47037,37203,sarah cannon,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,sarah cannon,sarah cannon research institute usa tn,sarah cannon research institute usa tn
+47037,37203,sarah cannon,sarah cannon research scri tennessee,sarah cannon research scri tennessee
 47037,37203,sarah cannon,sarah cannon scri oncology partners,sarah cannon scri oncology partners
 47037,37203,sarah cannon,sarah cannon tennessee oncology,sarah cannon tennessee oncology
 47037,37203,sarah cannon,tennessee oncology nashville sarah cannon research institute,tennessee oncology nashville sarah cannon research institute
@@ -3795,6 +3803,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 47037,37203,sarah cannon research,sarah cannon research institute scri the scri oncology research consortium,sarah cannon research institute scri the scri oncology research consortium
 47037,37203,sarah cannon research,sarah cannon research institute tennessee oncology,sarah cannon research institute tennessee oncology
 47037,37203,sarah cannon research,sarah cannon research institute usa tn,sarah cannon research institute usa tn
+47037,37203,sarah cannon research,sarah cannon research scri tennessee,sarah cannon research scri tennessee
 47037,37203,sarah cannon research,tennessee oncology nashville sarah cannon research institute,tennessee oncology nashville sarah cannon research institute
 47037,37203,sarah cannon research,the sarah cannon research institute tennessee oncology,the sarah cannon research institute tennessee oncology
 47037,37203,sarah cannon research institue,sarah cannon research institue oncology,sarah cannon research institue oncology
@@ -4644,6 +4653,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 53067,98506,vista oncology,vista oncology inc ps,vista oncology inc ps
 53077,98902,north star lodge,multicare cancer institute north star lodge,multicare cancer institute north star lodge
 53077,98902,north star lodge,north star lodge cancer center at yakima valley memorial hospital,north star lodge cancer center at yakima valley memorial hospital
+54039,25304,charleston area medical center,charleston area medical center camc,charleston area medical center camc
 54061,26506,west virginia,university of west virginia,university of west virginia
 54061,26506,west virginia,west virginia university,west virginia university
 54061,26506,west virginia,west virginia university cancer institute,west virginia university cancer institute
