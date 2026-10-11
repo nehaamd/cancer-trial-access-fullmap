@@ -17,7 +17,8 @@
     "sites_of_removed_trials": 57,
     "counties_with_changed_trial_count": 148,
     "counties_crossing_a_menu_threshold": 2,
-    "method_version": 3
+    "method_version": 4,
+    "previous_method_version": 3
   },
   "history": [
     {
@@ -57,7 +58,7 @@
       "pull": "2026-10-11",
       "registry_data": "2026-10-09",
       "trials": 4007,
-      "method": 3,
+      "method": 4,
       "l20": 12.0,
       "z60": 4.3,
       "g60b": 38.1,
@@ -76,6 +77,12 @@
       "version": 3,
       "date": "2026-10-05",
       "note": "Which registry rows count as a place, and which studies count as cancer trials. A row that names a telemedicine or virtual service instead of a clinic is no longer a site: one fully decentralized study listed such a row in 107 cities, and it had been the only trial within 60 road-miles for about 346,000 residents 55+. Rows whose ZIP code is a typing error (the same named hospital is listed repeatedly in the stated city and never near that ZIP) are located where the registry's other rows list that hospital. The registry search now also asks by name for cancers it files outside its neoplasm category or has not coded (myelodysplastic syndromes, myelofibrosis, adenocarcinomas, glioblastoma, metastases: 107 more trials on Oct 5, 2026), and studies kept only for wording such as 'tumor necrosis factor' or 'non-malignant' are dropped (8 studies). On the same registry data (Sep 30, 2026) the telemedicine, ZIP and screening rules moved the national figures as follows: none within 60 miles 3.8% to 4.2%; fewer than 20 trials within 60 miles 11.8% to 12.0%; counties with any trial 848 to 833; distances to broad menus and NCI centers did not move. The wider search then added trials without moving these shares."
+    },
+    {
+      "version": 4,
+      "date": "2026-10-10",
+      "first_pull": "2026-10-11",
+      "note": "Where a registry row is counted and drawn. A row whose ZIP code has no Census area (a PO box or a hospital's own ZIP) took the county of the ZIP's first three digits even when its own city lay in another county, and was drawn at that county's center: 58 rows sat 43 to 251 miles from their city (31 Tawas City, Michigan rows in Tuscola County; Liberal, Kansas in Morton County; Pueblo in Conejos County, Colorado; Omaha in Lincoln County, Nebraska; Dallas in Cass County, Texas). The row's own city now decides the county and the row is drawn there; one spelling rule for city names (Saint/St., Fort/Ft., Lexington-Fayette, Nashville-Davidson) puts 21 more rows at their city. A trial for spread from a named cancer (to the brain, liver or peritoneum) is classified with that cancer (6 trials), and leptomeningeal disease counts as cancer (NCT07814352, which was in the Oct 5 pull but appears among the trials newly listed between Oct 5 and Oct 9). First used for the registry data of Oct 9, 2026 (pulled Oct 11). On the same registry data (Oct 5, 2026) these rules moved 194 site rows of 100 trials to another county and changed the trial count of 69 counties (Tuscola, Michigan 31 to 2; Iosco 0 to 31; Midland 1 to 12; Washtenaw 233 to 240; Stanly, North Carolina 2 to 9; Union, New Jersey 29 to 36; Pueblo, Colorado and Hudson, New Jersey 19 to 20); counties with any trial 838 to 833; none within 60 road-miles 4.2% to 4.3% (76,538 more residents 55+: 92 census tracts around Texarkana, North Platte, the San Luis Valley, northeast Alabama and the Oklahoma Panhandle lost a trial that existed only at a misplaced point, and 17 tracts gained one); fewer than 20 trials within 60 road-miles 12.0%, unchanged; distances to broad menus and NCI centers did not move. The registry's own changes between Oct 5 and Oct 9 moved no one across 'none within 60 road-miles' and added 57,428 residents 55+ to 'fewer than 20' (still 12.0%)."
     }
   ],
   "new_trials": [
