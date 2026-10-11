@@ -153,7 +153,17 @@ def aggregate(tr):
     tr["w"] = tr.pop55; tr["state_fips"] = tr.county_fips.str[:2]
     st = tr.groupby("state_fips").apply(agg, include_groups=False).reset_index(); st.to_csv(OUT / "state_metrics_v3.csv", index=False)
     nat = agg(tr); nat = {k: (int(v) if isinstance(v, (np.integer,)) else float(v) if isinstance(v, (np.floating,)) else v) for k, v in nat.items()}
-    nat["method_version"] = config.METHOD_VERSION   # kept with every snapshot, so a later refresh knows whether two pulls were calculated the same way
+    # kept with every snapshot, so a later refresh knows whether two pulls were calculated the same way. A re-aggregation of an existing
+    # tract table (--from-tract-access) keeps that table's own version (its stamp, or the version in force at its pull date), so re-running
+    # it on old files does not mark them with rules that were registered later.
+    nat["method_version"] = config.METHOD_VERSION
+    if "--from-tract-access" in sys.argv:
+        try:
+            prev = json.load(open(OUT / "national_metrics_v3.json")).get("method_version", 1)
+            pulled = json.load(open("data/raw/fetch_log.json")).get("timestamp_utc", "")
+            nat["method_version"] = config.method_of(prev, pulled)
+        except (OSError, ValueError):
+            pass
     json.dump(nat, open(OUT / "national_metrics_v3.json", "w"), indent=2, default=str)
     # invariants
     inv = {"tract_pool_monotone_violations": int(((tr.trials_within_30rdmi > tr.trials_within_60rdmi) | (tr.trials_within_60rdmi > tr.trials_within_120rdmi)).sum()),
