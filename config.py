@@ -78,6 +78,14 @@ VIRTUAL_SITE_PATTERN = (r"\btele-?(?:medicine|health)\b|\bvirtual\b|\bdecentrali
 VIRTUAL_SITES_ARE_LOCATIONS = False
 
 # ---------------------------------------------------------------------------
+# Names members of Congress go by that data/ref/legislators-current.json does not carry (it has a "nickname" field for some members:
+# "Bernie" for Bernard Sanders). Keyed by bioguide id; the value is the full name as searched. build_community.py and
+# fetch_cosponsors.py add it as "nick" so the pages' search finds the member by it. Add a member only when the name is verified on the
+# member's own house.gov / senate.gov page. B001323: Nicholas J. Begich III, AK-At Large ("Representative Nick Begich", begich.house.gov, 11 Oct 2026).
+# ---------------------------------------------------------------------------
+NICKNAMES_EXTRA = {"B001323": "Nick Begich"}
+
+# ---------------------------------------------------------------------------
 # Distance thresholds (miles). Straight-line distance is inflated by
 # ROAD_FACTOR to approximate driving distance. State this in the methods.
 # ---------------------------------------------------------------------------
