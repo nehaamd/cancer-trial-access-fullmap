@@ -59,6 +59,8 @@ window.SITE = (function () {
       box.addEventListener('click', e => { if (isHead(e.target)) flip(); }); });
     const openHash = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); if (!t) return; const box = t.closest('.fold') || (t.querySelector && t.querySelector(':scope > .fold')); if (box && !box.classList.contains('open')) { box.classList.add('open'); const h = box.querySelector(':scope > h2'); const b = h && h.querySelector(':scope > button.fold-btn'); if (b) b.setAttribute('aria-expanded', 'true'); } setTimeout(() => t.scrollIntoView({ block: 'start' }), 30); };
     openHash(); window.addEventListener('hashchange', openHash); }
+  // Drive time from hours, as the map writes it: "a few minutes", "about 25 min", "about 1 h 50 min".
+  function driveTime(h) { const m = Math.round(h * 60); if (m < 5) return 'a few minutes'; if (m < 60) return `about ${Math.round(m / 5) * 5} min`; const hh = Math.floor(m / 60), mm = Math.round((m - hh * 60) / 10) * 10; return mm === 60 ? `about ${hh + 1} h` : `about ${hh} h${mm ? ' ' + mm + ' min' : ''}`; }
   const plural = (n, one, many) => n === 1 ? one : (many || one + 's');
   const listJoin = a => a.length <= 1 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "A, B and C"
   function ordinal(n) { const v = n % 100, s = ['th', 'st', 'nd', 'rd']; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
@@ -80,5 +82,5 @@ window.SITE = (function () {
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireHeader); else wireHeader();
 
-  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal };
+  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, driveTime };
 })();

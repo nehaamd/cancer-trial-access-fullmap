@@ -99,7 +99,7 @@
     <h2>What does this map measure?</h2>
     <p>It measures <b>geographic availability</b>: how many recruiting cancer treatment trials have a site within driving distance of where people live. Nothing more.</p>
     <ul>
-      <li><b>Which trials.</b> Recruiting, interventional, treatment-purpose studies on ClinicalTrials.gov with at least one US site, open to at least some adults aged 55 or older — <span data-f="trials"></span> on <span data-f="date"></span>. Each study is tagged with the cancers it names; about three in ten name several and are counted for each.</li>
+      <li><b>Which trials.</b> Recruiting, interventional, treatment-purpose studies on ClinicalTrials.gov with at least one US site, open to at least some adults aged 55 or older — <span data-f="trials"></span> on <span data-f="date"></span>. Each study is tagged with the cancers it names. <span data-f="multi">About three in ten</span> name several cancers, or only general terms such as “solid tumors”, and form a multi-cancer group; a trial that names several cancers counts for each of them when you choose a cancer type.</li>
       <li><b>Where the trials are.</b> Every recruiting site is placed at the center of its ZIP code (or at its city for the very large rural ZIP codes). A row that names a telemedicine or virtual service rather than a clinic is shown separately and not counted as a place.</li>
       <li><b>Where people live.</b> Each of the country’s <span data-f="tracts"></span> census tracts has a population center and a count of residents aged 55 and older. Distances run on the highway network from that point to each site.</li>
       <li><b>The figures.</b> For each tract: the number of trials with a site within 60 road-miles. For a county, district, state or the nation: the share of residents 55+ whose tract has fewer than 20 (the map’s exploratory threshold), or none, weighted by population. Also the distance to the nearest NCI-designated cancer center and to the nearest county with 100 or more trials (a “broad menu”).</li>
@@ -191,7 +191,8 @@
 <script>
 (function () { const M = window.COMMUNITY.meta; const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull };
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
-  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? M.nci.centers + ' adult' : 'about 70' };
+  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta), 'long'), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? M.nci.centers + ' adult' : 'about 70',
+    multi: M.pct_multi ? `About ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][Math.round(M.pct_multi / 10)]} in ten (${M.pct_multi}%)` : 'About three in ten' };   // community.js meta.pct_multi, the share the map's Methods quotes
   document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || '');
   SITE.foldOnPhone([...document.querySelectorAll('main section')], [0]); })();
 </script>
