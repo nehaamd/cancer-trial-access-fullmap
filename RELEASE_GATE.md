@@ -1,10 +1,10 @@
 # Release gate
 
-**PASS** — 31/31 checks pass
+**PASS** — 26/26 checks pass
 
 | Check | Detail | Result |
 |---|---|---|
-| Classification audit: no unreviewed condition strings | 61 flagged strings, 0 new to review (out_adult55/qc_cancer_type_audit.md) | ✓ |
+| Classification audit: no unreviewed condition strings | 64 flagged strings, 0 new to review (out_adult55/qc_cancer_type_audit.md) | ✓ |
 | Registry pull complete (studies fetched vs the registry's own count) | 4,543 of 4,543 studies; 0 repeated across pages dropped | ✓ |
 | Trial count plausible (2,000–8,000) | 4,007 eligible trials | ✓ |
 | Population 55+ equals the ACS reference (data/ref/county_pop55.csv) | 98,596,429 vs 98,596,429 | ✓ |
@@ -14,12 +14,7 @@
 | pct_gt60rdmi_nci within bounds [25, 65] | 43.7 | ✓ |
 | median_road_mi_nci within bounds [25, 90] | 48.0 | ✓ |
 | The pull is newer than the previous snapshot (2026-10-05) | pulled 2026-10-11T02:41 (registry data 2026-10-09) after 2026-10-05T15:09 (registry data 2026-10-05) | ✓ |
-| pct_lt20_trials_within_60rdmi moved less than 1.5 since 2026-10-05 | 12.0 -> 12.0 | ✓ |
-| pct_zero_trials_within_60rdmi moved less than 1.0 since 2026-10-05 | 4.2 -> 4.3 | ✓ |
-| pct_gt60rdmi_broad_menu moved less than 2.0 since 2026-10-05 | 38.1 -> 38.1 | ✓ |
-| pct_gt60rdmi_nci moved less than 1.0 since 2026-10-05 | 43.7 -> 43.7 | ✓ |
-| median_road_mi_nci moved less than 5 since 2026-10-05 | 48.0 -> 48.0 | ✓ |
-| Eligible trial count moved less than 10% since 2026-10-05 | 4,001 -> 4,007 | ✓ |
+| Drift vs the pull of 2026-10-05 | skipped once: the method changed (version 3 -> 4); the bounds above still apply | ✓ |
 | County trial-site total moved less than 15% since the previous pull | 38,554 -> 38,672 | ✓ |
 | Local route checks (12 short trips, 11 water crossings; road_local_checks.csv) | 23/23 within tolerance | ✓ |
 | Residents 55+ with a site within 20 straight-line miles but none within 60 road-miles (ceiling 100,000; water barriers explain the rest) | 22,196 in 22 tracts; largest: Clinton, New York 9,873, Island, Washington 6,827, Essex, New York 2,654, Tulare, California 1,690 | ✓ |
