@@ -34,6 +34,8 @@ def main():
             n, bid = l.get("name") or {}, (l.get("id") or {}).get("bioguide")
             official = n.get("official_full") or f"{n.get('first', '')} {n.get('last', '')}"
             if bid and n.get("nickname") and n["nickname"].lower() not in official.lower(): nick[bid] = f"{n['nickname']} {n['last']}"
+    import config   # names the dataset does not carry ("Nick Begich"), keyed by bioguide (config.NICKNAMES_EXTRA)
+    nick.update(getattr(config, "NICKNAMES_EXTRA", {}))
     # county -> districts (a county can touch several)
     cd_of = {}
     for k, d in DI.items():
