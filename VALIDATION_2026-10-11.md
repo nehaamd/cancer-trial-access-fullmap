@@ -154,6 +154,8 @@ The Library of Congress bill-status XML on govinfo, read on 11 October through a
 
 ## 8. The repository's own checks, re-run on 11 October
 
+*Note added later on 11 October, on the fix branch:* after the review fixes, `validate_extras.py` has 28 checks (28 pass), `validate_v3.py` 73 of 74 (the known Tier 4 universe check), and the release gate passes with the six drift rows folded into one "skipped once" row while the method stamp moves 3 → 4; `VALIDATION_extras.md` was re-run on the 11 October data. The figures below are those of this pass, before the fixes.
+
 `validate_extras.py`: 25 of 25 pass. Its output file was restored afterwards. The committed `VALIDATION_extras.md` is still dated 6 October with the figures of the 5 October data (12.01%, 4.20%, nonmetro 43.1%), because the refresh runs these checks only inside `validate_v3.py`, whose `VALIDATION_v3.md` is current. `release_gate.py`: PASS, 27 of 27; `RELEASE_GATE.md` was rewritten identically.
 
 ## 9. Changes to `validate_outside.py` for this pass
