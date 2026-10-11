@@ -1,10 +1,10 @@
 {
   "site_rows": 53949,
   "geocode": {
-    "zip_centroid": 49276,
+    "zip_centroid": 49274,
     "city_centroid_large_zip": 2318,
     "city_centroid": 2061,
-    "city_centroid_zip_spans_counties": 253,
+    "city_centroid_zip_spans_counties": 255,
     "zip_typo_corrected": 25,
     "county_centroid": 9,
     "facility_listing": 7
@@ -13,33 +13,33 @@
   "unlocated_list": [],
   "site_points": 2422,
   "site_points_off_network_gt30mi": 0,
-  "tract_sitepoint_pairs_within_120": 5766313,
-  "county_sitepoint_pairs_within_120": 97605,
+  "tract_sitepoint_pairs_within_120": 5766515,
+  "county_sitepoint_pairs_within_120": 97607,
   "screen_site_near_in_straight_line_far_by_road": {
     "rule": "contiguous states; nearest site point within 20 straight-line miles, none within 60 road-miles",
     "tracts": 21,
-    "pop55": 20506,
+    "pop55": 20970,
     "pct_of_pop55": 0.021,
     "largest_counties": [
       {
         "county": "Clinton, New York",
-        "pop55": 9873
+        "pop55": 10361
       },
       {
         "county": "Island, Washington",
-        "pop55": 6827
+        "pop55": 6719
       },
       {
         "county": "Essex, New York",
-        "pop55": 2654
+        "pop55": 2692
       },
       {
         "county": "Knox, Maine",
-        "pop55": 980
+        "pop55": 1064
       },
       {
         "county": "Galveston, Texas",
-        "pop55": 172
+        "pop55": 134
       },
       {
         "county": "Snohomish, Washington",
@@ -47,5 +47,5 @@
       }
     ]
   },
-  "seconds": 86
+  "seconds": 106
 }

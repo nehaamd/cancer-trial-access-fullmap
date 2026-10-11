@@ -882,7 +882,7 @@ NCT05939414,Vanderbilt University Medical Center,Nashville,TN,37232,47037,zip_ce
 NCT05939414,Univ of Texas Southwest Med Center,Dallas,TX,75390,48113,zip_centroid,376
 NCT05939414,Rio Grande Urology,El Paso,TX,79912,48141,zip_centroid,310
 NCT05939414,Virginia Oncology Associates,Norfolk,VA,23502,51710,zip_centroid,882
-NCT05939414,Blue Ridge Cancer Center,Wytheville,VA,24382,51197,zip_centroid,889
+NCT05939414,Blue Ridge Cancer Center,Wytheville,VA,24382,51197,zip_centroid,890
 NCT06311578,NYU Langone Health,New York,NY,10016,36061,zip_centroid,1603
 NCT06311578,UPMC Cancer Centers,Pittsburgh,PA,15232,42003,zip_centroid,1498
 NCT06311578,MD Anderson Cancer Center,Houston,TX,77030,48201,zip_centroid,194
@@ -1359,8 +1359,8 @@ NCT05879926,University of Kansas Health System Saint Francis Campus,Topeka,KS,66
 NCT05879926,University of Kansas Hospital-Westwood Cancer Center,Westwood,KS,66205,20091,zip_centroid,1187
 NCT05879926,King's Daughter's Medical Center,Ashland,KY,41101,21019,zip_centroid,1070
 NCT05879926,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT05879926,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
-NCT05879926,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT05879926,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
+NCT05879926,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT05879926,Baptist Health Hardin,Elizabethtown,KY,42701,21093,zip_centroid,967
 NCT05879926,Baptist Health Lexington,Lexington,KY,40503,21067,zip_centroid,1015
 NCT05879926,CommonSpirit Saint Joseph Hospital - Lexington,Lexington,KY,40504,21067,zip_centroid,1024
@@ -2397,7 +2397,7 @@ NCT04269902,Ballad Health Cancer Care - Kingsport,Kingsport,TN,37660,47163,zip_c
 NCT04269902,Baptist Memorial Hospital and Cancer Center-Memphis,Memphis,TN,38120,47157,zip_centroid,698
 NCT04269902,Huntsman Cancer Institute/University of Utah,Salt Lake City,UT,84112,49035,zip_centroid,1622
 NCT04269902,Ballad Health Cancer Care - Bristol,Bristol,VA,24201,51520,zip_centroid,867
-NCT04269902,Ballad Health Cancer Care - Norton,Norton,VA,24273,51195,zip_centroid,890
+NCT04269902,Ballad Health Cancer Care - Norton,Norton,VA,24273,51720,city_centroid_zip_spans_counties,888
 NCT04269902,VCU Massey Cancer Center at Stony Point,Richmond,VA,23235,51041,zip_centroid,943
 NCT04269902,VCU Massey Comprehensive Cancer Center,Richmond,VA,23298,51760,zip_centroid,949
 NCT04269902,FHCC Overlake,Bellevue,WA,98004,53033,zip_centroid,2385
@@ -4308,7 +4308,7 @@ NCT05253651,"Oncology & Hematology Associates of Southwest Virginia, Inc. D.B.A 
 NCT05253651,Oncology & Hematology Associates of Southwest Virginia,Low Moor,VA,24457,51005,zip_centroid,990
 NCT05253651,Oncology & Hematology Associates of Southwest Virginia Inc dba Blue Ridge Cancer Care,Roanoke,VA,24014,51770,city_centroid_zip_spans_counties,920
 NCT05253651,"Oncology & Hematology Associates of Southwest Virginia, Inc. D.B.A Blue Ridge Cancer Care",Salem,VA,24153,51775,city_centroid_large_zip,921
-NCT05253651,Oncology & Hematology Associates of Southwest Virginia,Wytheville,VA,24382,51197,zip_centroid,889
+NCT05253651,Oncology & Hematology Associates of Southwest Virginia,Wytheville,VA,24382,51197,zip_centroid,890
 NCT05253651,Providence Regional Cancer Partnership,Everett,WA,98201,53061,zip_centroid,2408
 NCT05253651,Providence Regional Medical Center Everett,Everett,WA,98201,53061,zip_centroid,2408
 NCT05253651,"Northwest Cancer Specialists, P.C.",Vancouver,WA,98684,53011,zip_centroid,2311
@@ -4857,7 +4857,7 @@ NCT05561387,Mercy Medical Center-West Lakes,West Des Moines,IA,50266,19049,zip_c
 NCT05561387,Central Care Cancer Center - Garden City,Garden City,KS,67846,20055,city_centroid_large_zip,1010
 NCT05561387,Central Care Cancer Center - Great Bend,Great Bend,KS,67530,20009,zip_centroid,1058
 NCT05561387,Flaget Memorial Hospital,Bardstown,KY,40004,21179,zip_centroid,991
-NCT05561387,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT05561387,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT05561387,Saint Joseph Hospital,Lexington,KY,40504,21067,zip_centroid,1024
 NCT05561387,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT05561387,Saint Joseph Hospital East,Lexington,KY,40509,21067,zip_centroid,1014
@@ -5880,8 +5880,8 @@ NCT05929768,Ascension Via Christi Hospitals Wichita,Wichita,KS,67214,20173,zip_c
 NCT05929768,Cancer Center of Kansas - Wichita,Wichita,KS,67214,20173,zip_centroid,969
 NCT05929768,Cancer Center of Kansas - Winfield,Winfield,KS,67156,20035,zip_centroid,913
 NCT05929768,Flaget Memorial Hospital,Bardstown,KY,40004,21179,zip_centroid,991
-NCT05929768,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
-NCT05929768,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT05929768,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
+NCT05929768,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT05929768,Baptist Health Hardin,Elizabethtown,KY,42701,21093,zip_centroid,967
 NCT05929768,Baptist Health Lexington,Lexington,KY,40503,21067,zip_centroid,1015
 NCT05929768,Saint Joseph Hospital,Lexington,KY,40504,21067,zip_centroid,1024
@@ -6940,7 +6940,7 @@ NCT04267848,Cancer Center of Kansas - Pratt,Pratt,KS,67124,20151,city_centroid_l
 NCT04267848,Cancer Center of Kansas-Wichita Medical Arts Tower,Wichita,KS,67208,20173,zip_centroid,968
 NCT04267848,Ascension Via Christi Hospitals Wichita,Wichita,KS,67214,20173,zip_centroid,969
 NCT04267848,Cancer Center of Kansas - Wichita,Wichita,KS,67214,20173,zip_centroid,969
-NCT04267848,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT04267848,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT04267848,Baptist Health Hardin,Elizabethtown,KY,42701,21093,zip_centroid,967
 NCT04267848,Baptist Health Lexington,Lexington,KY,40503,21067,zip_centroid,1015
 NCT04267848,Baptist Health Hamburg,Lexington,KY,40509,21067,zip_centroid,1014
@@ -7288,7 +7288,7 @@ NCT04267848,Ballad Health Cancer Care - Bristol,Bristol,VA,24201,51520,zip_centr
 NCT04267848,Augusta Health Center for Cancer and Blood Disorders,Fishersville,VA,22939,51015,zip_centroid,1028
 NCT04267848,Centra Alan B Pearson Regional Cancer Center,Lynchburg,VA,24501,51680,city_centroid_zip_spans_counties,931
 NCT04267848,Kaiser Permanente Tysons Corner Medical Center,McLean,VA,22102,51059,zip_centroid,1165
-NCT04267848,Ballad Health Cancer Care - Norton,Norton,VA,24273,51195,zip_centroid,890
+NCT04267848,Ballad Health Cancer Care - Norton,Norton,VA,24273,51720,city_centroid_zip_spans_counties,888
 NCT04267848,Virginia Cancer Institute,Richmond,VA,23229,51087,zip_centroid,956
 NCT04267848,VCU Massey Cancer Center at Stony Point,Richmond,VA,23235,51041,zip_centroid,943
 NCT04267848,VCU Massey Comprehensive Cancer Center,Richmond,VA,23298,51760,zip_centroid,949
@@ -8070,7 +8070,7 @@ NCT02523014,Mercy Medical Center-West Lakes,West Des Moines,IA,50266,19049,zip_c
 NCT02523014,Central Care Cancer Center - Great Bend,Great Bend,KS,67530,20009,zip_centroid,1058
 NCT02523014,Mercy Hospital Pittsburg,Pittsburg,KS,66762,20037,zip_centroid,928
 NCT02523014,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT02523014,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT02523014,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT02523014,CommonSpirit Saint Joseph Hospital - Lexington,Lexington,KY,40504,21067,zip_centroid,1024
 NCT02523014,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT02523014,CommonSpirit Saint Joseph Medical Center - East Lexington,Lexington,KY,40509,21067,zip_centroid,1014
@@ -10167,7 +10167,7 @@ NCT07226999,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA B
 NCT07226999,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Salem,VA,24153,51775,city_centroid_large_zip,921
 NCT07226999,Virginia Oncology Associates,Virginia Beach,VA,23456,51810,zip_centroid,873
 NCT07226999,Virginia Oncology Associates,Williamsburg,VA,23188,51095,zip_centroid,924
-NCT07226999,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,889
+NCT07226999,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,890
 NCT05765500,Dana-Farber Cancer Institute,Boston,MA,02215,25025,zip_centroid,1987
 NCT05765500,Dana-Farber Cancer Institute at Foxborough,Foxborough,MA,02035,25021,zip_centroid,1929
 NCT05232409,The Valley Hospital-Luckow Pavilion,Paramus,NJ,07652,34003,zip_centroid,1685
@@ -10944,7 +10944,7 @@ NCT06058377,University of Kansas Hospital-Indian Creek Campus,Overland Park,KS,6
 NCT06058377,Salina Regional Health Center,Salina,KS,67401,20169,zip_centroid,1129
 NCT06058377,University of Kansas Health System Saint Francis Campus,Topeka,KS,66606,20177,zip_centroid,1197
 NCT06058377,University of Kansas Hospital-Westwood Cancer Center,Westwood,KS,66205,20091,zip_centroid,1187
-NCT06058377,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT06058377,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT06058377,CommonSpirit Saint Joseph Medical Center - East Lexington,Lexington,KY,40509,21067,zip_centroid,1014
 NCT06058377,University of Kentucky/Markey Cancer Center,Lexington,KY,40536,21067,zip_centroid,1017
 NCT06058377,Abbeville General Hospital,Abbeville,LA,70510,22113,city_centroid_large_zip,217
@@ -11765,7 +11765,7 @@ NCT07421700,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Bl
 NCT07421700,Virginia Oncology Associates,Norfolk,VA,23502,51710,zip_centroid,882
 NCT07421700,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Blue Ridge Cancer Care",Roanoke,VA,24014,51770,city_centroid_zip_spans_counties,920
 NCT07421700,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Blue Ridge Cancer Care",Salem,VA,24153,51775,city_centroid_large_zip,921
-NCT07421700,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,889
+NCT07421700,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,890
 NCT07421700,Eye Associates Northwest - Edmonds Clinic,Edmonds,WA,98026,53061,zip_centroid,2405
 NCT07421700,Eye Associates Northwest - Kirkland Clinic,Kirkland,WA,98034,53033,zip_centroid,2397
 NCT07421700,Eye Associates Northwest - Ballard Clinic and Surgery Center,Seattle,WA,98104,53033,zip_centroid,2382
@@ -11960,7 +11960,7 @@ NCT06784752,Tennessee Oncology,Nashville,TN,37203,47037,zip_centroid,840
 NCT06784752,Texas Oncology,Dallas,TX,75251,48113,zip_centroid,395
 NCT06784752,Virginia Cancer Specialists,Fairfax,VA,22031,51059,zip_centroid,1132
 NCT06784752,Virginia Oncology Associates,Norfolk,VA,23502,51710,zip_centroid,882
-NCT06784752,Blue Ridge Cancer Center,Wytheville,VA,24382,51197,zip_centroid,889
+NCT06784752,Blue Ridge Cancer Center,Wytheville,VA,24382,51197,zip_centroid,890
 NCT06784752,Northwest Medical Specialties,Tacoma,WA,98405,53053,zip_centroid,2365
 NCT01185132,Rocky Mountain Cancer Centers - Aurora,Aurora,CO,80012,08005,zip_centroid,1308
 NCT01185132,Rocky Mountain Cancer Centers - Boulder,Boulder,CO,80303,08013,zip_centroid,1385
@@ -13913,7 +13913,7 @@ NCT04566328,Central Care Cancer Center - Garden City,Garden City,KS,67846,20055,
 NCT04566328,Central Care Cancer Center - Great Bend,Great Bend,KS,67530,20009,zip_centroid,1058
 NCT04566328,Mercy Hospital Pittsburg,Pittsburg,KS,66762,20037,zip_centroid,928
 NCT04566328,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT04566328,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT04566328,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT04566328,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT04566328,CommonSpirit Saint Joseph Medical Center - East Lexington,Lexington,KY,40509,21067,zip_centroid,1014
 NCT04566328,CommonSpirit Saint Joseph Hospital London,London,KY,40741,21125,zip_centroid,901
@@ -17027,7 +17027,7 @@ NCT05633654,Huntsman Cancer Institute,Salt Lake City,UT,84112,49035,zip_centroid
 NCT05633654,University of Virginia,Charlottesville,VA,22908,51540,zip_centroid,1018
 NCT05633654,Inova Fairfax Hospital,Fairfax,VA,22031,51059,zip_centroid,1132
 NCT05633654,Bon Secours Cancer Institute at St. Francis,Midlothian,VA,23114,51041,zip_centroid,939
-NCT05633654,"Oncology and Hematology Associates of Southwest Virginia, Inc",Wytheville,VA,24382,51197,zip_centroid,889
+NCT05633654,"Oncology and Hematology Associates of Southwest Virginia, Inc",Wytheville,VA,24382,51197,zip_centroid,890
 NCT05633654,Providence Regional Cancer System,Lacey,WA,98503,53067,zip_centroid,2358
 NCT05633654,MultiCare Regional Cancer Center - Tacoma,Puyallup,WA,98372,53053,zip_centroid,2363
 NCT05633654,"Northwest Medical Specialties, PLLC",Puyallup,WA,98373,53053,zip_centroid,2361
@@ -19807,7 +19807,7 @@ NCT06256588,GSK Investigational Site,Dallas,TX,75246,48113,zip_centroid,369
 NCT06256588,GSK Investigational Site,Fort Worth,TX,76104,48439,zip_centroid,360
 NCT06256588,GSK Investigational Site,San Antonio,TX,78217,48029,zip_centroid,173
 NCT06256588,GSK Investigational Site,Fredericksburg,VA,22408,51177,zip_centroid,1034
-NCT06256588,GSK Investigational Site,Wytheville,VA,24382,51197,zip_centroid,889
+NCT06256588,GSK Investigational Site,Wytheville,VA,24382,51197,zip_centroid,890
 NCT06835569,Research Site,Orlando,FL,32827,12095,zip_centroid,135
 NCT06835569,Research Site,Boston,MA,02114,25025,zip_centroid,1991
 NCT06835569,Research Site,Boston,MA,02115,25025,zip_centroid,1984
@@ -20428,7 +20428,7 @@ NCT06492616,Inova Schar Cancer Institute,Fairfax,VA,22031,51059,zip_centroid,113
 NCT06492616,Virginia Cancer Specialists,Fairfax,VA,22031,51059,zip_centroid,1132
 NCT06492616,Virginia Oncology Associates,Newport News,VA,23606,51700,zip_centroid,900
 NCT06492616,Virginia Cancer Institute,Richmond,VA,23229,51087,zip_centroid,956
-NCT06492616,"Oncology & Hematology Associates of Southwest Virginia, Inc",Wytheville,VA,24382,51197,zip_centroid,889
+NCT06492616,"Oncology & Hematology Associates of Southwest Virginia, Inc",Wytheville,VA,24382,51197,zip_centroid,890
 NCT06492616,Swedish Cancer Institute - Edmonds,Edmonds,WA,98206,53061,city_centroid,2404
 NCT06492616,Swedish Cancer Institute - Issaquah,Issaquah,WA,98029,53033,zip_centroid,2378
 NCT06492616,Fred Hutch CC at Evergreen HMC,Kirkland,WA,98034,53033,zip_centroid,2397
@@ -21476,7 +21476,7 @@ NCT05812807,Cancer Center of Kansas-Wichita Medical Arts Tower,Wichita,KS,67208,
 NCT05812807,Ascension Via Christi Hospitals Wichita,Wichita,KS,67214,20173,zip_centroid,969
 NCT05812807,Cancer Center of Kansas - Wichita,Wichita,KS,67214,20173,zip_centroid,969
 NCT05812807,Cancer Center of Kansas - Winfield,Winfield,KS,67156,20035,zip_centroid,913
-NCT05812807,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT05812807,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT05812807,Baptist Health Hardin,Elizabethtown,KY,42701,21093,zip_centroid,967
 NCT05812807,Baptist Health Lexington,Lexington,KY,40503,21067,zip_centroid,1015
 NCT05812807,Markey Cancer Center at Lexington Clinic,Lexington,KY,40504,21067,zip_centroid,1024
@@ -24289,7 +24289,7 @@ NCT07144280,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA B
 NCT07144280,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Blue Ridge Cancer Care",Roanoke,VA,24014,51770,city_centroid_zip_spans_counties,920
 NCT07144280,Oncology & Hematology Associates of Southwest Virginia Inc dba Blue Ridge Cancer Care,Salem,VA,24153,51775,city_centroid_large_zip,921
 NCT07144280,"Shenandoah Oncology, P.C.",Winchester,VA,22601,51840,zip_centroid,1225
-NCT07144280,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,889
+NCT07144280,"Oncology & Hematology Associates of Southwest Virginia, Inc.,DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,890
 NCT07144280,American Oncology Network Vista Oncology Division-West office,Olympia,WA,98502,53067,zip_centroid,2359
 NCT07144280,American Oncology Network Vista Oncology Division-East office,Olympia,WA,98506,53067,zip_centroid,2360
 NCT07050186,Northwestern University,Chicago,IL,60611,17031,zip_centroid,1901
@@ -26126,7 +26126,7 @@ NCT07222800,Virginia Cancer Institute,Richmond,VA,23235,51041,zip_centroid,943
 NCT07222800,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Roanoke,VA,24014,51770,city_centroid_zip_spans_counties,920
 NCT07222800,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Salem,VA,24153,51775,city_centroid_large_zip,921
 NCT07222800,"Virginia Cancer Specialists, PC",Woodbridge,VA,22191,51153,zip_centroid,1095
-NCT07222800,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,889
+NCT07222800,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,890
 NCT07222800,"Northwest Medical Specialties, PLLC",Bonney Lake,WA,98391,53053,zip_centroid,2362
 NCT07222800,Swedish Cancer Institute - Edmonds Campus,Edmonds,WA,98026,53061,zip_centroid,2405
 NCT07222800,Swedish Medical Center - Edmonds,Edmonds,WA,98026,53061,zip_centroid,2405
@@ -26980,7 +26980,7 @@ NCT07028853,UVA Health Cancer Care Pantops,Charlottesville,VA,22911,51003,zip_ce
 NCT07028853,Blue Ridge Cancer Care,Low Moor,VA,24457,51005,zip_centroid,990
 NCT07028853,Blue Ridge Cancer Care,Roanoke,VA,24014,51770,city_centroid_zip_spans_counties,920
 NCT07028853,Blue Ridge Cancer Care,Salem,VA,24153,51775,city_centroid_large_zip,921
-NCT07028853,Blue Ridge Cancer Care,Wytheville,VA,24382,51197,zip_centroid,889
+NCT07028853,Blue Ridge Cancer Care,Wytheville,VA,24382,51197,zip_centroid,890
 NCT07028853,"Northwest Medical Specialties, PLLC",Bonney Lake,WA,98391,53053,zip_centroid,2362
 NCT07028853,"Northwest Medical Specialties, PLLC",Federal Way,WA,98003,53033,zip_centroid,2368
 NCT07028853,"Northwest Medical Specialties, PLLC",Gig Harbor,WA,98332,53053,zip_centroid,2371
@@ -29518,7 +29518,7 @@ NCT06592924,UI Health Care Mission Cancer and Blood - Waukee Clinic,Waukee,IA,50
 NCT06592924,Mercy Medical Center-West Lakes,West Des Moines,IA,50266,19049,zip_centroid,1812
 NCT06592924,The Iowa Clinic PC,West Des Moines,IA,50266,19049,zip_centroid,1812
 NCT06592924,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT06592924,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT06592924,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT06592924,CommonSpirit Saint Joseph Hospital - Lexington,Lexington,KY,40504,21067,zip_centroid,1024
 NCT06592924,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT06592924,CommonSpirit Saint Joseph Medical Center - East Lexington,Lexington,KY,40509,21067,zip_centroid,1014
@@ -31999,7 +31999,7 @@ NCT06998940,McFarland Clinic - Trinity Cancer Center,Fort Dodge,IA,50501,19187,z
 NCT06998940,McFarland Clinic - Marshalltown,Marshalltown,IA,50158,19127,zip_centroid,1925
 NCT06998940,Mercy Medical Center-West Lakes,West Des Moines,IA,50266,19049,zip_centroid,1812
 NCT06998940,Flaget Memorial Hospital,Bardstown,KY,40004,21179,zip_centroid,991
-NCT06998940,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT06998940,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT06998940,Saint Joseph Hospital,Lexington,KY,40504,21067,zip_centroid,1024
 NCT06998940,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT06998940,Saint Joseph Hospital East,Lexington,KY,40509,21067,zip_centroid,1014
@@ -32548,7 +32548,7 @@ NCT07227415,"Virginia Cancer Specialists, PC",Fairfax,VA,22031,51059,zip_centroi
 NCT07227415,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Low Moor,VA,24457,51005,zip_centroid,990
 NCT07227415,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Roanoke,VA,24014,51770,city_centroid_zip_spans_counties,920
 NCT07227415,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Salem,VA,24153,51775,city_centroid_large_zip,921
-NCT07227415,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,889
+NCT07227415,"Oncology & Hematology Associates of Southwest Virginia, Inc., DBA Blue Ridge Cancer Care",Wytheville,VA,24382,51197,zip_centroid,890
 NCT07227415,Fred Hutchinson Cancer Center,Seattle,WA,98109,53033,zip_centroid,2387
 NCT07227415,University Of Washington Medical Center,Seattle,WA,98195,53033,zip_centroid,2390
 NCT07227415,"Northwest Cancer Specialists, P.C.",Vancouver,WA,98684,53011,zip_centroid,2311
@@ -35481,7 +35481,7 @@ NCT05806515,NorthShore University HealthSystem-Highland Park Hospital,Highland P
 NCT05806515,North Shore Medical Center,Skokie,IL,60076,17031,zip_centroid,1922
 NCT05806515,Alegent Health Mercy Hospital,Council Bluffs,IA,51503,19155,city_centroid_large_zip,1742
 NCT05806515,Flaget Memorial Hospital,Bardstown,KY,40004,21179,zip_centroid,991
-NCT05806515,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT05806515,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT05806515,Saint Joseph Hospital,Lexington,KY,40504,21067,zip_centroid,1024
 NCT05806515,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT05806515,Saint Joseph Hospital East,Lexington,KY,40509,21067,zip_centroid,1014
@@ -35911,7 +35911,7 @@ NCT06769126,The University of Kansas Cancer Center - Olathe,Olathe,KS,66061,2009
 NCT06769126,University of Kansas Cancer Center-Overland Park,Overland Park,KS,66210,20091,zip_centroid,1157
 NCT06769126,Salina Regional Health Center,Salina,KS,67401,20169,zip_centroid,1129
 NCT06769126,University of Kansas Hospital-Westwood Cancer Center,Westwood,KS,66205,20091,zip_centroid,1187
-NCT06769126,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT06769126,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT06769126,Baptist Health Lexington,Lexington,KY,40503,21067,zip_centroid,1015
 NCT06769126,Baptist Health Hamburg,Lexington,KY,40509,21067,zip_centroid,1014
 NCT06769126,University of Maryland/Greenebaum Cancer Center,Baltimore,MD,21201,24510,zip_centroid,1244
@@ -36458,7 +36458,7 @@ NCT02734537,Central Care Cancer Center - Garden City,Garden City,KS,67846,20055,
 NCT02734537,Central Care Cancer Center - Great Bend,Great Bend,KS,67530,20009,zip_centroid,1058
 NCT02734537,Mercy Hospital Pittsburg,Pittsburg,KS,66762,20037,zip_centroid,928
 NCT02734537,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT02734537,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT02734537,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT02734537,CommonSpirit Saint Joseph Hospital - Lexington,Lexington,KY,40504,21067,zip_centroid,1024
 NCT02734537,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT02734537,CommonSpirit Saint Joseph Medical Center - East Lexington,Lexington,KY,40509,21067,zip_centroid,1014
@@ -43725,8 +43725,8 @@ NCT06580314,Central Care Cancer Center - Great Bend,Great Bend,KS,67530,20009,zi
 NCT06580314,Mercy Hospital Pittsburg,Pittsburg,KS,66762,20037,zip_centroid,928
 NCT06580314,AdventHealth Shawnee Mission,Shawnee Mission,KS,66204,20091,zip_centroid,1176
 NCT06580314,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT06580314,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
-NCT06580314,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT06580314,Baptist Health Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
+NCT06580314,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT06580314,Baptist Health Lexington,Lexington,KY,40503,21067,zip_centroid,1015
 NCT06580314,CommonSpirit Saint Joseph Hospital - Lexington,Lexington,KY,40504,21067,zip_centroid,1024
 NCT06580314,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
@@ -47353,7 +47353,7 @@ NCT05040360,Central Care Cancer Center - Garden City,Garden City,KS,67846,20055,
 NCT05040360,Central Care Cancer Center - Great Bend,Great Bend,KS,67530,20009,zip_centroid,1058
 NCT05040360,Mercy Hospital Pittsburg,Pittsburg,KS,66762,20037,zip_centroid,928
 NCT05040360,Flaget Memorial Hospital,Bardstown,KY,40004,21179,zip_centroid,991
-NCT05040360,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT05040360,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT05040360,Saint Joseph Hospital,Lexington,KY,40504,21067,zip_centroid,1024
 NCT05040360,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT05040360,Saint Joseph Hospital East,Lexington,KY,40509,21067,zip_centroid,1014
@@ -50050,7 +50050,7 @@ NCT05174169,Saint Luke's South Hospital,Overland Park,KS,66213,20091,zip_centroi
 NCT05174169,Cancer Center of Kansas-Wichita Medical Arts Tower,Wichita,KS,67208,20173,zip_centroid,968
 NCT05174169,Ascension Via Christi Hospitals Wichita,Wichita,KS,67214,20173,zip_centroid,969
 NCT05174169,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT05174169,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT05174169,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT05174169,Baptist Health Lexington,Lexington,KY,40503,21067,zip_centroid,1015
 NCT05174169,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT05174169,Baptist Health Hamburg,Lexington,KY,40509,21067,zip_centroid,1014
@@ -51784,7 +51784,7 @@ NCT07068074,University of Kansas Cancer Center-Overland Park,Overland Park,KS,66
 NCT07068074,University of Kansas Hospital-Indian Creek Campus,Overland Park,KS,66211,20091,zip_centroid,1156
 NCT07068074,University of Kansas Hospital-Westwood Cancer Center,Westwood,KS,66205,20091,zip_centroid,1187
 NCT07068074,CommonSpirit Saint Joseph Hospital - Bardstown,Bardstown,KY,40004,21179,zip_centroid,991
-NCT07068074,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,888
+NCT07068074,Commonwealth Cancer Center-Corbin,Corbin,KY,40701,21235,city_centroid_large_zip,889
 NCT07068074,CommonSpirit Saint Joseph Hospital - Lexington,Lexington,KY,40504,21067,zip_centroid,1024
 NCT07068074,Saint Joseph Radiation Oncology Resource Center,Lexington,KY,40504,21067,zip_centroid,1024
 NCT07068074,CommonSpirit Saint Joseph Medical Center - East Lexington,Lexington,KY,40509,21067,zip_centroid,1014

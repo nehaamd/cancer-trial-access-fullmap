@@ -1,51 +1,46 @@
 {
   "ct_tracts_acs": 884,
   "ct_tracts_rekeyed": 882,
-  "tracts_with_pop_and_centroid": 84396,
-  "tracts_acs_total": 84396,
+  "tracts_with_pop_and_centroid": 84397,
+  "tracts_acs_total": 84397,
   "tracts_gazetteer": 84411,
-  "tract_pop55_total": 98577002,
-  "tract_cd_rows": 89397,
+  "tract_pop55_total": 100001021,
+  "tract_cd_rows": 89398,
   "tracts_without_cd_row": 3,
   "cd_count": 436,
   "connecticut_pop55_old_pep2021": {
-    "09001": 297730,
-    "09003": 278589,
-    "09005": 71627,
-    "09007": 61817,
-    "09009": 279557,
-    "09011": 92957,
-    "09013": 47895,
-    "09015": 38906
+    "09110": 308613,
+    "09120": 98179,
+    "09130": 67399,
+    "09140": 152231,
+    "09150": 34461,
+    "09160": 44712,
+    "09170": 184599,
+    "09180": 95006,
+    "09190": 199659
   },
   "connecticut_pop55_new_acs2023_tract_sum": {
-    "09001": 297730,
-    "09003": 278589,
-    "09005": 71627,
-    "09007": 61817,
-    "09009": 279557,
-    "09011": 92957,
-    "09013": 47895,
-    "09015": 38906
+    "09001": 302511,
+    "09003": 281279,
+    "09005": 73300,
+    "09007": 62892,
+    "09009": 282436,
+    "09011": 94072,
+    "09013": 48868,
+    "09015": 39501
   },
-  "counties_with_tract_sum_mismatch_before_raking": 2,
+  "counties_with_tract_sum_mismatch_before_raking": 1,
   "mismatch_before_raking": {
     "36103": {
-      "tract_sum": 476730,
-      "county_acs": 494965,
-      "diff": -18235
-    },
-    "36111": {
-      "tract_sum": 64619,
-      "county_acs": 65811,
-      "diff": -1192
+      "tract_sum": 483687,
+      "county_acs": 502338,
+      "diff": -18651
     }
   },
   "raking_factors": {
-    "36103": 1.03825,
-    "36111": 1.01845
+    "36103": 1.03856
   },
   "counties_with_tract_sum_mismatch_after_raking": 0,
-  "tract_pop55_total_after_raking": 98596429,
+  "tract_pop55_total_after_raking": 100019672,
   "pop_of_tracts_without_cd_row": 0
 }

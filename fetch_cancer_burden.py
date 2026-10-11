@@ -1,4 +1,4 @@
-"""Tier 3 — county cancer incidence from NCI/CDC State Cancer Profiles (NPCR + SEER, age-adjusted, 2018-2022 in the current release).
+"""Tier 3 — county cancer incidence from NCI/CDC State Cancer Profiles (NPCR + SEER, age-adjusted, five years; the source's current release, 2019-2023 since autumn 2026).
 
 One request per cancer site (parameterised URL, all US counties in one response). Every row gets an explicit status:
   ok                      rate published

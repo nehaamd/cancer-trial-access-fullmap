@@ -1,4 +1,4 @@
-"""Tier 2.2 (part 1) — national census-tract reference: population 55+ (ACS 2023 5-yr B01001), internal-point
+"""Tier 2.2 (part 1) — national census-tract reference: population 55+ (ACS 5-year (config.ACS_YEAR) B01001), internal-point
 centroids (2024 Gazetteer), and the Census 2020 tract -> 119th Congressional District relationship file.
 
 Outputs
@@ -12,11 +12,12 @@ file keys them by legacy county (090xx). The 6-digit tract code is unchanged, so
 through the relationship file (the mapping is checked to be one-to-one before use).
 """
 import io, json, zipfile
+import config
 from pathlib import Path
 import numpy as np, pandas as pd, requests
 
 REF = Path("data/ref")
-ACS = "https://www2.census.gov/programs-surveys/acs/summary_file/2023/table-based-SF/data/5YRData/acsdt5y2023-b01001.dat"
+ACS = config.acs_url("b01001")
 GAZ = "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_Gaz_tracts_national.zip"
 REL = "https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/tab20_cd11920_tract20_natl.txt"
 AGE55 = [f"B01001_E{i:03d}" for i in list(range(17, 26)) + list(range(41, 50))]
@@ -27,7 +28,7 @@ s = requests.Session()
 def main():
     log = {}
     # --- tract pop 55+ (stream the 200 MB national table, keep tract rows) ---
-    if not (REF / "tract_pop55_us.csv").exists():
+    if not config.acs_cache_ok(REF / "tract_pop55_us.csv"):
         rows, hdr = [], None
         with s.get(ACS, stream=True, timeout=1800) as r:
             r.raise_for_status(); r.encoding = "utf-8"
@@ -38,7 +39,7 @@ def main():
                 p = line.split("|"); g = p[0][-11:]
                 if g[:2] not in KEEP: continue
                 rows.append({"tract_acs": g, "pop55": sum(int(p[idx[v]] or 0) for v in AGE55)})
-        pd.DataFrame(rows).to_csv(REF / "tract_pop55_us.csv", index=False)
+        pd.DataFrame(rows).to_csv(REF / "tract_pop55_us.csv", index=False); config.acs_cache_mark(REF / "tract_pop55_us.csv")
     tp = pd.read_csv(REF / "tract_pop55_us.csv", dtype={"tract_acs": str})
     # --- centroids ---
     z = zipfile.ZipFile(io.BytesIO(s.get(GAZ, timeout=600).content)); name = [n for n in z.namelist() if n.endswith(".txt")][0]
@@ -71,7 +72,7 @@ def main():
     log.update({"tracts_with_pop_and_centroid": len(tr), "tracts_acs_total": len(tp), "tracts_gazetteer": len(gz), "tract_pop55_total": int(tr.pop55.sum()),
                 "tract_cd_rows": int(rel.tract.isin(set(tr.tract)).sum()), "tracts_without_cd_row": int((~tr.tract.isin(set(rel.tract))).sum()),
                 "cd_count": int(rel.cd_geoid.nunique())})
-    # --- county pop55: replace Connecticut with ACS-2023 tract sums on legacy counties ---
+    # --- county pop55: replace Connecticut with ACS tract sums on legacy counties ---
     cp = pd.read_csv(REF / "county_pop55.csv", dtype={"county_fips": str})
     ct_old = cp[cp.county_fips.str[:2] == "09"].set_index("county_fips").pop55.to_dict()
     ct_new = tr[tr.county_fips.str[:2] == "09"].groupby("county_fips").pop55.sum()

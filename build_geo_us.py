@@ -1,5 +1,6 @@
 """National reference geography for the US trial access snapshot (all states + DC)."""
 import csv, io, json, zipfile
+import config
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,7 +11,7 @@ U = {
  "zcta": "https://www2.census.gov/geo/docs/maps-data/data/rel2020/zcta520/tab20_zcta520_county20_natl.txt",
  "zcta_tract": "https://www2.census.gov/geo/docs/maps-data/data/rel2020/zcta520/tab20_zcta520_tract20_natl.txt",
  "cenpop": "https://www2.census.gov/geo/docs/reference/cenpop2020/county/CenPop2020_Mean_CO.txt",
- "acs": "https://www2.census.gov/programs-surveys/acs/summary_file/2023/table-based-SF/data/5YRData/acsdt5y2023-b01001.dat",
+ "acs": config.acs_url("b01001"),
  "cd": "https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/tab20_cd11920_county20_natl.txt",
  "gaz": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_Gaz_place_national.zip",
 }

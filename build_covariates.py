@@ -1,9 +1,10 @@
 """Reference data for the methods review: ZCTA centroids and pop 55+, county covariates."""
 import csv, io, json, zipfile
+import config
 from pathlib import Path
 import pandas as pd, requests
 
-REF = Path("data/ref"); BASE = "https://www2.census.gov/programs-surveys/acs/summary_file/2023/table-based-SF/data/5YRData/acsdt5y2023-{}.dat"
+REF = Path("data/ref"); BASE = config.acs_url("{}")
 s = requests.Session()
 
 

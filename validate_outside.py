@@ -315,7 +315,7 @@ def headline_recompute(D, FI, CM):
     rel = pd.read_csv(REF / "tract_cd119.csv", dtype={"tract": str, "cd_geoid": str}); rel["share"] = rel.share.astype(float)
     m = rel.merge(tr, on="tract", how="inner"); m["w"] = m.pop55 * m.share; m["far"] = m.w * (m.road_mi_broad > 60)
     g = m.groupby("cd_geoid").agg(w=("w", "sum"), far=("far", "sum")); g = g[g.w > 0]; n73 = int((g.far / g.w >= 0.9995).sum())
-    fd = (FI.get("districts") or {}).get("all_beyond_60_broad"); rd_d = readme_num(r"(\d+) congressional districts have every resident 55\+ beyond 60 road-miles", int)
+    fd = (FI.get("districts") or {}).get("all_beyond_60_broad"); rd_d = readme_num(r"(\d+) congressional districts have every resident 55\+ (?:\([^)]*\) )?beyond 60 road-miles", int)
     rec("headline", "districts where every resident 55+ is beyond 60 road-miles of a broad menu", f"{n73} (findings.js: {fd}; README: {rd_d})", n73 == fd == rd_d)
     # README headline block
     readme = (ROOT / "README.md").read_text(encoding="utf-8"); blk = readme[readme.index("headline:start"):readme.index("headline:end")]

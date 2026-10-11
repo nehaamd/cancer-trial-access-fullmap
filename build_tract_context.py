@@ -5,7 +5,7 @@ district's "average annual new cancer cases" was the sum of every county it touc
 Harris County) that meant the district showed the whole county's figures: 23,274 cases a year and Harris County's poverty rate.
 
 What this does:
-  1. Streams four ACS 2023 5-year tables at census-tract level (same tables and cells as build_covariates.py):
+  1. Streams four ACS 5-year (config.ACS_YEAR) tables at census-tract level (same tables and cells as build_covariates.py):
        B08201 households without a vehicle, B28002 households with broadband, B27001 uninsured (all ages and 55-64), B17001 poverty.
   2. District / state / national rates = (sum of tract numerators) / (sum of tract denominators), with tracts split by a district
      boundary counted by their tract_cd119.csv share. Tracts without ACS values fall back to their county's rate (counted in *_cov).
@@ -19,11 +19,12 @@ Run after build_webapp_data_v3.py:  python3 build_tract_context.py   (about 5-10
 Inputs are looked for in the repository root first, then in data/ref, out_adult55 and docs (the pipeline layout).
 """
 import json, sys
+import config
 from pathlib import Path
 import numpy as np, pandas as pd, requests
 
 ROOT = Path(__file__).resolve().parent
-BASE = "https://www2.census.gov/programs-surveys/acs/summary_file/2023/table-based-SF/data/5YRData/acsdt5y2023-{}.dat"
+BASE = config.acs_url("{}")
 BAD = {"", "-666666666", "-999999999", "-888888888", "-222222222", "-333333333", "-555555555"}
 
 
@@ -53,9 +54,9 @@ def stream(table, want):
 
 def tract_acs():
     cache = (ROOT / "data" / "ref" if (ROOT / "data" / "ref").is_dir() else ROOT) / "tract_covariates.csv"
-    if cache.exists() and "--refetch" not in sys.argv:
+    if config.acs_cache_ok(cache) and "--refetch" not in sys.argv:
         return pd.read_csv(cache, dtype={"tract": str}).set_index("tract")
-    print("streaming ACS 2023 5-year tract tables ...", flush=True)
+    print(f"streaming {config.ACS_LABEL} tract tables ...", flush=True)
     parts = [
         stream("b08201", {"veh_den": ["B08201_E001"], "veh_num": ["B08201_E002"]}),
         stream("b28002", {"bb_den": ["B28002_E001"], "bb_num": ["B28002_E004"]}),
@@ -65,7 +66,7 @@ def tract_acs():
         stream("b17001", {"pov_den": ["B17001_E001"], "pov_num": ["B17001_E002"]}),
     ]
     t = pd.concat(parts, axis=1); t.index.name = "tract"
-    t.reset_index().to_csv(cache, index=False)
+    t.reset_index().to_csv(cache, index=False); config.acs_cache_mark(cache)
     return t
 
 
@@ -76,7 +77,7 @@ def main():
     inc = pd.read_csv(find("cancer_incidence_county.csv"), dtype={"county_fips": str}); inc = inc[inc.site == "all"].set_index("county_fips")
     acs = tract_acs()
 
-    # Connecticut: the map keys tracts on the eight legacy counties; ACS 2023 keys them on planning regions. Tract codes (last six
+    # Connecticut: the map keys tracts on the eight legacy counties; the ACS keys them on planning regions. Tract codes (last six
     # digits) were kept in the 2022 change, so match CT on state + tract code.
     ct_map = {g[:2] + g[-6:]: g for g in acs.index if g.startswith("09")}
     tr["acs_key"] = np.where(tr.tract.str.startswith("09"), (tr.tract.str[:2] + tr.tract.str[-6:]).map(ct_map), tr.tract)
@@ -132,7 +133,7 @@ def main():
     for usps, rec in D["state_data"].items():
         f = rec.get("fips")
         if f in states: rec["ctx"] = {**rec.get("ctx", {}), **states[f]}
-    D["meta"]["ctx_method"] = ("Household figures: ACS 2023 5-year census-tract tables summed over the area (tracts split by a district boundary "
+    D["meta"]["ctx_method"] = (f"Household figures: {config.ACS_LABEL} census-tract tables summed over the area (tracts split by a district boundary "
                                "counted by share). Cases: county averages apportioned by residents 55+. Incidence rate: county rates weighted by residents 55+.")
     djs.write_text(pre + "=" + json.dumps(D, separators=(",", ":")) + ";")
     print("TX-9 before:", old9); print("TX-9 after: ", D["districts"]["4809"]["ctx"]); print("TX-11 after:", D["districts"]["4811"]["ctx"])
