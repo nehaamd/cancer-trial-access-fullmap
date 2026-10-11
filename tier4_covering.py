@@ -51,8 +51,115 @@ def city_keys(state, city):
         d = re.sub(pat, rep, c)
         if d != c and d not in out: out.append(d)
     return out
+# state FIPS -> postal abbreviation (50 states + DC)
+USPS = {"01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI",
+        "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN",
+        "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH",
+        "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA",
+        "54": "WV", "55": "WI", "56": "WY"}
+
+
 def to5070(lon, lat):
     p = gpd.GeoSeries(gpd.points_from_xy(lon, lat), crs=4326).to_crs(5070); return np.column_stack([p.x.values, p.y.values])
+
+
+def miles(a, b):
+    """Approximate miles between two (lat, lon) points (flat-earth, fine within a state)."""
+    return float(np.hypot((a[0] - b[0]) * 69.0, (a[1] - b[1]) * 69.0 * np.cos(np.radians(a[0]))))
+
+
+def county_polygons():
+    """County polygons (EPSG:4326, columns GEOID, geometry) from the Census cartographic boundary file, with Connecticut's eight
+    legacy counties spliced in from the 2021 file (the 2023 file carries planning regions; every other file here uses the legacy
+    counties). Needs data/geo/cb.zip and data/geo/cb500_2021.zip."""
+    counties = gpd.read_file("zip://data/geo/cb.zip")[["STATEFP", "GEOID", "geometry"]]
+    ct2021 = gpd.read_file("zip://data/geo/cb500_2021.zip"); ct2021 = ct2021[ct2021.STATEFP == "09"][["STATEFP", "GEOID", "geometry"]].to_crs(counties.crs)
+    counties = pd.concat([counties[counties.STATEFP != "09"], ct2021], ignore_index=True)
+    return gpd.GeoDataFrame(counties, geometry="geometry", crs=ct2021.crs)[["GEOID", "geometry"]].to_crs(4326)
+
+
+# Registry city names that are not one Census place in one county. New York City's boroughs are counties, not places; "New York"
+# is the postal name of Manhattan, while the Census place "New York" spans five counties and its single point is in Brooklyn
+# (metrics_us.py keeps a borough given by the ZIP's first three digits). Such a name is placed at the county's population centre.
+CITY_COUNTY = {("NY", "new york"): "36061", ("NY", "new york city"): "36061", ("NY", "manhattan"): "36061", ("NY", "brooklyn"): "36047",
+               ("NY", "bronx"): "36005", ("NY", "the bronx"): "36005", ("NY", "queens"): "36081", ("NY", "staten island"): "36085"}
+OFFSHORE_MI = 1.0      # a place point farther than this from any county's land is moved to where the place's people live
+_GAZ = None
+
+
+def gazetteer_points():
+    """Census Gazetteer places as (state, place) -> list of (lat, lon, county FIPS, land sq mi); one list because a name can occur
+    more than once in a state (Burbank, CA is a city in Los Angeles County and a CDP in Santa Clara County). Shared by county
+    assignment (metrics_us.py) and site placement (SiteLocator), so the two can never disagree about where a city is.
+
+    The county is the one holding the place's internal point. A point that lies in no county's land - the place takes in water,
+    and the Census point of a place is not always on land - takes the nearest county (23 places: Santa Monica, Monterey,
+    Portland ME, Dunedin, ...; before October 2026 they had no county and a row naming them could not be placed by its city). A
+    point more than OFFSHORE_MI from land is also moved: San Francisco's is in the Pacific near the Farallon Islands, 28 miles
+    from the nearest San Francisco tract with residents, and the 103 registry rows that name the city without a usable ZIP (ZIP
+    94143, UCSF's own) were drawn there - 50 road-miles from the city's population centre. Such a point is replaced by the
+    residents-55+-weighted centre of the county's census tracts nearest it (no farther than the nearest one plus the place's radius),
+    which puts San Francisco 1.1 miles from UCSF Parnassus. The point and county of each place are computed once per run."""
+    global _GAZ
+    if _GAZ is not None: return _GAZ
+    gz = gazetteer_frame(); out = {}
+    for s, p, la, lo, cf, ar in zip(gz.state, gz.place, gz.lat, gz.lon, gz.county_fips, gz.aland_sqmi):
+        out.setdefault((s, p), []).append((float(la), float(lo), cf if isinstance(cf, str) else "", float(ar)))
+    cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str}).set_index("county_fips")
+    for (s, k), cf in CITY_COUNTY.items():
+        if cf in cent.index: out[(s, k)] = [(float(cent.lat[cf]), float(cent.lon[cf]), cf, 0.0)]
+    _GAZ = out
+    return out
+
+
+_GAZ_FRAME = None
+
+
+def gazetteer_frame():
+    """data/ref/gazetteer_places.csv as a DataFrame (state, place, geoid, lat, lon, name, aland_sqmi) with `county_fips` added:
+    the county of each place's point, by the rules in gazetteer_points() (a point off any county's land takes the nearest county;
+    one more than OFFSHORE_MI out to sea is moved to its county's residents). build_places.py reads this for the search box."""
+    global _GAZ_FRAME
+    if _GAZ_FRAME is not None: return _GAZ_FRAME
+    gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str, "geoid": str})
+    gz["aland_sqmi"] = pd.to_numeric(gz["aland_sqmi"], errors="coerce").fillna(0.0) if "aland_sqmi" in gz.columns else 0.0
+    co = county_polygons()
+    pts = gpd.GeoDataFrame(gz[["lat", "lon"]], geometry=gpd.points_from_xy(gz.lon, gz.lat), crs=4326)
+    j = gpd.sjoin(pts, co, how="left", predicate="within"); j = j[~j.index.duplicated(keep="first")]
+    gz["county_fips"] = j.GEOID.reindex(gz.index).values; gz["lat"] = gz.lat.astype(float); gz["lon"] = gz.lon.astype(float)
+    off = gz.county_fips.isna()
+    if off.any():
+        p5 = gpd.GeoDataFrame(gz.loc[off, ["lat"]], geometry=gpd.points_from_xy(gz.lon[off], gz.lat[off]), crs=4326).to_crs(5070)
+        n = gpd.sjoin_nearest(p5, co.to_crs(5070), how="left", distance_col="d_m"); n = n[~n.index.duplicated(keep="first")]
+        gz.loc[off, "county_fips"] = n.GEOID.reindex(gz.index[off]).values
+        far = n.index[(n.d_m / 1609.344 > OFFSHORE_MI).values]
+        if len(far):
+            tr = pd.read_csv(REF / "tracts_us.csv", dtype={"tract": str, "county_fips": str}); tr = tr[tr.pop55 > 0]
+            for i in far:
+                t = tr[tr.county_fips == gz.at[i, "county_fips"]]
+                if t.empty: continue
+                d = np.hypot((t.lat.values - gz.at[i, "lat"]) * 69.0, (t.lon.values - gz.at[i, "lon"]) * 69.0 * np.cos(np.radians(gz.at[i, "lat"])))
+                sel = d <= d.min() + max(1.0, float(np.sqrt(gz.at[i, "aland_sqmi"] / np.pi))); w = t.pop55.values[sel].astype(float)
+                gz.at[i, "lat"] = float((t.lat.values[sel] * w).sum() / w.sum()); gz.at[i, "lon"] = float((t.lon.values[sel] * w).sum() / w.sum())
+    _GAZ_FRAME = gz
+    return gz
+
+
+def find_place(state, city, near=None):
+    """(lat, lon, county FIPS, land sq mi) of the Census place a registry city string names (tier4_covering.city_keys spellings),
+    or None. When the name occurs more than once in the state, the largest place within 40 miles of `near` (lat, lon: the ZIP, or
+    the county the row is in) is taken, else the nearest; without a hint, the largest. Superior, WI is a city of 37 square miles
+    and a village of one square mile five miles south of it: a hospital in "Superior" is in the city."""
+    g = gazetteer_points()
+    for k in city_keys(state, city):
+        c = g.get((state, k))
+        if c:
+            if len(c) == 1: return c[0]
+            if near:
+                close = [q for q in c if miles(near, q) <= 40.0]
+                return max(close, key=lambda q: q[3]) if close else min(c, key=lambda q: miles(near, q))
+            return max(c, key=lambda q: q[3])
+    return None
 
 
 class SiteLocator:
@@ -63,27 +170,24 @@ class SiteLocator:
     81301, 180 from Fairbanks for 99701), which put the hospital - and every trial in it - that far from the people of its own
     town. A site in such a ZIP is placed at the Census centroid of the city the registry names, when that city is more than
     CITY_MIN_MI from the ZIP centroid (otherwise the two agree) and within twice the ZIP's radius of it (otherwise city and ZIP
-    disagree, and the ZIP is kept as the more specific of the two)."""
+    disagree, and the ZIP is kept as the more specific of the two). City points come from gazetteer_points()."""
     BIG_ZIP_SQMI = 100.0; CITY_MIN_MI = 3.0
 
     def __init__(self):
         zc = pd.read_csv(REF / "zcta_pop55.csv", dtype={"zcta": str}); self.zip = {z: (float(a), float(b)) for z, a, b in zip(zc.zcta, zc.lat, zc.lon)}
         ar = pd.read_csv(REF / "zcta_land_area.csv", dtype={"zcta": str}) if (REF / "zcta_land_area.csv").exists() else pd.DataFrame({"zcta": [], "land_sqmi": []})
         self.area = dict(zip(ar.zcta, ar.land_sqmi.astype(float)))
-        gz = pd.read_csv(REF / "gazetteer_places.csv", dtype={"state": str, "place": str}).drop_duplicates(["state", "place"])
-        self.place = {(a, b): (float(c), float(d)) for a, b, c, d in zip(gz.state, gz.place, gz.lat, gz.lon)}
+        gazetteer_points()
 
-    def city(self, state, city):
-        for k in city_keys(state, city):
-            v = self.place.get((state, k))
-            if v: return v
-        return None
+    def city(self, state, city, near=None):
+        v = find_place(state, city, near)
+        return (v[0], v[1]) if v else None
 
     def by_zip(self, zip5, state, city):
         """(lat, lon, how) for a ZIP that has a centroid; how is "zip_centroid" or "city_centroid_large_zip". None if the ZIP is unknown."""
         z = self.zip.get(zip5)
         if z is None: return None
-        a = self.area.get(zip5, 0.0); c = self.city(state, city)
+        a = self.area.get(zip5, 0.0); c = self.city(state, city, near=z)
         if c and a > self.BIG_ZIP_SQMI:
             d = float(np.hypot((z[0] - c[0]) * 69.0, (z[1] - c[1]) * 69.0 * np.cos(np.radians(z[0]))))
             if self.CITY_MIN_MI < d <= max(2.0 * np.sqrt(a / np.pi), 10.0): return c[0], c[1], "city_centroid_large_zip"
@@ -142,12 +246,18 @@ def main():
         c = loc.city(r.state, r.city)
         if c: lat.append(c[0]); lon.append(c[1]); how.append("city"); continue
         lat.append(np.nan); lon.append(np.nan); how.append("none")
-    cand["lat"], cand["lon"], cand["geocode"] = lat, lon, how; log["geocode"] = cand.geocode.value_counts().to_dict(); cand = cand[cand.geocode != "none"].copy()
+    cand["lat"], cand["lon"], cand["geocode"] = lat, lon, how; log["geocode"] = cand.geocode.value_counts().to_dict()
+    n_none = int((cand.geocode == "none").sum()); cand = cand[cand.geocode != "none"].copy()
     cxy = to5070(cand.lon.values, cand.lat.values); cd, ci = tree.query(cxy); ci = aidx[ci]; c_acc = cd * M2MI
+    n_off = int((c_acc > MAX_ACCESS_MI).sum())
     cand = cand[c_acc <= MAX_ACCESS_MI].copy(); ci = ci[c_acc <= MAX_ACCESS_MI]; cxy = cxy[c_acc <= MAX_ACCESS_MI]; c_acc = c_acc[c_acc <= MAX_ACCESS_MI]
     # prefilter: only candidates within 70 straight-line miles of some under-served tract (secondary objective superset)
     ut = cKDTree(txy[lt20]); dmin, _ = ut.query(cxy); keep = dmin * M2MI <= 70
     cand = cand[keep].reset_index(drop=True); ci, c_acc = ci[keep], c_acc[keep]; log["candidates_evaluated"] = len(cand); print(f"candidates to evaluate: {len(cand)}", flush=True)
+    # the last exclusion bucket, so that read - excluded - evaluated closes exactly (sites.html prints the four buckets)
+    log["excluded_unlocated_or_far"] = n_none + n_off + int((~keep).sum())
+    log["excluded_unlocated_or_far_detail"] = {"not_geocoded": n_none, f"more_than_{MAX_ACCESS_MI:g}_mi_from_a_road": n_off, "more_than_70_mi_from_an_underserved_tract": int((~keep).sum())}
+    assert log["candidates_read"] - log["excluded_not_a_place_or_mistyped_zip"] - log["excluded_county_has_limited_menu"] - log["excluded_facility_already_recruiting"] - log["excluded_unlocated_or_far"] == log["candidates_evaluated"]
     # ---- one bounded Dijkstra per candidate ----
     cutoff = BAND + float(np.nanmax(t_acc[np.isfinite(t_acc)])) + float(c_acc.max()) + 0.01
     prim, sec, ntr, cover_zero = np.zeros(len(cand), np.int64), np.zeros(len(cand), np.int64), np.zeros(len(cand), np.int32), []
@@ -180,10 +290,10 @@ def main():
     log["seconds"] = round(time.time() - t0); json.dump(log, open(OUT / "tier4_log.json", "w"), indent=2)
     # web payload (top 200 ranked + greedy + method)
     top = ranked.head(200)[["rank_zero", "name", "name_is_placeholder", "city", "state", "county_name", "pop55_newly_covered_zero", "pop55_newly_covered_lt20", "tracts_within_60rdmi", "county_trials", "lat", "lon"]]
-    web = {"label": a.label, "method": METHOD, "generated": time.strftime("%Y-%m-%d"), "uncovered": log["uncovered_pop55"], "counts": {k: log[k] for k in ("candidates_read", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "candidates_evaluated")},
+    web = {"label": a.label, "method": METHOD, "generated": time.strftime("%Y-%m-%d"), "uncovered": log["uncovered_pop55"], "counts": {k: log[k] for k in ("candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "excluded_unlocated_or_far", "candidates_evaluated")},
            "ranked": [[int(r.rank_zero), r.name, int(r.name_is_placeholder), r.city, r.state, r.county_name, int(r.pop55_newly_covered_zero), int(r.pop55_newly_covered_lt20), int(r.tracts_within_60rdmi), int(r.county_trials), round(float(r.lat), 3), round(float(r.lon), 3)] for r in top.itertuples()], "greedy": seq}
     (DOCS / "tier4.js").write_text("window.TIER4=" + json.dumps(web, separators=(",", ":"), ensure_ascii=False) + ";", encoding="utf-8")
-    pd.set_option("display.width", 220); print(pd.DataFrame(seq)[["step", "name", "city", "state", "pop55_newly_covered", "cumulative_pop55_covered", "pct_of_uncovered_pop55"]].to_string(index=False)); print(json.dumps({k: log[k] for k in ("uncovered_pop55", "candidates_read", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "geocode", "candidates_evaluated", "seconds")}, indent=1))
+    pd.set_option("display.width", 220); print(pd.DataFrame(seq)[["step", "name", "city", "state", "pop55_newly_covered", "cumulative_pop55_covered", "pct_of_uncovered_pop55"]].to_string(index=False)); print(json.dumps({k: log[k] for k in ("uncovered_pop55", "candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "geocode", "excluded_unlocated_or_far", "excluded_unlocated_or_far_detail", "candidates_evaluated", "seconds")}, indent=1))
 
 
 if __name__ == "__main__":

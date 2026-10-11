@@ -59,6 +59,11 @@ window.SITE = (function () {
       box.addEventListener('click', e => { if (isHead(e.target)) flip(); }); });
     const openHash = () => { const t = location.hash && document.getElementById(location.hash.slice(1)); if (!t) return; const box = t.closest('.fold') || (t.querySelector && t.querySelector(':scope > .fold')); if (box && !box.classList.contains('open')) { box.classList.add('open'); const h = box.querySelector(':scope > h2'); const b = h && h.querySelector(':scope > button.fold-btn'); if (b) b.setAttribute('aria-expanded', 'true'); } setTimeout(() => t.scrollIntoView({ block: 'start' }), 30); };
     openHash(); window.addEventListener('hashchange', openHash); }
+  // Drive time from hours, as the map writes it: "a few minutes", "about 25 min", "about 1 h 50 min".
+  function driveTime(h) { const m = Math.round(h * 60); if (m < 5) return 'a few minutes'; if (m < 60) return `about ${Math.round(m / 5) * 5} min`; const hh = Math.floor(m / 60), mm = Math.round((m - hh * 60) / 10) * 10; return mm === 60 ? `about ${hh + 1} h` : `about ${hh} h${mm ? ' ' + mm + ' min' : ''}`; }
+  // A published rate or percentage with its one decimal kept ("173.0", not "173"); a period with an en dash ("2020–2024").
+  const rate = v => v === null || v === undefined ? '—' : Number(v).toFixed(1);
+  const period = s => String(s).replace('-', '–');
   const plural = (n, one, many) => n === 1 ? one : (many || one + 's');
   const listJoin = a => a.length <= 1 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "A, B and C"
   function ordinal(n) { const v = n % 100, s = ['th', 'st', 'nd', 'rd']; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
@@ -76,9 +81,11 @@ window.SITE = (function () {
     const groups = Array.from(nav.querySelectorAll('details.hdr-group'));
     groups.forEach(g => g.addEventListener('toggle', () => { if (g.open) groups.forEach(o => { if (o !== g) o.open = false; }); }));
     document.addEventListener('click', e => { if (!hdr.contains(e.target)) groups.forEach(o => { o.open = false; }); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') groups.forEach(o => { o.open = false; }); });
+    // Escape closes the audience menus and, on a phone, the open page menu (focus goes back to its button)
+    document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; groups.forEach(o => { o.open = false; });
+      if (hdr.classList.contains('nav-open')) { hdr.classList.remove('nav-open'); btn.setAttribute('aria-expanded', 'false'); const a = document.activeElement; if (!a || a === document.body || nav.contains(a)) btn.focus(); } });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireHeader); else wireHeader();
 
-  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal };
+  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, driveTime, rate, period };
 })();

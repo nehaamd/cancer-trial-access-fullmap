@@ -127,14 +127,14 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 05027,Columbia,05,0,0.4,1,"Dallas, Texas",232.0,4.22,"Caddo, Louisiana",77.4,1.66,Harold C. Simmons Comprehensive Cancer Center (UTSW),235.1,4.3,248.9,75.9,252.6,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05029,Conway,05,0,0.4,1,"Shelby, Tennessee",186.1,3.69,"Pulaski, Arkansas",51.1,0.97,Stephenson Cancer Center (Oklahoma),286.9,5.29,191.2,45.0,325.2,Stephenson Cancer Center (Oklahoma)
 05031,Craighead,05,29,0.1,1,"Shelby, Tennessee",78.5,1.55,"Craighead, Arkansas",0.0,0.0,Siteman Cancer Center (WashU),230.1,4.78,78.8,0.0,232.8,Siteman Cancer Center (WashU)
-05033,Crawford,05,0,0.4,1,Oklahoma,193.6,3.23,"Sebastian, Arkansas",17.1,0.36,Stephenson Cancer Center (Oklahoma),189.9,3.15,217.8,15.3,217.2,Stephenson Cancer Center (Oklahoma)
+05033,Crawford,05,0,0.4,1,"Oklahoma, Oklahoma",193.6,3.23,"Sebastian, Arkansas",17.1,0.36,Stephenson Cancer Center (Oklahoma),189.9,3.15,217.8,15.3,217.2,Stephenson Cancer Center (Oklahoma)
 05035,Crittenden,05,0,0.4,1,"Shelby, Tennessee",24.3,0.47,"Shelby, Tennessee",24.3,0.47,Vanderbilt-Ingram Cancer Center,217.3,3.6,22.5,22.5,243.3,Vanderbilt-Ingram Cancer Center
 05037,Cross,05,0,0.1,1,"Shelby, Tennessee",59.3,1.22,"Craighead, Arkansas",43.6,0.94,Vanderbilt-Ingram Cancer Center,252.3,4.35,61.2,49.0,277.6,Vanderbilt-Ingram Cancer Center
 05039,Dallas,05,0,0.0,1,"Shelby, Tennessee",202.0,4.17,"Pulaski, Arkansas",78.9,1.69,Harold C. Simmons Comprehensive Cancer Center (UTSW),297.3,5.38,208.6,76.8,311.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05041,Desha,05,0,1.2,1,"Shelby, Tennessee",169.3,3.56,"Pulaski, Arkansas",98.2,2.06,O'Neal Comprehensive Cancer Center (UAB),329.7,6.93,153.9,103.8,319.2,O'Neal Comprehensive Cancer Center (UAB)
 05043,Drew,05,0,0.1,1,"Shelby, Tennessee",190.0,3.97,"Pulaski, Arkansas",93.2,1.78,Harold C. Simmons Comprehensive Cancer Center (UTSW),327.8,6.08,180.0,101.9,344.3,O'Neal Comprehensive Cancer Center (UAB)
 05045,Faulkner,05,1,0.8,1,"Shelby, Tennessee",167.5,3.38,"Pulaski, Arkansas",32.9,0.63,Stephenson Cancer Center (Oklahoma),302.3,5.52,170.9,28.1,324.5,Siteman Cancer Center (WashU)
-05047,Franklin,05,0,0.4,1,Oklahoma,222.5,3.95,"Sebastian, Arkansas",35.1,0.76,Stephenson Cancer Center (Oklahoma),218.8,3.87,244.6,33.0,244.0,Stephenson Cancer Center (Oklahoma)
+05047,Franklin,05,0,0.4,1,"Oklahoma, Oklahoma",222.5,3.95,"Sebastian, Arkansas",35.1,0.76,Stephenson Cancer Center (Oklahoma),218.8,3.87,244.6,33.0,244.0,Stephenson Cancer Center (Oklahoma)
 05049,Fulton,05,0,1.7,1,"Shelby, Tennessee",166.6,3.47,"Craighead, Arkansas",89.6,1.99,Siteman Cancer Center (WashU),234.9,4.68,163.3,86.1,211.0,Siteman Cancer Center (WashU)
 05051,Garland,05,10,0.7,1,"Shelby, Tennessee",200.2,3.57,"Pulaski, Arkansas",57.5,1.19,Harold C. Simmons Comprehensive Cancer Center (UTSW),287.9,4.86,223.5,56.8,295.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05053,Grant,05,0,0.1,1,"Shelby, Tennessee",178.5,3.7,"Pulaski, Arkansas",37.4,0.82,Harold C. Simmons Comprehensive Cancer Center (UTSW),303.4,5.21,185.1,39.0,330.3,Harold C. Simmons Comprehensive Cancer Center (UTSW)
@@ -152,9 +152,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 05077,Lee,05,0,0.2,1,"Shelby, Tennessee",67.7,1.36,"Shelby, Tennessee",67.7,1.36,Vanderbilt-Ingram Cancer Center,260.6,4.48,66.4,57.0,290.5,Vanderbilt-Ingram Cancer Center
 05079,Lincoln,05,0,0.9,1,"Shelby, Tennessee",172.4,3.62,"Pulaski, Arkansas",77.5,1.47,Harold C. Simmons Comprehensive Cancer Center (UTSW),337.8,6.25,159.2,77.1,343.0,O'Neal Comprehensive Cancer Center (UAB)
 05081,Little River,05,0,0.1,1,"Dallas, Texas",190.0,3.27,"Caddo, Louisiana",97.8,2.13,Harold C. Simmons Comprehensive Cancer Center (UTSW),193.1,3.35,194.1,105.8,197.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-05083,Logan,05,0,0.4,1,Oklahoma,231.3,4.17,"Sebastian, Arkansas",44.0,0.98,Stephenson Cancer Center (Oklahoma),227.7,4.09,254.3,40.4,253.4,Stephenson Cancer Center (Oklahoma)
+05083,Logan,05,0,0.4,1,"Oklahoma, Oklahoma",231.3,4.17,"Sebastian, Arkansas",44.0,0.98,Stephenson Cancer Center (Oklahoma),227.7,4.09,254.3,40.4,253.4,Stephenson Cancer Center (Oklahoma)
 05085,Lonoke,05,0,1.5,1,"Shelby, Tennessee",137.4,2.65,"Pulaski, Arkansas",29.9,0.62,Siteman Cancer Center (WashU),329.3,6.5,142.8,26.0,327.7,Siteman Cancer Center (WashU)
-05087,Madison,05,0,1.5,1,Oklahoma,235.6,4.45,"Washington, Arkansas",31.1,0.7,Stephenson Cancer Center (Oklahoma),239.4,4.54,245.9,27.9,254.4,University of Kansas Cancer Center
+05087,Madison,05,0,1.5,1,"Oklahoma, Oklahoma",235.6,4.45,"Washington, Arkansas",31.1,0.7,Stephenson Cancer Center (Oklahoma),239.4,4.54,245.9,27.9,254.4,University of Kansas Cancer Center
 05089,Marion,05,0,0.9,1,"Shelby, Tennessee",222.4,4.87,"Greene, Missouri",99.0,2.25,University of Kansas Cancer Center,263.9,5.47,209.8,86.8,250.0,Siteman Cancer Center (WashU)
 05091,Miller,05,0,0.5,1,"Dallas, Texas",183.9,3.21,"Caddo, Louisiana",70.3,1.51,Harold C. Simmons Comprehensive Cancer Center (UTSW),187.0,3.29,200.6,78.5,204.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05093,Mississippi,05,0,1.9,1,"Shelby, Tennessee",78.3,1.51,"Craighead, Arkansas",44.8,0.94,Vanderbilt-Ingram Cancer Center,218.9,4.38,59.6,44.9,216.0,Vanderbilt-Ingram Cancer Center
@@ -167,22 +167,22 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 05107,Phillips,05,0,1.7,1,"Shelby, Tennessee",87.2,1.79,"DeSoto, Mississippi",74.8,1.51,O'Neal Comprehensive Cancer Center (UAB),264.9,5.19,74.6,61.0,281.2,O'Neal Comprehensive Cancer Center (UAB)
 05109,Pike,05,0,0.4,1,"Dallas, Texas",241.8,4.43,"Pulaski, Arkansas",102.1,2.12,Harold C. Simmons Comprehensive Cancer Center (UTSW),244.9,4.51,246.6,102.0,249.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05111,Poinsett,05,0,0.1,1,"Shelby, Tennessee",61.7,1.24,"Craighead, Arkansas",22.3,0.48,Siteman Cancer Center (WashU),252.0,5.2,60.1,20.6,251.2,Siteman Cancer Center (WashU)
-05113,Polk,05,0,2.2,1,Oklahoma,234.8,4.96,"Sebastian, Arkansas",83.9,1.86,Stephenson Cancer Center (Oklahoma),231.1,4.88,225.0,66.3,227.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
+05113,Polk,05,0,2.2,1,"Oklahoma, Oklahoma",234.8,4.96,"Sebastian, Arkansas",83.9,1.86,Stephenson Cancer Center (Oklahoma),231.1,4.88,225.0,66.3,227.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05115,Pope,05,0,0.3,1,"Shelby, Tennessee",210.0,4.12,"Pulaski, Arkansas",75.0,1.4,Stephenson Cancer Center (Oklahoma),262.3,4.37,218.0,69.1,298.2,Stephenson Cancer Center (Oklahoma)
 05117,Prairie,05,0,1.4,1,"Shelby, Tennessee",108.4,1.87,"Pulaski, Arkansas",49.2,0.9,Vanderbilt-Ingram Cancer Center,301.4,5.0,114.5,53.2,323.2,Siteman Cancer Center (WashU)
 05119,Pulaski,05,87,0.4,1,"Shelby, Tennessee",148.9,2.59,"Pulaski, Arkansas",0.0,0.0,Harold C. Simmons Comprehensive Cancer Center (UTSW),323.7,5.39,167.7,0.0,347.0,Siteman Cancer Center (WashU)
 05121,Randolph,05,0,1.0,1,"Shelby, Tennessee",121.0,2.44,"Craighead, Arkansas",44.0,0.96,Siteman Cancer Center (WashU),211.2,4.23,122.2,44.2,198.4,Siteman Cancer Center (WashU)
 05123,St. Francis,05,0,0.3,1,"Shelby, Tennessee",57.2,1.14,"Shelby, Tennessee",57.2,1.14,Vanderbilt-Ingram Cancer Center,250.2,4.27,61.0,56.6,283.7,Vanderbilt-Ingram Cancer Center
 05125,Saline,05,1,0.3,1,"Shelby, Tennessee",165.9,2.84,"Pulaski, Arkansas",23.4,0.45,Harold C. Simmons Comprehensive Cancer Center (UTSW),301.1,4.94,186.3,21.6,331.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-05127,Scott,05,0,0.3,1,Oklahoma,228.7,4.1,"Sebastian, Arkansas",43.3,0.94,Stephenson Cancer Center (Oklahoma),225.1,4.01,237.0,38.6,235.6,Stephenson Cancer Center (Oklahoma)
+05127,Scott,05,0,0.3,1,"Oklahoma, Oklahoma",228.7,4.1,"Sebastian, Arkansas",43.3,0.94,Stephenson Cancer Center (Oklahoma),225.1,4.01,237.0,38.6,235.6,Stephenson Cancer Center (Oklahoma)
 05129,Searcy,05,0,1.0,1,"Shelby, Tennessee",202.2,4.36,"Pulaski, Arkansas",99.1,2.11,University of Kansas Cancer Center,280.4,5.73,198.4,98.0,274.1,Siteman Cancer Center (WashU)
-05131,Sebastian,05,21,0.5,1,Oklahoma,191.0,3.28,"Sebastian, Arkansas",0.0,0.0,Stephenson Cancer Center (Oklahoma),187.3,3.2,214.0,0.0,213.2,Stephenson Cancer Center (Oklahoma)
+05131,Sebastian,05,21,0.5,1,"Oklahoma, Oklahoma",191.0,3.28,"Sebastian, Arkansas",0.0,0.0,Stephenson Cancer Center (Oklahoma),187.3,3.2,214.0,0.0,213.2,Stephenson Cancer Center (Oklahoma)
 05133,Sevier,05,0,0.7,1,"Dallas, Texas",204.3,3.61,"Caddo, Louisiana",124.0,2.69,Harold C. Simmons Comprehensive Cancer Center (UTSW),207.4,3.69,198.8,108.1,202.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05135,Sharp,05,0,0.3,1,"Shelby, Tennessee",151.4,3.08,"Craighead, Arkansas",74.4,1.6,Siteman Cancer Center (WashU),251.0,4.98,140.1,63.7,219.0,Siteman Cancer Center (WashU)
 05137,Stone,05,0,0.4,1,"Shelby, Tennessee",163.4,3.49,"Pulaski, Arkansas",101.3,2.22,Siteman Cancer Center (WashU),281.7,5.74,163.2,90.4,260.6,Siteman Cancer Center (WashU)
 05139,Union,05,0,0.0,1,"Shelby, Tennessee",244.7,5.07,"Caddo, Louisiana",95.0,2.06,Harold C. Simmons Comprehensive Cancer Center (UTSW),268.7,4.97,247.8,100.7,293.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 05141,Van Buren,05,0,1.2,1,"Shelby, Tennessee",174.1,3.64,"Pulaski, Arkansas",68.2,1.42,University of Kansas Cancer Center,314.1,6.47,175.1,66.1,290.7,Siteman Cancer Center (WashU)
-05143,Washington,05,59,0.3,1,Oklahoma,207.9,3.78,"Washington, Arkansas",0.0,0.0,Stephenson Cancer Center (Oklahoma),211.8,3.88,229.5,0.0,229.9,Stephenson Cancer Center (Oklahoma)
+05143,Washington,05,59,0.3,1,"Oklahoma, Oklahoma",207.9,3.78,"Washington, Arkansas",0.0,0.0,Stephenson Cancer Center (Oklahoma),211.8,3.88,229.5,0.0,229.9,Stephenson Cancer Center (Oklahoma)
 05145,White,05,0,0.6,1,"Shelby, Tennessee",120.0,2.47,"Pulaski, Arkansas",54.9,1.01,Siteman Cancer Center (WashU),301.5,5.98,128.2,53.2,298.0,Siteman Cancer Center (WashU)
 05147,Woodruff,05,0,0.5,1,"Shelby, Tennessee",88.9,1.87,"Craighead, Arkansas",64.2,1.35,Vanderbilt-Ingram Cancer Center,281.8,5.0,92.9,63.5,288.7,Siteman Cancer Center (WashU)
 05149,Yell,05,0,0.9,1,"Shelby, Tennessee",221.1,4.5,"Sebastian, Arkansas",75.5,1.66,Stephenson Cancer Center (Oklahoma),258.0,4.72,230.3,72.0,287.0,Stephenson Cancer Center (Oklahoma)
@@ -891,52 +891,52 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 20001,Allen,20,0,0.8,1,"Johnson, Kansas",89.4,1.79,"Douglas, Kansas",79.0,1.54,University of Kansas Cancer Center,100.7,2.04,94.5,87.0,108.0,University of Kansas Cancer Center
 20003,Anderson,20,0,0.8,1,"Johnson, Kansas",62.2,1.23,"Douglas, Kansas",51.7,0.98,University of Kansas Cancer Center,73.4,1.48,65.3,57.3,78.9,University of Kansas Cancer Center
 20005,Atchison,20,0,0.1,1,"Johnson, Kansas",59.9,1.24,"Buchanan, Missouri",26.7,0.56,University of Kansas Cancer Center,53.7,1.12,59.4,28.1,55.2,University of Kansas Cancer Center
-20007,Barber,20,0,1.3,1,Oklahoma,173.6,3.66,"Sedgwick, Kansas",89.7,1.88,Stephenson Cancer Center (Oklahoma),177.4,3.75,156.3,88.8,160.3,Stephenson Cancer Center (Oklahoma)
+20007,Barber,20,0,1.3,1,"Oklahoma, Oklahoma",173.6,3.66,"Sedgwick, Kansas",89.7,1.88,Stephenson Cancer Center (Oklahoma),177.4,3.75,156.3,88.8,160.3,Stephenson Cancer Center (Oklahoma)
 20009,Barton,20,15,0.4,1,"Johnson, Kansas",237.3,4.59,"Ellis, Kansas",63.2,1.31,University of Kansas Cancer Center,248.5,4.84,251.9,54.7,256.1,Stephenson Cancer Center (Oklahoma)
 20011,Bourbon,20,0,1.2,1,"Johnson, Kansas",83.1,1.39,"Newton, Missouri",78.8,1.69,University of Kansas Cancer Center,93.0,1.63,89.5,79.8,100.7,University of Kansas Cancer Center
 20013,Brown,20,0,1.3,1,"Johnson, Kansas",93.8,1.96,"Buchanan, Missouri",43.6,0.83,University of Kansas Cancer Center,87.6,1.84,89.6,46.9,86.6,University of Kansas Cancer Center
 20015,Butler,20,4,2.3,1,"Johnson, Kansas",162.1,2.75,"Sedgwick, Kansas",21.7,0.4,University of Kansas Cancer Center,173.3,3.0,177.4,23.0,189.6,Stephenson Cancer Center (Oklahoma)
 20017,Chase,20,0,1.0,1,"Johnson, Kansas",117.6,2.08,"Sedgwick, Kansas",74.1,1.33,University of Kansas Cancer Center,128.9,2.33,126.8,76.1,138.7,University of Kansas Cancer Center
-20019,Chautauqua,20,0,0.3,1,Oklahoma,164.9,3.28,"Tulsa, Oklahoma",92.5,1.94,Stephenson Cancer Center (Oklahoma),168.7,3.37,157.3,86.6,160.5,Stephenson Cancer Center (Oklahoma)
+20019,Chautauqua,20,0,0.3,1,"Oklahoma, Oklahoma",164.9,3.28,"Tulsa, Oklahoma",92.5,1.94,Stephenson Cancer Center (Oklahoma),168.7,3.37,157.3,86.6,160.5,Stephenson Cancer Center (Oklahoma)
 20021,Cherokee,20,0,2.6,1,"Johnson, Kansas",134.0,2.48,"Newton, Missouri",32.1,0.71,University of Kansas Cancer Center,143.9,2.71,150.1,27.5,161.2,University of Kansas Cancer Center
 20023,Cheyenne,20,0,0.9,1,"Denver, Colorado",180.2,3.59,"Ellis, Kansas",175.4,3.0,University of Colorado Cancer Center,173.9,3.46,202.9,171.0,197.5,University of Colorado Cancer Center
-20025,Clark,20,0,6.2,1,Oklahoma,229.1,4.76,"Ellis, Kansas",144.0,2.99,Stephenson Cancer Center (Oklahoma),230.8,4.65,215.9,136.4,219.3,Stephenson Cancer Center (Oklahoma)
+20025,Clark,20,0,6.2,1,"Oklahoma, Oklahoma",229.1,4.76,"Ellis, Kansas",144.0,2.99,Stephenson Cancer Center (Oklahoma),230.8,4.65,215.9,136.4,219.3,Stephenson Cancer Center (Oklahoma)
 20027,Clay,20,0,0.3,1,"Johnson, Kansas",151.8,3.09,"Saline, Kansas",63.9,1.19,University of Kansas Cancer Center,155.6,3.24,157.3,54.5,163.3,University of Kansas Cancer Center
 20029,Cloud,20,0,1.1,1,"Douglas, Nebraska",181.4,3.8,"Saline, Kansas",54.3,1.05,Fred & Pamela Buffett Cancer Center (UNMC),186.5,3.88,174.0,59.7,176.5,Fred & Pamela Buffett Cancer Center (UNMC)
 20031,Coffey,20,0,0.2,1,"Johnson, Kansas",80.9,1.4,"Shawnee, Kansas",58.3,1.13,University of Kansas Cancer Center,92.1,1.65,85.7,65.2,99.2,University of Kansas Cancer Center
-20033,Comanche,20,0,2.5,1,Oklahoma,201.5,4.13,"Ellis, Kansas",123.7,2.52,Stephenson Cancer Center (Oklahoma),203.2,4.02,188.4,136.7,191.9,Stephenson Cancer Center (Oklahoma)
-20035,Cowley,20,4,1.4,1,Oklahoma,135.0,2.67,"Sedgwick, Kansas",48.8,1.09,Stephenson Cancer Center (Oklahoma),138.8,2.76,141.0,47.7,144.9,Stephenson Cancer Center (Oklahoma)
+20033,Comanche,20,0,2.5,1,"Oklahoma, Oklahoma",201.5,4.13,"Ellis, Kansas",123.7,2.52,Stephenson Cancer Center (Oklahoma),203.2,4.02,188.4,136.7,191.9,Stephenson Cancer Center (Oklahoma)
+20035,Cowley,20,4,1.4,1,"Oklahoma, Oklahoma",135.0,2.67,"Sedgwick, Kansas",48.8,1.09,Stephenson Cancer Center (Oklahoma),138.8,2.76,141.0,47.7,144.9,Stephenson Cancer Center (Oklahoma)
 20037,Crawford,20,17,1.0,1,"Johnson, Kansas",110.5,1.98,"Newton, Missouri",47.2,1.01,University of Kansas Cancer Center,120.4,2.22,123.3,47.6,134.3,University of Kansas Cancer Center
 20039,Decatur,20,0,1.7,1,"Denver, Colorado",248.2,4.98,"Ellis, Kansas",124.6,2.35,University of Colorado Cancer Center,241.8,4.85,282.5,106.4,277.4,University of Colorado Cancer Center
 20041,Dickinson,20,0,2.1,1,"Johnson, Kansas",144.0,2.59,"Saline, Kansas",42.8,0.77,University of Kansas Cancer Center,148.7,2.61,155.6,29.9,164.5,University of Kansas Cancer Center
 20043,Doniphan,20,0,0.4,1,"Johnson, Kansas",76.8,1.39,"Buchanan, Missouri",15.2,0.29,University of Kansas Cancer Center,67.4,1.32,74.6,16.3,67.5,University of Kansas Cancer Center
 20045,Douglas,20,30,0.1,1,"Johnson, Kansas",29.9,0.5,"Douglas, Kansas",0.0,0.0,University of Kansas Cancer Center,41.1,0.74,33.2,0.0,42.6,University of Kansas Cancer Center
-20047,Edwards,20,0,1.0,1,Oklahoma,254.6,5.19,"Ellis, Kansas",74.1,1.51,Stephenson Cancer Center (Oklahoma),256.3,5.09,232.7,80.4,236.6,Stephenson Cancer Center (Oklahoma)
+20047,Edwards,20,0,1.0,1,"Oklahoma, Oklahoma",254.6,5.19,"Ellis, Kansas",74.1,1.51,Stephenson Cancer Center (Oklahoma),256.3,5.09,232.7,80.4,236.6,Stephenson Cancer Center (Oklahoma)
 20049,Elk,20,0,1.7,1,"Johnson, Kansas",165.6,3.13,"Sedgwick, Kansas",78.6,1.62,University of Kansas Cancer Center,176.8,3.38,158.2,75.7,171.9,University of Kansas Cancer Center
 20051,Ellis,20,25,0.7,1,"Johnson, Kansas",259.8,4.42,"Ellis, Kansas",0.0,0.0,University of Kansas Cancer Center,264.5,4.45,285.8,0.0,289.5,Fred & Pamela Buffett Cancer Center (UNMC)
 20053,Ellsworth,20,0,1.8,1,"Johnson, Kansas",205.6,3.74,"Saline, Kansas",40.1,0.85,University of Kansas Cancer Center,210.3,3.77,228.5,43.5,237.6,University of Kansas Cancer Center
 20055,Finney,20,17,0.2,1,"Denver, Colorado",302.5,5.95,"Ellis, Kansas",146.1,2.98,University of Colorado Cancer Center,296.1,5.82,301.0,124.6,295.5,University of Colorado Cancer Center
-20057,Ford,20,4,0.1,1,Oklahoma,251.2,5.14,"Ellis, Kansas",104.6,2.13,Stephenson Cancer Center (Oklahoma),252.9,5.04,247.8,103.1,251.3,Stephenson Cancer Center (Oklahoma)
+20057,Ford,20,4,0.1,1,"Oklahoma, Oklahoma",251.2,5.14,"Ellis, Kansas",104.6,2.13,Stephenson Cancer Center (Oklahoma),252.9,5.04,247.8,103.1,251.3,Stephenson Cancer Center (Oklahoma)
 20059,Franklin,20,0,1.3,1,"Johnson, Kansas",39.9,0.71,"Douglas, Kansas",27.2,0.52,University of Kansas Cancer Center,51.1,0.96,42.9,28.1,56.3,University of Kansas Cancer Center
 20061,Geary,20,0,0.1,1,"Johnson, Kansas",122.7,2.21,"Saline, Kansas",54.9,0.94,University of Kansas Cancer Center,127.4,2.24,135.6,52.9,143.5,University of Kansas Cancer Center
 20063,Gove,20,0,3.5,1,"Denver, Colorado",274.8,4.51,"Ellis, Kansas",64.7,1.13,University of Colorado Cancer Center,268.5,4.38,298.3,68.9,291.5,University of Colorado Cancer Center
 20065,Graham,20,0,0.4,1,"Denver, Colorado",292.1,5.12,"Ellis, Kansas",58.7,1.07,University of Colorado Cancer Center,285.7,4.99,286.7,51.9,291.3,Fred & Pamela Buffett Cancer Center (UNMC)
 20067,Grant,20,0,0.3,1,"Denver, Colorado",303.4,5.96,"Ellis, Kansas",183.1,3.73,University of Colorado Cancer Center,297.0,5.83,293.1,170.2,288.4,University of Colorado Cancer Center
-20069,Gray,20,0,3.8,1,Oklahoma,274.9,5.68,"Ellis, Kansas",133.8,2.74,Stephenson Cancer Center (Oklahoma),276.5,5.58,265.4,119.0,268.8,Stephenson Cancer Center (Oklahoma)
+20069,Gray,20,0,3.8,1,"Oklahoma, Oklahoma",274.9,5.68,"Ellis, Kansas",133.8,2.74,Stephenson Cancer Center (Oklahoma),276.5,5.58,265.4,119.0,268.8,Stephenson Cancer Center (Oklahoma)
 20071,Greeley,20,0,0.3,1,"Denver, Colorado",224.9,4.31,"Ellis, Kansas",163.8,3.34,University of Colorado Cancer Center,218.6,4.18,229.7,160.6,224.0,University of Colorado Cancer Center
 20073,Greenwood,20,0,2.5,1,"Johnson, Kansas",135.1,2.52,"Sedgwick, Kansas",68.1,1.32,University of Kansas Cancer Center,146.3,2.77,130.7,74.9,144.2,University of Kansas Cancer Center
 20075,Hamilton,20,0,0.1,1,"Denver, Colorado",250.4,4.88,"Pueblo, Colorado",169.1,3.62,University of Colorado Cancer Center,244.0,4.75,251.6,174.6,246.7,University of Colorado Cancer Center
-20077,Harper,20,0,0.6,1,Oklahoma,147.7,3.12,"Sedgwick, Kansas",54.3,1.14,Stephenson Cancer Center (Oklahoma),151.5,3.22,144.6,60.4,148.8,Stephenson Cancer Center (Oklahoma)
+20077,Harper,20,0,0.6,1,"Oklahoma, Oklahoma",147.7,3.12,"Sedgwick, Kansas",54.3,1.14,Stephenson Cancer Center (Oklahoma),151.5,3.22,144.6,60.4,148.8,Stephenson Cancer Center (Oklahoma)
 20079,Harvey,20,4,1.2,1,"Johnson, Kansas",170.7,3.15,"Sedgwick, Kansas",30.4,0.54,University of Kansas Cancer Center,181.9,3.4,186.5,30.5,198.5,University of Kansas Cancer Center
-20081,Haskell,20,0,1.0,1,Oklahoma,286.5,5.96,"Ellis, Kansas",160.1,3.27,Stephenson Cancer Center (Oklahoma),288.1,5.86,278.1,153.5,281.1,Stephenson Cancer Center (Oklahoma)
-20083,Hodgeman,20,0,1.8,1,Oklahoma,278.6,5.72,"Ellis, Kansas",89.5,1.86,Stephenson Cancer Center (Oklahoma),280.3,5.61,263.3,74.4,267.1,Stephenson Cancer Center (Oklahoma)
+20081,Haskell,20,0,1.0,1,"Oklahoma, Oklahoma",286.5,5.96,"Ellis, Kansas",160.1,3.27,Stephenson Cancer Center (Oklahoma),288.1,5.86,278.1,153.5,281.1,Stephenson Cancer Center (Oklahoma)
+20083,Hodgeman,20,0,1.8,1,"Oklahoma, Oklahoma",278.6,5.72,"Ellis, Kansas",89.5,1.86,Stephenson Cancer Center (Oklahoma),280.3,5.61,263.3,74.4,267.1,Stephenson Cancer Center (Oklahoma)
 20085,Jackson,20,0,0.3,1,"Johnson, Kansas",85.5,1.63,"Shawnee, Kansas",30.4,0.6,University of Kansas Cancer Center,88.8,1.92,76.2,30.6,78.8,University of Kansas Cancer Center
 20087,Jefferson,20,0,1.7,1,"Johnson, Kansas",53.2,1.13,"Shawnee, Kansas",30.2,0.68,University of Kansas Cancer Center,52.1,1.16,48.5,24.1,52.3,University of Kansas Cancer Center
 20089,Jewell,20,0,0.5,1,"Douglas, Nebraska",191.1,4.0,"Saline, Kansas",93.7,1.86,Fred & Pamela Buffett Cancer Center (UNMC),196.2,4.08,182.1,88.4,185.9,Fred & Pamela Buffett Cancer Center (UNMC)
 20091,Johnson,20,157,0.7,1,"Johnson, Kansas",0.0,0.0,"Johnson, Kansas",0.0,0.0,University of Kansas Cancer Center,13.8,0.31,0.0,0.0,13.7,University of Kansas Cancer Center
 20093,Kearny,20,0,0.1,1,"Denver, Colorado",278.8,5.46,"Ellis, Kansas",168.9,3.45,University of Colorado Cancer Center,272.4,5.33,281.0,146.2,275.7,University of Colorado Cancer Center
-20095,Kingman,20,4,0.8,1,Oklahoma,176.4,3.74,"Sedgwick, Kansas",46.0,0.84,Stephenson Cancer Center (Oklahoma),180.2,3.84,177.2,49.8,181.4,Stephenson Cancer Center (Oklahoma)
-20097,Kiowa,20,0,0.9,1,Oklahoma,229.6,4.69,"Ellis, Kansas",99.9,2.03,Stephenson Cancer Center (Oklahoma),231.2,4.59,207.1,106.8,210.9,Stephenson Cancer Center (Oklahoma)
+20095,Kingman,20,4,0.8,1,"Oklahoma, Oklahoma",176.4,3.74,"Sedgwick, Kansas",46.0,0.84,Stephenson Cancer Center (Oklahoma),180.2,3.84,177.2,49.8,181.4,Stephenson Cancer Center (Oklahoma)
+20097,Kiowa,20,0,0.9,1,"Oklahoma, Oklahoma",229.6,4.69,"Ellis, Kansas",99.9,2.03,Stephenson Cancer Center (Oklahoma),231.2,4.59,207.1,106.8,210.9,Stephenson Cancer Center (Oklahoma)
 20099,Labette,20,4,0.3,1,"Johnson, Kansas",140.0,2.85,"Newton, Missouri",70.4,1.45,University of Kansas Cancer Center,151.3,3.1,142.2,62.7,154.9,University of Kansas Cancer Center
 20101,Lane,20,0,0.9,1,"Denver, Colorado",295.1,5.74,"Ellis, Kansas",95.3,1.96,University of Colorado Cancer Center,288.7,5.61,304.6,80.9,298.4,University of Colorado Cancer Center
 20103,Leavenworth,20,0,3.1,1,"Johnson, Kansas",31.0,0.64,"Platte, Missouri",21.8,0.52,University of Kansas Cancer Center,29.8,0.67,29.3,17.8,26.9,University of Kansas Cancer Center
@@ -947,12 +947,12 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 20113,McPherson,20,3,0.9,1,"Johnson, Kansas",174.6,3.28,"Saline, Kansas",33.7,0.59,University of Kansas Cancer Center,185.8,3.53,193.5,35.9,204.2,University of Kansas Cancer Center
 20115,Marion,20,0,2.6,1,"Johnson, Kansas",146.5,2.69,"Saline, Kansas",62.0,1.31,University of Kansas Cancer Center,157.7,2.93,162.4,51.1,173.8,University of Kansas Cancer Center
 20117,Marshall,20,0,2.9,1,"Douglas, Nebraska",124.5,2.58,"Lancaster, Nebraska",86.1,1.9,Fred & Pamela Buffett Cancer Center (UNMC),129.5,2.66,125.3,83.1,125.4,Fred & Pamela Buffett Cancer Center (UNMC)
-20119,Meade,20,0,0.5,1,Oklahoma,244.2,5.04,"Ellis, Kansas",152.0,3.14,Stephenson Cancer Center (Oklahoma),245.9,4.93,241.9,149.1,244.9,Stephenson Cancer Center (Oklahoma)
+20119,Meade,20,0,0.5,1,"Oklahoma, Oklahoma",244.2,5.04,"Ellis, Kansas",152.0,3.14,Stephenson Cancer Center (Oklahoma),245.9,4.93,241.9,149.1,244.9,Stephenson Cancer Center (Oklahoma)
 20121,Miami,20,0,0.2,1,"Johnson, Kansas",27.0,0.52,"Johnson, Kansas",27.0,0.52,University of Kansas Cancer Center,38.3,0.77,28.0,28.0,40.8,University of Kansas Cancer Center
 20123,Mitchell,20,0,1.8,1,"Johnson, Kansas",210.7,4.33,"Saline, Kansas",73.1,1.46,University of Kansas Cancer Center,214.5,4.48,200.4,64.4,203.6,Fred & Pamela Buffett Cancer Center (UNMC)
 20125,Montgomery,20,4,4.9,1,"Johnson, Kansas",157.3,3.23,"Tulsa, Oklahoma",90.3,1.89,University of Kansas Cancer Center,168.5,3.48,160.3,86.7,173.6,University of Kansas Cancer Center
 20127,Morris,20,0,2.9,1,"Johnson, Kansas",114.1,2.37,"Shawnee, Kansas",67.5,1.3,University of Kansas Cancer Center,125.3,2.62,120.4,63.1,130.7,University of Kansas Cancer Center
-20129,Morton,20,0,0.2,1,Oklahoma,311.0,6.38,"Ellis, Kansas",222.1,4.54,Stephenson Cancer Center (Oklahoma),312.6,6.27,300.4,210.3,296.9,University of Colorado Cancer Center
+20129,Morton,20,0,0.2,1,"Oklahoma, Oklahoma",311.0,6.38,"Ellis, Kansas",222.1,4.54,Stephenson Cancer Center (Oklahoma),312.6,6.27,300.4,210.3,296.9,University of Colorado Cancer Center
 20131,Nemaha,20,0,0.8,1,"Douglas, Nebraska",113.7,2.34,"Buchanan, Missouri",64.3,1.24,University of Kansas Cancer Center,112.5,2.34,108.6,68.0,108.0,University of Kansas Cancer Center
 20133,Neosho,20,4,3.6,1,"Johnson, Kansas",113.0,2.35,"Douglas, Kansas",102.6,2.1,University of Kansas Cancer Center,124.2,2.6,116.0,87.1,129.3,University of Kansas Cancer Center
 20135,Ness,20,0,0.1,1,"Johnson, Kansas",301.1,5.86,"Ellis, Kansas",64.6,1.33,Stephenson Cancer Center (Oklahoma),306.9,6.15,292.0,49.1,295.9,Stephenson Cancer Center (Oklahoma)
@@ -963,7 +963,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 20145,Pawnee,20,0,0.4,1,"Johnson, Kansas",261.4,5.07,"Ellis, Kansas",59.0,1.2,Stephenson Cancer Center (Oklahoma),271.0,5.72,245.3,59.4,249.3,Stephenson Cancer Center (Oklahoma)
 20147,Phillips,20,0,0.5,1,"Douglas, Nebraska",252.3,5.29,"Ellis, Kansas",64.7,1.38,Fred & Pamela Buffett Cancer Center (UNMC),257.3,5.37,241.3,72.7,246.1,Fred & Pamela Buffett Cancer Center (UNMC)
 20149,Pottawatomie,20,0,0.9,1,"Johnson, Kansas",100.6,2.01,"Shawnee, Kansas",45.4,0.98,University of Kansas Cancer Center,104.4,2.16,106.0,44.1,111.9,University of Kansas Cancer Center
-20151,Pratt,20,5,0.1,1,Oklahoma,207.9,4.34,"Sedgwick, Kansas",76.4,1.47,Stephenson Cancer Center (Oklahoma),211.7,4.44,193.5,91.0,197.6,Stephenson Cancer Center (Oklahoma)
+20151,Pratt,20,5,0.1,1,"Oklahoma, Oklahoma",207.9,4.34,"Sedgwick, Kansas",76.4,1.47,Stephenson Cancer Center (Oklahoma),211.7,4.44,193.5,91.0,197.6,Stephenson Cancer Center (Oklahoma)
 20153,Rawlins,20,0,0.2,1,"Denver, Colorado",217.1,4.33,"Ellis, Kansas",137.6,2.39,University of Colorado Cancer Center,210.7,4.2,246.5,134.3,241.3,University of Colorado Cancer Center
 20155,Reno,20,0,1.3,1,"Johnson, Kansas",200.4,3.75,"Sedgwick, Kansas",54.0,1.11,Stephenson Cancer Center (Oklahoma),211.5,3.76,211.3,49.3,215.5,Stephenson Cancer Center (Oklahoma)
 20157,Republic,20,0,0.4,1,"Douglas, Nebraska",161.9,3.4,"Saline, Kansas",73.5,1.43,Fred & Pamela Buffett Cancer Center (UNMC),167.0,3.48,156.1,83.2,159.1,Fred & Pamela Buffett Cancer Center (UNMC)
@@ -974,16 +974,16 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 20167,Russell,20,0,1.3,1,"Johnson, Kansas",233.3,4.03,"Ellis, Kansas",31.4,0.54,University of Kansas Cancer Center,238.0,4.05,262.4,32.3,265.7,Fred & Pamela Buffett Cancer Center (UNMC)
 20169,Saline,20,29,1.2,1,"Johnson, Kansas",173.9,3.06,"Saline, Kansas",0.0,0.0,University of Kansas Cancer Center,178.6,3.09,185.2,0.0,194.2,University of Kansas Cancer Center
 20171,Scott,20,0,0.1,1,"Denver, Colorado",269.0,5.2,"Ellis, Kansas",116.9,2.38,University of Colorado Cancer Center,262.6,5.07,279.4,107.7,273.3,University of Colorado Cancer Center
-20173,Sedgwick,20,33,0.1,1,Oklahoma,156.9,2.63,"Sedgwick, Kansas",0.0,0.0,Stephenson Cancer Center (Oklahoma),160.7,2.72,179.0,0.0,183.1,Stephenson Cancer Center (Oklahoma)
-20175,Seward,20,4,0.2,1,Oklahoma,252.8,5.24,"Ellis, Kansas",188.9,3.91,Stephenson Cancer Center (Oklahoma),254.5,5.14,260.4,183.9,263.0,Stephenson Cancer Center (Oklahoma)
+20173,Sedgwick,20,33,0.1,1,"Oklahoma, Oklahoma",156.9,2.63,"Sedgwick, Kansas",0.0,0.0,Stephenson Cancer Center (Oklahoma),160.7,2.72,179.0,0.0,183.1,Stephenson Cancer Center (Oklahoma)
+20175,Seward,20,4,0.2,1,"Oklahoma, Oklahoma",252.8,5.24,"Ellis, Kansas",188.9,3.91,Stephenson Cancer Center (Oklahoma),254.5,5.14,260.4,183.9,263.0,Stephenson Cancer Center (Oklahoma)
 20177,Shawnee,20,36,1.3,1,"Johnson, Kansas",61.0,1.17,"Shawnee, Kansas",0.0,0.0,University of Kansas Cancer Center,65.7,1.2,62.9,0.0,70.6,University of Kansas Cancer Center
 20179,Sheridan,20,0,0.2,1,"Denver, Colorado",259.1,4.43,"Ellis, Kansas",84.2,1.49,University of Colorado Cancer Center,252.7,4.3,287.8,83.3,281.3,University of Colorado Cancer Center
 20181,Sherman,20,0,0.1,1,"Denver, Colorado",191.3,3.13,"Ellis, Kansas",144.4,2.36,University of Colorado Cancer Center,184.9,3.0,208.5,158.9,201.6,University of Colorado Cancer Center
 20183,Smith,20,0,0.0,1,"Douglas, Nebraska",223.5,4.68,"Buffalo, Nebraska",83.6,1.77,Fred & Pamela Buffett Cancer Center (UNMC),228.5,4.76,212.2,81.0,216.6,Fred & Pamela Buffett Cancer Center (UNMC)
-20185,Stafford,20,0,0.7,1,Oklahoma,233.2,4.87,"Ellis, Kansas",86.9,1.78,Stephenson Cancer Center (Oklahoma),237.1,4.97,221.0,82.4,225.1,Stephenson Cancer Center (Oklahoma)
+20185,Stafford,20,0,0.7,1,"Oklahoma, Oklahoma",233.2,4.87,"Ellis, Kansas",86.9,1.78,Stephenson Cancer Center (Oklahoma),237.1,4.97,221.0,82.4,225.1,Stephenson Cancer Center (Oklahoma)
 20187,Stanton,20,0,0.2,1,"Denver, Colorado",280.2,5.48,"Pueblo, Colorado",199.0,4.23,University of Colorado Cancer Center,273.8,5.36,273.5,192.1,269.2,University of Colorado Cancer Center
-20189,Stevens,20,0,0.9,1,Oklahoma,288.1,5.97,"Ellis, Kansas",192.8,3.95,Stephenson Cancer Center (Oklahoma),289.8,5.87,289.3,191.5,291.9,Stephenson Cancer Center (Oklahoma)
-20191,Sumner,20,4,0.8,1,Oklahoma,130.3,2.25,"Sedgwick, Kansas",32.7,0.64,Stephenson Cancer Center (Oklahoma),134.2,2.34,147.6,31.5,151.7,Stephenson Cancer Center (Oklahoma)
+20189,Stevens,20,0,0.9,1,"Oklahoma, Oklahoma",288.1,5.97,"Ellis, Kansas",192.8,3.95,Stephenson Cancer Center (Oklahoma),289.8,5.87,289.3,191.5,291.9,Stephenson Cancer Center (Oklahoma)
+20191,Sumner,20,4,0.8,1,"Oklahoma, Oklahoma",130.3,2.25,"Sedgwick, Kansas",32.7,0.64,Stephenson Cancer Center (Oklahoma),134.2,2.34,147.6,31.5,151.7,Stephenson Cancer Center (Oklahoma)
 20193,Thomas,20,0,0.3,1,"Denver, Colorado",227.7,3.74,"Ellis, Kansas",108.2,1.79,University of Colorado Cancer Center,221.3,3.61,250.5,118.2,243.9,University of Colorado Cancer Center
 20195,Trego,20,0,0.5,1,"Johnson, Kansas",291.1,4.94,"Ellis, Kansas",34.9,0.59,University of Colorado Cancer Center,293.6,4.77,305.6,36.9,309.9,Fred & Pamela Buffett Cancer Center (UNMC)
 20197,Wabaunsee,20,0,4.8,1,"Johnson, Kansas",89.6,1.71,"Shawnee, Kansas",34.5,0.67,University of Kansas Cancer Center,94.3,1.73,92.9,30.6,101.2,University of Kansas Cancer Center
@@ -1780,9 +1780,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 34007,Camden,34,58,0.3,1,"Philadelphia, Pennsylvania",14.7,0.34,"Camden, New Jersey",0.0,0.0,Sidney Kimmel Cancer Center (Jefferson),10.8,0.26,13.7,0.0,11.2,Sidney Kimmel Cancer Center (Jefferson)
 34009,Cape May,34,2,0.1,1,"Philadelphia, Pennsylvania",78.7,1.56,"Gloucester, New Jersey",61.1,1.14,Sidney Kimmel Cancer Center (Jefferson),74.4,1.49,78.1,49.5,74.4,Sidney Kimmel Cancer Center (Jefferson)
 34011,Cumberland,34,1,1.6,1,"Philadelphia, Pennsylvania",46.4,0.83,"Gloucester, New Jersey",26.1,0.44,Sidney Kimmel Cancer Center (Jefferson),42.0,0.76,47.5,26.4,43.3,Sidney Kimmel Cancer Center (Jefferson)
-34013,Essex,34,43,0.1,1,New York,16.2,0.34,"Essex, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),15.5,0.34,15.6,0.0,15.1,Perlmutter Cancer Center (NYU Langone)
+34013,Essex,34,43,0.1,1,"New York, New York",16.2,0.34,"Essex, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),15.5,0.34,15.6,0.0,15.1,Perlmutter Cancer Center (NYU Langone)
 34015,Gloucester,34,26,0.4,1,"Philadelphia, Pennsylvania",21.1,0.42,"Gloucester, New Jersey",0.0,0.0,Sidney Kimmel Cancer Center (Jefferson),16.8,0.35,21.1,0.0,16.9,Sidney Kimmel Cancer Center (Jefferson)
-34017,Hudson,34,20,0.1,1,New York,7.8,0.18,"Hudson, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),7.2,0.19,6.6,0.0,5.2,Perlmutter Cancer Center (NYU Langone)
+34017,Hudson,34,20,0.1,1,"New York, New York",7.8,0.18,"Hudson, New Jersey",0.0,0.0,Perlmutter Cancer Center (NYU Langone),7.2,0.19,6.6,0.0,5.2,Perlmutter Cancer Center (NYU Langone)
 34019,Hunterdon,34,5,1.8,1,"Somerset, New Jersey",24.0,0.52,"Somerset, New Jersey",24.0,0.52,Rutgers Cancer Institute of New Jersey,36.3,0.78,20.0,20.0,29.5,Rutgers Cancer Institute of New Jersey
 34021,Mercer,34,24,0.2,1,"Middlesex, New Jersey",25.6,0.51,"Mercer, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,21.9,0.47,26.4,0.0,24.9,Rutgers Cancer Institute of New Jersey
 34023,Middlesex,34,205,0.5,1,"Middlesex, New Jersey",0.0,0.0,"Middlesex, New Jersey",0.0,0.0,Rutgers Cancer Institute of New Jersey,4.5,0.1,0.0,0.0,3.4,Rutgers Cancer Institute of New Jersey
@@ -1800,8 +1800,8 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 35005,Chaves,35,0,0.1,1,"Tarrant, Texas",453.6,9.35,"Lubbock, Texas",172.2,3.54,UNM Comprehensive Cancer Center,203.3,4.08,459.0,181.9,204.0,UNM Comprehensive Cancer Center
 35006,Cibola,35,0,0.5,1,"Maricopa, Arizona",342.4,6.53,"Bernalillo, New Mexico",73.9,1.19,UNM Comprehensive Cancer Center,74.5,1.24,318.9,81.5,79.5,UNM Comprehensive Cancer Center
 35007,Colfax,35,0,3.0,1,"Denver, Colorado",239.4,4.23,"Pueblo, Colorado",132.1,2.38,UNM Comprehensive Cancer Center,205.5,4.12,251.7,130.0,189.2,UNM Comprehensive Cancer Center
-35009,Curry,35,0,0.7,1,Oklahoma,359.7,6.43,"Lubbock, Texas",101.8,2.15,UNM Comprehensive Cancer Center,222.9,4.24,397.9,115.8,240.2,UNM Comprehensive Cancer Center
-35011,De Baca,35,0,0.6,1,Oklahoma,420.6,7.72,"Bernalillo, New Mexico",158.7,3.11,UNM Comprehensive Cancer Center,162.3,3.22,438.9,170.1,171.3,UNM Comprehensive Cancer Center
+35009,Curry,35,0,0.7,1,"Oklahoma, Oklahoma",359.7,6.43,"Lubbock, Texas",101.8,2.15,UNM Comprehensive Cancer Center,222.9,4.24,397.9,115.8,240.2,UNM Comprehensive Cancer Center
+35011,De Baca,35,0,0.6,1,"Oklahoma, Oklahoma",420.6,7.72,"Bernalillo, New Mexico",158.7,3.11,UNM Comprehensive Cancer Center,162.3,3.22,438.9,170.1,171.3,UNM Comprehensive Cancer Center
 35013,Doña Ana,35,6,0.2,1,"Pima, Arizona",277.4,4.54,"El Paso, Texas",47.2,0.87,UNM Comprehensive Cancer Center,225.7,3.83,296.6,46.3,235.0,UNM Comprehensive Cancer Center
 35015,Eddy,35,0,4.2,1,"Tarrant, Texas",435.1,9.04,"El Paso, Texas",168.0,3.49,UNM Comprehensive Cancer Center,274.5,5.61,467.7,158.7,266.2,UNM Comprehensive Cancer Center
 35017,Grant,35,0,0.4,1,"Pima, Arizona",203.0,3.58,"El Paso, Texas",158.4,3.08,University of Arizona Cancer Center,205.3,3.65,195.5,155.5,194.3,University of Arizona Cancer Center
@@ -1815,9 +1815,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 35031,McKinley,35,0,1.3,1,"Maricopa, Arizona",285.3,5.6,"Bernalillo, New Mexico",132.6,2.14,UNM Comprehensive Cancer Center,133.1,2.19,287.1,140.5,139.2,UNM Comprehensive Cancer Center
 35033,Mora,35,0,1.3,1,"Denver, Colorado",321.9,5.64,"Bernalillo, New Mexico",150.5,2.71,UNM Comprehensive Cancer Center,152.6,2.82,309.1,119.1,122.0,UNM Comprehensive Cancer Center
 35035,Otero,35,0,1.1,1,"Pima, Arizona",346.4,5.95,"El Paso, Texas",82.0,1.67,UNM Comprehensive Cancer Center,217.1,4.29,349.8,86.4,196.1,UNM Comprehensive Cancer Center
-35037,Quay,35,0,0.4,1,Oklahoma,362.1,6.07,"Bernalillo, New Mexico",175.0,2.95,UNM Comprehensive Cancer Center,178.6,3.06,386.4,181.1,202.5,UNM Comprehensive Cancer Center
+35037,Quay,35,0,0.4,1,"Oklahoma, Oklahoma",362.1,6.07,"Bernalillo, New Mexico",175.0,2.95,UNM Comprehensive Cancer Center,178.6,3.06,386.4,181.1,202.5,UNM Comprehensive Cancer Center
 35039,Rio Arriba,35,0,1.6,1,"Denver, Colorado",334.7,6.83,"Bernalillo, New Mexico",102.7,1.9,UNM Comprehensive Cancer Center,104.8,2.01,303.2,94.9,97.6,UNM Comprehensive Cancer Center
-35041,Roosevelt,35,0,0.6,1,Oklahoma,377.4,6.81,"Lubbock, Texas",119.2,2.49,UNM Comprehensive Cancer Center,231.4,4.42,412.6,112.3,237.5,UNM Comprehensive Cancer Center
+35041,Roosevelt,35,0,0.6,1,"Oklahoma, Oklahoma",377.4,6.81,"Lubbock, Texas",119.2,2.49,UNM Comprehensive Cancer Center,231.4,4.42,412.6,112.3,237.5,UNM Comprehensive Cancer Center
 35043,Sandoval,35,13,3.2,1,"Denver, Colorado",404.9,7.73,"Bernalillo, New Mexico",25.2,0.51,UNM Comprehensive Cancer Center,27.3,0.63,381.9,17.6,19.7,UNM Comprehensive Cancer Center
 35045,San Juan,35,7,0.1,1,"Denver, Colorado",379.2,7.84,"Bernalillo, New Mexico",182.1,3.74,UNM Comprehensive Cancer Center,184.2,3.85,327.5,171.7,172.3,UNM Comprehensive Cancer Center
 35047,San Miguel,35,0,0.0,1,"Denver, Colorado",330.5,5.66,"Bernalillo, New Mexico",122.4,2.07,UNM Comprehensive Cancer Center,124.5,2.18,344.8,96.7,99.4,UNM Comprehensive Cancer Center
@@ -1851,14 +1851,14 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 36041,Hamilton,36,0,1.3,1,"Monroe, New York",197.0,3.67,"Albany, New York",92.4,2.0,Dartmouth Cancer Center,156.7,3.54,198.4,84.7,128.0,Dartmouth Cancer Center
 36043,Herkimer,36,0,0.2,1,"Monroe, New York",149.2,2.52,"Onondaga, New York",67.8,1.17,Wilmot Cancer Institute (Rochester),148.7,2.5,159.0,71.0,159.3,Wilmot Cancer Institute (Rochester)
 36045,Jefferson,36,0,0.3,1,"Monroe, New York",131.1,2.68,"Onondaga, New York",71.1,1.18,Wilmot Cancer Institute (Rochester),132.9,2.7,125.7,80.6,127.8,Wilmot Cancer Institute (Rochester)
-36047,Kings,36,45,0.1,1,New York,12.6,0.32,"Kings, New York",0.0,0.0,Perlmutter Cancer Center (NYU Langone),9.6,0.22,10.4,0.0,7.9,Perlmutter Cancer Center (NYU Langone)
+36047,Kings,36,45,0.1,1,"New York, New York",12.6,0.32,"Kings, New York",0.0,0.0,Perlmutter Cancer Center (NYU Langone),9.6,0.22,10.4,0.0,7.9,Perlmutter Cancer Center (NYU Langone)
 36049,Lewis,36,0,1.6,1,"Monroe, New York",148.1,3.14,"Onondaga, New York",85.3,1.69,Wilmot Cancer Institute (Rochester),149.9,3.16,140.5,73.8,142.1,Wilmot Cancer Institute (Rochester)
 36051,Livingston,36,3,0.8,1,"Monroe, New York",30.0,0.62,"Monroe, New York",30.0,0.62,Wilmot Cancer Institute (Rochester),27.2,0.55,33.6,33.6,30.5,Wilmot Cancer Institute (Rochester)
 36053,Madison,36,1,5.2,1,"Monroe, New York",113.8,2.33,"Onondaga, New York",33.0,0.75,Wilmot Cancer Institute (Rochester),113.4,2.32,115.9,27.9,116.0,Wilmot Cancer Institute (Rochester)
 36055,Monroe,36,118,0.2,1,"Monroe, New York",0.0,0.0,"Monroe, New York",0.0,0.0,Wilmot Cancer Institute (Rochester),3.5,0.1,0.0,0.0,3.2,Wilmot Cancer Institute (Rochester)
 36057,Montgomery,36,1,0.3,1,"New Haven, Connecticut",147.8,3.22,"Albany, New York",36.6,0.64,Dartmouth Cancer Center,149.4,3.43,153.8,38.6,139.0,Dartmouth Cancer Center
 36059,Nassau,36,401,0.1,1,"Nassau, New York",0.0,0.0,"Nassau, New York",0.0,0.0,Memorial Sloan Kettering Cancer Center,21.1,0.48,0.0,0.0,21.4,Montefiore Einstein Cancer Center
-36061,New York,36,958,1.1,1,New York,0.0,0.0,New York,0.0,0.0,Memorial Sloan Kettering Cancer Center,3.8,0.13,0.0,0.0,1.0,Memorial Sloan Kettering Cancer Center
+36061,New York,36,958,1.1,1,"New York, New York",0.0,0.0,"New York, New York",0.0,0.0,Memorial Sloan Kettering Cancer Center,3.8,0.13,0.0,0.0,1.0,Memorial Sloan Kettering Cancer Center
 36063,Niagara,36,0,0.6,1,"Erie, New York",20.6,0.42,"Erie, New York",20.6,0.42,Roswell Park Comprehensive Cancer Center,20.8,0.43,20.5,20.5,20.1,Roswell Park Comprehensive Cancer Center
 36065,Oneida,36,14,1.3,1,"Monroe, New York",125.4,2.11,"Onondaga, New York",43.9,0.76,Wilmot Cancer Institute (Rochester),124.9,2.09,136.9,49.5,137.3,Wilmot Cancer Institute (Rochester)
 36067,Onondaga,36,81,0.0,1,"Monroe, New York",83.8,1.45,"Onondaga, New York",0.0,0.0,Wilmot Cancer Institute (Rochester),83.4,1.44,88.2,0.0,88.4,Wilmot Cancer Institute (Rochester)
@@ -1868,9 +1868,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 36075,Oswego,36,13,2.1,1,"Monroe, New York",81.3,1.77,"Onondaga, New York",29.2,0.54,Wilmot Cancer Institute (Rochester),83.1,1.78,81.2,28.3,82.4,Wilmot Cancer Institute (Rochester)
 36077,Otsego,36,3,0.1,1,"Westchester, New York",165.1,3.87,"Albany, New York",83.0,1.51,Wilmot Cancer Institute (Rochester),169.3,3.46,148.4,76.8,158.2,Montefiore Einstein Cancer Center
 36079,Putnam,36,0,0.8,1,"Westchester, New York",30.7,0.65,"Fairfield, Connecticut",28.9,0.74,Montefiore Einstein Cancer Center,43.5,0.83,31.3,27.7,45.4,Montefiore Einstein Cancer Center
-36081,Queens,36,36,0.1,1,New York,11.2,0.31,"Queens, New York",0.0,0.0,Memorial Sloan Kettering Cancer Center,8.0,0.2,9.6,0.0,8.9,Memorial Sloan Kettering Cancer Center
+36081,Queens,36,36,0.1,1,"New York, New York",11.2,0.31,"Queens, New York",0.0,0.0,Memorial Sloan Kettering Cancer Center,8.0,0.2,9.6,0.0,8.9,Memorial Sloan Kettering Cancer Center
 36083,Rensselaer,36,0,0.4,1,"New Haven, Connecticut",113.3,2.56,"Albany, New York",14.6,0.33,Yale Cancer Center,120.0,2.67,116.1,11.1,113.9,Dartmouth Cancer Center
-36085,Richmond,36,12,1.3,1,New York,20.2,0.48,"Hudson, New Jersey",13.9,0.32,Perlmutter Cancer Center (NYU Langone),18.5,0.41,18.1,11.5,16.3,Perlmutter Cancer Center (NYU Langone)
+36085,Richmond,36,12,1.3,1,"New York, New York",20.2,0.48,"Hudson, New Jersey",13.9,0.32,Perlmutter Cancer Center (NYU Langone),18.5,0.41,18.1,11.5,16.3,Perlmutter Cancer Center (NYU Langone)
 36087,Rockland,36,4,0.4,1,"Westchester, New York",14.6,0.32,"Westchester, New York",14.6,0.32,Herbert Irving Comprehensive Cancer Center (Columbia),23.5,0.4,15.4,15.4,22.9,Montefiore Einstein Cancer Center
 36089,St. Lawrence,36,0,0.1,1,"Monroe, New York",192.0,3.97,"Onondaga, New York",132.0,2.48,Wilmot Cancer Institute (Rochester),193.9,3.99,192.6,118.9,191.7,Dartmouth Cancer Center
 36091,Saratoga,36,5,0.3,1,"New Haven, Connecticut",135.6,3.05,"Albany, New York",27.2,0.54,Dartmouth Cancer Center,120.2,2.69,143.3,27.2,106.0,Dartmouth Cancer Center
@@ -2131,83 +2131,83 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 39171,Williams,39,0,0.8,1,"Washtenaw, Michigan",89.1,1.86,"Allen, Indiana",52.1,1.12,University of Michigan Rogel Cancer Center,89.7,1.86,79.6,49.7,80.6,University of Michigan Rogel Cancer Center
 39173,Wood,39,13,0.3,1,"Washtenaw, Michigan",62.8,1.11,"Lucas, Ohio",18.5,0.38,University of Michigan Rogel Cancer Center,63.3,1.12,67.1,16.5,68.7,University of Michigan Rogel Cancer Center
 39175,Wyandot,39,0,0.5,1,"Franklin, Ohio",66.4,1.41,"Marion, Ohio",23.3,0.5,OSU Comprehensive Cancer Center – James,65.5,1.39,74.3,25.9,73.4,OSU Comprehensive Cancer Center – James
-40001,Adair,40,0,0.3,1,Oklahoma,186.1,3.69,"Washington, Arkansas",38.5,0.88,Stephenson Cancer Center (Oklahoma),187.7,3.34,196.0,35.6,196.2,Stephenson Cancer Center (Oklahoma)
-40003,Alfalfa,40,0,0.6,1,Oklahoma,122.0,2.55,"Sedgwick, Kansas",113.2,2.36,Stephenson Cancer Center (Oklahoma),125.8,2.64,108.3,106.4,112.3,Stephenson Cancer Center (Oklahoma)
+40001,Adair,40,0,0.3,1,"Oklahoma, Oklahoma",186.1,3.69,"Washington, Arkansas",38.5,0.88,Stephenson Cancer Center (Oklahoma),187.7,3.34,196.0,35.6,196.2,Stephenson Cancer Center (Oklahoma)
+40003,Alfalfa,40,0,0.6,1,"Oklahoma, Oklahoma",122.0,2.55,"Sedgwick, Kansas",113.2,2.36,Stephenson Cancer Center (Oklahoma),125.8,2.64,108.3,106.4,112.3,Stephenson Cancer Center (Oklahoma)
 40005,Atoka,40,0,1.6,1,"Dallas, Texas",127.3,2.4,"Dallas, Texas",127.3,2.4,Harold C. Simmons Comprehensive Cancer Center (UTSW),132.2,2.76,134.8,134.8,134.8,Stephenson Cancer Center (Oklahoma)
-40007,Beaver,40,0,5.4,1,Oklahoma,234.1,4.88,"Ellis, Kansas",194.7,4.07,Stephenson Cancer Center (Oklahoma),235.7,4.77,235.5,190.5,238.0,Stephenson Cancer Center (Oklahoma)
-40009,Beckham,40,0,0.3,1,Oklahoma,118.9,2.06,"Comanche, Oklahoma",106.6,2.29,Stephenson Cancer Center (Oklahoma),120.6,1.95,135.7,95.6,136.0,Stephenson Cancer Center (Oklahoma)
-40011,Blaine,40,1,0.5,1,Oklahoma,70.8,1.45,Oklahoma,70.8,1.45,Stephenson Cancer Center (Oklahoma),72.4,1.35,68.5,68.5,70.9,Stephenson Cancer Center (Oklahoma)
+40007,Beaver,40,0,5.4,1,"Oklahoma, Oklahoma",234.1,4.88,"Ellis, Kansas",194.7,4.07,Stephenson Cancer Center (Oklahoma),235.7,4.77,235.5,190.5,238.0,Stephenson Cancer Center (Oklahoma)
+40009,Beckham,40,0,0.3,1,"Oklahoma, Oklahoma",118.9,2.06,"Comanche, Oklahoma",106.6,2.29,Stephenson Cancer Center (Oklahoma),120.6,1.95,135.7,95.6,136.0,Stephenson Cancer Center (Oklahoma)
+40011,Blaine,40,1,0.5,1,"Oklahoma, Oklahoma",70.8,1.45,"Oklahoma, Oklahoma",70.8,1.45,Stephenson Cancer Center (Oklahoma),72.4,1.35,68.5,68.5,70.9,Stephenson Cancer Center (Oklahoma)
 40013,Bryan,40,0,0.2,1,"Dallas, Texas",90.1,1.67,"Dallas, Texas",90.1,1.67,Harold C. Simmons Comprehensive Cancer Center (UTSW),94.9,2.03,101.0,101.0,101.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-40015,Caddo,40,0,4.5,1,Oklahoma,68.1,1.48,"Comanche, Oklahoma",53.7,1.18,Stephenson Cancer Center (Oklahoma),66.0,1.39,63.0,45.3,61.7,Stephenson Cancer Center (Oklahoma)
-40017,Canadian,40,0,0.2,1,Oklahoma,17.2,0.39,Oklahoma,17.2,0.39,Stephenson Cancer Center (Oklahoma),17.2,0.29,17.3,17.3,17.8,Stephenson Cancer Center (Oklahoma)
-40019,Carter,40,0,1.2,1,Oklahoma,103.4,1.74,"Comanche, Oklahoma",98.7,2.07,Stephenson Cancer Center (Oklahoma),99.7,1.66,112.8,91.3,108.6,Stephenson Cancer Center (Oklahoma)
-40021,Cherokee,40,0,0.3,1,Oklahoma,160.1,3.1,"Tulsa, Oklahoma",59.0,1.12,Stephenson Cancer Center (Oklahoma),164.0,3.19,172.3,57.5,172.6,Stephenson Cancer Center (Oklahoma)
+40015,Caddo,40,0,4.5,1,"Oklahoma, Oklahoma",68.1,1.48,"Comanche, Oklahoma",53.7,1.18,Stephenson Cancer Center (Oklahoma),66.0,1.39,63.0,45.3,61.7,Stephenson Cancer Center (Oklahoma)
+40017,Canadian,40,0,0.2,1,"Oklahoma, Oklahoma",17.2,0.39,"Oklahoma, Oklahoma",17.2,0.39,Stephenson Cancer Center (Oklahoma),17.2,0.29,17.3,17.3,17.8,Stephenson Cancer Center (Oklahoma)
+40019,Carter,40,0,1.2,1,"Oklahoma, Oklahoma",103.4,1.74,"Comanche, Oklahoma",98.7,2.07,Stephenson Cancer Center (Oklahoma),99.7,1.66,112.8,91.3,108.6,Stephenson Cancer Center (Oklahoma)
+40021,Cherokee,40,0,0.3,1,"Oklahoma, Oklahoma",160.1,3.1,"Tulsa, Oklahoma",59.0,1.12,Stephenson Cancer Center (Oklahoma),164.0,3.19,172.3,57.5,172.6,Stephenson Cancer Center (Oklahoma)
 40023,Choctaw,40,0,0.2,1,"Dallas, Texas",131.6,2.58,"Smith, Texas",129.0,2.77,Harold C. Simmons Comprehensive Cancer Center (UTSW),134.7,2.66,132.8,132.8,135.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 40025,Cimarron,40,0,0.2,1,"Denver, Colorado",299.5,5.86,"Pueblo, Colorado",217.6,4.57,University of Colorado Cancer Center,293.1,5.73,295.0,190.1,292.6,University of Colorado Cancer Center
-40027,Cleveland,40,0,0.5,1,Oklahoma,21.1,0.42,Oklahoma,21.1,0.42,Stephenson Cancer Center (Oklahoma),17.5,0.34,21.7,21.7,17.4,Stephenson Cancer Center (Oklahoma)
-40029,Coal,40,0,1.5,1,Oklahoma,122.3,2.5,Oklahoma,122.3,2.5,Stephenson Cancer Center (Oklahoma),118.6,2.42,116.6,116.6,113.3,Stephenson Cancer Center (Oklahoma)
-40031,Comanche,40,23,0.7,1,Oklahoma,90.6,1.64,"Comanche, Oklahoma",0.0,0.0,Stephenson Cancer Center (Oklahoma),88.5,1.55,96.2,0.0,93.5,Stephenson Cancer Center (Oklahoma)
-40033,Cotton,40,0,1.0,1,Oklahoma,116.9,2.16,"Comanche, Oklahoma",30.8,0.63,Stephenson Cancer Center (Oklahoma),114.8,2.08,115.0,27.2,111.6,Stephenson Cancer Center (Oklahoma)
-40035,Craig,40,0,0.6,1,Oklahoma,165.1,2.76,"Newton, Missouri",56.1,1.12,Stephenson Cancer Center (Oklahoma),168.9,2.85,184.6,53.1,186.4,Stephenson Cancer Center (Oklahoma)
-40037,Creek,40,0,0.6,1,Oklahoma,81.9,1.34,"Tulsa, Oklahoma",21.7,0.4,Stephenson Cancer Center (Oklahoma),85.7,1.43,94.3,23.6,95.5,Stephenson Cancer Center (Oklahoma)
-40039,Custer,40,0,1.8,1,Oklahoma,77.5,1.42,Oklahoma,77.5,1.42,Stephenson Cancer Center (Oklahoma),79.1,1.31,88.8,80.8,89.6,Stephenson Cancer Center (Oklahoma)
+40027,Cleveland,40,0,0.5,1,"Oklahoma, Oklahoma",21.1,0.42,"Oklahoma, Oklahoma",21.1,0.42,Stephenson Cancer Center (Oklahoma),17.5,0.34,21.7,21.7,17.4,Stephenson Cancer Center (Oklahoma)
+40029,Coal,40,0,1.5,1,"Oklahoma, Oklahoma",122.3,2.5,"Oklahoma, Oklahoma",122.3,2.5,Stephenson Cancer Center (Oklahoma),118.6,2.42,116.6,116.6,113.3,Stephenson Cancer Center (Oklahoma)
+40031,Comanche,40,23,0.7,1,"Oklahoma, Oklahoma",90.6,1.64,"Comanche, Oklahoma",0.0,0.0,Stephenson Cancer Center (Oklahoma),88.5,1.55,96.2,0.0,93.5,Stephenson Cancer Center (Oklahoma)
+40033,Cotton,40,0,1.0,1,"Oklahoma, Oklahoma",116.9,2.16,"Comanche, Oklahoma",30.8,0.63,Stephenson Cancer Center (Oklahoma),114.8,2.08,115.0,27.2,111.6,Stephenson Cancer Center (Oklahoma)
+40035,Craig,40,0,0.6,1,"Oklahoma, Oklahoma",165.1,2.76,"Newton, Missouri",56.1,1.12,Stephenson Cancer Center (Oklahoma),168.9,2.85,184.6,53.1,186.4,Stephenson Cancer Center (Oklahoma)
+40037,Creek,40,0,0.6,1,"Oklahoma, Oklahoma",81.9,1.34,"Tulsa, Oklahoma",21.7,0.4,Stephenson Cancer Center (Oklahoma),85.7,1.43,94.3,23.6,95.5,Stephenson Cancer Center (Oklahoma)
+40039,Custer,40,0,1.8,1,"Oklahoma, Oklahoma",77.5,1.42,"Oklahoma, Oklahoma",77.5,1.42,Stephenson Cancer Center (Oklahoma),79.1,1.31,88.8,80.8,89.6,Stephenson Cancer Center (Oklahoma)
 40041,Delaware,40,0,0.6,1,"Johnson, Kansas",183.3,3.51,"Benton, Arkansas",45.7,1.01,Stephenson Cancer Center (Oklahoma),187.9,3.49,198.4,39.2,199.7,Stephenson Cancer Center (Oklahoma)
-40043,Dewey,40,0,5.6,1,Oklahoma,118.6,2.46,Oklahoma,118.6,2.46,Stephenson Cancer Center (Oklahoma),120.3,2.36,113.9,113.9,116.1,Stephenson Cancer Center (Oklahoma)
-40045,Ellis,40,0,0.6,1,Oklahoma,161.9,3.31,Oklahoma,161.9,3.31,Stephenson Cancer Center (Oklahoma),163.5,3.2,164.5,163.7,166.7,Stephenson Cancer Center (Oklahoma)
-40047,Garfield,40,0,0.3,1,Oklahoma,79.1,1.69,Oklahoma,79.1,1.69,Stephenson Cancer Center (Oklahoma),82.9,1.79,76.6,76.6,80.7,Stephenson Cancer Center (Oklahoma)
-40049,Garvin,40,0,0.7,1,Oklahoma,60.3,1.09,Oklahoma,60.3,1.09,Stephenson Cancer Center (Oklahoma),56.6,1.01,67.1,67.1,62.9,Stephenson Cancer Center (Oklahoma)
-40051,Grady,40,0,0.2,1,Oklahoma,39.2,0.77,Oklahoma,39.2,0.77,Stephenson Cancer Center (Oklahoma),37.1,0.68,41.2,41.2,38.1,Stephenson Cancer Center (Oklahoma)
-40053,Grant,40,0,0.8,1,Oklahoma,105.1,2.16,"Sedgwick, Kansas",79.4,1.67,Stephenson Cancer Center (Oklahoma),108.9,2.26,104.0,81.5,108.2,Stephenson Cancer Center (Oklahoma)
-40055,Greer,40,0,2.1,1,Oklahoma,148.0,3.13,"Comanche, Oklahoma",83.3,1.81,Stephenson Cancer Center (Oklahoma),145.9,3.05,141.7,74.8,140.8,Stephenson Cancer Center (Oklahoma)
-40057,Harmon,40,0,0.8,1,Oklahoma,176.1,3.44,"Comanche, Oklahoma",88.0,1.86,Stephenson Cancer Center (Oklahoma),174.0,3.36,175.8,100.9,174.8,Stephenson Cancer Center (Oklahoma)
-40059,Harper,40,0,0.9,1,Oklahoma,175.9,3.6,"Ellis, Kansas",175.3,3.56,Stephenson Cancer Center (Oklahoma),177.5,3.5,182.5,176.6,185.4,Stephenson Cancer Center (Oklahoma)
-40061,Haskell,40,0,0.1,1,Oklahoma,154.1,2.7,"Sebastian, Arkansas",48.4,1.08,Stephenson Cancer Center (Oklahoma),150.4,2.61,163.1,52.5,162.1,Stephenson Cancer Center (Oklahoma)
-40063,Hughes,40,0,0.5,1,Oklahoma,82.5,1.68,Oklahoma,82.5,1.68,Stephenson Cancer Center (Oklahoma),78.8,1.6,88.4,88.4,86.2,Stephenson Cancer Center (Oklahoma)
-40065,Jackson,40,0,0.2,1,Oklahoma,142.2,2.72,"Comanche, Oklahoma",54.1,1.14,Stephenson Cancer Center (Oklahoma),140.1,2.63,142.9,62.2,141.4,Stephenson Cancer Center (Oklahoma)
-40067,Jefferson,40,0,1.8,1,Oklahoma,117.1,2.39,"Comanche, Oklahoma",65.5,1.37,Stephenson Cancer Center (Oklahoma),115.0,2.3,118.1,55.9,114.1,Stephenson Cancer Center (Oklahoma)
+40043,Dewey,40,0,5.6,1,"Oklahoma, Oklahoma",118.6,2.46,"Oklahoma, Oklahoma",118.6,2.46,Stephenson Cancer Center (Oklahoma),120.3,2.36,113.9,113.9,116.1,Stephenson Cancer Center (Oklahoma)
+40045,Ellis,40,0,0.6,1,"Oklahoma, Oklahoma",161.9,3.31,"Oklahoma, Oklahoma",161.9,3.31,Stephenson Cancer Center (Oklahoma),163.5,3.2,164.5,163.7,166.7,Stephenson Cancer Center (Oklahoma)
+40047,Garfield,40,0,0.3,1,"Oklahoma, Oklahoma",79.1,1.69,"Oklahoma, Oklahoma",79.1,1.69,Stephenson Cancer Center (Oklahoma),82.9,1.79,76.6,76.6,80.7,Stephenson Cancer Center (Oklahoma)
+40049,Garvin,40,0,0.7,1,"Oklahoma, Oklahoma",60.3,1.09,"Oklahoma, Oklahoma",60.3,1.09,Stephenson Cancer Center (Oklahoma),56.6,1.01,67.1,67.1,62.9,Stephenson Cancer Center (Oklahoma)
+40051,Grady,40,0,0.2,1,"Oklahoma, Oklahoma",39.2,0.77,"Oklahoma, Oklahoma",39.2,0.77,Stephenson Cancer Center (Oklahoma),37.1,0.68,41.2,41.2,38.1,Stephenson Cancer Center (Oklahoma)
+40053,Grant,40,0,0.8,1,"Oklahoma, Oklahoma",105.1,2.16,"Sedgwick, Kansas",79.4,1.67,Stephenson Cancer Center (Oklahoma),108.9,2.26,104.0,81.5,108.2,Stephenson Cancer Center (Oklahoma)
+40055,Greer,40,0,2.1,1,"Oklahoma, Oklahoma",148.0,3.13,"Comanche, Oklahoma",83.3,1.81,Stephenson Cancer Center (Oklahoma),145.9,3.05,141.7,74.8,140.8,Stephenson Cancer Center (Oklahoma)
+40057,Harmon,40,0,0.8,1,"Oklahoma, Oklahoma",176.1,3.44,"Comanche, Oklahoma",88.0,1.86,Stephenson Cancer Center (Oklahoma),174.0,3.36,175.8,100.9,174.8,Stephenson Cancer Center (Oklahoma)
+40059,Harper,40,0,0.9,1,"Oklahoma, Oklahoma",175.9,3.6,"Ellis, Kansas",175.3,3.56,Stephenson Cancer Center (Oklahoma),177.5,3.5,182.5,176.6,185.4,Stephenson Cancer Center (Oklahoma)
+40061,Haskell,40,0,0.1,1,"Oklahoma, Oklahoma",154.1,2.7,"Sebastian, Arkansas",48.4,1.08,Stephenson Cancer Center (Oklahoma),150.4,2.61,163.1,52.5,162.1,Stephenson Cancer Center (Oklahoma)
+40063,Hughes,40,0,0.5,1,"Oklahoma, Oklahoma",82.5,1.68,"Oklahoma, Oklahoma",82.5,1.68,Stephenson Cancer Center (Oklahoma),78.8,1.6,88.4,88.4,86.2,Stephenson Cancer Center (Oklahoma)
+40065,Jackson,40,0,0.2,1,"Oklahoma, Oklahoma",142.2,2.72,"Comanche, Oklahoma",54.1,1.14,Stephenson Cancer Center (Oklahoma),140.1,2.63,142.9,62.2,141.4,Stephenson Cancer Center (Oklahoma)
+40067,Jefferson,40,0,1.8,1,"Oklahoma, Oklahoma",117.1,2.39,"Comanche, Oklahoma",65.5,1.37,Stephenson Cancer Center (Oklahoma),115.0,2.3,118.1,55.9,114.1,Stephenson Cancer Center (Oklahoma)
 40069,Johnston,40,0,1.2,1,"Dallas, Texas",121.6,2.66,"Dallas, Texas",121.6,2.66,Stephenson Cancer Center (Oklahoma),118.2,2.28,120.0,120.0,116.1,Stephenson Cancer Center (Oklahoma)
-40071,Kay,40,0,3.2,1,Oklahoma,104.8,2.03,"Sedgwick, Kansas",82.6,1.83,Stephenson Cancer Center (Oklahoma),108.7,2.13,104.3,78.9,108.2,Stephenson Cancer Center (Oklahoma)
-40073,Kingfisher,40,0,1.2,1,Oklahoma,46.9,1.01,Oklahoma,46.9,1.01,Stephenson Cancer Center (Oklahoma),50.7,1.11,41.9,41.9,45.6,Stephenson Cancer Center (Oklahoma)
-40075,Kiowa,40,0,2.0,1,Oklahoma,124.9,2.49,"Comanche, Oklahoma",54.7,1.18,Stephenson Cancer Center (Oklahoma),122.8,2.4,113.0,47.9,111.9,Stephenson Cancer Center (Oklahoma)
-40077,Latimer,40,0,2.3,1,Oklahoma,160.9,3.37,"Sebastian, Arkansas",77.1,1.62,Stephenson Cancer Center (Oklahoma),157.2,3.29,162.0,71.0,160.1,Stephenson Cancer Center (Oklahoma)
-40079,Le Flore,40,0,0.1,1,Oklahoma,192.6,3.37,"Sebastian, Arkansas",28.3,0.6,Stephenson Cancer Center (Oklahoma),188.9,3.29,198.1,28.5,196.9,Stephenson Cancer Center (Oklahoma)
-40081,Lincoln,40,0,0.4,1,Oklahoma,42.8,0.81,Oklahoma,42.8,0.81,Stephenson Cancer Center (Oklahoma),46.6,0.9,43.8,43.8,44.5,Stephenson Cancer Center (Oklahoma)
-40083,Logan,40,0,1.1,1,Oklahoma,25.3,0.49,Oklahoma,25.3,0.49,Stephenson Cancer Center (Oklahoma),29.1,0.58,25.0,25.0,29.1,Stephenson Cancer Center (Oklahoma)
+40071,Kay,40,0,3.2,1,"Oklahoma, Oklahoma",104.8,2.03,"Sedgwick, Kansas",82.6,1.83,Stephenson Cancer Center (Oklahoma),108.7,2.13,104.3,78.9,108.2,Stephenson Cancer Center (Oklahoma)
+40073,Kingfisher,40,0,1.2,1,"Oklahoma, Oklahoma",46.9,1.01,"Oklahoma, Oklahoma",46.9,1.01,Stephenson Cancer Center (Oklahoma),50.7,1.11,41.9,41.9,45.6,Stephenson Cancer Center (Oklahoma)
+40075,Kiowa,40,0,2.0,1,"Oklahoma, Oklahoma",124.9,2.49,"Comanche, Oklahoma",54.7,1.18,Stephenson Cancer Center (Oklahoma),122.8,2.4,113.0,47.9,111.9,Stephenson Cancer Center (Oklahoma)
+40077,Latimer,40,0,2.3,1,"Oklahoma, Oklahoma",160.9,3.37,"Sebastian, Arkansas",77.1,1.62,Stephenson Cancer Center (Oklahoma),157.2,3.29,162.0,71.0,160.1,Stephenson Cancer Center (Oklahoma)
+40079,Le Flore,40,0,0.1,1,"Oklahoma, Oklahoma",192.6,3.37,"Sebastian, Arkansas",28.3,0.6,Stephenson Cancer Center (Oklahoma),188.9,3.29,198.1,28.5,196.9,Stephenson Cancer Center (Oklahoma)
+40081,Lincoln,40,0,0.4,1,"Oklahoma, Oklahoma",42.8,0.81,"Oklahoma, Oklahoma",42.8,0.81,Stephenson Cancer Center (Oklahoma),46.6,0.9,43.8,43.8,44.5,Stephenson Cancer Center (Oklahoma)
+40083,Logan,40,0,1.1,1,"Oklahoma, Oklahoma",25.3,0.49,"Oklahoma, Oklahoma",25.3,0.49,Stephenson Cancer Center (Oklahoma),29.1,0.58,25.0,25.0,29.1,Stephenson Cancer Center (Oklahoma)
 40085,Love,40,0,1.2,1,"Tarrant, Texas",93.9,1.61,"Tarrant, Texas",93.9,1.61,Harold C. Simmons Comprehensive Cancer Center (UTSW),91.1,1.66,96.0,96.0,94.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-40087,McClain,40,0,0.3,1,Oklahoma,38.0,0.81,Oklahoma,38.0,0.81,Stephenson Cancer Center (Oklahoma),34.3,0.73,34.8,34.8,30.6,Stephenson Cancer Center (Oklahoma)
+40087,McClain,40,0,0.3,1,"Oklahoma, Oklahoma",38.0,0.81,"Oklahoma, Oklahoma",38.0,0.81,Stephenson Cancer Center (Oklahoma),34.3,0.73,34.8,34.8,30.6,Stephenson Cancer Center (Oklahoma)
 40089,McCurtain,40,0,3.6,1,"Dallas, Texas",180.0,3.67,"Sebastian, Arkansas",128.7,2.79,Harold C. Simmons Comprehensive Cancer Center (UTSW),183.1,3.75,168.5,113.8,171.4,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-40091,McIntosh,40,0,0.8,1,Oklahoma,122.3,2.09,"Tulsa, Oklahoma",67.8,1.46,Stephenson Cancer Center (Oklahoma),118.7,2.01,130.9,63.4,130.1,Stephenson Cancer Center (Oklahoma)
-40093,Major,40,0,1.7,1,Oklahoma,101.5,2.15,Oklahoma,101.5,2.15,Stephenson Cancer Center (Oklahoma),105.3,2.25,89.0,89.0,92.5,Stephenson Cancer Center (Oklahoma)
+40091,McIntosh,40,0,0.8,1,"Oklahoma, Oklahoma",122.3,2.09,"Tulsa, Oklahoma",67.8,1.46,Stephenson Cancer Center (Oklahoma),118.7,2.01,130.9,63.4,130.1,Stephenson Cancer Center (Oklahoma)
+40093,Major,40,0,1.7,1,"Oklahoma, Oklahoma",101.5,2.15,"Oklahoma, Oklahoma",101.5,2.15,Stephenson Cancer Center (Oklahoma),105.3,2.25,89.0,89.0,92.5,Stephenson Cancer Center (Oklahoma)
 40095,Marshall,40,0,0.7,1,"Dallas, Texas",101.5,2.2,"Dallas, Texas",101.5,2.2,Harold C. Simmons Comprehensive Cancer Center (UTSW),101.2,2.15,100.2,100.2,100.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-40097,Mayes,40,0,0.5,1,Oklahoma,146.7,2.57,"Tulsa, Oklahoma",44.4,0.87,Stephenson Cancer Center (Oklahoma),150.5,2.67,165.1,47.4,166.3,Stephenson Cancer Center (Oklahoma)
-40099,Murray,40,0,0.1,1,Oklahoma,84.5,1.52,Oklahoma,84.5,1.52,Stephenson Cancer Center (Oklahoma),80.9,1.44,90.6,90.6,86.5,Stephenson Cancer Center (Oklahoma)
-40101,Muskogee,40,0,0.0,1,Oklahoma,134.1,2.55,"Tulsa, Oklahoma",46.5,0.79,Stephenson Cancer Center (Oklahoma),135.2,2.28,145.4,48.9,145.4,Stephenson Cancer Center (Oklahoma)
-40103,Noble,40,0,2.4,1,Oklahoma,64.4,1.18,Oklahoma,64.4,1.18,Stephenson Cancer Center (Oklahoma),68.2,1.27,68.8,68.8,72.7,Stephenson Cancer Center (Oklahoma)
-40105,Nowata,40,0,0.3,1,Oklahoma,155.9,2.78,"Tulsa, Oklahoma",53.6,1.09,Stephenson Cancer Center (Oklahoma),159.7,2.88,162.9,58.7,165.1,Stephenson Cancer Center (Oklahoma)
-40107,Okfuskee,40,0,0.4,1,Oklahoma,72.9,1.55,"Tulsa, Oklahoma",63.6,1.2,Stephenson Cancer Center (Oklahoma),70.8,1.5,79.5,61.2,78.8,Stephenson Cancer Center (Oklahoma)
-40109,Oklahoma,40,190,0.1,1,Oklahoma,0.0,0.0,Oklahoma,0.0,0.0,Stephenson Cancer Center (Oklahoma),4.1,0.09,0.0,0.0,4.2,Stephenson Cancer Center (Oklahoma)
-40111,Okmulgee,40,0,0.4,1,Oklahoma,104.9,1.98,"Tulsa, Oklahoma",39.6,0.8,Stephenson Cancer Center (Oklahoma),103.0,1.83,104.4,40.4,104.2,Stephenson Cancer Center (Oklahoma)
-40113,Osage,40,0,2.9,1,Oklahoma,121.4,2.37,"Tulsa, Oklahoma",42.5,0.94,Stephenson Cancer Center (Oklahoma),125.2,2.47,113.4,33.5,115.8,Stephenson Cancer Center (Oklahoma)
+40097,Mayes,40,0,0.5,1,"Oklahoma, Oklahoma",146.7,2.57,"Tulsa, Oklahoma",44.4,0.87,Stephenson Cancer Center (Oklahoma),150.5,2.67,165.1,47.4,166.3,Stephenson Cancer Center (Oklahoma)
+40099,Murray,40,0,0.1,1,"Oklahoma, Oklahoma",84.5,1.52,"Oklahoma, Oklahoma",84.5,1.52,Stephenson Cancer Center (Oklahoma),80.9,1.44,90.6,90.6,86.5,Stephenson Cancer Center (Oklahoma)
+40101,Muskogee,40,0,0.0,1,"Oklahoma, Oklahoma",134.1,2.55,"Tulsa, Oklahoma",46.5,0.79,Stephenson Cancer Center (Oklahoma),135.2,2.28,145.4,48.9,145.4,Stephenson Cancer Center (Oklahoma)
+40103,Noble,40,0,2.4,1,"Oklahoma, Oklahoma",64.4,1.18,"Oklahoma, Oklahoma",64.4,1.18,Stephenson Cancer Center (Oklahoma),68.2,1.27,68.8,68.8,72.7,Stephenson Cancer Center (Oklahoma)
+40105,Nowata,40,0,0.3,1,"Oklahoma, Oklahoma",155.9,2.78,"Tulsa, Oklahoma",53.6,1.09,Stephenson Cancer Center (Oklahoma),159.7,2.88,162.9,58.7,165.1,Stephenson Cancer Center (Oklahoma)
+40107,Okfuskee,40,0,0.4,1,"Oklahoma, Oklahoma",72.9,1.55,"Tulsa, Oklahoma",63.6,1.2,Stephenson Cancer Center (Oklahoma),70.8,1.5,79.5,61.2,78.8,Stephenson Cancer Center (Oklahoma)
+40109,Oklahoma,40,190,0.1,1,"Oklahoma, Oklahoma",0.0,0.0,"Oklahoma, Oklahoma",0.0,0.0,Stephenson Cancer Center (Oklahoma),4.1,0.09,0.0,0.0,4.2,Stephenson Cancer Center (Oklahoma)
+40111,Okmulgee,40,0,0.4,1,"Oklahoma, Oklahoma",104.9,1.98,"Tulsa, Oklahoma",39.6,0.8,Stephenson Cancer Center (Oklahoma),103.0,1.83,104.4,40.4,104.2,Stephenson Cancer Center (Oklahoma)
+40113,Osage,40,0,2.9,1,"Oklahoma, Oklahoma",121.4,2.37,"Tulsa, Oklahoma",42.5,0.94,Stephenson Cancer Center (Oklahoma),125.2,2.47,113.4,33.5,115.8,Stephenson Cancer Center (Oklahoma)
 40115,Ottawa,40,0,1.0,1,"Johnson, Kansas",153.6,2.87,"Newton, Missouri",34.8,0.75,University of Kansas Cancer Center,163.5,3.1,171.5,28.4,182.9,University of Kansas Cancer Center
-40117,Pawnee,40,0,1.1,1,Oklahoma,95.8,1.82,"Tulsa, Oklahoma",46.2,0.96,Stephenson Cancer Center (Oklahoma),99.6,1.91,89.9,44.2,92.5,Stephenson Cancer Center (Oklahoma)
-40119,Payne,40,0,1.7,1,Oklahoma,63.2,1.26,Oklahoma,63.2,1.26,Stephenson Cancer Center (Oklahoma),67.1,1.35,57.9,57.9,61.0,Stephenson Cancer Center (Oklahoma)
-40121,Pittsburg,40,0,0.2,1,Oklahoma,128.4,2.67,"Sebastian, Arkansas",95.4,2.05,Stephenson Cancer Center (Oklahoma),124.7,2.59,130.1,95.9,128.2,Stephenson Cancer Center (Oklahoma)
-40123,Pontotoc,40,0,0.0,1,Oklahoma,86.5,1.75,Oklahoma,86.5,1.75,Stephenson Cancer Center (Oklahoma),82.8,1.67,84.4,84.4,80.9,Stephenson Cancer Center (Oklahoma)
-40125,Pottawatomie,40,0,0.3,1,Oklahoma,40.5,0.8,Oklahoma,40.5,0.8,Stephenson Cancer Center (Oklahoma),36.8,0.71,41.4,41.4,39.4,Stephenson Cancer Center (Oklahoma)
+40117,Pawnee,40,0,1.1,1,"Oklahoma, Oklahoma",95.8,1.82,"Tulsa, Oklahoma",46.2,0.96,Stephenson Cancer Center (Oklahoma),99.6,1.91,89.9,44.2,92.5,Stephenson Cancer Center (Oklahoma)
+40119,Payne,40,0,1.7,1,"Oklahoma, Oklahoma",63.2,1.26,"Oklahoma, Oklahoma",63.2,1.26,Stephenson Cancer Center (Oklahoma),67.1,1.35,57.9,57.9,61.0,Stephenson Cancer Center (Oklahoma)
+40121,Pittsburg,40,0,0.2,1,"Oklahoma, Oklahoma",128.4,2.67,"Sebastian, Arkansas",95.4,2.05,Stephenson Cancer Center (Oklahoma),124.7,2.59,130.1,95.9,128.2,Stephenson Cancer Center (Oklahoma)
+40123,Pontotoc,40,0,0.0,1,"Oklahoma, Oklahoma",86.5,1.75,"Oklahoma, Oklahoma",86.5,1.75,Stephenson Cancer Center (Oklahoma),82.8,1.67,84.4,84.4,80.9,Stephenson Cancer Center (Oklahoma)
+40125,Pottawatomie,40,0,0.3,1,"Oklahoma, Oklahoma",40.5,0.8,"Oklahoma, Oklahoma",40.5,0.8,Stephenson Cancer Center (Oklahoma),36.8,0.71,41.4,41.4,39.4,Stephenson Cancer Center (Oklahoma)
 40127,Pushmataha,40,0,0.1,1,"Dallas, Texas",158.4,3.07,"Sebastian, Arkansas",116.6,2.42,Harold C. Simmons Comprehensive Cancer Center (UTSW),161.5,3.15,154.8,112.4,156.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-40129,Roger Mills,40,0,0.5,1,Oklahoma,137.0,2.65,"Comanche, Oklahoma",133.5,2.88,Stephenson Cancer Center (Oklahoma),138.7,2.55,145.0,117.8,146.0,Stephenson Cancer Center (Oklahoma)
-40131,Rogers,40,0,0.5,1,Oklahoma,128.8,2.26,"Tulsa, Oklahoma",26.6,0.56,Stephenson Cancer Center (Oklahoma),132.7,2.35,141.1,24.8,142.6,Stephenson Cancer Center (Oklahoma)
-40133,Seminole,40,0,1.3,1,Oklahoma,64.3,1.3,Oklahoma,64.3,1.3,Stephenson Cancer Center (Oklahoma),60.6,1.22,65.9,65.9,63.7,Stephenson Cancer Center (Oklahoma)
-40135,Sequoyah,40,0,1.5,1,Oklahoma,164.6,2.72,"Sebastian, Arkansas",29.5,0.65,Stephenson Cancer Center (Oklahoma),160.9,2.63,187.9,28.1,187.3,Stephenson Cancer Center (Oklahoma)
-40137,Stephens,40,0,1.1,1,Oklahoma,84.2,1.7,"Comanche, Oklahoma",34.1,0.74,Stephenson Cancer Center (Oklahoma),82.1,1.61,88.5,33.6,84.8,Stephenson Cancer Center (Oklahoma)
-40139,Texas,40,0,0.5,1,Oklahoma,264.4,5.4,"Ellis, Kansas",224.6,4.65,Stephenson Cancer Center (Oklahoma),266.0,5.3,281.4,227.2,283.5,Stephenson Cancer Center (Oklahoma)
-40141,Tillman,40,0,0.7,1,Oklahoma,132.9,2.53,"Comanche, Oklahoma",46.8,1.0,Stephenson Cancer Center (Oklahoma),130.8,2.44,137.1,43.0,134.7,Stephenson Cancer Center (Oklahoma)
-40143,Tulsa,40,26,0.1,1,Oklahoma,102.4,1.7,"Tulsa, Oklahoma",0.0,0.0,Stephenson Cancer Center (Oklahoma),106.3,1.8,117.8,0.0,119.1,Stephenson Cancer Center (Oklahoma)
-40145,Wagoner,40,0,1.3,1,Oklahoma,121.1,2.01,"Tulsa, Oklahoma",18.8,0.32,Stephenson Cancer Center (Oklahoma),124.9,2.11,133.2,20.3,134.0,Stephenson Cancer Center (Oklahoma)
-40147,Washington,40,0,0.1,1,Oklahoma,142.7,2.58,"Tulsa, Oklahoma",48.6,1.0,Stephenson Cancer Center (Oklahoma),146.5,2.67,145.2,51.9,147.7,Stephenson Cancer Center (Oklahoma)
-40149,Washita,40,0,1.6,1,Oklahoma,102.4,2.14,"Comanche, Oklahoma",84.5,1.82,Stephenson Cancer Center (Oklahoma),100.3,2.05,105.6,71.0,105.6,Stephenson Cancer Center (Oklahoma)
-40151,Woods,40,0,2.1,1,Oklahoma,152.9,3.17,"Sedgwick, Kansas",116.4,2.45,Stephenson Cancer Center (Oklahoma),156.7,3.27,130.4,117.6,134.1,Stephenson Cancer Center (Oklahoma)
-40153,Woodward,40,0,0.3,1,Oklahoma,138.4,2.83,Oklahoma,138.4,2.83,Stephenson Cancer Center (Oklahoma),140.1,2.72,146.0,146.0,148.7,Stephenson Cancer Center (Oklahoma)
+40129,Roger Mills,40,0,0.5,1,"Oklahoma, Oklahoma",137.0,2.65,"Comanche, Oklahoma",133.5,2.88,Stephenson Cancer Center (Oklahoma),138.7,2.55,145.0,117.8,146.0,Stephenson Cancer Center (Oklahoma)
+40131,Rogers,40,0,0.5,1,"Oklahoma, Oklahoma",128.8,2.26,"Tulsa, Oklahoma",26.6,0.56,Stephenson Cancer Center (Oklahoma),132.7,2.35,141.1,24.8,142.6,Stephenson Cancer Center (Oklahoma)
+40133,Seminole,40,0,1.3,1,"Oklahoma, Oklahoma",64.3,1.3,"Oklahoma, Oklahoma",64.3,1.3,Stephenson Cancer Center (Oklahoma),60.6,1.22,65.9,65.9,63.7,Stephenson Cancer Center (Oklahoma)
+40135,Sequoyah,40,0,1.5,1,"Oklahoma, Oklahoma",164.6,2.72,"Sebastian, Arkansas",29.5,0.65,Stephenson Cancer Center (Oklahoma),160.9,2.63,187.9,28.1,187.3,Stephenson Cancer Center (Oklahoma)
+40137,Stephens,40,0,1.1,1,"Oklahoma, Oklahoma",84.2,1.7,"Comanche, Oklahoma",34.1,0.74,Stephenson Cancer Center (Oklahoma),82.1,1.61,88.5,33.6,84.8,Stephenson Cancer Center (Oklahoma)
+40139,Texas,40,0,0.5,1,"Oklahoma, Oklahoma",264.4,5.4,"Ellis, Kansas",224.6,4.65,Stephenson Cancer Center (Oklahoma),266.0,5.3,281.4,227.2,283.5,Stephenson Cancer Center (Oklahoma)
+40141,Tillman,40,0,0.7,1,"Oklahoma, Oklahoma",132.9,2.53,"Comanche, Oklahoma",46.8,1.0,Stephenson Cancer Center (Oklahoma),130.8,2.44,137.1,43.0,134.7,Stephenson Cancer Center (Oklahoma)
+40143,Tulsa,40,26,0.1,1,"Oklahoma, Oklahoma",102.4,1.7,"Tulsa, Oklahoma",0.0,0.0,Stephenson Cancer Center (Oklahoma),106.3,1.8,117.8,0.0,119.1,Stephenson Cancer Center (Oklahoma)
+40145,Wagoner,40,0,1.3,1,"Oklahoma, Oklahoma",121.1,2.01,"Tulsa, Oklahoma",18.8,0.32,Stephenson Cancer Center (Oklahoma),124.9,2.11,133.2,20.3,134.0,Stephenson Cancer Center (Oklahoma)
+40147,Washington,40,0,0.1,1,"Oklahoma, Oklahoma",142.7,2.58,"Tulsa, Oklahoma",48.6,1.0,Stephenson Cancer Center (Oklahoma),146.5,2.67,145.2,51.9,147.7,Stephenson Cancer Center (Oklahoma)
+40149,Washita,40,0,1.6,1,"Oklahoma, Oklahoma",102.4,2.14,"Comanche, Oklahoma",84.5,1.82,Stephenson Cancer Center (Oklahoma),100.3,2.05,105.6,71.0,105.6,Stephenson Cancer Center (Oklahoma)
+40151,Woods,40,0,2.1,1,"Oklahoma, Oklahoma",152.9,3.17,"Sedgwick, Kansas",116.4,2.45,Stephenson Cancer Center (Oklahoma),156.7,3.27,130.4,117.6,134.1,Stephenson Cancer Center (Oklahoma)
+40153,Woodward,40,0,0.3,1,"Oklahoma, Oklahoma",138.4,2.83,"Oklahoma, Oklahoma",138.4,2.83,Stephenson Cancer Center (Oklahoma),140.1,2.72,146.0,146.0,148.7,Stephenson Cancer Center (Oklahoma)
 41001,Baker,41,17,1.7,1,"Multnomah, Oregon",299.0,5.28,"Payette, Idaho",81.6,1.51,Knight Cancer Institute (OHSU),304.6,5.44,288.9,78.6,294.2,Knight Cancer Institute (OHSU)
 41003,Benton,41,9,0.8,1,"Multnomah, Oregon",84.1,1.77,"Lane, Oregon",40.6,0.86,Knight Cancer Institute (OHSU),78.3,1.59,88.0,45.2,83.4,Knight Cancer Institute (OHSU)
 41005,Clackamas,41,40,0.4,1,"Multnomah, Oregon",12.0,0.25,"Clackamas, Oregon",0.0,0.0,Knight Cancer Institute (OHSU),13.1,0.3,12.8,0.0,12.5,Knight Cancer Institute (OHSU)
@@ -2528,10 +2528,10 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48005,Angelina,48,0,0.0,1,"Harris, Texas",118.7,2.43,"Smith, Texas",84.5,1.88,MD Anderson Cancer Center,123.5,2.56,134.0,93.5,142.0,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48007,Aransas,48,0,0.5,1,"Bexar, Texas",155.0,3.27,"Bexar, Texas",155.0,3.27,Mays Cancer Center (UT Health San Antonio),158.3,3.36,160.6,160.6,164.0,Mays Cancer Center (UT Health San Antonio)
 48009,Archer,48,0,0.1,1,"Tarrant, Texas",130.0,2.72,"Comanche, Oklahoma",72.4,1.37,Harold C. Simmons Comprehensive Cancer Center (UTSW),144.7,3.06,122.8,77.4,143.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48011,Armstrong,48,0,1.6,1,Oklahoma,238.0,4.11,"Lubbock, Texas",142.4,2.91,Stephenson Cancer Center (Oklahoma),239.6,4.01,264.9,132.2,265.1,Stephenson Cancer Center (Oklahoma)
+48011,Armstrong,48,0,1.6,1,"Oklahoma, Oklahoma",238.0,4.11,"Lubbock, Texas",142.4,2.91,Stephenson Cancer Center (Oklahoma),239.6,4.01,264.9,132.2,265.1,Stephenson Cancer Center (Oklahoma)
 48013,Atascosa,48,0,0.1,1,"Bexar, Texas",33.7,0.74,"Bexar, Texas",33.7,0.74,Mays Cancer Center (UT Health San Antonio),37.0,0.82,36.9,36.9,38.5,Mays Cancer Center (UT Health San Antonio)
 48015,Austin,48,0,1.9,1,"Harris, Texas",55.1,1.05,"Fort Bend, Texas",47.3,1.04,MD Anderson Cancer Center,63.5,1.18,57.2,43.2,60.1,Dan L Duncan Comprehensive Cancer Center (Baylor)
-48017,Bailey,48,0,0.7,1,Oklahoma,354.1,6.28,"Lubbock, Texas",70.7,1.49,UNM Comprehensive Cancer Center,253.8,4.89,372.0,80.4,275.6,UNM Comprehensive Cancer Center
+48017,Bailey,48,0,0.7,1,"Oklahoma, Oklahoma",354.1,6.28,"Lubbock, Texas",70.7,1.49,UNM Comprehensive Cancer Center,253.8,4.89,372.0,80.4,275.6,UNM Comprehensive Cancer Center
 48019,Bandera,48,0,1.6,1,"Bexar, Texas",46.2,0.99,"Bexar, Texas",46.2,0.99,Mays Cancer Center (UT Health San Antonio),45.5,1.0,40.3,40.3,36.7,Mays Cancer Center (UT Health San Antonio)
 48021,Bastrop,48,0,2.2,1,"Travis, Texas",35.4,0.93,"Travis, Texas",35.4,0.93,Mays Cancer Center (UT Health San Antonio),92.2,1.78,30.8,30.8,101.8,Mays Cancer Center (UT Health San Antonio)
 48023,Baylor,48,0,0.2,1,"Tarrant, Texas",150.5,3.13,"Taylor, Texas",103.2,2.21,Harold C. Simmons Comprehensive Cancer Center (UTSW),165.2,3.47,155.8,103.4,179.9,Harold C. Simmons Comprehensive Cancer Center (UTSW)
@@ -2545,7 +2545,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48039,Brazoria,48,8,2.5,1,"Harris, Texas",39.1,0.79,"Fort Bend, Texas",33.8,0.72,MD Anderson Cancer Center,29.5,0.58,38.4,27.1,29.1,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48041,Brazos,48,1,0.1,1,"Harris, Texas",87.6,1.75,"Montgomery, Texas",68.8,1.3,MD Anderson Cancer Center,97.6,1.98,93.1,70.1,101.1,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48043,Brewster,48,0,2.9,1,"Bexar, Texas",372.7,7.66,"El Paso, Texas",236.1,4.59,Mays Cancer Center (UT Health San Antonio),372.7,7.67,370.9,234.1,367.4,Mays Cancer Center (UT Health San Antonio)
-48045,Briscoe,48,0,0.9,1,Oklahoma,266.7,5.29,"Lubbock, Texas",96.2,1.99,Stephenson Cancer Center (Oklahoma),264.6,5.21,268.3,86.7,267.5,Stephenson Cancer Center (Oklahoma)
+48045,Briscoe,48,0,0.9,1,"Oklahoma, Oklahoma",266.7,5.29,"Lubbock, Texas",96.2,1.99,Stephenson Cancer Center (Oklahoma),264.6,5.21,268.3,86.7,267.5,Stephenson Cancer Center (Oklahoma)
 48047,Brooks,48,0,0.1,1,"Bexar, Texas",166.1,3.32,"Bexar, Texas",166.1,3.32,Mays Cancer Center (UT Health San Antonio),169.4,3.4,190.8,190.8,193.0,Mays Cancer Center (UT Health San Antonio)
 48049,Brown,48,0,0.0,1,"Tarrant, Texas",132.2,2.85,"Taylor, Texas",79.1,1.68,Harold C. Simmons Comprehensive Cancer Center (UTSW),158.1,3.4,146.9,78.9,175.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48051,Burleson,48,0,1.2,1,"Travis, Texas",85.0,1.77,"Bell, Texas",81.2,1.72,MD Anderson Cancer Center,106.9,2.1,80.1,80.1,109.7,Dan L Duncan Comprehensive Cancer Center (Baylor)
@@ -2555,39 +2555,39 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48059,Callahan,48,0,3.8,1,"Tarrant, Texas",140.1,2.4,"Taylor, Texas",26.9,0.53,Harold C. Simmons Comprehensive Cancer Center (UTSW),166.0,2.95,157.9,22.7,186.3,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48061,Cameron,48,7,0.4,1,"Bexar, Texas",265.2,5.36,"Bexar, Texas",265.2,5.36,Mays Cancer Center (UT Health San Antonio),268.4,5.44,293.8,293.8,296.2,Mays Cancer Center (UT Health San Antonio)
 48063,Camp,48,0,0.8,1,"Dallas, Texas",122.5,2.26,"Smith, Texas",58.4,1.29,Harold C. Simmons Comprehensive Cancer Center (UTSW),125.7,2.34,126.4,59.3,130.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48065,Carson,48,0,1.1,1,Oklahoma,225.6,4.3,"Lubbock, Texas",158.9,3.07,Stephenson Cancer Center (Oklahoma),227.3,4.2,258.0,156.6,258.5,Stephenson Cancer Center (Oklahoma)
+48065,Carson,48,0,1.1,1,"Oklahoma, Oklahoma",225.6,4.3,"Lubbock, Texas",158.9,3.07,Stephenson Cancer Center (Oklahoma),227.3,4.2,258.0,156.6,258.5,Stephenson Cancer Center (Oklahoma)
 48067,Cass,48,0,1.7,1,"Dallas, Texas",164.0,3.0,"Caddo, Louisiana",65.3,1.47,Harold C. Simmons Comprehensive Cancer Center (UTSW),167.1,3.08,174.7,61.5,178.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48069,Castro,48,0,0.6,1,Oklahoma,325.1,5.69,"Lubbock, Texas",83.6,1.75,UNM Comprehensive Cancer Center,279.3,5.41,333.6,84.7,301.4,UNM Comprehensive Cancer Center
+48069,Castro,48,0,0.6,1,"Oklahoma, Oklahoma",325.1,5.69,"Lubbock, Texas",83.6,1.75,UNM Comprehensive Cancer Center,279.3,5.41,333.6,84.7,301.4,UNM Comprehensive Cancer Center
 48071,Chambers,48,0,2.1,1,"Harris, Texas",43.6,0.78,"Harris, Texas",43.6,0.78,MD Anderson Cancer Center,44.6,0.87,47.3,36.1,46.3,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48073,Cherokee,48,0,0.8,1,"Dallas, Texas",118.0,2.42,"Smith, Texas",31.3,0.71,Harold C. Simmons Comprehensive Cancer Center (UTSW),121.0,2.51,132.8,34.7,136.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48075,Childress,48,0,0.2,1,Oklahoma,207.4,4.07,"Comanche, Oklahoma",119.4,2.49,Stephenson Cancer Center (Oklahoma),205.3,3.99,205.5,124.4,204.2,Stephenson Cancer Center (Oklahoma)
+48075,Childress,48,0,0.2,1,"Oklahoma, Oklahoma",207.4,4.07,"Comanche, Oklahoma",119.4,2.49,Stephenson Cancer Center (Oklahoma),205.3,3.99,205.5,124.4,204.2,Stephenson Cancer Center (Oklahoma)
 48077,Clay,48,0,0.1,1,"Tarrant, Texas",101.1,2.1,"Comanche, Oklahoma",71.4,1.46,Harold C. Simmons Comprehensive Cancer Center (UTSW),115.9,2.44,111.9,68.0,128.3,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48079,Cochran,48,0,1.1,1,"Tarrant, Texas",364.9,7.52,"Lubbock, Texas",58.7,1.24,UNM Comprehensive Cancer Center,291.1,5.65,387.9,59.5,291.1,UNM Comprehensive Cancer Center
 48081,Coke,48,0,0.2,1,"Tarrant, Texas",217.4,3.91,"Taylor, Texas",60.8,1.26,Mays Cancer Center (UT Health San Antonio),226.3,4.24,230.8,62.4,238.2,Mays Cancer Center (UT Health San Antonio)
 48083,Coleman,48,0,0.1,1,"Tarrant, Texas",161.1,2.92,"Taylor, Texas",52.2,1.08,Mays Cancer Center (UT Health San Antonio),186.0,3.7,171.8,56.0,199.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48085,Collin,48,11,0.9,1,"Dallas, Texas",23.4,0.39,"Dallas, Texas",23.4,0.39,Harold C. Simmons Comprehensive Cancer Center (UTSW),28.4,0.51,26.0,26.0,26.9,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48087,Collingsworth,48,0,0.6,1,Oklahoma,185.0,3.35,"Comanche, Oklahoma",117.1,2.47,Stephenson Cancer Center (Oklahoma),186.6,3.85,191.6,124.2,191.1,Stephenson Cancer Center (Oklahoma)
+48087,Collingsworth,48,0,0.6,1,"Oklahoma, Oklahoma",185.0,3.35,"Comanche, Oklahoma",117.1,2.47,Stephenson Cancer Center (Oklahoma),186.6,3.85,191.6,124.2,191.1,Stephenson Cancer Center (Oklahoma)
 48089,Colorado,48,0,0.4,1,"Harris, Texas",72.0,1.29,"Fort Bend, Texas",59.3,1.26,MD Anderson Cancer Center,77.9,1.65,81.1,61.9,82.0,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48091,Comal,48,5,0.6,1,"Bexar, Texas",38.7,0.7,"Bexar, Texas",38.7,0.7,Mays Cancer Center (UT Health San Antonio),39.8,0.74,32.3,32.3,33.4,Mays Cancer Center (UT Health San Antonio)
 48093,Comanche,48,0,0.2,1,"Tarrant, Texas",106.0,2.28,"Taylor, Texas",93.2,1.91,Harold C. Simmons Comprehensive Cancer Center (UTSW),131.9,2.83,112.9,92.5,139.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48095,Concho,48,0,0.4,1,"Bexar, Texas",165.5,2.98,"Taylor, Texas",86.1,1.75,Mays Cancer Center (UT Health San Antonio),163.1,2.95,170.6,93.6,174.1,Mays Cancer Center (UT Health San Antonio)
 48097,Cooke,48,0,1.0,1,"Tarrant, Texas",68.0,1.16,"Tarrant, Texas",68.0,1.16,Harold C. Simmons Comprehensive Cancer Center (UTSW),65.2,1.21,70.3,70.3,68.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48099,Coryell,48,0,7.4,1,"Travis, Texas",79.8,1.64,"Bell, Texas",26.5,0.59,Mays Cancer Center (UT Health San Antonio),147.2,3.1,76.7,21.4,148.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48101,Cottle,48,0,0.1,1,Oklahoma,231.5,4.6,"Lubbock, Texas",117.6,2.43,Stephenson Cancer Center (Oklahoma),229.4,4.52,227.1,116.4,225.4,Stephenson Cancer Center (Oklahoma)
+48101,Cottle,48,0,0.1,1,"Oklahoma, Oklahoma",231.5,4.6,"Lubbock, Texas",117.6,2.43,Stephenson Cancer Center (Oklahoma),229.4,4.52,227.1,116.4,225.4,Stephenson Cancer Center (Oklahoma)
 48103,Crane,48,0,0.1,1,"Bexar, Texas",302.1,5.34,"Lubbock, Texas",168.3,3.47,Mays Cancer Center (UT Health San Antonio),299.7,5.31,315.9,181.1,312.3,Mays Cancer Center (UT Health San Antonio)
 48105,Crockett,48,0,0.1,1,"Bexar, Texas",200.2,3.27,"Taylor, Texas",168.8,3.47,Mays Cancer Center (UT Health San Antonio),197.7,3.24,217.5,175.1,213.8,Mays Cancer Center (UT Health San Antonio)
 48107,Crosby,48,0,0.8,1,"Tarrant, Texas",275.7,5.67,"Lubbock, Texas",36.1,0.77,Harold C. Simmons Comprehensive Cancer Center (UTSW),291.1,6.06,294.6,38.1,303.1,Stephenson Cancer Center (Oklahoma)
 48109,Culberson,48,0,0.5,1,"Bexar, Texas",426.0,6.85,"El Paso, Texas",122.4,2.24,UNM Comprehensive Cancer Center,385.2,7.13,443.6,124.6,356.5,UNM Comprehensive Cancer Center
-48111,Dallam,48,0,0.4,1,Oklahoma,313.2,6.07,"Lubbock, Texas",201.9,4.17,UNM Comprehensive Cancer Center,272.3,5.0,338.1,216.5,287.7,UNM Comprehensive Cancer Center
+48111,Dallam,48,0,0.4,1,"Oklahoma, Oklahoma",313.2,6.07,"Lubbock, Texas",201.9,4.17,UNM Comprehensive Cancer Center,272.3,5.0,338.1,216.5,287.7,UNM Comprehensive Cancer Center
 48113,Dallas,48,437,0.3,1,"Dallas, Texas",0.0,0.0,"Dallas, Texas",0.0,0.0,Harold C. Simmons Comprehensive Cancer Center (UTSW),6.1,0.13,0.0,0.0,3.9,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48115,Dawson,48,0,0.1,1,"Tarrant, Texas",285.0,5.9,"Lubbock, Texas",62.1,1.31,Harold C. Simmons Comprehensive Cancer Center (UTSW),310.9,6.45,327.8,67.9,356.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48117,Deaf Smith,48,0,0.2,1,Oklahoma,302.4,5.23,"Lubbock, Texas",104.1,2.17,UNM Comprehensive Cancer Center,279.5,4.78,336.3,112.0,289.1,UNM Comprehensive Cancer Center
+48117,Deaf Smith,48,0,0.2,1,"Oklahoma, Oklahoma",302.4,5.23,"Lubbock, Texas",104.1,2.17,UNM Comprehensive Cancer Center,279.5,4.78,336.3,112.0,289.1,UNM Comprehensive Cancer Center
 48119,Delta,48,0,0.1,1,"Dallas, Texas",80.9,1.51,"Dallas, Texas",80.9,1.51,Harold C. Simmons Comprehensive Cancer Center (UTSW),84.1,1.59,88.6,88.6,91.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48121,Denton,48,16,0.8,1,"Dallas, Texas",31.5,0.63,"Dallas, Texas",31.5,0.63,Harold C. Simmons Comprehensive Cancer Center (UTSW),26.1,0.52,29.9,29.9,27.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48123,DeWitt,48,0,0.8,1,"Bexar, Texas",90.5,1.92,"Bexar, Texas",90.5,1.92,Mays Cancer Center (UT Health San Antonio),93.7,2.0,93.9,93.9,97.5,Mays Cancer Center (UT Health San Antonio)
 48125,Dickens,48,0,0.7,1,"Tarrant, Texas",246.5,5.15,"Lubbock, Texas",72.1,1.52,Harold C. Simmons Comprehensive Cancer Center (UTSW),265.3,5.52,258.7,71.8,279.3,Stephenson Cancer Center (Oklahoma)
 48127,Dimmit,48,0,0.7,1,"Bexar, Texas",118.2,2.22,"Bexar, Texas",118.2,2.22,Mays Cancer Center (UT Health San Antonio),121.4,2.26,123.3,123.3,122.0,Mays Cancer Center (UT Health San Antonio)
-48129,Donley,48,0,1.1,1,Oklahoma,221.6,3.84,"Lubbock, Texas",143.5,2.97,Stephenson Cancer Center (Oklahoma),223.2,3.74,231.9,135.3,231.7,Stephenson Cancer Center (Oklahoma)
+48129,Donley,48,0,1.1,1,"Oklahoma, Oklahoma",221.6,3.84,"Lubbock, Texas",143.5,2.97,Stephenson Cancer Center (Oklahoma),223.2,3.74,231.9,135.3,231.7,Stephenson Cancer Center (Oklahoma)
 48131,Duval,48,0,3.7,1,"Bexar, Texas",134.5,2.85,"Bexar, Texas",134.5,2.85,Mays Cancer Center (UT Health San Antonio),137.8,2.93,144.8,144.8,146.8,Mays Cancer Center (UT Health San Antonio)
 48133,Eastland,48,0,1.0,1,"Tarrant, Texas",102.9,1.76,"Taylor, Texas",61.6,1.07,Harold C. Simmons Comprehensive Cancer Center (UTSW),128.7,2.31,116.6,64.7,144.9,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48135,Ector,48,7,0.1,1,"Tarrant, Texas",321.1,5.63,"Lubbock, Texas",138.1,2.84,Mays Cancer Center (UT Health San Antonio),333.4,6.01,338.5,144.0,335.0,Mays Cancer Center (UT Health San Antonio)
@@ -2599,8 +2599,8 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48147,Fannin,48,0,0.3,1,"Dallas, Texas",69.9,1.39,"Dallas, Texas",69.9,1.39,Harold C. Simmons Comprehensive Cancer Center (UTSW),74.9,1.51,74.9,74.9,76.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48149,Fayette,48,0,0.2,1,"Travis, Texas",72.4,1.74,"Travis, Texas",72.4,1.74,MD Anderson Cancer Center,108.7,2.03,71.7,71.7,108.6,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48151,Fisher,48,0,1.7,1,"Tarrant, Texas",194.6,4.07,"Taylor, Texas",59.4,1.22,Harold C. Simmons Comprehensive Cancer Center (UTSW),220.5,4.62,220.7,53.8,248.9,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48153,Floyd,48,0,0.1,1,Oklahoma,296.8,5.94,"Lubbock, Texas",59.5,1.24,Stephenson Cancer Center (Oklahoma),294.7,5.85,290.4,54.0,289.2,Stephenson Cancer Center (Oklahoma)
-48155,Foard,48,0,0.6,1,Oklahoma,193.6,3.82,"Comanche, Oklahoma",107.5,2.29,Stephenson Cancer Center (Oklahoma),191.5,3.73,196.2,102.9,194.0,Stephenson Cancer Center (Oklahoma)
+48153,Floyd,48,0,0.1,1,"Oklahoma, Oklahoma",296.8,5.94,"Lubbock, Texas",59.5,1.24,Stephenson Cancer Center (Oklahoma),294.7,5.85,290.4,54.0,289.2,Stephenson Cancer Center (Oklahoma)
+48155,Foard,48,0,0.6,1,"Oklahoma, Oklahoma",193.6,3.82,"Comanche, Oklahoma",107.5,2.29,Stephenson Cancer Center (Oklahoma),191.5,3.73,196.2,102.9,194.0,Stephenson Cancer Center (Oklahoma)
 48157,Fort Bend,48,45,0.8,1,"Harris, Texas",25.5,0.49,"Fort Bend, Texas",0.0,0.0,MD Anderson Cancer Center,22.1,0.47,24.6,0.0,21.3,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48159,Franklin,48,0,1.4,1,"Dallas, Texas",105.3,1.82,"Smith, Texas",66.3,1.5,Harold C. Simmons Comprehensive Cancer Center (UTSW),108.4,1.9,111.8,66.2,115.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48161,Freestone,48,0,1.0,1,"Dallas, Texas",92.4,1.63,"Smith, Texas",85.4,1.82,Harold C. Simmons Comprehensive Cancer Center (UTSW),95.4,1.72,100.6,82.3,102.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
@@ -2612,23 +2612,23 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48173,Glasscock,48,0,1.4,1,"Bexar, Texas",282.5,5.42,"Taylor, Texas",135.3,2.82,Mays Cancer Center (UT Health San Antonio),280.1,5.39,289.4,132.3,285.9,Mays Cancer Center (UT Health San Antonio)
 48175,Goliad,48,0,1.5,1,"Bexar, Texas",101.0,2.16,"Bexar, Texas",101.0,2.16,Mays Cancer Center (UT Health San Antonio),104.3,2.24,106.4,106.4,109.9,Mays Cancer Center (UT Health San Antonio)
 48177,Gonzales,48,0,1.8,1,"Bexar, Texas",69.6,1.38,"Bexar, Texas",69.6,1.38,Mays Cancer Center (UT Health San Antonio),72.9,1.47,71.6,71.6,77.5,Mays Cancer Center (UT Health San Antonio)
-48179,Gray,48,0,0.2,1,Oklahoma,200.4,3.77,"Lubbock, Texas",182.3,3.56,Stephenson Cancer Center (Oklahoma),202.1,3.66,231.3,176.5,232.0,Stephenson Cancer Center (Oklahoma)
+48179,Gray,48,0,0.2,1,"Oklahoma, Oklahoma",200.4,3.77,"Lubbock, Texas",182.3,3.56,Stephenson Cancer Center (Oklahoma),202.1,3.66,231.3,176.5,232.0,Stephenson Cancer Center (Oklahoma)
 48181,Grayson,48,12,0.7,1,"Dallas, Texas",62.2,1.06,"Dallas, Texas",62.2,1.06,Harold C. Simmons Comprehensive Cancer Center (UTSW),67.1,1.4,70.1,70.1,70.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48183,Gregg,48,11,0.1,1,"Dallas, Texas",122.8,2.51,"Smith, Texas",36.9,0.87,Harold C. Simmons Comprehensive Cancer Center (UTSW),125.9,2.59,141.7,38.5,145.6,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48185,Grimes,48,1,1.3,1,"Harris, Texas",71.1,1.5,"Montgomery, Texas",52.3,1.05,MD Anderson Cancer Center,81.1,1.73,66.4,42.7,74.8,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48187,Guadalupe,48,0,0.2,1,"Bexar, Texas",37.6,0.68,"Bexar, Texas",37.6,0.68,Mays Cancer Center (UT Health San Antonio),38.7,0.71,32.2,32.2,34.8,Mays Cancer Center (UT Health San Antonio)
-48189,Hale,48,0,0.3,1,Oklahoma,323.9,6.4,"Lubbock, Texas",47.5,0.86,UNM Comprehensive Cancer Center,312.3,6.08,309.8,50.1,308.9,Stephenson Cancer Center (Oklahoma)
-48191,Hall,48,0,2.7,1,Oklahoma,220.4,4.36,"Comanche, Oklahoma",132.3,2.78,Stephenson Cancer Center (Oklahoma),218.3,4.28,220.8,128.4,220.1,Stephenson Cancer Center (Oklahoma)
+48189,Hale,48,0,0.3,1,"Oklahoma, Oklahoma",323.9,6.4,"Lubbock, Texas",47.5,0.86,UNM Comprehensive Cancer Center,312.3,6.08,309.8,50.1,308.9,Stephenson Cancer Center (Oklahoma)
+48191,Hall,48,0,2.7,1,"Oklahoma, Oklahoma",220.4,4.36,"Comanche, Oklahoma",132.3,2.78,Stephenson Cancer Center (Oklahoma),218.3,4.28,220.8,128.4,220.1,Stephenson Cancer Center (Oklahoma)
 48193,Hamilton,48,0,1.5,1,"Tarrant, Texas",101.6,2.09,"Bell, Texas",81.2,1.72,Harold C. Simmons Comprehensive Cancer Center (UTSW),121.1,2.54,102.1,66.8,123.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48195,Hansford,48,0,1.1,1,Oklahoma,261.9,5.38,"Lubbock, Texas",222.5,4.35,Stephenson Cancer Center (Oklahoma),263.6,5.28,258.9,224.7,260.5,Stephenson Cancer Center (Oklahoma)
-48197,Hardeman,48,0,0.1,1,Oklahoma,184.0,3.58,"Comanche, Oklahoma",95.9,1.99,Stephenson Cancer Center (Oklahoma),181.9,3.49,180.9,92.3,179.1,Stephenson Cancer Center (Oklahoma)
+48195,Hansford,48,0,1.1,1,"Oklahoma, Oklahoma",261.9,5.38,"Lubbock, Texas",222.5,4.35,Stephenson Cancer Center (Oklahoma),263.6,5.28,258.9,224.7,260.5,Stephenson Cancer Center (Oklahoma)
+48197,Hardeman,48,0,0.1,1,"Oklahoma, Oklahoma",184.0,3.58,"Comanche, Oklahoma",95.9,1.99,Stephenson Cancer Center (Oklahoma),181.9,3.49,180.9,92.3,179.1,Stephenson Cancer Center (Oklahoma)
 48199,Hardin,48,0,0.8,1,"Harris, Texas",100.0,2.06,"Montgomery, Texas",100.0,2.12,MD Anderson Cancer Center,102.8,2.2,92.9,86.5,95.8,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48201,Harris,48,1051,0.3,1,"Harris, Texas",0.0,0.0,"Harris, Texas",0.0,0.0,MD Anderson Cancer Center,14.1,0.31,0.0,0.0,9.4,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48203,Harrison,48,0,0.1,1,"Dallas, Texas",144.3,2.99,"Caddo, Louisiana",38.6,0.72,Harold C. Simmons Comprehensive Cancer Center (UTSW),147.4,3.07,166.3,44.3,170.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48205,Hartley,48,0,2.1,1,Oklahoma,306.0,5.93,"Lubbock, Texas",194.7,4.03,UNM Comprehensive Cancer Center,275.4,5.07,337.9,206.7,289.6,UNM Comprehensive Cancer Center
+48205,Hartley,48,0,2.1,1,"Oklahoma, Oklahoma",306.0,5.93,"Lubbock, Texas",194.7,4.03,UNM Comprehensive Cancer Center,275.4,5.07,337.9,206.7,289.6,UNM Comprehensive Cancer Center
 48207,Haskell,48,0,1.1,1,"Tarrant, Texas",166.2,3.41,"Taylor, Texas",61.0,1.29,Harold C. Simmons Comprehensive Cancer Center (UTSW),192.1,3.96,178.4,63.0,205.4,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48209,Hays,48,0,3.4,1,"Travis, Texas",30.7,0.56,"Travis, Texas",30.7,0.56,Mays Cancer Center (UT Health San Antonio),63.4,1.13,28.3,28.3,62.8,Mays Cancer Center (UT Health San Antonio)
-48211,Hemphill,48,0,1.8,1,Oklahoma,188.8,3.71,"Comanche, Oklahoma",184.5,3.92,Stephenson Cancer Center (Oklahoma),190.5,3.6,194.2,167.9,195.5,Stephenson Cancer Center (Oklahoma)
+48211,Hemphill,48,0,1.8,1,"Oklahoma, Oklahoma",188.8,3.71,"Comanche, Oklahoma",184.5,3.92,Stephenson Cancer Center (Oklahoma),190.5,3.6,194.2,167.9,195.5,Stephenson Cancer Center (Oklahoma)
 48213,Henderson,48,0,0.6,1,"Dallas, Texas",70.4,1.4,"Smith, Texas",39.5,0.88,Harold C. Simmons Comprehensive Cancer Center (UTSW),73.4,1.49,78.5,41.8,81.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48215,Hidalgo,48,17,0.4,1,"Bexar, Texas",234.5,4.71,"Bexar, Texas",234.5,4.71,Mays Cancer Center (UT Health San Antonio),237.7,4.79,270.6,270.6,272.6,Mays Cancer Center (UT Health San Antonio)
 48217,Hill,48,0,0.1,1,"Tarrant, Texas",61.6,1.14,"Tarrant, Texas",61.6,1.14,Harold C. Simmons Comprehensive Cancer Center (UTSW),67.4,1.29,63.7,63.7,71.6,Harold C. Simmons Comprehensive Cancer Center (UTSW)
@@ -2639,7 +2639,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48227,Howard,48,0,0.6,1,"Tarrant, Texas",261.0,4.49,"Lubbock, Texas",107.8,2.25,Harold C. Simmons Comprehensive Cancer Center (UTSW),286.9,5.04,297.9,112.8,306.0,Mays Cancer Center (UT Health San Antonio)
 48229,Hudspeth,48,0,11.0,1,"Pima, Arizona",403.8,7.22,"El Paso, Texas",89.6,1.84,UNM Comprehensive Cancer Center,352.4,6.73,387.8,67.3,317.3,UNM Comprehensive Cancer Center
 48231,Hunt,48,0,0.2,1,"Dallas, Texas",49.9,0.85,"Dallas, Texas",49.9,0.85,Harold C. Simmons Comprehensive Cancer Center (UTSW),53.0,0.93,52.6,52.6,56.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48233,Hutchinson,48,0,1.7,1,Oklahoma,234.3,4.48,"Lubbock, Texas",174.1,3.34,Stephenson Cancer Center (Oklahoma),235.9,4.38,265.5,178.9,266.4,Stephenson Cancer Center (Oklahoma)
+48233,Hutchinson,48,0,1.7,1,"Oklahoma, Oklahoma",234.3,4.48,"Lubbock, Texas",174.1,3.34,Stephenson Cancer Center (Oklahoma),235.9,4.38,265.5,178.9,266.4,Stephenson Cancer Center (Oklahoma)
 48235,Irion,48,0,1.2,1,"Bexar, Texas",228.5,4.3,"Taylor, Texas",114.8,2.37,Mays Cancer Center (UT Health San Antonio),226.0,4.27,221.4,121.3,217.9,Mays Cancer Center (UT Health San Antonio)
 48237,Jack,48,0,0.9,1,"Tarrant, Texas",77.6,1.66,"Tarrant, Texas",77.6,1.66,Harold C. Simmons Comprehensive Cancer Center (UTSW),92.4,2.01,73.5,73.5,97.6,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48239,Jackson,48,0,0.4,1,"Harris, Texas",102.3,2.15,"Fort Bend, Texas",80.3,1.73,MD Anderson Cancer Center,98.8,2.13,110.4,85.8,106.1,Dan L Duncan Comprehensive Cancer Center (Baylor)
@@ -2670,7 +2670,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48289,Leon,48,0,2.9,1,"Harris, Texas",119.3,1.98,"Montgomery, Texas",89.3,1.45,Harold C. Simmons Comprehensive Cancer Center (UTSW),126.2,2.21,130.1,97.5,138.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48291,Liberty,48,0,0.3,1,"Harris, Texas",47.8,0.97,"Montgomery, Texas",47.0,0.98,MD Anderson Cancer Center,50.6,1.11,45.8,38.9,50.9,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48293,Limestone,48,0,0.3,1,"Dallas, Texas",92.9,1.75,"Bell, Texas",90.4,1.67,Harold C. Simmons Comprehensive Cancer Center (UTSW),95.9,1.84,102.8,86.9,104.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48295,Lipscomb,48,0,4.1,1,Oklahoma,208.4,4.31,Oklahoma,208.4,4.31,Stephenson Cancer Center (Oklahoma),210.0,4.2,204.2,195.8,206.3,Stephenson Cancer Center (Oklahoma)
+48295,Lipscomb,48,0,4.1,1,"Oklahoma, Oklahoma",208.4,4.31,"Oklahoma, Oklahoma",208.4,4.31,Stephenson Cancer Center (Oklahoma),210.0,4.2,204.2,195.8,206.3,Stephenson Cancer Center (Oklahoma)
 48297,Live Oak,48,0,0.0,1,"Bexar, Texas",89.1,1.75,"Bexar, Texas",89.1,1.75,Mays Cancer Center (UT Health San Antonio),92.4,1.83,100.1,100.1,102.7,Mays Cancer Center (UT Health San Antonio)
 48299,Llano,48,0,2.7,1,"Travis, Texas",68.0,1.39,"Travis, Texas",68.0,1.39,Mays Cancer Center (UT Health San Antonio),101.7,2.1,62.2,62.2,97.5,Mays Cancer Center (UT Health San Antonio)
 48301,Loving,48,0,4.0,1,"Bexar, Texas",386.7,6.59,"Lubbock, Texas",186.1,3.89,UNM Comprehensive Cancer Center,357.4,7.32,409.0,189.7,345.3,UNM Comprehensive Cancer Center
@@ -2693,33 +2693,33 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48335,Mitchell,48,0,0.1,1,"Tarrant, Texas",221.8,3.81,"Taylor, Texas",68.7,1.24,Harold C. Simmons Comprehensive Cancer Center (UTSW),247.7,4.36,254.5,76.8,283.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48337,Montague,48,0,0.6,1,"Tarrant, Texas",78.9,1.69,"Tarrant, Texas",78.9,1.69,Harold C. Simmons Comprehensive Cancer Center (UTSW),93.7,2.03,80.3,80.3,93.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48339,Montgomery,48,67,0.2,1,"Harris, Texas",30.5,0.54,"Montgomery, Texas",0.0,0.0,MD Anderson Cancer Center,40.4,0.77,34.3,0.0,43.6,Dan L Duncan Comprehensive Cancer Center (Baylor)
-48341,Moore,48,0,1.2,1,Oklahoma,274.3,5.28,"Lubbock, Texas",177.8,3.42,Stephenson Cancer Center (Oklahoma),275.9,5.18,300.8,194.9,301.9,Stephenson Cancer Center (Oklahoma)
+48341,Moore,48,0,1.2,1,"Oklahoma, Oklahoma",274.3,5.28,"Lubbock, Texas",177.8,3.42,Stephenson Cancer Center (Oklahoma),275.9,5.18,300.8,194.9,301.9,Stephenson Cancer Center (Oklahoma)
 48343,Morris,48,0,0.3,1,"Dallas, Texas",135.6,2.38,"Smith, Texas",71.2,1.53,Harold C. Simmons Comprehensive Cancer Center (UTSW),138.7,2.46,145.3,73.9,149.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48345,Motley,48,0,0.2,1,Oklahoma,262.6,5.23,"Lubbock, Texas",84.7,1.75,Stephenson Cancer Center (Oklahoma),260.5,5.14,259.2,81.9,257.7,Stephenson Cancer Center (Oklahoma)
+48345,Motley,48,0,0.2,1,"Oklahoma, Oklahoma",262.6,5.23,"Lubbock, Texas",84.7,1.75,Stephenson Cancer Center (Oklahoma),260.5,5.14,259.2,81.9,257.7,Stephenson Cancer Center (Oklahoma)
 48347,Nacogdoches,48,0,0.5,1,"Harris, Texas",141.9,2.92,"Smith, Texas",71.9,1.53,MD Anderson Cancer Center,146.6,3.06,160.0,74.2,168.1,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48349,Navarro,48,0,0.1,1,"Dallas, Texas",58.2,1.06,"Dallas, Texas",58.2,1.06,Harold C. Simmons Comprehensive Cancer Center (UTSW),61.2,1.15,64.0,64.0,65.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48351,Newton,48,0,3.4,1,"Harris, Texas",144.8,2.98,"Harris, Texas",144.8,2.98,MD Anderson Cancer Center,147.5,3.12,139.7,127.8,143.3,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48353,Nolan,48,0,0.2,1,"Tarrant, Texas",195.1,3.32,"Taylor, Texas",42.0,0.75,Harold C. Simmons Comprehensive Cancer Center (UTSW),221.0,3.87,222.5,45.2,251.0,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48355,Nueces,48,2,0.3,1,"Bexar, Texas",149.2,2.7,"Bexar, Texas",149.2,2.7,Mays Cancer Center (UT Health San Antonio),152.5,2.79,166.3,166.3,169.4,Mays Cancer Center (UT Health San Antonio)
-48357,Ochiltree,48,0,0.3,1,Oklahoma,233.1,4.79,"Comanche, Oklahoma",229.1,4.83,Stephenson Cancer Center (Oklahoma),234.7,4.68,232.4,216.9,234.3,Stephenson Cancer Center (Oklahoma)
-48359,Oldham,48,0,0.6,1,Oklahoma,293.0,4.98,"Lubbock, Texas",136.7,2.84,UNM Comprehensive Cancer Center,255.2,4.31,331.3,148.4,287.8,UNM Comprehensive Cancer Center
+48357,Ochiltree,48,0,0.3,1,"Oklahoma, Oklahoma",233.1,4.79,"Comanche, Oklahoma",229.1,4.83,Stephenson Cancer Center (Oklahoma),234.7,4.68,232.4,216.9,234.3,Stephenson Cancer Center (Oklahoma)
+48359,Oldham,48,0,0.6,1,"Oklahoma, Oklahoma",293.0,4.98,"Lubbock, Texas",136.7,2.84,UNM Comprehensive Cancer Center,255.2,4.31,331.3,148.4,287.8,UNM Comprehensive Cancer Center
 48361,Orange,48,0,0.8,1,"Harris, Texas",104.4,2.1,"Harris, Texas",104.4,2.1,MD Anderson Cancer Center,107.1,2.24,114.8,100.9,115.6,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48363,Palo Pinto,48,0,1.7,1,"Tarrant, Texas",57.5,1.19,"Tarrant, Texas",57.5,1.19,Harold C. Simmons Comprehensive Cancer Center (UTSW),83.4,1.74,63.9,63.9,92.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48365,Panola,48,0,0.3,1,"Dallas, Texas",158.2,3.09,"Caddo, Louisiana",42.1,0.87,Harold C. Simmons Comprehensive Cancer Center (UTSW),161.3,3.17,179.7,45.3,183.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48367,Parker,48,2,2.2,1,"Tarrant, Texas",31.4,0.63,"Tarrant, Texas",31.4,0.63,Harold C. Simmons Comprehensive Cancer Center (UTSW),57.3,1.18,33.5,33.5,61.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48369,Parmer,48,0,1.1,1,Oklahoma,337.4,5.95,"Lubbock, Texas",96.2,2.01,UNM Comprehensive Cancer Center,248.4,4.79,369.1,103.5,264.6,UNM Comprehensive Cancer Center
+48369,Parmer,48,0,1.1,1,"Oklahoma, Oklahoma",337.4,5.95,"Lubbock, Texas",96.2,2.01,UNM Comprehensive Cancer Center,248.4,4.79,369.1,103.5,264.6,UNM Comprehensive Cancer Center
 48371,Pecos,48,0,0.4,1,"Bexar, Texas",300.6,4.81,"Lubbock, Texas",226.7,4.52,Mays Cancer Center (UT Health San Antonio),298.2,4.78,327.4,229.1,323.8,Mays Cancer Center (UT Health San Antonio)
 48373,Polk,48,0,0.3,1,"Harris, Texas",75.8,1.49,"Montgomery, Texas",58.4,1.2,MD Anderson Cancer Center,80.6,1.63,83.9,56.4,91.7,Dan L Duncan Comprehensive Cancer Center (Baylor)
-48375,Potter,48,19,0.1,1,Oklahoma,255.8,4.45,"Lubbock, Texas",127.3,2.36,Stephenson Cancer Center (Oklahoma),257.4,4.35,293.6,138.4,294.0,Stephenson Cancer Center (Oklahoma)
+48375,Potter,48,19,0.1,1,"Oklahoma, Oklahoma",255.8,4.45,"Lubbock, Texas",127.3,2.36,Stephenson Cancer Center (Oklahoma),257.4,4.35,293.6,138.4,294.0,Stephenson Cancer Center (Oklahoma)
 48377,Presidio,48,0,2.5,1,"Bexar, Texas",422.0,8.68,"El Paso, Texas",232.5,4.49,Mays Cancer Center (UT Health San Antonio),422.0,8.69,412.9,220.7,409.5,Mays Cancer Center (UT Health San Antonio)
 48379,Rains,48,0,0.5,1,"Dallas, Texas",66.9,1.35,"Smith, Texas",51.8,1.14,Harold C. Simmons Comprehensive Cancer Center (UTSW),70.1,1.43,69.4,57.8,73.2,Harold C. Simmons Comprehensive Cancer Center (UTSW)
-48381,Randall,48,0,0.2,1,Oklahoma,262.5,4.5,"Lubbock, Texas",119.1,2.21,Stephenson Cancer Center (Oklahoma),264.2,4.4,298.1,129.9,298.3,Stephenson Cancer Center (Oklahoma)
+48381,Randall,48,0,0.2,1,"Oklahoma, Oklahoma",262.5,4.5,"Lubbock, Texas",119.1,2.21,Stephenson Cancer Center (Oklahoma),264.2,4.4,298.1,129.9,298.3,Stephenson Cancer Center (Oklahoma)
 48383,Reagan,48,0,0.1,1,"Bexar, Texas",242.8,4.12,"Taylor, Texas",158.3,3.25,Mays Cancer Center (UT Health San Antonio),240.4,4.1,254.2,155.8,250.6,Mays Cancer Center (UT Health San Antonio)
 48385,Real,48,0,3.6,1,"Bexar, Texas",103.8,2.13,"Bexar, Texas",103.8,2.13,Mays Cancer Center (UT Health San Antonio),103.8,2.14,95.1,95.1,91.7,Mays Cancer Center (UT Health San Antonio)
 48387,Red River,48,0,0.5,1,"Dallas, Texas",134.7,2.66,"Smith, Texas",102.7,2.26,Harold C. Simmons Comprehensive Cancer Center (UTSW),137.8,2.74,135.2,106.1,138.4,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48389,Reeves,48,0,0.1,1,"Bexar, Texas",359.7,6.0,"Lubbock, Texas",203.4,4.19,Mays Cancer Center (UT Health San Antonio),357.3,5.97,390.2,203.2,375.1,UNM Comprehensive Cancer Center
 48391,Refugio,48,0,1.8,1,"Bexar, Texas",125.3,2.66,"Bexar, Texas",125.3,2.66,Mays Cancer Center (UT Health San Antonio),128.6,2.74,136.1,136.1,139.5,Mays Cancer Center (UT Health San Antonio)
-48393,Roberts,48,0,3.4,1,Oklahoma,201.7,3.99,"Comanche, Oklahoma",197.3,4.2,Stephenson Cancer Center (Oklahoma),203.3,3.88,215.1,178.5,216.1,Stephenson Cancer Center (Oklahoma)
+48393,Roberts,48,0,3.4,1,"Oklahoma, Oklahoma",201.7,3.99,"Comanche, Oklahoma",197.3,4.2,Stephenson Cancer Center (Oklahoma),203.3,3.88,215.1,178.5,216.1,Stephenson Cancer Center (Oklahoma)
 48395,Robertson,48,0,0.5,1,"Travis, Texas",97.3,2.06,"Bell, Texas",87.7,1.85,MD Anderson Cancer Center,130.2,2.68,101.5,75.1,132.6,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48397,Rockwall,48,0,0.1,1,"Dallas, Texas",25.9,0.48,"Dallas, Texas",25.9,0.48,Harold C. Simmons Comprehensive Cancer Center (UTSW),29.1,0.56,26.6,26.6,30.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48399,Runnels,48,0,1.6,1,"Tarrant, Texas",197.1,4.23,"Taylor, Texas",60.4,1.24,Mays Cancer Center (UT Health San Antonio),201.2,3.75,201.5,53.7,215.3,Mays Cancer Center (UT Health San Antonio)
@@ -2733,7 +2733,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48415,Scurry,48,0,0.6,1,"Tarrant, Texas",224.1,4.67,"Taylor, Texas",80.1,1.58,Harold C. Simmons Comprehensive Cancer Center (UTSW),250.0,5.22,255.4,83.3,283.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48417,Shackelford,48,0,0.3,1,"Tarrant, Texas",128.3,2.65,"Taylor, Texas",42.8,0.86,Harold C. Simmons Comprehensive Cancer Center (UTSW),154.2,3.2,143.7,39.4,172.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48419,Shelby,48,0,0.6,1,"Harris, Texas",176.6,3.65,"Caddo, Louisiana",59.9,1.24,MD Anderson Cancer Center,181.4,3.79,188.5,59.9,195.9,Dan L Duncan Comprehensive Cancer Center (Baylor)
-48421,Sherman,48,0,0.3,1,Oklahoma,305.7,6.28,"Lubbock, Texas",210.7,4.08,UNM Comprehensive Cancer Center,303.3,5.63,309.1,230.6,310.7,Stephenson Cancer Center (Oklahoma)
+48421,Sherman,48,0,0.3,1,"Oklahoma, Oklahoma",305.7,6.28,"Lubbock, Texas",210.7,4.08,UNM Comprehensive Cancer Center,303.3,5.63,309.1,230.6,310.7,Stephenson Cancer Center (Oklahoma)
 48423,Smith,48,73,0.1,1,"Dallas, Texas",98.4,1.86,"Smith, Texas",0.0,0.0,Harold C. Simmons Comprehensive Cancer Center (UTSW),101.5,1.94,111.4,0.0,115.1,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48425,Somervell,48,0,0.1,1,"Tarrant, Texas",57.3,1.15,"Tarrant, Texas",57.3,1.15,Harold C. Simmons Comprehensive Cancer Center (UTSW),76.8,1.6,56.3,56.3,79.7,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48427,Starr,48,0,0.8,1,"Bexar, Texas",260.2,5.52,"Bexar, Texas",260.2,5.52,Mays Cancer Center (UT Health San Antonio),263.4,5.6,257.8,257.8,259.2,Mays Cancer Center (UT Health San Antonio)
@@ -2741,7 +2741,7 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48431,Sterling,48,0,0.1,1,"Bexar, Texas",247.7,4.71,"Taylor, Texas",100.5,2.11,Mays Cancer Center (UT Health San Antonio),245.2,4.68,262.2,98.7,258.8,Mays Cancer Center (UT Health San Antonio)
 48433,Stonewall,48,0,0.3,1,"Tarrant, Texas",193.7,4.05,"Taylor, Texas",64.1,1.34,Harold C. Simmons Comprehensive Cancer Center (UTSW),219.6,4.59,210.0,68.4,237.3,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48435,Sutton,48,0,0.1,1,"Bexar, Texas",163.5,2.68,"Taylor, Texas",153.7,3.19,Mays Cancer Center (UT Health San Antonio),161.1,2.65,175.0,165.4,171.3,Mays Cancer Center (UT Health San Antonio)
-48437,Swisher,48,0,0.3,1,Oklahoma,294.8,5.86,"Lubbock, Texas",76.5,1.4,Stephenson Cancer Center (Oklahoma),292.7,5.77,300.6,81.7,300.2,Stephenson Cancer Center (Oklahoma)
+48437,Swisher,48,0,0.3,1,"Oklahoma, Oklahoma",294.8,5.86,"Lubbock, Texas",76.5,1.4,Stephenson Cancer Center (Oklahoma),292.7,5.77,300.6,81.7,300.2,Stephenson Cancer Center (Oklahoma)
 48439,Tarrant,48,119,0.3,1,"Tarrant, Texas",0.0,0.0,"Tarrant, Texas",0.0,0.0,Harold C. Simmons Comprehensive Cancer Center (UTSW),27.5,0.46,0.0,0.0,28.5,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48441,Taylor,48,22,0.6,1,"Tarrant, Texas",159.5,2.71,"Taylor, Texas",0.0,0.0,Harold C. Simmons Comprehensive Cancer Center (UTSW),185.4,3.26,178.3,0.0,206.8,Harold C. Simmons Comprehensive Cancer Center (UTSW)
 48443,Terrell,48,0,2.6,1,"Bexar, Texas",274.6,5.66,"Bexar, Texas",274.6,5.66,Mays Cancer Center (UT Health San Antonio),274.5,5.67,280.4,261.9,276.9,Mays Cancer Center (UT Health San Antonio)
@@ -2764,9 +2764,9 @@ county_fips,county_name,state_fips,trials_in_county,access_mi,on_main_network,ne
 48477,Washington,48,0,0.2,1,"Harris, Texas",67.8,1.32,"Harris, Texas",67.8,1.32,MD Anderson Cancer Center,79.1,1.53,76.1,67.2,81.7,Dan L Duncan Comprehensive Cancer Center (Baylor)
 48479,Webb,48,5,0.5,1,"Bexar, Texas",158.9,2.73,"Bexar, Texas",158.9,2.73,Mays Cancer Center (UT Health San Antonio),162.1,2.77,176.6,176.6,176.9,Mays Cancer Center (UT Health San Antonio)
 48481,Wharton,48,0,1.3,1,"Harris, Texas",64.4,1.34,"Fort Bend, Texas",42.4,0.92,MD Anderson Cancer Center,61.0,1.31,70.2,45.7,66.2,Dan L Duncan Comprehensive Cancer Center (Baylor)
-48483,Wheeler,48,0,1.5,1,Oklahoma,168.6,3.13,"Comanche, Oklahoma",152.9,3.23,Stephenson Cancer Center (Oklahoma),170.3,3.03,186.4,138.7,186.7,Stephenson Cancer Center (Oklahoma)
+48483,Wheeler,48,0,1.5,1,"Oklahoma, Oklahoma",168.6,3.13,"Comanche, Oklahoma",152.9,3.23,Stephenson Cancer Center (Oklahoma),170.3,3.03,186.4,138.7,186.7,Stephenson Cancer Center (Oklahoma)
 48485,Wichita,48,5,0.8,1,"Tarrant, Texas",120.4,2.57,"Comanche, Oklahoma",55.8,1.03,Harold C. Simmons Comprehensive Cancer Center (UTSW),135.2,2.91,131.8,59.7,147.4,Stephenson Cancer Center (Oklahoma)
-48487,Wilbarger,48,0,0.5,1,Oklahoma,164.9,3.23,"Comanche, Oklahoma",78.8,1.7,Stephenson Cancer Center (Oklahoma),162.8,3.15,166.9,72.4,164.5,Stephenson Cancer Center (Oklahoma)
+48487,Wilbarger,48,0,0.5,1,"Oklahoma, Oklahoma",164.9,3.23,"Comanche, Oklahoma",78.8,1.7,Stephenson Cancer Center (Oklahoma),162.8,3.15,166.9,72.4,164.5,Stephenson Cancer Center (Oklahoma)
 48489,Willacy,48,0,0.1,1,"Bexar, Texas",231.9,4.66,"Bexar, Texas",231.9,4.66,Mays Cancer Center (UT Health San Antonio),235.2,4.74,257.4,257.4,259.8,Mays Cancer Center (UT Health San Antonio)
 48491,Williamson,48,9,1.5,1,"Travis, Texas",21.4,0.43,"Travis, Texas",21.4,0.43,Mays Cancer Center (UT Health San Antonio),103.4,1.77,20.6,20.6,107.1,Mays Cancer Center (UT Health San Antonio)
 48493,Wilson,48,0,3.7,1,"Bexar, Texas",42.9,0.94,"Bexar, Texas",42.9,0.94,Mays Cancer Center (UT Health San Antonio),46.1,1.02,35.1,35.1,38.7,Mays Cancer Center (UT Health San Antonio)

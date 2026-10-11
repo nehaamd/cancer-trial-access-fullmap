@@ -7,9 +7,12 @@ a Boston ZIP falls through to the city gazetteer, exactly as it did for county a
 if nothing else is available — the county population center (flagged). Two exceptions put a site at its city although its ZIP
 is known: a ZIP larger than 100 square miles, whose centroid is in open country (tier4_covering.SiteLocator), and a ZIP that
 spans counties when the site was assigned to the county where the ZIP's residents live (metrics_us.assign_sites). A row
-whose ZIP is a typing error is placed at the ZIP where the registry's other rows list that facility (metrics_us.zip_typos),
-and a row that is not a place at all - a telemedicine "site" - has no county and never reaches this script
-(config.VIRTUAL_SITE_PATTERN).
+whose ZIP is a typing error is placed at the ZIP where the registry's other rows list that facility, or at the ZIP its two
+swapped digits spell (metrics_us.zip_typos); a row with no usable ZIP whose county came from the registry's other listings of
+the facility in the same city is placed at their ZIP (metrics_us.facility_listings); a row whose registry state was wrong
+(metrics_us.assign_sites, "zip_state_corrected") is placed at its ZIP like any other. A row that is not a place at all - a
+telemedicine "site" - has no county and never reaches this script (config.VIRTUAL_SITE_PATTERN). City points, and the
+county each lies in, are tier4_covering.gazetteer_points(): the same table metrics_us.py assigns counties from.
 
 Sites at the same location are merged into "site points". For every tract and county population center: road miles to every
 site point within 120 road-miles. "Trials within X road-miles" then means trials with at least one recruiting site within X
@@ -25,10 +28,43 @@ import numpy as np, pandas as pd, geopandas as gpd
 from scipy import sparse
 from scipy.spatial import cKDTree
 from scipy.sparse.csgraph import dijkstra
-from tier4_covering import prepare_graph, norm, to5070, SiteLocator
+from tier4_covering import prepare_graph, norm, to5070, SiteLocator, USPS
 
 REF, OUT, ROADS, RAW = Path("data/ref"), Path("out_adult55"), Path("data/roads"), Path("data/raw")
 M2MI = 1 / 1609.344; SPEED_ACCESS = 35.0; MAX_ACCESS_MI = 30.0; BAND_MAX = 120.0
+
+
+def locate(sites, loc=None):
+    """(lat, lon, how) for every assigned site row of site_assignment_qc.csv (columns zip5, county_fips, assign_method, zip_fix,
+    state, city). No road graph is needed, so a change of placement rule can be dry-run on its own. A row is looked up in the
+    state of the county it was assigned to (metrics_us.py corrects a registry state that the ZIP and city both contradict), and a
+    city name that occurs twice in a state is read as the place nearer the assigned county."""
+    loc = loc or SiteLocator(); z2c = dict(pd.read_csv(REF / "zcta_county.csv", dtype=str).values)
+    cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str, "state_fips": str}).set_index("county_fips")
+    clat, clon = cent.lat.to_dict(), cent.lon.to_dict()
+    lat, lon, how = [], [], []
+    for r in sites.itertuples():
+        st = USPS.get(r.county_fips[:2], r.state); m = getattr(r, "assign_method", "")
+        # the ZIP is a typing error (metrics_us.zip_typos), or unusable while the registry lists the facility in the same city at
+        # another ZIP (metrics_us.facility_listings): the row is located at that ZIP
+        fix = getattr(r, "zip_fix", "") if m in ("zip_typo_corrected", "facility_listing") else ""
+        zf = loc.by_zip(fix, st, r.city) if fix else None
+        if zf: lat.append(zf[0]); lon.append(zf[1]); how.append(m); continue
+        zcty = z2c.get(r.zip5); z = loc.by_zip(r.zip5, st, r.city) if (zcty and zcty[:2] == r.county_fips[:2] and not fix) else None
+        la0, lo0 = clat[r.county_fips], clon[r.county_fips]; c = loc.city(st, r.city, near=(la0, lo0))
+        # the city name must agree with the assigned county: a registry row like city "Dallas" + ZIP 75521 (Atlanta, TX) was
+        # assigned to Cass County by ZIP, and must not be drawn 180 miles away in Dallas. 40 mi ~ the radius of a large county.
+        city_ok = bool(c) and np.hypot((c[0] - la0) * 69.0, (c[1] - lo0) * 69.0 * np.cos(np.radians(la0))) <= 40
+        # A site assigned to the county where its ZIP's residents live rather than where its land is ("zip_pop", metrics_us.py)
+        # is placed at its city: the ZIP centroid is in the other county.
+        if z and m == "zip_pop" and city_ok and z[2] == "zip_centroid": z = (c[0], c[1], "city_centroid_zip_spans_counties")
+        if z: lat.append(z[0]); lon.append(z[1]); how.append(z[2]); continue
+        if c:
+            if city_ok: lat.append(c[0]); lon.append(c[1]); how.append("city_centroid"); continue
+            # the city lies far from the assigned county: the row is not located (a point at the county center would be a phantom site)
+            lat.append(np.nan); lon.append(np.nan); how.append("unlocated_city_disagrees"); continue
+        lat.append(la0); lon.append(lo0); how.append("county_centroid")
+    return lat, lon, how
 
 
 def main():
@@ -38,32 +74,13 @@ def main():
     j_of = {nct: j for j, nct in enumerate(trials.nct_id)}
     sites = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna(""); sites = sites[(sites.county_fips != "") & sites.nct_id.isin(j_of)].copy()
     sites["zip5"] = sites.zip.str.extract(r"(\d{5})", expand=False).fillna("")
-    z2c = dict(pd.read_csv(REF / "zcta_county.csv", dtype=str).values); loc = SiteLocator()
     cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str, "state_fips": str}).set_index("county_fips")
-    clat, clon = cent.lat.to_dict(), cent.lon.to_dict()
-    lat, lon, how = [], [], []
-    for r in sites.itertuples():
-        # the ZIP is a typing error (metrics_us.zip_typos): the row is located at the ZIP where the registry's other rows put that facility
-        fix = getattr(r, "zip_fix", "") if getattr(r, "assign_method", "") == "zip_typo_corrected" else ""
-        zf = loc.by_zip(fix, r.state, r.city) if fix else None
-        if zf: lat.append(zf[0]); lon.append(zf[1]); how.append("zip_typo_corrected"); continue
-        zcty = z2c.get(r.zip5); z = loc.by_zip(r.zip5, r.state, r.city) if (zcty and zcty[:2] == r.county_fips[:2] and not fix) else None
-        c = loc.city(r.state, r.city); la0, lo0 = clat[r.county_fips], clon[r.county_fips]
-        # the city name must agree with the assigned county: a registry row like city "Dallas" + ZIP 75521 (Atlanta, TX) was
-        # assigned to Cass County by ZIP, and must not be drawn 180 miles away in Dallas. 40 mi ~ the radius of a large county.
-        city_ok = bool(c) and np.hypot((c[0] - la0) * 69.0, (c[1] - lo0) * 69.0 * np.cos(np.radians(la0))) <= 40
-        # A site assigned to the county where its ZIP's residents live rather than where its land is ("zip_pop", metrics_us.py)
-        # is placed at its city: the ZIP centroid is in the other county.
-        if z and getattr(r, "assign_method", "") == "zip_pop" and city_ok and z[2] == "zip_centroid": z = (c[0], c[1], "city_centroid_zip_spans_counties")
-        if z: lat.append(z[0]); lon.append(z[1]); how.append(z[2]); continue
-        if c:
-            if city_ok: lat.append(c[0]); lon.append(c[1]); how.append("city_centroid"); continue
-            # the city lies far from the assigned county: the row is not located (a point at the county center would be a phantom site)
-            lat.append(np.nan); lon.append(np.nan); how.append("unlocated_city_disagrees"); continue
-        lat.append(la0); lon.append(lo0); how.append("county_centroid")
+    lat, lon, how = locate(sites)
     sites["lat"], sites["lon"], sites["geocode"] = lat, lon, how
     log["site_rows"] = len(sites); log["geocode"] = sites.geocode.value_counts().to_dict()
-    unloc = sites.lat.isna(); log["unlocated_rows"] = int(unloc.sum()); sites = sites[~unloc].copy()   # rows with no defensible location carry no site point
+    unloc = sites.lat.isna(); log["unlocated_rows"] = int(unloc.sum())   # rows with no defensible location carry no site point
+    log["unlocated_list"] = [f"{r.nct_id} | {r.facility[:60]} | {r.city}, {r.state} {r.zip5} | county {r.county_fips}" for r in sites[unloc].head(50).itertuples()]
+    sites = sites[~unloc].copy()
     # merge coincident locations into site points
     sites["pt"] = (sites.lat.round(4).astype(str) + "," + sites.lon.round(4).astype(str))
     pts = sites.groupby("pt").agg(lat=("lat", "first"), lon=("lon", "first"), county_fips=("county_fips", "first"), geocode=("geocode", "first"),

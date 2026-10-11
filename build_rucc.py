@@ -21,7 +21,7 @@ excluded from medians and counted in the "no road route" share.
 
 Run from the repository root (flat layout) or the pipeline root (data/ref, out_adult55, docs). ~20 s.
 """
-import json, sys, struct
+import gzip, json, sys, struct
 from datetime import date
 from pathlib import Path
 import numpy as np, pandas as pd
@@ -61,20 +61,34 @@ def wmedian(vals, w):
     c = np.cumsum(ww); return float(v[np.searchsorted(c, c[-1] / 2)])
 
 
-def group_stats(t):
-    """t: tract rows. Returns the site's standard access figures for the residents 55+ in those tracts."""
+def write_gz(path, blob):
+    """<path>.gz beside <path>: the same bytes gzipped (mtime 0), which the map page fetches when the browser can decompress it (a 6.4 MB
+    tract file took 34 s on a phone profile). Left alone when it already decompresses to these bytes, so a different zlib elsewhere
+    does not rewrite an unchanged file."""
+    gz = Path(str(path) + ".gz")
+    try:
+        if gzip.decompress(gz.read_bytes()) == blob: return
+    except Exception: pass
+    gz.write_bytes(gzip.compress(blob, compresslevel=9, mtime=0))
+
+
+def group_stats(t, counts=False):
+    """t: tract rows. Returns the site's standard access figures for the residents 55+ in those tracts. counts=True adds n_l20 / n_z60, the
+    exact residents 55+ (tract sums) with fewer than 20 / no trials within 60 road-miles, so a page that prints a number of people never
+    multiplies a share rounded to 0.1 (which printed 611 Michigan metro residents short of trials where there are none)."""
     w = t.pop55.values.astype(float); W = w.sum()
     if W == 0: return None
     m60 = t.trials_within_60rdmi.values
     nci = t.road_mi_nci.values; brd = t.road_mi_broad.values
     okn, okb = nci < NOROAD, brd < NOROAD
-    return {"p": int(W), "n": int(t.county_fips.nunique()),
+    extra = {"n_l20": int(round(w[m60 < 20].sum())), "n_z60": int(round(w[m60 == 0].sum()))} if counts else {}
+    return {**{"p": int(W), "n": int(t.county_fips.nunique()),
             "z60": round(100 * w[m60 == 0].sum() / W, 1), "l20": round(100 * w[m60 < 20].sum() / W, 1), "l100": round(100 * w[m60 < 100].sum() / W, 1),
             "t60": int(round((w * m60).sum() / W)), "t30": int(round((w * t.trials_within_30rdmi.values).sum() / W)), "t120": int(round((w * t.trials_within_120rdmi.values).sum() / W)),
             "g60n": round(100 * (w[okn & (nci > 60)].sum() + w[~okn].sum()) / W, 1), "g120n": round(100 * (w[okn & (nci > 120)].sum() + w[~okn].sum()) / W, 1),
             "g60b": round(100 * (w[okb & (brd > 60)].sum() + w[~okb].sum()) / W, 1), "g120b": round(100 * (w[okb & (brd > 120)].sum() + w[~okb].sum()) / W, 1),
             "medn": None if okn.sum() == 0 else int(round(wmedian(nci[okn], w[okn]))), "medb": None if okb.sum() == 0 else int(round(wmedian(brd[okb], w[okb]))),
-            "nr": round(100 * w[~okb].sum() / W, 1)}
+            "nr": round(100 * w[~okb].sum() / W, 1)}, **extra}
 
 
 def main():
@@ -95,7 +109,7 @@ def main():
     tr["rucc"] = tr.county_fips.map(code); tr["metro"] = tr.rucc <= 3; tr["st"] = tr.county_fips.str[:2].map(FIPS2USPS)
 
     def groups(t):
-        g = {"metro": group_stats(t[t.metro]), "nonmetro": group_stats(t[~t.metro]), "codes": {}}
+        g = {"metro": group_stats(t[t.metro], counts=True), "nonmetro": group_stats(t[~t.metro], counts=True), "codes": {}}
         for c in range(1, 10):
             s = group_stats(t[t.rucc == c])
             if s: g["codes"][str(c)] = s
@@ -122,7 +136,7 @@ def main():
     tidx = np.array([cidx[f] for f in tr.county_fips], np.uint16)
     assert D["meta"]["tracts_bin"]["tracts"] == len(tr)
     blob = struct.pack("<II", 0x54524332, len(tr)) + tidx.astype("<u2").tobytes()
-    (docs_dir() / "tract_county.bin").write_bytes(blob)
+    (docs_dir() / "tract_county.bin").write_bytes(blob); write_gz(docs_dir() / "tract_county.bin", blob)
     m, nm = nat["metro"], nat["nonmetro"]
     meta = {"source": "USDA ERS Rural-Urban Continuum Codes, 2023 release (counties); 2013 release for Connecticut's eight legacy counties only",
             "vintage": "2023", "labels": {str(k): v for k, v in CODE_LABEL.items()}, "metro_codes": [1, 2, 3], "nonmetro_codes": [4, 5, 6, 7, 8, 9],

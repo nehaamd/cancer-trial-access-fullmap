@@ -1,6 +1,6 @@
 # Cancer-type classification audit
 
-5,269 distinct condition strings across 4,265 eligible trials · 61 strings flagged · **0 not yet reviewed**
+5,269 distinct condition strings across 4,265 eligible trials · 64 strings flagged · **0 not yet reviewed**
 
 ## Matched inside a longer word (40)
 
@@ -47,7 +47,7 @@
 | yes | sarcoma | Uterine Adenosarcoma | 1 | NCT07467772 |
 | yes | sarcoma | Uterine Leiomyosarcoma | 3 | NCT05649956 |
 
-## Reads as non-neoplastic or supportive care (21)
+## Reads as non-neoplastic or supportive care (24)
 
 | Reviewed | Category | Condition string | Trials | Example |
 |---|---|---|---|---|
@@ -56,9 +56,12 @@
 | yes | leukemia | Acute Myeloid Leukemia, Myelodysplasia-Related | 1 | NCT05554406 |
 | yes | mds_mpn | Acute Myeloid Leukemia, Myelodysplasia-Related | 1 | NCT05554406 |
 | yes | gastric_esophageal | Barretts Esophagus With Dysplasia | 1 | NCT05753748 |
+| yes | brain_cns | Benign Centrally-Located Intracranial Tumors | 1 | NCT03028246 |
 | yes | prostate | Benign Prostatic Hyperplasia | 2 | NCT05148156 |
 | yes | breast | Breast Cancer Survivor | 2 | NCT06728579 |
 | yes | gynecologic | Endometrial Hyperplasia | 2 | NCT05903131 |
+| yes | colorectal | Familial Adenomatous Polyposis | 1 | NCT05552755 |
+| yes | colorectal | Familial Adenomatous Polyposis (FAP) | 2 | NCT05919264 |
 | yes | mds_mpn | Hematopoetic Myelodysplasia | 1 | NCT06904066 |
 | yes | liver_biliary | Hepatitis B Virus Related Hepatocellular Carcinoma | 1 | NCT05417932 |
 | yes | liver_biliary | Hepatopancreaticobiliary and Foregut Operations | 1 | NCT06562179 |

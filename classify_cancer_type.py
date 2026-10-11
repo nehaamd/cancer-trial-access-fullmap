@@ -9,6 +9,7 @@ Rules (applied to each registry condition string separately, then combined):
   S = set of named categories matched across condition strings; G = a generic/basket term was listed.
   |S| >= 2                      -> multi  ("multiple named cancers")
   |S| == 1, not G               -> that category
+  |S| == 1, G of the other kind -> multi  ("basket with a named cohort")   [a blood cancer with a solid-tumour term, or a solid cancer with a blood-cancer term]
   |S| == 1, G, title is generic -> multi  ("basket with a named cohort")   [title mentions solid tumours etc. but not the category]
   |S| == 1, G, otherwise        -> that category (generic term treated as registry boilerplate; flagged generic_listed=1)
   |S| == 0, G                   -> multi  ("unspecified solid / haematologic")
@@ -24,29 +25,34 @@ I = re.I
 CATS = {  # order matters only for display
  "breast":        r"breast|\btnbc\b|\bhr\+?/her2|(?<!extra)mammary|ductal carcinoma in situ|\bdcis\b|lobular carcinom",
  "lung":          r"lung|\bnsclc\b|\bsclc\b|mesotheliom|bronch|thymom|thymic|pleural|pulmonary (neoplasm|cancer|carcinom|nodule)",
- "colorectal":    r"colorectal|\bcolon\b|colonic|rectal|rectum|\bcrc\b|\bmcrc\b",
+ "colorectal":    r"colorectal|\bcolon\b|colonic|rectal|rectum|\bcrc\b|\bmcrc\b|adenomatous polyposis(?! coli)",
  "prostate":      r"prostat|\bcrpc\b|\bmcrpc\b|\bmhspc\b|\bcspc\b|\bhspc\b",
  "melanoma_skin": r"melanom|merkel|extramammary paget|basal cell carcinom|cutaneous squamous|\bcscc\b|skin (cancer|neoplasm|carcinom)|nonmelanoma|non-melanoma",
  "lymphoma":      r"lymphom|hodgkin|waldenstr|\bdlbcl\b|\bctcl\b|\bptcl\b|mycosis fungoides|sezary|\bnhl\b|\bmcl\b|\bpmbcl\b|richter|lymphoproliferative|castleman",
  "leukemia":      r"leuk(?!oplak)|\baml\b|\bcll\b|\bcml\b|\bsll\b|\bapl\b|hairy cell|blastic plasmacytoid",
  "myeloma":       r"myelom|plasma cell|plasmacytom|amyloidosis|\bmgus\b|smoldering|light chain",
- "mds_mpn":       r"myelodysplas|preleukemi|\bmds\b|myelofibrosis|polycythemia|thrombocythemia|myeloproliferative|\bmpn\b|\bcmml\b|mastocytosis",
+ "mds_mpn":       r"myel?odysplas|preleukemi|\bmds\b|myelofibrosis|polycythemia|thrombocythemia|myeloproliferative|\bmpn\b|\bcmml\b|\bjmml\b|chronic myelomonocytic|juvenile myelomonocytic|myelomonocytic,? (chronic|juvenile)|atypical chronic myeloid|mastocytosis",
  "pancreatic":    r"pancrea|\bpdac\b",
- "liver_biliary": r"hepatocellular|\bhcc\b|liver (cancer|neoplasm|carcinom|tumou?r)|hepatobiliary|cholangio|biliary|gallbladder|bile duct|hepatoblastom|fibrolamellar",
+ "liver_biliary": r"hep(a?to|ate)cellul|\bhcc\b|liver (cancer|neoplasm|carcinom|tumou?r)|hepatobiliary|cholangio|biliary|gallbladder|bile duct|hepatoblastom|fibrolamellar",
  "gastric_esophageal": r"gastric|stomach|esophag|oesophag|gastroesophageal|gastro-esophageal|\bgej\b|\bgea\b",
  "gynecologic":   r"ovar|endometri|cervical (cancer|carcinom|neoplasm|squamous|adenocarcinom|intraepithelial)|cervix|uterine|uterus|fallopian|primary peritoneal|vulva|vagina|gynecolog|trophoblast|leiomyosarcom",
  "bladder_urothelial": r"(?<!gall)(?<!neo)bladder|urothel|\bnmibc\b|\bmibc\b|upper (urinary )?tract|urinary tract|ureter",
- "kidney":        r"kidney|renal cell|renal (cancer|carcinom|neoplasm|tumou?r)|\brcc\b|\bccrcc\b|wilms|nephroblastom",
- "brain_cns":     r"glio|\bgbm\b|astrocytom|brain (tumou?r|cancer|neoplasm|stem)|cns (tumou?r|neoplasm|cancer)|meningiom|ependymom|medulloblastom|oligodendro|central nervous system (tumou?r|neoplasm|cancer)|diffuse midline|\bdipg\b|craniopharyngiom|pituitary|neuro-?oncolog|\bhgg\b|\blgg\b",
- "head_neck":     r"head and neck|leukoplakia|erythroplakia|esthesioneuroblastom|olfactory neuroblastom|head & neck|\bhnscc\b|\bscchn\b|oral cavity|oropharyn|laryn|pharyn|nasopharyn|hypopharyn|salivary|tongue|sinonasal|oral (cancer|squamous|carcinom)|tonsil|lip cancer|adenoid cystic",
- "sarcoma":       r"sarcom|\bgist\b|gastrointestinal stromal|desmoid|osteosarcom|angiosarcom|ewing|rhabdomyo|liposarcom|chondrosarcom|chordom|synovial|fibromatosis|nerve sheath|\bmpnst\b|giant cell tumou?r of bone|bone (cancer|tumou?r)",
+ "kidney":        r"kidney|renal cell|renal (cancer|carcinom|neoplasm|tumou?r)|renal medullary|collecting duct carcinom|\brcc\b|\bccrcc\b|wilms|nephroblastom",
+ "brain_cns":     r"glio|\bgbm\b|astrocytom|brain (tumou?r|cancer|neoplasm|stem)|cns (tumou?r|neoplasm|cancer)|meningiom|ependymom|medulloblastom|oligodendro|central nervous system (tumou?r|neoplasm|cancer)|diffuse midline|\bdipg\b|craniopharyngiom|pituitary|neuro-?oncolog|\bhgg\b|\blgg\b|"
+                  r"embryonal tumou?r|\betmr\b|atypical teratoid|\batrt\b|pineoblastom|pineal (region|tumou?r|parenchymal)|cerebellar (neoplasm|tumou?r|pnet)|intracranial (tumou?r|neoplasm)|vestibular schwannom|acoustic neurom|cushing'?s? disease",
+ "head_neck":     r"head and neck|leukoplakia|erythroplakia|esthesioneuroblastom|olfactory neuroblastom|head & neck|head[- /]neck|\bhnscc\b|\bscchn\b|oral cavity|oropharyn|laryn|pharyn|nasopharyn|hypopharyn|salivary|tongue|sinonasal|nasal cavity|paranasal|maxillary sinus|oral (cancer|squamous|carcinom)|tonsil|lip cancer|adenoid cystic",
+ "sarcoma":       r"sarcom|\bgist\b|gastrointestinal stromal|desmoid|osteosarcom|angiosarcom|ewing|rhabdomyo|liposarcom|chondrosarcom|chordom|synovial|fibromatosis|nerve sheath|\bmpnst\b|giant cell tumou?r of bone|bone (cancer|tumou?r)|hemangioendotheliom",
  "neuroendocrine_endocrine": r"thyroid|adrenocortical|adrenal (cancer|carcinom|cortical)|pheochromocytom|paragangliom|neuroendocrin|\bnet\b|\bnets\b|carcinoid|parathyroid",
- "other_named":   r"testic|germ cell|seminom|penile|neuroblastom|retinoblastom|anal (cancer|carcinom|canal|squamous)|appendi|small bowel|small intestin|unknown primary|kaposi|uveal|ocular|eye (cancer|neoplasm)|urethral|peritoneal mesotheliom|histiocyt|langerhans|erdheim|nut carcinom|nut midline",
+ "other_named":   r"testic|germ cell|seminom|penile|neuroblastom|retinoblastom|anal (cancer|carcinom|canal|squamous|hsil|high.grade squamous|intraepithelial|dysplasia|precancer)|appendi|small bowel|small intestin|unknown primary|kaposi|uveal|ocular|eye (cancer|neoplasm)|urethral|peritoneal mesotheliom|histiocyt|dendritic cell sarcom|reticular cell sarcom|langerhans|erdheim|nut carcinom|nut midline",
 }
-# per-string precedence: if the left regex matches a condition string, only the listed categories are kept for that string
+# per-string precedence: if the left regex matches a condition string, only the listed categories are kept for that string. When the rule
+# names one category and the string matches none of the listed ones by the patterns above, that category is the answer (until Oct 2026
+# such strings came out empty: "Chronic Myelomonocytic Leukemia" in 25 trials, "Small Lymphocytic Lymphoma", "Myeloid Sarcoma").
 PRECEDENCE = [
  (r"small lymphocytic lymphoma|\bsll\b", {"leukemia"}),                   # CLL/SLL is one disease
- (r"myelomonocytic|atypical chronic myeloid", {"mds_mpn"}),                                         # CMML/JMML are MDS/MPN overlap entities, not "leukemia" for this purpose
+ (r"chronic myelomonocytic|juvenile myelomonocytic|myelomonocytic,? (chronic|juvenile)|\bcmml\b|\bjmml\b|atypical chronic myeloid", {"mds_mpn"}),  # CMML/JMML/aCML are MDS/MPN overlap entities, not "leukemia" for this purpose (acute myelomonocytic leukaemia is AML)
+ (r"myeloid sarcom|granulocytic sarcom|chloroma", {"leukemia"}),          # extramedullary acute myeloid leukaemia, not a soft-tissue sarcoma
+ (r"histiocytic sarcom|dendritic cell sarcom|langerhans cell sarcom|reticular cell sarcom", {"other_named"}),  # histiocytic / dendritic-cell neoplasms, not soft-tissue sarcomas
  (r"plasma cell leukemia", {"myeloma"}),                                   # a plasma-cell disorder
  (r"gliosarcom", {"brain_cns"}),                                           # a glioblastoma variant, not a sarcoma
  (r"carcinosarcom", set(CATS) - {"sarcoma"}),                              # a carcinoma of its organ (uterine, ovarian: gynecologic), not a sarcoma; the stem "sarcom" sits inside the word
@@ -65,26 +71,29 @@ PRECEDENCE = [
  (r"leukoplakia|erythroplakia", {"head_neck"}),                          # oral premalignant lesions (the leukaemia stem "leuk" is excluded from them)
  (r"preleukemi", {"mds_mpn"}),                                           # preleukaemia is an MDS term
 ]
-# metastatic *site*, not a primary: the organ named as the site of spread is dropped from the string, the primary (if the string names one)
-# is kept — "Breast Cancer Brain Metastases" is a breast trial, not a brain one and not an unspecified one. Until Oct 2026 the whole string
-# was emptied, so such trials fell to "unspecified solid / hematologic" unless another condition string named the primary.
+# metastatic *site*, not a primary: the phrase that names the site of spread is blanked from the string and the rest is matched, so
+# "Breast Cancer Brain Metastases" is a breast trial (not a brain one, not an unspecified one) and "Lung Cancer With Pleural Metastases"
+# stays a lung trial. Until Oct 2026 the whole string was emptied, so such trials fell to "unspecified solid / hematologic" unless another
+# condition string named the primary; from 10 Oct the site's category was removed from the whole string, which would also have removed a
+# primary that shares the organ (none among the strings in the data then, but "lung cancer with pleural metastases" would lose "lung").
 MET_SITE = [
- (r"lung metasta|pulmonary metasta|endobronchial metasta", {"lung"}),
- (r"brain metasta|cns metasta|leptomening|spinal metasta|spine metasta|vertebral metasta|intracranial metasta|cerebral metasta", {"brain_cns"}),
- (r"liver metasta|hepatic metasta", {"liver_biliary"}),
- (r"bone metasta|osseous metasta|metastatic bone disease|skeletal metasta", {"sarcoma"}),
- (r"peritoneal metasta|carcinomatosis|pleural metasta", {"other_named", "lung"}),
- (r"metastatic disease to|metastas[ei]s to the", {"lung", "brain_cns", "liver_biliary", "sarcoma", "other_named"}),
+ r"lung metasta|pulmonary metasta|endobronchial metasta|neoplasm in the lung|metasta\w* (in|to) (the )?lungs?\b",   # NCI term "Metastatic Malignant Neoplasm in the Lung"
+ r"brain metasta|cns metasta|leptomening\w*|spinal metasta|spine metasta|vertebral metasta|intracranial metasta|cerebral metasta|metastatic brain tumou?r|brain tumou?rs?\W+metastatic|metasta\w* (in|to) (the )?brain|neoplasm (in|to) (the )?brain|secondary brain",
+ r"liver metasta|hepatic metasta|metasta\w* (in|to) (the )?liver|neoplasm (in|to) (the )?liver",
+ r"bone metasta|osseous metasta|metastatic bone disease|skeletal metasta",
+ r"peritoneal metasta|carcinomatosis|pleural metasta",
+ r"metastatic disease to|metastas[ei]s to the",
 ]
 GENERIC = re.compile(r"solid tumou?r|solid neoplasm|solid malignan|advanced cancer|advanced malignan|metastatic cancer|metastatic malignan|^cancers?$|^neoplasms?$|^tumou?rs?$|^malignan(t|cy|cies)|malignan(t|cy|cies)$|"
                      r"hematologic(al)? (malignan|cancer|neoplasm)|blood cancer|^carcinoma$|^adenocarcinoma$|^metasta(tic|sis|ses)$|refractory cancer|recurrent cancer|rare (cancer|tumou?r|disease)|"
-                     r"^(advanced|metastatic|recurrent|refractory|relapsed|unresectable|locally advanced)( or [a-z]+)? (cancer|carcinoma|neoplasm|malignan|disease|tumou?r)s?$|"
+                     r"^(advanced|metastatic|recurrent|refractory|relapsed|unresectable|locally advanced)( or [a-z]+)? (cancer|carcinoma|adenocarcinoma|neoplasm|malignan|disease|tumou?r)s?$|"
+                     r"(expressing|positive|mutant|mutated|altered|amplified|rearranged)[- ](solid )?(cancers?|tumou?rs?|malignan\w*|neoplasms?)$|hematopoietic and lymphatic|"
                      r"multiple (cancer|tumou?r)|various (cancer|tumou?r)|pan-?cancer|tumor agnostic|tumou?r-agnostic|any cancer|all cancer|different cancer|"
-                     r"lung metasta|brain metasta|liver metasta|bone metasta|peritoneal metasta|spinal metasta|spine metasta|vertebral metasta|metastatic bone disease|oligoprogressive|neoplasm metasta|carcinomatosis|leptomening|oligometasta|hematopoietic and lymphoid|gastrointestinal (neoplasm|cancer|tumou?r|malignan|carcinom)|genitourinary (neoplasm|cancer|tumou?r|malignan)|thoracic (neoplasm|cancer|tumou?r|malignan)|gynecologic(al)? (neoplasm|cancer|tumou?r|malignan)|"
+                     r"lung metasta|brain metasta|liver metasta|bone metasta|peritoneal metasta|spinal metasta|spine metasta|vertebral metasta|metastatic bone disease|metastatic brain|brain tumou?rs?\W+metastatic|metasta\w* (in|to) (the )?brain|secondary brain|oligoprogressive|neoplasm metasta|carcinomatosis|leptomening|oligometasta|hematopoietic and lymphoid|gastrointestinal (neoplasm|cancer|tumou?r|malignan|carcinom)|genitourinary (neoplasm|cancer|tumou?r|malignan)|thoracic (neoplasm|cancer|tumou?r|malignan)|gynecologic(al)? (neoplasm|cancer|tumou?r|malignan)|"
                      r"^(cancer|malignan|neoplasm|tumou?r)[a-z]* (of|in) (the )?(elderly|adult|child|older)", I)
 CATRX = {k: re.compile(v, I) for k, v in CATS.items()}
 PRERX = [(re.compile(p, I), keep) for p, keep in PRECEDENCE]
-METRX = [(re.compile(p, I), drop) for p, drop in MET_SITE]
+METRX = [re.compile(p, I) for p in MET_SITE]
 CASE_SENS = {"leukemia": re.compile(r"\bB-ALL\b|\bT-ALL\b|\bALL\b(?![a-z])"), "lymphoma": re.compile(r"\bHL\b|\bFL\b|\bMZL\b"),
              "myeloma": re.compile(r"\bMM\b"), "kidney": re.compile(r"\bRCC\b"), "gynecologic": re.compile(r"\bOC\b"), "neuroendocrine_endocrine": re.compile(r"\bNET\b")}
 LABEL = {"breast": "Breast", "lung": "Lung & thoracic", "colorectal": "Colorectal", "prostate": "Prostate", "melanoma_skin": "Melanoma & skin",
@@ -98,23 +107,35 @@ LABEL = {"breast": "Breast", "lung": "Lung & thoracic", "colorectal": "Colorecta
 def cats_in(s):
     s = s.strip()
     if not s: return set()
+    met = False
+    for rx in METRX:                       # blank the metastatic-site phrase, keep whatever else the string names
+        s, n = rx.subn(" ", s); met = met or n > 0
     found = {k for k, rx in CATRX.items() if rx.search(s)} | {k for k, rx in CASE_SENS.items() if rx.search(s)}
-    for rx, drop in METRX:
-        if rx.search(s): found -= drop
     for rx, keep in PRERX:
-        if rx.search(s): found &= keep; break
+        if rx.search(s):
+            hit = found & keep
+            found = hit if (hit or met or len(keep) != 1) else set(keep)   # a one-category rule names the answer (see PRECEDENCE)
+            break
     return found
+
+
+HEME = {"lymphoma", "leukemia", "myeloma", "mds_mpn"}
+GEN_SOLID, GEN_HEME = re.compile(r"solid", I), re.compile(r"hematolog|haematolog|hematopoietic|blood cancer|lymphoid|lymphatic", I)
 
 
 def classify(conds, keywords, title, otitle):
     strings = [x for x in conds.split(";")]
-    S, G = set(), False
+    S, G, gen = set(), False, []
     for s in strings:
-        S |= cats_in(s); G = G or bool(GENERIC.search(s.strip()))
+        S |= cats_in(s)
+        if GENERIC.search(s.strip()): G = True; gen.append(s)
     src = "conditions"
     if len(S) >= 2: return "multi", "multiple named cancers", S, G, src
     if len(S) == 1:
         c = next(iter(S)); t = f"{title} {otitle}"
+        # a generic term of the other kind is not boilerplate: "Relapsed or Refractory Lymphomas; Advanced Solid Tumor" enrols both
+        if any(GEN_SOLID.search(g) for g in gen) if c in HEME else any(GEN_HEME.search(g) for g in gen):
+            return "multi", "basket with a named cohort", S, G, src
         if G and GENERIC.search(t) and not (CATRX[c].search(t) or (c in CASE_SENS and CASE_SENS[c].search(t))):
             return "multi", "basket with a named cohort", S, G, "conditions+title"
         extra = cats_in(title) - S

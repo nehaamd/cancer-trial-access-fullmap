@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Your community · Cancer Trial Access Map</title>
 <meta name="description" content="Enter a county, ZIP code, congressional district or state and see what access to cancer clinical trials looks like there: a short local summary, the numbers behind it, and questions to explore next.">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -54,7 +56,7 @@
   .btns{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.1rem 0 .2rem}
   .btn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.6rem 1.1rem;font-size:var(--fs-1);color:var(--ink);text-decoration:none;cursor:pointer;font-family:inherit;font-weight:600} .btn:hover{border-color:var(--navy);color:var(--navy)}
   .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)} .btn.primary:hover{background:#082B43;color:#fff}
-  .btn small{font-weight:400;color:inherit;opacity:.8}
+  .btn small{font-weight:400;color:inherit;opacity:.8;font-size:.75rem}
   h2.qs{font-size:var(--fs-3);margin:2rem 0 .2rem;letter-spacing:-.01em} .qs-sub{margin:0 0 .6rem;color:var(--ink-2)}
   .questions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:.9rem;align-items:start}   /* each card is as tall as its own text: no blank band above the link in the shorter ones */
   .q{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.5rem}
@@ -66,7 +68,7 @@
   .flag{background:#FBF1E8;border-left:3px solid var(--rust);padding:.4rem .7rem;border-radius:0 8px 8px 0;margin:.6rem 0;font-size:var(--fs-1)}
   .dlist{display:flex;gap:.4rem;flex-wrap:wrap;margin:.4rem 0 0}
   .ind{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.3rem;vertical-align:baseline}
-  @media (max-width:640px){ .btns{display:grid;grid-template-columns:1fr 1fr;gap:.45rem} .btns .btn{justify-content:center;text-align:center;padding:.55rem .6rem;font-size:var(--fs-0)} .btns .btn.primary{grid-column:1 / -1} .fact{grid-template-columns:1fr} .fact details{grid-column:1} .fact .num{font-size:1.7rem} main{font-size:16px} }
+  @media (max-width:640px){ .chip{min-height:40px} .btns{display:grid;grid-template-columns:1fr 1fr;gap:.45rem} .btns .btn{justify-content:center;text-align:center;padding:.55rem .6rem;font-size:var(--fs-0)} .btns .btn.primary{grid-column:1 / -1} .fact{grid-template-columns:1fr} .fact details{grid-column:1} .fact .num{font-size:1.7rem} main{font-size:16px} }
   @media print{ .search-wrap,.try,.btns,.questions,h2.qs,.qs-sub{display:none} }
 </style>
 </head>
@@ -88,8 +90,9 @@
   <p class="qs-sub" id="qs-sub">Each one opens a view of the data you can change yourself.</p>
   <div class="questions" id="questions"></div>
   <p class="note" id="note"></p>
+  <p id="sr-status" class="sr-only" role="status"></p>
+  <p class="about-est" style="margin:1.2rem 0 0;padding:.6rem 0;font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 </main>
-<p class="about-est" style="max-width:1040px;margin:0 auto 1rem;padding:.6rem var(--gutter);font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 <footer class="site">
 <p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
@@ -106,15 +109,20 @@
   // examples: a county with most residents short, a metro county, a district, a state, a ZIP
   const TRY = [['Warren County, KY', 'community.html?c=21227'], ['Harris County, TX', 'community.html?c=48201'], ['KY-2', 'community.html?d=2102'], ['North Dakota', 'community.html?s=ND'], ['ZIP 79901', 'community.html?zip=79901']];
   TRY.forEach(([l, h]) => { const a = document.createElement('a'); a.className = 'chip'; a.href = h; a.textContent = l; document.getElementById('try').appendChild(a); });
-  E.wireSearch(document.getElementById('q'), document.getElementById('q-list'), e => { place = E.pickToPlace(e); const q = E.param(place); history.pushState(null, '', 'community.html' + (q ? '?' + q + (type ? '&type=' + type : '') : '')); render(); document.getElementById('out').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-  window.addEventListener('popstate', () => { place = E.fromParams(new URLSearchParams(location.search)); render(); });
+  E.wireSearch(document.getElementById('q'), document.getElementById('q-list'), e => { place = E.pickToPlace(e); const q = E.param(place); history.pushState(null, '', 'community.html' + (q ? '?' + q + (type ? '&type=' + type : '') : '')); render(); say(place); document.getElementById('out').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  window.addEventListener('popstate', () => { place = E.fromParams(new URLSearchParams(location.search)); render(); say(place); });
+  // announce a new place to screen readers (cleared first, so choosing the same place again is announced too)
+  function say(pl) { const el = document.getElementById('sr-status'); el.textContent = ''; setTimeout(() => { el.textContent = pl ? pl.label + ': summary updated' : 'Search cleared'; }, 60); }
   const party = p => p === 'R' ? 'var(--rep)' : p === 'D' ? 'var(--dem)' : 'var(--ind)';
+  const tied = (n, what) => n ? `; tied with ${fmt(n)} other ${SITE.plural(n, what)} at the same share` : '';   // places with the same share share a rank
   const partyName = p => p === 'R' ? 'Republican' : p === 'D' ? 'Democrat' : p === 'I' ? 'Independent' : p || '';
 
   function kickerOf(pl) { if (pl.kind === 'county') { const ds = pl.d.map(k => E.district(k)).filter(Boolean); return `${/ County$/.test(pl.n) ? 'County' : 'County equivalent'} · ${esc(E.stName(pl.st))}${pl.metro === null ? '' : pl.metro ? ' · metro county' : ' · nonmetro (rural) county'}${ds.length ? ' · ' + ds.map(d => `<a href="community.html?d=${d.k}">${esc(d.label)}</a>`).join(', ') : ''}`; }
     if (pl.kind === 'district') return `Congressional district · ${esc(M.plan)} · <a href="community.html?s=${pl.st}">${esc(E.stName(pl.st))}</a>`; if (pl.kind === 'state') return 'State'; return 'Nation'; }
   function memberLine(pl) { if (pl.kind === 'district') return pl.member ? `<span class="ind" style="background:${party(pl.party)}"></span>${esc(pl.member)} (${partyName(pl.party)}) represents this district.` : 'This seat is currently vacant.';
-    if (pl.kind === 'county' && pl.d.length) { const ds = pl.d.map(k => E.district(k)).filter(d => d && d.member); return ds.length ? 'Represented in the House by ' + ds.map(d => `<span class="ind" style="background:${party(d.party)}"></span>${esc(d.member)} (${esc(d.label)})`).join(' and ') + '.' : ''; }
+    if (pl.kind === 'county' && pl.d.length) { const all = pl.d.map(k => E.district(k)).filter(Boolean), ds = all.filter(d => d.member), vac = all.filter(d => !d.member).map(d => esc(d.label));
+      return ds.length ? 'Represented in the House by ' + SITE.listJoin(ds.map(d => `<span class="ind" style="background:${party(d.party)}"></span>${esc(d.member)} (${esc(d.label)})`)) + (vac.length ? `; the ${SITE.listJoin(vac)} seat${vac.length > 1 ? 's are' : ' is'} vacant` : '') + '.'
+        : vac.length ? `House seat${vac.length > 1 ? 's' : ''} ${SITE.listJoin(vac)} ${vac.length > 1 ? 'are' : 'is'} currently vacant.` : ''; }
     if (pl.kind === 'state') return `${fmt(pl.ndist)} congressional ${SITE.plural(pl.ndist, 'district')}${pl.senators && pl.senators.length ? ` · senators ${pl.senators.map(s => `<span class="ind" style="background:${party(s.party)}"></span>${esc(s.name)} (${esc(s.party)})`).join(' and ')}` : pl.k === 'DC' ? ' · no senators (the District has a non-voting delegate in the House)' : ''}.`; return ''; }
 
   function render() {
@@ -136,9 +144,9 @@
     const typeOpts = `<option value="">Choose a cancer type…</option>` + M.types.filter(([k]) => k !== 'other_unclassified').map(([k, l]) => `<option value="${k}"${k === type ? ' selected' : ''}>${esc(l)}</option>`).join('');
     const cl = pl && type ? E.cancerLine(pl, type) : null;
     const cmp = (() => { if (!pl) return `Compare a county with its state and the nation, or two communities side by side, using the same measures. <b>What a comparison can tell you:</b> whether a place has more or fewer trials within reach than others. <b>What it cannot:</b> whether anyone there qualifies, whether a site is really enrolling, or why the difference exists.`;
-      if (pl.kind === 'county') { const r = E.countyRank(pl), st = E.stateOf(pl); return r.of === 1 ? `${esc(st.name)} has one county, so there is no in-state comparison; the national figure is ${pct(NAT.l20)}%.` : `Of ${esc(st.name)}’s ${fmt(r.of)} counties, <b>${fmt(r.above)}</b> ${r.above === 1 ? 'has' : 'have'} a larger share of residents 55+ short of trials than ${esc(pl.n)} (${pct(pl.l20)}%); the state figure is ${pct(st.l20)}% and the national figure ${pct(NAT.l20)}%. ${pl.metro === null ? '' : pl.metro ? `As a metro county, compare it with the national metro figure of ${pct(NAT.rural.metro[1])}%.` : `As a nonmetro county, compare it with the national nonmetro figure of ${pct(NAT.rural.nonmetro[1])}%.`} <b>A comparison can say</b> where more or fewer trials are within reach. <b>It cannot say</b> whether anyone qualifies, whether a listed site is enrolling, or why the difference exists.`; }
-      if (pl.kind === 'district') { const r = E.districtRank(pl), st = E.stateOf(pl); return `${esc(pl.label)} ranks <b>${SITE.ordinal(r.rank)} of ${fmt(r.of)}</b> districts nationally by the share of residents 55+ short of trials (${pct(pl.l20)}%), and ${SITE.ordinal(r.stRank)} of ${fmt(r.stOf)} in ${esc(st.name)} (state figure ${pct(st.l20)}%, national ${pct(NAT.l20)}%). <b>A comparison can say</b> where more or fewer trials are within reach. <b>It cannot say</b> whether anyone qualifies, whether a site is enrolling, or why — a district drawn across a city and its countryside averages two very different pictures.`; }
-      if (pl.kind === 'state') { const r = E.stateRank(pl); return `${esc(pl.name)} ranks <b>${SITE.ordinal(r.rank)} of ${fmt(r.of)}</b> states by the share of residents 55+ short of trials (${pct(pl.l20)}% against ${pct(NAT.l20)}% nationally). Inside the state, the metro share is ${pct(pl.rural.metro[1])}% and the nonmetro share ${pct(pl.rural.nonmetro[1])}%. <b>A comparison can say</b> where more or fewer trials are within reach. <b>It cannot say</b> whether anyone qualifies, whether a site is enrolling, or why.`; }
+      if (pl.kind === 'county') { const r = E.countyRank(pl), st = E.stateOf(pl); return r.of === 1 ? `${esc(st.name)} has one county, so there is no in-state comparison; the national figure is ${pct(NAT.l20)}%.` : `${r.above === 0 ? `<b>No county</b> in ${esc(st.name)} has` : `Of ${esc(st.name)}’s ${fmt(r.of)} counties, <b>${fmt(r.above)}</b> ${r.above === 1 ? 'has' : 'have'}`} a larger share of residents 55+ short of trials than ${esc(pl.n)} (${pct(pl.l20)}%); the state figure is ${pct(st.l20)}% and the national figure ${pct(NAT.l20)}%. ${pl.metro === null ? '' : pl.metro ? `As a metro county, compare it with the national metro figure of ${pct(NAT.rural.metro[1])}%.` : `As a nonmetro county, compare it with the national nonmetro figure of ${pct(NAT.rural.nonmetro[1])}%.`} <b>A comparison can say</b> where more or fewer trials are within reach. <b>It cannot say</b> whether anyone qualifies, whether a listed site is enrolling, or why the difference exists.`; }
+      if (pl.kind === 'district') { const r = E.districtRank(pl), st = E.stateOf(pl); return `${esc(pl.label)} ranks <b>${SITE.ordinal(r.rank)} of ${fmt(r.of)}</b> districts nationally by the share of residents 55+ short of trials (${pct(pl.l20)}%${tied(r.ties, 'district')}), and ${SITE.ordinal(r.stRank)} of ${fmt(r.stOf)} in ${esc(st.name)}${r.stTies ? `, tied with ${fmt(r.stTies)} ${SITE.plural(r.stTies, 'other')}` : ''} (state figure ${pct(st.l20)}%, national ${pct(NAT.l20)}%). <b>A comparison can say</b> where more or fewer trials are within reach. <b>It cannot say</b> whether anyone qualifies, whether a site is enrolling, or why — a district drawn across a city and its countryside averages two very different pictures.`; }
+      if (pl.kind === 'state') { const r = E.stateRank(pl); return `${esc(pl.name)} ranks <b>${SITE.ordinal(r.rank)} of ${fmt(r.of)}</b> states by the share of residents 55+ short of trials (${pct(pl.l20)}% against ${pct(NAT.l20)}% nationally${tied(r.ties, 'state')}). ${pl.rural.nonmetro[0] ? `Inside the state, the metro share is ${pct(pl.rural.metro[1])}% and the nonmetro share ${pct(pl.rural.nonmetro[1])}%.` : 'Every county here is a metro county.'} <b>A comparison can say</b> where more or fewer trials are within reach. <b>It cannot say</b> whether anyone qualifies, whether a site is enrolling, or why.`; }
       return ''; })();
     qs.innerHTML = `
       <div class="q"><h3>Would the picture change for a particular cancer?</h3>
@@ -153,7 +161,7 @@
         <a class="go" href="learn.html#barriers">Explore eligibility, visits, costs and referral barriers</a></div>
       <div class="q"><h3>How does ${pl ? esc(where) : 'my community'} compare?</h3>
         <p>${cmp}</p>
-        <a class="go" href="${L.compare}">Compare ${pl && pl.kind !== 'nat' ? 'every county in ' + esc(E.stName(pl.kind === 'state' ? pl.k : pl.st)) : 'counties'} side by side</a></div>
+        ${pl && pl.kind !== 'nat' && (E.stateOf(pl) || {}).counties === 1 ? '' : `<a class="go" href="${L.compare}">Compare ${pl && pl.kind !== 'nat' ? 'every county in ' + esc(E.stName(pl.kind === 'state' ? pl.k : pl.st)) : 'counties'} side by side</a>`}</div>
       <div class="q"><h3>What could help, and what can I do?</h3>
         <p>${pl ? `A page for ${esc(where)}: ` : 'For any place: '}a few local findings with their sources and limits; the policy proposals being discussed, in plain language, with their dated status and official links, and which barriers each one addresses; and ways to contribute for patients, clinicians and organizations — contacting your representatives, bringing a brief to a meeting, sharing, or reporting something that looks wrong.</p>
         <a class="go" href="${L.act}">Open “What could help”${pl ? ' for ' + esc(where) : ''}</a></div>

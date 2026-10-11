@@ -8,6 +8,11 @@ import config
 RAW, REF, OUT = Path("data/raw"), Path("data/ref"), Path("out")
 
 # --- NCI-designated treating centers (Comprehensive + Clinical), cancer.gov list updated 2026-06-10 ---
+# Checked 2026-10-11 against cancer.gov/research/infrastructure/cancer-centers/find and NCI's Office of Cancer Centers list
+# (cancercenters.cancer.gov/cancer-centers: 74 centers = 58 Comprehensive + 8 Clinical + 8 Basic Laboratory). The 8 basic-laboratory
+# centers (Salk, Sanford Burnham Prebys, Cancer Center at Illinois, Purdue, Jackson Laboratory, Koch Institute at MIT, Cold Spring
+# Harbor, Wistar) do not treat patients and are deliberately not listed. Tiers follow the Office of Cancer Centers list: Mount Sinai
+# Tisch became Comprehensive in October 2025 (Mount Sinai release of 22 Oct 2025), which cancer.gov's page still shows as Clinical.
 NCI = [
  ("O'Neal Comprehensive Cancer Center (UAB)", "birmingham", "AL", "Comprehensive"),
  ("University of Arizona Cancer Center", "tucson", "AZ", "Comprehensive"), ("Mayo Clinic Cancer Center – Phoenix", "phoenix", "AZ", "Comprehensive"),
@@ -32,7 +37,7 @@ NCI = [
  ("UNM Comprehensive Cancer Center", "albuquerque", "NM", "Comprehensive"),
  ("Montefiore Einstein Cancer Center", "bronx", "NY", "Comprehensive"), ("Herbert Irving Comprehensive Cancer Center (Columbia)", "manhattan", "NY", "Comprehensive"),
  ("Perlmutter Cancer Center (NYU Langone)", "manhattan", "NY", "Comprehensive"), ("Memorial Sloan Kettering Cancer Center", "manhattan", "NY", "Comprehensive"),
- ("Roswell Park Comprehensive Cancer Center", "buffalo", "NY", "Comprehensive"), ("Mount Sinai Tisch Cancer Center", "manhattan", "NY", "Clinical"),
+ ("Roswell Park Comprehensive Cancer Center", "buffalo", "NY", "Comprehensive"), ("Mount Sinai Tisch Cancer Center", "manhattan", "NY", "Comprehensive"),
  ("Wilmot Cancer Institute (Rochester)", "rochester", "NY", "Clinical"),
  ("Duke Cancer Institute", "durham", "NC", "Comprehensive"), ("UNC Lineberger Comprehensive Cancer Center", "chapel hill", "NC", "Comprehensive"),
  ("Wake Forest Baptist Comprehensive Cancer Center", "winston-salem", "NC", "Comprehensive"),
@@ -87,21 +92,30 @@ NCI_OVERRIDE = {"la jolla": (32.875, -117.236), "bronx": (40.880, -73.879), "man
 ONC = re.compile(r"cancer|neoplas|carcinom|lymphom|leuka?emi|leukoplaki|myelom|sarcom|melanom|malignan|tumou?r|gliom|mesotheliom|blastom|adenoma|myelodysplas|metasta|oncolog|hodgkin|"
                  r"waldenstr|myelofibrosis|polycythemia|thrombocythemia|\bmds\b|\baml\b|\bcll\b|\bcml\b|nsclc|sclc|\bgist\b|\bmpn\b|\bhcc\b|\brcc\b|\bcrc\b|pdac|\bgbm\b|dlbcl|tnbc|"
                  r"meningiom|leptomening|ependymom|germinom|craniopharyngiom|schwannom|neurofibrom|mycosis fungoides|sezary|amyloidosis|lymphoproliferative|mastocytosis|(?<!lympho)histiocyt|"
-                 r"castleman|paragangliom|pheochromocytom|desmoid|chordom|thymom|wilms|trophoblastic|plasmacytom|macroglobulinemia|\bptld\b|graft.versus.host|gvhd|\bctcl\b|\bptcl\b|\b[bt]-all\b|plasma cell|\bmgus\b|smoldering|hairy cell", re.I)
+                 r"castleman|paragangliom|pheochromocytom|desmoid|chordom|thymom|wilms|trophoblastic|plasmacytom|macroglobulinemia|\bptld\b|graft.versus.host|gvhd|\bctcl\b|\bptcl\b|\b[bt]-all\b|plasma cell|\bmgus\b|smoldering|hairy cell|"
+                 r"\bn?mibc\b|\bmcl\b|hemangioendotheliom", re.I)
+# Abbreviations and names added 11 Oct 2026 after a hand review of the exclusions: "NMIBC" (non-muscle-invasive bladder cancer, NCT06800963),
+# "MCL" (mantle cell lymphoma, NCT07257055, whose conditions and titles say only "MCL") and epithelioid hemangioendothelioma (a vascular
+# sarcoma, SARC046, NCT07104331) had excluded real cancer treatment trials.
 # Wording that contains a cancer word and is not about cancer. It is blanked before ONC is applied, so a study is kept only if it
 # names a cancer somewhere else: "... Who Cannot Tolerate Tumor Necrosis Factor Inhibitors" (rheumatoid arthritis), "Non-Malignant
 # Disorders" and "Non-oncology Plasma Cell-related Diseases" (transplant and CAR-T studies for other diseases), myelomeningocele
 # (spina bifida). "leuk" alone also matched interleukin, leukocyte and leukodystrophy, and "histiocyt" matched hemophagocytic
 # lymphohistiocytosis; ONC now asks for leukemia / leukaemia / leukoplakia and for histiocytosis that is not "lympho-".
-NOT_ONC = re.compile(r"tumou?r[ -]necrosis[ -]factor|non[- ]?oncolog\w*(?:\s+plasma[- ]cell)?|non[- ]?malignan\w*|non[- ]?cancer\w*|myelomeningocele|myeloschisis", re.I)
+NOT_ONC = re.compile(r"tumou?r[ -]necrosis[ -]factor|non[- ]?oncolog\w*(?:\s+plasma[- ]cell)?|non[- ]?malignan\w*|non[- ]?cancer\w*|myelomeningocele|myeloschisis|"
+                     r"\bmcl[- ]?(?:tear|injur\w*|sprain|rupture|reconstruct\w*|repair)", re.I)   # MCL is also the medial collateral ligament (see is_onc)
+# Wording that marks a study as about the knee's medial collateral ligament: then "MCL" is the ligament, not mantle cell lymphoma.
+LIGAMENT = re.compile(r"ligament|\bknee|\bacl\b|collateral", re.I)
 
 
 def is_onc(conditions, title):
     """True when the registry conditions or the brief title name a cancer (after blanking the NOT_ONC wording)."""
     mecp2 = "mecp2" in f"{conditions} {title}".lower()   # there "MDS" is MECP2 duplication syndrome, not myelodysplastic syndrome
+    knee = bool(LIGAMENT.search(f"{conditions} {title}"))  # there "MCL" is the medial collateral ligament, not mantle cell lymphoma
     for s in (conditions, title):
         s = NOT_ONC.sub(" ", s or "")
         if mecp2: s = re.sub(r"\bmds\b", " ", s, flags=re.I)
+        if knee: s = re.sub(r"\bmcl\b", " ", s, flags=re.I)
         if ONC.search(s): return True
     return False
 

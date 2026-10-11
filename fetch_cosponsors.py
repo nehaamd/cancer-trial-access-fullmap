@@ -1,9 +1,10 @@
 """Cosponsor tracking for the bills this site follows, joined to House districts and Senate seats.
 
 Tracked (119th Congress):
-  Clinical Trial Modernization Act — H.R. 3521 (Ruiz) and S. 4440 (Scott): grants for trial outreach in underserved
-      communities, anti-kickback safe harbours for participant expense reimbursement and free digital health tools, and a
-      tax exclusion for trial participation payments.
+  Clinical Trial Modernization Act — H.R. 3521 (Ruiz) and S. 4440 (Scott): grants for trial outreach to underrepresented
+      populations (sec. 3; the bill says "underrepresented", never "underserved"), anti-kickback safe harbours for participant
+      expense reimbursement and free digital health tools (sec. 4), manufacturer support for trial cost-sharing (sec. 5), and a
+      tax exclusion of up to $2,000 a year of trial participation payments (sec. 6). Text: govinfo BILLS-119hr3521ih / BILLS-119s4440is.
 Add a bill to BILLS below to track another one.
 
 Sources, in the order tried:
@@ -16,7 +17,7 @@ same file the rest of the site uses; a sponsor or cosponsor who has since left C
 Output: docs/cosponsors.js (window.COSPONSORS) — bills, per-member roles, a district -> member map and state -> senators map.
 Usage: python fetch_cosponsors.py [--require-network]   (the flag makes the run fail instead of reusing the saved pull when the feed is unreachable)
 """
-import json, os, sys, time, urllib.request, urllib.error
+import json, os, re, sys, time, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
 from datetime import date
 from pathlib import Path
@@ -28,7 +29,7 @@ BILLS = [
     # {"key": "epic_hr", "congress": 119, "type": "hr", "number": 1492, "topic": "epic", "label": "H.R. 1492", "short": "EPIC Act"},
     # {"key": "epic_s",  "congress": 119, "type": "s",  "number": 832,  "topic": "epic", "label": "S. 832",    "short": "EPIC Act"},
 ]
-TOPICS = {"ctma": {"name": "Clinical Trial Modernization Act", "long": "Clinical Trial Modernization Act", "what": "would fund trial outreach in underserved and rural communities and let sponsors cover participants' travel and other costs without anti-kickback exposure"}}
+TOPICS = {"ctma": {"name": "Clinical Trial Modernization Act", "long": "Clinical Trial Modernization Act", "what": "would fund outreach to groups underrepresented in trials, working with sites that include rural ones, and let sponsors cover participants' travel and other costs without anti-kickback exposure"}}
 STFIPS = {"AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08", "CT": "09", "DE": "10", "DC": "11", "FL": "12", "GA": "13", "HI": "15", "ID": "16", "IL": "17", "IN": "18", "IA": "19", "KS": "20", "KY": "21",
           "LA": "22", "ME": "23", "MD": "24", "MA": "25", "MI": "26", "MN": "27", "MS": "28", "MO": "29", "MT": "30", "NE": "31", "NV": "32", "NH": "33", "NJ": "34", "NM": "35", "NY": "36", "NC": "37", "ND": "38", "OH": "39",
           "OK": "40", "OR": "41", "PA": "42", "RI": "44", "SC": "45", "SD": "46", "TN": "47", "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53", "WV": "54", "WI": "55", "WY": "56"}
@@ -102,11 +103,20 @@ def main():
         if not raw_path.exists(): sys.exit(f"no network ({source}) and no saved cosponsors_raw.json")
         raw = json.loads(raw_path.read_text()); print(f"network unavailable ({source}); using saved pull from {raw['fetched']} ({raw['source'][:60]}...)")
     legis = json.load(open(find("legislators-current.json")))
+    # "nick": the name people search for when the official name does not contain it ("Bernie Sanders" for Bernard Sanders, "Chuck
+    # Schumer", "Ed Markey"): the dataset's nickname + surname, compared as a whole word ("Ed" is not in "Edward"); members the dataset
+    # gives no nickname come from config.NICKNAMES_EXTRA (bioguide -> name), when config.py defines it.
+    try:
+        import config; extra = dict(getattr(config, "NICKNAMES_EXTRA", {}) or {})
+    except Exception: extra = {}
     members, district_map, senators = {}, {}, {}
     for l in legis:
         t = l["terms"][-1]; bid = l["id"]["bioguide"]; name = l["name"].get("official_full") or f'{l["name"]["first"]} {l["name"]["last"]}'
         party = {"Republican": "R", "Democrat": "D"}.get(t["party"], "I")
         members[bid] = {"name": name, "party": party, "state": t["state"], "chamber": t["type"], "district": t.get("district")}
+        nk = l["name"].get("nickname")
+        nick = extra.get(bid) or (f'{nk} {l["name"]["last"]}' if nk and not re.search(r"\b" + re.escape(nk.lower()) + r"\b", name.lower()) else "")
+        if nick and nick.lower() not in name.lower(): members[bid]["nick"] = nick
         if t["type"] == "rep" and t["state"] in STFIPS:
             d = t.get("district") or 0; district_map[f"{STFIPS[t['state']]}{(98 if t['state'] == 'DC' else d):02d}"] = bid
         elif t["type"] == "sen": senators.setdefault(t["state"], []).append(bid)

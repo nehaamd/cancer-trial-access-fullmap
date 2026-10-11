@@ -6,6 +6,8 @@ Three passes of `validate_outside.py` (seeds 1, 2 and 3; 73 checks each, all thr
 
 ## 1. Live registry (all 4,001 listed trials, looked up today)
 
+The three passes were re-run on 10 October (03:46–03:57 UTC) after the median fix of 9 October, when ClinicalTrials.gov was serving its data of 9 October; the result files and the figures in this section and the next are from those re-runs (the first run, on 9 October 06:13 UTC, read an earlier snapshot: 4,538 studies, 15 trials leaving, 17 new with a US site). The refresh of 11 October 2026 matched the re-runs' prediction: the same 17 trials left, 22 of the 23 predicted entered (the 23rd, NCT07729137, a corneal-oedema study, was excluded by the oncology screen), and a 23rd that entered, NCT07814352 (leptomeningeal disease), was brought in by pull request #25's screen rule rather than by the registry (see `VALIDATION_2026-10-11.md`).
+
 | Check | Result | |
 |---|---|---|
 | Listed trials found on ClinicalTrials.gov | 4,001 of 4,001 | ✓ |
@@ -13,26 +15,26 @@ Three passes of `validate_outside.py` (seeds 1, 2 and 3; 73 checks each, all thr
 | Age limits still admit some adults 55+ (maximum age ≥ 55 or none, the site's rule) | 4,001 of 4,001 | ✓ |
 | Trials whose minimum age is 60 or more (open only to older adults; counted, not excluded) | 39 — the number CHANGES_v3 gives for 5 October | ✓ |
 | Payload (data.js) phase, sponsor class and minimum age equal the 5 October pull (trials.csv) | 0 / 0 / 0 mismatches (the payload keeps one decimal of age: 30 days → 0.1) | ✓ |
-| Overall status today | 3,986 Recruiting; 11 Active-not-recruiting, 1 Suspended, 1 Enrolling by invitation, 1 Terminated, 1 Completed | drift |
-| US sites listed as recruiting (city, state, ZIP) vs the pull | 50,225 unchanged, 226 added, 123 removed (0.7% of rows), across 132 trials | drift |
+| Overall status today | 3,984 Recruiting; 12 Active-not-recruiting, 2 Suspended, 1 Enrolling by invitation, 1 Terminated, 1 Completed | drift |
+| US sites listed as recruiting (city, state, ZIP) vs the pull | 50,159 unchanged, 325 added, 189 removed (1.0% of the pull's rows), across 154 trials | drift |
 | Listed trials with no US recruiting site today | 0 | info |
-| Trials that would leave the set at a refresh today | 15 of 4,001 (0.4%): NCT03824652, NCT04145622, NCT04712851, NCT04870762, NCT05185505, NCT05336383, NCT05394337, NCT05482516, NCT05663710, NCT05787561, NCT05918783, NCT06389591, NCT06568692, NCT06624085, NCT07429110 | drift |
+| Trials that would leave the set at a refresh today | 17 of 4,001 (0.4%): NCT03824652, NCT04145622, NCT04712851, NCT04870762, NCT05185505, NCT05336383, NCT05394337, NCT05482516, NCT05663710, NCT05787561, NCT05918783, NCT06389591, NCT06568692, NCT06624085, NCT07283900, NCT07333261, NCT07429110 | drift |
 | Registry edits since the pull | 1 trial's phase changed (NCT06080061, Phase 1 → N/A); 0 sponsor classes changed | drift |
-| The site's registry query re-run today | 4,538 studies, the same count as on 5 October; 79 not in the pull, of which 17 have a US recruiting site today and 15 of those also pass the age rule (1 first posted after 5 October); 15 in the pull no longer returned (the 15 above) | info |
-| The 17 that would enter at a refresh, reviewed by hand | 16 are cancer treatment trials (breast, CLL, NSCLC, three brain — glioblastoma, brain neoplasm, DIPG — pancreas, two AML, follicular lymphoma, RCC, colorectal, gastric, oropharyngeal, two solid-tumour); two of these (DIPG, a paediatric solid-tumour trial) have a maximum age of 25 and 20 and would be removed by the age rule; the 17th (NCT07694726, lymphedema prevention after head-and-neck surgery) is supportive care registered as Treatment and, since its condition field names a cancer, would be kept | reviewed |
+| The site's registry query re-run today | 4,543 studies (4,538 on 5 October); 87 not in the pull, of which 25 have a US recruiting site today and 23 of those also pass the age rule (1 first posted after 5 October); 18 in the pull no longer returned: the 17 above and NCT06641089, which the oncology screen had excluded | info |
+| The 25 that would enter at a refresh (US recruiting site today) | The 17 of the first run were reviewed by hand on 9 October: 16 are cancer treatment trials (breast, CLL, NSCLC, three brain — glioblastoma, brain neoplasm, DIPG — pancreas, two AML, follicular lymphoma, RCC, colorectal, gastric, oropharyngeal, two solid-tumour); two of these (DIPG, a paediatric solid-tumour trial) have a maximum age of 25 and 20 and would be removed by the age rule; the 17th (NCT07694726, lymphedema prevention after head-and-neck surgery) is supportive care registered as Treatment and, since its condition field names a cancer, would be kept. Of the 8 the re-run added, judged from their registry titles and conditions, 7 are cancer treatment trials (B-cell lymphoma, high-grade glioma, a radioligand for solid tumours, myeloma, DLBCL, soft-tissue sarcoma, solid tumours) and the 8th, NCT07729137 (corneal oedema), is not a cancer trial and would be excluded by the oncology screen | reviewed |
 | 5 October pull reconstructed: trials.csv (4,257) + the oncology screen's exclusions (217) | 4,474 = `trials_with_us_recruiting_site` in fetch_log.json | ✓ |
 | `data/raw/trials_raw.csv` is the 5 October pull | **✗ 4,294 rows; the pull had 4,474.** The committed file is from an earlier pull. `qc_us.py` refreshes it only when `fetch_log.json` is newer by file date, which git does not keep, so on a checkout where the dates come out the other way it keeps and screens the old file. No published figure reads this file: `trials.csv` is correct and reconciles above. | ✗ |
 
-What the drift means: a reader on 9 October sees figures from 5 October; 15 trials have since stopped recruiting and about 15 have started, or gained a US recruiting site, so the listed count would barely move. Site lists moved on 132 trials. The pages state the data date; this is the scale of staleness a four-day-old page carries.
+What the drift means: a reader on 9 October sees figures from 5 October; 17 trials have since stopped recruiting and 23 have started, or gained a US recruiting site, and pass the age rule, so the listed count would barely move. Site lists moved on 154 trials. The pages state the data date; this is the scale of staleness a four-day-old page carries.
 
 ## 2. What the registry search can and cannot see
 
 | Check | Result |
 |---|---|
-| Registry condition search for "neoplasms" (the registry's own synonym and MeSH expansion), same filters | 4,219 studies; **0** that the site's keyword search does not return |
-| Condition search for "oncology", same filters | 4,219; 0 not returned |
-| Full-text search for nine cancer words anywhere in the record (cancer, tumor, carcinoma, lymphoma, leukemia, myeloma, sarcoma, melanoma, malignant), same filters | 4,856; 396 not returned by the keyword search |
-| 84 distinct studies from those 396, reviewed by hand (30 per pass, with some overlap) | 83 are not cancer treatment trials: smoking and vaping cessation, chronic GVHD, cirrhosis, heart failure, depression, osteoarthritis, HIV, aplastic anaemia, hemophilia, and supportive care in cancer patients (anaemia during chemotherapy, scalp cooling, checkpoint-inhibitor colitis, chemotherapy neuropathy, palliative demoralisation). **One** is a cancer treatment trial the condition search cannot find: NCT05709782, spinal stereotactic radiosurgery on an MR-LINAC for spinal metastases, whose condition field says only "Spinal Disease"; its summary and eligibility text do use cancer terms, which is why the full-text probe found it. |
+| Registry condition search for "neoplasms" (the registry's own synonym and MeSH expansion), same filters | 4,224 studies; **0** that the site's keyword search does not return |
+| Condition search for "oncology", same filters | 4,224; 0 not returned |
+| Full-text search for nine cancer words anywhere in the record (cancer, tumor, carcinoma, lymphoma, leukemia, myeloma, sarcoma, melanoma, malignant), same filters | 4,860; 396 not returned by the keyword search |
+| 84 distinct studies from those 396, reviewed by hand (30 per pass, with some overlap; the re-runs drew the same 84) | 83 are not cancer treatment trials: smoking and vaping cessation, chronic GVHD, cirrhosis, heart failure, depression, osteoarthritis, HIV, aplastic anaemia, hemophilia, and supportive care in cancer patients (anaemia during chemotherapy, scalp cooling, checkpoint-inhibitor colitis, chemotherapy neuropathy, palliative demoralisation). **One** is a cancer treatment trial the condition search cannot find: NCT05709782, spinal stereotactic radiosurgery on an MR-LINAC for spinal metastases, whose condition field says only "Spinal Disease"; its summary and eligibility text do use cancer terms, which is why the full-text probe found it. |
 
 So the keyword search is a superset of the registry's own condition search for neoplasms, and what it misses are records whose condition field does not name a cancer. One in 84 reviewed is a small sample: the rate among the 396 could be anywhere from near zero to several percent, which is a handful of trials nationally, not dozens. Supportive-care trials in cancer patients are not returned when their condition field names the symptom rather than the cancer (and are, by the site's definition, not cancer treatment trials); a few whose condition field does name a cancer are returned and kept, as the README's note on supportive-care survivors says. If the author wants to close the gap, a full-text probe like this one plus the oncology screen over the ~400 extra records would do it.
 
@@ -114,4 +116,4 @@ For 38 distinct places (24 counties, 8 districts, 6 states; one district was dra
 
 1. ~~One median rule~~ — done 9 October (see section 3).
 2. Refresh `data/raw/trials_raw.csv` from the current pull, or make `qc_us.py` compare the file against `fetch_log.json` by content rather than by file date.
-3. At the next refresh, expect 15 trials out and about 15 in; nothing in this note changes any published share.
+3. At the next refresh, expect 17 trials out and about 23 in; nothing in this note changes any published share. (The refresh of 11 October: 17 out, 23 in.)

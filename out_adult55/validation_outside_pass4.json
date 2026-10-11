@@ -1,0 +1,636 @@
+{
+ "setup": [
+  {
+   "check": "seed / data date",
+   "value": "seed 4; registry data 2026-10-09T09:00:05 (fetch_log: 2026-10-09T09:00:05, fetched 2026-10-11T02:41 UTC; data.js pull 2026-10-11 02:41 UTC); 4,007 listed trials; run 2026-10-11 03:43 UTC; pages served from http://127.0.0.1:8103",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "trials.csv rows minus those with a maximum age under 55 equals the listed set",
+   "value": "4265 \u2212 258 = 4007 vs 4007",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "registry": [
+  {
+   "check": "registry data the API serves today vs the pull's",
+   "value": "2026-10-09T09:00:05 vs 2026-10-09T09:00:05 (API 2.0.5)",
+   "ok": null,
+   "detail": "same snapshot: the checks below reproduce the pull from the registry, and drift since the pull is not measured"
+  },
+  {
+   "check": "listed trials found on ClinicalTrials.gov today",
+   "value": "4,007 of 4,007",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "payload (data.js) phase / sponsor class / minimum age equal the pull (registry data of 2026-10-09, fetched 2026-10-11) (trials.csv)",
+   "value": "0 / 0 / 0 mismatches",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "overall status today",
+   "value": {
+    "RECRUITING": 4007
+   },
+   "ok": null,
+   "detail": "0 no longer Recruiting: "
+  },
+  {
+   "check": "still interventional with primary purpose Treatment",
+   "value": "4,007 of 4,007",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "age limits today still admit some adults 55+ (maximum age \u2265 55 or none \u2014 the site's rule)",
+   "value": "4,007 of 4,007",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "listed trials whose minimum age is 60 or more (open only to older adults; counted, not excluded): today vs the payload",
+   "value": "39 today; 39 in the payload (the pull (registry data of 2026-10-09, fetched 2026-10-11))",
+   "ok": true,
+   "detail": "NCT06195891 (60 Years), NCT06765317 (65 Years), NCT06998069 (65 Years), NCT06679829 (60 Years), NCT05684367 (60 Years), NCT06139107 (60 Years), NCT06096844 (70 Years), NCT06827860 (70 Years), NCT05952024 (65 Years), NCT07242118 (65 Years), NCT06824818 (70 Years), NCT07125183 (65 Years), NCT06377852 (60 Years), NCT07768436 (70 Years), NCT06042569 (65 Years), NCT06799195 (60 Years), NCT07392242 (60 Years), NCT05472792 (65 Years), NCT07321652 (65 Years), NCT07437950 (60 Years), NCT06973668 (65 Years), NCT07629206 (70 Years), NCT06552416 (65 Years), NCT06105684 (60 Years), NCT06309225 (65 Years), NCT04892173 (60 Years), NCT01515527 (60 Years), NCT06828991 (70 Years), NCT04305834 (70 Years), NCT06594939 (70 Years), NCT05976763 (60 Years), NCT07685717 (75 Years), NCT05849207 (65 Years), NCT06897488 (60 Years), NCT02476786 (70 Years), NCT05574127 (65 Years), NCT06507618 (65 Years), NCT06835803 (65 Years), NCT07068074 (75 Years)"
+  },
+  {
+   "check": "phase today vs the payload (differences are registry edits since 2026-10-09)",
+   "value": "0 changed",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "sponsor class today vs the payload",
+   "value": "0 changed",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "US sites listed as recruiting (city, state, ZIP) vs the pull (registry data of 2026-10-09, fetched 2026-10-11)",
+   "value": "50,461 unchanged, 0 added, 0 removed, across 0 trials with any change",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "listed trials with no US recruiting site today",
+   "value": "0",
+   "ok": null,
+   "detail": ""
+  },
+  {
+   "check": "trials that would leave the set at a refresh today (status, sites, age or type)",
+   "value": "0 of 4,007 (0.0%)",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "the pull reconstructed: trials.csv + screen exclusions = trials with a US recruiting site in fetch_log",
+   "value": "4,265 + 216 = 4,481 vs 4481",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "data/raw/trials_raw.csv (the committed copy of the raw pull) has the row count of the pull (registry data of 2026-10-09, fetched 2026-10-11)",
+   "value": "4294 rows vs 4481 in fetch_log / qc_log",
+   "ok": false,
+   "detail": "the committed trials_raw.csv is from an earlier pull (latest registry update in it: 2026-09-30); trials.csv and every published figure are from the pull (registry data of 2026-10-09, fetched 2026-10-11)"
+  },
+  {
+   "check": "the site's registry query re-run today",
+   "value": "4,543 studies (the pull: 4543); not in the pull: 62, of which 0 have a US recruiting site today and 0 of those also pass the age rule (0 of those first posted after 2026-10-09); in the pull but no longer returned: 0",
+   "ok": null,
+   "detail": "gone: ; would enter (US recruiting site, age rule): "
+  },
+  {
+   "check": "seeded sample of 0 studies that would enter at a refresh today (for review: cancer treatment trials?)",
+   "value": "\n    ",
+   "ok": null,
+   "detail": null
+  }
+ ],
+ "coverage": [
+  {
+   "check": "broader search 'condition 'neoplasms' (MeSH tree)' with the same filters",
+   "value": "4,224 studies; 0 not returned by the site's keyword search",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "broader search 'condition 'oncology'' with the same filters",
+   "value": "4,224 studies; 0 not returned by the site's keyword search",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "broader search 'full text 'cancer OR tumor OR carcinoma OR lymphoma OR leukemia OR myeloma OR sarcoma OR melanoma OR malignant'' with the same filters",
+   "value": "4,860 studies; 396 not returned by the site's keyword search",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "seeded sample of 30 studies only the broader searches return (for review: are any cancer treatment trials?)",
+   "value": "\n    NCT05995964 | A Study To Learn About Two Study Medicines (PF-07275315 And PF-07264660) In People Who Have Moderate To Severe | Atopic Dermatitis | ages 18 Years\u2013None\n    NCT06261060 | Low-Dose Sirolimus to Increase Hematopoietic Function in Patients With RUNX1 Familial Platelet Disorder | Familial Platelet Disorder; Hematopoietic | ages 18 Years\u2013None\n    NCT04411225 | Effects of Cannabidiol (CBD) Versus Placebo as an Adjunct to Treatment in Early Psychosis | Early Psychosis | ages 16 Years\u201330 Years\n    NCT07519902 | An Efficacy and Safety Study of Cenegermin Ophthalmic Solution Compared With Vehicle in the Treatment of PCED | Persistent Corneal Epithelial Defect | ages 18 Years\u2013None\n    NCT06596291 | Dose Escalation Study of EG110A, Administered by Intradetrusor Injections to Adults With Neurogenic Detrusor O | Neurogenic Detrusor Overactivity; Spinal Cord Injuries | ages 18 Years\u201375 Years\n    NCT06819891 | A Study to Assess the Efficacy and Safety of Induction Therapy With Afimkibart (RO7790121) in Participants Wit | Moderately to Severely Active Crohns Disease | ages 16 Years\u201380 Years\n    NCT05289167 | Post-Transplant Cyclophosphamide, Bortezomib and Abatacept for the Prevention of Graft-versus-Host-Disease (Gv | Graft-versus-host Disease | ages 14 Years\u2013100 Years\n    NCT04339777 | Allogeneic Hematopoietic Stem Cell Transplant for Patients With Inborn Errors of Immunity | Lymphoproliferative Disorders; Autoimmune Lymphoproliferative; Immune System Diseases; Common Variable Immunodeficiency; | ages 4 Years\u201369 Years\n    NCT03952637 | A Phase 1/2 Study of Intravenous Gene Transfer With an AAV9 Vector Expressing Human Beta-galactosidase in Type | Lysosomal Diseases; Gangliosidosis; GM1 | ages 6 Months\u201312 Years\n    NCT02254863 | UCB Transplant of Inherited Metabolic Diseases With Administration of Intrathecal UCB Derived Oligodendrocyte- | Adrenoleukodystrophy; Batten Disease; Mucopolysaccharidosis II; Leukodystrophy, Globoid Cell; Leukodystrophy, Metachroma | ages 1 Week\u201322 Years\n    NCT06615050 | A Study of Tacrolimus/Methotrexate/Ruxolitinib Versus Post-Transplant Cyclophosphamide/Tacrolimus/Mycophenolat | Graft-versus-host Disease (GVHD) | ages 18 Years\u2013None\n    NCT07064473 | EASi-PROTKT\u2122 - A Study to Test Vicadrostat (BI 690517) Taken Together With Empagliflozin in People With Type 2 | Diabetes Mellitus, Type 2; Hypertension; Cardiovascular Diseases | ages 18 Years\u2013None\n    NCT06223672 | Essential Fats For Enhancing Cognitive Thinking (EFFECT) Study | Cognitive Decline; Cognitive Impairment | ages 40 Years\u201375 Years\n    NCT07767097 | Stiffness and Low Dose Irradiation RCT | Arthrofibrosis of Knee | ages 18 Years\u2013None\n    NCT03808922 | Phase III DAS181 Lower Tract PIV Infection in Immunocompromised Subjects (Substudy: DAS181 for COVID-19): RCT  | Lower Respiratory Tract Infection; Parainfluenza; Immunocompromised; COVID-19 | ages None\u2013None\n    NCT05899166 | Carbohydrate Beta Cell Function and Glucose Control in Children With Diabetes | Diabetes Mellitus, Type 1 | ages 5 Years\u201312 Years\n    NCT06950294 | iNO300 Therapy in Critically Ill Patients With Pneumonia | Critical Illness; Pneumonia | ages 18 Years\u2013None\n    NCT07013474 | A Study to Learn About the Study Medicine Ibuzatrelvir in Adults With COVID-19 Who Are Severely Immunocompromi | COVID-19 Infection | ages 18 Years\u2013None\n    NCT06474299 | The Avenues Study: Dual Use Cessation | Smoking Cessation; Electronic Cigarette Use | ages 21 Years\u2013None\n    NCT06128629 | MAGNITUDE: A Phase 3 Study of NTLA-2001 in Participants With Transthyretin Amyloidosis With Cardiomyopathy (AT | Transthyretin Amyloidosis (ATTR) With Cardiomyopathy | ages 18 Years\u201390 Years\n    NCT05526144 | Thyroid Hormone for Treatment of Nonalcoholic Steatohepatitis in Veterans | Nonalcoholic Steatohepatitis; Liver Fibrosis | ages 18 Years\u201375 Years\n    NCT04560803 | Epidermal Skin Grafts to Improve Healing In Radiation Wounds | Radiation Dermatitis | ages 18 Years\u201380 Years\n    NCT06082037 | A Study to Test How Effective Belumosudil Tablets Are for Treating Adult Participants With Chronic Lung Allogr | Lung Transplant Rejection | ages 18 Years\u2013None\n    NCT05844501 | Ondansetron for the Management of Atrial Fibrillation | Atrial Fibrillation | ages 18 Years\u2013100 Years\n    NCT02735707 | Randomized, Embedded, Multifactorial Adaptive Platform Trial for Community- Acquired Pneumonia | Community-acquired Pneumonia, Influenza, COVID-19 | ages 18 Years\u2013None\n    NCT07284485 | Immunoprevention for High-risk Lung Lesions | High-risk Lung Nodules | ages 18 Years\u2013None\n    NCT06072482 | A Study to Evaluate Avacopan in Participants With ANCA-associated Vasculitis | Antineutrophil Cytoplasmic Antibody-associated Vasculitis | ages 18 Years\u2013100 Years\n    NCT06121297 | RESET-SLE: A Phase 1/2 Open-Label Study to Evaluate the Safety and Efficacy of CABA-201 in Subjects With Activ | Systemic Lupus Erythematosus; Lupus Nephritis | ages 12 Years\u201365 Years\n    NCT05723198 | A Study of Baricitinib (LY3009104) in Children From 6 Years to Less Than 18 Years of Age With Alopecia Areata | Areata Alopecia; Alopecia; Hypotrichosis; Hair Diseases; Skin Diseases; Pathological Conditions, Anatomical | ages 6 Years\u201317 Years\n    NCT05442567 | A Study of Vedolizumab in Children With Ulcerative Colitis (UC) or Crohn's Disease (CD) | Ulcerative Colitis; Crohn's Disease | ages 2 Years\u2013None",
+   "ok": null,
+   "detail": null
+  }
+ ],
+ "headline": [
+  {
+   "check": "p: recomputed from tracts vs data.js / findings.js",
+   "value": "98596429 vs 98596429 / 98596429",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "l20: recomputed from tracts vs data.js / findings.js",
+   "value": "12.0 vs 12.0 / 12.0",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "z60: recomputed from tracts vs data.js / findings.js",
+   "value": "4.3 vs 4.3 / 4.3",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "l100: recomputed from tracts vs data.js / findings.js",
+   "value": "34.2 vs 34.2 / 34.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "zc: recomputed from tracts vs data.js / findings.js",
+   "value": "21.1 vs 21.1 / 21.1",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g60b: recomputed from tracts vs data.js / findings.js",
+   "value": "38.1 vs 38.1 / 38.1",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g120b: recomputed from tracts vs data.js / findings.js",
+   "value": "18.4 vs 18.4 / 18.4",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g60l: recomputed from tracts vs data.js / findings.js",
+   "value": "14.0 vs 14.0 / 14.0",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g60n: recomputed from tracts vs data.js / findings.js",
+   "value": "43.7 vs 43.7 / 43.7",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "g120n: recomputed from tracts vs data.js / findings.js",
+   "value": "20.8 vs 20.8 / 20.8",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nr: recomputed from tracts vs data.js / findings.js",
+   "value": "0.7 vs 0.7 / 0.7",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nrn: recomputed from tracts vs data.js / findings.js",
+   "value": "0.4 vs 0.4 / None",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "medn: recomputed from tracts vs data.js / findings.js",
+   "value": "48 vs 48 / 48",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "medb: recomputed from tracts vs data.js / findings.js",
+   "value": "36 vs 36 / 36",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "t60: recomputed from tracts vs data.js / findings.js",
+   "value": "355 vs 355 / 355",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "t30: recomputed from tracts vs data.js / findings.js",
+   "value": "220 vs 220 / 220",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "t120: recomputed from tracts vs data.js / findings.js",
+   "value": "576 vs 576 / 576",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "own: recomputed from tracts vs data.js / findings.js",
+   "value": "127 vs 127 / 127",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "people_l20: recomputed from tracts vs data.js / findings.js",
+   "value": "11879390 vs None / 11879390",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "people_z60: recomputed from tracts vs data.js / findings.js",
+   "value": "4232394 vs None / 4232394",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "people_g60n: recomputed from tracts vs data.js / findings.js",
+   "value": "43130974 vs None / 43130974",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "people_g60b: recomputed from tracts vs data.js / findings.js",
+   "value": "37587924 vs None / 37587924",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "medians published for the nation, 51 states and 436 districts equal the one rule (over residents with a road route) recomputed from tracts",
+   "value": "0 differences",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "counties without a 2023 rural-urban code (2013 fallback)",
+   "value": "8: 09001, 09003, 09005, 09007, 09009, 09011, 09013, 09015",
+   "ok": null,
+   "detail": null
+  },
+  {
+   "check": "metro p: recomputed vs findings.js",
+   "value": "82859109 vs 82859109",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro n: recomputed vs findings.js",
+   "value": "1186 vs 1186",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro l20: recomputed vs findings.js",
+   "value": "6.2 vs 6.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro z60: recomputed vs findings.js",
+   "value": "1.3 vs 1.3",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro l100: recomputed vs findings.js",
+   "value": "24.8 vs 24.8",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro t30: recomputed vs findings.js",
+   "value": "260 vs 260",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro t60: recomputed vs findings.js",
+   "value": "411 vs 411",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro t120: recomputed vs findings.js",
+   "value": "631 vs 631",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro g60n: recomputed vs findings.js",
+   "value": "35.2 vs 35.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro g120n: recomputed vs findings.js",
+   "value": "15.7 vs 15.7",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro g60b: recomputed vs findings.js",
+   "value": "28.8 vs 28.8",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro g120b: recomputed vs findings.js",
+   "value": "13.6 vs 13.6",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro medn: recomputed vs findings.js",
+   "value": "35 vs 35",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro medb: recomputed vs findings.js",
+   "value": "25 vs 25",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "metro nr: recomputed vs findings.js",
+   "value": "0.6 vs 0.6",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro p: recomputed vs findings.js",
+   "value": "15737320 vs 15737320",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro n: recomputed vs findings.js",
+   "value": "1957 vs 1957",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro l20: recomputed vs findings.js",
+   "value": "43.0 vs 43.0",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro z60: recomputed vs findings.js",
+   "value": "20.2 vs 20.2",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro l100: recomputed vs findings.js",
+   "value": "83.6 vs 83.6",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro t30: recomputed vs findings.js",
+   "value": "10 vs 10",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro t60: recomputed vs findings.js",
+   "value": "60 vs 60",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro t120: recomputed vs findings.js",
+   "value": "288 vs 288",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro g60n: recomputed vs findings.js",
+   "value": "88.9 vs 88.9",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro g120n: recomputed vs findings.js",
+   "value": "47.8 vs 47.8",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro g60b: recomputed vs findings.js",
+   "value": "87.3 vs 87.3",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro g120b: recomputed vs findings.js",
+   "value": "43.4 vs 43.4",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro medn: recomputed vs findings.js",
+   "value": "115 vs 115",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro medb: recomputed vs findings.js",
+   "value": "109 vs 109",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro nr: recomputed vs findings.js",
+   "value": "1.1 vs 1.1",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "nonmetro share of residents 55+",
+   "value": "16.0% (README says 16.0%)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "README rural sentence (nonmetro / metro: fewer than 20, none, median to an NCI center) equals the recomputation",
+   "value": "README (43.0, 6.2, 20.2, 1.3, 115.0, 35.0) vs recomputed (np.float64(43.0), np.float64(6.2), np.float64(20.2), np.float64(1.3), 115, 35)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "broad-menu counties (100+), 20+ counties, counties with any trial",
+   "value": "82, 380, 832 (metrics_log: 82, 380, 832; README: 82 broad, 380 limited)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "states with no broad-menu county",
+   "value": "15: AK, AR, DE, HI, ID, LA, ME, MS, ND, NH, NM, NV, VT, WV, WY (findings.js: 15; README: 15)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "districts where every resident 55+ is beyond 60 road-miles of a broad menu",
+   "value": "73 (findings.js: 73; README: 73)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "README headline block carries the recomputed figures",
+   "value": "all present",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "roads": [
+  {
+   "check": "county \u2192 nearest NCI center: road miles shorter than straight-line (impossible; 3% tolerance for rounding/centroids)",
+   "value": "0 of 3,085 counties",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "road / straight-line ratio to the nearest NCI center",
+   "value": "median 1.17, p10 1.09, p90 1.32, max 5.15",
+   "ok": null,
+   "detail": "3 counties above 2.5: Island, Jefferson, Kitsap"
+  },
+  {
+   "check": "county \u2192 nearest broad menu: road miles shorter than straight-line",
+   "value": "0 of 3,024",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "road / straight-line ratio to the nearest broad menu",
+   "value": "median 1.18, p10 1.09, p90 1.34 (README: median 1.18, 1.09\u20131.34)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "README: the \u00d71.2 convention is too low for N of M counties (road / straight-line > 1.2), recomputed from county_road_distances.csv",
+   "value": "1,271 of 3,026; median 1.18, p10 1.09, p90 1.34 (README: 1,271 of 3,026; 1.18, 1.09\u20131.34)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "counties with no road route to a broad menu",
+   "value": "35: 15, 2",
+   "ok": null,
+   "detail": "states (FIPS): 02, 15"
+  }
+ ],
+ "sites": [
+  {
+   "check": "sampled site rows whose ZIP center lies in the assigned county (or the Census ZCTA\u2192county agrees)",
+   "value": "147 of 147 (3 rows without a ZCTA center skipped)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "sampled site rows whose ZIP center is within 40 miles of the registry's stated city",
+   "value": "131 of 131 with a gazetteer match",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "rows assigned by the ZIP's first three digits whose stated city lies within 40 miles of the assigned county (all such rows)",
+   "value": "1945 of 1945 judged (25 without a gazetteer match; 1,780 by ZIP prefix, 190 by city over ZIP prefix)",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "every row placed by its ZIP: ZIP center more than 25 miles from the stated city, which lies outside the assigned county; counties whose whole trial count rests on such rows",
+   "value": "268 of 47,137 rows (> 40 mi: 62); 7 counties rest entirely on them: Gage 31067 (1 trial), Chatham 37037 (1 trial), Halifax 37083 (1 trial), Mitchell 37121 (1 trial), Ashtabula 39007 (1 trial), Brazos 48041 (1 trial), Skamania 53059 (1 trial)",
+   "ok": null,
+   "detail": "rows behind those counties: [('NCT07173751', 'Paradigm Oncology Hematology West P.C. d', 'Omaha', 'NE', '68310', '31067', 79), ('NCT07102381', 'Northwest Cancer Specialists', 'Vancouver', 'WA', '98648', '53059', 32), ('NCT05645107', 'GC2202 Study Site 109', 'Greenville', 'NC', '27843', '37083', 28), ('NCT06750094', 'Baylor Scott & White Medical Center', 'Round Rock', 'TX', '77845', '48041', 83), ('NCT07228832', 'Clinical Study Site', 'Akron', 'OH', '44032', '39007', 60), ('NCT05433142', 'Xencor Investigative Site', 'Charlotte', 'NC', '28777', '37121', 85), ('NCT07166094', 'Wake Forest University', 'Winston-Salem', 'NC', '27517', '37037', 71)]"
+  },
+  {
+   "check": "site rows drawn at a county center although the stated city lies elsewhere (phantom sites)",
+   "value": "0 rows; 9 more at a county center because ZIP and city are both unknown; 0 rows left unlocated (route_sites_log.json)",
+   "ok": true,
+   "detail": "at a county center (ZIP and city unknown): [['NCT07421700', 'Smilow Cancer Hospital - Trumbull', 'Trumbull', 'CT', '06835', '09001'], ['NCT07518186', 'University of Connecticut Health Center', 'Farmington', 'CT', '06030', '09003'], ['NCT06256588', 'GSK Investigational Site', 'Farmington', 'CT', '06030', '09003'], ['NCT07258511', 'University of Connecticut Health Center', 'Farmington', 'CT', '06030', '09003'], ['NCT07213804', 'UConn Health', 'Farmington', 'CT', '06030', '09003'], ['NCT07190248', 'University of Connecticut Health Center ( Site 0130)', 'Farmington', 'CT', '06030', '09003'], ['NCT07229313', 'Kivu Trial Site', 'New Have', 'CT', '06520', '09009'], ['NCT05552222', 'University of Connecticut', 'Farmington', 'CT', '06030', '09003'], ['NCT06393374', 'University of Connecticut Health Center ( Site 0128)', 'Farmington', 'CT', '06030', '09003']]"
+  }
+ ],
+ "cosponsors": [
+  {
+   "check": "H.R. 3521: cosponsors in cosponsors.js vs findings.js",
+   "value": "30 ({'R': 11, 'D': 19}) vs 30 ({'R': 11, 'D': 19, 'I': 0}); roles {'sponsor': 1, 'original': 1, 'cosponsor': 29}",
+   "ok": true,
+   "detail": "fetched 2026-10-11 from govinfo BILLSTATUS XML"
+  },
+  {
+   "check": "S. 4440: cosponsors in cosponsors.js vs findings.js",
+   "value": "1 ({'D': 1}) vs 1 ({'R': 0, 'D': 1, 'I': 0}); roles {'sponsor': 1, 'original': 1}",
+   "ok": true,
+   "detail": "fetched 2026-10-11 from govinfo BILLSTATUS XML"
+  }
+ ],
+ "zipfinder": [
+  {
+   "check": "find.html result equals the method recomputed in Python for 30 ZIP codes",
+   "value": "30 of 30 agree",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "ZIP estimate (straight-line \u00d7 1.2) vs the county's road-network trials-within-60 (informational; different methods)",
+   "value": "ratio median 1.02, p10 0.89, p90 2.52 over 29 ZIPs",
+   "ok": null,
+   "detail": "46932:66/12.0; 57719:14/14.0; 22043:902/876.2; 74110:26/26.0; 93705:53/44.1; 31322:34/34.0; 19053:809/790.7; 15140:335/338.7; 05033:96/103.4; 75156:77/105.4; 55763:64/59.1; 13847:3/5.0"
+  },
+  {
+   "check": "ZIP estimate (straight-line \u00d7 1.2) vs the road-network trials-within-60 of the census tract nearest the ZIP center (informational; same place, different distance methods)",
+   "value": "23 of 30 ZIPs within 10% (or 2 trials); ratio median 1.00, p10 0.98, p90 2.85 over the 29 with a tract figure above zero",
+   "ok": null,
+   "detail": "outside 10%: 55763:64/54 (tract 27137011401, 10.3 mi from the ZIP center); 67443:56/48 (tract 20113788400, 7.1 mi from the ZIP center); 50449:51/5 (tract 19081270200, 6.2 mi from the ZIP center); 38650:40/82 (tract 28145950200, 2.4 mi from the ZIP center); 55787:64/12 (tract 27001770401, 6.2 mi from the ZIP center); 18370:324/114 (tract 42089300401, 0.9 mi from the ZIP center); 72648:43/15 (tract 05101180100, 2.7 mi from the ZIP center)"
+  }
+ ],
+ "pages": [
+  {
+   "check": "figures agree across index / community / brief / act and with the tract recomputation (8 counties, 3 districts, 2 states: 46127, 40153, 12069, 27011, 02016, 21081, 27047, 27067, 0614, 0403, 2607, OH, LA)",
+   "value": "13 places; 0 disagreements",
+   "ok": true,
+   "detail": null
+  }
+ ],
+ "health": [
+  {
+   "check": "14 pages \u00d7 2 sizes: JavaScript errors",
+   "value": "0 pages with errors",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "horizontal overflow",
+   "value": "0 pages",
+   "ok": true,
+   "detail": null
+  },
+  {
+   "check": "axe-core WCAG 2 A/AA violations (axe-core 4.10.2)",
+   "value": "0",
+   "ok": true,
+   "detail": null
+  }
+ ]
+}

@@ -10,9 +10,11 @@ on:
     - cron: "0 11 * * 1"   # Mondays 11:00 UTC
 permissions:
   contents: write
+# Both workflows push to main on Mondays (registry 11:00 UTC, cosponsors 12:17 UTC): one waits for the other instead of racing it to the push.
+concurrency: { group: publish-main, cancel-in-progress: false }
 jobs:
   refresh:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # pinned: the ubuntu-latest label moves to Ubuntu 26 from 19 October 2026 (a Monday, the scheduled day); move deliberately, after a run by hand
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -35,10 +37,9 @@ jobs:
         uses: actions/cache@v4
         with: { path: data/roads, key: roads-tiger2025-graph-v2 }
       - run: python build_roads_us.py --if-stale
-      - name: Snapshot the previous pull
-        run: |
-          d=$(python -c "import json;print(json.load(open('data/raw/fetch_log.json'))['timestamp_utc'][:10])")
-          mkdir -p data/snapshots/$d && cp data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv out_adult55/county_metrics.csv out_adult55/national_metrics_v3.json out_adult55/state_metrics_v3.csv data/snapshots/$d/ || true
+      # run_refresh.sh first keeps the pull being replaced in data/snapshots/<its date>/, and builds changes.js (diff_snapshots.py) before the
+      # validation and the release gate, so both check the new comparison and VALIDATION_v3.md reports it (until October 2026 the snapshot and
+      # the diff were separate steps here, and the diff ran after the gate: the published validation described the previous refresh's diff)
       - name: Refresh chain
         env:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}   # optional; govinfo BILLSTATUS needs no key
@@ -53,16 +54,17 @@ jobs:
           test -f refresh.log || exit 0
           { echo '### The refresh stopped here — nothing was published'; echo; echo '```'; tail -n 60 refresh.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           echo "::error title=Refresh chain failed (last lines of its output)::$(tail -n 25 refresh.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}' | cut -c1-3500)"
-      - run: python diff_snapshots.py
       - name: Redraw the link-preview image and the findings-page map from the new data (a failure here does not stop the refresh)
         continue-on-error: true
         run: |
           pip install -q playwright pillow && python -m playwright install --with-deps chromium
           python make_assets.py
+      # every file the chain writes and a page, a validator or the next refresh reads; trials_raw.csv / us_sites_raw.csv (the unscreened pull,
+      # kept by qc_us.py) and mortality_log.json were missing until October 2026, so the copies in the repository were from 1 and 6 October
       - name: Commit and publish
         run: |
           git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
-          git add -A docs out RELEASE_GATE.md README.md audit_allowlist.txt data/raw/trials.csv data/raw/us_sites.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv data/snapshots out_adult55/*.csv out_adult55/*.json out_adult55/*.md VALIDATION_v3.md VALIDATION_extras.md cosponsors_raw.json rucc_log.json burden_log.json \
+          git add -A docs out RELEASE_GATE.md README.md audit_allowlist.txt data/raw/trials.csv data/raw/us_sites.csv data/raw/trials_raw.csv data/raw/us_sites_raw.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv data/snapshots out_adult55/*.csv out_adult55/*.json out_adult55/*.md VALIDATION_v3.md VALIDATION_extras.md cosponsors_raw.json rucc_log.json burden_log.json mortality_log.json \
                      data/ref/nci_centers.csv data/ref/legislators-current.json data/ref/legislators_log.json data/roads/graph_stats.json
           git commit -m "Registry refresh $(date -u +%F)" || echo "nothing to commit"
           git push

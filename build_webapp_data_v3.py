@@ -4,7 +4,7 @@ Facility definition (Tier 1.1): a distinct recruiting facility = distinct (norma
 names are free text, so two spellings of one hospital can count twice and one name can cover two campuses; the count is
 therefore approximate and is labelled as "facilities (registry-listed, deduplicated by name)".
 """
-import json, re
+import gzip, json, re
 import config
 from pathlib import Path
 import numpy as np, pandas as pd, geopandas as gpd
@@ -18,7 +18,22 @@ STFIPS = {"AL": "01", "AK": "02", "AZ": "04", "AR": "05", "CA": "06", "CO": "08"
           "OK": "40", "OR": "41", "PA": "42", "RI": "44", "SC": "45", "SD": "46", "TN": "47", "TX": "48", "UT": "49", "VT": "50", "VA": "51", "WA": "53", "WV": "54", "WI": "55", "WY": "56"}
 INV = {v: k for k, v in STFIPS.items()}
 NOROAD = 999.0
+# The ACS release behind the population 55+ (build_tracts_us.py, B01001), the household context (build_covariates.py, build_tract_context.py:
+# the 2023 5-year summary files) and the ZIP-code tables: one name for every page (meta.acs), instead of each page's own wording or a parse
+# of meta.ctx_method. Change it with the year in those scripts' download URLs.
+ACS_RELEASE = {"label": "ACS 2023 5-year", "year": 2023, "span": "2019-2023"}
 SITECODE = re.compile(r"\(?\s*(site|study site|local institution|investigative site|clinical site|id|site id|site number|site #)\s*[-#:]?\s*\d+[a-z]?\s*\)?|\(\s*\d{3,6}\s*\)|/\s*id#?\s*\d+|\bsite\s+\d{2,6}\b", re.I)
+def write_gz(path, blob):
+    """<path>.gz beside <path>: the same bytes gzipped (mtime 0), which the map page fetches when the browser can decompress it (the 6.4 MB
+    tracts60.bin took 34 s on a phone profile). Left alone when it already decompresses to these bytes, so a different zlib elsewhere does
+    not rewrite an unchanged file. (The same function as build_rucc.write_gz, for tract_county.bin.)"""
+    gz = Path(str(path) + ".gz")
+    try:
+        if gzip.decompress(gz.read_bytes()) == blob: return
+    except Exception: pass
+    gz.write_bytes(gzip.compress(blob, compresslevel=9, mtime=0))
+
+
 def norm(x):
     """Facility key: lower-case, sponsor site codes removed ("( Site 0087)", "Local Institution - 0012", "/ID# 12345"), punctuation dropped."""
     y = SITECODE.sub(" ", str(x)); y = re.sub(r"[^a-z0-9 ]", " ", y.lower()); return re.sub(r"\s+", " ", y).strip()
@@ -97,7 +112,11 @@ def main():
         for r_ in pd.read_csv(REF / "site_aliases.csv", dtype=str).fillna("").itertuples(): ALIAS[(r_.county_fips, r_.alias_norm)] = r_.canonical_norm
     sites["fac"] = [ALIAS.get((c, f), f) for c, f in zip(sites.county_fips, sites.fac)]
     PLACEHOLDER = re.compile(r"^(research site|local institution|study site|clinical site|investigational site|investigative site|site|clinical research site|research facility|central recruiting site|recruiting site)$|^\s*$", re.I)
-    fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", lambda s: s.value_counts().index[0]), city=("city", lambda s: s.value_counts().index[0]), zip=("zip", lambda s: s[s.str.len() == 5].value_counts().index[0] if (s.str.len() == 5).any() else ""),
+    # A facility's own ZIP comes from rows that were placed at their own ZIP: a row whose ZIP was a typing error (zip_typo_corrected) or no
+    # usable place (facility_listing) was placed at another ZIP, and its own would print an address that is not there ("Albany Medical
+    # College, Albany" carried 10461, the Bronx ZIP of one mistyped row, until October 2026)
+    sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
+    fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", lambda s: s.value_counts().index[0]), city=("city", lambda s: s.value_counts().index[0]), zip=("zip_own", lambda s: s[s.str.len() == 5].value_counts().index[0] if (s.str.len() == 5).any() else ""),
                                                    trials=("nct_id", lambda s: sorted({j_of[n] for n in s})), n_rows=("nct_id", "size")).reset_index()
     fac["name"] = fac.name.map(clean_name)
     fac["unresolved"] = [int(bool(PLACEHOLDER.match(f)) or code_like(n)) for f, n in zip(fac.fac, fac.name)]
@@ -172,6 +191,10 @@ def main():
                        "hn": None if r.road_mi_nci >= NOROAD else round(float(r.drive_hr_nci), 1), "nn": r.nearest_nci, "nbm": r.nearest_broad,
                        "noroad": ("off" if "OFF ROAD" in str(r.nearest_nci) else "island" if "NO ROAD" in str(r.nearest_nci) or "NO ROAD" in str(r.nearest_broad) else ""),
                        "sl": {"b": round(float(c.dist_to_broad_mi)), "n": round(float(c.dist_to_nci_mi))},
+                       # straight-line "access" miles from the county population center to the nearest highway node (route_us.py); the road
+                       # miles and drive times above include it, at 35 mph. On an island with no highway of its own it crosses water as if
+                       # by bridge (Nantucket 27 mi, San Juan WA 15, Dukes MA 9), so the page can say so (deferred on 10 Oct 2026 for want of it)
+                       "am": None if float(r.access_mi) >= NOROAD else round(float(r.access_mi), 1),
                        "acs": None if v is None else {"veh": None if pd.isna(v.pct_hh_no_vehicle) else round(float(v.pct_hh_no_vehicle), 1), "net": None if pd.isna(v.pct_hh_no_internet) else round(float(v.pct_hh_no_internet), 1),
                                                      "bb": None if pd.isna(v.hh_broadband) or pd.isna(v.hh_total) or v.hh_total == 0 else round(100 * float(v.hh_broadband) / float(v.hh_total), 1),
                                                      "unins": None if pd.isna(v.uninsured_rate) else round(float(v.uninsured_rate), 1), "unins55": None if pd.isna(v.uninsured_rate_55_64) else round(float(v.uninsured_rate_55_64), 1),
@@ -240,7 +263,7 @@ def main():
     meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2024 election maps)", "virtual_sites": {"rows": int(len(virt)), "trials": int(virt.nct_id.nunique())}, "zip_typos": n_typo, "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
             "router": {"pairs": rlog["router_validation"]["pairs"], "mean_pct": rlog["router_validation"]["mean_abs_pct_diff"], "max_pct": rlog["router_validation"]["max_abs_pct_diff"],
                        **({"local": {"pairs": lc["routes"], "failed": lc["failed"], "note": ("all within tolerance" if not lc["failed"] else f"{lc['failed']} outside tolerance: " + "; ".join(lc["failed_routes"]))}} if lc else {})},
-            "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(),
+            "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(), "acs": ACS_RELEASE["label"], "acs_year": ACS_RELEASE["year"], "acs_span": ACS_RELEASE["span"],
             "burden": {"period": btitle["all"].split(", ")[-1], "pulled": blog["pulled"], "small_threshold": 16, "sites": [[s, btitle[s].split(" (All")[0]] for s in bsites], "not_available_states": ["KS"]},
             "sitepoints": int(SM.shape[0]), "pct_multi": cts["pct_multi_55plus"], "pct_unclassified": cts["pct_unclassified_55plus"], "national": {k: nat[k] for k in ("pop55", "pct_zero_trials_within_60rdmi", "pct_lt20_trials_within_60rdmi", "pct_in_zero_trial_county", "pct_gt60rdmi_broad_menu", "pct_gt120rdmi_broad_menu", "pct_gt60rdmi_nci", "median_road_mi_nci", "pct_no_road_route_broad")},
             "vacant": [k for k, v in districts.items() if not v["member"]]}
@@ -270,7 +293,7 @@ def main():
     def pad4(b): return b + b"\0" * ((4 - len(b) % 4) % 4)
     blob = struct.pack("<IIIII", 0x54524331, len(tr_), len(split), len(ps), len(state_order)) + tr_.pop55.values.astype("<u4").tobytes() + pad4(state_idx.tobytes()) + pad4(dist_idx.astype("<u2").tobytes())
     blob += b"".join(struct.pack("<IHH", a, b, c) for a, b, c in split) + offsets.astype("<u4").tobytes() + ps.astype("<u2").tobytes()
-    (DOCS / "tracts60.bin").write_bytes(blob); meta["state_order"] = state_order; meta["tracts_bin"] = {"file": "tracts60.bin", "bytes": len(blob), "tracts": int(len(tr_)), "pairs": int(len(ps)), "split_records": len(split)}
+    (DOCS / "tracts60.bin").write_bytes(blob); write_gz(DOCS / "tracts60.bin", blob); meta["state_order"] = state_order; meta["tracts_bin"] = {"file": "tracts60.bin", "bytes": len(blob), "tracts": int(len(tr_)), "pairs": int(len(ps)), "split_records": len(split)}
     data["meta"] = meta
     print("tracts60.bin MB:", round(len(blob) / 1e6, 1), "| pairs", len(ps), "| split", len(split))
     s = json.dumps(data, separators=(",", ":"), ensure_ascii=False); (DOCS / "data.js").write_text("window.DATA=" + s + ";", encoding="utf-8")

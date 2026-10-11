@@ -23,24 +23,52 @@ def w(path, rows):
         wr = csv.DictWriter(f, fieldnames=list(rows[0].keys())); wr.writeheader(); wr.writerows(rows)
 
 
-# legal suffixes stripped from Census place names, compound ones first: "Juneau city and borough" -> Juneau (not "Juneau city and"),
-# "Indianapolis city (balance)" -> Indianapolis, "Nashville-Davidson metropolitan government (balance)" -> Nashville-Davidson
-PLACE_SUFFIXES = (" city and borough", " municipality and borough", " city (balance)", " city", " town", " village", " cdp", " borough", " municipality", " (balance)", " consolidated government", " metro government", " urban county", " unified government", " metropolitan government")
+# The legal description the Census appends to a place name, by its LSAD code (the Gazetteer's LSAD column), stripped exactly
+# once: "Greenwood Village city" is Greenwood Village, "Charles Town city" is Charles Town, "Kearns metro township" is Kearns.
+# Puerto Rico's "comunidad" / "zona urbana" (LSAD 55 / 62) are left as written; LSAD 00 places carry no description and keep
+# their whole name ("Carson City", "Princeton", "Macon-Bibb County") except the "(balance)" of a consolidated city, which goes
+# with its government-form words: "Indianapolis city (balance)" -> Indianapolis, "Nashville-Davidson metropolitan government
+# (balance)" -> Nashville-Davidson.
+LSAD_SUFFIX = {"25": " city", "43": " town", "47": " village", "57": " cdp", "21": " borough", "37": " municipality", "53": " city and borough",
+               "35": " metro township", "UG": " unified government", "CG": " consolidated government", "UC": " urban county", "MG": " metropolitan government", "CN": " corporation"}
+BALANCE_FORMS = (" city", " unified government", " consolidated government", " metro government", " metropolitan government")
+# Massachusetts writes its town-form cities as "Agawam Town city": the place is Agawam. The whole-name key stays as an alias row.
+MA_TOWN_CITY = {"MA"}
+
+
+def split_place_name(name, lsad, state):
+    """(key, display name) for a Gazetteer NAME and its LSAD code, plus the alias row (key, display) a Massachusetts "X Town city"
+    keeps, or None. Both names lose the legal description once; the display name keeps the Census capitalisation."""
+    nm = name.lower(); alias = None
+    if lsad == "00":
+        if nm.endswith(" (balance)"):
+            nm = nm[: -len(" (balance)")]
+            for f in BALANCE_FORMS:
+                if nm.endswith(f): nm = nm[: -len(f)]; break
+    else:
+        suf = LSAD_SUFFIX.get(lsad, "")
+        if suf and nm.endswith(suf): nm = nm[: -len(suf)]
+        if state in MA_TOWN_CITY and lsad == "25" and nm.endswith(" town"): alias = (nm, name[: len(nm)]); nm = nm[: -len(" town")]
+    return nm, name[: len(nm)], alias
 
 
 def build_gazetteer(s=None):
     """Census Gazetteer places -> data/ref/gazetteer_places.csv. `place` is the lower-case matching key (used to place registry sites
     by city name); `name` is the same name as the Census writes it, for display in the map's search box; `aland_sqmi` (land area)
-    lets build_places.py estimate how big a place is. The legal suffix ("city", "town", "CDP", ...) is removed from both names."""
+    lets build_places.py estimate how big a place is. The legal description ("city", "town", "CDP", ...) is removed from both
+    names once, by the LSAD code (split_place_name): until October 2026 every suffix in a list was tried in turn, so "Greenwood
+    Village city" became "Greenwood", "Charles Town city" "Charles", "Carson City" "Carson", and Utah's "metro township" was never
+    removed (82 names in the map's search box). A Massachusetts "X Town city" is X, with "X Town" kept as a second row (same GEOID)
+    so either spelling matches; build_places.py shows a GEOID once."""
     s = s or requests.Session(); r = s.get(U["gaz"], timeout=300); r.raise_for_status()
     zf = zipfile.ZipFile(io.BytesIO(r.content)); name = [n for n in zf.namelist() if n.endswith(".txt")][0]
     gaz = []
     for row in csv.DictReader(io.StringIO(zf.read(name).decode("utf-8-sig")), delimiter="\t"):
         row = {k.strip(): (v.strip() if isinstance(v, str) else v) for k, v in row.items()}
-        disp = row["NAME"]; nm = disp.lower()
-        for suf in PLACE_SUFFIXES:   # in order, each at most once: a compound suffix is listed before its parts
-            if nm.endswith(suf): nm = nm[: -len(suf)]; disp = disp[: len(nm)]
-        gaz.append({"state": row["USPS"], "place": nm, "geoid": row["GEOID"], "lat": float(row["INTPTLAT"]), "lon": float(row["INTPTLONG"]), "name": disp, "aland_sqmi": float(row.get("ALAND_SQMI") or 0)})
+        nm, disp, alias = split_place_name(row["NAME"], row.get("LSAD", ""), row["USPS"])
+        rec = {"state": row["USPS"], "place": nm, "geoid": row["GEOID"], "lat": float(row["INTPTLAT"]), "lon": float(row["INTPTLONG"]), "name": disp, "aland_sqmi": float(row.get("ALAND_SQMI") or 0)}
+        gaz.append(rec)
+        if alias: gaz.append({**rec, "place": alias[0], "name": alias[1]})
     w(REF / "gazetteer_places.csv", gaz); return len(gaz)
 
 

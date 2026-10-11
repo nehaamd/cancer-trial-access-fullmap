@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What could help · Cancer Trial Access Map</title>
 <meta name="description" content="For any county, congressional district or state: what the data shows about access to cancer clinical trials, the policy proposals being discussed in plain language with their dated status and official sources, which barriers each would address, and ways to contribute.">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -38,7 +40,7 @@
   section{padding:1.6rem 0 1rem;border-top:1px solid var(--rule)}
   .label{display:inline-block;font-size:var(--fs-0);font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.15rem .6rem;border-radius:6px;margin:0 0 .5rem} .label.find{background:#E3ECF4;color:var(--navy)} .label.pol{background:#F3E9F7;color:#5B2A86} .label.act{background:#E8F3E8;color:#2F6B3A}
   h2{font-size:var(--fs-4);line-height:1.15;letter-spacing:-.02em;margin:0 0 .5rem;font-weight:700;max-width:32ch}
-  h3{font-size:var(--fs-2);margin:1.2rem 0 .4rem;font-weight:700;letter-spacing:-.01em} h4{font-size:var(--fs-1);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin:.9rem 0 .3rem;font-weight:700}
+  h3{font-size:var(--fs-2);margin:1.2rem 0 .4rem;font-weight:700;letter-spacing:-.01em} h4,h3.h4{font-size:var(--fs-1);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin:.9rem 0 .3rem;font-weight:700}
   p,li{max-width:72ch} ul,ol{padding-left:1.3rem} li{margin:.25rem 0}
   .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.2rem;box-shadow:var(--shadow);margin:.8rem 0}
   .facts{list-style:none;margin:0;padding:0} .facts li{display:grid;grid-template-columns:minmax(96px,auto) 1fr;gap:.1rem .9rem;align-items:baseline;padding:.55rem 0;border-top:1px solid var(--rule);max-width:none} .facts li:first-child{border-top:0;padding-top:0}
@@ -56,7 +58,7 @@
   .aud{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:.9rem;max-width:none} .aud .card{margin:0} .aud h3{margin:0 0 .3rem;font-size:var(--fs-2)} .aud ul{margin:.3rem 0 0;padding-left:1.2rem} .aud li{font-size:var(--fs-1);max-width:none}
   .small{font-size:var(--fs-0);color:var(--ink-2)} .note{font-size:var(--fs-0);color:var(--ink-3);max-width:80ch}
   .ok{color:#2F6B3A;font-weight:600}
-  @media (max-width:640px){main{font-size:16px} .facts li{grid-template-columns:1fr}}
+  @media (max-width:640px){main{font-size:16px} .facts li{grid-template-columns:1fr} .parts a{min-height:40px;display:inline-flex;align-items:center}}
   @media print{.search-wrap,.parts,.btns,.btn{display:none}}
 </style>
 </head>
@@ -76,8 +78,9 @@
   <section id="findings"><span class="label find">Part 1 · Findings · descriptive</span><div id="findings-body"></div></section>
   <section id="policy"><span class="label pol">Part 2 · Policy options · proposals and arguments made by others</span><div id="policy-body"></div></section>
   <section id="contribute"><span class="label act">Part 3 · Ways to contribute</span><div id="contribute-body"></div></section>
+  <p id="sr-status" class="sr-only" role="status"></p>
+  <p class="about-est" style="margin:1.2rem 0 0;padding:.6rem 0;font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 </main>
-<p class="about-est" style="max-width:1040px;margin:0 auto 1rem;padding:.6rem var(--gutter);font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="index.html#dev-limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 <footer class="site">
 <p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="index.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
@@ -89,13 +92,15 @@
   const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull }; document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
   const p0 = new URLSearchParams(location.search); let place = E.fromParams(p0);
   if (!place && /^\d{5}$/.test(p0.get('zip') || '')) E.loadZip().then(Z => { const cf = Z[p0.get('zip')]; if (cf && X.counties[cf]) { place = E.county(cf); render(); } });
-  E.wireSearch(document.getElementById('q'), document.getElementById('q-list'), e => { place = E.pickToPlace(e); const q = E.param(place); history.pushState(null, '', 'act.html' + (q ? '?' + q : '')); render(); document.getElementById('findings').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-  window.addEventListener('popstate', () => { place = E.fromParams(new URLSearchParams(location.search)); render(); });
+  E.wireSearch(document.getElementById('q'), document.getElementById('q-list'), e => { place = E.pickToPlace(e); const q = E.param(place); history.pushState(null, '', 'act.html' + (q ? '?' + q : '')); render(); say(); document.getElementById('findings').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  window.addEventListener('popstate', () => { place = E.fromParams(new URLSearchParams(location.search)); render(); say(); });
+  // announce the new place to screen readers (cleared first, so the same place chosen again is announced too)
+  function say() { const el = document.getElementById('sr-status'); el.textContent = ''; setTimeout(() => { el.textContent = (place ? place.label : 'United States') + ': findings, policy options and ways to contribute updated'; }, 60); }
   const party = p => p === 'R' ? 'var(--rep)' : p === 'D' ? 'var(--dem)' : 'var(--ind)';
   const partyName = p => p === 'R' ? 'Republican' : p === 'D' ? 'Democrat' : p === 'I' ? 'Independent' : p || '';
   const roleChip = r => r ? `<span class="role yes">${esc(E.ROLE[r] || r)}</span>` : `<span class="role no">not a cosponsor</span>`;
   const bills = M.bills, HB = Object.keys(bills).filter(k => bills[k].type === 'hr'), SB = Object.keys(bills).filter(k => bills[k].type === 's');
-  const niceD = d => d ? SITE.nice(d, 'long') : '—';
+  const niceD = d => d ? SITE.nice(d) : '—';
 
   function render() {
     const pl = place || E.nation(); const L = E.links(pl); const where = pl.kind === 'county' ? pl.n : pl.kind === 'nat' ? 'the United States' : pl.label;
@@ -105,16 +110,16 @@
     // ---- Part 1 ----
     const F = E.facts(pl);
     document.getElementById('findings-body').innerHTML = `<h2>What the data shows for ${esc(where)}</h2>
-      <p class="small">Registry data as of ${SITE.nice(E.dataDate(), 'long')}. These are the same figures the map and the printable brief show. ${place ? `<a href="${L.community}">Your community</a> explains each measure; ` : ''}<a href="learn.html#measure">What this map measures</a>.</p>
+      <p class="small">Registry data as of ${SITE.nice(E.dataDate())}. These are the same figures the map and the printable brief show. ${place ? `<a href="${L.community}">Your community</a> explains each measure; ` : ''}<a href="learn.html#measure">What this map measures</a>.</p>
       <div class="card"><ul class="facts">${F.map(f => `<li class="${f.hot ? 'hot' : ''}"><div class="num">${f.num}<small>${f.unit}</small></div><div><p>${f.text}</p>${f.cmp ? `<p class="cmp">${f.cmp}</p>` : ''}</div></li>`).join('')}</ul></div>
-      <div class="two"><div><h4>Sources</h4><ul class="small">
-        <li>ClinicalTrials.gov (NIH/NLM), registry data of ${SITE.nice(E.dataDate(), 'long')}: recruiting interventional treatment trials with a US site, open to some adults 55+.</li>
+      <div class="two"><div><h3 class="h4">Sources</h3><ul class="small">
+        <li>ClinicalTrials.gov (NIH/NLM), registry data of ${SITE.nice(E.dataDate())}: recruiting interventional treatment trials with a US site, open to some adults 55+.</li>
         <li>US Census Bureau: American Community Survey 2023 five-year estimates (residents 55+ by census tract); TIGER/Line 2025 roads; 2020 tract-to-district relationship file (${esc(M.plan)}).</li>
         <li>USDA Economic Research Service: Rural-Urban Continuum Codes, 2023.</li>
-        <li>NCI/CDC State Cancer Profiles: cancer death rates ${esc(M.mort_period)} and incidence ${esc(M.inc_period)}, age-adjusted.</li>
+        <li>NCI/CDC State Cancer Profiles: cancer death rates ${esc(SITE.period(M.mort_period))} and incidence ${esc(SITE.period(M.inc_period))}, age-adjusted.</li>
         <li>National Cancer Institute: list of NCI-designated cancer centers.</li>
         <li>Library of Congress bill-status data (govinfo) for cosponsors, fetched ${SITE.nice(M.cosponsors_fetched)}; unitedstates/congress-legislators for members.</li></ul></div>
-      <div><h4>Limits</h4><ul class="small">
+      <div><h3 class="h4">Limits</h3><ul class="small">
         <li>Trials are counted, not matched: nobody’s eligibility is assessed.</li>
         <li>“Recruiting” is the registry’s own status, taken at its word; it can lag reality by months.</li>
         <li>Distance is the only barrier measured. Cost, time, eligibility, referral and insurance are not in these figures. <a href="learn.html#leaves-out">What the map leaves out.</a></li>
@@ -132,15 +137,15 @@
       <div class="card bill"><h3 style="margin-top:0">The Clinical Trial Modernization Act · tracked by this site</h3>${billCards}
         <div class="two"><div><h4>What it would do · in plain language</h4><ul>
           <li><b>Grants for outreach.</b> Federal grants and contracts for community education, recruitment and outreach about drug and device trials, including training clinicians as investigators and partnering with community organizations; priority for multilingual materials and for areas such as tribal communities (section 3).</li>
-          <li><b>Let sponsors pay participants’ costs.</b> A safe harbor in the federal anti-kickback law so that a trial’s sponsor can reimburse travel, transportation and meals, and provide digital health tools, when offered to all participants alike (section 4).</li>
+          <li><b>Let sponsors pay participants’ costs.</b> A safe harbor in the federal anti-kickback law so that a trial’s sponsor can reimburse travel, transportation and meals when offered to all participants alike, and provide free digital health tools that participants need to take part (section 4).</li>
           <li><b>Let sponsors cover cost-sharing.</b> Manufacturers could pay participants’ copayments and deductibles for trial-related care, with safeguards such as consent, ethics-board oversight and enrollment caps (section 5).</li>
           <li><b>Tax treatment.</b> Up to $2,000 a year of payments to a trial participant would not count as taxable income (section 6).</li>
           <li>It defines “underrepresented population” by NIH and FDA definitions (section 2) and keeps other anti-kickback protections in place (section 7).</li></ul>
           <p class="small">Summary of the bill as introduced; the <a href="${esc(bills[HB[0]].url)}/text" target="_blank" rel="noopener">official text</a> governs.</p></div>
         <div><h4>Which barriers it addresses</h4><ul>
-          <li><span class="ok">Cost of taking part</span> — travel, meals, lodging, copayments — by letting sponsors pay without legal exposure.</li>
+          <li><span class="ok">Cost of taking part</span> — travel, meals and other trial expenses, copayments — by letting sponsors pay without legal exposure.</li>
           <li><span class="ok">Repeated visits</span>, indirectly, through reimbursed travel and digital tools for remote check-ins.</li>
-          <li><span class="ok">Information and referral</span> in underserved and rural communities, through outreach grants.</li></ul>
+          <li><span class="ok">Information and referral</span> for groups underrepresented in trials, including through rural sites, through outreach grants.</li></ul>
           <h4>Which it leaves</h4><ul>
           <li><b>Distance itself.</b> It does not open new trial sites or fund research staff in nonmetro hospitals and practices; the map would look the same the day it passed.</li>
           <li><b>Eligibility rules</b> and the accuracy of the registry’s “recruiting” status.</li>
@@ -164,33 +169,36 @@
         <div class="opt"><h3>Broader eligibility criteria</h3><p class="meta">FDA final guidance, December 2025 · “Enhancing Participation in Clinical Trials — Eligibility Criteria, Enrollment Practices, and Trial Designs”; recommendations from ASCO and Friends of Cancer Research</p>
           <dl><dt>What it is</dt><dd>Encouraging sponsors to drop exclusions that are not scientifically or medically necessary — for example on age, prior cancers, HIV, or organ function — so that more of the people who have a disease can join its trials.</dd>
           <dt>Addresses</dt><dd>Eligibility: the gap between “a trial nearby” and “a trial for me”.</dd><dt>Leaves</dt><dd>Distance, cost and referral; adoption is up to each sponsor and protocol.</dd>
-          <dt>Read more</dt><dd><a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/enhancing-diversity-clinical-trial-populations-eligibility-criteria-enrollment-practices-and-trial" target="_blank" rel="noopener">FDA guidance page</a></dd></dl></div>
+          <dt>Read more</dt><dd><a href="https://www.fda.gov/regulatory-information/search-fda-guidance-documents/enhancing-participation-clinical-trials-eligibility-criteria-enrollment-practices-and-trial-designs" target="_blank" rel="noopener">FDA guidance page</a></dd></dl></div>
         <div class="opt"><h3>Coverage of routine costs</h3><p class="meta">In force · Medicare since 2000; state Medicaid programs since January 2022 (Consolidated Appropriations Act, 2021); most private plans under the Affordable Care Act</p>
           <dl><dt>What it is</dt><dd>Insurers pay for the routine care a participant would have needed anyway — visits, standard drugs, scans — while the sponsor pays for the experimental treatment and research-only tests.</dd>
-          <dt>Addresses</dt><dd>Cost of medical care during a trial.</dd><dt>Leaves</dt><dd>Travel, lodging, meals and lost wages (which the tracked bill targets); whether a site is in-network; the uninsured.</dd>
+          <dt>Addresses</dt><dd>Cost of medical care during a trial.</dd><dt>Leaves</dt><dd>Travel, meals and other trial expenses, and lost wages (the tracked bill targets the expenses, not wages); whether a site is in-network; the uninsured.</dd>
           <dt>Read more</dt><dd><a href="https://www.cancer.gov/research/participate/clinical-trials/paying" target="_blank" rel="noopener">NCI: paying for clinical trials</a> · <a href="https://www.congress.gov/bill/116th-congress/house-bill/133" target="_blank" rel="noopener">Consolidated Appropriations Act, 2021 (H.R. 133)</a></dd></dl></div>
         <div class="opt"><h3>Navigation and referral</h3><p class="meta">Ongoing services · NCI Cancer Information Service; patient navigators at cancer programs</p>
-          <dl><dt>What it is</dt><dd>People whose job is to find trials a patient might fit, check eligibility with the study team, and work through logistics. The NCI’s service is free: 1-800-4-CANCER.</dd>
+          <dl><dt>What it is</dt><dd>People whose job is to find trials a patient might fit, check eligibility with the study team, and work through logistics. NCI’s Cancer Information Service runs a free trial search: 1-800-4-CANCER (option 2).</dd>
           <dt>Addresses</dt><dd>Information and referral; some of the logistics.</dd><dt>Leaves</dt><dd>Whether a fitting trial exists within reach at all.</dd>
           <dt>Read more</dt><dd><a href="https://www.cancer.gov/contact" target="_blank" rel="noopener">NCI Cancer Information Service</a> · <a href="https://www.cancer.gov/research/participate/clinical-trials-search" target="_blank" rel="noopener">NCI trial search</a></dd></dl></div>
       </div>
       <p class="note">Statuses were checked when this page was written (October 2026) and the bill lines are refreshed weekly from the Library of Congress feed. Anything else may have moved; the links go to the official sources.</p>`;
     // ---- Part 3 ----
-    const house = del ? del.house.filter(d => d.member) : [];
+    const house = del ? del.house.filter(d => d.member) : [], vacant = del ? del.house.filter(d => !d.member).map(d => esc(d.label)) : [];
+    const vacTxt = vacant.length > 1 ? `the ${SITE.listJoin(vacant)} seats are vacant` : `the ${vacant[0]} seat is vacant`;
+    const contact = [house.length ? `Your House ${SITE.plural(house.length, 'member is', 'members are')} ${SITE.listJoin(house.map(d => esc(d.member) + ' (' + esc(d.label) + ')'))}${vacant.length ? '; ' + vacTxt : ''}` : vacant.length ? `The House seat${vacant.length > 1 ? 's' : ''} (${SITE.listJoin(vacant)}) ${vacant.length > 1 ? 'are' : 'is'} vacant` : '',
+      del && del.senators.length ? `your senators are ${del.senators.map(s => esc(s.name)).join(' and ')}` : ''].filter(Boolean).join('; ');
     document.getElementById('contribute-body').innerHTML = `<h2>Ways to contribute</h2>
       <p class="small">The findings above are descriptive; the arguments in Part 2 are other people’s. What you do with them is yours. These are ways people have used material like this.</p>
       <div class="aud">
         <div class="card"><h3>Anyone</h3><ul>
-          <li><b>Contact your representatives.</b> ${house.length ? `Your House ${SITE.plural(house.length, 'member is', 'members are')} ${SITE.listJoin(house.map(d => esc(d.member) + ' (' + esc(d.label) + ')'))}${del.senators.length ? '; your senators are ' + del.senators.map(s => esc(s.name)).join(' and ') : ''}. ` : ''}<a href="https://www.house.gov/representatives/find-your-representative" target="_blank" rel="noopener">Find your representative</a> · <a href="https://www.senate.gov/senators/senators-contact.htm" target="_blank" rel="noopener">Contact a senator</a>. A short note that names your county and one figure from Part 1 is enough.</li>
+          <li><b>Contact your representatives.</b> ${contact ? contact.charAt(0).toUpperCase() + contact.slice(1) + '. ' : ''}<a href="https://www.house.gov/representatives/find-your-representative" target="_blank" rel="noopener">Find your representative</a> · <a href="https://www.senate.gov/senators/senators-contact.htm" target="_blank" rel="noopener">Contact a senator</a>. A short note that names your county and one figure from Part 1 is enough.</li>
           <li><b>Bring the brief to a meeting.</b> <a href="${L.brief}">The one-page printable brief${place ? ' for ' + esc(where) : ''}</a> carries the figures, the map and an editable ask.</li>
           <li><b>Share this page.</b> <button class="btn" type="button" id="copy">Copy link</button> <span id="copied" class="small"></span></li>
           <li><b>Report something that looks wrong.</b> A trial that has closed, a site in the wrong county, a sentence that misleads: <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues/new?title=${encodeURIComponent('Possible error: ' + (place ? pl.label : 'general'))}" target="_blank" rel="noopener">open an issue</a>. Corrections change the data for everyone.</li></ul></div>
         <div class="card"><h3>Patients and families</h3><ul>
           <li>Ask your care team whether a trial might fit, and whether they refer to one. Bring NCT numbers from the <a href="find.html">ZIP finder</a>.</li>
-          <li>Call the NCI Cancer Information Service, <a href="tel:1-800-422-6237">1-800-4-CANCER</a>, which checks eligibility and logistics for free.</li>
+          <li>Call the NCI Cancer Information Service, <a href="tel:1-800-422-6237">1-800-4-CANCER</a> (option 2), for a free trial search tailored to the diagnosis, to discuss with the care team.</li>
           <li>Ask a study team about travel, lodging and telehealth support before deciding; many trials and foundations help with costs.</li></ul></div>
         <div class="card"><h3>Clinicians and practices</h3><ul>
-          <li>Ask every patient with a new diagnosis or a change in treatment whether a trial has been considered; most people join because their own oncologist mentioned one.</li>
+          <li>Ask every patient with a new diagnosis or a change in treatment whether a trial has been considered; many people join because their own oncologist mentioned one.</li>
           <li>If your practice opens no trials, ask what it would take to affiliate with an <a href="https://ncorp.cancer.gov/" target="_blank" rel="noopener">NCORP</a> community site or a cooperative group.</li>
           <li>If your practice runs trials, keep the site status on ClinicalTrials.gov current; this map, and patients, take it at its word.</li>
           <li>Use the <a href="${L.map}">map</a> in tumor boards or teaching to show where your patients come from and what is within their reach.</li></ul></div>

@@ -2,7 +2,7 @@
 deployed layout or the pipeline layout. Standalone: writes VALIDATION_extras.md; validate_v3.py also folds these rows in.
 Usage: python validate_extras.py [--browser]   (--browser re-runs the in-page tract recomputation with Playwright, if installed)
 """
-import json, math, sys, struct, time
+import calendar, json, math, sys, struct, time
 from pathlib import Path
 import numpy as np, pandas as pd
 
@@ -35,6 +35,18 @@ def run(browser=False):
         check("RUCC: nonmetro '<20 within 60 road-mi' share recomputed independently from tract_access.csv", f"{nonmetro_l20:.1f}% vs rucc.js {nm['l20']}%; metro {m['l20']}% (nonmetro / metro ratio {nm['l20'] / m['l20']:.1f}×)", abs(nonmetro_l20 - nm["l20"]) < 0.06)
         sums = {st: g["metro"]["p"] + (g["nonmetro"]["p"] if g["nonmetro"] else 0) for st, g in RU["states"].items() if g["metro"]}; bad = [st for st, p in sums.items() if p != D["state_data"][st]["p"]]
         check("RUCC: state metro + nonmetro populations equal state totals", f"{len(bad)} mismatches" + (f" ({bad})" if bad else ""), not bad)
+        # exact counts behind the shares (n_l20 / n_z60, build_rucc.py), which the map prints as numbers of people instead of share x population
+        pw = tr.pop55.values.astype(float); mt = (code <= 3).values; l20m = (tr.trials_within_60rdmi < 20).values; z60m = (tr.trials_within_60rdmi == 0).values; stf = tr.county_fips.str[:2].values
+        badn, ngroups = [], 0
+        for st, g in [("US", RU["nat"])] + list(RU["states"].items()):
+            sm = np.ones(len(tr), bool) if st == "US" else stf == D["state_data"][st]["fips"]
+            for kind, km in (("metro", mt), ("nonmetro", ~mt)):
+                grp = g.get(kind)
+                if grp is None: continue
+                ngroups += 1
+                if (grp.get("n_l20"), grp.get("n_z60")) != (int(round(pw[sm & km & l20m].sum())), int(round(pw[sm & km & z60m].sum()))): badn.append(f"{st} {kind}")
+        check("RUCC: exact residents 55+ with fewer than 20 / no trials within 60 road-mi (n_l20, n_z60) on every metro and nonmetro group, recounted from tract_access.csv",
+              f"{ngroups} groups, {len(badn)} differ" + (f" ({badn[:6]})" if badn else f"; nation {m.get('n_l20', 0) + nm.get('n_l20', 0):,} short of trials ({nm.get('n_l20', 0):,} nonmetro + {m.get('n_l20', 0):,} metro)"), not badn)
         p = find("tract_county.bin"); buf = p.read_bytes(); magic, n = struct.unpack("<II", buf[:8]); idx = np.frombuffer(buf, "<u2", n, 8); order = RU["meta"]["county_order"]
         back = np.array(order)[idx]; agree = int((back == tr.county_fips.values).sum())
         check("tract_county.bin: every tract maps back to its own county through meta.county_order", f"{agree:,} of {n:,} tracts; {len(order)} counties in order list", magic == 0x54524332 and n == len(tr) and agree == n and len(order) == len(counties))
@@ -51,7 +63,7 @@ def run(browser=False):
         ns = sum(len(v) for v in CO["senators"].values()); check("Cosponsors: 100 senators mapped to states", f"{ns} senators across {len(CO['senators'])} states", ns == 100)
         chamber_ok = all(CO["members"][m]["chamber"] == ("rep" if b[k]["type"] == "hr" else "sen") for k in b for m in [b[k]["sponsor"]] + [x for x in CO["by_member"] if k in CO["by_member"][x]])
         check("Cosponsors: House bills carry only representatives, Senate bills only senators", "chambers consistent" if chamber_ok else "MISMATCH", chamber_ok)
-        age = (time.time() - time.mktime(time.strptime(CO["meta"]["fetched"], "%Y-%m-%d"))) / 86400; check("Cosponsors: freshness of the pull", f"fetched {CO['meta']['fetched']} ({age:.0f} days ago) from {CO['meta']['source'][:40]}…", age < 45, "re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date")
+        age = (time.time() - calendar.timegm(time.strptime(CO["meta"]["fetched"], "%Y-%m-%d"))) / 86400; check("Cosponsors: freshness of the pull", f"fetched {CO['meta']['fetched']} ({int(age)} days ago) from {CO['meta']['source'][:40]}…", age < 45, "re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date")
     # ---- burden vs access ----
     if BU:
         w = tr.pop55.astype(float); g = tr.groupby("county_fips"); W = g.pop55.sum().astype(float)
@@ -76,6 +88,25 @@ def run(browser=False):
         check("ZIP lookup: spot check — nearest site point to ZIP 77030 (Texas Medical Center) is in Harris County within ~2 miles", f"{near[0][0]:.1f} mi; facilities there include {names}", bool(near) and near[0][0] < 2.5 and FI["sp"][near[0][1]][2] == "48201")
         z2 = FI["zcta"].get("79901"); n2 = sum(1 for p in FI["sp"] if mi(z2[:2], p[:2]) * FI["meta"]["road_factor"] <= 60) if z2 else 0
         check("ZIP lookup: spot check — El Paso ZIP 79901 finds site points within 60 estimated road-miles and no Houston sites", f"{n2} site points within 60 est. road-mi", 0 < n2 < 40)
+        # large or split ZIP code areas measure from where their residents live (build_zcta_centers.py), not from the Census internal point:
+        # 99701's point was 183 miles north of Fairbanks, 99503's 278 miles west of Anchorage, 83716's 48 miles from Boise (October 2026)
+        far = {}
+        for z_, town in (("99701", "Fairbanks"), ("99503", "Anchorage"), ("83716", "Boise")):
+            zz = FI["zcta"].get(z_); near_ = min(mi(zz[:2], p[:2]) for p in FI["sp"]) if zz else None
+            if near_ is None or near_ > 10: far[z_] = (town, None if near_ is None else round(near_, 1))
+        check("ZIP lookup: large ZIP code areas measure from their residents (99701 Fairbanks, 99503 Anchorage, 83716 Boise each have a site point within 10 miles)", "all three within 10 miles" if not far else "far: " + str(far), not far, FI["meta"].get("zcta_centers", "centers: zcta_pop55.csv internal points"))
+        # a population-weighted center is used only inside (or within a mile of) its own ZIP area and when the tract apportionment covers
+        # half to twice the ZIP's residents (build_zcta_centers.py); until 11 Oct 2026 2,905 centers lay outside their ZIP (97904: 54 miles)
+        pcf = find("zcta_popcenter.csv")
+        if pcf is not None:
+            pc = pd.read_csv(pcf, dtype={"zcta": str}).set_index("zcta"); wt = pc[pc.source == "tract_weighted"]
+            bad_place = int((wt.outside_mi.isna() | (wt.outside_mi > 1.0)).sum()) if "outside_mi" in pc.columns else len(wt)
+            bad_cov = int((~wt.coverage.between(0.5, 2.0)).sum())
+            used = {z: (round(float(pc.lat[z]), 3), round(float(pc.lon[z]), 3)) for z in FI["zcta"] if z in pc.index}
+            off = [z for z, ll in used.items() if (FI["zcta"][z][0], FI["zcta"][z][1]) != ll]
+            check("ZIP lookup: every population-weighted ZIP center lies within a mile of its own ZIP area and passes the coverage test; find_data.js uses those centers",
+                  f"{len(wt):,} weighted centers: {bad_place} outside their ZIP area (or not tested), {bad_cov} outside the coverage band; {len(off)} of {len(used):,} finder ZIPs not at their center" + (f" (e.g. {off[:5]})" if off else ""),
+                  bad_place == 0 and bad_cov == 0 and not off)
         ui = (find("find.html") or Path("find.html")).read_text(encoding="utf-8"); check("ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present)", "all phrases present" if all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]) else "MISSING", all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]))
     ui = (find("index.html") or Path("index.html")).read_text(encoding="utf-8")
     check("Map page loads the three new data files and states the burden view is a cross-tabulation, not a score", "rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present" if all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]) else "MISSING", all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]))
@@ -113,10 +144,16 @@ def run(browser=False):
     return rows
 
 
+def write_md(rs):
+    """VALIDATION_extras.md from the rows of run(). validate_v3.py calls this too: the refresh runs these checks only through validate_v3.py,
+    and until October 2026 the file was written only by a standalone run, so the copy the refresh committed stayed at 6 October."""
+    md = ["# Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)", "", f"Checks re-run by `validate_extras.py` on {time.strftime('%Y-%m-%d', time.gmtime())} (UTC).", "", "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rs]
+    Path("VALIDATION_extras.md").write_text("\n".join(md) + "\n")
+
+
 def main():
     run("--browser" in sys.argv)
-    md = ["# Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)", "", f"Checks re-run by `validate_extras.py` on {time.strftime('%Y-%m-%d')}.", "", "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
-    Path("VALIDATION_extras.md").write_text("\n".join(md) + "\n"); n_ok = sum(1 for r in rows if r[2] == '✓'); print(f"\n{n_ok}/{len(rows)} checks pass"); sys.exit(0 if n_ok == len(rows) else 1)
+    write_md(rows); n_ok = sum(1 for r in rows if r[2] == '✓'); print(f"\n{n_ok}/{len(rows)} checks pass"); sys.exit(0 if n_ok == len(rows) else 1)
 
 
 if __name__ == "__main__":

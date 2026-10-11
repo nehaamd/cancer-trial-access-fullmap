@@ -17,7 +17,8 @@
     "sites_of_removed_trials": 57,
     "counties_with_changed_trial_count": 148,
     "counties_crossing_a_menu_threshold": 2,
-    "method_version": 3
+    "method_version": 4,
+    "previous_method_version": 3
   },
   "history": [
     {
@@ -57,7 +58,7 @@
       "pull": "2026-10-11",
       "registry_data": "2026-10-09",
       "trials": 4007,
-      "method": 3,
+      "method": 4,
       "l20": 12.0,
       "z60": 4.3,
       "g60b": 38.1,
@@ -76,6 +77,12 @@
       "version": 3,
       "date": "2026-10-05",
       "note": "Which registry rows count as a place, and which studies count as cancer trials. A row that names a telemedicine or virtual service instead of a clinic is no longer a site: one fully decentralized study listed such a row in 107 cities, and it had been the only trial within 60 road-miles for about 346,000 residents 55+. Rows whose ZIP code is a typing error (the same named hospital is listed repeatedly in the stated city and never near that ZIP) are located where the registry's other rows list that hospital. The registry search now also asks by name for cancers it files outside its neoplasm category or has not coded (myelodysplastic syndromes, myelofibrosis, adenocarcinomas, glioblastoma, metastases: 107 more trials on Oct 5, 2026), and studies kept only for wording such as 'tumor necrosis factor' or 'non-malignant' are dropped (8 studies). On the same registry data (Sep 30, 2026) the telemedicine, ZIP and screening rules moved the national figures as follows: none within 60 miles 3.8% to 4.2%; fewer than 20 trials within 60 miles 11.8% to 12.0%; counties with any trial 848 to 833; distances to broad menus and NCI centers did not move. The wider search then added trials without moving these shares."
+    },
+    {
+      "version": 4,
+      "date": "2026-10-10",
+      "first_pull": "2026-10-11",
+      "note": "Where a registry row is counted and drawn. A row whose ZIP code has no Census area (a PO box or a hospital's own ZIP) took the county of the ZIP's first three digits even when its own city lay in another county, and was drawn at that county's center: 58 rows sat 43 to 251 miles from their city (31 Tawas City, Michigan rows in Tuscola County; Liberal, Kansas in Morton County; Pueblo in Conejos County, Colorado; Omaha in Lincoln County, Nebraska; Dallas in Cass County, Texas). The row's own city now decides the county and the row is drawn there; one spelling rule for city names (Saint/St., Fort/Ft., Lexington-Fayette, Nashville-Davidson) puts 21 more rows at their city. A trial for spread from a named cancer (to the brain, liver or peritoneum) is classified with that cancer (6 trials), and leptomeningeal disease counts as cancer (NCT07814352, which was in the Oct 5 pull but appears among the trials newly listed between Oct 5 and Oct 9). First used for the registry data of Oct 9, 2026 (pulled Oct 11). On the same registry data (Oct 5, 2026) these rules moved 194 site rows of 100 trials to another county and changed the trial count of 69 counties (Tuscola, Michigan 31 to 2; Iosco 0 to 31; Midland 1 to 12; Washtenaw 233 to 240; Stanly, North Carolina 2 to 9; Union, New Jersey 29 to 36; Pueblo, Colorado and Hudson, New Jersey 19 to 20); counties with any trial 838 to 833; none within 60 road-miles 4.2% to 4.3% (76,538 more residents 55+: 92 census tracts around Texarkana, North Platte, the San Luis Valley, northeast Alabama and the Oklahoma Panhandle lost a trial that existed only at a misplaced point, and 17 tracts gained one); fewer than 20 trials within 60 road-miles 12.0%, unchanged; distances to broad menus and NCI centers did not move. The registry's own changes between Oct 5 and Oct 9 moved no one across 'none within 60 road-miles' and added 57,428 residents 55+ to 'fewer than 20' (still 12.0%)."
     }
   ],
   "new_trials": [
@@ -3653,302 +3660,362 @@
   ],
   "county_changes": [
     {
-      "county": "Washington, Oregon",
+      "county": "Washington County, Oregon",
+      "fips": "41067",
       "from": 107,
       "to": 83
     },
     {
-      "county": "Miami, Ohio",
+      "county": "Miami County, Ohio",
+      "fips": "39109",
       "from": 21,
       "to": 36
     },
     {
-      "county": "Clark, Nevada",
+      "county": "Clark County, Nevada",
+      "fips": "32003",
       "from": 89,
       "to": 75
     },
     {
-      "county": "Multnomah, Oregon",
+      "county": "Multnomah County, Oregon",
+      "fips": "41051",
       "from": 282,
       "to": 270
     },
     {
-      "county": "Cuyahoga, Ohio",
+      "county": "Cuyahoga County, Ohio",
+      "fips": "39035",
       "from": 319,
       "to": 327
     },
     {
-      "county": "Allegheny, Pennsylvania",
+      "county": "Allegheny County, Pennsylvania",
+      "fips": "42003",
       "from": 329,
       "to": 335
     },
     {
-      "county": "New York, New York",
+      "county": "New York County, New York",
+      "fips": "36061",
       "from": 953,
       "to": 958
     },
     {
-      "county": "Los Angeles, California",
+      "county": "Los Angeles County, California",
+      "fips": "06037",
       "from": 945,
       "to": 950
     },
     {
-      "county": "Cook, Illinois",
+      "county": "Cook County, Illinois",
+      "fips": "17031",
       "from": 535,
       "to": 540
     },
     {
-      "county": "King, Washington",
+      "county": "King County, Washington",
+      "fips": "53033",
       "from": 382,
       "to": 386
     },
     {
-      "county": "Douglas, Nebraska",
+      "county": "Douglas County, Nebraska",
+      "fips": "31055",
       "from": 209,
       "to": 213
     },
     {
-      "county": "Porter, Indiana",
+      "county": "Porter County, Indiana",
+      "fips": "18127",
       "from": 23,
       "to": 27
     },
     {
-      "county": "Suffolk, Massachusetts",
+      "county": "Suffolk County, Massachusetts",
+      "fips": "25025",
       "from": 632,
       "to": 635
     },
     {
-      "county": "Orange, California",
+      "county": "Orange County, California",
+      "fips": "06059",
       "from": 422,
       "to": 425
     },
     {
-      "county": "St. Louis, Missouri",
+      "county": "St. Louis city, Missouri",
+      "fips": "29510",
       "from": 367,
       "to": 370
     },
     {
-      "county": "Bergen, New Jersey",
+      "county": "Bergen County, New Jersey",
+      "fips": "34003",
       "from": 371,
       "to": 368
     },
     {
-      "county": "DeKalb, Georgia",
+      "county": "DeKalb County, Georgia",
+      "fips": "13089",
       "from": 309,
       "to": 312
     },
     {
-      "county": "Olmsted, Minnesota",
+      "county": "Olmsted County, Minnesota",
+      "fips": "27109",
       "from": 293,
       "to": 296
     },
     {
-      "county": "Adams, Colorado",
+      "county": "Adams County, Colorado",
+      "fips": "08001",
       "from": 204,
       "to": 207
     },
     {
-      "county": "Lake, Indiana",
+      "county": "Lake County, Indiana",
+      "fips": "18089",
       "from": 57,
       "to": 60
     },
     {
-      "county": "Linn, Iowa",
+      "county": "Linn County, Iowa",
+      "fips": "19113",
       "from": 42,
       "to": 45
     },
     {
-      "county": "Clackamas, Oregon",
+      "county": "Clackamas County, Oregon",
+      "fips": "41005",
       "from": 43,
       "to": 40
     },
     {
-      "county": "Yamhill, Oregon",
+      "county": "Yamhill County, Oregon",
+      "fips": "41071",
       "from": 35,
       "to": 32
     },
     {
-      "county": "Dallas, Texas",
+      "county": "Dallas County, Texas",
+      "fips": "48113",
       "from": 435,
       "to": 437
     },
     {
-      "county": "Fairfax, Virginia",
+      "county": "Fairfax County, Virginia",
+      "fips": "51059",
       "from": 384,
       "to": 386
     },
     {
-      "county": "Miami-Dade, Florida",
+      "county": "Miami-Dade County, Florida",
+      "fips": "12086",
       "from": 370,
       "to": 368
     },
     {
-      "county": "Hillsborough, Florida",
+      "county": "Hillsborough County, Florida",
+      "fips": "12057",
       "from": 316,
       "to": 318
     },
     {
-      "county": "Bexar, Texas",
+      "county": "Bexar County, Texas",
+      "fips": "48029",
       "from": 308,
       "to": 310
     },
     {
-      "county": "San Francisco, California",
+      "county": "San Francisco County, California",
+      "fips": "06075",
       "from": 249,
       "to": 251
     },
     {
-      "county": "Oklahoma, Oklahoma",
+      "county": "Oklahoma County, Oklahoma",
+      "fips": "40109",
       "from": 188,
       "to": 190
     },
     {
-      "county": "Orange, North Carolina",
+      "county": "Orange County, North Carolina",
+      "fips": "37135",
       "from": 180,
       "to": 182
     },
     {
-      "county": "Mecklenburg, North Carolina",
+      "county": "Mecklenburg County, North Carolina",
+      "fips": "37119",
       "from": 159,
       "to": 161
     },
     {
-      "county": "Travis, Texas",
+      "county": "Travis County, Texas",
+      "fips": "48453",
       "from": 152,
       "to": 154
     },
     {
-      "county": "Bronx, New York",
+      "county": "Bronx County, New York",
+      "fips": "36005",
       "from": 151,
       "to": 153
     },
     {
-      "county": "Providence, Rhode Island",
+      "county": "Providence County, Rhode Island",
+      "fips": "44007",
       "from": 117,
       "to": 115
     },
     {
-      "county": "Montgomery, Ohio",
+      "county": "Montgomery County, Ohio",
+      "fips": "39113",
       "from": 77,
       "to": 79
     },
     {
-      "county": "Jefferson, Louisiana",
+      "county": "Jefferson Parish, Louisiana",
+      "fips": "22051",
       "from": 73,
       "to": 75
     },
     {
-      "county": "Douglas, Colorado",
+      "county": "Douglas County, Colorado",
+      "fips": "08035",
       "from": 72,
       "to": 74
     },
     {
-      "county": "East Baton Rouge, Louisiana",
+      "county": "East Baton Rouge Parish, Louisiana",
+      "fips": "22033",
       "from": 69,
       "to": 71
     },
     {
-      "county": "Fort Bend, Texas",
+      "county": "Fort Bend County, Texas",
+      "fips": "48157",
       "from": 43,
       "to": 45
     },
     {
-      "county": "Middlesex, Massachusetts",
+      "county": "Middlesex County, Massachusetts",
+      "fips": "25017",
       "from": 40,
       "to": 42
     },
     {
-      "county": "Chatham, Georgia",
+      "county": "Chatham County, Georgia",
+      "fips": "13051",
       "from": 32,
       "to": 34
     },
     {
-      "county": "Scott, Iowa",
+      "county": "Scott County, Iowa",
+      "fips": "19163",
       "from": 16,
       "to": 18
     },
     {
-      "county": "Marion, Oregon",
+      "county": "Marion County, Oregon",
+      "fips": "41047",
       "from": 12,
       "to": 10
     },
     {
-      "county": "Pottawattamie, Iowa",
+      "county": "Pottawattamie County, Iowa",
+      "fips": "19155",
       "from": 10,
       "to": 8
     },
     {
-      "county": "Harris, Texas",
+      "county": "Harris County, Texas",
+      "fips": "48201",
       "from": 1050,
       "to": 1051
     },
     {
-      "county": "Davidson, Tennessee",
+      "county": "Davidson County, Tennessee",
+      "fips": "47037",
       "from": 549,
       "to": 548
     },
     {
-      "county": "Nassau, New York",
+      "county": "Nassau County, New York",
+      "fips": "36059",
       "from": 402,
       "to": 401
     },
     {
-      "county": "Franklin, Ohio",
+      "county": "Franklin County, Ohio",
+      "fips": "39049",
       "from": 400,
       "to": 401
     },
     {
-      "county": "Maricopa, Arizona",
+      "county": "Maricopa County, Arizona",
+      "fips": "04013",
       "from": 372,
       "to": 373
     },
     {
-      "county": "Salt Lake, Utah",
+      "county": "Salt Lake County, Utah",
+      "fips": "49035",
       "from": 329,
       "to": 330
     },
     {
-      "county": "New Haven, Connecticut",
+      "county": "New Haven County, Connecticut",
+      "fips": "09009",
       "from": 326,
       "to": 327
     },
     {
-      "county": "Baltimore, Maryland",
+      "county": "Baltimore city, Maryland",
+      "fips": "24510",
       "from": 318,
       "to": 317
     },
     {
-      "county": "Suffolk, New York",
+      "county": "Suffolk County, New York",
+      "fips": "36103",
       "from": 303,
       "to": 304
     },
     {
-      "county": "Kent, Michigan",
+      "county": "Kent County, Michigan",
+      "fips": "26081",
       "from": 229,
       "to": 230
     },
     {
-      "county": "Hennepin, Minnesota",
+      "county": "Hennepin County, Minnesota",
+      "fips": "27053",
       "from": 213,
       "to": 214
     },
     {
-      "county": "District of Columbia, District of Columbia",
+      "county": "District of Columbia",
+      "fips": "11001",
       "from": 208,
       "to": 207
     },
     {
-      "county": "Denver, Colorado",
+      "county": "Denver County, Colorado",
+      "fips": "08031",
       "from": 207,
       "to": 206
     },
     {
-      "county": "Middlesex, New Jersey",
+      "county": "Middlesex County, New Jersey",
+      "fips": "34023",
       "from": 204,
       "to": 205
     },
     {
-      "county": "Jefferson, Alabama",
+      "county": "Jefferson County, Alabama",
+      "fips": "01073",
       "from": 173,
       "to": 172
     }

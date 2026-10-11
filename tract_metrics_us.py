@@ -84,7 +84,10 @@ def main():
         d = z[f"t_{lab}"]; h = z[f"t_{lab}_hr"]
         tr[f"road_mi_{lab}"] = np.where(np.isfinite(d), np.round(d, 1), NOROAD); tr[f"drive_hr_{lab}"] = np.where(np.isfinite(h), np.round(h, 2), NOROAD)
     cent = pd.read_csv(REF / "county_centroids.csv", dtype={"county_fips": str}); nci = config.nci_targets()
-    cname = (cent.county_name + ", " + cent.state_name).values
+    # "District of Columbia" once (until October 2026 the tract labels, and from them the "most often" broad menu of DC, DC-98, MD-4 and MD-5
+    # on the pages, read "District of Columbia, District of Columbia"). Only DC: seven counties share their state's name (Oklahoma County,
+    # New York County, Utah County, ...) and keep the state ("Oklahoma, Oklahoma"), or the label would read as the state.
+    cname = np.where(cent.state_fips.astype(str).str.zfill(2) == "11", cent.county_name, cent.county_name + ", " + cent.state_name)
     tr["nearest_broad"] = np.where(z["t_broad_src"] >= 0, cname[np.clip(z["t_broad_src"], 0, None)], "NO ROAD CONNECTION")
     tr["nearest_nci"] = np.where(z["t_nci_src"] >= 0, nci.name.values[np.clip(z["t_nci_src"], 0, None)], "NO ROAD CONNECTION")
     tr.loc[tr.road_mi_broad == 0, "nearest_broad"] = cname[tr.loc[tr.road_mi_broad == 0, "county_fips"].map(k_of).values]
@@ -150,7 +153,18 @@ def aggregate(tr):
     tr["w"] = tr.pop55; tr["state_fips"] = tr.county_fips.str[:2]
     st = tr.groupby("state_fips").apply(agg, include_groups=False).reset_index(); st.to_csv(OUT / "state_metrics_v3.csv", index=False)
     nat = agg(tr); nat = {k: (int(v) if isinstance(v, (np.integer,)) else float(v) if isinstance(v, (np.floating,)) else v) for k, v in nat.items()}
-    nat["method_version"] = config.METHOD_VERSION   # kept with every snapshot, so a later refresh knows whether two pulls were calculated the same way
+    # kept with every snapshot, so a later refresh knows whether two pulls were calculated the same way. A re-aggregation of an existing
+    # tract table (--from-tract-access) keeps that table's own version (its stamp, or the version in force at its pull date), so re-running
+    # it on old files does not mark them with rules that were registered later.
+    nat["method_version"] = config.METHOD_VERSION
+    if "--from-tract-access" in sys.argv:
+        try:
+            prev = json.load(open(OUT / "national_metrics_v3.json")).get("method_version", 1)
+            pulled = json.load(open("data/raw/fetch_log.json")).get("timestamp_utc", "")
+            nat["method_version"] = config.method_of(prev, pulled)
+        except (OSError, ValueError) as e:   # no stamp to keep: say so, since the current version may postdate this tract table's rules
+            print(f"WARNING: --from-tract-access could not read the existing method stamp ({type(e).__name__}: {e}); national_metrics_v3.json is "
+                  f"stamped with the current METHOD_VERSION {config.METHOD_VERSION}, which may be later than the rules this tract table was calculated with", flush=True)
     json.dump(nat, open(OUT / "national_metrics_v3.json", "w"), indent=2, default=str)
     # invariants
     inv = {"tract_pool_monotone_violations": int(((tr.trials_within_30rdmi > tr.trials_within_60rdmi) | (tr.trials_within_60rdmi > tr.trials_within_120rdmi)).sum()),

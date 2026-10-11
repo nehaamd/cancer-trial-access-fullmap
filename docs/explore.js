@@ -27,21 +27,23 @@ window.EXPLORE = (function () {
   function stateOf(pl) { return pl.kind === 'state' ? pl : pl.kind === 'nat' ? null : state(pl.st); }
   // rank of a county's share-short among the counties of its state (1 = most residents short)
   function countyRank(c) { const rows = Object.keys(X.counties).filter(k => k.slice(0, 2) === c.k.slice(0, 2)).map(k => county(k)).filter(x => x.l20 !== null && x.l20 !== undefined); rows.sort((a, b) => b.l20 - a.l20); const i = rows.findIndex(x => x.k === c.k); return { rank: i + 1, of: rows.length, above: rows.filter(x => x.l20 > c.l20).length }; }
-  function districtRank(d) { const rows = Object.keys(X.districts).map(k => district(k)); rows.sort((a, b) => b.l20 - a.l20); const i = rows.findIndex(x => x.k === d.k); const inState = rows.filter(x => x.st === d.st); return { rank: i + 1, of: rows.length, stRank: inState.findIndex(x => x.k === d.k) + 1, stOf: inState.length }; }
-  function stateRank(s) { const rows = Object.keys(X.states).map(k => state(k)); rows.sort((a, b) => b.l20 - a.l20); return { rank: rows.findIndex(x => x.k === s.k) + 1, of: rows.length }; }
+  // ranks count only places with a larger share, so places with the same share share a rank (231 districts are at 0.0%)
+  const rankIn = (rows, v) => ({ rank: 1 + rows.filter(x => x.l20 > v).length, of: rows.length, ties: rows.filter(x => x.l20 === v).length - 1 });
+  function districtRank(d) { const rows = Object.keys(X.districts).map(k => district(k)); const r = rankIn(rows, d.l20), s = rankIn(rows.filter(x => x.st === d.st), d.l20); return { ...r, stRank: s.rank, stOf: s.of, stTies: s.ties }; }
+  function stateRank(s) { return rankIn(Object.keys(X.states).map(k => state(k)), s.l20); }
 
   // ---- the local summary: a few plain sentences with their numbers (the same figures the map and brief show) ----
   function facts(pl) {
     const F = []; const st = stateOf(pl); const n20 = pl.kind === 'nat' && pl.people_l20 ? pl.people_l20 : pl.p * pl.l20 / 100, n0 = pl.kind === 'nat' && pl.people_z60 ? pl.people_z60 : pl.p * pl.z60 / 100;   // nation: tract sums, as on the map
     const where = pl.kind === 'county' ? 'in ' + pl.n : pl.kind === 'district' ? 'in ' + pl.label : pl.kind === 'state' ? 'in ' + pl.name : 'in the United States';
     F.push({ id: 'short', num: pct(pl.l20), unit: '%', hot: pl.l20 >= 50,
-      text: `of residents 55 and older ${where} — ${people(n20)} people — have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. ${n0 < 1 ? 'Everyone here has at least one listed trial within that distance.' : `${pct(pl.z60)}% (${people(n0)}) have none.`}`,
+      text: `of residents 55 and older ${where} — ${people(n20)} people — have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. ${n0 < 1 ? (n20 >= 1 ? 'None has fewer than one: everyone here has at least one listed trial within 60 road-miles.' : 'Everyone here has at least one listed trial within that distance.') : `${pct(pl.z60)}% (${people(n0)}) have none.`}`,
       cmp: pl.kind === 'nat' ? '' : `${st && pl.kind !== 'state' ? `${esc(st.name)}: ${pct(st.l20)}% · ` : ''}United States: ${pct(NAT.l20)}%`,
       why: 'Twenty trials is an exploratory threshold chosen for this map, not a clinical cut-off: any one person qualifies for only some trials, so it asks whether there is some choice nearby. Distance is measured in road-miles; how long the drive takes varies with roads, traffic and where people live. Trials often need repeated visits.' });
     if (pl.kind === 'county') {
       F.push({ id: 'trials', num: fmt(pl.t), unit: pl.t === 1 ? ' trial' : ' trials', hot: pl.t === 0,
         text: pl.t ? `${pl.t === 1 ? 'has' : 'have'} a recruiting site in the county (${fmt(pl.f)} ${SITE.plural(pl.f, 'site')}); ${fmt(pl.t60)} within 60 road-miles of the county’s population center. The typical (median) resident 55+ has ${fmt(pl.tm)} within reach.` : `No listed trial has a recruiting site in the county. ${fmt(pl.t60)} ${SITE.plural(pl.t60, 'trial has', 'trials have')} a site within 60 road-miles of the county’s population center; the typical resident 55+ has ${fmt(pl.tm)} within reach.`,
-        cmp: st ? `${esc(st.name)}: ${fmt(st.cwt)} of ${fmt(st.counties)} counties have a trial · ${fmt(st.broad)} host a broad menu (100 or more)` : '',
+        cmp: st ? `${esc(st.name)}: ${fmt(st.cwt)} of ${fmt(st.counties)} ${SITE.plural(st.counties, 'county', 'counties')} ${st.cwt === 1 ? 'has' : 'have'} a trial · ${fmt(st.broad)} ${st.broad === 1 ? 'hosts' : 'host'} a broad menu (100 or more)` : '',
         why: 'A trial “in the county” is a registry row that lists a recruiting site here. Big centers appear under many names, and a listed site is not a promise that it is enrolling this week.' });
     }
     const road = pl.kind === 'county'
@@ -49,14 +51,14 @@ window.EXPLORE = (function () {
         : pl.noroad === 'off' ? { num: '—', unit: '', text: 'The county’s population center is more than 30 miles from any primary or secondary road, so no road distance is reported.' }
         : { num: fmt(pl.rn), unit: ' road-miles', hot: pl.rn >= 150, text: `from the county’s population center to the nearest NCI-designated cancer center, ${esc(pl.nn)}. ${pl.rb === 0 ? 'The county itself hosts a broad menu (100 or more trials).' : `The nearest broad menu of trials (a county with 100 or more) is ${fmt(pl.rb)} road-miles away, in ${esc(pl.nbm)}.`}` })
       : pl.medn === null ? { num: '—', unit: '', text: `No census tract ${where} has a road route to an NCI-designated cancer center. ${pct(pl.g60b)}% of residents 55+ live more than 60 road-miles from a broad menu of trials (a county with 100 or more) or have no road route to one.` }
-      : { num: fmt(pl.medn), unit: ' road-miles', hot: pl.medn >= 100, text: `is the median distance from home to the nearest NCI-designated cancer center for residents 55+ ${where}${pl.mnci ? ' (most often ' + esc(pl.mnci) + ')' : ''}${pl.nrn >= 1 ? `, among the ${pct(100 - pl.nrn)}% who have a road route to one (${pct(pl.nrn)}% have none)` : ''}. ${pct(pl.g60n)}% live more than 60 road-miles from one; ${pct(pl.g60b)}% live more than 60 road-miles from a broad menu of trials (a county with 100 or more).` };
+      : { num: fmt(pl.medn), unit: ' road-miles', hot: pl.medn >= 100, text: `is the median distance from home to the nearest NCI-designated cancer center for residents 55+ ${where}${pl.mnci ? ' (most often ' + esc(pl.mnci) + ')' : ''}${pl.nrn >= 1 ? `, among the ${pct(100 - pl.nrn)}% who have a road route to one (${pct(pl.nrn)}% have none)` : ''}. ${pct(pl.g60n)}% live more than 60 road-miles from one; ${pct(pl.g60b)}% live more than 60 road-miles from a broad menu of trials (a county with 100 or more).${pl.nr >= 1 ? ` ${pct(pl.nr)}% have no road route to one.` : ''}` };
     road.id = 'road'; road.cmp = pl.kind === 'nat' ? '' : `${st && pl.kind !== 'state' ? `${esc(st.name)} median ${st.medn === null ? 'no route' : fmt(st.medn) + ' road-miles'} · ` : ''}United States median ${fmt(NAT.medn)} road-miles`;
     road.why = 'NCI-designated centers run the widest range of trials, including early-phase studies that community practices rarely open. Distance is measured on the road network from where people live, not as the crow flies.'; F.push(road);
     if (pl.kind === 'county' && pl.mort && pl.mort[2] <= 1 && pl.mort[0] !== null) {
       const t = M.mort_tertile; const band = t ? (pl.mort[0] >= t[1] ? 'in the top third of US counties' : pl.mort[0] >= t[0] ? 'in the middle third of US counties' : 'in the bottom third of US counties') : '';
-      F.push({ id: 'deaths', num: pl.mort[0], unit: ' per 100,000', hot: t && pl.mort[0] >= t[1] && pl.l20 >= 50,
-        text: `age-adjusted cancer death rate, ${M.mort_period} (about ${fmt(pl.mort[1])} deaths a year)${band ? ', ' + band : ''}${pl.mort[2] === 1 ? ' — small numbers, interpret with caution' : ''}.${t && pl.mort[0] >= t[1] && pl.l20 >= 50 ? ' This county is one where cancer deaths are high and trials are far.' : ''}`,
-        cmp: `United States: ${NAT.mort_rate !== undefined ? NAT.mort_rate : '—'} per 100,000`, why: 'A death rate says how heavy the burden of cancer is here; it does not say why. The two measures are shown side by side, never combined into a score.' });
+      F.push({ id: 'deaths', num: SITE.rate(pl.mort[0]), unit: ' per 100,000', hot: t && pl.mort[0] >= t[1] && pl.l20 >= 50,
+        text: `age-adjusted cancer death rate, ${SITE.period(M.mort_period)} (about ${fmt(pl.mort[1])} deaths a year)${band ? ', ' + band : ''}${pl.mort[2] === 1 ? ' — small numbers, interpret with caution' : ''}.${t && pl.mort[0] >= t[1] && pl.l20 >= 50 ? ' This county is one where cancer deaths are high and trials are far.' : ''}`,
+        cmp: `United States: ${SITE.rate(NAT.mort_rate)} per 100,000`, why: 'A death rate says how heavy the burden of cancer is here; it does not say why. The two measures are shown side by side, never combined into a score.' });
     }
     if (pl.kind !== 'county' && pl.rural) {
       const [mp, ml] = pl.rural.metro, [np_, nl] = pl.rural.nonmetro; if (np_ && mp) F.push({ id: 'rural', num: pct(nl), unit: '%', hot: nl >= 50,
@@ -78,25 +80,28 @@ window.EXPLORE = (function () {
   // one sentence of teaching per cancer type: why the total count can mislead (shared with the map, in site.js)
   const teach = SITE.teach;
   // ---- search over counties, districts, states and members (cities and ZIP codes loaded on demand) ----
-  const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 -]/g, ' ').replace(/\s+/g, ' ').trim();
+  const norm = s => String(s).toLowerCase().replace(/['’]/g, '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 -]/g, ' ').replace(/\s+/g, ' ').trim();
+  const surname = n => { const p = norm(n).split(' ').filter(x => x && !/^(jr|sr|ii|iii|iv)$/.test(x)); return p.length ? p[p.length - 1] : ''; };   // "Sanford D. Bishop, Jr." -> "bishop"
+  const saints = n => [[/\bst\b/g, 'saint'], [/\bsaint\b/g, 'st'], [/\bste\b/g, 'sainte'], [/\bsainte\b/g, 'ste']].reduce((x, [re, to]) => re.test(n) ? x + ' ' + n.replace(re, to) : x, n);   // "Saint Louis" finds St. Louis
   let IDX = null, PLACES = null, ZIP = null, PLp = null, ZIPp = null;
   function index() { if (IDX) return IDX; IDX = [];
-    Object.keys(X.states).forEach(st => IDX.push({ t: 's', k: st, l: X.states[st].name, s: 'State', w: norm(X.states[st].name + ' ' + st), pri: 3 }));
-    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + cdLabel(d.cd) + ' ' + (d.member || '')), m: d.member ? norm(d.member) : '', pri: 1 }); });
-    Object.keys(X.states).forEach(st => (X.states[st].senators || []).forEach(sn => IDX.push({ t: 's', k: st, l: sn.name + ' · ' + X.states[st].name, s: 'Senator (' + sn.party + ') · opens ' + X.states[st].name, w: norm(sn.name + ' ' + X.states[st].name + ' senator'), m: norm(sn.name), pri: 1 })));
-    Object.keys(X.counties).forEach(cf => { const c = county(cf); IDX.push({ t: 'c', k: cf, l: c.n + ', ' + c.st, s: 'County · ' + stName(c.st), w: norm(c.n + ' ' + c.st + ' ' + stName(c.st)), pri: 0.6 }); });
+    Object.keys(X.states).forEach(st => IDX.push({ t: 's', k: st, l: X.states[st].name, s: 'State', w: norm(X.states[st].name + ' ' + st), code: st.toLowerCase(), pri: 3 }));
+    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + cdLabel(d.cd) + ' ' + (d.member || '') + (d.nick ? ' ' + d.nick : '') + (cdLabel(d.cd) === 'At large' ? ' ' + d.st + '-AL ' + d.st + '-1' : '')), m: d.member ? surname(d.member) : '', pri: 1 }); });
+    Object.keys(X.states).forEach(st => (X.states[st].senators || []).forEach(sn => IDX.push({ t: 's', k: st, l: sn.name + ' · ' + X.states[st].name, s: 'Senator (' + sn.party + ') · opens ' + X.states[st].name, w: norm(sn.name + (sn.nick ? ' ' + sn.nick : '') + ' ' + X.states[st].name + ' senator'), m: surname(sn.name), pri: 1 })));
+    Object.keys(X.counties).forEach(cf => { const c = county(cf); IDX.push({ t: 'c', k: cf, l: c.n + ', ' + c.st, s: 'County · ' + stName(c.st), w: saints(norm(c.n + ' ' + c.st + ' ' + stName(c.st))), pri: 0.6 }); });
     return IDX; }
-  const loadPlaces = () => PLp || (PLp = fetch('places.json').then(r => r.ok ? r.json() : null).then(j => { PLACES = []; if (!j) return; Object.entries(j.places).forEach(([st, list]) => list.forEach(([name, cf, size]) => { if (!X.counties[cf]) return; PLACES.push({ t: 'p', k: cf, l: name + ', ' + st, s: 'City or town · opens ' + county(cf).n, w: norm(name + ' ' + st + ' ' + stName(st)), pri: 0.3 + (size || 0) / 10 }); })); }).catch(() => { PLACES = []; }));
+  const loadPlaces = () => PLp || (PLp = fetch('places.json').then(r => r.ok ? r.json() : null).then(j => { PLACES = []; if (!j) return; Object.entries(j.places).forEach(([st, list]) => list.forEach(([name, cf, size]) => { if (!X.counties[cf]) return; PLACES.push({ t: 'p', k: cf, l: name + ', ' + st, s: 'City or town · opens ' + county(cf).n, w: saints(norm(name + ' ' + st + ' ' + stName(st))), pri: 0.3 + (size || 0) / 10 }); })); }).catch(() => { PLACES = []; }));
   const loadZip = () => ZIPp || (ZIPp = fetch('zip_county.json').then(r => r.json()).then(j => { ZIP = {}; Object.entries(j).forEach(([cf, zs]) => zs.forEach(z => ZIP[z] = cf)); return ZIP; }));
   function search(text, limit) { const t = norm(text); if (!t) return []; const ws = t.split(' ');
-    const score = e => { let sc = 0; for (const w of ws) { if (e.w.split(' ').includes(w)) sc += 6; else if (e.w.includes(' ' + w) || e.w.startsWith(w)) sc += 4; else if (e.w.includes(w)) sc += 1; else return -1; } if (e.w === t || norm(e.l) === t || norm(e.l).startsWith(t)) sc += 10;
-      if (e.m && ws.some(w => e.m.split(' ').includes(w))) sc += 8;   // a word of the query is a member's name: the seat outranks towns of the same name
+    const score = e => { let sc = 0; for (const w of ws) { if (e.w.split(' ').includes(w)) sc += 6; else if (e.w.includes(' ' + w) || e.w.startsWith(w)) sc += 4; else if (e.w.includes(w)) sc += 1; else return -1; } if (e.w === t || norm(e.l) === t || norm(e.l).startsWith(t) || e.code === t) sc += 10;
+      if (e.m && ws.includes(e.m)) sc += 12;   // a word of the query is a member's surname: the seat outranks places of the same name ("Bergman" is MI-1, not Bergman, AR)
       return sc + e.pri; };
     return index().concat(PLACES || []).map(e => [score(e), e]).filter(x => x[0] > 0).sort((a, b) => b[0] - a[0] || a[1].l.localeCompare(b[1].l)).slice(0, limit || 8).map(x => x[1]); }
   // wire a search box: calls onPick({t,k,l}) with t in s|d|c|p|z (p and z resolve to a county)
   function wireSearch(input, listEl, onPick) { let opts = [], cur = -1;
     const show = (items, note) => { opts = items; cur = -1; input.removeAttribute('aria-activedescendant'); listEl.innerHTML = items.map((e, i) => `<div class="opt" role="option" id="${input.id}-opt-${i}" aria-selected="false" data-i="${i}"><span><b>${esc(e.l)}</b><span class="sub">${esc(e.s)}</span></span></div>`).join('') + (note ? `<div class="none">${note}</div>` : ''); listEl.hidden = !items.length && !note; input.setAttribute('aria-expanded', String(!listEl.hidden)); listEl.querySelectorAll('.opt').forEach(o => o.addEventListener('mousedown', ev => { ev.preventDefault(); go(opts[+o.dataset.i]); })); };
-    const go = e => { if (!e) return; listEl.hidden = true; input.value = e.l; onPick(e); };
+    const close = () => { listEl.hidden = true; cur = -1; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); };
+    const go = e => { if (!e) return; close(); input.value = e.l; onPick(e); };
     const lookup = () => { const v = input.value.trim();
       if (/^\d{5}$/.test(v)) { loadZip().then(Z => { if (input.value.trim() !== v) return; const cf = Z[v]; if (cf && X.counties[cf]) show([{ t: 'z', k: cf, l: 'ZIP ' + v + ' · ' + county(cf).label, s: 'County where most of this ZIP code’s residents live' }]); else show([], /^00[6-9]|^969/.test(v) ? 'That ZIP code is in a US territory; this site covers the 50 states and the District of Columbia.' : 'No county found for that ZIP code. Try the city or county name.'); }); return; }
       if (/^\d{1,4}$/.test(v)) { show([], 'Keep typing a 5-digit ZIP code, or type a city, county, district, state or member’s name.'); return; }
@@ -105,8 +110,8 @@ window.EXPLORE = (function () {
     input.addEventListener('focus', loadPlaces, { once: true });
     input.addEventListener('keydown', ev => { if (listEl.hidden) { if (ev.key === 'Enter') { ev.preventDefault(); const r = search(input.value); if (r.length) go(r[0]); } return; }
       if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') { if (!opts.length) return; ev.preventDefault(); cur = (cur + (ev.key === 'ArrowDown' ? 1 : -1) + opts.length) % opts.length; listEl.querySelectorAll('.opt').forEach((o, i) => { o.classList.toggle('on', i === cur); o.setAttribute('aria-selected', String(i === cur)); }); input.setAttribute('aria-activedescendant', `${input.id}-opt-${cur}`); }
-      else if (ev.key === 'Enter') { ev.preventDefault(); go(opts[cur >= 0 ? cur : 0]); } else if (ev.key === 'Escape') listEl.hidden = true; });
-    input.addEventListener('blur', () => setTimeout(() => { listEl.hidden = true; }, 120)); }
+      else if (ev.key === 'Enter') { ev.preventDefault(); go(opts[cur >= 0 ? cur : 0]); } else if (ev.key === 'Escape') close(); });
+    input.addEventListener('blur', () => setTimeout(close, 120)); }
   const pickToPlace = e => e.t === 's' ? state(e.k) : e.t === 'd' ? district(e.k) : county(e.k);
 
   // ---- legislation: roles for a place's delegation ----
