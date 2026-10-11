@@ -5,7 +5,7 @@ Every figure is copied from the files the map itself reads (data.js, burden.js, 
 pages cannot disagree with the map. Runs in run_refresh.sh after build_findings.py. Nothing is computed here except the
 county -> district index (inverted from each district's county list).
 """
-import json
+import json, re
 from datetime import date
 from pathlib import Path
 
@@ -33,7 +33,7 @@ def main():
         for l in json.load(open(leg, encoding="utf-8")):
             n, bid = l.get("name") or {}, (l.get("id") or {}).get("bioguide")
             official = n.get("official_full") or f"{n.get('first', '')} {n.get('last', '')}"
-            if bid and n.get("nickname") and n["nickname"].lower() not in official.lower(): nick[bid] = f"{n['nickname']} {n['last']}"
+            if bid and n.get("nickname") and not re.search(r"\b" + re.escape(n["nickname"].lower()) + r"\b", official.lower()): nick[bid] = f"{n['nickname']} {n['last']}"   # whole word: "Ed" is not in "Edward" (same rule as fetch_cosponsors.py)
     import config   # names the dataset does not carry ("Nick Begich"), keyed by bioguide (config.NICKNAMES_EXTRA)
     nick.update(getattr(config, "NICKNAMES_EXTRA", {}))
     # county -> districts (a county can touch several)
