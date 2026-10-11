@@ -56,7 +56,15 @@ def main():
         cmp_, cur_ = count(sp), count(sc)
         if not (cur_ == names.trials_in_county).all(): summ["county_change_note"] = "county recount differs from county_metrics.csv; check the trial universe"
         d = cur_ - cmp_; mv = d[d != 0]
-        detail["county_changes"] = [{"county": f"{names.loc[f, 'county_name']}, {names.loc[f, 'state_name']}", "from": int(cmp_[f]), "to": int(cur_[f])} for f in mv.abs().sort_values(ascending=False, kind="stable").index[:60]]
+        # labels: the Census Bureau's full name of the county equivalent from data.js ("St. Louis city" and "St. Louis County", "Baltimore city",
+        # "Fairfax County" and "Fairfax city"), the state once ("District of Columbia", not twice), and the FIPS code for a page that wants to link it
+        nl = {}
+        if (DOCS / "data.js").exists():
+            s_ = (DOCS / "data.js").read_text(encoding="utf-8"); nl = {k: v.get("nl") for k, v in json.loads(s_[s_.index("=") + 1:].strip().rstrip(";"))["counties"].items()}
+        def label(f):
+            n, st = nl.get(f) or names.loc[f, "county_name"], names.loc[f, "state_name"]
+            return n if n == st else f"{n}, {st}"
+        detail["county_changes"] = [{"county": label(f), "fips": f, "from": int(cmp_[f]), "to": int(cur_[f])} for f in mv.abs().sort_values(ascending=False, kind="stable").index[:60]]
         summ["counties_with_changed_trial_count"] = int(len(mv)); summ["counties_crossing_a_menu_threshold"] = int(((cmp_ >= 20) != (cur_ >= 20)).sum() + ((cmp_ >= 100) != (cur_ >= 100)).sum())
     except Exception as e:
         # the page prints "0 counties changed their trial count" when the count is missing, so never publish that silently
