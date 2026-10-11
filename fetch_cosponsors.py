@@ -17,7 +17,7 @@ same file the rest of the site uses; a sponsor or cosponsor who has since left C
 Output: docs/cosponsors.js (window.COSPONSORS) — bills, per-member roles, a district -> member map and state -> senators map.
 Usage: python fetch_cosponsors.py [--require-network]   (the flag makes the run fail instead of reusing the saved pull when the feed is unreachable)
 """
-import json, os, sys, time, urllib.request, urllib.error
+import json, os, re, sys, time, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
 from datetime import date
 from pathlib import Path
@@ -103,11 +103,20 @@ def main():
         if not raw_path.exists(): sys.exit(f"no network ({source}) and no saved cosponsors_raw.json")
         raw = json.loads(raw_path.read_text()); print(f"network unavailable ({source}); using saved pull from {raw['fetched']} ({raw['source'][:60]}...)")
     legis = json.load(open(find("legislators-current.json")))
+    # "nick": the name people search for when the official name does not contain it ("Bernie Sanders" for Bernard Sanders, "Chuck
+    # Schumer", "Ed Markey"): the dataset's nickname + surname, compared as a whole word ("Ed" is not in "Edward"); members the dataset
+    # gives no nickname come from config.NICKNAMES_EXTRA (bioguide -> name), when config.py defines it.
+    try:
+        import config; extra = dict(getattr(config, "NICKNAMES_EXTRA", {}) or {})
+    except Exception: extra = {}
     members, district_map, senators = {}, {}, {}
     for l in legis:
         t = l["terms"][-1]; bid = l["id"]["bioguide"]; name = l["name"].get("official_full") or f'{l["name"]["first"]} {l["name"]["last"]}'
         party = {"Republican": "R", "Democrat": "D"}.get(t["party"], "I")
         members[bid] = {"name": name, "party": party, "state": t["state"], "chamber": t["type"], "district": t.get("district")}
+        nk = l["name"].get("nickname")
+        nick = extra.get(bid) or (f'{nk} {l["name"]["last"]}' if nk and not re.search(r"\b" + re.escape(nk.lower()) + r"\b", name.lower()) else "")
+        if nick and nick.lower() not in name.lower(): members[bid]["nick"] = nick
         if t["type"] == "rep" and t["state"] in STFIPS:
             d = t.get("district") or 0; district_map[f"{STFIPS[t['state']]}{(98 if t['state'] == 'DC' else d):02d}"] = bid
         elif t["type"] == "sen": senators.setdefault(t["state"], []).append(bid)
