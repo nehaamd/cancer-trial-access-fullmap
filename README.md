@@ -6,14 +6,14 @@ Web app: `docs/` (static, deployable to GitHub Pages as-is; `index.html` map wit
 
 <!-- headline:start — rewritten by build_readme.py on every refresh; edit the script, not this block -->
 ## Headline results (residents 55+, trials accepting some adults aged 55 or older, road miles from each census tract's population center)
-Registry data as of 5 October 2026: 4,001 listed trials at about 9,600 registry-listed facilities (2,450 distinct site locations).
-- **12.0% of Americans 55+ have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; 4.2% have none.** (21.0% live in a county with no trial — a county-boundary statistic that overstates isolation and is not the lead number.)
+Registry data as of 9 October 2026: 4,007 listed trials at about 9,600 registry-listed facilities (2,438 distinct site locations).
+- **12.0% of Americans 55+ have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; 4.3% have none.** (21.1% live in a county with no trial — a county-boundary statistic that overstates isolation and is not the lead number.)
 - **38.1% live more than 60 road-miles from a broad menu** (a county with 100 or more trials); 18.4% more than 120; 0.7% (Alaska, Hawaii) have no road connection to one at all.
 - **43.7% live more than 60 road-miles from an NCI-designated cancer center that treats adults** (65 centers at 67 locations); the median resident 55+ is 48 road-miles from one; 20.8% are more than 120.
-- 377 counties host at least a limited menu (20 or more trials), 83 of them a broad menu; **15 states have no broad-menu county**; 73 congressional districts have every resident 55+ beyond 60 road-miles of one.
-- Road distance / straight-line distance to the nearest broad menu: median 1.18 (10th–90th percentile 1.09–1.34); the common ×1.2 convention is too low for 1,275 of 3,025 counties.
-- **Rural vs urban (USDA Rural-Urban Continuum Codes, 2023): 43.1% of residents 55+ in nonmetro counties (codes 4–9) have fewer than 20 recruiting trials within 60 road-miles, vs 6.1% in metro counties; 20.0% vs 1.2% have none; median road distance to an NCI-designated center 115 vs 35 miles.** Nonmetro counties hold 16.0% of residents 55+.
-- **Need vs access: 497 counties (4,341,298 residents 55+, about 88,182 new cancer diagnoses a year) have above-median all-sites incidence AND at least half of residents 55+ with fewer than 20 trials within 60 road-miles** — a cross-tabulation of the two published measures, never a combined score (the page lets the reader change the cancer site, the access criterion and the threshold).
+- 380 counties host at least a limited menu (20 or more trials), 82 of them a broad menu; **15 states have no broad-menu county**; 73 congressional districts have every resident 55+ beyond 60 road-miles of one.
+- Road distance / straight-line distance to the nearest broad menu: median 1.18 (10th–90th percentile 1.09–1.34); the common ×1.2 convention is too low for 1,271 of 3,026 counties.
+- **Rural vs urban (USDA Rural-Urban Continuum Codes, 2023): 43.0% of residents 55+ in nonmetro counties (codes 4–9) have fewer than 20 recruiting trials within 60 road-miles, vs 6.2% in metro counties; 20.2% vs 1.3% have none; median road distance to an NCI-designated center 115 vs 35 miles.** Nonmetro counties hold 16.0% of residents 55+.
+- **Need vs access: 495 counties (4,326,396 residents 55+, about 87,904 new cancer diagnoses a year) have above-median all-sites incidence AND at least half of residents 55+ with fewer than 20 trials within 60 road-miles** — a cross-tabulation of the two published measures, never a combined score (the page lets the reader change the cancer site, the access criterion and the threshold).
 - Router check: 38 published city-pair driving distances, mean difference 3.1%; 23 local routes (short in-town trips and water crossings), all within tolerance. Reference distances are approximate; see VALIDATION_v3.md.
 <!-- headline:end -->
 

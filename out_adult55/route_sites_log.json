@@ -1,18 +1,18 @@
 {
-  "site_rows": 53776,
+  "site_rows": 53913,
   "geocode": {
-    "zip_centroid": 49151,
-    "city_centroid_large_zip": 2312,
-    "city_centroid": 1992,
-    "city_centroid_zip_spans_counties": 223,
-    "county_centroid_city_disagrees": 58,
-    "county_centroid": 26,
-    "zip_typo_corrected": 14
+    "zip_centroid": 49243,
+    "city_centroid_large_zip": 2318,
+    "city_centroid": 2076,
+    "city_centroid_zip_spans_counties": 253,
+    "zip_typo_corrected": 14,
+    "county_centroid": 9
   },
-  "site_points": 2450,
+  "unlocated_rows": 0,
+  "site_points": 2438,
   "site_points_off_network_gt30mi": 0,
-  "tract_sitepoint_pairs_within_120": 5811278,
-  "county_sitepoint_pairs_within_120": 98779,
+  "tract_sitepoint_pairs_within_120": 5789892,
+  "county_sitepoint_pairs_within_120": 98272,
   "screen_site_near_in_straight_line_far_by_road": {
     "rule": "contiguous states; nearest site point within 20 straight-line miles, none within 60 road-miles",
     "tracts": 22,
@@ -49,5 +49,5 @@
       }
     ]
   },
-  "seconds": 69
+  "seconds": 67
 }

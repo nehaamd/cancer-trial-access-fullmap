@@ -1,6 +1,6 @@
 {
-  "timestamp_utc": "2026-10-05T15:09:50.583290+00:00",
-  "registry_data_timestamp": "2026-10-05T09:00:05",
+  "timestamp_utc": "2026-10-11T02:41:02.566502+00:00",
+  "registry_data_timestamp": "2026-10-09T09:00:05",
   "registry_api_version": "2.0.5",
   "params": {
     "query.cond": "cancer OR neoplasm OR neoplasms OR carcinoma OR lymphoma OR leukemia OR myeloma OR sarcoma OR melanoma OR malignancy OR malignant OR tumor OR tumour OR glioma OR mesothelioma OR adenocarcinoma OR cholangiocarcinoma OR carcinomatosis OR glioblastoma OR astrocytoma OR oligodendroglioma OR neuroblastoma OR medulloblastoma OR leiomyosarcoma OR angiosarcoma OR osteosarcoma OR liposarcoma OR rhabdomyosarcoma OR chondrosarcoma OR myelodysplastic OR myelodysplasia OR myelofibrosis OR myeloproliferative OR \"polycythemia vera\" OR \"essential thrombocythemia\" OR mastocytosis OR \"Langerhans cell histiocytosis\" OR metastasis OR metastases OR metastatic OR oligometastatic OR oligometastasis OR hepatocellular OR AML OR MDS OR HCC OR PDAC OR NSCLC OR macroglobulinemia",
@@ -12,7 +12,9 @@
     "countTotal": "true",
     "format": "json"
   },
-  "api_total_count": 4538,
-  "trials_with_us_recruiting_site": 4474,
-  "us_site_rows": 59489
+  "api_total_count": 4543,
+  "studies_fetched": 4543,
+  "duplicate_study_rows_dropped": 0,
+  "trials_with_us_recruiting_site": 4481,
+  "us_site_rows": 59599
 }
