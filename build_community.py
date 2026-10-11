@@ -24,6 +24,16 @@ def main():
     bsites = [s[0] for s in meta["burden"]["sites"]]; msites = [s[0] for s in MO["meta"]["sites"]]
     name_of = {bid: m["name"] for bid, m in CO["members"].items()}
     roles = {bid: {b: r["role"] for b, r in v.items()} for bid, v in CO["by_member"].items()}
+    # The name people search for is often a nickname the official name does not contain ("Bernie Sanders": official name Bernard Sanders;
+    # "Jim Clyburn", "Ed Markey", "Hal Rogers"). legislators-current.json carries the nickname; "nick" is that name with the surname, only
+    # when the official name does not already contain it ("Chuck Grassley", "Jack Reed" need none), for the search index of the pages.
+    nick = {}
+    leg = Path("data/ref/legislators-current.json")
+    if leg.exists():
+        for l in json.load(open(leg, encoding="utf-8")):
+            n, bid = l.get("name") or {}, (l.get("id") or {}).get("bioguide")
+            official = n.get("official_full") or f"{n.get('first', '')} {n.get('last', '')}"
+            if bid and n.get("nickname") and n["nickname"].lower() not in official.lower(): nick[bid] = f"{n['nickname']} {n['last']}"
     # county -> districts (a county can touch several)
     cd_of = {}
     for k, d in DI.items():
@@ -41,7 +51,7 @@ def main():
         bid = CO["district_map"].get(k); ru = RU["districts"].get(k) or {}
         districts[k] = {"st": d["st"], "cd": d["cd"], "p": d["p"], "l20": d["l20"], "z60": d["z60"], "t60": d["t60"], "g60n": d["g60n"], "g60b": d["g60b"], "medn": d["medn"], "medb": d["medb"], "nrn": d.get("nrn", 0),
                         "nr": d.get("nr", 0), "member": d["member"], "party": d["party"], "bio": bid, "nm": ru.get("nonmetro_pct"), "ct": (d.get("bd") or {}).get("ct"), "counties": d.get("counties", []),
-                        "mnci": d.get("mnci"), "mbroad": d.get("mbroad")}
+                        "mnci": d.get("mnci"), "mbroad": d.get("mbroad"), **({"nick": nick[bid]} if bid in nick else {})}
     states = {}
     for st, g in SD.items():
         ru = RU["states"].get(st) or {}; bs = BU["summary"]["states"].get(st) or {}; ms = (MO.get("summary") or {}).get("states", {}).get(st) or {}
@@ -50,7 +60,7 @@ def main():
                       "ndist": g["ndist"], "counties": g["counties"], "cwt": g["counties_with_trials"], "broad": g["broad"], "limited": g["limited"], "trials": g["trials"], "mnci": g.get("mnci"),
                       "ct": (g.get("bd") or {}).get("ct"), "rural": {"metro": [met.get("p"), met.get("l20"), met.get("z60")], "nonmetro": [non.get("p"), non.get("l20"), non.get("z60")]},
                       "burden": [bs.get("hb_la_counties"), bs.get("hb_la_pop55"), bs.get("counties_classified")], "mort": [ms.get("hh_counties"), ms.get("hh_pop55"), ms.get("hh_deaths")],
-                      "senators": [{"name": name_of.get(b, b), "party": CO["members"][b]["party"], "bio": b} for b in CO["senators"].get(st, []) if b in CO["members"]]}
+                      "senators": [{"name": name_of.get(b, b), "party": CO["members"][b]["party"], "bio": b, **({"nick": nick[b]} if b in nick else {})} for b in CO["senators"].get(st, []) if b in CO["members"]]}
     bills = {k: {**{f: b.get(f) for f in ("congress", "type", "number", "label", "short", "title", "introduced", "latest_action", "n_cosponsors", "n_original", "parties", "url", "cosponsors_url", "topic")}, "sponsor": name_of.get(b.get("sponsor"), b.get("sponsor")), "sponsor_bio": b.get("sponsor")} for k, b in CO["bills"].items()}
     nat = {**{k: meta["nat_core"][k] for k in ("p", "nt", "l20", "z60", "t60", "g60n", "g60b", "medn", "medb", "nr", "nrn", "mnci", "mbroad")}, "ct": meta["nat_core"]["bd"]["ct"],
            "rural": {"metro": [RU["nat"]["metro"]["p"], RU["nat"]["metro"]["l20"], RU["nat"]["metro"]["z60"]], "nonmetro": [RU["nat"]["nonmetro"]["p"], RU["nat"]["nonmetro"]["l20"], RU["nat"]["nonmetro"]["z60"]]},
