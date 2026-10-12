@@ -1,6 +1,6 @@
 # Validation — National Cancer Trial Access Map v3
 
-Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (graph version 2); ACS 2024 5-year; State Cancer Profiles 2019-2023. Checks re-run by `validate_v3.py` on 2026-10-11 (UTC).
+Registry pull 2026-10-12 (registry data of 2026-10-09); road graph TIGER 2025 (graph version 2); ACS 2024 5-year; State Cancer Profiles 2019-2023. Checks re-run by `validate_v3.py` on 2026-10-12 (UTC).
 
 | Check | Result | Pass | Context |
 |---|---|---|---|
@@ -24,7 +24,7 @@ Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (g
 | Router vs published city-pair driving distances (target mean < 5%) | 38 pairs, mean |error| 3.1%, max 13.3% (Miami–Tampa) | ✓ | routes run between county population centers, published values are city center to city center; the tails (Miami–Tampa, DC–Pittsburgh, Atlanta–Jacksonville) are pairs where the centroid sits well outside downtown |
 | Router on local trips and water crossings (road_local_checks.csv) | 23/23 within tolerance: 12 short or regional trips (at most 2x the driving distance + 5 mi; longest relative to the drive: Spokane WA: South Hill to Sacred Heart Medical Center, 6.5 vs about 3 mi) and 11 water crossings (at least 0.6x the drive around, i.e. no invented crossing) | ✓ | added October 2026: the first national graph routed several in-town trips 60-300 miles (Tucson, Kalispell, Spokane, Pueblo, Duluth); the city-pair check above could not see it. Driving distances are approximate map values, used only as a coarse screen |
 | Residents 55+ with a recruiting site within 20 straight-line miles but none within 60 road-miles (contiguous states) | 20,970 residents in 21 tracts (0.021% of residents 55+); largest: Clinton, New York 10,361; Island, Washington 6,719; Essex, New York 2,692; Knox, Maine 1,064; Galveston, Texas 134; Snohomish, Washington 0 | ✓ | what remains should be places cut off by water with no bridge (islands, peninsulas, lake shores); ferries are not modelled. About 194,000 before the October 2026 graph repair |
-| Registry re-check: 25 random trials re-fetched individually (status, purpose, phase, max age, US recruiting-site count) | 25/25 match | ✓ | re-fetched 2026-10-11, pull was 2026-10-11 (UTC) |
+| Registry re-check: 25 random trials re-fetched individually (status, purpose, phase, max age, US recruiting-site count) | 25/25 match | ✓ | re-fetched 2026-10-12, pull was 2026-10-12 (UTC) |
 | Cancer-type classifier: same-session self-consistency read of 50 sampled trials (NOT independent validation) | 50/50 agree | ✓ | The builder re-read titles/conditions; this checks the rules were applied as intended, not that the rules are right. The 200-trial file qc_cancer_type_sample_200.csv is left for a blind hand check. |
 | Cancer-type classifier: multi-cancer bucket and unclassified share reported | 28.1% multi/basket ({'multiple named cancers': 614, 'unspecified solid / hematologic': 460, 'basket with a named cohort': 36, 'unspecified (title)': 10, 'multiple named cancers (title/keywords)': 6, 'title names additional cancers': 1}); 0.6% unclassified | ✓ |  |
 | Cancer burden: county counts vs state-published counts (all sites, 50 states) | median |diff| 0.01%, max 1.27% (state 02) | ✓ | Alaska's max reflects the 2019 Chugach/Copper River split not in the registry file |
@@ -46,7 +46,7 @@ Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (g
 | Telemedicine / virtual registry rows are not mapped as sites | 108 rows in 2 trials; 0 of them assigned to a county; 2 trial(s) listed for the ZIP finder's telemedicine section | ✓ | a fully decentralized study lists one telemedicine row per city; counted as sites, the rows of one such study (NCT06906562) were the only trial within 60 road-miles for about 346,000 residents 55+ |
 | Registry rows with a mistyped ZIP are located where the registry lists that facility | 25 rows (Paradigm Oncology Hematology, Omaha 68310; City of Hope at Irvine Lenna, Irvine 91355; MD Anderson Cancer Center, Houston 77303; University of California-San, San Diego 90293; ...); 0 still drawn at the ZIP | ✓ | judged a typing error only when the same named facility is listed repeatedly near the stated city and never near the ZIP (metrics_us.zip_typos) |
 | Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted) | 0 bad facility trial indices; 0 bad sitepoint→facility refs; 0 unsorted nearby lists; sponsor names 4,013/4,013, last-update dates 4,013/4,013 | ✓ |  |
-| Refresh diff: previous and current pulls compared (changes.js describes this pull) | 2026-10-11 → 2026-10-11: 4,007 → 4,013 trials; 6 new, 0 no longer listed, 0 sites added / 0 removed at continuing trials; 22 counties changed count | ✓ | registry data timestamp 2026-10-09T09:00:05 |
+| Refresh diff: previous and current pulls compared (changes.js describes this pull) | 2026-10-11 → 2026-10-12: 4,013 → 4,013 trials; 0 new, 0 no longer listed, 0 sites added / 0 removed at continuing trials; 0 counties changed count | ✓ | registry data timestamp 2026-10-09T09:00:05 |
 | Tier 4: no evaluated candidate sits in a county with a limited menu | 0 of 1917 candidates in a county with ≥20 trials | ✓ |  |
 | Tier 4: greedy marginal gains are non-increasing | 25 picks; first 109,878, last 18,208; 27.6% of uncovered reached | ✓ |  |
 | Tier 4: candidate universe is the intended one (CoC + NCORP) | universe = registry stand-in (facilities that hosted an oncology treatment trial started 2016+) | ✗ | registry-derived stand-in used because www.facs.org / ncorp.cancer.gov were not reachable; results are labelled a research prototype in the UI until the intended universe is substituted |
@@ -63,7 +63,7 @@ Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (g
 | Cosponsors: district → member map covers every non-vacant House seat (+ DC delegate) | 434 mapped; 2 vacant in the payload; 436 district rows | ✓ |  |
 | Cosponsors: 100 senators mapped to states | 100 senators across 50 states | ✓ |  |
 | Cosponsors: House bills carry only representatives, Senate bills only senators | chambers consistent | ✓ |  |
-| Cosponsors: freshness of the pull | fetched 2026-10-11 (0 days ago) from govinfo BILLSTATUS XML… | ✓ | re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date |
+| Cosponsors: freshness of the pull | fetched 2026-10-12 (0 days ago) from govinfo BILLSTATUS XML… | ✓ | re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date |
 | Burden: county '<20 within 60 road-mi' shares recomputed from tract_access.csv; their population-weighted mean equals the national share | max |diff| 0.05 pts (rounding); weighted mean 11.98% vs national 12.0% | ✓ |  |
 | Burden: national median and the high-burden/low-access cell recomputed independently | median 471.1 vs 471.1; cell 492 counties / 4,339,742 residents 55+ vs burden.js 492 / 4,339,742; 3130 classified | ✓ |  |
 | Burden: the four cells partition the classified counties | 492 + 1030 + 822 + 786 = 3130 vs 3130 | ✓ |  |
@@ -78,7 +78,7 @@ Registry pull 2026-10-11 (registry data of 2026-10-09); road graph TIGER 2025 (g
 | ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
 | Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
 | community.js reproduces data.js / burden.js for every county, district and state | 3143 counties (0 differ), 436 districts (0 differ), 51 states (0 differ); nation 12.0% vs 12.0% | ✓ | built by build_community.py from the same files the map reads; the Your community and What could help pages read this file |
-| community.js carries the tracked bills with the cosponsor fetch date | H.R. 3521: 30 cosponsors, S. 4440: 1 cosponsors; fetched 2026-10-11 | ✓ |  |
+| community.js carries the tracked bills with the cosponsor fetch date | H.R. 3521: 30 cosponsors, S. 4440: 1 cosponsors; fetched 2026-10-12 | ✓ |  |
 
 ## Fresh-eyes review (Step 2)
 
