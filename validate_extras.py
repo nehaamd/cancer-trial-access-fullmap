@@ -122,10 +122,25 @@ def run(browser=False):
                 r = pg.evaluate("""async () => { const V = window.__validate; await V.loadTractsAll(); const F = V.filteredCounty(); const B = window.BURDEN.county; let over = 0, maxd = 0, worst = '';
                   V.CK.forEach((k,i) => { const d = Math.max(Math.abs(F.l20[i]-B[k].l20), Math.abs(F.z60[i]-B[k].z60)); if (d > 0.55) over++; if (d > maxd) { maxd = d; worst = k; } });
                   const R = V.filteredRural('nat', 0); return { over, maxd, worst, metro: R.metro.l20, nonmetro: R.nonmetro.l20 }; }""")
+                # the movable trial-count line (the pills on the panel's first figure): press each one and read back the national, Texas and per-county
+                # shares the page computes; compared below with an independent recount from tract_access.csv at the same line
+                lines = {}
+                for lt in (5, 10, 50, 100):
+                    pg.click(f'.thr-btn[data-lt="{lt}"]'); pg.wait_for_function("() => !document.querySelector('#pane-body .computing')", timeout=120000); pg.wait_for_timeout(150)
+                    lines[lt] = pg.evaluate("""() => { const V = window.__validate; const F = V.FS(); const co = {}; V.CK.forEach(k => { const v = V.shortOf(k); co[k] = v ? v.s : null; });
+                      return { lt: V.getLT(), nat: V.filteredGeo('nat', 0).l20, tx: F ? F.l20[F.idx['TX']] : null, co, text: document.querySelector('#stat-access .main').textContent }; }""")
                 b.close()
             srv.terminate()
             check("Browser: in-page tract recomputation (no filter) reproduces burden.js county shares and rucc.js metro/nonmetro shares", f"{r['over']} of {len(counties)} counties differ by >0.55 pts (max {r['maxd']:.1f}, {D['counties'][r['worst']]['n']}); metro {r['metro']:.1f}% / nonmetro {r['nonmetro']:.1f}% vs {RU['nat']['metro']['l20']} / {RU['nat']['nonmetro']['l20']}", r["over"] <= 2 and abs(r["metro"] - RU["nat"]["metro"]["l20"]) < 0.06 and abs(r["nonmetro"] - RU["nat"]["nonmetro"]["l20"]) < 0.06,
                   "the residual county is a 20-trial threshold effect: the browser pools the 3,915 located trials, the pipeline table counts 3,919 eligible trials")
+            w = tr.pop55.astype(float); tx = tr.county_fips.str.startswith("48"); worst = []; parts = []
+            for lt, L in lines.items():
+                short = (tr.trials_within_60rdmi < lt); py_nat = 100 * w[short].sum() / w.sum(); py_tx = 100 * w[short & tx].sum() / w[tx].sum()
+                cs = tr.assign(w=w, s=w * short).groupby("county_fips")[["w", "s"]].sum(); cs = cs[cs.w > 0]; py_co = 100 * cs.s / cs.w
+                dco = max(abs(py_co[k] - v) for k, v in L["co"].items() if v is not None and k in py_co.index)
+                worst.append(max(abs(L["nat"] - py_nat), abs(L["tx"] - py_tx) if L["tx"] is not None else 9, dco)); parts.append(f"<{lt}: page {L['nat']:.2f}% vs {py_nat:.2f}%, TX {L['tx']:.1f}% vs {py_tx:.1f}%, counties max |diff| {dco:.3f}")
+                if L["lt"] != lt or f"fewer than {lt} " not in L["text"]: worst.append(9)
+            check("Browser: the trial-count line (5 / 10 / 50 / 100) recomputes the national, state and county shares in the page; each equals an independent recount from tract_access.csv", "; ".join(parts), max(worst) < 0.011)
         except Exception as e:
             check("Browser: in-page recomputation", f"skipped ({type(e).__name__}: {str(e)[:60]})", True)
     # ---- community.js (the question-based pages): copied from the files above, so every figure must equal its source ----

@@ -1,6 +1,6 @@
 # Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)
 
-Checks re-run by `validate_extras.py` on 2026-10-12 (UTC).
+Checks re-run by `validate_extras.py` on 2026-10-15 (UTC).
 
 | Check | Result | Pass | Context |
 |---|---|---|---|
@@ -16,7 +16,7 @@ Checks re-run by `validate_extras.py` on 2026-10-12 (UTC).
 | Cosponsors: district → member map covers every non-vacant House seat (+ DC delegate) | 434 mapped; 2 vacant in the payload; 436 district rows | ✓ |  |
 | Cosponsors: 100 senators mapped to states | 100 senators across 50 states | ✓ |  |
 | Cosponsors: House bills carry only representatives, Senate bills only senators | chambers consistent | ✓ |  |
-| Cosponsors: freshness of the pull | fetched 2026-10-12 (0 days ago) from govinfo BILLSTATUS XML… | ✓ | re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date |
+| Cosponsors: freshness of the pull | fetched 2026-10-12 (3 days ago) from govinfo BILLSTATUS XML… | ✓ | re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date |
 | Burden: county '<20 within 60 road-mi' shares recomputed from tract_access.csv; their population-weighted mean equals the national share | max |diff| 0.05 pts (rounding); weighted mean 11.98% vs national 12.0% | ✓ |  |
 | Burden: national median and the high-burden/low-access cell recomputed independently | median 471.1 vs 471.1; cell 492 counties / 4,339,742 residents 55+ vs burden.js 492 / 4,339,742; 3130 classified | ✓ |  |
 | Burden: the four cells partition the classified counties | 492 + 1030 + 822 + 786 = 3130 vs 3130 | ✓ |  |
@@ -30,5 +30,7 @@ Checks re-run by `validate_extras.py` on 2026-10-12 (UTC).
 | ZIP lookup: every population-weighted ZIP center lies within a mile of its own ZIP area and passes the coverage test; find_data.js uses those centers | 23,884 weighted centers: 0 outside their ZIP area (or not tested), 0 outside the coverage band; 0 of 33,640 finder ZIPs not at their center | ✓ |  |
 | ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
 | Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
+| Browser: in-page tract recomputation (no filter) reproduces burden.js county shares and rucc.js metro/nonmetro shares | 0 of 3143 counties differ by >0.55 pts (max 0.0, Washington); metro 6.2% / nonmetro 42.9% vs 6.2 / 42.9 | ✓ | the residual county is a 20-trial threshold effect: the browser pools the 3,915 located trials, the pipeline table counts 3,919 eligible trials |
+| Browser: the trial-count line (5 / 10 / 50 / 100) recomputes the national, state and county shares in the page; each equals an independent recount from tract_access.csv | <5: page 6.44% vs 6.44%, TX 9.9% vs 9.9%, counties max |diff| 0.000; <10: page 8.61% vs 8.61%, TX 14.7% vs 14.7%, counties max |diff| 0.000; <50: page 21.50% vs 21.50%, TX 28.6% vs 28.6%, counties max |diff| 0.000; <100: page 34.09% vs 34.09%, TX 33.3% vs 33.3%, counties max |diff| 0.000 | ✓ |  |
 | community.js reproduces data.js / burden.js for every county, district and state | 3143 counties (0 differ), 436 districts (0 differ), 51 states (0 differ); nation 12.0% vs 12.0% | ✓ | built by build_community.py from the same files the map reads; the Your community and What could help pages read this file |
 | community.js carries the tracked bills with the cosponsor fetch date | H.R. 3521: 30 cosponsors, S. 4440: 1 cosponsors; fetched 2026-10-12 | ✓ |  |
