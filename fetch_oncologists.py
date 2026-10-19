@@ -106,10 +106,21 @@ def cms(log):
 
 def nppes(log):
     page = get(NPPES_PAGE).text
-    links = re.findall(r'href="([^"]*NPPES_Data_Dissemination_[A-Za-z]+_\d{4}[^"]*\.zip)"', page)
-    full = [l for l in links if not re.search(r"weekly|deactiv|_\d{6}_\d{6}", l, re.I)]
-    if not full: sys.exit(f"no full replacement file on {NPPES_PAGE}; links: {links[:10]}")
-    url = requests.compat.urljoin(NPPES_PAGE, full[0]); dest = TMP / Path(url).name; download(url, dest)
+    links = re.findall(r"""[^"'\s<>=]*NPPES_Data_Dissemination[^"'\s<>]*?\.zip""", page, re.I)
+    full = [l for l in dict.fromkeys(links) if not re.search(r"weekly|deactiv|_\d{6}_\d{6}", l, re.I)]
+    url = requests.compat.urljoin(NPPES_PAGE, full[0]) if full else None
+    if url is None:   # the page's markup changes; the file names have been stable: NPPES_Data_Dissemination_<Month>_<Year>[_V2].zip
+        print(f"  no link matched on {NPPES_PAGE}; .zip links on the page: {re.findall(r'[^\"\'\s<>=]+\.zip', page)[:12]}", flush=True)
+        t = time.gmtime(); months = [(t.tm_year, t.tm_mon), (t.tm_year - (t.tm_mon == 1), 12 if t.tm_mon == 1 else t.tm_mon - 1)]
+        for y, m in months:
+            for v in ("_V2", ""):
+                u = f"https://download.cms.gov/nppes/NPPES_Data_Dissemination_{time.strftime('%B', (y, m, 1, 0, 0, 0, 0, 1, 0))}_{y}{v}.zip"
+                try:
+                    if s.head(u, timeout=60, allow_redirects=True).status_code == 200: url = u; break
+                except Exception as e: print("  ", u, e)
+            if url: break
+    if url is None: sys.exit("no NPPES full replacement file found")
+    print(f"  NPPES file: {url}", flush=True); dest = TMP / Path(url).name; download(url, dest)
     z = zipfile.ZipFile(dest)
     member = next((n for n in z.namelist() if re.search(r"npidata_pfile_\d{8}-\d{8}\.csv$", n)), None) or sys.exit(f"no npidata file in {z.namelist()}")
     with z.open(member) as f: head = pd.read_csv(f, nrows=0).columns
@@ -143,6 +154,10 @@ def nppes(log):
 if __name__ == "__main__":
     lp = REF / "oncologists_log.json"; log = json.loads(lp.read_text()) if lp.exists() else {}
     log["pulled"] = time.strftime("%Y-%m-%d")
-    if "--nppes-only" not in sys.argv: cms(log)
-    if "--cms-only" not in sys.argv: nppes(log)
-    lp.write_text(json.dumps(log, indent=1))
+    failed = []
+    for name, fn, skip in (("cms", cms, "--nppes-only"), ("nppes", nppes, "--cms-only")):
+        if skip in sys.argv: continue
+        try: fn(log)
+        except SystemExit as e: failed.append(name); log.setdefault("errors", {})[name] = str(e); print(f"{name} FAILED: {e}", flush=True)
+    lp.write_text(json.dumps(log, indent=1))   # a source that failed keeps its previous extract; the other is still written
+    if failed: sys.exit(f"failed: {failed}")
