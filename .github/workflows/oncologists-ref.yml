@@ -37,7 +37,7 @@ jobs:
         run: |
           { echo '### Oncologist extract'; echo '```'; tail -n 15 fetch_onc.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           echo "::notice title=fetch summary::$(grep -E '^(CMS|NPPES):' fetch_onc.log | tr '\n' ' ')"
-      - name: Commit the extract (also when one source failed: the other one's extract is kept)
+      - name: Commit the extract (also when one source failed, so the other one is kept)
         if: always()
         run: |
           git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
