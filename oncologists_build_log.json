@@ -1,0 +1,194 @@
+{
+ "rules": {
+  "specialty": "CMS primary specialty",
+  "groups": {
+   "MEDICAL ONCOLOGY": "onc",
+   "HEMATOLOGY/ONCOLOGY": "onc",
+   "HEMATOLOGY-ONCOLOGY": "onc",
+   "HEMATOLOGY ONCOLOGY": "onc",
+   "HEMATOLOGY": "onc",
+   "HEMATOPOIETIC CELL TRANSPLANTATION AND CELLULAR THERAPY": "onc",
+   "RADIATION ONCOLOGY": "rad",
+   "GYNECOLOGICAL ONCOLOGY": "gyn",
+   "GYNECOLOGIC ONCOLOGY": "gyn",
+   "SURGICAL ONCOLOGY": "surg"
+  },
+  "reach_road_mi": 60.0,
+  "categories": {
+   "1": "Oncologists and trials",
+   "2": "Oncologists, no trials",
+   "3": "Trials, no oncologist listed",
+   "4": "Neither"
+  }
+ },
+ "source": {
+  "cms_url": "https://data.cms.gov/provider-data/sites/default/files/resources/52c3f098d7e56028a298fd297cb0b38d_1790972133/DAC_NationalDownloadableFile.csv",
+  "cms_modified": "2026-10-02",
+  "pulled": "2026-10-19",
+  "nppes_url": "https://download.cms.gov/nppes/NPPES_Data_Dissemination_October_2026_V2.zip"
+ },
+ "secondary_only": {
+  "clinicians": 2255,
+  "primary_specialties": {
+   "INTERNAL MEDICINE": 788,
+   "GENERAL SURGERY": 429,
+   "PEDIATRIC MEDICINE": 322,
+   "PATHOLOGY": 200,
+   "OBSTETRICS/GYNECOLOGY": 177,
+   "DIAGNOSTIC RADIOLOGY": 33,
+   "UROLOGY": 29,
+   "HOSPICE/PALLIATIVE CARE": 27,
+   "ORTHOPEDIC SURGERY": 27,
+   "NEUROLOGY": 27,
+   "HOSPITALIST": 26,
+   "OTOLARYNGOLOGY": 25,
+   "THORACIC SURGERY": 16,
+   "GASTROENTEROLOGY": 16,
+   "COLORECTAL SURGERY (PROCTOLOGY)": 15
+  },
+  "note": "oncology or hematology is a secondary specialty only; not counted"
+ },
+ "placement": {
+  "location_rows": 61932,
+  "methods": {
+   "zip": 59554,
+   "zip3": 1832,
+   "zip_pop": 270,
+   "unassigned": 229,
+   "city_over_zip3": 39,
+   "zip_typo_corrected": 6,
+   "zip_state_corrected": 2
+  },
+  "unplaced_rows": 229,
+  "unplaced_clinicians_with_no_placed_location": 127,
+  "unplaced_examples": [
+   [
+    "CAGUAS",
+    "PR",
+    "00725"
+   ],
+   [
+    "ARECIBO",
+    "PR",
+    "00614"
+   ],
+   [
+    "MANATI",
+    "PR",
+    "00674"
+   ],
+   [
+    "San Juan",
+    "PR",
+    "00917"
+   ],
+   [
+    "CAROLINA",
+    "PR",
+    "00979"
+   ],
+   [
+    "SAN JUAN",
+    "PR",
+    "00927"
+   ],
+   [
+    "BARCELONETA",
+    "PR",
+    "00617"
+   ],
+   [
+    "DEDEDO",
+    "GU",
+    "96929"
+   ],
+   [
+    "CAYEY",
+    "PR",
+    "00837"
+   ],
+   [
+    "SAN JUAN",
+    "PR",
+    "00917"
+   ],
+   [
+    "ARECIBO",
+    "PR",
+    "00612"
+   ],
+   [
+    "CHRISTIANSTED",
+    "VI",
+    "00820"
+   ],
+   [
+    "SAN JUAN",
+    "PR",
+    "00923"
+   ],
+   [
+    "BAYAMON",
+    "PR",
+    "00961"
+   ],
+   [
+    "BAYAMON",
+    "PR",
+    "00959"
+   ]
+  ]
+ },
+ "asco_comparable": {
+  "clinicians": 15670,
+  "counties_with_one": 1446,
+  "excluding_transplant": 15534
+ },
+ "pediatric_excluded": {
+  "clinicians": 541,
+  "rule": "NPPES taxonomy 2080P0207X and no adult oncology/hematology taxonomy"
+ },
+ "nppes_check": {
+  "cms_oncologists_with_nppes_row": 14382,
+  "cms_oncologists": 15129
+ },
+ "clinicians": {
+  "onc": 15127,
+  "rad": 5392,
+  "gyn": 1178,
+  "surg": 1433
+ },
+ "clinicians_onc_by_specialty": {
+  "HEMATOLOGY/ONCOLOGY": 9697,
+  "MEDICAL ONCOLOGY": 4240,
+  "HEMATOLOGY": 1058,
+  "HEMATOPOIETIC CELL TRANSPLANTATION AND CELLULAR THERAPY": 134
+ },
+ "counties_per_clinician": {
+  "median": 1.0,
+  "p90": 3.0,
+  "max": 29,
+  "share_in_1_county": 0.671
+ },
+ "nat": {
+  "p": 100019672,
+  "c1": 78.3,
+  "c2": 11.2,
+  "c3": 0.7,
+  "c4": 9.9,
+  "vis": 9.7,
+  "onc": 15127,
+  "rad": 5392,
+  "gyn": 1178,
+  "surg": 1433,
+  "per100k": 15.1,
+  "counties": {
+   "1": 774,
+   "2": 671,
+   "3": 51,
+   "4": 1647
+  },
+  "counties_with_onc": 1445,
+  "counties_all_shared": 579
+ }
+}

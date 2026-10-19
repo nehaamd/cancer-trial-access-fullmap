@@ -64,7 +64,7 @@ jobs:
       - name: Commit and publish
         run: |
           git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
-          git add -A docs out RELEASE_GATE.md README.md audit_allowlist.txt data/raw/trials.csv data/raw/us_sites.csv data/raw/trials_raw.csv data/raw/us_sites_raw.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv data/snapshots out_adult55/*.csv out_adult55/*.json out_adult55/*.md VALIDATION_v3.md VALIDATION_extras.md cosponsors_raw.json rucc_log.json burden_log.json mortality_log.json \
+          git add -A docs out RELEASE_GATE.md README.md audit_allowlist.txt data/raw/trials.csv data/raw/us_sites.csv data/raw/trials_raw.csv data/raw/us_sites_raw.csv data/raw/fetch_log.json data/raw/trial_cancer_type.csv data/snapshots out_adult55/*.csv out_adult55/*.json out_adult55/*.md VALIDATION_v3.md VALIDATION_extras.md cosponsors_raw.json rucc_log.json burden_log.json mortality_log.json oncologists_build_log.json \
                      data/ref/nci_centers.csv data/ref/legislators-current.json data/ref/legislators_log.json data/roads/graph_stats.json
           git commit -m "Registry refresh $(date -u +%F)" || echo "nothing to commit"
           git push

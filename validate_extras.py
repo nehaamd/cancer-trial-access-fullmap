@@ -156,6 +156,54 @@ def run(browser=False):
               len(CM["counties"]) == len(counties) and not bad and len(CM["districts"]) == len(D["districts"]) and not dbad and len(CM["states"]) == len(D["state_data"]) and not sbad and CM["meta"]["nat"]["l20"] == nat["l20"],
               "built by build_community.py from the same files the map reads; the Your community and What could help pages read this file")
         if CO: check("community.js carries the tracked bills with the cosponsor fetch date", ", ".join(f"{b['label']}: {b['n_cosponsors']} cosponsors" for b in CM["meta"]["bills"].values()) + f"; fetched {CM['meta']['cosponsors_fetched']}", set(CM["meta"]["bills"]) == set(CO["bills"]) and all(CM["meta"]["bills"][k]["n_cosponsors"] == CO["bills"][k]["n_cosponsors"] for k in CO["bills"]) and CM["meta"]["cosponsors_fetched"] == CO["meta"]["fetched"])
+    # ---- oncologists vs trials (build_oncologists.py): recomputed here from the extract's county table and the trial counts, and set against ----
+    # ---- the published ASCO workforce study that used the same CMS file (Kirkwood et al., JCO Oncology Practice 2025, doi:10.1200/OP-25-00144) ----
+    ON = load_js("oncologists.js", "window.ONCOLOGISTS="); olog_p = find("oncologists_build_log.json")
+    if ON and olog_p is not None:
+        olog = json.loads(olog_p.read_text()); oc = ON["county"]
+        missing = sorted(set(counties) - set(oc)); extra = sorted(set(oc) - set(counties))
+        badcat = [k for k, v in oc.items() if k in D["counties"] and v[6] != (1 if v[0] and D["counties"][k]["t"] else 2 if v[0] else 3 if D["counties"][k]["t"] else 4)]
+        check("Oncologists: every county has a row, and each county's category follows from its oncologist count and its trial count in data.js",
+              f"{len(oc):,} counties ({len(missing)} missing, {len(extra)} extra); {len(badcat)} categories disagree", not missing and not extra and not badcat)
+        cat = tr.county_fips.map(lambda f: oc[f][6]); w = tr.pop55.astype(float); tot = w.sum()
+        sh = {k: round(100 * w[cat == k].sum() / tot, 1) for k in (1, 2, 3, 4)}; n = ON["nat"]
+        check("Oncologists: residents 55+ by category, recounted from tract_access.csv, equal oncologists.js (and the four shares sum to 100)",
+              f"recounted {sh} vs published {{1: {n['c1']}, 2: {n['c2']}, 3: {n['c3']}, 4: {n['c4']}}}; sum {sum(sh.values()):.1f}",
+              all(abs(sh[k] - n[f"c{k}"]) < 0.06 for k in sh) and abs(sum(sh.values()) - 100) < 0.25 and n["p"] == nat["p"])
+        sp = [s for s, g in ON["states"].items() if g["p"] != D["state_data"][s]["p"]]; dp = [k for k, g in ON["districts"].items() if abs(g["p"] - D["districts"][k]["p"]) > 1]
+        check("Oncologists: state and district residents 55+ equal data.js", f"{len(ON['states'])} states ({len(sp)} differ), {len(ON['districts'])} districts ({len(dp)} differ by more than 1)",
+              len(ON["states"]) == len(D["state_data"]) and not sp and len(ON["districts"]) == len(D["districts"]) and not dp)
+        a = olog["asco_comparable"]; pub_n, pub_cty, pub_res = 14547, 45.0, 89.0   # Kirkwood et al. 2025: March 2024 file
+        cty = 100 * a["counties_with_one"] / len(counties); res = n["c1"] + n["c2"]
+        check("Oncologists: the ASCO-comparable count reproduces the published workforce study (14,547 in the March 2024 Care Compare file; oncologists in 45% of counties; 89% of residents 55+ in a county with one)",
+              f"{a['clinicians']:,} clinicians in the {ON['meta']['source_modified']} file ({100 * (a['clinicians'] / pub_n - 1):+.1f}%); counties {cty:.1f}% vs {pub_cty}%; residents 55+ {res:.1f}% vs {pub_res}%",
+              0.95 <= a["clinicians"] / pub_n <= 1.15 and abs(cty - pub_cty) <= 3 and abs(res - pub_res) <= 2,
+              "a newer file: ASCO reported growth of about 2% a year (12,267 in 2014 to 14,547 in 2024); the map's own count also excludes pediatric hematology-oncologists")
+        nci = pd.read_csv(find("nci_centers.csv"), dtype=str); nci = nci[nci.adult == "1"]
+        z2c = dict(pd.read_csv(find("zcta_county.csv"), dtype=str).values)   # the center's own ZIP (coord_source zip_centroid_NNNNN) -> county
+        nci["cf"] = nci.coord_source.str.extract(r"(\d{5})")[0].map(z2c)
+        try:   # centers located by an override or the city's Census place: the county of that place (the gazetteer the site rules use)
+            from tier4_covering import find_place
+            for i in nci.index[nci.cf.isna()]: q = find_place(nci.at[i, "state"], nci.at[i, "city"]); nci.at[i, "cf"] = q[2] if q else None
+        except Exception: pass
+        zc = pd.read_csv(find("zcta_pop55.csv"), dtype={"zcta": str})   # last resort (La Jolla is not a Census place): the ZIP center nearest the center's point
+        for i in nci.index[nci.cf.isna()]:
+            d = (zc.lat - float(nci.at[i, "lat"])) ** 2 + ((zc.lon - float(nci.at[i, "lon"])) * 0.8) ** 2; nci.at[i, "cf"] = z2c.get(zc.zcta.iloc[int(d.values.argmin())])
+        bad_nci = [f"{r.name} ({r.cf})" for r in nci.itertuples() if not isinstance(r.cf, str) or oc.get(r.cf, [0])[0] == 0]
+        check("Oncologists: the county of every adult NCI-designated center (by its ZIP, or its city) has oncologists listed", f"{len(nci)} centers, {int(nci.cf.notna().sum())} placed; {len(bad_nci)} without" + (f": {bad_nci[:5]}" if bad_nci else ""), not bad_nci)
+        um = olog.get("unmapped_oncology_specialties"); un = olog["placement"]
+        check("Oncologists: no CMS oncology specialty label is unmapped, and the only unplaced practice locations are outside the 50 states and DC",
+              f"unmapped labels: {um or 'none'}; {un['unplaced_rows']} unplaced rows, e.g. {[x[1] for x in un['unplaced_examples']][:8]}",
+              not um and all(x[1] in ("PR", "GU", "VI", "AS", "MP", "AA", "AE", "AP", "") for x in un["unplaced_examples"]))
+        nc = olog.get("nppes_check")
+        if nc: check("Oncologists: cross-check with NPPES — share of the map's oncologists whose registry entry carries an oncology or hematology taxonomy",
+                     f"{nc['cms_oncologists_with_nppes_row']:,} of {nc['cms_oncologists']:,} ({100 * nc['cms_oncologists_with_nppes_row'] / nc['cms_oncologists']:.1f}%); pediatric excluded: {olog['pediatric_excluded']['clinicians']}",
+                     nc["cms_oncologists_with_nppes_row"] / nc["cms_oncologists"] >= 0.9)
+        csvp = find("oncologists_counties.csv")
+        if csvp is not None:
+            cv = pd.read_csv(csvp, dtype={"county_fips": str}); diff = [r.county_fips for r in cv.itertuples() if r.oncologists != oc[r.county_fips][0] or r.trials_in_county != D["counties"][r.county_fips]["t"]]
+            check("Oncologists: the downloadable county table matches oncologists.js and data.js", f"{len(cv):,} rows; {len(diff)} differ", len(cv) == len(counties) and not diff)
+        check("Map page loads oncologists.js and offers the layer", "oncologists.js referenced; layer 'onc' defined" if 'src="oncologists.js"' in ui and "onc: {label:" in ui else "missing", 'src="oncologists.js"' in ui and "onc: {label:" in ui)
     return rows
 
 

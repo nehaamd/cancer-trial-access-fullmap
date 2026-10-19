@@ -1,0 +1,43 @@
+# Oncologist reference data (fetch_oncologists.py): CMS Doctors and Clinicians file + NPPES. Both hosts are blocked on some networks, so the
+# download runs here. Run it by hand ("Refresh oncologist reference data" -> "Run workflow") when you want a newer month; the weekly refresh
+# reuses the committed extract (data/ref/oncologists_*.csv) and does not download anything. It commits the extract to the branch it ran on.
+name: Refresh oncologist reference data
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: oncologists-ref-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: Download and extract
+        shell: bash
+        run: |
+          set -o pipefail
+          python fetch_oncologists.py 2>&1 | tee fetch_onc.log
+      - name: If it failed, show where
+        if: failure()
+        shell: bash
+        run: |
+          test -f fetch_onc.log || exit 0
+          echo "::error title=fetch_oncologists.py failed (last lines)::$(tail -n 30 fetch_onc.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}' | cut -c1-3500)"
+      - name: Report what was kept (run summary)
+        if: always()
+        run: |
+          { echo '### Oncologist extract'; echo '```'; tail -n 15 fetch_onc.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          echo "::notice title=fetch summary::$(grep -E '^(CMS|NPPES):' fetch_onc.log | tr '\n' ' ')"
+      - name: Commit the extract (also when one source failed, so the other one is kept)
+        if: always()
+        run: |
+          git config user.name "refresh-bot"; git config user.email "refresh-bot@users.noreply.github.com"
+          git add data/ref/oncologists_log.json; for f in data/ref/oncologists_cms.csv data/ref/oncologists_nppes.csv; do test -f $f && git add $f; done
+          git commit -m "Oncologist reference extract $(date -u +%F)" || echo "nothing to commit"
+          git push origin HEAD:${GITHUB_REF_NAME}
