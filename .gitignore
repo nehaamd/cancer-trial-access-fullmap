@@ -8,3 +8,4 @@ data/geo/*.zip
 __pycache__/
 *.log
 data/roads/route_cache_sites.npz
+data/tmp_onc/
