@@ -1,22 +1,22 @@
 {
   "summary": {
-    "previous_pull": "2026-10-11T18:42:11Z",
-    "current_pull": "2026-10-12T20:07:58Z",
+    "previous_pull": "2026-10-12T20:07:58Z",
+    "current_pull": "2026-10-19T04:15:11Z",
     "previous_registry_data": "2026-10-09T09:00:05",
-    "current_registry_data": "2026-10-09T09:00:05",
+    "current_registry_data": "2026-10-16T09:00:05",
     "trials_previous": 4013,
-    "trials_current": 4013,
-    "trials_new": 0,
-    "trials_no_longer_listed": 0,
-    "field_changes": 0,
+    "trials_current": 4026,
+    "trials_new": 33,
+    "trials_no_longer_listed": 20,
+    "field_changes": 6,
     "recruiting_sites_previous": 54062,
-    "recruiting_sites_current": 54062,
-    "sites_new_at_existing_trials": 0,
-    "sites_removed_at_existing_trials": 0,
-    "sites_of_new_trials": 0,
-    "sites_of_removed_trials": 0,
-    "counties_with_changed_trial_count": 0,
-    "counties_crossing_a_menu_threshold": 0,
+    "recruiting_sites_current": 54555,
+    "sites_new_at_existing_trials": 395,
+    "sites_removed_at_existing_trials": 74,
+    "sites_of_new_trials": 294,
+    "sites_of_removed_trials": 129,
+    "counties_with_changed_trial_count": 212,
+    "counties_crossing_a_menu_threshold": 4,
     "method_version": 6,
     "previous_method_version": 6
   },
@@ -85,6 +85,17 @@
       "z60": 4.3,
       "g60b": 38.0,
       "g60n": 43.7,
+      "medn": 48.0
+    },
+    {
+      "pull": "2026-10-19",
+      "registry_data": "2026-10-16",
+      "trials": 4026,
+      "method": 6,
+      "l20": 11.9,
+      "z60": 4.3,
+      "g60b": 37.7,
+      "g60n": 43.7,
       "medn": 48.0,
       "current": true
     }
@@ -117,10 +128,3577 @@
       "note": "Not a change of method: the yearly sources were updated. Residents 55+ and household figures now come from the ACS 2020-2024 5-year release (was 2019-2023), and cancer incidence from State Cancer Profiles 2019-2023 (was 2018-2022), which, unlike the 2018-2022 release, includes Kansas counties. Measured on the same registry data (Oct 9, 2026) and the same rules: residents 55+ 98,596,429 to 100,019,672; fewer than 20 trials within 60 road-miles 12.0% (11.88 to 11.98 million people); none within 60 road-miles 4.4% to 4.3% (4.31 to 4.34 million); beyond 60 road-miles of a broad menu 38.1% to 38.0%; of an NCI center 43.7% (unchanged); no state moved more than half a point; no district's share beyond 60 road-miles moved a full point before rounding (AZ-9 and TX-36 show 1.0 after rounding), and in VA-9 the share living in a county with no trial site rose 80.2% to 84.0%. The new population split moved ZIP 24273 from Wise County to Norton city, Virginia, so two Ballad Health Norton site listings now count in Norton (0 to 2) instead of Wise (2 to 0). Counties with a published or small-numbers incidence rate 3,026 to 3,130 (Kansas); high-incidence, low-access counties 495 to 492."
     }
   ],
-  "new_trials": [],
-  "no_longer_listed": [],
-  "field_changes": [],
-  "sites_new_at_existing_trials": [],
-  "sites_removed_at_existing_trials": [],
-  "county_changes": []
+  "new_trials": [
+    {
+      "nct_id": "NCT06084416",
+      "title": "A Study of Sovilnesib in Subjects With Ovarian Cancer",
+      "phase": "PHASE1",
+      "sponsor": "Volastra Therapeutics, Inc.",
+      "n_us_sites": 4
+    },
+    {
+      "nct_id": "NCT06223568",
+      "title": "Phase II Trial of Neoadjuvant Chemotherapy (NAC) Alone or in Combination With Immunotherapy Vaccine PRGN-2009 in Subjects With Newly Diagnosed HPV-Associated Oropharyngeal (Head and Neck) Cancer",
+      "phase": "PHASE2",
+      "sponsor": "National Cancer Institute (NCI)",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT06385262",
+      "title": "TOP 2301: Neoadjuvant Chemo for NSCLC",
+      "phase": "PHASE2",
+      "sponsor": "Duke University",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07128199",
+      "title": "A Study to Assess Zipalertinib Versus Placebo in Participants With Early Stage NSCLC With Uncommon EGFR Mutations, Following Complete Tumor Resection",
+      "phase": "PHASE3",
+      "sponsor": "Taiho Oncology, Inc.",
+      "n_us_sites": 9
+    },
+    {
+      "nct_id": "NCT07220187",
+      "title": "Adding Pirtobrutinib to the Usual Treatment for People With Newly Diagnosed Richter Transformation, The PIRAMID Trial",
+      "phase": "PHASE3",
+      "sponsor": "SWOG Cancer Research Network",
+      "n_us_sites": 62
+    },
+    {
+      "nct_id": "NCT07318389",
+      "title": "ASCEND-CRC: Profiling and Targeting Dynamic Tumor Resistance in Patients With Metastatic Colorectal Cancer",
+      "phase": "EARLY_PHASE1",
+      "sponsor": "M.D. Anderson Cancer Center",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07358195",
+      "title": "Addition of Venetoclax to Combined Hematopoietic Stem Cell and Kidney Transplantation",
+      "phase": "EARLY_PHASE1",
+      "sponsor": "Massachusetts General Hospital",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07389239",
+      "title": "A Study Evaluating the Immunotherapy Treatment for Ovarian Cancer and Other Advanced Malignancies.",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "University of Chicago",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07393555",
+      "title": "Treatment for Advanced Non-small Cell Lung Cancer With Actionable Genomic Alterations After Targeted Treatment and Chemotherapy (An Expanded Lung-MAP Treatment Trial)",
+      "phase": "PHASE2",
+      "sponsor": "SWOG Cancer Research Network",
+      "n_us_sites": 41
+    },
+    {
+      "nct_id": "NCT07466498",
+      "title": "Estrogen to Improve Quality of Life for Men With Newly Diagnosed or Recurrent Metastatic Hormone Sensitive Prostate Cancer, EQUIP Trial",
+      "phase": "PHASE2",
+      "sponsor": "Fred Hutchinson Cancer Center",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07557056",
+      "title": "Nemtabrutinib and Venetoclax for the Treatment of Patients With Chronic Lymphocytic Leukemia or Small Lymphocytic Lymphoma",
+      "phase": "PHASE2",
+      "sponsor": "Jennifer Woyach",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07569263",
+      "title": "IL-8 Receptor Modified Patient-Derived Activated CD70 CAR T Cell Therapy in Adults With Brain Metastases",
+      "phase": "PHASE1",
+      "sponsor": "University of Florida",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07578116",
+      "title": "Adding Surgery and Radiation to the Usual Treatment for HER2-Positive Breast Cancer That Had Already Spread at Diagnosis",
+      "phase": "PHASE3",
+      "sponsor": "SWOG Cancer Research Network",
+      "n_us_sites": 59
+    },
+    {
+      "nct_id": "NCT07615049",
+      "title": "Testing Short-Course Radiation Versus Standard-Course Radiation for Soft Tissue Sarcomas That Need Surgery and Radiation",
+      "phase": "PHASE3",
+      "sponsor": "SWOG Cancer Research Network",
+      "n_us_sites": 67
+    },
+    {
+      "nct_id": "NCT07646821",
+      "title": "A Phase 1b/2 Study of Ropeginterferon Alfa-2b Added to Azacitidine in MDS/AML With TP53 Mutations",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "M.D. Anderson Cancer Center",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07667400",
+      "title": "Docetaxel and SX-682 in Recurrent/Metastatic Head and Neck Squamous Cell Carcinoma, Salivary Gland Carcinoma, and Advanced Prostate Cancer",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "National Cancer Institute (NCI)",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07683754",
+      "title": "T-DXd Based Therapy Followed by Endocrine Therapy Plus Dual HER2 Blockade in First-line HER2+/ HR+ Metastatic Breast Cancer and Retreatment With T-DXd",
+      "phase": "PHASE3",
+      "sponsor": "Daiichi Sankyo",
+      "n_us_sites": 5
+    },
+    {
+      "nct_id": "NCT07708961",
+      "title": "Temozolomide, With or Without WSD0922-FU, for the Treatment of EGFR-Mutant, IDH-Wildtype Glioblastoma",
+      "phase": "PHASE2",
+      "sponsor": "Mayo Clinic",
+      "n_us_sites": 2
+    },
+    {
+      "nct_id": "NCT07711002",
+      "title": "Saruparib in Combination With Physician's Choice of ARPI in Patients With mHSPC Previously Treated With Docetaxel or 177Lu-PSMA Therapy Without Disease Progression and PSA \u2265 0.2 ng/mL (EvoPAR-PR05)",
+      "phase": "PHASE3",
+      "sponsor": "AstraZeneca",
+      "n_us_sites": 3
+    },
+    {
+      "nct_id": "NCT07725796",
+      "title": "A Phase 1 Dose-escalation Study of UGN-501 Administered Intravesically in Adult Participants With Recurrent NMIBC",
+      "phase": "PHASE1",
+      "sponsor": "UroGen Pharma, Inc., a subsidiary of UroGen Pharma Ltd.",
+      "n_us_sites": 6
+    },
+    {
+      "nct_id": "NCT07731789",
+      "title": "Tafasitamab and Rituximab for the Treatment of Newly Diagnosed Follicular Lymphoma",
+      "phase": "PHASE2",
+      "sponsor": "University of Washington",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07743164",
+      "title": "A Clinical Trial of Raludotatug Deruxtecan (R-DXd) With or Without Bevacizumab in Participants With Ovarian Cancer Who Have Progressed During Treatment With PARP-inhibitors Treatment on First Line Maintenance (MK-5909-008/ENGOT-ov107/GOG-3142 / REJOICE-Ovarian05)",
+      "phase": "PHASE3",
+      "sponsor": "Merck Sharp & Dohme LLC",
+      "n_us_sites": 2
+    },
+    {
+      "nct_id": "NCT07766187",
+      "title": "Combination Therapy Using Durvalumab and Histotripsy for Treatment of Intrahepatic Cholangiocarcinoma",
+      "phase": "PHASE2",
+      "sponsor": "University of Wisconsin, Madison",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07767474",
+      "title": "A Study to Evaluate ATX-898 in Participants With Advanced Solid Tumors",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "Antares Therapeutics, Inc",
+      "n_us_sites": 5
+    },
+    {
+      "nct_id": "NCT07769502",
+      "title": "A Study to Assess Adverse Events and Change in Disease Activity With Treatment Combinations With Telisotuzumab Adizutecan in Adults Participants With Pancreatobiliary Cancers",
+      "phase": "PHASE2",
+      "sponsor": "AbbVie",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07770100",
+      "title": "Concurrent Immunotherapy and Systemic Therapy With Stereotactic Body Radiation Therapy (SBRT) for Stage IV Cancers (COINSSS IV)",
+      "phase": "PHASE2",
+      "sponsor": "Mark Bernard",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07807956",
+      "title": "A Study to Assess Adverse Events, Change in Disease Activity and How Intravenous ABBV-253 Moves Through the Body in Adult Participants With Advanced Solid Tumors",
+      "phase": "PHASE1",
+      "sponsor": "AbbVie",
+      "n_us_sites": 3
+    },
+    {
+      "nct_id": "NCT07843940",
+      "title": "A Study to Test Obrixtamig in Combination With Pumitamig in People With Advanced Small Cell Lung Cancer (Dareon\u00ae-Rosetta35)",
+      "phase": "PHASE1;PHASE2",
+      "sponsor": "Boehringer Ingelheim",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07869823",
+      "title": "Cemiplimab and Quad Shot Radiation for Cutaneous Squamous Cell Carcinoma in the Head and Neck",
+      "phase": "EARLY_PHASE1",
+      "sponsor": "Vanderbilt-Ingram Cancer Center",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07869836",
+      "title": "BL-M07D1 (Trastuzumab Brengitecan T-bren) vs Standard of Care Platinum-based Chemotherapy (PBC) for HER2-expressing Metastatic Urothelial Cancer After Progression on Anti-PD-(L)1-based Therapy",
+      "phase": "PHASE3",
+      "sponsor": "SystImmune Inc.",
+      "n_us_sites": 2
+    },
+    {
+      "nct_id": "NCT07872553",
+      "title": "A Study of Treatment Delivery Preference In People With Kidney Cancer",
+      "phase": "PHASE4",
+      "sponsor": "Memorial Sloan Kettering Cancer Center",
+      "n_us_sites": 7
+    },
+    {
+      "nct_id": "NCT07874490",
+      "title": "Osimertinib and Cyclosporine A to Enhance Antitumor Efficacy in NSCLC",
+      "phase": "PHASE2",
+      "sponsor": "NYU Langone Health",
+      "n_us_sites": 1
+    },
+    {
+      "nct_id": "NCT07878988",
+      "title": "This is a Phase 1/1b Study to Evaluate the Safety and Preliminary Antitumor Activity of LTZ-232 in Participants With Advanced/Metastatic Colorectal Cancer and Other Solid Tumors",
+      "phase": "PHASE1",
+      "sponsor": "LTZ Therapeutics, Inc.",
+      "n_us_sites": 1
+    }
+  ],
+  "no_longer_listed": [
+    {
+      "nct_id": "NCT03398161",
+      "title": "Ultra Low Dose Radiation Therapy in Treating Patients With Mycosis Fungoides",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT03975231",
+      "title": "Dabrafenib, Trametinib, and IMRT in Treating Patients With BRAF Mutated Anaplastic Thyroid Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT04841148",
+      "title": "Avelumab or Hydroxychloroquine With or Without Palbociclib to Eliminate Dormant Breast Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT04858009",
+      "title": "Hyperthermic Intraperitoneal Chemotherapy for the Treatment of Pancreatic Cancer and Peritoneal Metastasis",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT05086692",
+      "title": "A Beta-only IL-2 ImmunoTherapY Study",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT05168618",
+      "title": "Cabozantinib and Atezolizumab for the Treatment of Metastatic Castration-Resistant Prostate Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT05239624",
+      "title": "Enfortumab Vedotin and Pembrolizumab in People With Bladder Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT05307705",
+      "title": "A Study of LOXO-783 in Patients With Breast Cancer/Other Solid Tumors",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT05756777",
+      "title": "A Study of Gilteritinib in Combination With Ivosidenib or Enasidenib in People With Acute Myeloid Leukemia (AML)",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT05996107",
+      "title": "Study of Ribociclib Administered Concurrently With Postoperative Radiation Therapy in Patients With High-Risk, HR+/HER2- Breast Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06072131",
+      "title": "To Evaluate Efficacy of Belinostat or Pralatrexate in Combination Against CHOP Alone in PTCL",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06163391",
+      "title": "A Study to Assess Safety and Efficacy of SOT201 in Patients With Advanced/Metastatic Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06195891",
+      "title": "Orca-T Following Chemotherapy and Total Marrow and Lymphoid Irradiation for the Treatment of Acute Myeloid Leukemia, Acute Lymphoblastic Leukemia or Myelodysplastic Syndrome",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06417814",
+      "title": "A Study to Investigate the Efficacy and Safety of Dato-DXd With or Without Osimertinib Compared With Platinum Based Doublet Chemotherapy in Participants With EGFR-Mutated Locally Advanced or Metastatic Non-Small Cell Lung Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06501625",
+      "title": "Ivosidenib Plus Durvalumab and Gemcitabine/Cisplatin as First-Line Therapy in Participants With Locally Advanced or Metastatic Cholangiocarcinoma With an IDH1 Mutation",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06637423",
+      "title": "A Clinical Study of Sacituzumab Tirumotecan (MK-2870) in Patients With Bladder Cancer (MK-2870-027)",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06660407",
+      "title": "Grid Radiation Therapy for the Treatment of Stage IV Non-Small Cell Lung Cancer",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT06930729",
+      "title": "Optimizing Care for Cancer Survivors With Depression: Project 3",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT07087054",
+      "title": "Carcinoid Syndrome Efficacy Study Featuring an Oral Daily Paltusotine Regimen",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    },
+    {
+      "nct_id": "NCT07129252",
+      "title": "A Study to Investigate Safety and Effectiveness of CRN09682 in Participants With SST2-Expressing NENs and Other Solid Tumors",
+      "last_status": "RECRUITING",
+      "note": "not returned by the recruiting/treatment/oncology query today (status may have changed to a non-recruiting value, or the record was withdrawn)"
+    }
+  ],
+  "field_changes": [
+    {
+      "nct_id": "NCT06163430",
+      "field": "title",
+      "from": "A Phase 1/2 Clinical Study to Evaluate the Safety, Tolerability, Pharmacokinetics, and Efficacy of TERN-701 in Participants With Chronic Myeloid Leukemia (CARDINAL)",
+      "to": "A Clinical Study of MK-4208/TERN-701 in Participants With Chronic Myeloid Leukemia (CML) (MK-4208-003/Tern701-1012/CARDINAL)"
+    },
+    {
+      "nct_id": "NCT06623396",
+      "field": "title",
+      "from": "A Study of Mesothelin-Targeted CAR T-Cell Therapy in People With Esophagogastric Cancer",
+      "to": "A Study of Mesothelin-Targeted CAR T-Cell Therapy in People With Esophagogastric Cancer or Malignant Peritoneal Mesothelioma"
+    },
+    {
+      "nct_id": "NCT06712316",
+      "field": "title",
+      "from": "Safety, Efficacy, and Pharmacokinetics of BNT327 in Combination With Chemotherapy and Other Investigational Agents for Lung Cancer",
+      "to": "Safety, Efficacy, and Pharmacokinetics of BNT327 in Combination With Chemotherapy and Other Investigational Agents for Lung Cancer (ROSETTA Lung-02)"
+    },
+    {
+      "nct_id": "NCT06843447",
+      "field": "title",
+      "from": "A Clinical Study of Raludotatug Deruxtecan in People With Ovarian Cancer (MK-5909-003)",
+      "to": "A Clinical Study of Raludotatug Deruxtecan in People With Ovarian Cancer (MK-5909-003)."
+    },
+    {
+      "nct_id": "NCT07458347",
+      "field": "title",
+      "from": "A Phase 1 Dose-escalation Trial of KST-6051 in Participants With Advanced Solid Tumors With Kirsten Rat Sarcoma Viral Oncogene Homolog (KRAS) Mutation",
+      "to": "A Phase 1 Dose Escalation and Dose Expansion Trial of KST-6051 in Participants With Advanced Solid Tumors With Kirsten Rat Sarcoma Viral Oncogene Homolog (KRAS) Mutation"
+    },
+    {
+      "nct_id": "NCT07844694",
+      "field": "phase",
+      "from": "EARLY_PHASE1",
+      "to": "PHASE1"
+    }
+  ],
+  "sites_new_at_existing_trials": [
+    {
+      "nct_id": "NCT01906385",
+      "facility": "ohio state university comprehensive cancer center",
+      "city": "columbus",
+      "state": "OH"
+    },
+    {
+      "nct_id": "NCT03191149",
+      "facility": "fairview cancer center - woodbury",
+      "city": "woodbury",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT03606967",
+      "facility": "university of texas medical branch",
+      "city": "galveston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT03643861",
+      "facility": "the kirklin clinic at acton road",
+      "city": "birmingham",
+      "state": "AL"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03866382",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03866382",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03866382",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT03866382",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "peacehealth saint john medical center",
+      "city": "longview",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04269902",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04301076",
+      "facility": "emory university hospital midtown",
+      "city": "atlanta",
+      "state": "GA"
+    },
+    {
+      "nct_id": "NCT04301076",
+      "facility": "nyp/columbia university medical center/herbert irving comprehensive cancer center",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04628767",
+      "facility": "johns hopkins university/sidney kimmel cancer center",
+      "city": "baltimore",
+      "state": "MD"
+    },
+    {
+      "nct_id": "NCT04628767",
+      "facility": "uchealth - cherry creek",
+      "city": "denver",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04840602",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04840602",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04840602",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04840602",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "northwell health cancer institute at huntington",
+      "city": "greenlawn",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "presbyterian kaseman hospital",
+      "city": "albuquerque",
+      "state": "NM"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05058651",
+      "facility": "benefis sletten cancer institute",
+      "city": "great falls",
+      "state": "MT"
+    },
+    {
+      "nct_id": "NCT05058651",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05058651",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05058651",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05058651",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05112601",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05112601",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "minnesota oncology hematology pa-chaska",
+      "city": "chaska",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05136196",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05317858",
+      "facility": "duke university",
+      "city": "durham",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT05554393",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05554393",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05554406",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05554406",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "allegiance health",
+      "city": "jackson",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "duke university medical center",
+      "city": "durham",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "henry ford macomb hospital-clinton township",
+      "city": "clinton township",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "henry ford medical center-columbus",
+      "city": "novi",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "henry ford medical center-fairlane",
+      "city": "dearborn",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "henry ford west bloomfield hospital",
+      "city": "west bloomfield",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "henry ford wyandotte hospital",
+      "city": "wyandotte",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "loyola university medical center",
+      "city": "maywood",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "lsu health baton rouge-north clinic",
+      "city": "baton rouge",
+      "state": "LA"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "nyp/weill cornell medical center",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "our lady of the lake physician group",
+      "city": "baton rouge",
+      "state": "LA"
+    },
+    {
+      "nct_id": "NCT05633654",
+      "facility": "tufts medical center",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT05636618",
+      "facility": "advent health radiation oncology at central florida",
+      "city": "orlando",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT05655312",
+      "facility": "m health fairview university of minnesota medical center",
+      "city": "minneapolis",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT05655312",
+      "facility": "unc hospitals, the university of north carolina at chapel hill",
+      "city": "chapel hill",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT05655312",
+      "facility": "university hospitals cleveland medical center",
+      "city": "cleveland",
+      "state": "OH"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "henry ford west bloomfield hospital",
+      "city": "west bloomfield",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05773274",
+      "facility": "ucsf medical center-mission bay",
+      "city": "san francisco",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT05920356",
+      "facility": "regis clinical research llc",
+      "city": "miami",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT05947851",
+      "facility": "atlantic health system morristown medical center ( site 5445)",
+      "city": "morristown",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT05947851",
+      "facility": "avera cancer institute - aberdeen ( site 5458)",
+      "city": "aberdeen",
+      "state": "SD"
+    },
+    {
+      "nct_id": "NCT05947851",
+      "facility": "avera cancer institute - marshall ( site 5462)",
+      "city": "marshall",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT05947851",
+      "facility": "avera cancer institute - mitchell ( site 5461)",
+      "city": "mitchell",
+      "state": "SD"
+    },
+    {
+      "nct_id": "NCT05947851",
+      "facility": "avera cancer institute - pierre ( site 5460)",
+      "city": "pierre",
+      "state": "SD"
+    },
+    {
+      "nct_id": "NCT05947851",
+      "facility": "avera cancer institute - yankton ( site 5459)",
+      "city": "yankton",
+      "state": "SD"
+    },
+    {
+      "nct_id": "NCT05947851",
+      "facility": "west virginia university ( site 5447)",
+      "city": "morgantown",
+      "state": "WV"
+    },
+    {
+      "nct_id": "NCT05950464",
+      "facility": "augusta university medical center",
+      "city": "augusta",
+      "state": "GA"
+    },
+    {
+      "nct_id": "NCT05987241",
+      "facility": "johns hopkins university/sidney kimmel cancer center",
+      "city": "baltimore",
+      "state": "MD"
+    },
+    {
+      "nct_id": "NCT05987241",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05987241",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT05987241",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06029270",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06029270",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06029270",
+      "facility": "stanford cancer institute palo alto",
+      "city": "palo alto",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence hood river memorial hospital",
+      "city": "hood river",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "wexford health and wellness pavilion",
+      "city": "wexford",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "city of hope national medical center /id# 258645",
+      "city": "duarte",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "duke cancer center /id# 255129",
+      "city": "durham",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "florida cancer specialists- sarasota cattlemen /id# 261569",
+      "city": "sarasota",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "inova schar cancer institute - fairfax - innovation park drive /id# 262771",
+      "city": "fairfax",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "lifespan cancer institute at rhode island hospital /id# 257693",
+      "city": "providence",
+      "state": "RI"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "md anderson cancer center /id# 255131",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "memorial sloan kettering cancer center - new york - york avenue /id# 255132",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "musc hollings cancer center /id# 257935",
+      "city": "charleston",
+      "state": "SC"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "northwestern medicine - northwestern memorial hospital /id# 257378",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "prisma health /id# 257697",
+      "city": "greenville",
+      "state": "SC"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "sarah cannon research institute at healthone - denver /id# 258926",
+      "city": "denver",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "scri oncology partners /id# 261568",
+      "city": "nashville",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "south texas accelerated research therapeutics /id# 260404",
+      "city": "san antonio",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "start midwest /id# 256581",
+      "city": "grand rapids",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "ucsf medical center - mount zion /id# 257705",
+      "city": "san francisco",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "univ hosp cleveland /id# 257706",
+      "city": "cleveland",
+      "state": "OH"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "univ texas hsc san antonio /id# 257708",
+      "city": "san antonio",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "university of chicago medical center /id# 258197",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "washington university /id# 257379",
+      "city": "st louis",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT06126276",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06126276",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06136559",
+      "facility": "swedish cancer institute, edmonds campus ( site 0072)",
+      "city": "edmonds",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06136559",
+      "facility": "swedish cancer institute, issaquah campus ( site 0073)",
+      "city": "issaquah",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06136559",
+      "facility": "swedish medical center-swedish cancer institute ( site 0071)",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06203600",
+      "facility": "henry ford medical center-columbus",
+      "city": "novi",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06203600",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06203600",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06203600",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06203600",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "asplundh cancer pavilion",
+      "city": "willow grove",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "novant health forsyth medical center",
+      "city": "winston-salem",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06337318",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06340568",
+      "facility": "asplundh cancer pavilion",
+      "city": "willow grove",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06340568",
+      "facility": "baptist health lexington",
+      "city": "lexington",
+      "state": "KY"
+    },
+    {
+      "nct_id": "NCT06340568",
+      "facility": "minnesota oncology",
+      "city": "minneapolis",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT06340568",
+      "facility": "university of colorado cancer center",
+      "city": "aurora",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT06340568",
+      "facility": "usc/norris cancer center",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06340568",
+      "facility": "virginia oncology associates",
+      "city": "norfolk",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT06366347",
+      "facility": "ou health stephenson cancer center",
+      "city": "oklahoma city",
+      "state": "OK"
+    },
+    {
+      "nct_id": "NCT06366347",
+      "facility": "university of colorado cancer center",
+      "city": "aurora",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT06374459",
+      "facility": "mayo clinic",
+      "city": "rochester",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT06422806",
+      "facility": "allegheny general hospital",
+      "city": "pittsburgh",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06422806",
+      "facility": "forbes hospital",
+      "city": "monroeville",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06422806",
+      "facility": "jefferson hospital",
+      "city": "jefferson hills",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06422806",
+      "facility": "oregon health and science university",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06422806",
+      "facility": "saint vincent hospital",
+      "city": "erie",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06422806",
+      "facility": "west penn hospital",
+      "city": "pittsburgh",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06422806",
+      "facility": "wexford health and wellness pavilion",
+      "city": "wexford",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "baystate medical center",
+      "city": "springfield",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence hood river memorial hospital",
+      "city": "hood river",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06498635",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06510374",
+      "facility": "wakemed",
+      "city": "raleigh",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06526793",
+      "facility": "research site",
+      "city": "san antonio",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06528301",
+      "facility": "city of hope",
+      "city": "duarte",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06586957",
+      "facility": "university of california - los angeles",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06589804",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06589804",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06589804",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06623422",
+      "facility": "baptist clinical research institute, inc. ( site 9501)",
+      "city": "memphis",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT06623422",
+      "facility": "illinois cancer care ( site 8107)",
+      "city": "peoria",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "aurora",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "austin",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "baltimore",
+      "state": "MD"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "charlotte",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "charlottesville",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "cleveland",
+      "state": "OH"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "columbus",
+      "state": "OH"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "durham",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "edmonds",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "eugene",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "hackensack",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "indianapolis",
+      "state": "IN"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "issaquah",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "jacksonville",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "lincoln",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "louisville",
+      "state": "KY"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "manassas",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "milwaukee",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "minneapolis",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "norfolk",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "phoenix",
+      "state": "AZ"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "pittsburgh",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "rochester",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "rochester",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "sacramento",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "san diego",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "st louis",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "the bronx",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "tyler",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "waukesha",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "ascentage investigative site",
+      "city": "winston-salem",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "benefis sletten cancer institute",
+      "city": "great falls",
+      "state": "MT"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "providence hood river memorial hospital",
+      "city": "hood river",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06649812",
+      "facility": "swedish medical center-first hill",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06717347",
+      "facility": "maryland oncology hematology (moh) ( site 8004)",
+      "city": "columbia",
+      "state": "MD"
+    },
+    {
+      "nct_id": "NCT06717347",
+      "facility": "new jersey cancer care ( site 7002)",
+      "city": "belleville",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT06717347",
+      "facility": "oncology and hematology associates ( site 9546)",
+      "city": "springfield",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT06717347",
+      "facility": "oncology associates of oregon, p.c.(willamette valley cancer institute) (wvci) ( site 8001)",
+      "city": "eugene",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT06717347",
+      "facility": "scri oncology partners ( site 7000)",
+      "city": "nashville",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT06747845",
+      "facility": "dana-farber cancer institute",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT06764875",
+      "facility": "research site",
+      "city": "albany",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06764875",
+      "facility": "research site",
+      "city": "evanston",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06788964",
+      "facility": "unc lineberger comprehensive cancer center",
+      "city": "chapel hill",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06795009",
+      "facility": "university of new mexico",
+      "city": "albuquerque",
+      "state": "NM"
+    },
+    {
+      "nct_id": "NCT06795022",
+      "facility": "research site",
+      "city": "hackensack",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT06809114",
+      "facility": "medical university of south carolina musc",
+      "city": "charleston",
+      "state": "SC"
+    },
+    {
+      "nct_id": "NCT06809114",
+      "facility": "scri healthone",
+      "city": "denver",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT06809114",
+      "facility": "yale",
+      "city": "new haven",
+      "state": "CT"
+    },
+    {
+      "nct_id": "NCT06820463",
+      "facility": "university of north carolina at chapel hill /id# 267786",
+      "city": "chapel hill",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06820463",
+      "facility": "university of washington /id# 271298",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06824467",
+      "facility": "city of hope lennar foundation cancer center ( site 0024)",
+      "city": "irvine",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06827236",
+      "facility": "greco hainsworth center for research tennessee oncology",
+      "city": "nashville",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT06846606",
+      "facility": "h lee moffitt cancer center and research institute",
+      "city": "tampa",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06846606",
+      "facility": "memorial sloan kettering cancer center",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06846606",
+      "facility": "roswell park comprehensive cancer center",
+      "city": "buffalo",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT06846606",
+      "facility": "university of texas md anderson cancer center",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06860594",
+      "facility": "vcu massey comprehensive cancer center",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "dana-farber cancer institute",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "highlands oncology group - springdale",
+      "city": "springdale",
+      "state": "AR"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "karmanos cancer institute",
+      "city": "detroit",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "morton plant hospital - baycare health system",
+      "city": "clearwater",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "oncology & hematology of south texas",
+      "city": "laredo",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "ssm health cancer care - fenton",
+      "city": "fenton",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "st. anthony's hospital",
+      "city": "st. petersburg",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "university of alabama at birmingham",
+      "city": "birmingham",
+      "state": "AL"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "university of texas medical branch at galveston",
+      "city": "galveston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06875310",
+      "facility": "velocity clinical research, annapolis",
+      "city": "annapolis",
+      "state": "MD"
+    },
+    {
+      "nct_id": "NCT06925737",
+      "facility": "clermont oncology center ( site 0087)",
+      "city": "clermont",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06925737",
+      "facility": "community cancer institute ( site 0081)",
+      "city": "clovis",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06925737",
+      "facility": "mid florida hematology and oncology center ( site 0086)",
+      "city": "orange city",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06943872",
+      "facility": "texas oncology baylor charles a sammons cancer center",
+      "city": "dallas",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06948084",
+      "facility": "benefis sletten cancer institute",
+      "city": "great falls",
+      "state": "MT"
+    },
+    {
+      "nct_id": "NCT06952504",
+      "facility": "university of cincinnati medical center ( site 5013)",
+      "city": "cincinnati",
+      "state": "OH"
+    },
+    {
+      "nct_id": "NCT06952504",
+      "facility": "university of oklahoma health sciences center, stephenson cancer center ( site 6012)",
+      "city": "oklahoma city",
+      "state": "OK"
+    },
+    {
+      "nct_id": "NCT06952504",
+      "facility": "washington university - school of medicine ( site 5006)",
+      "city": "st louis",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT06966700",
+      "facility": "southern illinois hospital services ( site 9554)",
+      "city": "carterville",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06989112",
+      "facility": "research site",
+      "city": "marshall",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT06989437",
+      "facility": "henry-joyce cancer clinic",
+      "city": "nashville",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT07007312",
+      "facility": "university of kansas",
+      "city": "fairway",
+      "state": "KS"
+    },
+    {
+      "nct_id": "NCT07030712",
+      "facility": "md anderson cancer center ( site 0104)",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07042295",
+      "facility": "the angeles clinic and research institute - west los angeles office",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07043400",
+      "facility": "baylor scott and white medical center temple",
+      "city": "temple",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07059845",
+      "facility": "virginia commonwealth university medical center /id# 277932",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07061977",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07061977",
+      "facility": "corewell health beaumont troy hospital",
+      "city": "troy",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT07061977",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07061977",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07061977",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07061977",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07069712",
+      "facility": "research site",
+      "city": "pittsburgh",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "massey cancer center clinical & translational research lab",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "vcu emergency center at new kent",
+      "city": "quinton",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "vcu health community memorial hospital",
+      "city": "south hill",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "vcu health short pump pavilion",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "vcu health stony point",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "vcu health tappahannock hospital",
+      "city": "tappahannock",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "vcu medical center gateway building",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07144280",
+      "facility": "virginia commonwealth university",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07149363",
+      "facility": "maine medical center",
+      "city": "scarborough",
+      "state": "ME"
+    },
+    {
+      "nct_id": "NCT07149363",
+      "facility": "massachusetts general hospital (mgh)",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT07149363",
+      "facility": "washington university in st. louis school of medicine",
+      "city": "st louis",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT07185997",
+      "facility": "columbia university medical center",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07186842",
+      "facility": "karmanos cancer institute",
+      "city": "detroit",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "clackamas radiation oncology center",
+      "city": "clackamas",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine cancer center delnor",
+      "city": "geneva",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine cancer center kishwaukee",
+      "city": "dekalb",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine cancer center warrenville",
+      "city": "warrenville",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine glenview outpatient center",
+      "city": "glenview",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine grayslake outpatient center",
+      "city": "grayslake",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine lake forest hospital",
+      "city": "lake forest",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine oak brook",
+      "city": "oak brook",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern medicine orland park",
+      "city": "orland park",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "northwestern university",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "providence newberg medical center",
+      "city": "newberg",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07195734",
+      "facility": "providence willamette falls medical center",
+      "city": "oregon city",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07198074",
+      "facility": "providence portland medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07198074",
+      "facility": "providence saint vincent medical center",
+      "city": "portland",
+      "state": "OR"
+    },
+    {
+      "nct_id": "NCT07226986",
+      "facility": "duke univ medical center",
+      "city": "durham",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT07291037",
+      "facility": "research site",
+      "city": "hinsdale",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07310420",
+      "facility": "cancer care northwest",
+      "city": "spokane",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT07310420",
+      "facility": "mission cancer and blood",
+      "city": "des moines",
+      "state": "IA"
+    },
+    {
+      "nct_id": "NCT07310420",
+      "facility": "university of illinois at chicago",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07310420",
+      "facility": "wakemed cancer care - waverly hematology & medical oncology",
+      "city": "cary",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT07326566",
+      "facility": "university of wisconsin carbone cancer center",
+      "city": "madison",
+      "state": "WI"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "um sylvester comprehensive cancer center at coral gables",
+      "city": "coral gables",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "um sylvester comprehensive cancer center at coral springs",
+      "city": "coral springs",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "um sylvester comprehensive cancer center at deerfield beach",
+      "city": "deerfield beach",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "um sylvester comprehensive cancer center at doral",
+      "city": "doral",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "um sylvester comprehensive cancer center at hollywood",
+      "city": "hollywood",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "um sylvester comprehensive cancer center at kendall",
+      "city": "miami",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "um sylvester comprehensive cancer center at plantation",
+      "city": "plantation",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07332507",
+      "facility": "university of miami miller school of medicine-sylvester cancer center",
+      "city": "miami",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07357727",
+      "facility": "rocky mountain cancer centers",
+      "city": "denver",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT07365995",
+      "facility": "nyoh albany cancer center",
+      "city": "albany",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07365995",
+      "facility": "piedmont cancer institute",
+      "city": "atlanta",
+      "state": "GA"
+    },
+    {
+      "nct_id": "NCT07365995",
+      "facility": "start carolinas",
+      "city": "myrtle beach",
+      "state": "SC"
+    },
+    {
+      "nct_id": "NCT07365995",
+      "facility": "tennessee oncology",
+      "city": "nashville",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT07388524",
+      "facility": "swedish cancer institute-edmonds",
+      "city": "edmonds",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT07388524",
+      "facility": "swedish cancer institute-issaquah",
+      "city": "issaquah",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT07388524",
+      "facility": "swedish medical center-first hill",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT07391774",
+      "facility": "rutgers cancer institute of new jersey",
+      "city": "new brunswick",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT07391774",
+      "facility": "the cancer institute at saint francis hospital",
+      "city": "east hills",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07424833",
+      "facility": "mayo clinic",
+      "city": "jacksonville",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07426757",
+      "facility": "smilow cancer hospital - north haven",
+      "city": "north haven",
+      "state": "CT"
+    },
+    {
+      "nct_id": "NCT07426757",
+      "facility": "smilow cancer hospital - yale new haven health",
+      "city": "new haven",
+      "state": "CT"
+    },
+    {
+      "nct_id": "NCT07426757",
+      "facility": "smilow cancer hospital phase 1 unit",
+      "city": "new haven",
+      "state": "CT"
+    },
+    {
+      "nct_id": "NCT07426757",
+      "facility": "yale university - smilow cancer hospital; c/o thomas ferencz, rph, bcop",
+      "city": "new haven",
+      "state": "CT"
+    },
+    {
+      "nct_id": "NCT07426757",
+      "facility": "yale-new haven hospital-yale cancer center",
+      "city": "new haven",
+      "state": "CT"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "fountain valley",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "indianapolis",
+      "state": "IN"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "irvine",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "la jolla",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "macon",
+      "state": "GA"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "orange",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "philadelphia",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "richmond",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "rochester",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "the bronx",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07431281",
+      "facility": "research site",
+      "city": "wilkes-barre",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT07437950",
+      "facility": "benefis sletten cancer institute",
+      "city": "great falls",
+      "state": "MT"
+    },
+    {
+      "nct_id": "NCT07437950",
+      "facility": "university of kentucky/markey cancer center",
+      "city": "lexington",
+      "state": "KY"
+    },
+    {
+      "nct_id": "NCT07463807",
+      "facility": "city of hope comprehensive cancer center",
+      "city": "duarte",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07489495",
+      "facility": "dana farber cancer institute ( site 0135)",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "cancer care specialists for illinois",
+      "city": "o'fallon",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "hattiesburg hematology and oncology clinic",
+      "city": "hattiesburg",
+      "state": "MS"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "kaiser permanente san marcos medical offices",
+      "city": "san marcos",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "missouri cancer associates columbia, mo",
+      "city": "columbia",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "nebraska hematology oncology",
+      "city": "lincoln",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "rocky mountain cancer centers, llp(us oncology research)",
+      "city": "lone tree",
+      "state": "CO"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "texas oncology baylor charles a sammons cancer center",
+      "city": "dallas",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "university of virginia",
+      "city": "charlottesville",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "virginia oncology associates",
+      "city": "norfolk",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07504588",
+      "facility": "benefis sletten cancer institute",
+      "city": "great falls",
+      "state": "MT"
+    },
+    {
+      "nct_id": "NCT07516366",
+      "facility": "uc irvine health/chao family comprehensive cancer center",
+      "city": "orange",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07516366",
+      "facility": "uci health - chao family comprehensive cancer center and ambulatory care",
+      "city": "irvine",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07516366",
+      "facility": "university of virginia cancer center",
+      "city": "charlottesville",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07519772",
+      "facility": "cedar sinai cancer center ( site 0119)",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07525206",
+      "facility": "university of washington /id# 281451",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT07541170",
+      "facility": "renown regional medical center",
+      "city": "reno",
+      "state": "NV"
+    },
+    {
+      "nct_id": "NCT07554521",
+      "facility": "pioneer research center",
+      "city": "bullhead city",
+      "state": "AZ"
+    },
+    {
+      "nct_id": "NCT07555938",
+      "facility": "md anderson cancer center",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07562152",
+      "facility": "university of nebraska medical center",
+      "city": "omaha",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT07590934",
+      "facility": "research site",
+      "city": "omaha",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT07601243",
+      "facility": "beth israel deaconess medical center",
+      "city": "boston",
+      "state": "MA"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "mayo clinic arizona",
+      "city": "phoenix",
+      "state": "AZ"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "mayo clinic florida",
+      "city": "jacksonville",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "mayo clinic rochester",
+      "city": "rochester",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "piedmont cancer institute",
+      "city": "atlanta",
+      "state": "GA"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "university of florida",
+      "city": "gainesville",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07621718",
+      "facility": "vanderbilt-ingram cancer center",
+      "city": "nashville",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT07625644",
+      "facility": "highlands oncology group",
+      "city": "springdale",
+      "state": "AR"
+    },
+    {
+      "nct_id": "NCT07625644",
+      "facility": "opn healthcare",
+      "city": "glendale",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT07625644",
+      "facility": "total health and research center",
+      "city": "miami",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07659782",
+      "facility": "honorhealth research institute",
+      "city": "scottsdale",
+      "state": "AZ"
+    },
+    {
+      "nct_id": "NCT07659782",
+      "facility": "university of chicago",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07659782",
+      "facility": "university of north carolina at chapel hill",
+      "city": "chapel hill",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT07681596",
+      "facility": "research site",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07749586",
+      "facility": "clinical trial site",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07805954",
+      "facility": "honorhealth research institute",
+      "city": "scottsdale",
+      "state": "AZ"
+    },
+    {
+      "nct_id": "NCT07805954",
+      "facility": "mayo clinic arizona",
+      "city": "phoenix",
+      "state": "AZ"
+    },
+    {
+      "nct_id": "NCT07805954",
+      "facility": "mayo clinic florida",
+      "city": "jacksonville",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07805954",
+      "facility": "mayo clinic rochester",
+      "city": "rochester",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT07807163",
+      "facility": "site us069",
+      "city": "baton rouge",
+      "state": "LA"
+    },
+    {
+      "nct_id": "NCT07807163",
+      "facility": "site us073",
+      "city": "roanoke",
+      "state": "VA"
+    },
+    {
+      "nct_id": "NCT07807163",
+      "facility": "site us075",
+      "city": "st. petersburg",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07807163",
+      "facility": "site us076",
+      "city": "west palm beach",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07807163",
+      "facility": "site us077",
+      "city": "fort myers",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07807163",
+      "facility": "site us078",
+      "city": "orlando",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT07824349",
+      "facility": "start san antonio",
+      "city": "san antonio",
+      "state": "TX"
+    }
+  ],
+  "sites_removed_at_existing_trials": [
+    {
+      "nct_id": "NCT01906385",
+      "facility": "northshore university hospital",
+      "city": "manhasset",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT03739814",
+      "facility": "west virginia university healthcare",
+      "city": "morgantown",
+      "state": "WV"
+    },
+    {
+      "nct_id": "NCT04181060",
+      "facility": "alaska oncology and hematology llc",
+      "city": "anchorage",
+      "state": "AK"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "allegiance health",
+      "city": "jackson",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "corewell health farmington hills hospital",
+      "city": "farmington hills",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "greater baltimore medical center",
+      "city": "baltimore",
+      "state": "MD"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "loyola university medical center",
+      "city": "maywood",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT04267848",
+      "facility": "ut southwestern simmons cancer center - redbird",
+      "city": "dallas",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT04665739",
+      "facility": "vanderbilt university/ingram cancer center",
+      "city": "nashville",
+      "state": "TN"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "memorial sloan kettering basking ridge",
+      "city": "basking ridge",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "memorial sloan kettering bergen",
+      "city": "montvale",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "memorial sloan kettering cancer center",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "memorial sloan kettering commack",
+      "city": "commack",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "memorial sloan kettering monmouth",
+      "city": "middletown",
+      "state": "NJ"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "memorial sloan kettering nassau",
+      "city": "uniondale",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04671667",
+      "facility": "memorial sloan kettering westchester",
+      "city": "harrison",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "corewell health farmington hills hospital",
+      "city": "farmington hills",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT04858334",
+      "facility": "nea baptist memorial hospital and fowler family cancer center - jonesboro",
+      "city": "jonesboro",
+      "state": "AR"
+    },
+    {
+      "nct_id": "NCT05058651",
+      "facility": "corewell health farmington hills hospital",
+      "city": "farmington hills",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05139017",
+      "facility": "st. vincent frontier cancer center-research ( site 0108)",
+      "city": "billings",
+      "state": "MT"
+    },
+    {
+      "nct_id": "NCT05382559",
+      "facility": "columbia university - herbert irving comprehensive cancer center",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT05382559",
+      "facility": "florida cancer specialist",
+      "city": "lake mary",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "beacon kalamazoo cancer center",
+      "city": "kalamazoo",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "cancer and hematology centers of western michigan - norton shores",
+      "city": "norton shores",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "trinity health grand rapids hospital",
+      "city": "grand rapids",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "trinity health muskegon hospital",
+      "city": "muskegon",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05633615",
+      "facility": "university of new mexico cancer center",
+      "city": "albuquerque",
+      "state": "NM"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "corewell health farmington hills hospital",
+      "city": "farmington hills",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT05675410",
+      "facility": "valley medical center",
+      "city": "renton",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "affiliated oncologists il",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "carti cancer center",
+      "city": "little rock",
+      "state": "AR"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "hca midwest division",
+      "city": "kansas city",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "holy cross health",
+      "city": "fort lauderdale",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "kelsey seybold clinic",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "presbyterian medical group",
+      "city": "albuquerque",
+      "state": "NM"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "uc irvine medical center",
+      "city": "orange",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "western reg mc-coh phoenix",
+      "city": "goodyear",
+      "state": "AZ"
+    },
+    {
+      "nct_id": "NCT05827081",
+      "facility": "willis-knighton cancer center",
+      "city": "shreveport",
+      "state": "LA"
+    },
+    {
+      "nct_id": "NCT06029270",
+      "facility": "university of illinois",
+      "city": "chicago",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "ais cancer center at san joaquin community hospital",
+      "city": "bakersfield",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06058377",
+      "facility": "corewell health farmington hills hospital",
+      "city": "farmington hills",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06084481",
+      "facility": "start-san antonio",
+      "city": "san antonio",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06123338",
+      "facility": "university of pennsylvania (data collection only)",
+      "city": "philadelphia",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT06126276",
+      "facility": "university of oklahoma health sciences center",
+      "city": "oklahoma city",
+      "state": "OK"
+    },
+    {
+      "nct_id": "NCT06127407",
+      "facility": "usc norris comprehensive cancer center",
+      "city": "los angeles",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06312176",
+      "facility": "archbold memorial hospital-lewis hall singletary oncology center ( site 0032)",
+      "city": "thomasville",
+      "state": "GA"
+    },
+    {
+      "nct_id": "NCT06312176",
+      "facility": "yale cancer center ( site 0060)",
+      "city": "new haven",
+      "state": "CT"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "kaiser permanente-fresno",
+      "city": "fresno",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06317649",
+      "facility": "kaiser permanente-modesto",
+      "city": "modesto",
+      "state": "CA"
+    },
+    {
+      "nct_id": "NCT06545331",
+      "facility": "georgetown university medical center",
+      "city": "washington d.c.",
+      "state": "DC"
+    },
+    {
+      "nct_id": "NCT06629779",
+      "facility": "adult & pediatric urology, pc",
+      "city": "omaha",
+      "state": "NE"
+    },
+    {
+      "nct_id": "NCT06641414",
+      "facility": "md anderson cancer center",
+      "city": "houston",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT06672146",
+      "facility": "allegiance health",
+      "city": "jackson",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06672146",
+      "facility": "henry ford hospital",
+      "city": "detroit",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06672146",
+      "facility": "henry ford macomb hospital-clinton township",
+      "city": "clinton township",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06672146",
+      "facility": "henry ford medical center-columbus",
+      "city": "novi",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06672146",
+      "facility": "henry ford west bloomfield hospital",
+      "city": "west bloomfield",
+      "state": "MI"
+    },
+    {
+      "nct_id": "NCT06712316",
+      "facility": "ssm health cancer care - st. clare",
+      "city": "fenton",
+      "state": "MO"
+    },
+    {
+      "nct_id": "NCT06717347",
+      "facility": "cotton o'neil cancer center ( site 0108)",
+      "city": "topeka",
+      "state": "KS"
+    },
+    {
+      "nct_id": "NCT06764875",
+      "facility": "research site",
+      "city": "burnsville",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT06820463",
+      "facility": "university of north carolina medical center /id# 267786",
+      "city": "chapel hill",
+      "state": "NC"
+    },
+    {
+      "nct_id": "NCT06820463",
+      "facility": "university of washington-fred hutchinson cancer center - seattle /id# 271298",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT06841354",
+      "facility": "allina health cancer institute ( site 0069)",
+      "city": "minneapolis",
+      "state": "MN"
+    },
+    {
+      "nct_id": "NCT06890338",
+      "facility": "mount sinai medical center /id# 274868",
+      "city": "miami beach",
+      "state": "FL"
+    },
+    {
+      "nct_id": "NCT06925737",
+      "facility": "the gw medical faculty associates ( site 0057)",
+      "city": "washington d.c.",
+      "state": "DC"
+    },
+    {
+      "nct_id": "NCT06943872",
+      "facility": "texas oncology baylorcharles a sammons cancer center",
+      "city": "dallas",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07043400",
+      "facility": "scott and white memorial hospital",
+      "city": "temple",
+      "state": "TX"
+    },
+    {
+      "nct_id": "NCT07069712",
+      "facility": "research site",
+      "city": "new york",
+      "state": "NY"
+    },
+    {
+      "nct_id": "NCT07198074",
+      "facility": "ascension saint vincent indianapolis hospital",
+      "city": "indianapolis",
+      "state": "IN"
+    },
+    {
+      "nct_id": "NCT07310420",
+      "facility": "northshore university healthsystem - evanston hospital",
+      "city": "evanston",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07463807",
+      "facility": "ecog-acrin cancer research group",
+      "city": "philadelphia",
+      "state": "PA"
+    },
+    {
+      "nct_id": "NCT07492641",
+      "facility": "cancer care specialists for illinois",
+      "city": "ofallon",
+      "state": "IL"
+    },
+    {
+      "nct_id": "NCT07525206",
+      "facility": "university of washington-fred hutchinson cancer center - seattle /id# 281451",
+      "city": "seattle",
+      "state": "WA"
+    },
+    {
+      "nct_id": "NCT07625644",
+      "facility": "los alamitos hematology/oncology medical group",
+      "city": "glendale",
+      "state": "CA"
+    }
+  ],
+  "county_changes": [
+    {
+      "county": "Washington County, Oregon",
+      "fips": "41067",
+      "from": 83,
+      "to": 106
+    },
+    {
+      "county": "Clackamas County, Oregon",
+      "fips": "41005",
+      "from": 40,
+      "to": 59
+    },
+    {
+      "county": "Yamhill County, Oregon",
+      "fips": "41071",
+      "from": 32,
+      "to": 51
+    },
+    {
+      "county": "Multnomah County, Oregon",
+      "fips": "41051",
+      "from": 272,
+      "to": 287
+    },
+    {
+      "county": "Richmond city, Virginia",
+      "fips": "51760",
+      "from": 154,
+      "to": 161
+    },
+    {
+      "county": "King County, Washington",
+      "fips": "53033",
+      "from": 387,
+      "to": 393
+    },
+    {
+      "county": "St. Louis city, Missouri",
+      "fips": "29510",
+      "from": 370,
+      "to": 376
+    },
+    {
+      "county": "Durham County, North Carolina",
+      "fips": "37063",
+      "from": 252,
+      "to": 258
+    },
+    {
+      "county": "Cascade County, Montana",
+      "fips": "30013",
+      "from": 68,
+      "to": 73
+    },
+    {
+      "county": "Orange County, North Carolina",
+      "fips": "37135",
+      "from": 183,
+      "to": 187
+    },
+    {
+      "county": "Orange County, Florida",
+      "fips": "12095",
+      "from": 162,
+      "to": 166
+    },
+    {
+      "county": "Peoria County, Illinois",
+      "fips": "17143",
+      "from": 98,
+      "to": 102
+    },
+    {
+      "county": "Macon County, Illinois",
+      "fips": "17115",
+      "from": 85,
+      "to": 89
+    },
+    {
+      "county": "Suffolk County, Massachusetts",
+      "fips": "25025",
+      "from": 638,
+      "to": 641
+    },
+    {
+      "county": "Nassau County, New York",
+      "fips": "36059",
+      "from": 401,
+      "to": 398
+    },
+    {
+      "county": "Maricopa County, Arizona",
+      "fips": "04013",
+      "from": 373,
+      "to": 376
+    },
+    {
+      "county": "Bexar County, Texas",
+      "fips": "48029",
+      "from": 310,
+      "to": 313
+    },
+    {
+      "county": "Duval County, Florida",
+      "fips": "12031",
+      "from": 256,
+      "to": 259
+    },
+    {
+      "county": "Denver County, Colorado",
+      "fips": "08031",
+      "from": 206,
+      "to": 209
+    },
+    {
+      "county": "Jefferson County, Alabama",
+      "fips": "01073",
+      "from": 172,
+      "to": 175
+    },
+    {
+      "county": "Fulton County, Georgia",
+      "fips": "13121",
+      "from": 165,
+      "to": 168
+    },
+    {
+      "county": "Sacramento County, California",
+      "fips": "06067",
+      "from": 159,
+      "to": 162
+    },
+    {
+      "county": "Erie County, New York",
+      "fips": "36029",
+      "from": 154,
+      "to": 157
+    },
+    {
+      "county": "Sangamon County, Illinois",
+      "fips": "17167",
+      "from": 82,
+      "to": 85
+    },
+    {
+      "county": "Waukesha County, Wisconsin",
+      "fips": "55133",
+      "from": 73,
+      "to": 76
+    },
+    {
+      "county": "East Baton Rouge Parish, Louisiana",
+      "fips": "22033",
+      "from": 71,
+      "to": 74
+    },
+    {
+      "county": "McLean County, Illinois",
+      "fips": "17113",
+      "from": 66,
+      "to": 69
+    },
+    {
+      "county": "Chesterfield County, Virginia",
+      "fips": "51041",
+      "from": 66,
+      "to": 69
+    },
+    {
+      "county": "Montgomery County, Pennsylvania",
+      "fips": "42091",
+      "from": 66,
+      "to": 69
+    },
+    {
+      "county": "Norfolk city, Virginia",
+      "fips": "51710",
+      "from": 65,
+      "to": 68
+    },
+    {
+      "county": "Snohomish County, Washington",
+      "fips": "53061",
+      "from": 58,
+      "to": 61
+    },
+    {
+      "county": "Tazewell County, Illinois",
+      "fips": "17179",
+      "from": 57,
+      "to": 60
+    },
+    {
+      "county": "LaSalle County, Illinois",
+      "fips": "17099",
+      "from": 57,
+      "to": 60
+    },
+    {
+      "county": "Knox County, Illinois",
+      "fips": "17095",
+      "from": 56,
+      "to": 59
+    },
+    {
+      "county": "McDonough County, Illinois",
+      "fips": "17109",
+      "from": 52,
+      "to": 55
+    },
+    {
+      "county": "Fulton County, Illinois",
+      "fips": "17057",
+      "from": 52,
+      "to": 55
+    },
+    {
+      "county": "Bureau County, Illinois",
+      "fips": "17011",
+      "from": 51,
+      "to": 54
+    },
+    {
+      "county": "Hancock County, Illinois",
+      "fips": "17067",
+      "from": 51,
+      "to": 54
+    },
+    {
+      "county": "Woodford County, Illinois",
+      "fips": "17203",
+      "from": 51,
+      "to": 54
+    },
+    {
+      "county": "Henry County, Illinois",
+      "fips": "17073",
+      "from": 51,
+      "to": 54
+    },
+    {
+      "county": "Hood River County, Oregon",
+      "fips": "41027",
+      "from": 12,
+      "to": 15
+    },
+    {
+      "county": "Los Angeles County, California",
+      "fips": "06037",
+      "from": 949,
+      "to": 951
+    },
+    {
+      "county": "Orange County, California",
+      "fips": "06059",
+      "from": 425,
+      "to": 427
+    },
+    {
+      "county": "Franklin County, Ohio",
+      "fips": "39049",
+      "from": 403,
+      "to": 405
+    },
+    {
+      "county": "Miami-Dade County, Florida",
+      "fips": "12086",
+      "from": 369,
+      "to": 371
+    },
+    {
+      "county": "Westchester County, New York",
+      "fips": "36119",
+      "from": 244,
+      "to": 242
+    },
+    {
+      "county": "Monmouth County, New Jersey",
+      "fips": "34025",
+      "from": 237,
+      "to": 235
+    },
+    {
+      "county": "Somerset County, New Jersey",
+      "fips": "34035",
+      "from": 225,
+      "to": 223
+    },
+    {
+      "county": "Milwaukee County, Wisconsin",
+      "fips": "55079",
+      "from": 218,
+      "to": 220
+    },
+    {
+      "county": "Hennepin County, Minnesota",
+      "fips": "27053",
+      "from": 214,
+      "to": 216
+    },
+    {
+      "county": "Broward County, Florida",
+      "fips": "12011",
+      "from": 196,
+      "to": 198
+    },
+    {
+      "county": "Oklahoma County, Oklahoma",
+      "fips": "40109",
+      "from": 190,
+      "to": 192
+    },
+    {
+      "county": "Mecklenburg County, North Carolina",
+      "fips": "37119",
+      "from": 162,
+      "to": 164
+    },
+    {
+      "county": "Dane County, Wisconsin",
+      "fips": "55025",
+      "from": 157,
+      "to": 159
+    },
+    {
+      "county": "Bronx County, New York",
+      "fips": "36005",
+      "from": 154,
+      "to": 156
+    },
+    {
+      "county": "Tarrant County, Texas",
+      "fips": "48439",
+      "from": 119,
+      "to": 121
+    },
+    {
+      "county": "Shelby County, Tennessee",
+      "fips": "47157",
+      "from": 118,
+      "to": 120
+    },
+    {
+      "county": "Oakland County, Michigan",
+      "fips": "26125",
+      "from": 118,
+      "to": 120
+    },
+    {
+      "county": "Jackson County, Missouri",
+      "fips": "29095",
+      "from": 107,
+      "to": 105
+    },
+    {
+      "county": "St. Clair County, Illinois",
+      "fips": "17163",
+      "from": 98,
+      "to": 100
+    }
+  ]
 }

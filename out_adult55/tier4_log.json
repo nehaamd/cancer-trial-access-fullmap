@@ -4,18 +4,18 @@
   "method": "Candidate universe. Existing facilities capable of hosting a trial, from the supplied candidates file (intended: Commission on Cancer-accredited programs plus NCORP affiliates; the stand-in used when those were unreachable is every US facility that hosted an interventional oncology treatment trial started 2016 or later on ClinicalTrials.gov). Candidates are excluded if (a) their county already hosts a limited menu (20 or more listed trials) or (b) the facility itself already hosts a listed trial today; an entry that is a telemedicine service rather than a place, or is listed under a mistyped ZIP code, is not a candidate. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and joined to the highway network like every other point in this project.\n\nObjective (primary). Residents aged 55+ who today have no listed cancer treatment trial within 60 road-miles of their census tract's population center, and who would have one if a trial opened at the candidate (i.e. the candidate is within 60 road-miles of their tract). Secondary view: the same, for residents who today have fewer than 20 such trials within 60 road-miles.\n\nOutput. Every candidate ranked by the population 55+ it would newly cover (primary objective), and a greedy sequence: the best candidate is chosen, the residents it covers are removed, and the next best is chosen, for up to 25 steps, with the cumulative coverage curve. Marginal population is measured on the same road graph and tract data as the rest of the map.\n\nThis is not a recommendation to build anything. It identifies which existing, trial-capable facilities sit nearest to the largest currently uncovered older populations.",
   "uncovered_pop55": {
     "zero_trials_within_60rdmi": 4336238,
-    "lt20_trials_within_60rdmi": 11982755
+    "lt20_trials_within_60rdmi": 11906176
   },
   "candidates_read": 23667,
   "excluded_not_a_place_or_mistyped_zip": 129,
-  "excluded_county_has_limited_menu": 20664,
-  "excluded_facility_already_recruiting": 902,
+  "excluded_county_has_limited_menu": 20675,
+  "excluded_facility_already_recruiting": 898,
   "geocode": {
-    "zip": 1703,
-    "city_large_zip": 214,
+    "zip": 1702,
+    "city_large_zip": 208,
     "city": 55
   },
-  "candidates_evaluated": 1917,
+  "candidates_evaluated": 1910,
   "excluded_unlocated_or_far": 55,
   "excluded_unlocated_or_far_detail": {
     "not_geocoded": 0,
@@ -431,5 +431,5 @@
       "pop55_newly_covered_lt20": 78157
     }
   ],
-  "seconds": 40
+  "seconds": 46
 }

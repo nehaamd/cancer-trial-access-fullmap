@@ -148,10 +148,10 @@
   },
   "road_over_straightline_ratio_broad": {
     "median": 1.181,
-    "p10": 1.087,
-    "p90": 1.336,
-    "counties_where_x1_2_underestimated": 1271,
-    "counties_compared": 3026
+    "p10": 1.088,
+    "p90": 1.337,
+    "counties_where_x1_2_underestimated": 1274,
+    "counties_compared": 3023
   },
-  "seconds": 108
+  "seconds": 146
 }

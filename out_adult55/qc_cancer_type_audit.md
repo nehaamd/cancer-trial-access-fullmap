@@ -1,8 +1,8 @@
 # Cancer-type classification audit
 
-5,278 distinct condition strings across 4,271 eligible trials · 64 strings flagged · **0 not yet reviewed**
+5,298 distinct condition strings across 4,283 eligible trials · 67 strings flagged · **0 not yet reviewed**
 
-## Matched inside a longer word (40)
+## Matched inside a longer word (43)
 
 | Reviewed | Category | Condition string | Trials | Example |
 |---|---|---|---|---|
@@ -39,8 +39,11 @@
 | yes | sarcoma | Neurofibromatosis Type 1 (NF1)-Related Plexiform Neurofibromas (PNs) | 1 | NCT06961565 |
 | yes | sarcoma | Neurofibromatosis Type 2 | 1 | NCT04374305 |
 | yes | brain_cns | Oligoastrocytoma | 1 | NCT04623931 |
+| yes | liver_biliary | Pancreatobiliary Cancers | 1 | NCT07769502 |
 | yes | liver_biliary | Pancreatobiliary Carcinoma | 1 | NCT04221893 |
 | yes | brain_cns | Pleomorphic Xanthoastrocytoma | 1 | NCT04541082 |
+| yes | other_named | Recurrent Ganglioneuroblastoma | 1 | NCT07437963 |
+| yes | other_named | Refractory Ganglioneuroblastoma | 1 | NCT07437963 |
 | yes | sarcoma | Sclerosing Epithelioid Fibrosarcoma | 1 | NCT06239272 |
 | yes | sarcoma | Unresectable Leiomyosarcoma | 2 | NCT05711615 |
 | yes | sarcoma | Unresectable Myxofibrosarcoma | 1 | NCT05711615 |

@@ -1,14 +1,14 @@
 {
-  "trials_raw": 4485,
-  "excluded_non_oncology_rule": 214,
-  "trials_kept": 4271,
-  "site_rows_kept": 57971,
+  "trials_raw": 4498,
+  "excluded_non_oncology_rule": 215,
+  "trials_kept": 4283,
+  "site_rows_kept": 58366,
   "route": {
-    "oral": 1726,
-    "non_oral": 2072,
-    "indeterminate": 473
+    "oral": 1728,
+    "non_oral": 2083,
+    "indeterminate": 472
   },
-  "excludes_55plus": 258,
+  "excludes_55plus": 257,
   "nci_treating_centers": 68,
   "nci_adult_locations": 67,
   "nci_adult_centers": 65,
