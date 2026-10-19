@@ -3,6 +3,13 @@
 #   burden (NCT05552755, NCT06950385, NCT05919264), so the colorectal filter is right; "polyp" only reads as benign to the audit.
 #   brain_cns / Benign Centrally-Located Intracranial Tumors: intracranial tumours (hypothalamic hamartoma, NCT03028246, ages up to 22, not
 #   listed); "benign" reads as non-neoplastic to the audit, and the CNS category is the right one.
+# 19 Oct 2026, registry review (the refresh of 19 Oct stopped on these; the classifier is right in each case, so they are accepted as reviewed):
+#   liver_biliary / Pancreatobiliary Cancers: NCT07769502 (AbbVie, phase 2, adults 18+, one US site, Hattiesburg MS) lists "Pancreatobiliary
+#   Cancers" and "Pancreatic Ductal Adenocarcinoma"; "biliary" is read inside the longer word. Pancreatobiliary means pancreatic and biliary
+#   tract cancers, so the trial is filed as multiple named cancers (liver_biliary + pancreatic) and shows under both filters, which is right.
+#   other_named / Recurrent and Refractory Ganglioneuroblastoma: NCT07437963 (NCI / Children's Oncology Group, ages 1-30); "neuroblastoma" is read
+#   inside the longer word. Ganglioneuroblastoma is a neuroblastic tumour and belongs with neuroblastoma in "Other named cancer". The trial's
+#   upper age of 30 keeps it out of the 55+ analysis; the audit reads the raw pull, so the string still needs recording.
 bladder_urothelial	Urinary Tract Infection
 brain_cns	Anaplastic Oligoastrocytoma
 brain_cns	Anaplastic Pleomorphic Xanthoastrocytoma
@@ -27,6 +34,7 @@ leukemia	Acute Myeloid Leukemia, Myelodysplasia-Related
 liver_biliary	Hepatitis B Virus Related Hepatocellular Carcinoma
 liver_biliary	Hepatopancreaticobiliary (HPB) Malignancy
 liver_biliary	Hepatopancreaticobiliary and Foregut Operations
+liver_biliary	Pancreatobiliary Cancers
 liver_biliary	Pancreatobiliary Carcinoma
 lymphoma	Hydroa Vacciniforme-Like Lymphoproliferative Disorder
 mds_mpn	Acute Myeloid Leukemia With Myelodysplasia-Related Changes
@@ -36,6 +44,8 @@ mds_mpn	Myelodysplasia
 melanoma_skin	Merkel Cell Polyomavirus Infection
 other_named	Ganglioneuroblastoma
 other_named	Ganglioneuroblastoma, Nodular
+other_named	Recurrent Ganglioneuroblastoma
+other_named	Refractory Ganglioneuroblastoma
 pancreatic	Gastroenteropancreatic NEC (GEP NEC)
 pancreatic	Gastroenteropancreatico Tumors
 pancreatic	Hepatopancreaticobiliary (HPB) Malignancy
