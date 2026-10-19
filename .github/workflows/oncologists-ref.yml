@@ -4,9 +4,6 @@
 name: Refresh oncologist reference data
 on:
   workflow_dispatch:
-  push:
-    branches: [feat/oncologists-layer]
-    paths: [fetch_oncologists.py, .github/workflows/oncologists-ref.yml]
 permissions:
   contents: write
 concurrency:
