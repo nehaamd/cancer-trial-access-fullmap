@@ -1,5 +1,5 @@
 {
- "built": "2026-10-19",
+ "built": "2026-10-26",
  "period": "2020-2024",
  "tertiles_all": [
   151.4,
@@ -7,20 +7,20 @@
  ],
  "national": {
   "counties_classified": 3083,
-  "hh_counties": 473,
-  "hh_pop55": 3328898,
-  "hh_deaths": 27042,
-  "hh_small": 86,
+  "hh_counties": 472,
+  "hh_pop55": 3341107,
+  "hh_deaths": 27140,
+  "hh_small": 84,
   "cells": {
-   "hh": 473,
-   "h_only": 534,
-   "l_only": 787,
-   "neither": 1289
+   "hh": 472,
+   "h_only": 535,
+   "l_only": 779,
+   "neither": 1297
   },
   "tertile_low_access": {
-   "1": 446,
-   "2": 341,
-   "3": 473
+   "1": 440,
+   "2": 339,
+   "3": 472
   },
   "tertile_counties": {
    "1": 1098,

@@ -1,19 +1,19 @@
 {
   "age_filter": "trials with maximum age < 55 excluded (n=257)",
-  "site_rows": 54555,
+  "site_rows": 54888,
   "site_assignment": {
-    "zip": 52008,
-    "zip3": 1805,
-    "zip_pop": 293,
-    "city_over_zip3": 188,
+    "zip": 52323,
+    "zip3": 1818,
+    "zip_pop": 296,
+    "city_over_zip3": 187,
     "virtual_site": 108,
-    "city_gazetteer": 97,
+    "city_gazetteer": 100,
     "zip_typo_corrected": 25,
-    "zip_state_corrected": 19,
-    "facility_listing": 7,
+    "zip_state_corrected": 18,
+    "facility_listing": 8,
     "unassigned": 5
   },
-  "distinct_trials": 4026,
+  "distinct_trials": 4023,
   "counties": 3143,
   "counties_with_any_trial": 825,
   "broad_menu_counties": 85,
@@ -30,10 +30,10 @@
     "wmean_dist_to_nci_mi": 77.8,
     "wmean_trials_within_60mi": 366.0,
     "wmean_oral_trials_within_60mi": 169.0,
-    "wmean_oral_indeterminate_within_60mi": 43.0,
+    "wmean_oral_indeterminate_within_60mi": 44.0,
     "pct_pop55_beyond_60mi_of_broad_menu": 36.6,
-    "pct_pop55_beyond_60mi_of_limited_menu": 12.7,
+    "pct_pop55_beyond_60mi_of_limited_menu": 12.6,
     "pct_pop55_beyond_120mi_of_broad_menu": 18.8,
-    "pct_pop55_beyond_120mi_of_limited_menu": 3.1
+    "pct_pop55_beyond_120mi_of_limited_menu": 3.0
   }
 }
