@@ -12,15 +12,15 @@ step,name,placeholder,city,state,county,pop55_newly_covered,cumulative_pop55_cov
 11,Island Urology-Hilo,0,Hilo,HI,"Hawaii, Hawaii",46880,793083,18.3,19.6887,-155.0829
 12,Andalusia,1,Andalusia,AL,"Covington, Alabama",44115,837198,19.3,31.3094,-86.478
 13,Saint Joseph Regional Medical Center,0,Lewiston,ID,"Nez Perce, Idaho",44002,881200,20.3,46.3931,-116.9935
-14,Champlain Valley Physicians Hospital Medical Center,0,Plattsburgh,NY,"Clinton, New York",40989,922189,21.3,44.7091,-73.4735
+14,Champlain Valley Physicians Hospital Medical Center,0,Plattsburgh,NY,"Clinton, New York",40989,922189,21.2,44.7091,-73.4735
 15,Pinnacle Research Group,0,Anniston,AL,"Calhoun, Alabama",37455,959644,22.1,33.6841,-85.7052
 16,IU Health Bloomington,0,Bloomington,IN,"Monroe, Indiana",34242,993886,22.9,39.0852,-86.6123
 17,Arizona Arthritis and Rheumatology Research PLLC 3,0,Flagstaff,AZ,"Coconino, Arizona",30311,1024197,23.6,35.1852,-111.6207
 18,Deaconess Clinic,0,Evansville,IN,"Vanderburgh, Indiana",26116,1050313,24.2,37.9485,-87.5555
 19,Georgia Cancer Specialists - Blairsville,0,Blairsville,GA,"Union, Georgia",25858,1076171,24.8,34.8568,-83.968
-20,Minot,1,Minot,ND,"Ward, North Dakota",23892,1100063,25.4,48.2361,-101.2775
-21,GenesisCare USA - Key West,0,Key West,FL,"Monroe, Florida",20723,1120786,25.9,24.5446,-81.9217
+20,Minot,1,Minot,ND,"Ward, North Dakota",23892,1100063,25.3,48.2361,-101.2775
+21,GenesisCare USA - Key West,0,Key West,FL,"Monroe, Florida",20723,1120786,25.8,24.5446,-81.9217
 22,Regional West Medical Center,0,Scottsbluff,NE,"Sioux, Nebraska",19620,1140406,26.3,41.8681,-103.662
 23,Unity Health- Searcy Medical Center,0,Searcy,AR,"White, Arkansas",18592,1158998,26.7,35.2267,-91.7368
-24,Ottumwa Regional Health Center,0,Ottumwa,IA,"Wapello, Iowa",18545,1177543,27.2,41.0444,-92.4291
-25,"Saint Bernards Medical Center,4000 Linwood Drive",0,Paragould,AR,"Greene, Arkansas",18208,1195751,27.6,36.0795,-90.5164
+24,Ottumwa Regional Health Center,0,Ottumwa,IA,"Wapello, Iowa",18545,1177543,27.1,41.0444,-92.4291
+25,"Saint Bernards Medical Center,4000 Linwood Drive",0,Paragould,AR,"Greene, Arkansas",18208,1195751,27.5,36.0795,-90.5164

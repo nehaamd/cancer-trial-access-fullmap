@@ -1,20 +1,20 @@
 {
-  "site_rows": 54775,
+  "site_rows": 55103,
   "geocode": {
-    "zip_centroid": 50024,
-    "city_centroid_large_zip": 2356,
-    "city_centroid": 2095,
-    "city_centroid_zip_spans_counties": 257,
+    "zip_centroid": 50321,
+    "city_centroid_large_zip": 2370,
+    "city_centroid": 2111,
+    "city_centroid_zip_spans_counties": 258,
     "zip_typo_corrected": 25,
     "county_centroid": 10,
     "facility_listing": 8
   },
   "unlocated_rows": 0,
   "unlocated_list": [],
-  "site_points": 2423,
+  "site_points": 2425,
   "site_points_off_network_gt30mi": 0,
-  "tract_sitepoint_pairs_within_120": 5767538,
-  "county_sitepoint_pairs_within_120": 97566,
+  "tract_sitepoint_pairs_within_120": 5765984,
+  "county_sitepoint_pairs_within_120": 97477,
   "screen_site_near_in_straight_line_far_by_road": {
     "rule": "contiguous states; nearest site point within 20 straight-line miles, none within 60 road-miles",
     "tracts": 21,
@@ -47,5 +47,5 @@
       }
     ]
   },
-  "seconds": 95
+  "seconds": 81
 }
