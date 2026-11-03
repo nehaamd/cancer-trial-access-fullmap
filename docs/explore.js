@@ -34,7 +34,7 @@ window.EXPLORE = (function () {
 
   // ---- the local summary: a few plain sentences with their numbers (the same figures the map and brief show) ----
   function facts(pl) {
-    const F = []; const st = stateOf(pl); const n20 = pl.kind === 'nat' && pl.people_l20 ? pl.people_l20 : pl.p * pl.l20 / 100, n0 = pl.kind === 'nat' && pl.people_z60 ? pl.people_z60 : pl.p * pl.z60 / 100;   // nation: tract sums, as on the map
+    const F = []; const st = stateOf(pl); const n20 = pl.kind === 'nat' && pl.people_l20 ? pl.people_l20 : Number.isFinite(pl.n_l20) ? pl.n_l20 : pl.p * pl.l20 / 100, n0 = pl.kind === 'nat' && pl.people_z60 ? pl.people_z60 : Number.isFinite(pl.n_z60) ? pl.n_z60 : pl.p * pl.z60 / 100;   // nation and counties: tract sums, as on the map; states and districts: rounded back from the share
     const where = pl.kind === 'county' ? 'in ' + pl.n : pl.kind === 'district' ? 'in ' + pl.label : pl.kind === 'state' ? 'in ' + pl.name : 'in the United States';
     F.push({ id: 'short', num: pct(pl.l20), unit: '%', hot: pl.l20 >= 50,
       text: `of residents 55 and older ${where} — ${people(n20)} people — have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. ${n0 < 1 ? (n20 >= 1 ? 'None has fewer than one: everyone here has at least one listed trial within 60 road-miles.' : 'Everyone here has at least one listed trial within that distance.') : `${pct(pl.z60)}% (${people(n0)}) have none.`}`,

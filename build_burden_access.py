@@ -52,6 +52,10 @@ def main():
     W = g.pop55.sum().astype(float)
     def share(mask): return (pd.Series(w * mask, index=tr.index).groupby(tr.county_fips).sum() / W * 100).round(1)
     l20 = share(tr.trials_within_60rdmi.values < 20); z60 = share(tr.trials_within_60rdmi.values == 0)
+    # the residents behind each share, as exact tract sums (n_l20 / n_z60): the pages print these counts, and a count rounded back from a
+    # one-decimal share differed from the tract recount a moved trial-count line prints (Yavapai AZ: 121,759 at the 20-trial line, 121,769 at 5)
+    def count(mask): return pd.Series(w * mask, index=tr.index).groupby(tr.county_fips).sum().round().astype(int)
+    n_l20 = count(tr.trials_within_60rdmi.values < 20); n_z60 = count(tr.trials_within_60rdmi.values == 0)
     t60 = (pd.Series(w * tr.trials_within_60rdmi.values, index=tr.index).groupby(tr.county_fips).sum() / W).round().astype(int)
     zt = {t: share(tr[c].values == 0) for t, c in zip(types, tcols)}
     # the typical resident: population-weighted median of trials within 60 road-miles over the county's tracts (the map's shading;
@@ -60,7 +64,7 @@ def main():
         d = d.sort_values("trials_within_60rdmi"); cw = d.pop55.cumsum().values; half = d.pop55.sum() / 2
         return int(d.trials_within_60rdmi.values[min(int(np.searchsorted(cw, half)), len(d) - 1)]) if half > 0 else int(d.trials_within_60rdmi.median())
     t60m = g.apply(wmedian)
-    county = {f: {"l20": float(l20[f]), "z60": float(z60[f]), "t60": int(t60[f]), "t60m": int(t60m[f]), "zt": [float(zt[t][f]) for t in types]} for f in W.index}
+    county = {f: {"l20": float(l20[f]), "z60": float(z60[f]), "n_l20": int(n_l20[f]), "n_z60": int(n_z60[f]), "t60": int(t60[f]), "t60m": int(t60m[f]), "zt": [float(zt[t][f]) for t in types]} for f in W.index}
     # incidence, from the same file the payload uses
     inc = pd.read_csv(find("cancer_incidence_county.csv"), dtype={"county_fips": str})
     medians = {s: (round(float(gg[gg.status == "ok"].rate.median()), 1) if (gg.status == "ok").any() else None) for s, gg in inc.groupby("site")}
