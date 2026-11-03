@@ -125,6 +125,9 @@ def aggregate(tr):
         wm = lambda c: float((g[c] * g.w).sum() / W); pct = lambda mask: round(100 * float(g.loc[mask, "w"].sum() / W), 1)
         def modal(g_, name, dist):   # the target most residents with a road route are nearest to; the no-route label only when nobody has a route
             h = g_[g_[dist] < NOROAD]; return (h if len(h) else g_).groupby(name).w.sum().idxmax()
+        def shares(g_, name, dist, top=3):   # the targets nearest to the most residents, as [name, % of all residents 55+] for the top few (residents with a road route; the
+            h = g_[g_[dist] < NOROAD]; s = h.groupby(name).w.sum().sort_values(ascending=False).head(top)   # rest, incl. no-route, is the remainder to 100). JSON, one cell
+            return json.dumps([[n, round(100 * float(v) / W, 1)] for n, v in s.items()])
         def wmed(c):   # population-weighted median over residents with a road route; NOROAD when no resident has one
             s = g[g[c] < NOROAD].sort_values(c); Wr = s.w.sum()
             return float(s.loc[s.w.cumsum() >= Wr / 2, c].iloc[0]) if Wr > 0 else NOROAD
@@ -137,7 +140,8 @@ def aggregate(tr):
              "median_road_mi_nci": round(wmed("road_mi_nci"), 0), "median_road_mi_broad_menu": round(wmed("road_mi_broad"), 0), "median_road_mi_limited_menu": round(wmed("road_mi_lim"), 0),
              "wmean_trials_within_60rdmi": round(wm("trials_within_60rdmi"), 0), "wmean_trials_within_30rdmi": round(wm("trials_within_30rdmi"), 0),
              "wmean_trials_within_120rdmi": round(wm("trials_within_120rdmi"), 0), "wmean_trials_in_own_county": round(wm("trials_in_own_county"), 0),
-             "modal_nearest_nci": modal(g, "nearest_nci", "road_mi_nci"), "modal_nearest_broad": modal(g, "nearest_broad", "road_mi_broad")}
+             "modal_nearest_nci": modal(g, "nearest_nci", "road_mi_nci"), "modal_nearest_broad": modal(g, "nearest_broad", "road_mi_broad"),
+             "nearest_nci_shares": shares(g, "nearest_nci", "road_mi_nci"), "nearest_broad_shares": shares(g, "nearest_broad", "road_mi_broad")}
         for c in tcols: r["wmean_" + c] = round(wm(c), 0)
         def wm_avail(c):
             m = g[c].notna(); Wm = g.loc[m, "w"].sum(); return (round(float((g.loc[m, c] * g.loc[m, "w"]).sum() / Wm), 1) if Wm > 0 else None, round(100 * float(Wm / W), 1))

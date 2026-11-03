@@ -1,6 +1,6 @@
 # Release gate
 
-**PASS** — 33/33 checks pass
+**PASS** — 34/34 checks pass
 
 | Check | Detail | Result |
 |---|---|---|
@@ -23,6 +23,7 @@
 | County trial-site total moved less than 15% since the previous pull | 39,419 -> 39,552 | ✓ |
 | Local route checks (12 short trips, 11 water crossings; road_local_checks.csv) | 23/23 within tolerance | ✓ |
 | Residents 55+ with a site within 20 straight-line miles but none within 60 road-miles (ceiling 100,000; water barriers explain the rest) | 20,970 in 21 tracts; largest: Clinton, New York 10,361, Island, Washington 6,719, Essex, New York 2,692, Knox, Maine 1,064 | ✓ |
+| Next-nearest NCI centers agree with the nearest (all-pairs ranking vs single-source routing) | first-ranked center differs for 0 counties; max miles difference 0.05; 3108 counties have a second center by road, 3108 a third | ✓ |
 | Router vs published city-pair distances (mean difference below 5%, every pair routable) | 38 pairs, mean 3.1%, max 13.3%, unroutable 0 | ✓ |
 | No site row drawn at a county center when its stated city lies elsewhere | 0 rows left unlocated and dropped; county-center placements: 10 | ✓ |
 | No county whose only located sites sit at the county center (ZIP and city both unknown) | 10 such rows; counties with nothing else: 0 | ✓ |

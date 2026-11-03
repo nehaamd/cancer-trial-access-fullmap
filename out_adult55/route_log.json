@@ -70,6 +70,13 @@
     "p90": 2.22,
     "max": Infinity
   },
+  "nci_next": {
+    "listed": 2,
+    "max_abs_mi_diff_first_vs_nearest": 0.05,
+    "first_name_differs": 0,
+    "counties_with_next1": 3108,
+    "counties_with_next2": 3108
+  },
   "counties_no_road_route": {
     "n": 35,
     "broad": 35,
@@ -153,5 +160,5 @@
     "counties_where_x1_2_underestimated": 1274,
     "counties_compared": 3023
   },
-  "seconds": 157
+  "seconds": 316
 }

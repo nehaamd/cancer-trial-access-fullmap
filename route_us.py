@@ -154,6 +154,14 @@ def main():
         return dist, hr, src
 
     Db, Hb, Sb = nearest(broad_src, "broad menu"); Dl, Hl, Sl = nearest(lim_src, "limited menu"); Dn, Hn, Sn = nearest(n_node, "NCI centers")
+    # --- every county's road miles to every NCI location, for the next-nearest centers (the county card's "+2 more"; batches of 8 sources, as the pools below) ---
+    NCI_NEXT = 2   # centers listed after the nearest one
+    dn_all = np.full((nn, nc), np.inf, dtype=np.float32)
+    for b0 in range(0, nn, 8):
+        D = dijkstra(A, directed=False, indices=n_node[b0:b0 + 8], min_only=False); dn_all[b0:b0 + 8] = D[:, c_node].astype(np.float32); del D
+    dn_all[:, c_off] = np.inf   # off-network county centres have no road distance at all
+    nci_rank = np.argsort(dn_all, axis=0, kind="stable")   # per county: NCI rows in distance order
+    print(f"  NCI centers, all pairs: {nn} sources x {nc} counties, {time.time()-t0:.0f}s", flush=True)
     cname = {c: (r.county_name if str(r.state_fips).zfill(2) == "11" else f"{r.county_name}, {r.state_name}") for c, r in zip(c_node, cent.itertuples())}; nname = dict(zip(n_node, nci.name))   # "District of Columbia", not "District of Columbia, District of Columbia"; only DC: Oklahoma County, Oklahoma and New York County, New York keep their state (until October 2026 the name test dropped it for 139 counties' nearest broad menu)
 
     def county_row(k):
@@ -165,10 +173,19 @@ def main():
             d = D[node] if not c_off[k] else np.inf  # off-network centres have no road distance at all
             if np.isfinite(d): r[f"nearest_{lab}"] = names[int(S[node])]; r[f"road_mi_{lab}"] = round(float(d), 1); r[f"drive_hr_{lab}"] = round(float(Hh[node]), 2)
             else: r[f"nearest_{lab}"] = "OFF ROAD NETWORK (>30 mi from a primary/secondary road)" if c_off[k] else "NO ROAD CONNECTION (island / disconnected network)"; r[f"road_mi_{lab}"] = NOROAD; r[f"drive_hr_{lab}"] = NOROAD
+        # the next-nearest NCI centers after the nearest one above (same distances; the first of the all-pairs ranking is the nearest, checked in the log)
+        for j in range(1, NCI_NEXT + 1):
+            i = int(nci_rank[j, k]); d = float(dn_all[i, k])
+            r[f"nci_next{j}_name"] = nci.name.iat[i] if np.isfinite(d) else ""; r[f"nci_next{j}_road_mi"] = round(d, 1) if np.isfinite(d) else NOROAD
         r["straightline_x1_2_broad"] = round(float(cm.loc[f, "dist_to_broad_mi"]), 1); r["straightline_x1_2_limited"] = round(float(cm.loc[f, "dist_to_limited_mi"]), 1)
         r["straightline_x1_2_nci"] = round(float(cm.loc[f, "dist_to_nci_mi"]), 1); r["straightline_nearest_nci"] = cm.loc[f, "nearest_nci"]
         return r
     rd = pd.DataFrame([county_row(k) for k in range(nc)]); rd.to_csv(OUT / "county_road_distances.csv", index=False)
+    # the all-pairs ranking must agree with the single-source nearest: same center (or an equal distance) and the same miles
+    first = dn_all[nci_rank[0], np.arange(nc)]; routed = np.isfinite(rd.road_mi_nci.values) & (rd.road_mi_nci.values < NOROAD)
+    log["nci_next"] = {"listed": NCI_NEXT, "max_abs_mi_diff_first_vs_nearest": round(float(np.abs(first[routed] - rd.road_mi_nci.values[routed]).max()), 2) if routed.any() else None,
+                       "first_name_differs": int(sum(nci.name.iat[int(nci_rank[0, k])] != rd.nearest_nci.iat[k] and abs(first[k] - rd.road_mi_nci.iat[k]) > 0.05 for k in np.where(routed)[0])),
+                       "counties_with_next1": int((rd.nci_next1_road_mi < NOROAD).sum()), "counties_with_next2": int((rd.nci_next2_road_mi < NOROAD).sum())}
     unr = rd[(rd.road_mi_broad >= NOROAD) | (rd.road_mi_limited >= NOROAD) | (rd.road_mi_nci >= NOROAD)]
     log["counties_no_road_route"] = {"n": len(unr), "broad": int((rd.road_mi_broad >= NOROAD).sum()), "limited": int((rd.road_mi_limited >= NOROAD).sum()), "nci": int((rd.road_mi_nci >= NOROAD).sum()),
                                      "list": [f"{r.county_name} ({r.state_fips})" for r in unr.itertuples()]}
