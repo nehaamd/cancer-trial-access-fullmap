@@ -137,6 +137,7 @@ def main():
     # ---- county metrics ----
     cm = pd.read_csv(OUT / "county_metrics.csv", dtype={"county_fips": str, "state_fips": str}).set_index("county_fips")
     rd = pd.read_csv(OUT / "county_road_distances.csv", dtype={"county_fips": str, "state_fips": str}).set_index("county_fips")
+    nci_idx = {r.name: i for i, r in enumerate(config.nci_targets().itertuples())}   # positions in data.nci (ncil below is built from the same list, in the same order)
     cov = pd.read_csv(REF / "county_covariates.csv", dtype={"county_fips": str}).set_index("county_fips")
     # facility-level routing (route_sites_us.py): the county's 60-road-mile pool is every *recruiting site* within 60 road-miles
     # of the county population center — not every county whose center is within 60 miles. Site points are ZIP/city-level locations.
@@ -189,6 +190,8 @@ def main():
                        "tr": ct_trials.get(f, []), "fac": ct_fac.get(f, []), "nb": nb60.get(f, []), "nbd": nbd.get(f, []), "t60": pool60[f], "f60": fac60[f],
                        "rb": road("broad"), "rl": road("limited"), "rn": road("nci"), "hb": None if r.road_mi_broad >= NOROAD else round(float(r.drive_hr_broad), 1),
                        "hn": None if r.road_mi_nci >= NOROAD else round(float(r.drive_hr_nci), 1), "nn": r.nearest_nci, "nbm": r.nearest_broad,
+                       # the next-nearest NCI centers after nn (route_us.py): [[index into data.nci, road miles], ...]; [] when the county has no road route or the file predates them
+                       "nx": [[nci_idx[r[f"nci_next{j}_name"]], round(float(r[f"nci_next{j}_road_mi"]))] for j in (1, 2) if f"nci_next{j}_name" in r and r[f"nci_next{j}_name"] in nci_idx and float(r[f"nci_next{j}_road_mi"]) < NOROAD],
                        "noroad": ("off" if "OFF ROAD" in str(r.nearest_nci) else "island" if "NO ROAD" in str(r.nearest_nci) or "NO ROAD" in str(r.nearest_broad) else ""),
                        "sl": {"b": round(float(c.dist_to_broad_mi)), "n": round(float(c.dist_to_nci_mi))},
                        # straight-line "access" miles from the county population center to the nearest highway node (route_us.py); the road
@@ -219,12 +222,15 @@ def main():
     def ctx_of(r):  # residents-55+-weighted means of county values; *_cov = share of residents 55+ whose county has the value
         return {"veh": nz(r.acs_no_vehicle), "bb": nz(r.acs_broadband), "unins": nz(r.acs_uninsured), "unins55": nz(r.acs_uninsured_55_64), "pov": nz(r.acs_poverty), "acs_cov": nz(r.acs_no_vehicle_pop_covered_pct),
                 "inc": nz(r.inc_all_rate), "inc_cov": nz(r.inc_all_rate_pop_covered_pct), "cases": None if pd.isna(r.inc_all_cases_sum) else int(r.inc_all_cases_sum)}
+    def shares_of(r, col):   # the targets nearest to the most residents 55+, [[name, % of residents], ...] (top 3; tract_metrics_us.py); [] when no resident has a road route
+        v = r.get(col) if hasattr(r, "get") else None
+        return json.loads(v) if isinstance(v, str) and v.startswith("[") else (v if isinstance(v, list) else [])
     def core_of(r):
         return {"p": int(r.pop55), "nt": int(r.n_tracts), "z60": float(r.pct_zero_trials_within_60rdmi), "l20": float(r.pct_lt20_trials_within_60rdmi), "l100": float(r.pct_lt100_trials_within_60rdmi), "zc": float(r.pct_in_zero_trial_county),
                 "g60b": float(r.pct_gt60rdmi_broad_menu), "g120b": float(r.pct_gt120rdmi_broad_menu), "g60l": float(r.pct_gt60rdmi_limited_menu), "g60n": float(r.pct_gt60rdmi_nci), "g120n": float(r.pct_gt120rdmi_nci),
                 "nr": float(r.pct_no_road_route_broad), "nrn": float(r.pct_no_road_route_nci), "medb": None if r.median_road_mi_broad_menu >= NOROAD else int(r.median_road_mi_broad_menu), "medn": None if r.median_road_mi_nci >= NOROAD else int(r.median_road_mi_nci),
                 "medl": None if r.median_road_mi_limited_menu >= NOROAD else int(r.median_road_mi_limited_menu), "t30": int(r.wmean_trials_within_30rdmi), "t60": int(r.wmean_trials_within_60rdmi), "t120": int(r.wmean_trials_within_120rdmi), "own": int(r.wmean_trials_in_own_county),
-                "mnci": r.modal_nearest_nci, "mbroad": r.modal_nearest_broad,
+                "mnci": r.modal_nearest_nci, "mbroad": r.modal_nearest_broad, "ns": shares_of(r, "nearest_nci_shares"), "bs": shares_of(r, "nearest_broad_shares"),
                 "bd": {"ct": {c.replace("wmean_t60_cancer_type_", ""): int(r[c]) for c in tcols["ct"]}, "ph": {c.replace("wmean_t60_phase_", ""): int(r[c]) for c in tcols["ph"]}, "sp": {c.replace("wmean_t60_sponsor_", ""): int(r[c]) for c in tcols["sp"]}}}
     # ---- states ----
     sm = pd.read_csv(OUT / "state_metrics_v3.csv", dtype={"state_fips": str}).set_index("state_fips")
@@ -249,7 +255,7 @@ def main():
                         "nr": float(r.pct_no_road_route_broad), "nrn": float(r.pct_no_road_route_nci), "medb": None if r.median_road_mi_broad_menu >= NOROAD else int(r.median_road_mi_broad_menu),
                         "medn": None if r.median_road_mi_nci >= NOROAD else int(r.median_road_mi_nci), "medl": None if r.median_road_mi_limited_menu >= NOROAD else int(r.median_road_mi_limited_menu),
                         "t30": int(r.wmean_trials_within_30rdmi), "t60": int(r.wmean_trials_within_60rdmi), "t120": int(r.wmean_trials_within_120rdmi),
-                        "own": int(r.wmean_trials_in_own_county), "mnci": r.modal_nearest_nci, "mbroad": r.modal_nearest_broad,
+                        "own": int(r.wmean_trials_in_own_county), "mnci": r.modal_nearest_nci, "mbroad": r.modal_nearest_broad, "ns": shares_of(r, "nearest_nci_shares"), "bs": shares_of(r, "nearest_broad_shares"),
                         "bd": {"ct": {c.replace("wmean_t60_cancer_type_", ""): int(r[c]) for c in tcols["ct"]}, "ph": {c.replace("wmean_t60_phase_", ""): int(r[c]) for c in tcols["ph"]}, "sp": {c.replace("wmean_t60_sponsor_", ""): int(r[c]) for c in tcols["sp"]}},
                         "v2": {"g60b": float(old.loc[k, "pct_pop55_beyond_60mi_of_broad_menu"]), "zc": float(old.loc[k, "pct_pop55_in_counties_with_zero_trials"])} if k in old.index else None,
                         "member": m["name"] if m else "", "party": m["party"] if m else "", "hr3521": "lead" if k in lead_hr3521 else "", "ctx": ctx_of(r), "counties": d_counties.get(k, [])}

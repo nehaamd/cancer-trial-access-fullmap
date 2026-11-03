@@ -21,6 +21,8 @@
   "wmean_trials_in_own_county": 129.0,
   "modal_nearest_nci": "Harold C. Simmons Comprehensive Cancer Center (UTSW)",
   "modal_nearest_broad": "Los Angeles, California",
+  "nearest_nci_shares": "[[\"Harold C. Simmons Comprehensive Cancer Center (UTSW)\", 3.3], [\"Winship Cancer Institute (Emory)\", 3.3], [\"Moffitt Cancer Center\", 3.2]]",
+  "nearest_broad_shares": "[[\"Los Angeles, California\", 3.4], [\"Harris, Texas\", 2.9], [\"Suffolk, Massachusetts\", 2.8]]",
   "wmean_t60_cancer_type_bladder_urothelial": 20.0,
   "wmean_t60_cancer_type_brain_cns": 12.0,
   "wmean_t60_cancer_type_breast": 47.0,

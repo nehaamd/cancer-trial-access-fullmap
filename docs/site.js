@@ -67,6 +67,13 @@ window.SITE = (function () {
   const plural = (n, one, many) => n === 1 ? one : (many || one + 's');
   const listJoin = a => a.length <= 1 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];   // "A, B and C"
   function ordinal(n) { const v = n % 100, s = ['th', 'st', 'nd', 'rd']; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+  // The places nearest to the most residents 55+ of an area, from the [[name, % of residents], ...] list the data files carry (ns / bs: the top three,
+  // tract_metrics_us.py): "Markey Cancer Center (Kentucky) for 78.3% of residents · Vanderbilt-Ingram Cancer Center 21.4% · OSU – James 0.3%".
+  // Replaces the single "most often X" (X is the first entry). '' when nobody there has a road route; the old parenthetical when a data file predates the list.
+  // Named only when a place is nearest for at least one resident in ten: below that (the nation: 3.3%) the names say nothing.
+  function nearestFor(list, modal, esc) { const e = esc || (x => x); const p = v => v >= 99.95 ? '100' : v < 0.05 ? '<0.1' : v.toFixed(1);
+    if (Array.isArray(list)) return list.length && list[0][1] >= 10 ? ' (' + list.map((x, i) => i === 0 ? `${e(x[0])} for ${p(x[1])}% of residents` : `${e(x[0])} ${p(x[1])}%`).join(' · ') + ')' : '';
+    return modal && !/^NO ROAD/.test(modal) ? ' (most often ' + e(modal) + ')' : ''; }
 
   // Header: on a phone the page links sit behind a Menu button (the links stay visible without JavaScript);
   // on a laptop the two audience groups open as small menus, one at a time, and close on a click elsewhere or Escape.
@@ -87,5 +94,5 @@ window.SITE = (function () {
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireHeader); else wireHeader();
 
-  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, driveTime, rate, period };
+  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, nearestFor, driveTime, rate, period };
 })();
