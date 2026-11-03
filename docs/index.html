@@ -1199,7 +1199,7 @@
     const gS = D.state_data[c.s2], key0 = mapStatKey();
     // the next-nearest centers (c.nx: [[index into D.nci, road miles], ...]) stay behind a "+2 more" tap, so the card reads as before
     const nxMore = () => { const L = (c.nx || []).filter(x => D.nci[x[0]]); if (!L.length) return '';
-      return ` <button type="button" class="linkish nx-more" aria-expanded="false" aria-controls="nx-list" data-n="${L.length}">+${L.length} more</button><span id="nx-list" hidden> Next nearest: ${L.map(x => `${esc(D.nci[x[0]].n)} ${fmt(x[1])} road-mi`).join(' · ')}.</span>`; };
+      return `<span id="nx-list" hidden> Next nearest: ${L.map(x => `${esc(D.nci[x[0]].n)} ${fmt(x[1])} road-mi`).join(' · ')}.</span> <button type="button" class="linkish nx-more" aria-expanded="false" aria-controls="nx-list" data-n="${L.length}">+${L.length} more</button>`; };
     const nciStat = () => stat({ num: fmt(c.rn), unit: ' road-miles', text: 'from the county population center to the nearest NCI-designated center, ' + esc(c.nn) + (c.hn !== null ? ' (' + hrs(c.hn) + ')' : '') + '.' + nxMore(), cmp: gS ? `<span data-cmp="state">State median ${gS.medn === null ? 'no route' : fmt(gS.medn) + ' road-miles'}</span> · <span data-cmp="nat">National ${fmt(D.meta.nat_core.medn)}</span>` : '', cls: c.rn >= 150 ? 'hot' : '', tag: key0 === 'nci' ? layerName() : '' });
     const roadStat = c.noroad === 'island' && c.rn !== null ? nciStat() + statHTML('—', '', 'No road connection from this county to a broad menu (island or disconnected network); ' + (c.rl === 0 ? 'the county hosts a limited menu.' : c.rl === null ? 'no road route to a limited menu.' : fmt(c.rl) + ' road-mi to a limited menu.'), 'na')
       : c.noroad === 'island' ? statHTML('—', '', 'No road connection from this county to any broad menu or NCI center (island or disconnected network). Straight-line ×1.2 for reference only: ' + fmt(c.sl.n) + ' mi to the nearest center.', 'na')
@@ -1461,7 +1461,7 @@
   const wrapSel = d3.select(wrapEl);
   window.__mapZoomSync = () => { if (R.w > 0 && R.h > 0) wrapSel.property('__zoom', tFromVb(curVB)); wrapEl.classList.toggle('zoomed', curVB[2] < W * 0.999); };
   document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('.nx-more'); if (!b) return; const l = document.getElementById(b.getAttribute('aria-controls')); if (!l) return;
-    const open = l.hidden; l.hidden = !open; b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'fewer' : `+${b.dataset.n} more`; });   // the county card's next-nearest NCI centers
+    const open = l.hidden; l.hidden = !open; b.setAttribute('aria-expanded', String(open)); b.textContent = open ? 'hide' : `+${b.dataset.n} more`; });   // the county card's next-nearest NCI centers
   const hintEl = document.getElementById('map-hint'); let hintTimer = setTimeout(() => hintEl.classList.add('gone'), 12000);
   function hintUsed() { if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; } if (!hintEl.dataset.keep) hintEl.classList.add('gone'); }
   const zoomBeh = d3.zoom().scaleExtent([1, 12]).clickDistance(4).extent(() => [[R.left, R.top], [R.left + R.w, R.top + R.h]])
