@@ -1,5 +1,5 @@
 {
- "built": "2026-11-02",
+ "built": "2026-11-03",
  "period": "2020-2024",
  "tertiles_all": [
   151.4,
@@ -14,12 +14,12 @@
   "cells": {
    "hh": 472,
    "h_only": 535,
-   "l_only": 775,
-   "neither": 1301
+   "l_only": 771,
+   "neither": 1305
   },
   "tertile_low_access": {
-   "1": 440,
-   "2": 335,
+   "1": 438,
+   "2": 333,
    "3": 472
   },
   "tertile_counties": {
