@@ -644,7 +644,9 @@
   const bubR = d3.scaleSqrt().domain([0, 180000]).range([0, 17]);   // area ∝ residents; 180,000 (about the largest county) is a 17-unit radius on the 975-unit map
   function shortOf(k) {   // {n: residents 55+ short, s: their share, p: residents 55+} for county k under the current filter, or null
     const i = CI[k]; if (recalc()) { if (!FCo) return null; const sh = FCo.l20[i]; return isNaN(sh) ? null : { n: FCo.pop[i] * sh / 100, s: sh, p: FCo.pop[i] }; }
-    const u = BU && BU.county[k]; if (!u || u.l20 === null || u.l20 === undefined) return null; return { n: C[k].p * u.l20 / 100, s: u.l20, p: C[k].p }; }
+    const u = BU && BU.county[k]; if (!u || u.l20 === null || u.l20 === undefined) return null; return { n: countyN(u, 'l20', C[k].p), s: u.l20, p: C[k].p }; }
+  // residents 55+ behind a county share: the exact tract sum when burden.js carries it (n_l20 / n_z60), else rounded back from the one-decimal share
+  const countyN = (u, k, p) => Number.isFinite(u['n_' + k]) ? u['n_' + k] : p * u[k] / 100;
   const isMetro = k => RU && RU.county[k] ? RU.county[k].c <= 3 : null;
   function shortTotals() { let all = 0, metro = 0, non = 0, pop = 0; for (const k of CK) { const v = shortOf(k); if (!v) continue; all += v.n; pop += v.p; const m = isMetro(k); if (m === true) metro += v.n; else if (m === false) non += v.n; } return pop ? { all, metro, nonmetro: non, pop } : null; }
   // One color by default: every circle is the same rust, so the map carries a single encoding (circle area = people).
@@ -1372,7 +1374,7 @@
   ${CO ? `<p><strong>Legislation.</strong> Sponsor and cosponsor lists for ${Object.keys(CO.bills).map(k => CO.bills[k].label).join(' / ')} (${[...new Set(Object.values(CO.meta.topics).map(t => t.name))].join('; ')}) from the Library of Congress bill-status feed (govinfo.gov BILLSTATUS; congress.gov API when a key is configured), as of ${SITE.nice(CO.meta.fetched)}; members matched to districts through unitedstates/congress-legislators. Withdrawn cosponsors are excluded. Cosponsorship is one signal of a member's position, not a vote; verify on congress.gov before citing.</p>` : ''}</details>`;
   // Key terms: the shares quoted for the default layer, worked out from the same data (counties drawn with a circle; counties where most residents 55+ are short)
   if (BU) (window.requestIdleCallback || setTimeout)(() => { let all = 0, drawn = 0, pop = 0, popMaj = 0, area = 0, areaMaj = 0; const ar = {}; GEO.counties.features.forEach(f => { ar[f.properties.id] = d3.geoArea(f); });
-    for (const k of CK) { const u = BU.county[k], p = C[k].p; pop += p; area += ar[k] || 0; if (!u || u.l20 === null || u.l20 === undefined) continue; const n = p * u.l20 / 100; all += n; if (n >= BUB_FLOOR) drawn += n; if (u.l20 > 50) { popMaj += p; areaMaj += ar[k] || 0; } }
+    for (const k of CK) { const u = BU.county[k], p = C[k].p; pop += p; area += ar[k] || 0; if (!u || u.l20 === null || u.l20 === undefined) continue; const n = countyN(u, 'l20', p); all += n; if (n >= BUB_FLOOR) drawn += n; if (u.l20 > 50) { popMaj += p; areaMaj += ar[k] || 0; } }
     const put = (id, t) => { const e = document.getElementById(id); if (e) e.textContent = t; };
     if (all) put('kt-drawn', pct(100 * drawn / all) + '%'); if (area) put('kt-area', 'about ' + Math.round(100 * areaMaj / area) + '%'); if (pop) put('kt-pop', 'about ' + Math.round(100 * popMaj / pop) + '%'); });
   window.__nav = { selectDistrict, selectCounty, selectState: st => { pickS.value = st; pickS.dispatchEvent(new Event('change')); }, clearSelection, setTab };

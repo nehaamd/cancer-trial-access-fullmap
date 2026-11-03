@@ -145,7 +145,7 @@
   svg.append('g').selectAll('path').data(feats).join('path').attr('d', path).attr('class', 'c');
   // residents 55+ short of trials, as on the map's opening layer: area ∝ people, the map's 17-unit radius for 180,000 residents on its 975-unit width, here on 480 units
   const bubR = d3.scaleSqrt().domain([0, 180000]).range([0, 17 * W / 975]);   // BU (window.BURDEN) is declared above
-  const shortN = k => { const u = BU && BU.county[k], c = C[k]; return u && c && u.l20 !== null && u.l20 !== undefined ? c.p * u.l20 / 100 : 0; };
+  const shortN = k => { const u = BU && BU.county[k], c = C[k]; return u && c && u.l20 !== null && u.l20 !== undefined ? (Number.isFinite(u.n_l20) ? u.n_l20 : c.p * u.l20 / 100) : 0; };   // the exact tract sum when burden.js carries it, as on the map
   const bubs = feats.map(f => { const k = f.properties.id, n = shortN(k); return n >= 500 ? { k, c: path.centroid(f), n } : null; }).filter(d => d && isFinite(d.c[0])).sort((a, b) => b.n - a.n);
   const gBub = svg.append('g');
   if (kind !== 'nat') svg.append('g').selectAll('path').data(GEO.districts.features.filter(f => f.properties.s === st)).join('path').attr('d', path).attr('fill', 'none').attr('stroke', '#7C8794').attr('stroke-width', .6);

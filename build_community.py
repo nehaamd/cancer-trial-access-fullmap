@@ -45,7 +45,7 @@ def main():
     for cf, c in C.items():
         u = BU["county"].get(cf) or {}; r = RU["county"].get(cf); b = (c.get("b") or [None] * 20)[inc_i]; m = (MO["county"].get(cf) or [None] * 20)[mort_i]
         counties[cf] = {"n": c.get("nl") or c["n"], "st": usps.get(c["s"], c["s"]), "p": c["p"], "t": c["t"], "f": c["f"], "t60": c["t60"], "f60": c.get("f60"),
-                        "l20": u.get("l20"), "z60": u.get("z60"), "tm": u.get("t60m", u.get("t60")), "zt": u.get("zt"),
+                        "l20": u.get("l20"), "z60": u.get("z60"), "tm": u.get("t60m", u.get("t60")), "zt": u.get("zt"), "n_l20": u.get("n_l20"), "n_z60": u.get("n_z60"),   # n_*: the exact tract sums behind the shares
                         "rn": c["rn"], "nn": c["nn"], "rb": c["rb"], "nbm": c["nbm"], "noroad": c.get("noroad") or "",
                         "ru": r["c"] if r else None, "inc": [b[0], b[3], b[4]] if b else None, "mort": [m[0], m[3], m[4]] if m else None, "d": cd_of.get(cf, [])}
     districts = {}
@@ -70,7 +70,7 @@ def main():
            "mort": [MO["summary"]["nat"]["hh_counties"], MO["summary"]["nat"]["hh_pop55"], MO["summary"]["nat"]["hh_deaths"]],
            "mort_rate": MO["meta"]["us"]["all"]["rate"], "mort_period": MO["meta"]["period"]}   # the US all-sites death rate the pages compare a county with
     nci_meta = {k: meta["nci"].get(k) for k in ("centers", "locations")} if isinstance(meta.get("nci"), dict) else {}
-    CCOLS = ["n", "st", "p", "t", "f", "t60", "f60", "l20", "z60", "tm", "zt", "rn", "nn", "rb", "nbm", "noroad", "ru", "inc", "mort", "d"]
+    CCOLS = ["n", "st", "p", "t", "f", "t60", "f60", "l20", "z60", "tm", "zt", "rn", "nn", "rb", "nbm", "noroad", "ru", "inc", "mort", "d", "n_l20", "n_z60"]   # new columns go at the end: explore.js maps by position
     counties = {cf: [c[k] for k in CCOLS] for cf, c in counties.items()}
     for d in districts.values(): d["ct"] = [d["ct"].get(t) for t in type_keys] if d["ct"] else None
     for g in states.values(): g["ct"] = [g["ct"].get(t) for t in type_keys] if g["ct"] else None
