@@ -5,7 +5,7 @@ window.EXPLORE = (function () {
   const X = window.COMMUNITY, M = X.meta, CC = X.ccols, NAT = M.nat;
   const fmt = n => (n === null || n === undefined || isNaN(n)) ? '—' : Math.round(n).toLocaleString('en-US');
   const pct = v => (v === null || v === undefined || isNaN(v)) ? '—' : (Math.round(v * 10) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  const people = n => n === null || n === undefined ? '—' : n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));   // the map's rule (index.html), so the same figure prints the same everywhere
+  const people = n => n === null || n === undefined ? '—' : n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));   // the map's rule (map.html), so the same figure prints the same everywhere
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const cdLabel = cd => (cd === '0' || cd === '00' || cd === 0 || cd === 'AL' || cd === '98') ? 'At large' : String(+cd);   // 98 is the registry code for DC's delegate seat
   const stName = st => X.states[st] ? X.states[st].name : st;
@@ -21,7 +21,7 @@ window.EXPLORE = (function () {
   const nation = () => ({ k: 'US', kind: 'nat', ...NAT, label: 'United States', name: 'the United States' });
   function fromParams(p) { if (p.get('c') && X.counties[p.get('c')]) return county(p.get('c')); if (p.get('d') && X.districts[p.get('d')]) return district(p.get('d')); if (p.get('s') && X.states[(p.get('s') || '').toUpperCase()]) return state(p.get('s').toUpperCase()); return null; }
   const param = pl => pl.kind === 'county' ? 'c=' + pl.k : pl.kind === 'district' ? 'd=' + pl.k : pl.kind === 'state' ? 's=' + pl.k : '';
-  const links = pl => { const q = param(pl); return { map: 'index.html' + (q ? '?' + q : ''), brief: 'brief.html' + (q ? '?' + q : ''), act: 'act.html' + (q ? '?' + q : ''), community: 'community.html' + (q ? '?' + q : ''), compare: pl.kind === 'county' ? `index.html?s=${pl.st}&tab=compare` : pl.kind === 'district' ? `index.html?s=${pl.st}&tab=compare` : pl.kind === 'state' ? `index.html?s=${pl.k}&tab=compare` : 'index.html?tab=compare', trials: pl.kind === 'county' ? `trials.html?county=${pl.k}` : null }; };
+  const links = pl => { const q = param(pl); return { map: 'map.html' + (q ? '?' + q : ''), brief: 'brief.html' + (q ? '?' + q : ''), act: 'act.html' + (q ? '?' + q : ''), community: 'community.html' + (q ? '?' + q : ''), compare: pl.kind === 'county' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'district' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'state' ? `map.html?s=${pl.k}&tab=compare` : 'map.html?tab=compare', trials: pl.kind === 'county' ? `trials.html?county=${pl.k}` : null }; };
 
   // ---- comparisons ----
   function stateOf(pl) { return pl.kind === 'state' ? pl : pl.kind === 'nat' ? null : state(pl.st); }
