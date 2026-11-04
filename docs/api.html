@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data API · Cancer Trial Access Map</title>
+<meta name="description" content="The Cancer Trial Access Map's figures as plain JSON files for every county, congressional district and state: how to fetch them, what each field means, the license, and how to cite.">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/api.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cancer Trial Access Map">
+<meta property="og:title" content="Data API · Cancer Trial Access Map">
+<meta property="og:description" content="Every county, district and state's trial-access figures as plain JSON files, free to use with attribution.">
+<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/api.html">
+<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Data API · Cancer Trial Access Map">
+<meta name="twitter:description" content="Every county, district and state's trial-access figures as plain JSON files, free to use with attribution.">
+<meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<style>
+  *{box-sizing:border-box} html{font-size:16px} html,body{margin:0;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased} main{font-size:17px}
+  a{color:var(--link)} a:hover{color:var(--navy)}
+  main{max-width:920px;margin:0 auto;padding:0 var(--gutter) 2rem}
+  .hero{padding:2.2rem 0 1.4rem;border-bottom:1px solid var(--rule)}
+  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
+  h1{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(1.9rem,4.2vw,2.8rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .9rem;font-weight:600;max-width:24ch}
+  .lede{font-size:1.2rem;line-height:1.5;max-width:60ch;margin:0}
+  section{padding:1.8rem 0 1.2rem;border-bottom:1px solid var(--rule)} section:last-of-type{border-bottom:0}
+  h2{font-size:var(--fs-4);line-height:1.15;letter-spacing:-.02em;margin:0 0 .6rem;font-weight:700}
+  h3{font-size:var(--fs-1);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin:1.1rem 0 .3rem;font-weight:700}
+  p{max-width:68ch} ul{max-width:68ch;padding-left:1.2rem} li{margin:.3rem 0}
+  pre,code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em} code{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:.05em .3em}
+  pre{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:.8rem 1rem;overflow-x:auto;max-width:100%;line-height:1.45;margin:.6rem 0 1rem} pre code{border:0;background:none;padding:0}
+  table{border-collapse:collapse;width:100%;font-size:var(--fs-1);margin:.6rem 0 1rem} th,td{text-align:left;padding:.4rem .5rem;border-top:1px solid var(--rule);vertical-align:top} th{color:var(--ink-2);font-weight:650} td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;white-space:nowrap}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);font-size:var(--fs-1);margin:.8rem 0}
+  .card b{display:block;margin-bottom:.3rem}
+  .cite{background:var(--card);border:1px dashed var(--rule-2);border-radius:8px;padding:.7rem .9rem;font-size:var(--fs-1);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere;max-width:none}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.5rem 1rem;font-size:var(--fs-1);color:var(--ink);text-decoration:none;cursor:pointer;min-height:40px} .btn:hover{border-color:var(--navy);color:var(--navy)}
+  .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff} .btn.primary:hover{background:#0d4a72;color:#fff}
+  .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0 0}
+  #try{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.6rem 0} #try input{font:inherit;padding:.5rem .7rem;border:1px solid var(--rule-2);border-radius:8px;min-width:12rem} #try output{display:block;width:100%}
+  @media (max-width:640px){table{display:block;overflow-x:auto}}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="map.html#methods">Methods &amp; data</a><a href="api.html" aria-current="page">Data API</a><a href="about.html">About</a></nav>
+</header>
+<main>
+  <div class="hero">
+    <p class="kicker">Data API · data as of <span data-f="data_as_of"></span></p>
+    <h1>Every county, district and state, as a file you can fetch.</h1>
+    <p class="lede">The map's figures are published as plain JSON files at predictable addresses, one per place, refreshed with the map every week. Pull a county's numbers into a news graphic, a cancer center's dashboard or a research notebook with one request. No key, no sign-up, no rate limit.</p>
+  </div>
+
+  <section id="addresses">
+    <h2>Addresses</h2>
+    <table>
+      <thead><tr><th>Place</th><th>Address</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>national.json</td><td>The United States</td><td><a href="api/national.json">api/national.json</a></td></tr>
+        <tr><td>state/{USPS}.json</td><td>One state or DC, by two-letter code</td><td><a href="api/state/TX.json">api/state/TX.json</a></td></tr>
+        <tr><td>district/{USPS}-{NN}.json</td><td>One congressional district; <code>00</code> for an at-large seat</td><td><a href="api/district/TX-34.json">api/district/TX-34.json</a></td></tr>
+        <tr><td>county/{FIPS}.json</td><td>One county, by 5-digit FIPS code</td><td><a href="api/county/48215.json">api/county/48215.json</a></td></tr>
+        <tr><td>all_states.json<br>all_districts.json<br>all_counties.json</td><td>Every place at that level, as one array</td><td><a href="api/all_states.json">api/all_states.json</a></td></tr>
+        <tr><td>index.json</td><td>This page as data: files, field definitions, data date, license, the list of district ids</td><td><a href="api/index.json">api/index.json</a></td></tr>
+      </tbody>
+    </table>
+    <p class="small muted">Base URL: <code id="base"></code>. Districts use the 119th Congress maps (2024 elections); the <code>plan</code> field says so in every district file.</p>
+    <form id="try" onsubmit="return false">
+      <label for="try-id">Try it:</label>
+      <input id="try-id" placeholder="48215, TX-34 or TX" value="TX-34" aria-label="Place id">
+      <button class="btn primary" type="button" id="try-go">Fetch</button>
+      <output id="try-out"></output>
+    </form>
+  </section>
+
+  <section id="example">
+    <h2>One line of code</h2>
+    <pre><code>// JavaScript, in any web page
+const r = await fetch("<span data-f="base"></span>api/district/TX-34.json").then(r =&gt; r.json());
+console.log(r.name, r.pct_lt20_trials_within_60rdmi + "% of residents 55+ short of trials", r.member.name);</code></pre>
+    <pre><code># Python
+import requests
+d = requests.get("<span data-f="base"></span>api/county/48215.json").json()
+print(d["name"], d["people_lt20_trials_within_60rdmi"], "residents 55+ with fewer than 20 trials within 60 road-miles")</code></pre>
+    <pre><code># R
+d &lt;- jsonlite::fromJSON("<span data-f="base"></span>api/all_counties.json")
+head(d[order(-d$people_lt20_trials_within_60rdmi), c("name", "pop55", "pct_lt20_trials_within_60rdmi")])</code></pre>
+  </section>
+
+  <section id="fields">
+    <h2>Fields</h2>
+    <p>Every file carries the same core fields, so county, district and state records can be handled alike. Percentages are of residents aged 55 and older; distances are road miles on the highway network from where people live. Full definitions and limits are on <a href="map.html#methods">Methods &amp; data</a>.</p>
+    <table id="fields-table"><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody></tbody></table>
+    <p class="small muted">A value of <code>null</code> means not computable for that place (for example, a median road distance where no residents have a road route).</p>
+  </section>
+
+  <section id="license">
+    <h2>License and citation</h2>
+    <p>The data files are free to use, share and build on under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0</a>: use them for anything, including commercial work, and credit the source. The underlying sources (ClinicalTrials.gov, the Census Bureau, NCI, CMS) are public data. The site's code is on <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">GitHub</a>.</p>
+    <p class="cite" id="cite"></p>
+    <p>If you use the data in a publication, a dashboard or a news story, a note to the <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">issue page</a> is welcome; it helps show where the work is being used.</p>
+    <div class="actions"><a class="btn primary" href="api/index.json">Open index.json</a><a class="btn" href="map.html#methods">Methods &amp; data</a><a class="btn" href="about.html">About the project</a></div>
+  </section>
+
+  <section id="notes">
+    <h2>Good to know</h2>
+    <ul>
+      <li><b>Freshness.</b> Files are rebuilt with each weekly registry refresh; <code>data_as_of</code> in every file is the registry date the figures come from. Trials change weekly, so cache with that in mind.</li>
+      <li><b>Stability.</b> Field names will not be renamed or removed without a version note here. New fields may be added.</li>
+      <li><b>Counties.</b> County shares are computed from census tracts weighted by residents 55+, the same way as districts and states, so the three levels add up.</li>
+      <li><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible.</li>
+    </ul>
+  </section>
+</main>
+<footer class="site">
+<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="map.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<script src="site.js"></script>
+<script>
+(async function () {
+  const base = location.origin + location.pathname.replace(/[^/]*$/, '');
+  document.querySelectorAll('[data-f="base"]').forEach(el => el.textContent = base);
+  document.getElementById('base').textContent = base + 'api/';
+  let idx = null;
+  try { idx = await fetch('api/index.json').then(r => r.json()); } catch (e) {}
+  if (idx) {
+    document.querySelectorAll('[data-f="data_as_of"]').forEach(el => el.textContent = SITE.nice(idx.data_as_of));
+    document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = 'Data as of ' + SITE.nice(idx.data_as_of));
+    const tb = document.querySelector('#fields-table tbody');
+    for (const [k, v] of Object.entries(idx.fields)) { const tr = document.createElement('tr'); tr.innerHTML = `<td>${k}</td><td>${v}</td>`; tb.appendChild(tr); }
+    document.getElementById('cite').textContent = `${idx.license.attribution} Data as of ${SITE.nice(idx.data_as_of)}; accessed ${SITE.nice(SITE.today())}.`;
+  }
+  const go = async () => {
+    const id = document.getElementById('try-id').value.trim().toUpperCase(); const out = document.getElementById('try-out');
+    const path = /^\d{5}$/.test(id) ? `county/${id}` : /^[A-Z]{2}-\d{2}$/.test(id) ? `district/${id}` : /^[A-Z]{2}$/.test(id) ? `state/${id}` : id === 'US' ? 'national' : null;
+    if (!path) { out.innerHTML = '<p class="small">Use a 5-digit county FIPS (48215), a district (TX-34) or a state (TX).</p>'; return; }
+    try { const d = await fetch(`api/${path}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+      out.innerHTML = `<p><b>${d.name}</b>: ${d.pct_lt20_trials_within_60rdmi}% of residents 55+ (${(d.people_lt20_trials_within_60rdmi || 0).toLocaleString()} people) have fewer than 20 trials within 60 road-miles; median ${d.median_road_mi_nci ?? '—'} road-miles to an NCI center${d.member && d.member.name ? `; ${d.member.name} (${d.member.party}), ${d.member.ctma_hr3521 === 'none' ? 'not a cosponsor of' : d.member.ctma_hr3521 + ' of'} ${d.member.bill}` : ''}. <a href="api/${path}.json">Open the file</a> · <a href="${d.links.map}">Open on the map</a></p>`;
+    } catch (e) { out.innerHTML = `<p class="small">No file for "${id}".</p>`; }
+  };
+  document.getElementById('try-go').addEventListener('click', go);
+  document.getElementById('try-id').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+})();
+</script>
+</body>
+</html>

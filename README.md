@@ -24,6 +24,7 @@ Registry data as of 3 November 2026: 4,035 listed trials at about 9,700 registry
 | Page | Purpose |
 |---|---|
 | `index.html` | The homepage: purpose, headline numbers from `findings.js`, three doors (patients, advocates, research). |
+| `api.html`, `api/` | **Data API**: one JSON file per county (`api/county/48215.json`), district (`api/district/TX-34.json`) and state (`api/state/TX.json`), plus `national.json`, the three `all_*.json` tables and `index.json` with field definitions; built by `build_api.py`; CC BY 4.0. |
 | `about.html` | About the project: who builds it, how it is built, how to cite, independence. |
 | `map.html` | The map: counties (opening on residents 55+ short of trials, as circles sized by people and colored metro/nonmetro), districts and states; a figures panel whose first card is the figure the map shows, with state and national comparisons; filters; Trials / Sites / Analysis tabs; every view has a shareable link |
 | `findings.html` | Key findings: the headline numbers, metro vs nonmetro, every state ranked, the districts with least access, need vs access, the tracked bills, methods in brief, how to cite. Reads `findings.js`, built by `build_findings.py` (in `run_refresh.sh`) |
