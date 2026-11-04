@@ -9,7 +9,7 @@ import requests
 import config
 
 RAW = Path("data/raw"); RAW.mkdir(parents=True, exist_ok=True)
-EXTRA = ["InterventionOtherName", "ArmGroupDescription", "BriefSummary", "MinimumAge", "MaximumAge", "Keyword", "OfficialTitle", "LeadSponsorName", "LastUpdatePostDate", "CentralContactName", "CentralContactPhone", "CentralContactEMail", "CollaboratorName"]
+EXTRA = ["InterventionOtherName", "ArmGroupDescription", "BriefSummary", "MinimumAge", "MaximumAge", "Keyword", "OfficialTitle", "LeadSponsorName", "LastUpdatePostDate", "CentralContactName", "CentralContactPhone", "CentralContactEMail", "CollaboratorName", "EligibilityCriteria"]
 
 STATES = {  # name/abbr -> (FIPS, USPS)
  "alabama":("01","AL"),"alaska":("02","AK"),"arizona":("04","AZ"),"arkansas":("05","AR"),"california":("06","CA"),"colorado":("08","CO"),
