@@ -94,5 +94,31 @@ window.SITE = (function () {
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireHeader); else wireHeader();
 
-  return { foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, nearestFor, driveTime, rate, period };
+
+  // ---- "Ask the map": the question box. The site posts the question to a small helper (a Cloudflare Worker, worker/ in the
+  // repository) that reads the same published data files as the Data API and returns {answer, table, sources, view}.
+  // ASK_URL is the helper's address; while it is empty every question box stays hidden and the site works exactly as before.
+  const ASK_URL = '';
+  async function ask(q) {
+    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 45000);
+    try {
+      const r = await fetch(ASK_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ q }), signal: ctrl.signal });
+      const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || ('HTTP ' + r.status)); return j;
+    } finally { clearTimeout(t); }
+  }
+  const escA = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // The answer card: the question, the answer, the rows it was written from, the files it read, and what the box is not.
+  function askCardHTML(q, res) {
+    const rows = Array.isArray(res.table) ? res.table : []; let table = '';
+    if (rows.length) { const cols = Object.keys(rows[0]); table = '<div class="ask-tbl"><table><thead><tr>' + cols.map(c => '<th>' + escA(c) + '</th>').join('') + '</tr></thead><tbody>' + rows.map(r => '<tr>' + cols.map(c => '<td>' + escA(r[c]) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>'; }
+    const src = (res.sources || []).length ? '<p class="ask-src">Read from: ' + res.sources.map(s => '<a href="' + escA(s.url) + '" target="_blank" rel="noopener">' + escA(s.title) + '</a>').join(', ') + (res.data_as_of ? ' · data as of ' + escA(nice(res.data_as_of)) : '') + '</p>' : '';
+    const note = res.route === 'search' || res.route === 'data' ? '<p class="ask-note">Figures are read from this site’s published data files, not written by the model. The box lists and ranks; it does not match patients to trials or give medical advice.</p>' : '';
+    return '<div class="ask-card" id="ask-card" role="region" aria-label="Answer"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">' + escA(q) + '</p><div class="ask-a">' + escA(res.answer || '').split(/\n+/).map(x => '<p>' + x + '</p>').join('') + '</div>' + table + src + note + '</div>';
+  }
+  const ASK_CSS = '.ask{display:flex;gap:6px;align-items:stretch}.ask input{flex:1;min-width:0;border:1px solid var(--rule);border-radius:8px;padding:.5rem .65rem;font:inherit;font-size:var(--fs-0,.95rem);background:var(--card,#fff);color:var(--ink)}.ask input:focus{outline:2px solid var(--gulf,#2F6F8F);outline-offset:1px}.ask button{border:0;border-radius:8px;padding:.45rem .8rem;font:inherit;font-weight:600;background:var(--navy,#1B2430);color:#fff;cursor:pointer}.ask button[disabled]{opacity:.6;cursor:progress}.ask-hint{margin:.15rem 0 0;font-size:.8rem;color:var(--ink-3,#6B7280)}'
+    + '.ask-card{position:relative;margin:.8rem 1.25rem 0;padding:.8rem 2.2rem .7rem .9rem;border:1px solid var(--rule);border-left:4px solid var(--rust,#B5452F);border-radius:8px;background:var(--paper,#F7F4EE)}.ask-card .ask-x{position:absolute;top:.35rem;right:.45rem;border:0;background:none;font-size:1.3rem;line-height:1;color:var(--ink-3);cursor:pointer}.ask-card .ask-q{margin:0 0 .35rem;font-weight:600;color:var(--ink-2)}.ask-card .ask-a p{margin:0 0 .4rem}.ask-tbl{overflow:auto;margin:.4rem 0}.ask-tbl table{border-collapse:collapse;font-size:.82rem;width:100%}.ask-tbl th,.ask-tbl td{text-align:left;padding:.25rem .45rem;border-bottom:1px solid var(--rule);vertical-align:top}.ask-tbl th{font-weight:600;color:var(--ink-2)}.ask-src,.ask-note{margin:.35rem 0 0;font-size:.78rem;color:var(--ink-3)}.ask-card.err{border-left-color:var(--ink-3)}'
+    + '@media (max-width:720px){.ask-card{margin:.6rem var(--gutter,1rem) 0}}';
+  function askStyles() { if (document.getElementById('ask-css')) return; const st = document.createElement('style'); st.id = 'ask-css'; st.textContent = ASK_CSS; document.head.appendChild(st); }
+
+  return { ASK_URL, ask, askCardHTML, askStyles, foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, nearestFor, driveTime, rate, period };
 })();

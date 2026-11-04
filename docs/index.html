@@ -73,6 +73,8 @@
       <h1>Where you live shouldn't decide which cancer trials you can join.</h1>
       <p class="lede">The Cancer Trial Access Map measures, in road miles, how far Americans live from recruiting cancer clinical trials, by county, congressional district and state, and shows what would change it. <b>About <span data-f="people_l20_m">11.8</span> million Americans aged 55 and older</b> have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home.</p>
       <div class="actions"><a class="btn primary" href="map.html">Open the map</a><a class="btn" href="findings.html">Key findings</a><a class="btn" href="find.html">Trials near a ZIP</a></div>
+      <form class="ask" id="askf" hidden autocomplete="off" action="map.html" method="get" style="margin-top:1rem"><input id="askq" name="ask" type="text" maxlength="400" placeholder="Ask the map: which districts in Ohio have the least access?" aria-label="Ask the map a question"><button type="submit">Ask</button></form>
+      <p class="ask-hint" id="ask-hint" hidden>Answers are read from the map’s published data files and open the matching view. Lists and ranks only; not medical advice.</p>
       <p class="stamp-line"><span data-site-date>Data as of the latest weekly refresh</span> · ClinicalTrials.gov, Census Bureau, NCI</p>
     </div>
     <figure>
@@ -157,6 +159,7 @@
   const vals = { people_l20_m: M(N.people_l20), people_z60_m: M(N.people_z60), l20: pct(N.l20), z60: pct(N.z60), nm_l20: pct0(R.nonmetro.l20), m_l20: pct0(R.metro.l20), trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities) };
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
+  if (SITE.ASK_URL) { SITE.askStyles(); document.getElementById('askf').hidden = false; document.getElementById('ask-hint').hidden = false; }   // the question box appears once the helper is deployed
   const dd = SITE.dataDate(F.meta);
   document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${SITE.nice(dd)}; accessed ${SITE.nice(SITE.today())}.`;
 })();

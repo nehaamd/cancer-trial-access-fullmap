@@ -169,6 +169,7 @@
   .unit-district .county,.unit-state .county{fill:#F4F2EC !important;pointer-events:none;stroke:#fff;stroke-width:.2}
   .statefill{fill:none;stroke:#fff;stroke-width:.8;pointer-events:none} .unit-state .statefill{pointer-events:all;cursor:pointer} .unit-state .statefill:hover{stroke:var(--ink);stroke-width:1.6}
   .unit-state .district{display:none} .unit-district .district:not(.fillable){display:none}
+  .hl-outline{fill:none;stroke:var(--rust);stroke-width:2.2;stroke-linejoin:round;pointer-events:none;paint-order:stroke} .hl-halo{fill:none;stroke:#fff;stroke-width:4;stroke-linejoin:round;pointer-events:none}
   .statecase{fill:none;stroke:#fff;stroke-width:2;pointer-events:none;opacity:.8}
   .stateline{fill:none;stroke:#3F3831;stroke-width:.95;pointer-events:none;opacity:.95}
   .district.selected{stroke-width:2.6;stroke:var(--rust);opacity:1} .district.selected-halo{stroke:#fff;stroke-width:5.5;opacity:.95}
@@ -310,6 +311,7 @@
     <!-- floating search card: the search box, example places, and the "Explore the data" drawer with every control -->
     <div class="fcard search-card" id="search-card">
       <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a place, ZIP or member of Congress" aria-label="Search by city, ZIP code, county, congressional district, state or member of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
+      <form class="ask" id="askf" hidden autocomplete="off"><input id="askq" type="text" maxlength="400" placeholder="Ask the map: e.g. which Texas counties have the least access?" aria-label="Ask the map a question"><button type="submit" id="askb">Ask</button></form>
       <div class="invite" id="doors" hidden>
         <div class="invite-row">
           <p class="invite-lead"><b>Try</b></p>
@@ -639,6 +641,7 @@
   const halo = gS.append('path').attr('class', 'district selected-halo'), sel = gS.append('path').attr('class', 'district selected');
   const chalo = gS.append('path').attr('class', 'csel-halo'), csel = gS.append('path').attr('class', 'csel');   // outline of the selected county
   const outlineCounty = k => { const f = k ? countyFeatures.find(f => f.properties.id === k) : null; chalo.attr('d', f ? path(f) : null); csel.attr('d', f ? path(f) : null); };
+  const gHL = svg.append('g').attr('class', 'hl');   // outlines of the places an answer from the question box refers to
   gN.selectAll('path').data(NCI).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(52)).attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
   // ---- the default layer: residents 55+ with fewer than 20 trials within 60 road-miles, as circles sized by people ----
   const bubR = d3.scaleSqrt().domain([0, 180000]).range([0, 17]);   // area ∝ residents; 180,000 (about the largest county) is a 17-unit radius on the 975-unit map
@@ -735,6 +738,7 @@
     else if (metric === 'acs') lg.append('span').html('<i style="background:var(--nodata)"></i>no data');
     legendStar(lg);
     document.getElementById('inc-site').style.display = (metric === 'inc' || isBva(metric)) ? '' : 'none'; document.getElementById('acs-var').style.display = metric === 'acs' ? '' : 'none';
+    gHL.raise();
   }
   const incSel = document.getElementById('inc-site'); BSITE.forEach(([k, lab], i) => { const o = document.createElement('option'); o.value = i; o.textContent = lab; incSel.appendChild(o); }); incSel.addEventListener('change', () => { incSite = +incSel.value; if ((isBva(metric) || tab === 'burden') && BU) { const ty = BU.meta.site2type[BSITE[incSite][0]] || ''; if (ty !== filt.type) { filt.type = ty; ft.value = ty; update(); return; } } paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); refreshTab(); pushURL(); });
   document.getElementById('acs-var').addEventListener('change', e => { acsVar = e.target.value; paint(); renderPane(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
@@ -1535,6 +1539,43 @@
   }
   window.addEventListener('popstate', () => applyURL(false));
   applyURL(true);
+
+  // ---- "Ask the map" ----
+  // A question goes to the helper (SITE.ask); the reply carries a view {page, qs, hl}. The map moves to that view the same way a
+  // link would (the address changes, applyURL reads it), the places the answer refers to are outlined, and the answer card sits
+  // above the figures. Nothing in the reply is computed by the model: the figures come from the published api/ files.
+  const askForm = document.getElementById('askf'), askIn = document.getElementById('askq'), askBtn = document.getElementById('askb');
+  function highlight(ids) {
+    const want = new Set(ids || []); gHL.selectAll('*').remove(); if (!want.size) return;
+    const feats = unit === 'district' ? districtFeatures.filter(f => want.has(String(f.properties.id)))
+      : unit === 'state' ? stateFeatures.filter(f => want.has(String(f.properties.id || f.id)))
+      : countyFeatures.filter(f => want.has(String(f.properties.id)));
+    gHL.selectAll('path.hl-halo').data(feats).join('path').attr('class', 'hl-halo').attr('d', path);
+    gHL.selectAll('path.hl-outline').data(feats).join('path').attr('class', 'hl-outline').attr('d', path);
+    gHL.raise();
+  }
+  function showAnswer(q, res, isErr) {
+    const old = document.getElementById('ask-card'); if (old) old.remove();
+    const tabs = document.querySelector('#pane .tabs'); if (!tabs) return;
+    tabs.insertAdjacentHTML('afterend', res ? SITE.askCardHTML(q, res) : `<div class="ask-card err" id="ask-card" role="region" aria-label="Answer"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(isErr)}</p></div></div>`);
+    const card = document.getElementById('ask-card'); card.querySelector('.ask-x').addEventListener('click', () => { card.remove(); highlight([]); });
+    document.getElementById('pane').scrollTop = 0; card.setAttribute('tabindex', '-1'); card.focus({ preventScroll: true });
+  }
+  async function runAsk(q) {
+    q = String(q || '').trim(); if (!q) return; askIn.value = q; askBtn.disabled = true; askBtn.textContent = 'Asking…';
+    try {
+      const res = await SITE.ask(q); const v = res.view || {};
+      if (v.page === 'find') { location.href = 'find.html' + (v.qs ? '?' + v.qs : ''); return; }
+      if (v.page === 'map') { history.pushState(null, '', 'map.html' + (v.qs ? '?' + v.qs : '')); applyURL(false); }
+      showAnswer(q, res); highlight(v.page === 'map' ? v.hl : []);
+    } catch (e) { showAnswer(q, null, 'The question box is not available right now; the map, the finder and the Data API still work. (' + (e && e.message ? e.message : 'no reply') + ')'); }
+    finally { askBtn.disabled = false; askBtn.textContent = 'Ask'; }
+  }
+  if (SITE.ASK_URL) {
+    SITE.askStyles(); askForm.hidden = false;
+    askForm.addEventListener('submit', e => { e.preventDefault(); runAsk(askIn.value); });
+    { const p = new URLSearchParams(location.search); const q0 = p.get('ask'); if (q0) { p.delete('ask'); history.replaceState(null, '', 'map.html' + (p.toString() ? '?' + p : '')); runAsk(q0); } }   // a question carried in from the homepage box
+  }
   { const ml = document.getElementById('map-loading'); if (ml) ml.remove(); }
   // "Methods & data" links land on the methods text itself, opened
   const openMethods = () => { if (location.hash !== '#methods') return; const d = document.querySelector('#foot details'); if (d) d.open = true; document.getElementById('methods').scrollIntoView(); };
