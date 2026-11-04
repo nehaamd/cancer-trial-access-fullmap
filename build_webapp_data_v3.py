@@ -96,6 +96,11 @@ def main():
          "upd": trials.get("last_update_posted", pd.Series([""] * len(trials))).fillna("").tolist(), "cc": [contact_short(x) for x in trials.get("central_contact", pd.Series([""] * len(trials))).fillna("")],
          "ct": [t_idx[c] for c in trials.cancer_type], "cats": [cats_for(n, c) for n, c in zip(trials.nct_id, trials.cancer_type)],
          "multi": [ctype.multi_subtype.get(n, "") if ctype.cancer_type.get(n) == "multi" else "" for n in trials.nct_id],
+         # route of the study drug for the ZIP finder's "given by" filter: 1 oral, 0 not oral (infusion, injection, procedure or no drug),
+         # -1 indeterminate (a drug is listed but no route words); from classify_setting.py's oral_route column
+         "oral": [{"oral": 1, "non_oral": 0}.get(x, -1) for x in trials.get("oral_route", pd.Series(["indeterminate"] * len(trials))).fillna("indeterminate")],
+         # free-text search key for the ZIP finder (drug, gene or biomarker words): conditions and registry keywords, lower-cased, capped
+         "kw": [(str(c or "") + ";" + str(k or "")).lower()[:400] for c, k in zip(trials.conditions.fillna(""), trials.get("keywords", pd.Series([""] * len(trials))).fillna(""))],
          "types": [[c, CT_LABEL[c]] for c in types], "named_types": named_types, "phases": phases, "sponsors": [["industry", "Industry"], ["academic_other", "Academic / other"], ["nih_federal", "NIH / federal"]]}
     # ---- registry rows that are not places (metrics_us.assign_sites, config.VIRTUAL_SITE_PATTERN): trial index -> states named ----
     allrows = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna("")
