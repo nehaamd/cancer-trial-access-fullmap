@@ -85,7 +85,7 @@ h1,h2{text-wrap:balance}
 }
 @media print{header.site,footer.site .foot-grid{display:none}}
 
-/* ---- Oncotrek wordmark: the organization, with the product named beside it ---- */
+/* ---- header: optional product link beside the wordmark ---- */
 header.site .wordmark{letter-spacing:.01em}
 header.site .product{color:var(--ink-2);text-decoration:none;font-size:var(--fs-1);font-weight:600;white-space:nowrap;border-bottom:2px solid transparent;padding-bottom:1px}
 header.site .product:hover{color:var(--navy)} header.site .product[aria-current="page"]{color:var(--navy);border-bottom-color:var(--navy)}
