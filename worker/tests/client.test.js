@@ -97,10 +97,24 @@ const ctxBase = () => ({ q: 'Texas counties with oncologists but no trials <scri
 test('cardHTML escapes everything the model wrote and has every section in order', () => {
   const h = R.cardHTML(ctxBase());
   assert.ok(!h.includes('<script>'), 'no raw script tag'); assert.ok(h.includes('&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;')); assert.ok(!h.includes('<b>bold</b>')); assert.ok(h.includes('&lt;b&gt;bold&lt;/b&gt;')); assert.ok(h.includes('data-q="&lt;i&gt;x&lt;/i&gt;"'));
-  const order = ['class="ask-q"', 'class="ask-a"', 'How this was read', 'Or ask:', 'Not in the data', 'class="ask-tbl"', 'class="ask-sum"', 'class="ask-cav"', 'Map now shows:', '(2 outlined)', 'id="ask-focus" checked', 'Read from:', 'How this was answered', 'Follow up:', 'New question', 'does not match patients to trials'];
+  // the calmer card (Nov 2026): the answer first, then its caveats, how it was read, what is not in the data, the table, the map line and the
+  // follow-ups; sources, the rule as read, the steps, the model and the check sit in one Details disclosure at the end
+  const order = ['Back to overview', 'class="ask-q"', 'class="ask-a"', 'class="ask-cav"', 'How this was read', 'Or ask:', 'Not in the data', 'class="ask-tbl"', 'class="ask-sum"', 'Map now shows:', '(2 outlined)', 'id="ask-focus" checked', 'Follow up:', 'New question', '<summary>Details</summary>', 'Read from:', 'Rule as read:', 'How this was answered', 'does not match patients to trials'];
   let at = -1; for (const s of order) { const i = h.indexOf(s); assert.ok(i > at, `${s} in order (found at ${i}, after ${at})`); at = i; }
   assert.ok(h.includes('href="https://nehaamd.github.io/cancer-trial-access-fullmap/api/all_counties.json"')); assert.ok(!h.includes('javascript:'), 'a bad source url is not a link'); assert.ok(h.includes('as of Nov 3, 2026')); assert.ok(h.includes('incidence 2019–2023'));
   assert.ok(h.includes('model claude-sonnet-5-5')); assert.ok(h.includes('2 model steps')); });
+test('the card speaks the interpretation in words: field paths become catalog labels, rules in parentheses move to Details', () => {
+  const p = R.plainInterpretation('Counties in Texas with at least one oncologist (oncologists.count > 0) and no recruiting trial with a site in the county (trials_listed_here = 0), largest first by residents 55+.');
+  assert.equal(p.text, 'Counties in Texas with at least one oncologist and no recruiting trial with a site in the county, largest first by residents 55+.'); assert.deepEqual(p.rules, ['oncologists.count > 0', 'trials_listed_here = 0']);
+  const q = R.plainInterpretation('Counties with oncologists.count > 0 and trials_listed_here = 0.'); assert.equal(q.text, 'Counties with oncologists > 0 and trials with a site here = 0.'); assert.equal(q.rules.length, 1, 'the raw text is kept under Details');
+  assert.deepEqual(R.plainInterpretation('Ohio counties, e.g. rural ones (i.e. nonmetro).'), { text: 'Ohio counties, e.g. rural ones (i.e. nonmetro).', rules: [] }, 'ordinary abbreviations stay');
+  const h = R.cardHTML(ctxBase()); const read = h.slice(h.indexOf('How this was read'), h.indexOf('Not in the data')); assert.ok(!read.includes('oncologists.count'), 'no field path in the plain section'); assert.ok(h.includes('<code>Counties in Texas with oncologists.count &gt; 0')); });
+test('the card shows 10 rows then "Show all N"; Details holds the sources, steps and model; follow-ups are text links', () => {
+  const rows = Array.from({ length: 25 }, (_, i) => ({ id: String(10000 + i), name: `C${i}`, v: i })); const ctx = ctxBase(); ctx.table = { columns: ['id', 'name', 'v'], rows, table: null, unit: 'county' };
+  const h = R.cardHTML(ctx); const tb = h.slice(h.indexOf('<tbody>'), h.indexOf('</tbody>')); assert.equal((tb.match(/<tr>/g) || []).length, 10); assert.ok(h.includes('Show all 25'));
+  assert.equal((R.cardHTML({ ...ctx, showAll: true }).match(/<tr>/g) || []).length - 1, 25);
+  const det = h.slice(h.indexOf('<details class="ask-details">'), h.indexOf('</details>')); for (const s of ['Read from:', 'How this was answered', 'model claude-sonnet-5-5', 'number by number']) assert.ok(det.includes(s), s + ' inside Details');
+  assert.ok(/class="ask-link ask-fuq" data-q="How many residents 55\+ live there\?"/.test(h)); assert.ok(R.CARD_SECTIONS.includes('afterAnswer') && R.CARD_SECTIONS.includes('end'), 'room for later sections'); });
 test('an unverified answer omits the answer text and shows the notice, but keeps the table and the map line', () => {
   const ctx = ctxBase(); ctx.verification = { ok: false, issues: ['number 99 not in any tool result'] }; const h = R.cardHTML(ctx);
   assert.ok(!h.includes('Two Texas counties have oncologists')); assert.ok(h.includes(R.UNVERIFIED_NOTICE)); assert.ok(h.includes('class="ask-tbl"')); assert.ok(h.includes('Map now shows:')); assert.ok(h.includes('verification failed: number 99 not in any tool result'));

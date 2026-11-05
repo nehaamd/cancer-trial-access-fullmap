@@ -1,31 +1,36 @@
 /* Ask the map v3 — the answer card in the figures column of map.html (loaded by ask/ask.js). The box itself is styled by
    site.js (SITE.askStyles), because the homepage shows the box without the card. Colours come from the site's tokens (site.css). */
-.ask-card,.ask-again{--ask-tint:var(--paper,#F7F5F0);--ask-tint-2:var(--rule,#E6E2DA);--ask-tint:color-mix(in srgb,var(--sky,#9EC4E0) 22%,var(--card,#fff));--ask-tint-2:color-mix(in srgb,var(--sky,#9EC4E0) 40%,var(--card,#fff));--ask-amber:#FBF3E2;--ask-amber-2:#E6CB8E;--ask-amber-ink:var(--warn,#7A5A00)}
-.ask-card{position:relative;margin:.8rem 1.25rem 0;padding:.8rem 2.2rem .7rem .9rem;border:1px solid var(--rule);border-left:4px solid var(--rust,#8A3B1E);border-radius:8px;background:var(--paper,#F7F5F0);font-size:var(--fs-1,.95rem);line-height:1.45}
-.ask-card:focus{outline:none} .ask-card:focus-visible{outline:3px solid var(--gulf,#3F7FB5);outline-offset:2px}
-.ask-card.err{border-left-color:var(--ink-3)} .ask-card.busy{border-left-color:var(--gulf,#3F7FB5)} .ask-card.plain{border-left-color:var(--navy,#0B3C5D)}
-.ask-card .ask-x{position:absolute;top:.35rem;right:.45rem;border:0;background:none;font-size:1.3rem;line-height:1;color:var(--ink-3);cursor:pointer;border-radius:50%;padding:.1rem .4rem}
-.ask-card .ask-x:hover{color:var(--ink);background:var(--card)}
-.ask-card .ask-q{margin:0 0 .35rem;font-weight:600;color:var(--ink-2)}
-.ask-card .ask-a{font-family:"Source Serif 4",Georgia,serif;font-size:1.02rem;line-height:1.5;color:var(--ink)} .ask-card .ask-a p{margin:0 0 .45rem}
-.ask-card .ask-tag{display:inline-block;font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;font-size:.72rem;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--rule-2,#CFCBC2);border-radius:999px;padding:.05rem .5rem;margin:0 0 .3rem;background:var(--card,#fff)}
-.ask-card .ask-tag-no{color:var(--ask-amber-ink);border-color:var(--ask-amber-2);background:var(--ask-amber)}
-.ask-card .ask-unverified{margin:0 0 .5rem;padding:.45rem .65rem;background:var(--card,#fff);border:1px dashed var(--rule-2,#CFCBC2);border-radius:6px;color:var(--ink-2);font-size:var(--fs-0,.84rem)}
+.ask-card{--ask-tint:var(--paper,#F7F5F0);--ask-tint-2:var(--rule,#E6E2DA);--ask-tint:color-mix(in srgb,var(--sky,#9EC4E0) 22%,var(--card,#fff));--ask-tint-2:color-mix(in srgb,var(--sky,#9EC4E0) 40%,var(--card,#fff))}
+/* the card is the figures column's content while it is open (map.html: #pane.answering), so it is not a box: whitespace and thin rules, as the overview */
+.ask-card{position:relative;padding:.7rem 1.25rem 1.2rem;font-size:var(--fs-1,.95rem);line-height:1.45}
+.ask-card:focus{outline:none} .ask-card:focus-visible{outline:2px solid var(--sky,#9EC4E0);outline-offset:-2px}
+.ask-card .ask-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin:0 0 .5rem}
+.ask-card .ask-back{border:0;background:none;padding:.2rem 0;font:inherit;font-size:var(--fs-0,.84rem);font-weight:650;color:var(--link,#2F6A9C);cursor:pointer} .ask-card .ask-back:hover{color:var(--navy);text-decoration:underline}
+.ask-card .ask-x{border:0;background:none;font-size:1.4rem;line-height:1;color:var(--ink-3);cursor:pointer;border-radius:50%;padding:.1rem .45rem}
+.ask-card .ask-x:hover{color:var(--ink);background:var(--paper,#F7F5F0)}
+.ask-card .ask-kick{color:var(--ink-3);font-size:.75rem;margin:0 0 .25rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.ask-card .ask-q{margin:0 0 .6rem;font-family:"Source Serif 4",Georgia,serif;font-size:var(--fs-3,1.35rem);font-weight:600;line-height:1.2;letter-spacing:-.015em;color:var(--ink)}
+.ask-card .ask-a{font-family:"Source Serif 4",Georgia,serif;font-size:1.06rem;line-height:1.55;color:var(--ink)} .ask-card .ask-a p{margin:0 0 .5rem}
+.ask-card.busy .ask-q,.ask-card.err .ask-q{color:var(--ink-2)}
+.ask-card .ask-tag{display:inline-block;font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;font-size:.72rem;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--rule-2,#CFCBC2);border-radius:3px;padding:.02rem .4rem;margin:0 0 .35rem}
+.ask-card .ask-tag-no{color:var(--warn,#7A5A00);border-color:#E6CB8E}
+.ask-card .ask-unverified{margin:0 0 .5rem;padding:.1rem 0 .1rem .7rem;border-left:3px solid var(--rule-2,#CFCBC2);color:var(--ink-2);font-size:var(--fs-0,.84rem)}
 .ask-card .ask-detail{font-size:.78rem;color:var(--ink-3);overflow-wrap:anywhere}
-/* the sections: a small serif heading, quiet text */
-.ask-card .ask-sec{margin:.5rem 0 0} .ask-card .ask-sec h4{margin:0 0 .15rem;font-family:"Source Serif 4",Georgia,serif;font-weight:600;font-size:.95rem;color:var(--navy,#0B3C5D);letter-spacing:-.005em}
-.ask-card .ask-sec p{margin:0 0 .25rem;font-size:var(--fs-0,.84rem);color:var(--ink-2)} .ask-card .ask-sec ul{margin:0;padding-left:1.1rem;font-size:var(--fs-0,.84rem)} .ask-card .ask-sec li{margin:.08rem 0}
+/* the sections: a small uppercase heading, quiet text, a thin rule above */
+.ask-card .ask-sec{margin:.8rem 0 0;padding-top:.6rem;border-top:1px solid var(--rule)} .ask-card .ask-sec h4{margin:0 0 .2rem;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.ask-card .ask-sec p{margin:0 0 .25rem;font-size:var(--fs-0,.84rem);color:var(--ink-2)}
 .ask-card .ask-lead{font-size:var(--fs-0,.84rem);font-weight:650;color:var(--ink-3);margin-right:.1rem}
-/* what the data does not have: muted amber, so it reads as a limit rather than an error */
-.ask-card .ask-nid{padding:.45rem .65rem .4rem;background:var(--ask-amber);border:1px solid var(--ask-amber-2);border-radius:6px} .ask-card .ask-nid h4{color:var(--ask-amber-ink)} .ask-card .ask-nid li{color:var(--ink-2)}
-/* chips: alternatives, follow-ups, the places of a row (one look, shared with the box's example chips) */
-.ask-card .ask-alts,.ask-card .ask-fu{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.25rem 0 0}
-.ask-card .ask-pl,.ask-card .ask-new,.ask-card .ask-showall{font:inherit;font-size:var(--fs-0,.84rem);color:var(--navy,#0B3C5D);background:var(--card,#fff);border:1px solid var(--rule-2,#CFCBC2);border-radius:999px;padding:.25rem .7rem;cursor:pointer;line-height:1.3;text-align:left}
-.ask-card .ask-pl:hover,.ask-card .ask-showall:hover{border-color:var(--navy);background:var(--ask-tint)} .ask-card .ask-fuq{font-weight:600;background:var(--ask-tint);border-color:var(--ask-tint-2)}
-.ask-card .ask-new{border:0;background:none;color:var(--link,#2F6A9C);text-decoration:underline;text-underline-offset:2px;padding:.25rem .3rem;margin-left:auto} .ask-card .ask-new:hover{color:var(--navy)}
-.ask-card .ask-fu{margin-top:.5rem}
+/* what the data does not have: a plain line with a subtle rule at its left, so it reads as a limit rather than an error */
+.ask-card .ask-nid{border-top:0;padding:.05rem 0 .05rem .75rem;border-left:3px solid var(--sand,#F2C48A)} .ask-card .ask-nid h4{color:var(--warn,#7A5A00)}
+/* alternatives and follow-ups: small text links */
+.ask-card .ask-alts,.ask-card .ask-fu{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .9rem;margin:.3rem 0 0}
+.ask-card .ask-link,.ask-card .ask-new{font:inherit;font-size:var(--fs-0,.84rem);color:var(--link,#2F6A9C);background:none;border:0;padding:.1rem 0;cursor:pointer;line-height:1.35;text-align:left;text-decoration:underline;text-decoration-color:var(--sky,#9EC4E0);text-underline-offset:3px}
+.ask-card .ask-link:hover,.ask-card .ask-new:hover{color:var(--navy);text-decoration-color:currentColor} .ask-card .ask-fuq{font-weight:600}
+.ask-card .ask-alts .ask-lead,.ask-card .ask-fu .ask-lead{flex-basis:100%}
+.ask-card .ask-fu{margin-top:.9rem;padding-top:.6rem;border-top:1px solid var(--rule)} .ask-card .ask-new{margin-left:auto;color:var(--ink-2)}
+.ask-card .ask-showall{font:inherit;font-size:var(--fs-0,.84rem);font-weight:600;color:var(--navy,#0B3C5D);background:var(--card,#fff);border:1px solid var(--rule-2,#CFCBC2);border-radius:999px;padding:.2rem .7rem;cursor:pointer;line-height:1.3} .ask-card .ask-showall:hover{border-color:var(--navy)}
 /* the results table: sortable headers with an arrow, numbers right-aligned, places as buttons that open the place on the map */
-.ask-tbl{overflow:auto;margin:.5rem 0 .2rem;border:1px solid var(--rule);border-radius:6px;background:var(--card,#fff);max-height:min(60vh,520px)}
+.ask-tbl{overflow:auto;margin:.8rem 0 .2rem;border-top:1px solid var(--rule);background:var(--card,#fff);max-height:min(60vh,520px)}
 .ask-tbl table{display:table;overflow:visible;border-collapse:collapse;font-size:.82rem;width:100%;min-width:100%}   /* display:table again: map.html's phone rule (table{display:block;overflow-x:auto}) would make the table its own scroller, and the sticky header and the wrapper's scrolling would break */
 .ask-tbl th,.ask-tbl td{text-align:left;padding:.28rem .5rem;border-bottom:1px solid var(--rule);vertical-align:top;white-space:nowrap}
 .ask-tbl th{position:sticky;top:0;background:var(--card,#fff);z-index:1;padding:0;font-weight:600;color:var(--ink-2)} .ask-tbl tr:last-child td{border-bottom:0}
@@ -39,26 +44,22 @@
 .ask-card .ask-cav{margin:.4rem 0 0;padding-left:1.1rem;font-size:.78rem;color:var(--ink-3)} .ask-card .ask-cav li{margin:.1rem 0}
 .ask-card .ask-dropped{margin:.3rem 0 0;font-size:.76rem;color:var(--ink-3)}
 /* the map line with the Focus toggle */
-.ask-card .ask-map{margin:.5rem 0 .4rem;font-size:var(--fs-0,.84rem);color:var(--ink-2);padding:.4rem .6rem;background:var(--card,#fff);border:1px solid var(--rule);border-radius:6px;line-height:1.5}
-.ask-card .ask-map b{color:var(--ink);font-weight:650} .ask-card .ask-map-lead{font-weight:650;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;font-size:.72rem} .ask-card .ask-hl-lab{color:var(--rust,#8A3B1E);font-weight:600} .ask-card .ask-hl-n{font-weight:400;color:var(--ink-3)}
-.ask-card .ask-focus{display:inline-flex;align-items:center;gap:.3rem;margin-left:.5rem;padding:.1rem .5rem .1rem .35rem;border:1px solid var(--rule-2,#CFCBC2);border-radius:999px;background:var(--paper,#F7F5F0);font-weight:600;color:var(--navy,#0B3C5D);cursor:pointer;vertical-align:baseline} .ask-card .ask-focus input{margin:0;accent-color:var(--rust,#8A3B1E);width:14px;height:14px}
-.ask-card .ask-focus:has(input:checked){background:var(--ask-tint);border-color:var(--ask-tint-2)}
+.ask-card .ask-map{margin:.7rem 0 0;font-size:var(--fs-0,.84rem);color:var(--ink-2);line-height:1.5}
+.ask-card .ask-map b{color:var(--ink);font-weight:650} .ask-card .ask-map-lead{font-weight:650;color:var(--ink-3)} .ask-card .ask-hl-lab{color:var(--rust,#8A3B1E);font-weight:600} .ask-card .ask-hl-n{font-weight:400;color:var(--ink-3)}
+.ask-card .ask-focus{display:inline-flex;align-items:center;gap:.3rem;margin-left:.3rem;font-weight:600;color:var(--navy,#0B3C5D);cursor:pointer;vertical-align:baseline} .ask-card .ask-focus input{margin:0;accent-color:var(--rust,#8A3B1E);width:14px;height:14px}
+/* Details: the sources, the rule as read, the steps, the model and the check, in one disclosure */
+.ask-card .ask-details{margin:.7rem 0 0;font-size:.78rem;color:var(--ink-3)} .ask-card .ask-details>summary{cursor:pointer;color:var(--link,#2F6A9C);font-weight:650;font-size:var(--fs-0,.84rem);list-style:none;display:inline-block;padding:.15rem 0} .ask-card .ask-details>summary::-webkit-details-marker{display:none} .ask-card .ask-details>summary::before{content:"▸ ";font-size:.85em} .ask-card .ask-details[open]>summary::before{content:"▾ "}
+.ask-card .ask-details>*:not(summary){margin:.35rem 0 0}
 .ask-card .ask-src,.ask-card .ask-note{margin:.35rem 0 0;font-size:.78rem;color:var(--ink-3)} .ask-card .ask-src a{color:var(--link,#2F6A9C)} .ask-card .ask-asof{color:var(--ink-3)}
-/* the step log: small, plain, collapsed */
-.ask-card .ask-log{margin:.4rem 0 0;font-size:.78rem;color:var(--ink-3)} .ask-card .ask-log summary{cursor:pointer;color:var(--link,#2F6A9C);font-weight:600;display:inline;list-style:none} .ask-card .ask-log summary::-webkit-details-marker{display:none} .ask-card .ask-log summary::before{content:"▸ ";font-size:.85em} .ask-card .ask-log[open] summary::before{content:"▾ "}
-.ask-card .ask-log ol,.ask-card .ask-steps{margin:.3rem 0 0;padding-left:1.3rem;color:var(--ink-2)} .ask-card .ask-log li,.ask-card .ask-steps li{margin:.12rem 0;line-height:1.4} .ask-card .ask-log-r{display:block;color:var(--ink-3);padding-left:.4rem} .ask-card li.err .ask-log-r{color:var(--rust,#8A3B1E)} .ask-card .ask-log-foot{margin:.3rem 0 0;color:var(--ink-3)}
+.ask-card .ask-rule code{font-size:.95em;background:var(--paper,#F7F5F0);padding:0 .25rem;border-radius:3px;overflow-wrap:anywhere} .ask-card .ask-log-h{margin-bottom:0}
+.ask-card .ask-log,.ask-card .ask-steps{margin:.3rem 0 0;padding-left:1.3rem;color:var(--ink-2)} .ask-card .ask-log li,.ask-card .ask-steps li{margin:.12rem 0;line-height:1.4} .ask-card .ask-log-r{display:block;color:var(--ink-3);padding-left:.4rem} .ask-card li.err .ask-log-r{color:var(--rust,#8A3B1E)} .ask-card .ask-log-foot{margin:.3rem 0 0;color:var(--ink-3)}
 .ask-card .ask-steps{font-size:.8rem;list-style:decimal} .ask-card.busy .ask-a p::after{content:"";display:inline-block;width:.9em;height:.9em;margin-left:.4rem;vertical-align:-.15em;border:2px solid var(--gulf,#3F7FB5);border-right-color:transparent;border-radius:50%;animation:ask-spin .9s linear infinite} @keyframes ask-spin{to{transform:rotate(360deg)}}
-/* the way back to the box when the figures column shows a tab instead of the map */
-.ask-again{display:flex;align-items:center;flex-wrap:wrap;gap:.2rem .6rem;margin:.6rem 1.25rem 0;font-size:var(--fs-0,.84rem);color:var(--ink-2)} .ask-again[hidden]{display:none}
-.ask-again button{font:inherit;font-size:var(--fs-0,.84rem);font-weight:650;color:var(--navy);background:var(--ask-tint);border:1px solid var(--ask-tint-2);border-radius:999px;padding:.25rem .7rem;cursor:pointer;line-height:1.3} .ask-again button:hover{border-color:var(--gulf)}
-@media (max-width:720px){.ask-card,.ask-again{margin-left:var(--gutter,1rem);margin-right:var(--gutter,1rem)}}
 /* a phone: tap targets of at least 40 px, the table scrolls sideways inside the bottom sheet, the card keeps its reading size */
 @media (max-width:640px){
-  .ask-card{padding:.8rem 2.1rem .7rem .8rem} .ask-card .ask-a{font-size:1rem}
-  .ask-card .ask-pl,.ask-card .ask-new,.ask-card .ask-showall,.ask-card .ask-x,.ask-card .ask-focus,.ask-again button,.ask-card .ask-log summary{min-height:40px} .ask-card .ask-x{min-width:40px;display:flex;align-items:center;justify-content:center;top:.15rem;right:.2rem}
-  .ask-card .ask-focus{padding:.2rem .7rem .2rem .5rem} .ask-card .ask-focus input{width:18px;height:18px} .ask-card .ask-log summary{display:inline-flex;align-items:center}
+  .ask-card{padding:.6rem var(--gutter,16px) 1rem} .ask-card .ask-a{font-size:1.02rem} .ask-card .ask-q{font-size:var(--fs-2,1.08rem)}
+  .ask-card .ask-link,.ask-card .ask-new,.ask-card .ask-showall,.ask-card .ask-x,.ask-card .ask-back,.ask-card .ask-focus,.ask-card .ask-details>summary{min-height:40px} .ask-card .ask-link,.ask-card .ask-new{display:inline-flex;align-items:center} .ask-card .ask-x{min-width:40px;display:flex;align-items:center;justify-content:center}
+  .ask-card .ask-focus input{width:18px;height:18px} .ask-card .ask-details>summary{display:inline-flex;align-items:center}
   .ask-tbl{max-height:min(55vh,440px);max-width:100%} .ask-tbl table{font-size:.84rem} .ask-tbl th,.ask-tbl td{padding:.4rem .55rem;vertical-align:middle} .ask-tbl .ask-sort{min-height:40px;padding:.5rem .55rem} .ask-tbl .ask-place{display:inline-block;min-height:28px;padding:.2rem 0}
-  .ask-card .ask-new{margin-left:0}
 }
 @media (prefers-reduced-motion:reduce){.ask-card.busy .ask-a p::after{animation:none;border-right-color:var(--gulf,#3F7FB5)}}
 @media (forced-colors:active){.ask-tbl th[aria-sort="ascending"] .ask-sort,.ask-tbl th[aria-sort="descending"] .ask-sort{text-decoration:underline;text-decoration-thickness:2px}}
