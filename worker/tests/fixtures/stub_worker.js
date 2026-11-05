@@ -5,6 +5,8 @@
      "unverified"  -> the answer comes back with verification.ok = false      "scope"  -> the fixed SCOPE_TEXT, no map
      "limit"       -> 429 with retry_after_s                                   "fail"   -> 502 with a detail
      "slow"        -> no reply for 100 s (the client's 90 s timeout)           "text"   -> a text-only answer (no map, no table)
+     "method"      -> a standard-method call, then an answer whose table comes from its sub-call (the card's method label)
+   POST /feedback is logged to the console and answered {ok:true}.
    Run:  node worker/tests/fixtures/stub_worker.js [port=8766]   then on the map page (served on localhost):
          localStorage.setItem('askUrl', 'http://localhost:8766/ask'); localStorage.setItem('askEngineUrl', '/worker/tests/fixtures/engine.stub.js')
    (with the repository root served: python3 -m http.server 8765 -> http://localhost:8765/docs/map.html). Signatures are not checked here. */
@@ -19,6 +21,7 @@ const QUERY = { table: 'counties', where: [{ field: 'state', op: '=', value: 'TX
 http.createServer((req, res) => {
   if (req.method === 'OPTIONS') return json(res, 204, {});
   if (req.method !== 'POST') return json(res, 405, { error: 'POST only' });
+  if (req.url.startsWith('/feedback')) { let raw = ''; req.on('data', d => { raw += d; }); req.on('end', () => { console.log('feedback ' + raw.slice(0, 300)); json(res, 200, { ok: true }); }); return; }
   let raw = ''; req.on('data', d => { raw += d; }); req.on('end', () => {
     let b; try { b = JSON.parse(raw); } catch (e) { return json(res, 400, { error: 'bad JSON' }); }
     const q = String(b.q || ''), turns = Array.isArray(b.turns) ? b.turns : [], low = q.toLowerCase();
@@ -28,6 +31,12 @@ http.createServer((req, res) => {
     if (/\bslow\b/.test(low)) return;   // never answers
     if (/\bscope\b/.test(low)) return json(res, 200, { v: 3, kind: 'answer', step: 1, assistant: [], sig: 'stub', answer: { answer: CAT.SCOPE_TEXT, answerable: 'no', not_in_data: ['Eligibility is not in the data.'] }, verification: { ok: true, issues: [], retries: 0 }, model: 'stub' });
     if (/\btext\b/.test(low)) return json(res, 200, { v: 3, kind: 'answer', step: 1, assistant: [], sig: 'stub', answer: { answer: 'The data covers 3,143 counties, 436 districts and 51 states.', answerable: 'partly' }, verification: { ok: true, issues: [], retries: 0 }, model: 'stub' });
+    if (/\bmethod\b/.test(low)) {   // a standard method: the card shows "Standard method: <title>"
+      const M = { id: 'oncologists_no_trials_counties', params: { state: 'TX' } };
+      if (turns.length === 0) return json(res, 200, { v: 3, kind: 'tools', step: 1, assistant: [{ type: 'tool_use', id: 'toolu_m', name: 'method', input: M }], sig: 'stub', calls: [{ id: 'toolu_m', name: 'method', input: M }] });
+      const answer = { answer: 'Texas counties with oncologists but no recruiting trial, by the standard method.', answerable: 'yes', interpretation: 'The standard method for counties with oncologists but no trials.', map: { unit: 'county', layer: 'onc', state: 'TX', highlight: { from_call: 'toolu_m' }, highlight_label: 'Counties with oncologists but no recruiting trial' }, table: { from_call: 'toolu_m.1' }, sources: ['counties'] };
+      return json(res, 200, { v: 3, kind: 'answer', step: 2, assistant: [], sig: 'stub', answer, verification: { ok: true, issues: [], retries: 0 }, model: 'stub-model' });
+    }
     if (turns.length === 0) return json(res, 200, { v: 3, kind: 'tools', step: 1, assistant: [{ type: 'tool_use', id: 'toolu_1', name: 'query', input: QUERY }, { type: 'tool_use', id: 'toolu_2', name: 'final_answer', input: {} }], sig: 'stub', calls: [{ id: 'toolu_1', name: 'query', input: QUERY }, { id: 'toolu_2', name: 'final_answer', input: {} }] });
     const r1 = turns[turns.length - 1].results.find(r => r.tool_use_id === 'toolu_1'); let count = '?'; try { count = JSON.parse(r1.content).count; } catch (e) { /* keep ? */ }
     const unverified = /\bunverified\b/.test(low);

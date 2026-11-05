@@ -61,6 +61,41 @@ export function firstPlace(text, among) {
   return best ? best.id : null;
 }
 
+// ---------- pairs: each named place written with its own figure (the attribution the worker's claims check guards) ----------
+// pairs: [[name variants], expected value] for every place of the question. A pair holds when some clause of the answer names the
+// place and a number matching the value (the §6 rounding rule), and that number's nearest place in the clause (the one before it,
+// else the one after it) is this place. Place names are masked first, so "Hidalgo County, Texas" is one token and its comma does
+// not split the clause; clauses split at ; , and the comparison words (against, compared with, than, while, whereas, versus, and, but).
+const PAIR_SPLIT = /;|,(?!\d{3})|\s(?:and|but|while|whereas|against|versus|vs\.?|compared (?:with|to)|than|with|to|from)\s/i;
+export function pairedInText(text, names, value, allPairs) {
+  const t = String(text || ''); const mentions = [];
+  const all = (allPairs && allPairs.length ? allPairs : [[names, value]]).map(([ns], i) => ({ i, ns: (Array.isArray(ns) ? ns : [ns]).map(String).filter(Boolean) }));
+  const me = all.findIndex(p => p.ns.join('|') === (Array.isArray(names) ? names : [names]).map(String).join('|'));
+  for (const p of all) for (const n of p.ns) { const low = t.toLowerCase(), v = n.toLowerCase(); let from = 0; for (;;) { const k = low.indexOf(v, from); if (k < 0) break; from = k + 1; if (/[a-z0-9]/i.test(t[k - 1] || '') || /[a-z0-9]/i.test(t[k + v.length] || '')) continue; mentions.push({ start: k, end: k + v.length, pair: p.i }); } }
+  mentions.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+  const kept = []; let last = -1; for (const m of mentions) { if (m.start < last) continue; kept.push(m); last = m.end; }
+  let masked = '', pos = 0; kept.forEach((m, k) => { masked += t.slice(pos, m.start) + String.fromCharCode(0xE000 + k); pos = m.end; }); masked += t.slice(pos);
+  const tokOf = clause => [...clause.matchAll(/[\uE000-\uF8FF]/g)].map(m => ({ at: m.index, pair: kept[m[0].charCodeAt(0) - 0xE000].pair }));
+  for (const sentence of masked.split(/(?<=[.!?])\s+(?=[A-Z0-9\uE000-\uF8FF])/)) {
+    const clauses = sentence.split(PAIR_SPLIT).map(c => ({ text: c, toks: tokOf(c) }));
+    clauses.forEach((cl, ci) => {   // a clause with no place takes the nearest place of its sentence: the last one before it, else the next one
+      if (cl.toks.length) return; const prev = clauses.slice(0, ci).reverse().find(c => c.toks.length), next = clauses.slice(ci + 1).find(c => c.toks.length);
+      cl.inherit = prev ? prev.toks[prev.toks.length - 1].pair : next ? next.toks[0].pair : null; });
+    for (const cl of clauses) {
+      if (!cl.toks.some(x => x.pair === me) && cl.inherit !== me) continue;
+      const plain = cl.text.replace(/[\uE000-\uF8FF]/g, '\u2063');
+      const re = /(?<![\w.])(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s*(million|billion|thousand|k)\b)?/gi; let m;
+      while ((m = re.exec(plain))) {
+        const w = extractNumbers(m[0])[0]; if (!w || !numberMatches(w, value)) continue;
+        if (!cl.toks.length) return true;
+        const before = cl.toks.filter(x => x.at < m.index).pop(), after = cl.toks.find(x => x.at > m.index);
+        if ((before || after).pair === me) return true;
+      }
+    }
+  }
+  return false;
+}
+
 // ---------- highlight resolution ----------
 export function resolveHighlight(answer, full) {
   // full: callId -> { ids } (engine.full); returns { ids: [...]|null, source }
@@ -126,6 +161,11 @@ function runCheckSet(checks, q, exp, r, ans, text, allText, notes) {
   if (checks.numbers_present) for (const e of checks.numbers_present) {
     if (e && typeof e === 'object' && e.any_of) { const vals = e.any_of.map(numVal); if (!vals.some(v => textHasNumber(text, v))) f.push(`none of ${e.any_of.map((k, i) => `${k}=${vals[i]}`).join(' | ')} in the answer`); }
     else { const v = numVal(e); if (v === undefined) f.push(`numbers_present: no expected value for '${e}'`); else if (!textHasNumber(text, v)) f.push(`${typeof e === 'string' ? e + '=' : ''}${v} not in the answer`); }
+  }
+  if (checks.pairs) {   // [[name variants], value] per place: each place written with its own figure in the same clause
+    const list = exp[typeof checks.pairs === 'string' ? checks.pairs : 'pairs'] || [];
+    if (!list.length) f.push('pairs: no expected pairs');
+    for (const [names, value] of list) if (!pairedInText(text, names, value, list)) f.push(`${(Array.isArray(names) ? names : [names])[0]} is not written with its own figure ${value} in any clause`);
   }
   if (checks.numbers_absent) for (const e of checks.numbers_absent) { const v = numVal(e); if (textHasNumber(text, v)) f.push(`${e}=${v} appears but must not`); }
   for (const re of checks.text_must_match || []) if (!new RegExp(re, 'i').test(text)) f.push(`answer does not match /${re}/i`);

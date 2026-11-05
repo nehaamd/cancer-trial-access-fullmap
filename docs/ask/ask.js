@@ -8,6 +8,7 @@
    Pure parts (validation, query string, truncation, sorting, formatting, the card's HTML) live in render.js and are tested in Node. */
 import { TABLES } from './catalog.js';
 import * as R from './render.js';
+import { methodById } from './methods.js';
 
 const SITE = window.SITE || {};
 const H = () => window.__askHooks || {};
@@ -15,6 +16,7 @@ const H = () => window.__askHooks || {};
 const devOverride = key => { try { return ['localhost', '127.0.0.1'].includes(location.hostname) ? localStorage.getItem(key) || '' : ''; } catch (e) { return ''; } };
 const ASK_URL = devOverride('askUrl') || SITE.ASK_URL || '';
 const TIMEOUT_S = Number(SITE.ASK_TIMEOUT_S) || 90;
+const FEEDBACK_URL = (() => { try { return ASK_URL ? new URL(ASK_URL, location.href).origin + '/feedback' : ''; } catch (e) { return ''; } })();   // the worker's /feedback route (ASK_CONTRACT §7)
 const MAX_TURNS = 10;          // the worker forces final_answer at its 8th model call; this is the client's own stop
 const PRIOR_MAX = 3;           // earlier (question, answer) pairs sent with a follow-up
 const HISTORY_ROWS = 2000;     // table rows kept in the history entry (Back/Forward restores the card without the engine)
@@ -126,12 +128,22 @@ function renderAnswer(ctx, opts = {}) {
     if (t.classList.contains('ask-sort')) { toggleSort(t.dataset.col); return; }
     if (t.classList.contains('ask-showall')) { card.showAll = true; rerender({ focusSel: '.ask-tbl' }); return; }
     if (t.classList.contains('ask-new')) { newQuestion(); return; }
+    if (t.classList.contains('ask-fb-b')) { sendFeedback(t.dataset.v); return; }
     if (t.classList.contains('ask-reset')) { e.preventDefault(); resetMap(); }
   });
   el.addEventListener('change', e => { if (e.target && e.target.id === 'ask-focus') setFocus(e.target.checked, true); });
 }
 function rerender(o = {}) { if (!card) return; const pane = document.getElementById('pane'), top = pane ? pane.scrollTop : 0, aside = !(pane && pane.classList.contains('answering')); renderAnswer(card, { quiet: true, background: aside }); if (pane) pane.scrollTop = top; if (o.focusSel) { const t = document.querySelector('#ask-card ' + o.focusSel); if (t && t.focus) t.focus({ preventScroll: true }); } }
 function toggleSort(col) { if (!card || !col) return; const s = card.sort; card.sort = s && s.key === col ? (s.dir === 'asc' ? { key: col, dir: 'desc' } : null) : { key: col, dir: 'asc' }; rerender({ focusSel: `.ask-sort[data-col="${col.replace(/"/g, '\\"')}"]` }); }   // ascending, then descending, then the engine's order
+// "Was this right?": one POST to the worker, never waited on and never shown as an error; the buttons give way to the thanks
+function sendFeedback(verdict) {
+  if (!card || card.feedback) return; card.feedback = verdict === 'yes' ? 'yes' : 'no';
+  const st = window.__askState; if (st) st.feedback = card.feedback;
+  try { const hs = history.state; if (hs && hs.ask && hs.ask.q === card.q) history.replaceState({ ...hs, ask: { ...hs.ask, feedback: card.feedback } }, '', location.href); } catch (e) { /* file: pages */ }   // Back / Forward keep the thanks
+  rerender();
+  if (!FEEDBACK_URL) return;
+  try { fetch(FEEDBACK_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(R.feedbackPayload(card, card.feedback)), keepalive: true }).catch(() => {}); } catch (e) { /* feedback is best effort */ }
+}
 function setFocus(on, byUser) { if (H().setFocus) H().setFocus(on); if (byUser) { try { sessionStorage.setItem(FOCUS_KEY, on ? '1' : '0'); } catch (e) { /* private mode */ } } if (card && card.focus) card.focus.on = on; if (window.__askState) window.__askState.focus = on; }
 function resetMap() {   // the card's "Reset map": back to the default national view; the card stays, its outlines go
   if (H().highlight) H().highlight([]); if (H().setFocus) H().setFocus(false); window.__askState = null;
@@ -142,7 +154,7 @@ function resetMap() {   // the card's "Reset map": back to the default national 
 // the render context of an answer: the stored snapshot (what the history entry keeps) plus live parts (the map's own line, the focus state)
 function ctxOf(snap, table) {
   const t = table || snap.table || null; const ids = Array.isArray(snap.ids) ? snap.ids : [];
-  return { q: snap.q, answer: snap.answer, verification: snap.verification, model: snap.model, steps: snap.steps, table: t, sources: snap.sources, vintages: snap.vintages, log: snap.log, dropped: snap.dropped,
+  return { q: snap.q, answer: snap.answer, verification: snap.verification, model: snap.model, steps: snap.steps, table: t, sources: snap.sources, vintages: snap.vintages, log: snap.log, dropped: snap.dropped, method: snap.method || null, calls: snap.calls || [], feedback: snap.feedback || null,
     mapShows: snap.hasMap ? (safe(() => H().mapShows()) || '') : null, hl: { label: snap.hlLabel || '', count: ids.length }, focus: { on: H().focus ? !!H().focus() : !!snap.focus, show: ids.length > 0 && snap.hasMap }, sort: null, showAll: false, placeIdOf: placeIdOf(t && t.unit) };
 }
 const cleanSources = list => (Array.isArray(list) ? list : []).filter(s => s && typeof s === 'object').map(s => ({ table: String(s.table || ''), title: String(s.title || ''), file: String(s.file || ''), url: s.url ? String(s.url) : '', as_of: s.as_of ? String(s.as_of) : '' })).slice(0, 12);
@@ -207,7 +219,8 @@ function finish(q, resp, log, results, calls, steps) {
   if (mv && mv.highlight) { const h = safe(() => engine.highlightIds(mv.highlight)); if (h) ids = R.resolveIds(h.ids || [], id => h.unit || engine.unitOf(id)); else if (mv.highlight.from_call) mv.dropped.push('the highlight named a call with no places'); }
   const before = ids.length; ids = ids.filter(known); if (mv && before && !ids.length) mv.dropped.push('none of the highlighted ids is on the map');
   const focusOn = decideFocus(ids.length);
-  const snap = { v: 3, q, answer, verification, model: typeof resp.model === 'string' ? resp.model : null, steps, ids, focus: focusOn, hasMap: !!mv, hlLabel: mv ? mv.highlight_label : '', table: capTable(table), sources: plain ? [] : sourcesFor(answer, calls), vintages: plain ? {} : (safe(() => engine.vintages()) || {}), log: log.map(e => ({ call: e.call, result: e.result, error: e.error })), dropped: mv ? mv.dropped : [] };
+  const snap = { v: 3, q, answer, verification, model: typeof resp.model === 'string' ? resp.model : null, steps, ids, focus: focusOn, hasMap: !!mv, hlLabel: mv ? mv.highlight_label : '', table: capTable(table), sources: plain ? [] : sourcesFor(answer, calls), vintages: plain ? { data_as_of: safe(() => engine.vintages().data_as_of) || '' } : (safe(() => engine.vintages()) || {}), log: log.map(e => ({ call: e.call, result: e.result, error: e.error })), dropped: mv ? mv.dropped : [],
+    method: plain ? null : (safe(() => R.methodFor(answer, calls, methodById)) || null), calls: Object.values(calls).filter(c => c.name !== 'final_answer').slice(0, 12).map(c => ({ name: c.name, input: c.input })), feedback: null };
   if (plain) { window.__askState = null; if (H().highlight) H().highlight([]); if (H().setFocus) H().setFocus(false); renderAnswer(ctxOf(snap, null)); return; }
   window.__askState = snap;   // pushURL (map.html) copies it into every later history entry of this view
   if (H().highlight) H().highlight(ids); if (H().setFocus) H().setFocus(focusOn);   // the outlines first: the card's "Map now shows" line describes them

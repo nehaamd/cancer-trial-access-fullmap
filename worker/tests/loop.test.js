@@ -11,7 +11,7 @@ import { step, validateBody, buildMessages, MAX_STEPS, MAX_RESULT_BYTES, MAX_CAL
 import { sign, verifySig, canonical, constantTimeEqual, secretFor, sha256hex } from '../src/sign.js';
 import { verify, numbersIn, numberWordsIn, capitalisedTokens, buildContext } from '../src/verify.js';
 import { systemPrompt, toolDefinitions, catalogPaths, EXAMPLES, TOOL_NAMES } from '../src/prompt.js';
-import { handle, checkLimits, resetLimits, makeCallModel, MAX_BODY_BYTES } from '../src/index.js';
+import { handle, checkLimits, resetLimits, makeCallModel, MAX_BODY_BYTES, FEEDBACK_MAX_BYTES } from '../src/index.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url)); const ROOT = path.resolve(HERE, '..', '..');
 let passed = 0, failed = 0; const failures = [];
@@ -51,12 +51,16 @@ const COUNTY_ROWS = { table: 'counties', count: 38, in_scope: 254, returned: 3, 
 const DISTRICT_ROWS = { table: 'districts', count: 9, in_scope: 38, returned: 2, columns: ['id', 'name', 'state', 'pop55', 'oncologists.pct_pop55_in_counties_with_oncologists_no_trials'], rows: [{ id: 'TX-34', name: 'Texas 34th', state: 'TX', pop55: 201345, 'oncologists.pct_pop55_in_counties_with_oncologists_no_trials': 38.2 }, { id: 'TX-15', name: 'Texas 15th', state: 'TX', pop55: 190001, 'oncologists.pct_pop55_in_counties_with_oncologists_no_trials': 21.7 }], nulls: {}, ids_truncated: false, sum_pop55_matching: 1400000, source: { file: 'api/all_districts.json', url: '', as_of: '2026-11-03' } };
 const exec = (name, input) => name === 'query' && input.table === 'districts' ? DISTRICT_ROWS : name === 'query' ? COUNTY_ROWS : name === 'find_places' ? { matches: [{ id: '48215', table: 'counties', kind: 'county', name: 'Hidalgo County, Texas', state: 'TX', pop55: 182206, how: 'exact' }], ambiguous: false } : { ok: true };
 const GOOD = { answer: '38 of 254 Texas counties have at least one oncologist but no recruiting trial with a site in the county; 1,180,232 residents 55+ live in them. The largest are Hidalgo County, Texas (182,206 residents 55+, 41 oncologists), Cameron County, Texas (98,765, 17) and Webb County, Texas (52,310, 12). 9 Texas districts contain such counties; the largest share is Texas 34th at 38.2%.', answerable: 'yes', interpretation: 'Counties in Texas in oncologists-vs-trials class 2 (oncologists.class = 2).', alternatives: ['Which Texas counties have oncologists but no trial within 60 road-miles?'], not_in_data: [], caveats: ['An oncologist with practice locations in two counties is counted in both.'], map: { unit: 'county', layer: 'onc', params: {}, state: 'TX', highlight: { from_call: 'FIRST' }, highlight_label: 'Texas counties with oncologists but no recruiting trial' }, table: { from_call: 'FIRST' }, sources: ['counties', 'districts'], follow_ups: ['Which of these counties are rural?'] };
-const withCall = (a, id) => JSON.parse(JSON.stringify(a).replace(/"FIRST"/g, JSON.stringify(id)));
+// the figures of GOOD as claims (ASK_CONTRACT §6 rule 6): FIRST = the county query, SECOND = the district query
+GOOD.claims = [{ place: 'TX', field: 'count', value: 38, call: 'FIRST' }, { place: 'TX', field: 'in_scope', value: 254, call: 'FIRST' }, { place: 'TX', field: 'sum_pop55_matching', value: 1180232, call: 'FIRST' },
+  { place: '48215', field: 'pop55', value: 182206, call: 'FIRST' }, { place: '48215', field: 'oncologists.count', value: 41, call: 'FIRST' }, { place: '48061', field: 'pop55', value: 98765, call: 'FIRST' }, { place: '48061', field: 'oncologists.count', value: 17, call: 'FIRST' },
+  { place: '48479', field: 'pop55', value: 52310, call: 'FIRST' }, { place: '48479', field: 'oncologists.count', value: 12, call: 'FIRST' }, { place: 'TX', field: 'count', value: 9, call: 'SECOND' }, { place: 'TX-34', field: 'oncologists.pct_pop55_in_counties_with_oncologists_no_trials', value: 38.2, call: 'SECOND' }];
+const withCall = (a, id, id2 = 'SECOND') => JSON.parse(JSON.stringify(a).replace(/"FIRST"/g, JSON.stringify(id)).replace(/"SECOND"/g, JSON.stringify(id2)));
 const Q = 'which counties and districts in texas have oncologists but no access to clinical trials?';
 // the canonical script: two queries in turn 1, then a final whose from_call is the county query
 function canonicalScript(finalInput = GOOD, { extraFinals = [] } = {}) {
   const qid = tid(), did = tid();
-  return fakeModel([[tu('query', { table: 'counties', where: [{ field: 'state', op: '=', value: 'TX' }, { field: 'oncologists.class', op: '=', value: 2 }] }, qid), tu('query', { table: 'districts', where: [{ field: 'state', op: '=', value: 'TX' }] }, did)], [tu('final_answer', withCall(finalInput, qid))], ...extraFinals.map(f => [tu('final_answer', withCall(f, qid))])]);
+  return fakeModel([[tu('query', { table: 'counties', where: [{ field: 'state', op: '=', value: 'TX' }, { field: 'oncologists.class', op: '=', value: 2 }] }, qid), tu('query', { table: 'districts', where: [{ field: 'state', op: '=', value: 'TX' }] }, did)], [tu('final_answer', withCall(finalInput, qid, did))], ...extraFinals.map(f => [tu('final_answer', withCall(f, qid, did))])]);
 }
 
 // ---------- sign.js ----------
@@ -118,6 +122,12 @@ await test('prompt: tool schemas are valid JSON-schema objects with tight enums 
   for (const g of ag.properties.group_by.enum) assert(Object.keys(catalog.TABLES).some(t => catalog.groupableFields(t).includes(g)), 'groupable ' + g);
 });
 
+await test('prompt: the method tool lists every standard method; final_answer has claims; the prompt lists the methods and the CLAIMS rules', async () => {
+  const M = await import('../../docs/ask/methods.js'); const tools = toolDefinitions(catalog);
+  const mt = tools.find(t => t.name === 'method'); eq(mt.input_schema.properties.id.enum, M.METHOD_IDS); eq(Object.keys(mt.input_schema.properties.params.properties), Object.keys(M.PARAMS));
+  const cl = tools.find(t => t.name === 'final_answer').input_schema.properties.claims; eq(cl.maxItems, 40); eq(cl.items.required, ['place', 'field', 'value', 'call']);
+  const p = systemPrompt(catalog); assert(p.includes('CLAIMS (final_answer.claims') && p.includes('STANDARD METHODS'), 'sections'); for (const m of M.METHODS) assert(p.includes(`  ${m.id}(`), 'method line ' + m.id);
+});
 // ---------- verify.js units ----------
 await test('verify: number extraction handles separators, decimals, money, phones, NCT ids, ordinals, years, negatives, k/million', () => {
   const n = numbersIn('1,234,567 residents; 11.8 million; $2,000; 1-800-4-CANCER; 1-800-227-2345; NCT01234567; 38.2%; -3; the 3rd and the 34th; in 2024; TX-34; 55+; per 100,000; 5k; 2019–2023; 2020-2024; H.R. 3521');
@@ -128,8 +138,9 @@ await test('verify: number extraction handles separators, decimals, money, phone
   eq(capitalisedTokens('Hidalgo County, Texas has the most. St. Louis City and Miami-Dade County; NCI-designated centers.'), ['Hidalgo', 'County', 'Texas', 'Louis', 'City', 'Miami-Dade', 'County', 'NCI-designated']);
 });
 const ctxOf = (turns, question = Q) => buildContext({ question, turns, catalog });
-const TURNS = [{ assistant: [tu('query', { table: 'counties' }, 'toolu_c'), tu('query', { table: 'districts' }, 'toolu_d')], results: [{ tool_use_id: 'toolu_c', content: JSON.stringify(COUNTY_ROWS) }, { tool_use_id: 'toolu_d', content: JSON.stringify(DISTRICT_ROWS) }] }];
-const good = withCall(GOOD, 'toolu_c');
+const TX_ONLY = [{ field: 'state', op: '=', value: 'TX' }];
+const TURNS = [{ assistant: [tu('query', { table: 'counties', where: TX_ONLY }, 'toolu_c'), tu('query', { table: 'districts', where: TX_ONLY }, 'toolu_d')], results: [{ tool_use_id: 'toolu_c', content: JSON.stringify(COUNTY_ROWS) }, { tool_use_id: 'toolu_d', content: JSON.stringify(DISTRICT_ROWS) }] }];
+const good = withCall(GOOD, 'toolu_c', 'toolu_d');
 await test('verify: the good answer passes; every §6 rule rejects with a specific message', () => {
   eq(verify(good, ctxOf(TURNS)), { ok: true, issues: [] });
   const bad = (patch, sub) => { const r = verify({ ...good, ...patch }, ctxOf(TURNS)); assert(!r.ok, 'should fail: ' + sub); assert(includes(r.issues, sub), `expected "${sub}" in ${JSON.stringify(r.issues)}`); return r; };
@@ -163,7 +174,7 @@ await test('verify: rounding, million form, question numbers, constants, vintage
   const ok = (answer, question) => { const r = verify({ ...good, answer }, ctxOf(TURNS, question)); assert(r.ok, `${answer} -> ${JSON.stringify(r.issues)}`); };
   ok('About 1.2 million residents 55+ live in the 38 counties.');                 // 1,180,232 -> 1.2 million (2 sig)
   ok('About 1.18 million residents 55+ live in the 38 counties.');                // 3 sig
-  ok('1,180,000 residents 55+ live in the 38 counties, led by Hidalgo County, Texas at 38% of a district.');   // 38.2 -> 38
+  ok('1,180,000 residents 55+ live in the 38 counties, led by Hidalgo County, Texas; Texas 34th is at 38%.');   // 38.2 -> 38
   ok('Texas 34th has 38.2% of residents 55+ in such counties; Hidalgo County, Texas has about 180,000 residents 55+.');   // 182,206 -> 180,000 (2 sig)
   ok('Of the 254 counties, 38 match; the data covers residents 55+ within 60 road-miles and trials of 100 or more.');     // constants
   ok('Incidence rates cover 2019–2023 and death rates 2020–2024; the registry pull was 2026-11-03.');                     // vintages + result date
@@ -173,12 +184,13 @@ await test('verify: rounding, million form, question numbers, constants, vintage
   const r2 = verify({ ...good, answer: 'About 40 of 254 Texas counties match.' }, ctxOf(TURNS)); assert(!r2.ok, '1-significant-digit rounding (40 for 38) is not accepted');
   // trailing zeros are ambiguous: a round figure is accepted when it is the result rounded to 2 or more digits
   const nat = [{ assistant: [tu('profile', { table: 'national', id: 'US' }, 'toolu_n')], results: [{ tool_use_id: 'toolu_n', content: JSON.stringify({ row: { pop55: 100019672, people_lt20_trials_within_60rdmi: 11802321, pct_lt20_trials_within_60rdmi: 11.8, people_zero_trials_within_60rdmi: 4300846, trials_listed_here: 4035, x: 19876 } }) }] }];
-  const okN = (answer, q = 'how many people') => { const r = verify({ ...good, map: undefined, table: undefined, answer }, ctxOf(nat, q)); assert(r.ok, `${answer} -> ${JSON.stringify(r.issues)}`); };
+  const natClaims = Object.entries(JSON.parse(nat[0].results[0].content).row).map(([k, v]) => ({ place: 'US', field: 'row.' + k, value: v, call: 'toolu_n' }));
+  const okN = (answer, q = 'how many people') => { const r = verify({ ...good, map: undefined, table: undefined, claims: natClaims, answer }, ctxOf(nat, q)); assert(r.ok, `${answer} -> ${JSON.stringify(r.issues)}`); };
   okN('The data covers 100 million residents 55+.'); okN('About 12 million residents 55+ are short of trials.'); okN('About 20,000 live there.'); okN('4,300,000 have none within 60 road-miles.'); okN('4,035 trials, roughly 4,000 trials.');
   okN('Residents aged 55–64 are a separate ACS band; the data has 3,143 counties and 436 districts.');                     // 64, 3,143 and 436 are constants
   okN('Fifteen thousand people, give or take, is not what the data says; it says twelve million are short of trials.', 'does fifteen thousand people sound right');   // question words
   for (const [a, sub] of [['About 100.5 million residents 55+.', 'number 100.5 million'], ['About 4,400,000 have none.', 'number 4,400,000'], ['About 13 million are short.', 'number 13 million'], ['Fifteen hundred trials are listed.', 'number Fifteen hundred'], ['Three thousand trials are listed.', 'number Three thousand'], ['Thirteen trials.', 'number Thirteen'], ['Half a million people.', 'number Half a million'], ['Several hundred trials.', 'vague quantity']]) {
-    const r = verify({ ...good, map: undefined, table: undefined, answer: a }, ctxOf(nat, 'how many people')); assert(!r.ok && includes(r.issues, sub), `${a} should fail with "${sub}": ${JSON.stringify(r.issues)}`);
+    const r = verify({ ...good, map: undefined, table: undefined, claims: natClaims, answer: a }, ctxOf(nat, 'how many people')); assert(!r.ok && includes(r.issues, sub), `${a} should fail with "${sub}": ${JSON.stringify(r.issues)}`);
   }
 });
 await test('verify: style catches unicode bullets, bare domains, "dot com" and advice synonyms; common sentence starters pass', () => {
@@ -193,6 +205,15 @@ await test('verify: SCOPE_TEXT and OTHER_TEXT answers pass with answerable "no" 
   eq(verify({ answer: catalog.SCOPE_TEXT, answerable: 'no', interpretation: 'Out of scope: a question about a person\'s care.', not_in_data: ['The data lists trials; it does not match people to them.'] }, ctxOf([], 'which trial is right for my mother with stage 3 lung cancer?')), { ok: true, issues: [] });
   eq(verify({ answer: catalog.OTHER_TEXT, answerable: 'no', interpretation: 'Not a question about the map\'s data.', not_in_data: ['Jokes are not in the data.'] }, ctxOf([], 'tell me a joke')), { ok: true, issues: [] });
   assert(!verify({ answer: catalog.SCOPE_TEXT, answerable: 'no', interpretation: 'x' }, ctxOf([], 'q')).ok, 'still needs not_in_data');
+});
+
+await test('verify: highlight / table from a method call or one of its sub-calls is accepted; claims may cite a sub-call', () => {
+  const sub = { call: 'toolu_m.1', name: 'query', input: { table: 'counties', where: TX_ONLY }, result: COUNTY_ROWS };
+  const turns = [{ assistant: [tu('method', { id: 'oncologists_no_trials_counties', params: { state: 'TX' } }, 'toolu_m')], results: [{ tool_use_id: 'toolu_m', content: JSON.stringify({ method: 'oncologists_no_trials_counties', results: [sub] }) }] }];
+  const a = { answer: '38 of 254 Texas counties match; the largest is Hidalgo County, Texas with 41 oncologists.', answerable: 'yes', interpretation: 'Standard method.', claims: [{ place: 'TX', field: 'count', value: 38, call: 'toolu_m.1' }, { place: 'TX', field: 'in_scope', value: 254, call: 'toolu_m.1' }, { place: '48215', field: 'oncologists.count', value: 41, call: 'toolu_m.1' }] };
+  for (const fc of ['toolu_m', 'toolu_m.1']) { const r = verify({ ...a, map: { unit: 'county', layer: 'onc', highlight: { from_call: fc } }, table: { from_call: fc } }, ctxOf(turns)); assert(r.ok, fc + ' ' + JSON.stringify(r.issues)); }
+  const r2 = verify({ ...a, table: { from_call: 'toolu_m.9' } }, ctxOf(turns)); assert(!r2.ok && includes(r2.issues, 'toolu_m.9'), 'an unknown sub-call is rejected');
+  const r3 = verify({ ...a, claims: a.claims.map(c => ({ ...c, call: 'toolu_m' })) }, ctxOf(turns)); assert(r3.ok, 'a claim on the method id is looked up in its sub-results: ' + JSON.stringify(r3.issues));
 });
 
 // ---------- loop.js: the protocol ----------
@@ -313,8 +334,11 @@ await test('loop: a text-only reply becomes kind:"answer" with answerable "partl
   eq(r2.kind, 'answer'); eq(r2.verification.retries, 1); assert(r2.verification.ok); eq(model2.calls[1].messages[2].role, 'user'); assert(typeof model2.calls[1].messages[2].content === 'string' && model2.calls[1].messages[2].content.includes('Text replies are not shown'));
   // a text-only reply whose every token checks out passes as it is (after the two nudges)
   const model3 = fakeModel([[txt('The data covers 254 counties in Texas.')], [txt('The data covers 254 counties in Texas.')], [txt('The data covers 254 counties in Texas.')]]);
+  // a text reply cannot carry claims (ASK_CONTRACT §6 rule 6): one that writes a figure is not shown; one with no figure passes as it is
   const b = [tu('query', { table: 'counties' })]; const turns = [{ assistant: b, sig: await sign(b, SECRET), results: [{ tool_use_id: b[0].id, content: '{"in_scope":254}' }] }];
-  const r3 = await step({ v: 3, q: 'how many counties in texas', turns }, ENV, model3); eq(r3.kind, 'answer'); eq(r3.verification.ok, true); eq(r3.answer.answerable, 'partly');
+  const r3 = await step({ v: 3, q: 'how many counties in texas', turns }, ENV, model3); eq(r3.kind, 'answer'); eq(r3.verification.ok, false); eq(r3.answer.answerable, 'partly'); assert(includes(r3.verification.issues, 'claims is empty'), JSON.stringify(r3.verification.issues));
+  const model4 = fakeModel([[txt('The data covers every county in Texas.')], [txt('The data covers every county in Texas.')], [txt('The data covers every county in Texas.')]]);
+  const r4 = await step({ v: 3, q: 'how many counties in texas', turns }, ENV, model4); eq(r4.kind, 'answer'); eq(r4.verification.ok, true, JSON.stringify(r4.verification.issues));
 });
 await test('loop: SCOPE_TEXT answer passes verification without any tool call', async () => {
   const model = fakeModel([[tu('final_answer', { answer: catalog.SCOPE_TEXT, answerable: 'no', interpretation: 'Out of scope: a question about a person\'s care.', not_in_data: ['The data lists trials; it does not match people to them.'] })]]);
@@ -323,12 +347,12 @@ await test('loop: SCOPE_TEXT answer passes verification without any tool call', 
 });
 await test('loop: final_answer alongside other calls is returned as kind:"tools" with ALL calls and a note', async () => {
   const fid = tid();
-  const model = fakeModel([[tu('query', { table: 'counties' }), tu('final_answer', { answer: 'x', answerable: 'yes', interpretation: 'y' }, fid)], [tu('final_answer', withCall(GOOD, 'FIRST'))]]);
+  const model = fakeModel([[tu('query', { table: 'counties', where: TX_ONLY }), tu('final_answer', { answer: 'x', answerable: 'yes', interpretation: 'y' }, fid)], [tu('final_answer', withCall(GOOD, 'FIRST'))]]);
   const r1 = await step({ v: 3, q: Q, turns: [] }, ENV, model);
   eq(r1.kind, 'tools'); eq(r1.calls.map(c => c.name), ['query', 'final_answer']); assert(r1.note && r1.note.includes(FINAL_NOTE), 'note tells the client what to answer');
   // the client answers the final_answer call with {ok:true, note} and the model is called again with both results
   const results = r1.calls.map(c => ({ tool_use_id: c.id, content: JSON.stringify(c.name === 'final_answer' ? { ok: true, note: FINAL_NOTE } : COUNTY_ROWS) }));
-  const fix = JSON.parse(JSON.stringify(withCall(GOOD, r1.calls[0].id))); fix.answer = '38 of 254 Texas counties match; the largest is Hidalgo County, Texas with 41 oncologists.'; fix.sources = ['counties'];
+  const fix = JSON.parse(JSON.stringify(withCall(GOOD, r1.calls[0].id))); fix.answer = '38 of 254 Texas counties match; the largest is Hidalgo County, Texas with 41 oncologists.'; fix.sources = ['counties']; fix.claims = fix.claims.filter(c => c.call === r1.calls[0].id && ['count', 'in_scope', 'oncologists.count'].includes(c.field) && ['TX', '48215'].includes(c.place));
   model.calls.length = 0; const model2 = fakeModel([[tu('final_answer', fix)]]);
   const r2 = await step({ v: 3, q: Q, turns: [{ assistant: r1.assistant, sig: r1.sig, results }] }, ENV, model2);
   eq(r2.kind, 'answer'); assert(r2.verification.ok, JSON.stringify(r2.verification.issues)); eq(model2.calls[0].messages[2].content.length, 2);
@@ -395,6 +419,23 @@ await test('http: a request body over MAX_BODY_BYTES is refused with 413 before 
   const r = await handle(req(huge, { ip: '8.8.8.8' }), ENV, fakeModel([])); eq(r.status, 413); assert((await r.json()).error.includes('too large'));
   const r2 = await handle(new Request('https://worker.test/ask', { method: 'POST', headers: { 'content-type': 'application/json', Origin: 'https://nehaamd.github.io', 'content-length': String(MAX_BODY_BYTES + 1) }, body: '{}' }), ENV, fakeModel([])); eq(r2.status, 413);
 }));
+await test('http: POST /feedback logs one {feedback} line without visitor identifiers, with CORS, size, shape and rate checks', async () => {
+  resetLimits(); const lines = []; const real = console.log; console.log = (...a) => { lines.push(a.join(' ')); };
+  try {
+    const fb = { v: 3, kind: 'feedback', q: 'which counties in texas have oncologists but no trials?', verdict: 'no', answer_text: '48 of 254 Texas counties…', interpretation: 'Class 2 counties.', steps: [{ tool: 'query', input: '{"table":"counties"}' }], model: 'claude-sonnet-5-5', data_as_of: '2026-11-03', verified: true, method: null };
+    const r = await handle(req(fb, { path: '/feedback', ip: '4.4.4.4' }), ENV, fakeModel([])); eq(r.status, 200); eq(await r.json(), { ok: true }); eq(r.headers.get('Access-Control-Allow-Origin'), 'https://nehaamd.github.io');
+    const logged = lines.map(l => { try { return JSON.parse(l); } catch (e) { return null; } }).filter(x => x && x.feedback); eq(logged.length, 1); eq(logged[0].feedback.verdict, 'no'); eq(logged[0].feedback.q, fb.q); eq(logged[0].feedback.steps, fb.steps);
+    assert(!JSON.stringify(logged).includes('4.4.4.4'), 'no visitor address in the log');
+    eq((await handle(req(null, { method: 'OPTIONS', path: '/feedback' }), ENV, fakeModel([]))).status, 204, 'preflight');
+    eq((await handle(req(fb, { path: '/feedback', origin: 'https://evil.test' }), ENV, fakeModel([]))).status, 403);
+    eq((await handle(req(null, { path: '/feedback', method: 'GET' }), ENV, fakeModel([]))).status, 404);
+    eq((await handle(req({ ...fb, answer_text: 'x'.repeat(FEEDBACK_MAX_BYTES) }, { path: '/feedback', ip: '4.4.4.5' }), ENV, fakeModel([]))).status, 413);
+    for (const badBody of [{ ...fb, verdict: 'maybe' }, { ...fb, kind: 'ask' }, { ...fb, q: '' }, { ...fb, v: 2 }]) eq((await handle(req(badBody, { path: '/feedback', ip: '4.4.4.6' }), ENV, fakeModel([]))).status, 400, JSON.stringify(badBody).slice(0, 60));
+    eq((await handle(req('{oops', { path: '/feedback', ip: '4.4.4.6' }), ENV, fakeModel([]))).status, 400);
+    resetLimits(); let last; for (let i = 0; i < 7; i++) last = await handle(req(fb, { path: '/feedback', ip: '4.4.4.7' }), ENV, fakeModel([])); eq(last.status, 429, 'the seventh in a minute is refused'); assert((await last.json()).retry_after_s >= 1);
+    eq((await handle(req({ v: 3, q: 'hello', turns: [] }, { ip: '4.4.4.7' }), ENV, otherModel())).status, 200, 'feedback has its own budget: questions still pass');
+  } finally { console.log = real; }
+});
 await test('http: makeCallModel posts the §3 shape, retries once on 529, maps timeouts', async () => {
   const seen = [];
   const fetchOk = async (url, init) => { seen.push({ url, init }); return new Response(JSON.stringify({ content: [txt('hi')], stop_reason: 'end_turn', usage: { input_tokens: 1 }, model: 'm' }), { status: 200 }); };
@@ -423,7 +464,8 @@ if (fs.existsSync(enginePath)) {
         const c = store[qid], d = store[did]; assert(c && !c.error, 'county query failed: ' + JSON.stringify(c).slice(0, 200)); assert(d && !d.error, 'district query failed: ' + JSON.stringify(d).slice(0, 200));
         const top = c.rows[0]; const topd = d.rows[0];
         const answer = `${c.count} of ${c.in_scope} Texas counties have at least one oncologist but no recruiting trial with a site in the county; ${c.sum_pop55_matching.toLocaleString('en-US')} residents 55+ live in them. The largest is ${top.name} (${top.pop55.toLocaleString('en-US')} residents 55+, ${top['oncologists.count']} oncologists). ${d.count} Texas districts contain such counties; the largest share of residents 55+ living in them is in ${topd.name} at ${topd['oncologists.pct_pop55_in_counties_with_oncologists_no_trials']}%.`;
-        return [tu('final_answer', { answer, answerable: 'yes', interpretation: 'Counties in Texas in oncologists-vs-trials class 2; for districts, the share of residents 55+ living in such counties.', alternatives: ['Which Texas counties have oncologists but no trial within 60 road-miles?'], not_in_data: [], caveats: ['An oncologist with practice locations in two counties is counted in both.'], map: { unit: 'county', layer: 'onc', params: {}, state: 'TX', highlight: { from_call: qid }, highlight_label: 'Texas counties with oncologists but no recruiting trial' }, table: { from_call: qid }, sources: ['counties', 'districts'] })];
+        const claims = [{ place: 'TX', field: 'count', value: c.count, call: qid }, { place: 'TX', field: 'in_scope', value: c.in_scope, call: qid }, { place: 'TX', field: 'sum_pop55_matching', value: c.sum_pop55_matching, call: qid }, { place: top.id, field: 'pop55', value: top.pop55, call: qid }, { place: top.id, field: 'oncologists.count', value: top['oncologists.count'], call: qid }, { place: 'TX', field: 'count', value: d.count, call: did }, { place: topd.id, field: 'oncologists.pct_pop55_in_counties_with_oncologists_no_trials', value: topd['oncologists.pct_pop55_in_counties_with_oncologists_no_trials'], call: did }];
+        return [tu('final_answer', { answer, claims, answerable: 'yes', interpretation: 'Counties in Texas in oncologists-vs-trials class 2; for districts, the share of residents 55+ living in such counties.', alternatives: ['Which Texas counties have oncologists but no trial within 60 road-miles?'], not_in_data: [], caveats: ['An oncologist with practice locations in two counties is counted in both.'], map: { unit: 'county', layer: 'onc', params: {}, state: 'TX', highlight: { from_call: qid }, highlight_label: 'Texas counties with oncologists but no recruiting trial' }, table: { from_call: qid }, sources: ['counties', 'districts'] })];
       },
     ]);
     const { r } = await drive(Q, model, async (name, input, id) => { const out = await engine.run(name, input, id); store[id] = out; return out; });
@@ -439,6 +481,18 @@ if (fs.existsSync(enginePath)) {
     assert(out && out.error && /oncologist_count/.test(out.error), 'engine returns {error}: ' + JSON.stringify(out).slice(0, 200));
     const model = fakeModel([[tu('query', { table: 'counties', where: [{ field: 'oncologist_count', op: '>', value: 0 }] })], p => { const tr = p.messages[2].content[0]; assert(tr.is_error === true, 'is_error passed through'); assert(tr.content.includes('oncologist_count')); return [tu('final_answer', { answer: catalog.OTHER_TEXT, answerable: 'no', interpretation: 'x', not_in_data: ['y'] })]; }]);
     const { r } = await drive(Q, model, (name, input, id) => engine.run(name, input, id)); eq(r.kind, 'answer');
+  });
+  await test('end to end: a standard method through the real engine, claims on its sub-call, a verified answer', async () => {
+    const { createEngine } = await import(pathToFileURL(enginePath).href);
+    const engine = createEngine({ root: ROOT }); await engine.load(); const mid = tid(); const store = {};
+    const model = fakeModel([
+      [tu('method', { id: 'oncologists_no_trials_counties', params: { state: 'TX' } }, mid)],
+      () => { const r = store[mid]; assert(r && !r.error, JSON.stringify(r).slice(0, 200)); const sub = r.results[0]; const q = sub.result; const top = q.rows[0];
+        return [tu('final_answer', { answer: `${q.count} of ${q.in_scope} Texas counties have oncologists but no recruiting trial with a site in the county; the largest is ${top.name} with ${top['oncologists.count']} oncologists.`, answerable: 'yes', interpretation: 'Standard method: counties with oncologists but no trials.', claims: [{ place: 'TX', field: 'count', value: q.count, call: sub.call }, { place: 'TX', field: 'in_scope', value: q.in_scope, call: sub.call }, { place: top.id, field: 'oncologists.count', value: top['oncologists.count'], call: sub.call }], map: { unit: 'county', layer: 'onc', state: 'TX', highlight: { from_call: mid }, highlight_label: 'x' }, table: { from_call: sub.call } })]; },
+    ]);
+    const { r, responses } = await drive('which counties in texas have oncologists but no trials?', model, async (name, input, id) => { const out = await engine.run(name, input, id); store[id] = out; return out; });
+    eq(responses[0].calls[0].name, 'method'); eq(r.kind, 'answer'); assert(r.verification.ok, JSON.stringify(r.verification.issues));
+    eq(engine.highlightIds(r.answer.map.highlight).ids.length, store[mid].results[0].result.count, 'the method id outlines every match of its primary call');
   });
 } else console.log('skip end-to-end: docs/ask/engine.js not present');
 

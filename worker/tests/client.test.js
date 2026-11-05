@@ -139,4 +139,39 @@ test('busy and error cards escape the question and the detail', () => {
   const b = R.busyHTML('<x>', [{ call: 'Counties where a > 1', result: null }, { call: 'c', result: 'r <y>', error: true }]); assert.ok(b.includes('&lt;x&gt;')); assert.ok(b.includes('aria-busy="true"')); assert.ok(b.includes('→ r &lt;y&gt;')); assert.ok(b.includes('<li class="err">'));
   const e = R.errorHTML('<x>', 'The question box is unavailable right now; the map and its filters still work.', '<detail>'); assert.ok(e.includes('class="ask-card err"')); assert.ok(e.includes('&lt;detail&gt;')); });
 
+// ---------- the standard-method label and feedback (ASK_CONTRACT §7) ----------
+const M = await import(pathToFileURL(path.resolve(HERE, '..', '..', 'docs', 'ask', 'methods.js')).href);
+test('methodFor: a table or highlight from a method call (or one of its sub-calls) names the method; other answers none', () => {
+  const calls = { toolu_m: { name: 'method', input: { id: 'oncologists_no_trials_counties', params: { state: 'TX' } } }, toolu_q: { name: 'query', input: { table: 'counties' } } };
+  const m = R.methodFor({ table: { from_call: 'toolu_m.1' } }, calls, M.methodById); assert.equal(m.id, 'oncologists_no_trials_counties'); assert.equal(m.title, M.methodById('oncologists_no_trials_counties').title); assert.equal(m.reviewed_by, '');
+  assert.equal(R.methodFor({ map: { highlight: { from_call: 'toolu_m' } } }, calls, M.methodById).id, 'oncologists_no_trials_counties');
+  assert.equal(R.methodFor({ table: { from_call: 'toolu_q' } }, calls, M.methodById), null); assert.equal(R.methodFor({}, calls, M.methodById), null); assert.equal(R.methodFor({ table: { from_call: 'toolu_x' } }, calls, M.methodById), null); });
+test('methodHTML: "Standard method" with the rule; "Reviewed method · name, date" only when both are set; escaped', () => {
+  const base = { id: 'x', title: 'Counties <b>with</b> oncologists', rule: 'Class 2 "only"', reviewed_by: '', reviewed_on: '' };
+  const h = R.methodHTML(base); assert.ok(h.includes('Standard method:')); assert.ok(h.includes('Counties &lt;b&gt;with&lt;/b&gt; oncologists')); assert.ok(h.includes('title="Class 2 &quot;only&quot;"')); assert.ok(!h.includes('Reviewed'));
+  assert.ok(!R.methodHTML({ ...base, reviewed_by: 'Neha Agrawal' }).includes('Reviewed'), 'a name without a date is not a review');
+  const r = R.methodHTML({ ...base, reviewed_by: 'Neha Agrawal', reviewed_on: '2026-11-20' }); assert.ok(r.includes('Reviewed method · Neha Agrawal, Nov 20, 2026')); assert.ok(!r.includes('Standard method'));
+  assert.equal(R.methodHTML(null), '');
+  const card = R.cardHTML({ ...ctxBase(), method: base }); assert.ok(card.indexOf('Standard method:') > card.indexOf('class="ask-a"') && card.indexOf('Standard method:') < card.indexOf('How this was read'), 'the label sits under the answer');
+  assert.ok(!card.includes('computed for this question')); assert.ok(R.cardHTML(ctxBase()).includes('computed for this question'), 'an answer without a method says so in the details'); });
+test('every method has a title, a rule, an example and steps; the label follows the library\'s review fields', () => {
+  assert.ok(M.METHODS.length >= 28, 'about 30 methods: ' + M.METHODS.length);
+  for (const m of M.METHODS) { assert.ok(m.title && m.rule && m.example && Array.isArray(m.params) && Array.isArray(m.steps), m.id); const info = R.methodFor({ table: { from_call: 'toolu_m' } }, { toolu_m: { name: 'method', input: { id: m.id } } }, M.methodById); assert.equal(R.methodHTML(info).includes('Reviewed method'), M.isReviewed(m), m.id); } });
+test('feedbackHTML: Yes / No and the report link; after a vote the thanks replace the buttons', () => {
+  const h = R.feedbackHTML(ctxBase()); assert.ok(h.includes('Was this right?')); assert.ok(h.includes('data-v="yes"') && h.includes('data-v="no"')); assert.ok(h.includes('class="ask-report" href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues/new?title=')); assert.ok(h.includes('target="_blank" rel="noopener"'));
+  const t = R.feedbackHTML({ ...ctxBase(), feedback: 'no' }); assert.ok(t.includes('Thanks — noted.')); assert.ok(!t.includes('ask-fb-b')); assert.ok(t.includes('Report a problem'));
+  assert.ok(R.cardHTML(ctxBase()).includes('Was this right?')); const pl = ctxBase(); pl.answer = { answer: CAT.SCOPE_TEXT, answerable: 'no' }; assert.ok(R.cardHTML(pl).includes('Was this right?'), 'the plain card has it too'); });
+test('feedbackPayload: the documented fields, capped, no visitor identifier, ≤ 20 KB', () => {
+  const ctx = { ...ctxBase(), answer: { ...ANSWER, answer: 'x'.repeat(5000) }, calls: Array.from({ length: 40 }, (_, i) => ({ name: i % 2 ? 'query' : 'final_answer', input: { table: 'counties', pad: 'y'.repeat(2000) } })), vintages: { data_as_of: '2026-11-03' } };
+  const p = R.feedbackPayload(ctx, 'no');
+  assert.deepEqual(Object.keys(p).sort(), ['answer_text', 'data_as_of', 'interpretation', 'kind', 'method', 'model', 'q', 'steps', 'v', 'verdict', 'verified'].sort());
+  assert.equal(p.v, 3); assert.equal(p.kind, 'feedback'); assert.equal(p.verdict, 'no'); assert.ok(p.answer_text.length <= 1500); assert.ok(p.steps.length <= 12 && p.steps.every(s => s.tool === 'query' && s.input.length <= 300)); assert.equal(p.data_as_of, '2026-11-03');
+  assert.ok(new TextEncoder().encode(JSON.stringify(p)).length <= R.FEEDBACK_MAX_BYTES); assert.equal(R.feedbackPayload(ctx, 'maybe').verdict, 'no'); assert.equal(R.feedbackPayload(ctx, 'yes').verdict, 'yes'); });
+test('issueURL: title and a body with the question, answer, reading, steps and data date; stays under 6,000 characters', () => {
+  const ctx = { ...ctxBase(), calls: [{ name: 'query', input: { table: 'counties', where: [{ field: 'state', op: '=', value: 'TX' }] } }], vintages: { data_as_of: '2026-11-03' } };
+  const u = R.issueURL(ctx); assert.ok(u.startsWith('https://github.com/nehaamd/cancer-trial-access-fullmap/issues/new?title=' + encodeURIComponent('Ask the map: problem with an answer') + '&body='));
+  const body = decodeURIComponent(u.split('&body=')[1]); for (const s of ['**Question:** ' + ctx.q, '**Answer:** ' + ANSWER.answer, '**How it was read:** ' + ANSWER.interpretation, '- query {"table":"counties"', '**Data as of:** 2026-11-03']) assert.ok(body.includes(s), s);
+  const big = R.issueURL({ ...ctx, answer: { ...ANSWER, answer: 'é'.repeat(1500), interpretation: 'ü'.repeat(600) }, calls: Array.from({ length: 12 }, () => ({ name: 'query', input: { pad: 'z'.repeat(400) } })) }); assert.ok(big.length <= R.ISSUE_URL_MAX, 'capped: ' + big.length); assert.ok(decodeURIComponent(big.split('&body=')[1]).includes('**Question:**'));
+  const un = decodeURIComponent(R.issueURL({ ...ctx, verification: { ok: false, issues: ['x'] } }).split('&body=')[1]); assert.ok(un.includes('did not pass its check')); });
+
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

@@ -9,6 +9,7 @@
    "available to" claims; ≤ 1,200 characters. (5) answerable "no" needs not_in_data. Pure function; no I/O. */
 import * as DEFAULT_CATALOG from '../../docs/ask/catalog.js';
 import { catalogText, CALL_TOOLS_WITH_IDS, UNITS } from './prompt.js';
+import { checkClaims } from './claims.js';
 
 export const MAX_ANSWER_CHARS = 1200;
 const LIMITS = { alternatives: 3, not_in_data: 4, caveats: 5, follow_ups: 3 };
@@ -26,15 +27,19 @@ const VAGUE_RE = /\b(hundreds|thousands|millions|billions|dozens|tens of thousan
 // a number word, optionally compounded ("twenty-three") and scaled ("fifteen hundred", "half a million", "a thousand")
 const WORD_RE = new RegExp(`\\b(a|an|half a|half|${Object.keys(SMALL_WORDS).join('|')}|${Object.keys(WORDS).join('|')})(?:[-\\s](one|two|three|four|five|six|seven|eight|nine))?(?:\\s+(hundred|thousand|million|billion))?\\b`, 'gi');
 
-const stripIds = s => String(s || '').replace(PHONE_RE, ' ').replace(NCT_RE, ' ').replace(DISTRICT_ID_RE, ' ');
+const blank = m => ' '.repeat(m.length);   // same-length masking keeps the positions of the numbers (numbersWithPos)
+const stripIds = s => String(s || '').replace(PHONE_RE, blank).replace(NCT_RE, blank).replace(DISTRICT_ID_RE, blank);
 /** Every number written in a text: [{raw, digits (no commas/sign), value (with sign and multiplier), sig, mult}]. */
-export function numbersIn(text) {
+export function numbersIn(text) { return numbersWithPos(text).map(({ index, end, ...n }) => n); }
+/** numbersIn with the position of each number in the text: [{…, index, end}] (claims.js pairs numbers with place names). */
+export function numbersWithPos(text) {
   const out = []; const t = stripIds(text); let m; const re = new RegExp(NUM_RE.source, 'gi');
   while ((m = re.exec(t))) {
     let digits = m[2].replace(/,/g, '').replace(/,+$/, ''); if (!/\d/.test(digits)) continue;
     const word = (m[3] || '').toLowerCase(); const mult = MULT[word] || 1;
     const value = parseFloat(digits) * (m[1] ? -1 : 1) * mult;
-    out.push({ raw: m[0].trim().replace(/,+$/, ''), digits, value, sig: sigDigits(digits), mult, word });
+    const raw = m[0].trim().replace(/,+$/, ''); const index = m.index + (m[0].length - m[0].trimStart().length);
+    out.push({ raw, digits, value, sig: sigDigits(digits), mult, word, index, end: index + raw.length });
   }
   return out;
 }
@@ -43,6 +48,14 @@ function sigDigits(digits) { let d = digits.replace(/^0+/, ''); if (d.includes('
 function writtenDigits(n) { const v = Math.abs(n.value); if (Number.isInteger(v)) return String(v).replace(/^0+/, '').length; let d = String(n.digits).replace(/^0+/, ''); if (d.includes('.')) d = d.replace('.', '').replace(/^0+/, ''); return d.length; }
 function sigRound(r, p) { if (r === 0) return 0; const e = Math.floor(Math.log10(Math.abs(r))); const f = Math.pow(10, p - 1 - e); return Math.round(r * f) / f; }
 const near = (a, b) => Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
+/** Does a written number (from numbersIn) stand for the value v under rule 1 (same digits, or v rounded to the written precision)? */
+export function writtenMatches(n, v) {
+  if (typeof v !== 'number' || !Number.isFinite(v)) return false;
+  if (near(v, n.value)) return true;
+  const lo = Math.max(2, sigDigits(n.digits)), hi = Math.max(lo, writtenDigits(n));
+  for (let p = lo; p <= hi; p++) if (near(sigRound(v, p), n.value)) return true;
+  return false;
+}
 
 /** Number words above ten in a text (digits already removed): [{raw, value}]; one–ten are always allowed, but "fifteen hundred",
  *  "two thousand" and "half a million" are one number each (never "fifteen" and a constant "hundred"). */
@@ -65,11 +78,12 @@ export function numberWordsIn(text) {
 export function buildContext(ctx) {
   const C = ctx.catalog || DEFAULT_CATALOG;
   const turns = Array.isArray(ctx.turns) ? ctx.turns : [];
-  const resultTexts = []; const callIds = new Map(); const queryResults = [];   // queryResults: truncated query results, to steer highlight.ids to from_call
+  const resultTexts = []; const callIds = new Map(); const queryResults = []; const methodsRead = new Set();   // method calls whose sub-call list could be read   // queryResults: truncated query results, to steer highlight.ids to from_call
   for (const t of turns) {
     for (const b of t.assistant || []) if (b && b.type === 'tool_use') callIds.set(b.id, b.name);
     for (const r of t.results || []) {
       const text = typeof r.content === 'string' ? r.content : JSON.stringify(r.content ?? ''); resultTexts.push(text);
+      if (callIds.get(r.tool_use_id) === 'method') { try { const j = JSON.parse(text); if (j && Array.isArray(j.results)) methodsRead.add(r.tool_use_id); for (const x of (j && Array.isArray(j.results) ? j.results : [])) if (x && typeof x.call === 'string') callIds.set(x.call, String(x.name || '')); } catch (e) { /* a truncated method result: its sub-call ids are accepted by their prefix */ } }
       if (callIds.get(r.tool_use_id) === 'query' && /"ids_truncated":\s*true/.test(text)) { try { const j = JSON.parse(text); if (j && Array.isArray(j.rows)) queryResults.push({ id: r.tool_use_id, count: j.count, returned: j.returned, rowIds: new Set(j.rows.map(x => String(x && x.id))) }); } catch (e) { /* a truncated or non-JSON result: nothing to steer */ } }
     }
   }
@@ -82,6 +96,7 @@ export function buildContext(ctx) {
   const catText = ctx.catalogText || catalogText(C);
   const stop = new Set(FIXED_STOP);
   for (const [code, name] of Object.entries(C.STATES || {})) { stop.add(code.toLowerCase()); for (const w of name.toLowerCase().split(/[^a-z]+/)) if (w) stop.add(w); }
+  for (const d of Object.keys(C.DEMONYMS || {})) for (const w of d.split(/\s+/)) { stop.add(w); stop.add(w + 's'); }   // Ohioans, Texans, New Yorkers
   for (const w of wordsOf(catText)) stop.add(w);
   for (const w of wordsOf(question)) stop.add(w);
   for (const w of wordsOf(C.SCOPE_TEXT + ' ' + C.OTHER_TEXT)) stop.add(w);
@@ -92,7 +107,7 @@ export function buildContext(ctx) {
   const keep = new Set(FIXED_STOP); for (const name of Object.values(C.STATES || {})) for (const w of name.toLowerCase().split(/[^a-z]+/)) keep.add(w);
   for (const T of Object.values(C.TABLES || {})) for (const m of `${T.name_desc || ''} ${T.id_desc || ''}`.match(/"[^"]+"/g) || []) for (const w of wordsOf(m)) if (!keep.has(w)) stop.delete(w);
   for (const fd of Object.values(C.TABLES || {}).flatMap(T => T.fields)) for (const m of String(fd.desc || '').match(/e\.g\. "[^"]+"/g) || []) for (const w of wordsOf(m)) if (!keep.has(w)) stop.delete(w);
-  return { C, turns, question, resultsText, resultsLower, resultDigits, resultValues, questionDigits, questionWords, constants, stop, callIds, queryResults, scope: norm(C.SCOPE_TEXT), other: norm(C.OTHER_TEXT) };
+  return { C, turns, question, resultsText, resultsLower, resultDigits, resultValues, questionDigits, questionWords, constants, stop, callIds, queryResults, methodsRead, scope: norm(C.SCOPE_TEXT), other: norm(C.OTHER_TEXT) };
 }
 const norm = s => String(s || '').replace(/\s+/g, ' ').trim();
 const wordsOf = s => String(s || '').toLowerCase().split(/[^a-z0-9'’]+/).map(w => w.replace(/['’]s$/, '').replace(/['’]/g, '')).filter(Boolean);
@@ -191,6 +206,8 @@ export function verify(answer, context) {
       if (table.rows !== undefined) { if (!Array.isArray(table.rows) || !Array.isArray(table.columns)) issues.push('table.columns and table.rows must be lists.'); else for (const row of table.rows) for (const cell of (Array.isArray(row) ? row : [])) if (typeof cell === 'number' || (typeof cell === 'string' && /\d/.test(cell))) for (const n of numbersIn(String(cell))) checkNumber(n, 'table.rows', ctx, issues); }
     }
   }
+  // 6. claims: each figure paired with its place, checked against its call's result, and the text checked place by place (claims.js)
+  if (!fixed) checkClaims(answer, ctx, issues);
   if (Array.isArray(answer.sources)) { const ok = new Set([...Object.keys(C.TABLES), 'trials', 'site_info']); for (const s of answer.sources) if (!ok.has(s)) issues.push(`sources entry "${s}" is not a table; use ${[...ok].join(', ')}.`); }
   return { ok: issues.length === 0, issues: [...new Set(issues)] };
 }
@@ -225,9 +242,11 @@ function checkNumber(n, field, ctx, issues, isWord = false) {
   issues.push(`number ${n.raw} in ${field} is not in any tool result${closest !== null ? ` (closest: ${closest})` : ''}; use only figures from the results, rounded at most to the precision written, or call a tool to get it.`);
 }
 function checkCall(id, field, ctx, issues) {
-  const name = ctx.callIds.get(String(id));
-  if (!name) issues.push(`${field} "${id}" is not the id of a tool call of this question; use the id (toolu_…) of a query, compare, profile or find_places call.`);
-  else if (!CALL_TOOLS_WITH_IDS.includes(name)) issues.push(`${field} names a ${name} call; it must be a query, compare, profile or find_places call.`);
+  let name = ctx.callIds.get(String(id));
+  const base = String(id).replace(/\.\d+$/, '');
+  if (!name && base !== String(id) && ctx.callIds.get(base) === 'method' && !(ctx.methodsRead && ctx.methodsRead.has(base))) name = 'method';   // a sub-call of a method whose result was cut
+  if (!name) issues.push(`${field} "${id}" is not the id of a tool call of this question; use the id (toolu_…) of a query, compare, profile, find_places or method call (or a method's sub-call, toolu_….1).`);
+  else if (!CALL_TOOLS_WITH_IDS.includes(name)) issues.push(`${field} names a ${name} call; it must be a query, compare, profile, find_places or method call.`);
 }
 function idInResults(id, ctx) {
   if (!id) return false;

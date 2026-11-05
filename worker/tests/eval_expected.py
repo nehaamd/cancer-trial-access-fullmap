@@ -171,6 +171,33 @@ put("X03", numbers={"nonmetro_lt20": state["KY"]["nonmetro"]["pct_lt20"], "metro
 worse = max((state["MT"], state["WY"]), key=lambda s: s["pct_lt20_trials_within_60rdmi"])
 put("X04", ids=["MT", "WY"], place_first=place_first([worse], [state["MT"], state["WY"]]), numbers={"wy": state["WY"]["pct_lt20_trials_within_60rdmi"], "mt": state["MT"]["pct_lt20_trials_within_60rdmi"]})
 
+# ---------------- attribution: each named place with its own figure (check "pairs") ----------------
+def pv(row):   # name variants for the pairs check: the full name too ("Hidalgo County, Texas"), then the short forms
+    return ([row["name"]] if row.get("level") == "county" else []) + variants(row)
+def pairs(rows, path): return [[pv(r), get(r, path)] for r in rows]
+def strict_top(rows, path, n, desc=True):
+    # the top n, keeping only places whose value is strictly ahead of the (n+1)th (a tie at the cut-off may be listed either way)
+    r = ranked([x for x in rows if get(x, path) is not None], path, desc)
+    if len(r) <= n: return r
+    cut = get(r[n], path)
+    return [x for x in r[:n] if (get(x, path) > cut if desc else get(x, path) < cut)]
+two = [state["WY"], state["MT"]]
+put("AT01", ids=["WY", "MT"], pairs=pairs(two, "pct_lt20_trials_within_60rdmi"), place_first=place_first([max(two, key=lambda s: s["pct_lt20_trials_within_60rdmi"])], two))
+put("AT02", ids=["48215", "48061"], pairs=pairs([county["48215"], county["48061"]], "trials_listed_here"))
+put("AT03", ids=["KY", "OH", "WV"], pairs=pairs([state["KY"], state["OH"], state["WV"]], "pct_lt20_trials_within_60rdmi"))
+ak_mt = [state["AK"], state["MT"]]
+put("AT04", ids=["AK", "MT"], pairs=pairs(ak_mt, "pct_zero_trials_within_60rdmi"), place_first=place_first([max(ak_mt, key=lambda s: s["pct_zero_trials_within_60rdmi"])], ak_mt))
+top_onc = strict_top(rows_in("counties", "TX"), "oncologists.count", 3)
+put("AT05", ids=ids(ranked(rows_in("counties", "TX"), "oncologists.count", True, 3)), pairs=pairs(top_onc, "oncologists.count"))
+d2 = [district["TX-34"], district["TX-15"]]
+put("AT06", ids=["TX-34", "TX-15"], pairs=pairs(d2, "median_road_mi_nci"), place_first=place_first([max(d2, key=lambda d: d["median_road_mi_nci"])], d2))
+put("AT07", ids=["ME", "VT", "NH"], pairs=pairs([state["ME"], state["VT"], state["NH"]], "median_road_mi_nci"))
+top_b = strict_top(S, "median_road_mi_nci", 4)
+put("AT08", ids=ids(ranked(S, "median_road_mi_nci", True, 4)), pairs=pairs(top_b, "median_road_mi_nci"))
+put("AT09", ids=["48479", "48061"], pairs=pairs([county["48479"], county["48061"]], "people_lt20_trials_within_60rdmi"))
+d3 = [district["FL-02"], district["GA-08"], district["AL-05"]]
+put("AT10", ids=ids(d3), pairs=pairs(d3, "wmean_trials_within_60rdmi"), place_first=place_first([max(d3, key=lambda d: d["wmean_trials_within_60rdmi"])], d3))
+
 # ---------------- need vs access, deaths vs access ----------------
 def hila(c): return c.get("incidence_above_county_median") is True and c["pct_lt20_trials_within_60rdmi"] >= 50
 def hdla(c): return c.get("mortality_top_third") is True and c["pct_lt20_trials_within_60rdmi"] >= 50
