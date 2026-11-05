@@ -160,7 +160,7 @@ async function write(q, table, asOf, env) {
 async function claude(env, model, system, user, maxTokens) {
   if (!env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY is not set on the worker');
   const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-    body: JSON.stringify({ model, max_tokens: maxTokens, temperature: 0, system, messages: [{ role: 'user', content: user }] }) });
+    body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: 'user', content: user }] }) });
   if (!r.ok) throw new Error(`model ${model}: HTTP ${r.status} ${(await r.text()).slice(0, 200)}`);
   const j = await r.json(); return (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
 }

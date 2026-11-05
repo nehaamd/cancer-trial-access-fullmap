@@ -121,7 +121,7 @@ def main():
             if not text: return n, u, None, "no record text"
             for attempt in (1, 2):
                 try:
-                    msg = client.messages.create(model=MODEL, max_tokens=900, temperature=0, system=SYSTEM,
+                    msg = client.messages.create(model=MODEL, max_tokens=900, system=SYSTEM,
                                                  messages=[{"role": "user", "content": f"Registry record {n}:\n\n{text}\n\nReturn the JSON object."}])
                     return n, u, parse_json("".join(b.text for b in msg.content if getattr(b, "type", "") == "text")), None
                 except Exception as e:   # rate limits, transient errors, malformed JSON: once more, then leave it for next week
