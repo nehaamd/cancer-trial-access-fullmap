@@ -6678,5 +6678,293 @@
    "qs_not": []
   },
   "allow_model": false
+ },
+ {
+  "q": "where is the closest NCI designated center near meadville PA?",
+  "cat": "neha-nearest",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "place_id": "42039",
+   "state": "PA",
+   "qs_has": [
+    "c=42039"
+   ],
+   "hl": [
+    "42039"
+   ],
+   "answer_has": [
+    "Case Comprehensive Cancer Center",
+    "82 road-miles",
+    "Crawford County"
+   ],
+   "check": {
+    "row": 0,
+    "col": "county center",
+    "spec": {
+     "file": "counties",
+     "id": "42039",
+     "field": "road_mi_nci_from_center"
+    },
+    "how": "road_mi_nci_from_center of county 42039 (Crawford, PA)",
+    "equals": 84
+   },
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "nearest NCI center near Meadville PA",
+  "cat": "neha-nearest",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "place_id": "42039",
+   "state": "PA",
+   "qs_has": [
+    "c=42039"
+   ],
+   "hl": [
+    "42039"
+   ],
+   "answer_has": [
+    "Case Comprehensive Cancer Center",
+    "82 road-miles",
+    "Crawford County"
+   ],
+   "check": {
+    "row": 0,
+    "col": "county center",
+    "spec": {
+     "file": "counties",
+     "id": "42039",
+     "field": "road_mi_nci_from_center"
+    },
+    "how": "road_mi_nci_from_center of county 42039 (Crawford, PA)",
+    "equals": 84
+   },
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "how far is the nearest NCI center from Meadville, Pennsylvania",
+  "cat": "neha-nearest",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "place_id": "42039",
+   "state": "PA",
+   "qs_has": [
+    "c=42039"
+   ],
+   "hl": [
+    "42039"
+   ],
+   "answer_has": [
+    "Case Comprehensive Cancer Center",
+    "82 road-miles",
+    "Crawford County"
+   ],
+   "check": {
+    "row": 0,
+    "col": "county center",
+    "spec": {
+     "file": "counties",
+     "id": "42039",
+     "field": "road_mi_nci_from_center"
+    },
+    "how": "road_mi_nci_from_center of county 42039 (Crawford, PA)",
+    "equals": 84
+   },
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "closest NCI cancer center to 16335",
+  "cat": "neha-nearest",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "place_id": "42039",
+   "qs_has": [
+    "c=42039"
+   ],
+   "answer_has": [
+    "Case Comprehensive Cancer Center",
+    "82 road-miles"
+   ],
+   "check": {
+    "row": 0,
+    "col": "drive|hours",
+    "spec": {
+     "file": "counties",
+     "id": "42039",
+     "field": "drive_hours_nci"
+    },
+    "how": "drive_hours_nci of counties row id=42039",
+    "equals": 1.8
+   },
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "Where are there oncologists in Texas but NO clinical trials?",
+  "cat": "neha-onc",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "state": "TX",
+   "order": "best",
+   "metric": "onc",
+   "qs_has": [
+    "m=onc",
+    "s=TX"
+   ],
+   "answer_has": [
+    "48 Texas counties",
+    "most oncologists",
+    "Cherokee County"
+   ],
+   "check": {
+    "row": 0,
+    "col": "oncolog",
+    "spec": {
+     "file": "counties",
+     "field": "oncologists.count",
+     "agg": "max",
+     "where": {
+      "state": "TX",
+      "oncologists.class": 2
+     }
+    },
+    "how": "max oncologists.count among TX counties with oncologists.class == 2",
+    "equals": 43
+   },
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "Where are there oncologists in Ohio but no trials?",
+  "cat": "neha-onc",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "state": "OH",
+   "order": "best",
+   "metric": "onc",
+   "qs_has": [
+    "m=onc",
+    "s=OH"
+   ],
+   "answer_has": [
+    "most oncologists"
+   ],
+   "check": {
+    "row": 0,
+    "col": "oncolog",
+    "spec": {
+     "file": "counties",
+     "field": "oncologists.count",
+     "agg": "max",
+     "where": {
+      "state": "OH",
+      "oncologists.class": 2
+     }
+    },
+    "how": "max oncologists.count among OH counties with oncologists.class == 2",
+    "equals": 6
+   },
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "Is there an NCI center in Oklahoma?",
+  "cat": "neha-exists",
+  "expect": {
+   "route": "data",
+   "level": "state",
+   "place_id": "OK",
+   "metric": "nearest_nci",
+   "qs_has": [
+    "s=OK"
+   ],
+   "answer_has": [
+    "Stephenson Cancer Center",
+    "94 road-miles",
+    "63.4%"
+   ],
+   "check": {
+    "row": 0,
+    "col": "nearest NCI",
+    "spec": {
+     "file": "states",
+     "id": "OK",
+     "field": "nearest_nci"
+    },
+    "how": "nearest_nci of states row id=OK",
+    "equals": "Stephenson Cancer Center (Oklahoma)"
+   },
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "are there any NCI designated cancer centers in Hidalgo County, Texas?",
+  "cat": "neha-exists",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "place_id": "48215",
+   "metric": "nearest_nci",
+   "answer_has": [
+    "Mays Cancer Center",
+    "not in the county"
+   ],
+   "check": {
+    "row": 0,
+    "col": "more than 60 road-miles from an NCI|from an NCI",
+    "spec": {
+     "file": "counties",
+     "id": "48215",
+     "field": "pct_gt60rdmi_nci"
+    },
+    "how": "pct_gt60rdmi_nci of counties row id=48215",
+    "equals": 100.0
+   },
+   "qs_has": [],
+   "qs_not": []
+  },
+  "allow_model": false
+ },
+ {
+  "q": "what is trial access like in Appalachia",
+  "cat": "neha-region",
+  "expect": {
+   "route": "data",
+   "level": "county",
+   "place_id": "51195",
+   "caveat": true,
+   "qs_has": [
+    "c=51195"
+   ],
+   "check": {
+    "row": 0,
+    "col": "share of residents 55+ with fewer than 20|share with fewer than 20|fewer than 20",
+    "spec": {
+     "file": "counties",
+     "id": "51195",
+     "field": "pct_lt20_trials_within_60rdmi"
+    },
+    "how": "pct_lt20_trials_within_60rdmi of counties row id=51195",
+    "equals": 100.0
+   },
+   "qs_not": []
+  },
+  "allow_model": false
  }
 ]

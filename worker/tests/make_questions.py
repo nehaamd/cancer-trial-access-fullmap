@@ -910,6 +910,24 @@ case('trials in Billings, Montana', 'review-view', {'route': 'search', 'qs_has':
 case('How does the United States do?', 'review-wording', {'route': 'data', 'level': 'national', 'answer_not': ['nearest nci-designated center is']})   # 19 (matched case-insensitively)
 case('How does the District of Columbia do?', 'review-wording', {'route': 'data', 'level': 'state', 'place_id': 'DC', 'answer_not': ['Of the 1 counties']})
 
+# ================================================================ N. Neha's questions (towns with a bare state code; nearest-centre answers lead with the centre; oncologists but no trials)
+for q in ['where is the closest NCI designated center near meadville PA?', 'nearest NCI center near Meadville PA', 'how far is the nearest NCI center from Meadville, Pennsylvania']:
+    case(q, 'neha-nearest', {'route': 'data', 'level': 'county', 'place_id': '42039', 'state': 'PA', 'qs_has': ['c=42039'], 'hl': ['42039'], 'answer_has': ['Case Comprehensive Cancer Center', '82 road-miles', 'Crawford County'],
+        'check': one('counties', '42039', 'road_mi_nci_from_center', 'county center', 'road_mi_nci_from_center of county 42039 (Crawford, PA)')})
+case('closest NCI cancer center to 16335', 'neha-nearest', {'route': 'data', 'level': 'county', 'place_id': '42039', 'qs_has': ['c=42039'], 'answer_has': ['Case Comprehensive Cancer Center', '82 road-miles'],
+    'check': one('counties', '42039', 'drive_hours_nci', COL['drive'])})
+case('Where are there oncologists in Texas but NO clinical trials?', 'neha-onc', {'route': 'data', 'level': 'county', 'state': 'TX', 'order': 'best', 'metric': 'onc', 'qs_has': ['m=onc', 's=TX'], 'answer_has': ['48 Texas counties', 'most oncologists', 'Cherokee County'],
+    'check': agg('counties', 'oncologists.count', COL['onc'], 'max', {'state': 'TX', 'oncologists.class': 2}, 'max oncologists.count among TX counties with oncologists.class == 2')})
+case('Where are there oncologists in Ohio but no trials?', 'neha-onc', {'route': 'data', 'level': 'county', 'state': 'OH', 'order': 'best', 'metric': 'onc', 'qs_has': ['m=onc', 's=OH'], 'answer_has': ['most oncologists'],
+    'check': agg('counties', 'oncologists.count', COL['onc'], 'max', {'state': 'OH', 'oncologists.class': 2}, 'max oncologists.count among OH counties with oncologists.class == 2')})
+
+case('Is there an NCI center in Oklahoma?', 'neha-exists', {'route': 'data', 'level': 'state', 'place_id': 'OK', 'metric': 'nearest_nci', 'qs_has': ['s=OK'], 'answer_has': ['Stephenson Cancer Center', '94 road-miles', '63.4%'],
+    'check': one('states', 'OK', 'nearest_nci', COL['nearest_nci'])})
+case('are there any NCI designated cancer centers in Hidalgo County, Texas?', 'neha-exists', {'route': 'data', 'level': 'county', 'place_id': '48215', 'metric': 'nearest_nci', 'answer_has': ['Mays Cancer Center', 'not in the county'],
+    'check': one('counties', '48215', 'pct_gt60rdmi_nci', COL['g60n'])})
+case('what is trial access like in Appalachia', 'neha-region', {'route': 'data', 'level': 'county', 'place_id': '51195', 'caveat': True, 'qs_has': ['c=51195'],
+    'check': one('counties', '51195', 'pct_lt20_trials_within_60rdmi', COL['pct_lt20'])})
+
 # ---------------------------------------------------------------- write
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'questions.json')
 with open(out, 'w', encoding='utf-8') as f:
