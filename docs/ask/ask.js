@@ -25,7 +25,7 @@ const ERR = {
   unavailable: 'The question box is unavailable right now; the map and its filters still work.',
   timeout: `No reply within ${TIMEOUT_S} seconds for this step; try again.`,
   network: 'The question box could not be reached; check the connection and try again. The map and its filters still work.',
-  engine: 'The data files could not be loaded (offline?).',
+  engine: 'The data files could not be loaded; check the connection and try again. The map and its filters still work.',
   steps: 'The question took too many steps to answer; try a narrower question.',
 };
 
@@ -55,7 +55,7 @@ async function ensureEngine() {
   if (!enginePromise) enginePromise = (async () => {
     const url = new URL(devOverride('askEngineUrl') || './engine.js', import.meta.url).href;
     const mod = await import(url);
-    engine = mod.createEngine({ globals: window, fetchJSON: u => fetch(u).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${u}`); return r.json(); }), base: '', onProgress: t => setStatus(t) });
+    engine = mod.createEngine({ globals: window, fetchJSON: u => fetch(u).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${u}`); return r.json(); }), base: '', onProgress: t => { if (ui.form && ui.form.hasAttribute('aria-busy')) setStatus(t); } });   // only while a question runs: the load goes on after a closed card, and its "Data loaded." must not stay in the box
     await engine.load(); engineReady = true; return engine;
   })().catch(e => { enginePromise = null; throw e; });
   return enginePromise;
@@ -86,7 +86,7 @@ function handleError(q, e) {
 function removeCard() { const old = document.getElementById('ask-card'); if (old) old.remove(); const ag = document.getElementById('ask-again'); if (ag) ag.hidden = true; }
 function sync() {   // after every repaint, tab change or unit change (map.html's __askSync calls this): the "Map now shows" line and the way back to the box
   const el = document.getElementById('ask-map-shows'); if (el && H().mapShows) el.textContent = safe(() => H().mapShows()) || '';
-  const ag = document.getElementById('ask-again'); if (ag) ag.hidden = (H().tab ? H().tab() : 'map') === 'map' || !document.getElementById('ask-card');
+  const ag = document.getElementById('ask-again'); if (ag) { ag.hidden = (H().tab ? H().tab() : 'map') === 'map' || !document.getElementById('ask-card'); const sp = ag.querySelector('span'); if (sp) sp.hidden = !(H().hl && safe(() => H().hl().length)); }   // "the Map tab shows the outlined places" only when there are outlines
 }
 function mountCard(html, opts = {}) {
   removeCard(); const host = H().paneHost ? H().paneHost() : document.querySelector('#pane .tabs'); if (!host) return null;
@@ -153,7 +153,7 @@ async function run(q) {
   q = String(q || '').trim(); if (!q || !ui.form) return;
   if (q.length < 3) { setStatus('Ask a longer question.'); return; }
   if (Date.now() < cooldownUntil) { setStatus(`Please wait ${Math.ceil((cooldownUntil - Date.now()) / 1000)} s before the next question.`); return; }
-  ui.input.value = q; const g = ++gen; if (ctrl) ctrl.abort();
+  ui.input.value = q; ui.input.scrollTop = 0; ui.input.scrollLeft = 0; const g = ++gen; if (ctrl) ctrl.abort();   // the box shows the start of the question while it runs (a long one scrolls while typed)
   const log = [], results = {}, calls = {}; let step = 0;
   setBusy(true); renderBusy(q, log, engineReady ? 'Asking the map…' : LOAD_TEXT); if (!engineReady) setStatus(LOAD_TEXT); else setStatus('Asking the map…');
   try {
@@ -161,7 +161,7 @@ async function run(q) {
     if (g !== gen) return;
     const turns = [];
     for (let i = 0; i < MAX_TURNS; i++) {
-      setLead(`Asking the map… (step ${i + 1} of up to 8)`); setStatus(i === 0 ? 'Asking the map…' : `Step ${step + 1}: reading the results…`);
+      setLead(`Asking the map… (step ${Math.min(i + 1, 8)} of up to 8)`); setStatus(i === 0 ? 'Asking the map…' : `Step ${step + 1}: reading the results…`);
       const my = new AbortController(); ctrl = my; const timer = setTimeout(() => my.abort(), TIMEOUT_S * 1000); let resp;
       try { resp = await postStep({ v: 3, q, turns, prior, client: { page: 'map', unit: safe(() => H().unit()) || 'county' } }, my.signal); }
       catch (e) { if (g !== gen) return; handleError(q, e); return; }

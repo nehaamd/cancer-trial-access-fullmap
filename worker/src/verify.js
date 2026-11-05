@@ -22,8 +22,9 @@ const NUM_RE = /(?<![\w.])(-?)\$?(\d[\d,]*(?:\.\d+)?)(?:\s*(million|billion|thou
 const MULT = { million: 1e6, billion: 1e9, thousand: 1e3, k: 1e3 };
 const SMALL_WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, zero: 0 };
 const WORDS = { eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90, hundred: 100, thousand: 1000, million: 1e6, billion: 1e9, dozen: 12 };
-const VAGUE_RE = /\b(hundreds|thousands|millions|billions|dozens|tens of thousands|countless|numerous)\b/gi;
-const WORD_RE = new RegExp(`\\b(${Object.keys(WORDS).join('|')})(?:[-\\s](one|two|three|four|five|six|seven|eight|nine))?\\b`, 'gi');
+const VAGUE_RE = /\b(hundreds|thousands|millions|billions|dozens|tens of thousands|countless|numerous|(?:a few|several|many) (?:hundred|thousand|million))\b/gi;
+// a number word, optionally compounded ("twenty-three") and scaled ("fifteen hundred", "half a million", "a thousand")
+const WORD_RE = new RegExp(`\\b(a|an|half a|half|${Object.keys(SMALL_WORDS).join('|')}|${Object.keys(WORDS).join('|')})(?:[-\\s](one|two|three|four|five|six|seven|eight|nine))?(?:\\s+(hundred|thousand|million|billion))?\\b`, 'gi');
 
 const stripIds = s => String(s || '').replace(PHONE_RE, ' ').replace(NCT_RE, ' ').replace(DISTRICT_ID_RE, ' ');
 /** Every number written in a text: [{raw, digits (no commas/sign), value (with sign and multiplier), sig, mult}]. */
@@ -38,14 +39,25 @@ export function numbersIn(text) {
   return out;
 }
 function sigDigits(digits) { let d = digits.replace(/^0+/, ''); if (d.includes('.')) d = d.replace('.', '').replace(/^0+/, ''); else d = d.replace(/0+$/, ''); return d.length; }
+// the digits a number occupies once written out (trailing zeros and the multiplier word included): "100 million" → 9, "20,000" → 5
+function writtenDigits(n) { const v = Math.abs(n.value); if (Number.isInteger(v)) return String(v).replace(/^0+/, '').length; let d = String(n.digits).replace(/^0+/, ''); if (d.includes('.')) d = d.replace('.', '').replace(/^0+/, ''); return d.length; }
 function sigRound(r, p) { if (r === 0) return 0; const e = Math.floor(Math.log10(Math.abs(r))); const f = Math.pow(10, p - 1 - e); return Math.round(r * f) / f; }
 const near = (a, b) => Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
 
-/** Number words above ten in a text (digits already removed): [{raw, value}]; one–ten are always allowed. */
+/** Number words above ten in a text (digits already removed): [{raw, value}]; one–ten are always allowed, but "fifteen hundred",
+ *  "two thousand" and "half a million" are one number each (never "fifteen" and a constant "hundred"). */
 export function numberWordsIn(text) {
   const t = String(text || '').replace(new RegExp(NUM_RE.source, 'gi'), ' ');   // "11.8 million" is a number, not a word
   const out = []; let m; const re = new RegExp(WORD_RE.source, 'gi');
-  while ((m = re.exec(t))) { const w = m[1].toLowerCase(); let v = WORDS[w]; if (m[2]) v += SMALL_WORDS[m[2].toLowerCase()]; if (w === 'hundred' || w === 'thousand' || w === 'million' || w === 'billion') { const before = t.slice(Math.max(0, m.index - 12), m.index); const q = before.match(/\b(a|an|one|two|three|four|five|six|seven|eight|nine|ten|half a|half)\s*$/i); if (q) { const k = q[1].toLowerCase(); v = (k === 'a' || k === 'an' ? 1 : /half/.test(k) ? 0.5 : SMALL_WORDS[k]) * WORDS[w]; } } out.push({ raw: m[0], value: v }); }
+  while ((m = re.exec(t))) {
+    const w = m[1].toLowerCase(); const small = m[2] ? SMALL_WORDS[m[2].toLowerCase()] : 0; const scale = m[3] ? WORDS[m[3].toLowerCase()] : null;
+    let v;
+    if (w === 'a' || w === 'an') { if (!scale) continue; v = 1; }
+    else if (w === 'half a' || w === 'half') { if (!scale) continue; v = 0.5; }
+    else if (w in SMALL_WORDS) { if (!scale) continue; v = SMALL_WORDS[w] + small; }   // one–ten alone are allowed
+    else v = WORDS[w] + small;
+    out.push({ raw: m[0], value: scale ? v * scale : v });
+  }
   return out;
 }
 
@@ -71,6 +83,7 @@ export function buildContext(ctx) {
   for (const w of wordsOf(question)) stop.add(w);
   for (const w of wordsOf(C.SCOPE_TEXT + ' ' + C.OTHER_TEXT)) stop.add(w);
   for (const t of Object.values(C.SITE_INFO || {})) for (const w of wordsOf(`${t.title} ${t.text}`)) stop.add(w);
+  for (const [phrase] of C.CANCER_WORDS || []) for (const w of wordsOf(phrase)) stop.add(w);   // "Ovarian", "Uterine", "Glioblastoma" at a sentence start
   // the catalog's quoted examples ("Hidalgo County, Texas", "Mays Cancer Center") are illustrations, not vocabulary: a place or
   // center named in an answer must still come from a result
   const keep = new Set(FIXED_STOP); for (const name of Object.values(C.STATES || {})) for (const w of name.toLowerCase().split(/[^a-z]+/)) keep.add(w);
@@ -95,6 +108,9 @@ across against along alongside amid behind beneath beside beyond despite except 
 add added adds answer answered appear appears apply applies are based become becomes being bring brings call called calls come comes compare compares consider considered count counted counts cover covered covers describe describes draw drawn exclude excluded excludes exist exists fall falls find found follow follows get give given gives go goes hold holds include included includes keep keeps lack lacks lead leads leave leaves lie lies list listed lists live lives look looks make makes match matched matches mean means measure measured measures meet meets note noted notes offer offers place placed put puts rank ranked ranks read reads record records remain remains report reported reports represent represents rest results return returns run runs say says see seen show shown shows sit sits stand stands start starts stay stays take taken takes tell tells tend tends total totals treat treated turn turns use used uses vary varies
 able available average averages certain clear close closer combined common current different direct distinct due early equal exact fair far farther few full further greater high higher large larger late later likely limited long longer low lower main major mean median minor missing modest much narrow near nearer net notable open other overall own partial particular poor possible present published rare recent relative remaining roughly short shorter similar single small smaller sole specific steady strong total true typical unclear unknown various very weak whole wide wider worse
 figure figures number numbers value values total totals count counts share shares list lists table tables row rows result results answer answers question questions reading readings rule rules measure measures level levels place places area areas part parts rest remainder half third quarter majority minority range gap gaps line lines period periods year years month months week weeks day days time times source sources file files pull pulls note notes caveat caveats case cases site sites center centers people person resident residents household households home homes
+therefore currently consequently additionally lastly today now somewhat nobody nowhere something anything everything sometimes always approximately precisely entirely largely mainly partially fully completely
+counting using ranking rounding rounded sorted ordered ordering adding applying restricting limiting weighting weighted expressed tied tie ties
+sum sums difference differences proportion fraction ratio threshold thresholds cutoff cut-off percent percentage points patient doctor doctors drug drugs gene genes tumor tumors tumour tumours
 `.split(/\s+/));
 
 // ---------- the checks ----------
@@ -174,14 +190,16 @@ export function verify(answer, context) {
 }
 
 const listOf = v => Array.isArray(v) ? v.filter(x => typeof x === 'string') : typeof v === 'string' ? [v] : [];
+// bare domains are URLs too, except the registry and Congress sites the catalog itself names ("listed on ClinicalTrials.gov")
+const DOMAIN_RE = /\b(?!clinicaltrials\.gov|congress\.gov|house\.gov|senate\.gov|govinfo\.gov)[\w-]+\.(?:com|org|net|io|edu|gov)\b|\b\w+ dot (?:com|org|net|gov)\b/i;
 function style(s, field, issues, full) {
-  if (/https?:\/\/|www\./i.test(s)) issues.push(`${field} contains a URL; links come from the site, not from the answer.`);
-  if (/\*\*|__|`|^\s*#|^\s*[-*•]\s|^\s*\d+[.)]\s|\[[^\]]+\]\([^)]+\)|<\/?[a-z]+>/m.test(s)) issues.push(`${field} contains markdown or list formatting; write plain sentences.`);
+  if (/https?:\/\/|www\./i.test(s) || DOMAIN_RE.test(s)) issues.push(`${field} contains a URL; links come from the site, not from the answer.`);
+  if (/\*\*|__|`|\*\S[^*\n]*\S\*|^\s*#|^\s*[-*•‣◦▪·–—]\s|^\s*\d+[.)]\s|\[[^\]]+\]\([^)]+\)|<\/?[a-z]+>/m.test(s)) issues.push(`${field} contains markdown or list formatting; write plain sentences.`);
   if (!full) return;
   if (/\bI\b(?![-)])|\bI'(?:m|ve|d|ll)\b|\b[Mm]y\b|\b[Mm]e\b|\b[Ww]e\b|\b[Ww]e're\b|\b[Oo]ur\b|\bus\b/.test(s) || /\bas an ai\b|\blanguage model\b/i.test(s)) issues.push(`${field} uses the first person; write about the data only.`);
   for (const sentence of s.split(/(?<=[.!?])\s+/)) {
     const neg = /\b(not|no|never|cannot|does not|do not|is not|are not)\b/i.test(sentence);
-    const m = sentence.match(/\b(should|ought to|recommend\w*|consult\w*|advis(?:e|es|ed|ing)|talk to (?:your|a|an)|ask your|see your|contact your|you (?:may|might|can|could|need)|consider (?:enrolling|joining|asking)|enrol(?:l)?(?:ing)? in|sign up for)\b/i);
+    const m = sentence.match(/\b(should|ought to|recommend\w*|consult\w*|advis(?:e|es|ed|ing|able)|talk to (?:your|a|an)|speak (?:to|with) (?:your|a|an)|check with (?:your|a|an)|reach out to|ask your|see your|contact your|you (?:may|might|can|could|need)|(?:it is|it's|it would be) (?:best|wise|worth|a good idea)|consider (?:enrolling|joining|asking|contacting|calling)|enrol(?:l)?(?:ing)? in|sign up for)\b/i);
     if (m) issues.push(`${field} gives advice ("${m[1]}"); report what the data shows, nothing more.`);
     const e = sentence.match(/\b(eligib\w*)\b|\b(?:you|she|he|they|patients?|people|someone|anyone|who)\s+(?:\w+\s+){0,2}(qualif\w*)\b/i); if (e && !neg) issues.push(`${field} speaks of eligibility ("${e[1] || e[2]}"); the data does not match people to trials.`);
     const a = sentence.match(/\bavailable (?:to|for) (?:you|her|him|them|your|anyone|a patient|patients|someone|people|residents|everyone)\b|\b(?:you|she|he|they|your \w+) (?:can|could|may|might) (?:join|enrol|enroll|take part|participate)\b|\bopen to (?:you|her|him|them|your)\b/i);
@@ -193,7 +211,10 @@ function checkNumber(n, field, ctx, issues, isWord = false) {
   if (ctx.resultValues.some(v => near(v, n.value))) return;
   if (ctx.questionDigits.has(n.digits) || (isWord && ctx.questionWords.has(n.value))) return;
   if (ctx.constants.has(n.digits) && n.mult === 1) return;
-  if (n.sig >= 2) for (const v of ctx.resultValues) if (near(sigRound(v, n.sig), n.value)) return;
+  // a result value rounded to p significant digits, for any p from the digits written up to the digits implied: trailing zeros are
+  // ambiguous ("100 million" for 100,019,672, "20,000" for 19,876 are 2-digit roundings), but never fewer than 2 digits
+  const lo = Math.max(2, sigDigits(n.digits)), hi = Math.max(lo, writtenDigits(n));
+  for (let p = lo; p <= hi; p++) for (const v of ctx.resultValues) if (near(sigRound(v, p), n.value)) return;
   const closest = ctx.resultValues.length ? ctx.resultValues.reduce((best, v) => Math.abs(v - n.value) < Math.abs(best - n.value) ? v : best, ctx.resultValues[0]) : null;
   issues.push(`number ${n.raw} in ${field} is not in any tool result${closest !== null ? ` (closest: ${closest})` : ''}; use only figures from the results, rounded at most to the precision written, or call a tool to get it.`);
 }

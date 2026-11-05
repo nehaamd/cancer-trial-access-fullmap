@@ -12,7 +12,7 @@ worker's part.
 ```
 browser (docs/ask/ask.js + engine.js)                     worker (this directory)
   question ─────────────────────────────────────────────► POST /ask {v:3, q, turns:[], prior}
-                                                           limits (step 0 only) → step(): prompt + tools from the catalog → model
+                                                           limits (step 0; continuation steps capped at MAX_STEPS × those) → step(): prompt + tools from the catalog → model
   ◄──────────────────────────────── {kind:"tools", assistant, sig, calls:[{id,name,input}]}
   run every call with the engine (query / aggregate / profile / compare / find_places / trials / site_info)
   POST again with turns:[…, {assistant, sig, results}] ──► check the signatures, rebuild the transcript, call the model again
@@ -126,7 +126,7 @@ secrets → `/health` → `node worker/tests/eval.js --worker <url>/ask --max 25
   at `MAX_STEPS`, verification accept/reject cases (rounded and million forms accepted; invented numbers, re-attributed places,
   unknown ids, bad layers/params, markdown, URLs, advice, first person, `answerable:"no"` without `not_in_data` rejected) with
   the internal retry, text-only replies, `SCOPE_TEXT`, prior Q/A rendering, the `final_answer`-alongside-tools rule, HTTP status
-  codes, rate limits (step 0 only), `makeCallModel` (request shape, retry, timeout), prompt sections and tool-schema validity
+  codes, rate limits (step 0; continuation budget), body size, `makeCallModel` (request shape, retry, timeout), prompt sections and tool-schema validity
   (every field path in the prompt exists in the catalog), and — when `docs/ask/engine.js` is present — the canonical Texas
   question end to end through the real engine with a verified answer.
 - `node worker/src/prompt.js --print` — the rendered system prompt (review it after a catalog change) and its size.

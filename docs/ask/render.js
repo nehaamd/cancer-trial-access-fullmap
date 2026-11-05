@@ -14,6 +14,8 @@ export const TABLE_LIMIT = 100;
 export const FOCUS_MAX = 400;
 export const UNVERIFIED_NOTICE = 'The written summary could not be checked against the data, so only the data is shown.';
 export const STANDING_NOTE = 'Figures are read from the map’s data files; the written summary was checked against them number by number. The box lists and ranks; it does not match patients to trials or give medical advice.';
+export const STANDING_NOTE_UNCHECKED = 'Figures are read from the map’s data files. The box lists and ranks; it does not match patients to trials or give medical advice.';   // the summary failed its check and is not shown
+export const STANDING_NOTE_PLAIN = 'The box lists and ranks what the map’s data files hold; it does not match patients to trials or give medical advice.';   // the fixed scope / other-topic text: no figures were read
 
 // ---------- ids: the engine's (FIPS, "TX-34", USPS) and the map's (FIPS, 4-digit geoid, USPS) ----------
 export const idKind = id => /^\d{5}$/.test(String(id)) ? 'county' : /^\d{4}$/.test(String(id)) ? 'district' : /^[A-Z]{2}$/i.test(String(id)) && STATES[String(id).toUpperCase()] ? 'state' : null;   // map ids
@@ -119,7 +121,10 @@ export function tableHTML(t, o = {}) {
     return '<tr>' + cols.map(c => { const v = getPath(r, c), txt = esc(fmtCell(v));
       if (c === placeCol && pid) return `<td><button type="button" class="ask-place" data-pl="${esc(pid)}">${txt}</button></td>`;
       return `<td${typeof v === 'number' ? ' class="n"' : ''}>${txt}</td>`; }).join('') + '</tr>'; }).join('');
-  const more = rows.length > shown.length ? `<p class="ask-more-rows"><button type="button" class="ask-showall">Show all ${rows.length.toLocaleString('en-US')}</button><span>${shown.length} of ${rows.length.toLocaleString('en-US')} rows shown</span></p>` : '';
+  // a restored view (Back/Forward, reload) keeps at most HISTORY_ROWS rows of a very long result: say so instead of passing them off as all
+  const total = t.rows_capped && Number.isFinite(t.count) && t.count > rows.length ? t.count : rows.length;
+  const more = rows.length > shown.length ? `<p class="ask-more-rows"><button type="button" class="ask-showall">Show all ${rows.length.toLocaleString('en-US')}</button><span>${shown.length} of ${total.toLocaleString('en-US')} rows shown</span></p>`
+    : total > rows.length ? `<p class="ask-more-rows"><span>${rows.length.toLocaleString('en-US')} of ${total.toLocaleString('en-US')} rows were kept for this restored view; ask the question again for all of them.</span></p>` : '';
   return `<div class="ask-tbl"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>${more}`;
 }
 
@@ -169,7 +174,7 @@ export function cardHTML(ctx) {
   const kind = answerable(a); const tag = kind === 'partly' ? '<span class="ask-tag">Answered in part</span>' : kind === 'no' ? '<span class="ask-tag ask-tag-no">Not in the data</span>' : '';
   const x = '<button type="button" class="ask-x" aria-label="Close answer">×</button>';
   const head = `<p class="ask-q">${esc(ctx.q)}</p>`;
-  if (plain) return `<div class="ask-card plain" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}<div class="ask-a">${paras(a.answer)}</div><p class="ask-note">${esc(STANDING_NOTE)}</p></div>`;
+  if (plain) return `<div class="ask-card plain" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}<div class="ask-a">${paras(a.answer)}</div><p class="ask-note">${esc(STANDING_NOTE_PLAIN)}</p></div>`;
   const body = ok && String(a.answer || '').trim() ? `<div class="ask-a">${tag}${paras(a.answer)}</div>` : `<p class="ask-unverified">${esc(UNVERIFIED_NOTICE)}</p>`;
   const alts = strList(a.alternatives, 3), nid = strList(a.not_in_data, 4), cav = strList(a.caveats, 5), fu = strList(a.follow_ups, 3), interp = String(a.interpretation || '').trim();
   const read = interp || alts.length ? `<section class="ask-sec ask-read"><h4>How this was read</h4>${interp ? `<p>${esc(interp)}</p>` : ''}${alts.length ? `<div class="ask-alts"><span class="ask-lead">Or ask:</span>${chipsHTML(alts, 'ask-alt')}</div>` : ''}</section>` : '';
@@ -184,7 +189,7 @@ export function cardHTML(ctx) {
   const src = sourcesHTML(ctx.sources, ctx.vintages);
   const log = Array.isArray(ctx.log) && ctx.log.length ? `<details class="ask-log"><summary>How this was answered</summary><ol>${stepsHTML(ctx.log)}</ol><p class="ask-log-foot">${esc([ctx.steps ? `${ctx.steps} model step${ctx.steps === 1 ? '' : 's'}` : '', ctx.model ? `model ${ctx.model}` : '', ctx.verification ? (ok ? 'every number and place name in the summary was found in the tool results' : 'verification failed: ' + strList(ctx.verification.issues, 6).join('; ')) : ''].filter(Boolean).join(' · '))}</p></details>` : '';
   const follow = `<div class="ask-fu">${fu.length ? `<span class="ask-lead">Follow up:</span>${chipsHTML(fu, 'ask-fuq')}` : ''}<button type="button" class="ask-new">New question</button></div>`;
-  return `<div class="ask-card" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}${body}${read}${notin}${table}${sum}${caveats}${dropped}${mapLine}${src}${log}${follow}<p class="ask-note">${esc(STANDING_NOTE)}</p></div>`;
+  return `<div class="ask-card" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}${body}${read}${notin}${table}${sum}${caveats}${dropped}${mapLine}${src}${log}${follow}<p class="ask-note">${esc(ok ? STANDING_NOTE : STANDING_NOTE_UNCHECKED)}</p></div>`;
 }
 
 // the table the card shows, from the engine's full result for table.from_call (full: engine.full(id); res: the result the model

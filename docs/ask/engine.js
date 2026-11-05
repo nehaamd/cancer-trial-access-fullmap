@@ -321,8 +321,9 @@ export function createEngine(options = {}) {
       if (Array.isArray(n.any_of)) { if (depth > 2) return { error: 'any_of nested too deeply' }; const kids = []; for (const k of n.any_of) { const r = parseNode(k, depth + 1); if (r.error) return r; kids.push(r); } return { any_of: kids }; }
       const field = String(n.field || '');
       if (!hasField(table, field)) return unknownField(table, field);
-      const op = n.op === '==' ? '=' : n.op;
+      let op = n.op === '==' ? '=' : n.op;
       if (!OPS.includes(op)) return { error: `unknown op '${n.op}'`, hint: 'ops: ' + OPS.join(' ') };
+      if (n.value === null && (op === '=' || op === '!=')) op = op === '=' ? 'is_null' : 'not_null';   // "= null" means is_null (comparisons never match null)
       const c = { field, op };
       out.fields.push(field);
       if (op === 'is_null' || op === 'not_null') return c;
@@ -397,7 +398,7 @@ export function createEngine(options = {}) {
   function sourceOf(table) {
     const f = FILES[table] || {};
     const file = f.file || null;
-    const url = !file ? null : /^api\//.test(file) ? SITE_BASE + file : SITE_BASE + file.replace(/\s.*$/, '');
+    const url = !file ? null : SITE_BASE + file.replace(/\s.*$/, '');   // "api/all_states.json (senators) + cosponsors.js" → the first file
     const asOf = table === 'cosponsors' || table === 'senators' ? ((S.files.cosponsors && S.files.cosponsors.meta && S.files.cosponsors.meta.fetched) || S.asOf) : table === 'nci_centers' ? SOURCES.nci.vintage : S.asOf;
     return { file, url, as_of: asOf };
   }
@@ -599,9 +600,9 @@ export function createEngine(options = {}) {
     const sc = trialScope(input.scope); if (sc.error) return sc;
     const filters = {};
     let typeIdx = -1;
-    if (!isNull(input.cancer_type) && input.cancer_type !== '') { const k = String(input.cancer_type); typeIdx = T.types.findIndex(x => x[0] === k); if (typeIdx < 0) return { error: `unknown cancer_type '${k}'`, hint: 'types: ' + Object.keys(CANCER_TYPES).join(', ') }; filters.cancer_type = k; }
-    if (!isNull(input.phase) && input.phase !== '') { const p = String(input.phase).replace(/^phase\s*/i, '').replace(/\//, '-'); if (!PHASES.includes(p)) return { error: `unknown phase '${input.phase}'`, hint: 'phases: ' + PHASES.join(', ') }; filters.phase = p; }
-    if (!isNull(input.sponsor_type) && input.sponsor_type !== '') { const s = String(input.sponsor_type); if (!SPONSOR_TYPES[s]) return { error: `unknown sponsor_type '${s}'`, hint: 'sponsor types: ' + Object.keys(SPONSOR_TYPES).join(', ') }; filters.sponsor_type = s; }
+    if (!isNull(input.cancer_type) && input.cancer_type !== '') { const k = String(input.cancer_type).trim().toLowerCase(); typeIdx = T.types.findIndex(x => x[0] === k); if (typeIdx < 0) return { error: `unknown cancer_type '${input.cancer_type}'`, hint: 'types: ' + Object.keys(CANCER_TYPES).join(', ') }; filters.cancer_type = k; }
+    if (!isNull(input.phase) && input.phase !== '') { const p = String(input.phase).trim().replace(/^phase\s*/i, '').replace(/\//, '-').toUpperCase(); if (!PHASES.includes(p)) return { error: `unknown phase '${input.phase}'`, hint: 'phases: ' + PHASES.join(', ') }; filters.phase = p; }
+    if (!isNull(input.sponsor_type) && input.sponsor_type !== '') { const s = String(input.sponsor_type).trim().toLowerCase(); if (!SPONSOR_TYPES[s]) return { error: `unknown sponsor_type '${input.sponsor_type}'`, hint: 'sponsor types: ' + Object.keys(SPONSOR_TYPES).join(', ') }; filters.sponsor_type = s; }
     if (!isNull(input.keyword) && String(input.keyword).trim() !== '') filters.keyword = String(input.keyword).trim().toLowerCase();
     if (!isNull(input.min_age_at_most) && input.min_age_at_most !== '') { const a = +input.min_age_at_most; if (!Number.isFinite(a)) return { error: 'min_age_at_most must be a number' }; filters.min_age_at_most = a; }
     const limit = clampLimit(input.limit, 10, 25);

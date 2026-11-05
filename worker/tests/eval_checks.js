@@ -17,17 +17,27 @@ export function extractNumbers(text) {
     const sig = digits.replace(/0+$/, '').length || 1;                      // first non-zero to last non-zero digit
     const trailingZeros = frac ? 0 : (intPart.match(/0+$/) || [''])[0].length;
     const precision = (frac ? Math.pow(10, -frac.length) : Math.pow(10, trailingZeros)) * mult;
-    out.push({ value: parseFloat(intPart + (frac ? '.' + frac : '')) * mult, precision, sig, raw: m[0] });
+    out.push({ value: parseFloat(intPart + (frac ? '.' + frac : '')) * mult, precision, sig, raw: m[0], digits: intPart + (frac ? '.' + frac : '') });
   }
   const wre = /\b(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\b/gi;
-  while ((m = wre.exec(text || ''))) out.push({ value: WORD_NUMBERS[m[1].toLowerCase()], precision: 1, sig: 1, raw: m[0], word: true });
+  while ((m = wre.exec(text || ''))) { const v = WORD_NUMBERS[m[1].toLowerCase()]; out.push({ value: v, precision: 1, sig: 1, raw: m[0], word: true, digits: String(v) }); }
   return out;
 }
+// The same rule as the worker's verify.js (checkNumber): a written number stands for a result value when the digits are equal, or
+// when the value rounded to p significant digits equals it, for any p from the digits written (never fewer than 2) up to the digits
+// the number occupies once written out — trailing zeros are ambiguous, so "30" may be 29.8, "100" 99.6, "20,000" 19,876 and
+// "100 million" 100,019,672, while "40" is not 42.7 and "200" is not 178. The eval must not fail what the worker verifies.
+const sigDigits = digits => { let d = String(digits).replace(/^0+/, ''); if (d.includes('.')) d = d.replace('.', '').replace(/^0+/, ''); else d = d.replace(/0+$/, ''); return d.length; };
+const writtenDigits = (value, digits) => { const v = Math.abs(value); if (Number.isInteger(v)) return String(v).replace(/^0+/, '').length; let d = String(digits).replace(/^0+/, ''); if (d.includes('.')) d = d.replace('.', '').replace(/^0+/, ''); return d.length; };
+const sigRound = (r, p) => { if (r === 0) return 0; const e = Math.floor(Math.log10(Math.abs(r))); const f = Math.pow(10, p - 1 - e); return Math.round(r * f) / f; };
+const near = (a, b) => Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 1e-9);
 export function numberMatches(written, expected) {
   if (typeof expected !== 'number' || !isFinite(expected)) return false;
-  if (Math.abs(written.value - expected) < 1e-9) return true;                                         // same digits
-  if (written.sig < 2) return Math.abs(written.value - Math.round(expected)) < 1e-9 && Number.isInteger(written.value) && Math.abs(expected - Math.round(expected)) < 0.05; // "100" for 100.0 only
-  return Math.abs(written.value - expected) <= written.precision / 2 + 1e-9;                           // rounded to the written precision
+  if (near(written.value, expected)) return true;                                                     // same digits
+  const digits = written.digits != null ? String(written.digits) : String(written.value);
+  const lo = Math.max(2, sigDigits(digits)), hi = Math.max(lo, writtenDigits(written.value, digits));
+  for (let p = lo; p <= hi; p++) if (near(sigRound(expected, p), written.value)) return true;        // rounded to the written precision
+  return false;
 }
 export function textHasNumber(text, expected) { return extractNumbers(text).some(w => numberMatches(w, expected)); }
 

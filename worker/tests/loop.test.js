@@ -11,7 +11,7 @@ import { step, validateBody, buildMessages, MAX_STEPS, MAX_RESULT_BYTES, MAX_CAL
 import { sign, verifySig, canonical, constantTimeEqual, secretFor, sha256hex } from '../src/sign.js';
 import { verify, numbersIn, numberWordsIn, capitalisedTokens, buildContext } from '../src/verify.js';
 import { systemPrompt, toolDefinitions, catalogPaths, EXAMPLES, TOOL_NAMES } from '../src/prompt.js';
-import { handle, checkLimits, resetLimits, makeCallModel } from '../src/index.js';
+import { handle, checkLimits, resetLimits, makeCallModel, MAX_BODY_BYTES } from '../src/index.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url)); const ROOT = path.resolve(HERE, '..', '..');
 let passed = 0, failed = 0; const failures = [];
@@ -171,6 +171,23 @@ await test('verify: rounding, million form, question numbers, constants, vintage
   ok('The 20 counties you asked about: 38 match.', 'which 20 texas counties have oncologists but no trials');
   const r = verify({ ...good, answer: '1.3 million residents 55+ live in the 38 counties.' }, ctxOf(TURNS)); assert(!r.ok && includes(r.issues, 'number 1.3 million'), 'wrong rounding must fail');
   const r2 = verify({ ...good, answer: 'About 40 of 254 Texas counties match.' }, ctxOf(TURNS)); assert(!r2.ok, '1-significant-digit rounding (40 for 38) is not accepted');
+  // trailing zeros are ambiguous: a round figure is accepted when it is the result rounded to 2 or more digits
+  const nat = [{ assistant: [tu('profile', { table: 'national', id: 'US' }, 'toolu_n')], results: [{ tool_use_id: 'toolu_n', content: JSON.stringify({ row: { pop55: 100019672, people_lt20_trials_within_60rdmi: 11802321, pct_lt20_trials_within_60rdmi: 11.8, people_zero_trials_within_60rdmi: 4300846, trials_listed_here: 4035, x: 19876 } }) }] }];
+  const okN = (answer, q = 'how many people') => { const r = verify({ ...good, map: undefined, table: undefined, answer }, ctxOf(nat, q)); assert(r.ok, `${answer} -> ${JSON.stringify(r.issues)}`); };
+  okN('The data covers 100 million residents 55+.'); okN('About 12 million residents 55+ are short of trials.'); okN('About 20,000 live there.'); okN('4,300,000 have none within 60 road-miles.'); okN('4,035 trials, roughly 4,000 trials.');
+  okN('Residents aged 55–64 are a separate ACS band; the data has 3,143 counties and 436 districts.');                     // 64, 3,143 and 436 are constants
+  okN('Fifteen thousand people, give or take, is not what the data says; it says twelve million are short of trials.', 'does fifteen thousand people sound right');   // question words
+  for (const [a, sub] of [['About 100.5 million residents 55+.', 'number 100.5 million'], ['About 4,400,000 have none.', 'number 4,400,000'], ['About 13 million are short.', 'number 13 million'], ['Fifteen hundred trials are listed.', 'number Fifteen hundred'], ['Three thousand trials are listed.', 'number Three thousand'], ['Thirteen trials.', 'number Thirteen'], ['Half a million people.', 'number Half a million'], ['Several hundred trials.', 'vague quantity']]) {
+    const r = verify({ ...good, map: undefined, table: undefined, answer: a }, ctxOf(nat, 'how many people')); assert(!r.ok && includes(r.issues, sub), `${a} should fail with "${sub}": ${JSON.stringify(r.issues)}`);
+  }
+});
+await test('verify: style catches unicode bullets, bare domains, "dot com" and advice synonyms; common sentence starters pass', () => {
+  const bad = (answer, sub) => { const r = verify({ ...good, answer }, ctxOf(TURNS)); assert(!r.ok && includes(r.issues, sub), `${answer} should fail with "${sub}": ${JSON.stringify(r.issues)}`); };
+  bad('38 of 254 Texas counties:\n– Hidalgo County, Texas\n– Webb County, Texas', 'markdown'); bad('38 counties.\n‣ Hidalgo County, Texas', 'markdown'); bad('Hidalgo County, Texas is *fully* short of trials.', 'markdown');
+  bad('38 of 254 Texas counties; see example.com for more.', 'URL'); bad('38 of 254 Texas counties; see example dot com.', 'URL'); bad('38 of 254 Texas counties; see nehaamd.github.io.', 'URL');
+  bad('38 of 254 Texas counties. It is advisable to talk to a doctor.', 'advice'); bad('38 of 254 Texas counties. Patients ought to speak with a doctor.', 'advice'); bad('38 of 254 Texas counties. It would be wise to check with your oncologist.', 'advice');
+  const ok = answer => { const r = verify({ ...good, answer }, ctxOf(TURNS)); assert(r.ok, `${answer} -> ${JSON.stringify(r.issues)}`); };
+  ok('Therefore 38 of 254 Texas counties match. Currently 9 districts contain such counties. Counting only those, Hidalgo County, Texas leads. Approximately 38% of Texas 34th lives in them. Ovarian cancer is a type key, as listed on ClinicalTrials.gov and refreshed from congress.gov.');
 });
 await test('verify: SCOPE_TEXT and OTHER_TEXT answers pass with answerable "no" and a not_in_data sentence', () => {
   eq(verify({ answer: catalog.SCOPE_TEXT, answerable: 'no', interpretation: 'Out of scope: a question about a person\'s care.', not_in_data: ['The data lists trials; it does not match people to them.'] }, ctxOf([], 'which trial is right for my mother with stage 3 lung cancer?')), { ok: true, issues: [] });
@@ -352,7 +369,7 @@ await test('http: a full step over HTTP, status codes for bad transcript, model 
   const slow = await handle(req({ v: 3, q: Q, turns: [] }, { ip: '9.9.9.8' }), ENV, async () => { const e = new Error('x'); e.name = 'TimeoutError'; throw e; }); eq(slow.status, 504);
   const unknownTool = await handle(req({ v: 3, q: Q, turns: [] }, { ip: '9.9.9.7' }), ENV, fakeModel([[tu('explode', {})]])); eq(unknownTool.status, 502);
 }));
-await test('http: rate limits count only requests with turns.length === 0; 429 carries retry_after_s', () => quiet(async () => {
+await test('http: rate limits count questions (turns.length === 0) and, separately, continuation steps; 429 carries retry_after_s', () => quiet(async () => {
   resetLimits(); const final = () => fakeModel([[tu('final_answer', { answer: catalog.OTHER_TEXT, answerable: 'no', interpretation: 'x', not_in_data: ['y'] })]]);
   for (let i = 0; i < 3; i++) eq((await handle(req({ v: 3, q: 'hello', turns: [] }, { ip: '5.5.5.5' }), ENV, final())).status, 200, 'first three pass');
   const r = await handle(req({ v: 3, q: 'hello', turns: [] }, { ip: '5.5.5.5' }), ENV, final()); eq(r.status, 429); const j = await r.json(); assert(j.retry_after_s >= 1 && j.retry_after_s <= 60, 'retry_after_s'); assert(j.error.includes('minute')); eq(r.headers.get('retry-after'), String(j.retry_after_s));
@@ -365,6 +382,17 @@ await test('http: rate limits count only requests with turns.length === 0; 429 c
   const capped = await handle(req({ v: 3, q: 'hello', turns: [] }, { ip: '7.7.7.9' }), ENV, final()); eq(capped.status, 429); assert((await capped.json()).error.includes("today's limit"));
   // checkLimits directly: per-minute window slides
   resetLimits(); const now = Date.now(); for (let i = 0; i < 3; i++) eq(checkLimits('a', ENV, now + i).ok, true); eq(checkLimits('a', ENV, now + 10).ok, false); eq(checkLimits('a', ENV, now + 60001).ok, true); eq(checkLimits('b', ENV, now).ok, true);
+  // continuation steps have their own budget of MAX_STEPS × the question limits: a replayed signed turn cannot buy unlimited model calls
+  resetLimits(); for (let i = 0; i < 3 * MAX_STEPS; i++) eq(checkLimits('c', ENV, now, true).ok, true, 'continuation ' + i); eq(checkLimits('c', ENV, now, true).ok, false, 'continuation budget exhausted'); eq(checkLimits('c', ENV, now).ok, true, 'questions still have their own budget');
+  resetLimits(); const replay = { v: 3, q: Q, turns: [{ assistant: t0.assistant, sig: t0.sig, results: t0.calls.map(c => ({ tool_use_id: c.id, content: JSON.stringify(exec(c.name, c.input)) })) }] };
+  let status = 200; for (let i = 0; i < 3 * MAX_STEPS + 1 && status === 200; i++) status = (await handle(req(replay, { ip: '6.6.6.6' }), ENV, canonicalScript())).status;
+  eq(status, 429, 'the replayed turn is throttled after MAX_STEPS × PER_MINUTE continuation steps');
+}));
+await test('http: a request body over MAX_BODY_BYTES is refused with 413 before parsing', () => quiet(async () => {
+  resetLimits();
+  const huge = JSON.stringify({ v: 3, q: Q, turns: [], pad: 'x'.repeat(MAX_BODY_BYTES + 10) });
+  const r = await handle(req(huge, { ip: '8.8.8.8' }), ENV, fakeModel([])); eq(r.status, 413); assert((await r.json()).error.includes('too large'));
+  const r2 = await handle(new Request('https://worker.test/ask', { method: 'POST', headers: { 'content-type': 'application/json', Origin: 'https://nehaamd.github.io', 'content-length': String(MAX_BODY_BYTES + 1) }, body: '{}' }), ENV, fakeModel([])); eq(r2.status, 413);
 }));
 await test('http: makeCallModel posts the §3 shape, retries once on 529, maps timeouts', async () => {
   const seen = [];

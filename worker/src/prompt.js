@@ -92,7 +92,7 @@ const GEO = ['counties', 'districts', 'states', 'national'];
 const SPLIT_RE = /^(metro|nonmetro)\.(.+)$/;
 function buildCatalogText(C, pathsOnly = false) {
   const out = []; const paths = [];
-  const key = fd => `${fd.path}|${fd.type}|${fd.unit}|${fd.desc}|${fd.nulls || ''}|${fd.optional ? 1 : 0}`;
+  const key = fd => `${fd.path}|${fd.type}|${fd.unit}|${fd.desc}|${fd.nulls || ''}|${fd.optional ? 1 : 0}|${JSON.stringify(fd.layer || null)}|${JSON.stringify(fd.params || null)}`;   // the layer tag is part of the definition: a field shown on different layers per unit is rendered per table
   // group the geographic tables' fields by the set of tables that carry an identical definition
   const groups = new Map();   // "counties+districts+states+national" -> [fd]
   const seen = new Map();     // fieldKey -> {fd, tables:[]}

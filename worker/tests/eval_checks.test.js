@@ -28,6 +28,15 @@ t('178 exact', textHasNumber('178 counties', 178));
 t('3.2 million for 3,159,164', textHasNumber('about 3.2 million', 3159164));
 t('3.1 million is not 3,159,164', !textHasNumber('about 3.1 million', 3159164));
 t('0.7 exact', textHasNumber('0.7% of residents', 0.7));
+// trailing zeros are ambiguous precision, as in the worker's verify.js: the eval must accept what the worker verifies
+t('30 for 29.8 (2 written digits)', textHasNumber('30% of residents', 29.8));
+t('100 for 99.6', textHasNumber('100% of residents', 99.6));
+t('1,000 for 998', textHasNumber('1,000 residents', 998));
+t('20,000 for 19,876', textHasNumber('20,000 residents 55+', 19876));
+t('100 million for 100,019,672', textHasNumber('100 million people', 100019672));
+t('twenty for 19.6', textHasNumber('twenty counties', 19.6));
+t('30 is not 34', !textHasNumber('30% of residents', 34));
+t('0.3 is not 0.34 (one significant digit)', !textHasNumber('0.3%', 0.34));
 t('word four for 4', textHasNumber('four centers', 4));
 t('257 road-miles vs 254', !textHasNumber('254 road-miles', 257));
 t('17 not matched by 170', !textHasNumber('170', 17));

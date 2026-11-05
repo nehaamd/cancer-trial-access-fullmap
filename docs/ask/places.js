@@ -10,7 +10,7 @@ import { STATES, DEMONYMS } from './catalog.js';
 export const norm = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
   .replace(/&/g, ' and ').replace(/[’'`]/g, "'").replace(/[^a-z0-9',.\- ]+/g, ' ').replace(/\s+/g, ' ').trim();
 // a comparison key: norm + common abbreviations folded + nothing but letters and digits
-export const key = s => norm(s).replace(/\bsaint\b/g, 'st').replace(/\bmount\b/g, 'mt').replace(/\bfort\b/g, 'ft').replace(/[^a-z0-9]/g, '');
+export const key = s => norm(s).replace(/\bsainte\b/g, 'ste').replace(/\bsaint\b/g, 'st').replace(/\bmount\b/g, 'mt').replace(/\bfort\b/g, 'ft').replace(/[^a-z0-9]/g, '');
 
 const SUFFIX = /\s+(county|parish|borough|census area|city and borough|municipality|city)$/i;
 const ORD = { first: 1, second: 2, third: 3, fourth: 4, fifth: 5, sixth: 6, seventh: 7, eighth: 8, ninth: 9, tenth: 10, eleventh: 11, twelfth: 12, thirteenth: 13, fourteenth: 14, fifteenth: 15, sixteenth: 16, seventeenth: 17, eighteenth: 18, nineteenth: 19, twentieth: 20 };
@@ -157,7 +157,8 @@ export function findPlaces(ix, input) {
   const want = k => !kind || kind === k;
   const notes = [];
   let found = [];
-  if (want('state') && !parsed.state) found.push(...matchStates(ix, q0));
+  // a state's own name is a match unless the caller restricted the search to another state ("Washington" with state:"OR" is the county)
+  if (want('state') && !parsed.state) found.push(...matchStates(ix, q0).filter(m => !stateHint || m.kind === 'national' || m.state === stateHint));
   const districtHits = want('district') ? matchDistricts(ix, q0, parsed, stateHint) : [];
   found.push(...districtHits);
   const zipHits = want('zip') ? matchZip(ix, parsed.name, stateHint, notes) : [];

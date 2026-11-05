@@ -95,7 +95,7 @@ const CORE_ACCESS = (lv) => [
   f('median_road_mi_nci', 'integer', 'road-miles', 'Median road-miles from home to the nearest NCI-designated center, over residents 55+ who have a road route.', { nulls: 'no road route (islands, remote Alaska)', layer: { county: 'rn', district: 'medn', state: 'medn' }, source: 'roads' }),
   f('median_road_mi_broad_menu', 'integer', 'road-miles', 'Median road-miles from home to the nearest county with 100+ recruiting trials.', { nulls: 'no road route', layer: { county: 'rb', district: 'g60b', state: 'g60b' }, source: 'roads' }),
   f('wmean_trials_within_60rdmi', 'integer', 'trials', 'Population-weighted mean number of recruiting trials within 60 road-miles of home (residents 55+).', { layer: { county: 'short', district: 'l20', state: 'l20' } }),
-  f('trials_listed_here', 'integer', 'trials', lv === 'county' ? 'Recruiting cancer treatment trials with at least one site in the county (distinct trials).' : 'Distinct recruiting trials with a site in any county of the ' + lv + (lv === 'district' ? ' (counties that overlap it; a trial in a county shared by two districts counts for both)' : '') + '.', { layer: { county: 't' } }),
+  f('trials_listed_here', 'integer', 'trials', lv === 'county' ? 'Recruiting cancer treatment trials with at least one site in the county (distinct trials).' : 'Distinct recruiting trials with a site in any county of the ' + lv + (lv === 'district' ? ' (counties that overlap it; a trial in a county shared by two districts counts for both)' : '') + '.', lv === 'county' ? { layer: { county: 't' } } : {}),
   f('nearest_nci', 'string', '', 'Name of the NCI-designated center nearest to most residents (by road).', { layer: { county: 'rn', district: 'medn', state: 'medn' }, source: 'nci' }),
   f('nearest_broad_menu', 'string', '', 'The broad-menu county nearest to most residents, as "County, State" (no "County" suffix).', { layer: { county: 'rb' } }),
   f('context.no_vehicle', 'number', '%', 'Households with no vehicle (ACS, all ages, population-weighted).', { source: 'acs', layer: { county: 'acs', district: 'gacs', state: 'gacs' }, params: { acs: 'veh' } }),
@@ -122,7 +122,7 @@ const METRO_SPLIT = (which) => [
 const RUCC_MEASURES = ['pop55', 'counties', 'pct_lt20', 'pct_zero', 'pct_lt100', 'mean_trials_60', 'pct_gt60rdmi_nci', 'pct_gt60rdmi_broad_menu', 'median_road_mi_nci', 'median_road_mi_broad_menu'];
 const BY_RUCC = f('by_rucc.<code>.<measure>', 'number', '', 'Access figures for residents 55+ of counties with that RUCC code (1–9); <measure> is one of pop55, counties, pct_lt20, pct_zero, pct_lt100, mean_trials_60, pct_gt60rdmi_nci, pct_gt60rdmi_broad_menu, median_road_mi_nci, median_road_mi_broad_menu. Null when the state has no county with that code.', { optional: true, source: 'rucc', keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9'], keys2: RUCC_MEASURES });
 const ONC_SUMMARY = (lv) => [
-  f('oncologists.count', 'integer', 'oncologists', `Oncologists with a Medicare practice location in the ${lv}${lv === 'district' ? ' (in counties overlapping it)' : ''}; an oncologist with locations in two counties is counted in both.`, { source: 'oncologists', layer: { county: 'onc' } }),
+  f('oncologists.count', 'integer', 'oncologists', `Oncologists with a Medicare practice location in the ${lv === 'national' ? 'country' : lv}${lv === 'district' ? ' (in counties overlapping it)' : ''}; an oncologist with locations in two counties is counted in both.`, { source: 'oncologists' }),
   f('oncologists.pct_pop55_in_counties_with_oncologists_no_trials', 'number', '%', 'Share of residents 55+ living in counties that have oncologists but no recruiting trial (county class 2).', { source: 'oncologists' }),
   f('oncologists.pct_pop55_in_counties_with_both', 'number', '%', 'Share of residents 55+ in counties with oncologists and trials (class 1).', { source: 'oncologists' }),
   f('oncologists.pct_pop55_in_counties_with_trials_no_oncologist', 'number', '%', 'Share of residents 55+ in counties with trials but no oncologist listed (class 3).', { source: 'oncologists' }),
@@ -140,7 +140,7 @@ export const TABLES = {
       f('facilities', 'integer', 'sites', 'Trial sites (distinct facility names) in the county with a recruiting trial.', { layer: { county: 't' } }),
       f('districts', 'array', '', 'Ids of the congressional districts that overlap the county (e.g. ["TX-15","TX-34"]). Most counties sit in one district; large counties in several.', { source: 'districts' }),
       f('rucc', 'integer', 'code', 'USDA Rural-Urban Continuum Code 1 (large metro) … 9 (most rural). 1–3 metro, 4–9 nonmetro.', { enum: [1, 2, 3, 4, 5, 6, 7, 8, 9], groupable: true, source: 'rucc', layer: { county: 'short' }, params: { rural: '1' } }),
-      f('rucc_label', 'string', '', 'The USDA label for the code.', { source: 'rucc' }),
+      f('rucc_label', 'string', '', 'Short label for the code in the map\'s wording ("Metro, 1 million or more" … "Nonmetro, urban population under 5,000, not adjacent").', { source: 'rucc' }),
       f('metro', 'boolean', '', 'true = metro county (RUCC 1–3); false = nonmetro / rural (RUCC 4–9).', { groupable: true, source: 'rucc', layer: { county: 'short' }, params: { rural: '1' } }),
       f('road_mi_nci_from_center', 'integer', 'road-miles', 'Road-miles from the county population center to the nearest NCI-designated center (the map\'s "road-miles to an NCI center" county layer).', { nulls: 'no road route', layer: { county: 'rn' }, source: 'roads' }),
       f('road_mi_broad_menu_from_center', 'integer', 'road-miles', 'Road-miles from the population center to the nearest county with 100+ recruiting trials; 0 when the county itself has a broad menu.', { nulls: 'no road route', layer: { county: 'rb' }, source: 'roads' }),
@@ -402,7 +402,9 @@ export const SCOPE_TEXT = 'This box answers questions about where trials are and
 export const OTHER_TEXT = 'This box answers questions about the numbers on the map: trial access, distances to cancer centers, cancer incidence and deaths, oncologists, rural and household context, and who in Congress cosponsors the Clinical Trial Modernization Act, for any county, district or state. For how the map is built, see Methods & data.';
 
 // numbers the verifier always allows: the measures' own definitions and the bills
-export const CONSTANTS = ['55', '60', '20', '100', '30', '120', '200', '400', '50', '25', '75', '5', '10', '3521', '4440', '119', '2000', '16', '1.2', '800', '422', '6237', '227', '2345', '955', '4572', '471.1', '172.6', '151.4', '2016', '2019', '2020', '2023', '2024', '2025', '2026', '65', '67', '84,397', '84397'];
+export const CONSTANTS = ['55', '60', '20', '100', '30', '120', '200', '400', '50', '25', '75', '5', '10', '3521', '4440', '119', '2000', '16', '1.2', '800', '422', '6237', '227', '2345', '955', '4572', '471.1', '172.6', '151.4', '2016', '2019', '2020', '2023', '2024', '2025', '2026', '65', '67', '84,397', '84397',
+  '64',   // the ACS age band 55–64 (context.uninsured_55_64)
+  '3,143', '3143', '436', '51'];   // the row counts of the counties, districts and states tables, as the catalog states them
 
 // short column labels for the results table (the field path stays in the tooltip); labelFor() humanises any path not listed
 export const LABELS = {

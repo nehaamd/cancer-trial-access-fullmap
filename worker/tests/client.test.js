@@ -112,6 +112,15 @@ test('answerable partly / no show a tag; a dropped map part is reported; no map 
   const ctx = ctxBase(); ctx.answer = { ...ANSWER, answerable: 'no' }; ctx.dropped = ['layer "zzz" is not a county layer on this page']; ctx.mapShows = null; const h = R.cardHTML(ctx);
   assert.ok(h.includes('Not in the data</span>')); assert.ok(h.includes('Not applied to the map: layer &quot;zzz&quot;')); assert.ok(!h.includes('Map now shows'));
   assert.ok(R.cardHTML({ ...ctxBase(), answer: { ...ANSWER, answerable: 'partly' } }).includes('Answered in part')); });
+test('the standing note claims a number-by-number check only when the summary passed it; the plain card claims no figures', () => {
+  assert.ok(R.cardHTML(ctxBase()).includes('checked against them number by number'));
+  const un = ctxBase(); un.verification = { ok: false, issues: ['x'] }; const h = R.cardHTML(un); assert.ok(!h.includes('number by number')); assert.ok(h.includes(R.STANDING_NOTE_UNCHECKED));
+  const pl = ctxBase(); pl.answer = { answer: CAT.SCOPE_TEXT, answerable: 'no' }; const hp = R.cardHTML(pl); assert.ok(!hp.includes('Figures are read')); assert.ok(hp.includes('does not match patients to trials')); });
+test('a restored table capped at the history limit says how many rows were kept', () => {
+  const rows = Array.from({ length: 120 }, (_, i) => ({ id: String(10000 + i), name: `C${i}`, v: i })); const t = { columns: ['id', 'name', 'v'], rows, table: null, unit: 'county', count: 3143, rows_capped: true };
+  assert.ok(R.tableHTML(t).includes('100 of 3,143 rows shown'), 'the total is the real count');
+  assert.ok(R.tableHTML(t, { showAll: true }).includes('120 of 3,143 rows were kept for this restored view'));
+  assert.ok(!R.tableHTML({ ...t, rows_capped: false }, { showAll: true }).includes('were kept'), 'a full table says nothing'); });
 test('busy and error cards escape the question and the detail', () => {
   const b = R.busyHTML('<x>', [{ call: 'Counties where a > 1', result: null }, { call: 'c', result: 'r <y>', error: true }]); assert.ok(b.includes('&lt;x&gt;')); assert.ok(b.includes('aria-busy="true"')); assert.ok(b.includes('→ r &lt;y&gt;')); assert.ok(b.includes('<li class="err">'));
   const e = R.errorHTML('<x>', 'The question box is unavailable right now; the map and its filters still work.', '<detail>'); assert.ok(e.includes('class="ask-card err"')); assert.ok(e.includes('&lt;detail&gt;')); });

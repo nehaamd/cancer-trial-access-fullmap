@@ -32,7 +32,10 @@ if (!exists(qfile)) die(`${qfile} missing`);
 if (!exists(efile)) die(`${efile} missing — run: python3 -I worker/tests/eval_expected.py`);
 let questions = JSON.parse(fs.readFileSync(qfile, 'utf8')).questions; const expected = JSON.parse(fs.readFileSync(efile, 'utf8'));
 if (expected.data_as_of && expected.data_as_of !== JSON.parse(fs.readFileSync(path.join(ROOT, 'docs/api/index.json'), 'utf8')).data_as_of) console.error(`eval: warning — eval_expected.json is from data_as_of ${expected.data_as_of}, the API is newer; re-run eval_expected.py`);
-questions = questions.filter(q => !ONLY || q.id.toLowerCase() === ONLY || q.id.toLowerCase().includes(ONLY) || (q.cat || '').toLowerCase().includes(ONLY) || q.q.toLowerCase().includes(ONLY)).slice(0, MAX);
+questions = questions.filter(q => !ONLY || q.id.toLowerCase() === ONLY || q.id.toLowerCase().includes(ONLY) || (q.cat || '').toLowerCase().includes(ONLY) || q.q.toLowerCase().includes(ONLY));
+// --max N takes an even spread across the file (every k-th question), so a small run still covers every category; the hard-gate
+// cases (scope / other / injection) are always included
+if (Number.isFinite(MAX) && MAX < questions.length) { const gates = questions.filter(q => /^(scope|other|injection)$/.test(q.cat || '')); const rest = questions.filter(q => !gates.includes(q)); const want = Math.max(0, MAX - gates.length); const step = rest.length / Math.max(1, want); const picked = []; for (let i = 0; i < want; i++) picked.push(rest[Math.floor(i * step)]); const set = new Set([...gates, ...picked]); questions = questions.filter(q => set.has(q)); }
 if (!questions.length) die('no questions selected');
 
 // ---------- the engine (tools run locally in both modes) ----------

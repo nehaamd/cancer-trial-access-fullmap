@@ -4,11 +4,14 @@
    verifies the final answer against the tool results the client sent (verify.js), signs what the model said (sign.js) and
    returns it. Tools run in the browser against the site's own data (docs/ask/engine.js); the worker never reads data files.
    Nothing about the visitor is stored; the per-request log line carries no visitor identifier. */
-import { step, StepError, PROTOCOL_VERSION } from './loop.js';
+import { step, StepError, PROTOCOL_VERSION, MAX_STEPS } from './loop.js';
 
 export default {
   async fetch(request, env) { return handle(request, env, makeCallModel(env)); }
 };
+
+// the largest legitimate request: 8 turns × 8 results × 24 KB plus the assistant blocks; anything bigger is refused before parsing
+export const MAX_BODY_BYTES = 2 * 1024 * 1024;
 
 export async function handle(request, env, callModel) {
   const origin = request.headers.get('Origin') || '';
@@ -18,13 +21,14 @@ export async function handle(request, env, callModel) {
   if (url.pathname === '/health') return json({ ok: true, v: PROTOCOL_VERSION, model: env.MODEL || null, site: env.SITE_BASE || null }, cors);
   if (url.pathname !== '/ask' || request.method !== 'POST') return json({ error: 'POST /ask with {"v":3,"q":"…","turns":[]}' }, cors, 404);
   if (!allowed(origin, env)) return json({ error: 'This page is not allowed to use the question box.' }, cors, 403);
+  if (parseInt(request.headers.get('content-length')) > MAX_BODY_BYTES) return json({ error: 'The request is too large.' }, cors, 413);
   let body;
-  try { body = await request.json(); } catch (e) { return json({ error: 'The request was not understood.' }, cors, 400); }
+  try { const text = await request.text(); if (text.length > MAX_BODY_BYTES) return json({ error: 'The request is too large.' }, cors, 413); body = JSON.parse(text); } catch (e) { return json({ error: 'The request was not understood.' }, cors, 400); }
   const turns = body && Array.isArray(body.turns) ? body.turns.length : 0;
-  if (turns === 0) {   // only the first step of a question counts toward the limits; later steps of the same question are free
-    const r = checkLimits(request.headers.get('CF-Connecting-IP') || 'x', env);
-    if (!r.ok) return json({ error: r.error, retry_after_s: r.retry_after_s }, { ...cors, 'retry-after': String(r.retry_after_s) }, 429);
-  }
+  // the first step of a question counts toward the limits; later steps of the same question are free up to the steps a question
+  // can have (MAX_STEPS × the question limits), so a replayed signed turn cannot buy unlimited model calls
+  const r = checkLimits(request.headers.get('CF-Connecting-IP') || 'x', env, Date.now(), turns > 0);
+  if (!r.ok) return json({ error: r.error, retry_after_s: r.retry_after_s }, { ...cors, 'retry-after': String(r.retry_after_s) }, 429);
   const t0 = Date.now(); const q = body && typeof body.q === 'string' ? body.q.slice(0, 400) : '';
   try {
     const out = await step(body, env, callModel);
@@ -60,18 +64,23 @@ export function makeCallModel(env, fetchFn = (typeof fetch === 'function' ? fetc
 }
 
 // ---------- limits (best effort, per worker isolate; the spending limit on the key is the hard stop) ----------
-const seen = new Map(); let dayCount = 0, dayStamp = '';
-export function checkLimits(ip, env, now = Date.now()) {
-  const per = parseInt(env.PER_MINUTE) || 12, cap = parseInt(env.DAILY_CAP) || 3000;
-  const arr = (seen.get(ip) || []).filter(t => now - t < 60000);
+// Two budgets: questions (step 0; PER_MINUTE per visitor, DAILY_CAP in all) and continuation steps (turns non-empty; MAX_STEPS times
+// those, which a question never reaches). Continuation requests are cheap for an honest client and were previously uncounted,
+// so a captured signed turn could be replayed for unlimited model calls.
+const seen = new Map(); const seenCont = new Map(); let dayCount = 0, dayCountCont = 0, dayStamp = '';
+export function checkLimits(ip, env, now = Date.now(), continuation = false) {
+  const mult = continuation ? MAX_STEPS : 1;
+  const per = (parseInt(env.PER_MINUTE) || 12) * mult, cap = (parseInt(env.DAILY_CAP) || 3000) * mult;
+  const bucket = continuation ? seenCont : seen;
+  const arr = (bucket.get(ip) || []).filter(t => now - t < 60000);
   if (arr.length >= per) return { ok: false, error: 'Too many questions in a minute; please wait a moment.', retry_after_s: Math.max(1, Math.ceil((60000 - (now - arr[0])) / 1000)) };
-  const today = new Date(now).toISOString().slice(0, 10); if (today !== dayStamp) { dayStamp = today; dayCount = 0; }
-  if (dayCount >= cap) { const midnight = Date.UTC(new Date(now).getUTCFullYear(), new Date(now).getUTCMonth(), new Date(now).getUTCDate() + 1); return { ok: false, error: "The question box has reached today's limit; the map and its filters still work. Try again tomorrow.", retry_after_s: Math.max(60, Math.ceil((midnight - now) / 1000)) }; }
-  arr.push(now); seen.set(ip, arr); if (seen.size > 5000) seen.clear();
-  dayCount++;
+  const today = new Date(now).toISOString().slice(0, 10); if (today !== dayStamp) { dayStamp = today; dayCount = 0; dayCountCont = 0; }
+  if ((continuation ? dayCountCont : dayCount) >= cap) { const midnight = Date.UTC(new Date(now).getUTCFullYear(), new Date(now).getUTCMonth(), new Date(now).getUTCDate() + 1); return { ok: false, error: "The question box has reached today's limit; the map and its filters still work. Try again tomorrow.", retry_after_s: Math.max(60, Math.ceil((midnight - now) / 1000)) }; }
+  arr.push(now); bucket.set(ip, arr); if (bucket.size > 5000) bucket.clear();
+  if (continuation) dayCountCont++; else dayCount++;
   return { ok: true };
 }
-export function resetLimits() { seen.clear(); dayCount = 0; dayStamp = ''; }
+export function resetLimits() { seen.clear(); seenCont.clear(); dayCount = 0; dayCountCont = 0; dayStamp = ''; }
 
 // ---------- plumbing ----------
 function allowed(origin, env) { if (!origin) return true; return (env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean).includes(origin); }

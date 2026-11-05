@@ -3,6 +3,8 @@
 # (workflow_call). Needs the repository secret ANTHROPIC_API_KEY. The full transcripts are kept as the artifact eval_out.json.
 name: "Ask the map: evaluation"
 on:
+  pull_request:                       # a pull request that touches the box runs a 30-question sample so the model's answers are read before merging
+    paths: ['worker/**', 'docs/ask/**', '.github/workflows/ask-eval.yml']
   workflow_dispatch:
     inputs:
       max:
@@ -50,7 +52,7 @@ jobs:
         continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: node worker/tests/eval.js --max "${{ inputs.max || '0' }}" --only "${{ inputs.only || '' }}" --model "${{ inputs.model || 'claude-sonnet-5-5' }}" --json eval_out.json --md eval_summary.md | tee eval_log.txt
+        run: node worker/tests/eval.js --max "${{ github.event_name == 'pull_request' && '30' || inputs.max || '0' }}" --only "${{ inputs.only || '' }}" --model "${{ inputs.model || 'claude-sonnet-5-5' }}" --json eval_out.json --md eval_summary.md | tee eval_log.txt
       - name: Keep the transcripts
         if: always()
         uses: actions/upload-artifact@v4

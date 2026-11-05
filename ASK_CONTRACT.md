@@ -78,10 +78,11 @@ Responses (always JSON, `cache-control: no-store`):
 * `kind:"answer"`: the loop ends. If `verification.ok` is false the client MUST NOT show `answer.answer`; it shows the results
   (table / highlights) with the notice in §7 instead. The worker has already retried verification failures internally
   (up to 2 extra model calls, each fed the failure as a `tool_result` error for the `final_answer` call), so `ok:false` is rare.
-* Errors: `400 {error}` (bad request / transcript), `403 {error}` (origin), `429 {error, retry_after_s}` (per-visitor minute
-  limit or the daily cap; only step 0 of a question counts toward limits, later steps of the same question are free),
-  `502 {error, detail}` (model or internal failure), `504 {error}` (model timed out). Error texts are plain sentences the client
-  shows as-is.
+* Errors: `400 {error}` (bad request / transcript), `403 {error}` (origin), `413 {error}` (body over 2 MB), `429 {error,
+  retry_after_s}` (per-visitor minute limit or the daily cap; step 0 of a question counts toward the question limits, later steps
+  of the same question count toward a separate continuation budget of `MAX_STEPS ×` those limits, which a question never
+  reaches — so a replayed signed turn cannot buy unlimited model calls), `502 {error, detail}` (model or internal failure),
+  `504 {error}` (model timed out). Error texts are plain sentences the client shows as-is.
 * Limits: `MAX_STEPS = 8` model calls per question (the 8th is forced to `final_answer` with `tool_choice:{type:"tool",
   name:"final_answer"}`), `max_tokens` 1200 per call, model timeout 25 s per call. A single HTTP step may contain up to 3 model
   calls (verification retries), so the client waits up to 90 s per step with a visible progress line.
@@ -208,16 +209,20 @@ with no condition beyond the state scope — outlines only the rows returned (th
 Rules the worker enforces (`verify.js`):
 1. Every number in `answer`, `interpretation`, `caveats`, `not_in_data` must be (a) present in some tool result of this question
    (digits equal after removing thousands separators), or (b) a tool-result number rounded to the written precision (≥2
-   significant digits; `million`/`billion`/`thousand`/`k` multipliers handled), or (c) present in the question, or (d) one of the
-   definitional constants (55, 60, 20, 100, 30, 120, 200, 3521, 4440, 119, 2000, 1-800-4-CANCER digits) or a year/period string
-   present in the catalog vintages. Number words above ten are checked the same way; one–ten are allowed.
+   significant digits; `million`/`billion`/`thousand`/`k` multipliers handled; trailing zeros are ambiguous, so "100 million" for
+   100,019,672 and "20,000" for 19,876 pass as 2-digit roundings while "40" for 38 does not), or (c) present in the question, or
+   (d) one of the definitional constants (55, 60, 20, 100, 30, 120, 200, 3521, 4440, 119, 2000, 64, the table sizes 3,143 / 436 /
+   51, 1-800-4-CANCER digits) or a year/period string present in the catalog vintages. Number words above ten are checked the
+   same way ("fifteen hundred" and "half a million" are one number each); one–ten are allowed.
 2. Every capitalised token in `answer` that is not in the stoplist (common sentence words, the site's own vocabulary) must appear
    in a tool result, in the question, or in the catalog text.
 3. `map.highlight.ids`, `map.place` must appear in tool results; `map.highlight.from_call` / `table.from_call` must name a
    `query`, `compare`, `profile` or `find_places` call of this question; `map.layer` must be in `MAP_LAYERS[map.unit]`;
    `params` values must be in the catalog enumerations.
-4. Style: no `http`, no markdown (`**`, `#`, backticks, bullets), no "I"/"as an AI", no advice verbs (should, recommend, consult,
-   eligible…), no claim that a trial is "available to" a person. ≤ 1,200 characters in `answer`.
+4. Style: no `http`/`www`/bare domains/"dot com" (the registry and Congress sites the catalog names are allowed), no markdown
+   (`**`, `#`, backticks, bullets incl. unicode dashes and dots), no "I"/"as an AI", no advice verbs (should, ought to, recommend,
+   consult, advisable, talk to / speak with / check with a doctor, eligible…), no claim that a trial is "available to" a person.
+   ≤ 1,200 characters in `answer`.
 5. `answerable:"no"` requires `not_in_data` to be non-empty and `answer` to say what the data does have instead (may be short).
 On failure the worker sends the model a `tool_result` error for the `final_answer` call listing the issues and retries (≤2).
 

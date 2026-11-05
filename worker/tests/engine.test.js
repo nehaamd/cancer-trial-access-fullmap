@@ -117,6 +117,7 @@ check('unknown order field → error', /unknown field/.test((await Q({ table: 'c
 check('missing value → error', /needs a value/.test((await Q({ table: 'counties', where: [{ field: 'pop55', op: '>' }] })).error || ''));
 check('enum warning for a wrong value', (await Q({ table: 'districts', where: [{ field: 'member.party', op: '=', value: 'Democrat' }] })).warnings, 'no warning');
 check('where not an array → error', (await Q({ table: 'counties', where: 'bad' })).error);
+eq('"= null" reads as is_null, "!= null" as not_null', [(await Q({ table: 'counties', where: [{ field: 'mortality.all', op: '=', value: null }] })).count, (await Q({ table: 'counties', where: [{ field: 'mortality.all', op: '!=', value: null }] })).count], [(await Q({ table: 'counties', where: [{ field: 'mortality.all', op: 'is_null' }] })).count, (await Q({ table: 'counties', where: [{ field: 'mortality.all', op: 'not_null' }] })).count]);
 check('run never throws on null input', !!(await engine.run('query', null)).error);
 check('unknown tool → error', /unknown tool/.test((await engine.run('nope', {})).error));
 eq('final_answer is a no-op', await engine.run('final_answer', { answer: 'x' }), { ok: true });
@@ -263,6 +264,8 @@ check('state link with type', (await TR({ scope: { state: 'TX' }, cancer_type: '
 check('the note says listed, not available', /not matched|available to a particular person/.test(th.note));
 check('unknown cancer_type → error', /unknown cancer_type/.test((await TR({ scope: { national: true }, cancer_type: 'toe' })).error || ''));
 check('unknown phase → error', /unknown phase/.test((await TR({ scope: { national: true }, phase: '7' })).error || ''));
+eq('type, phase and sponsor keys are case-insensitive ("Lung", "Phase 3", "Industry", "na")', (r => [r.filters, r.count === (0 + r.count)])(await TR({ scope: { county_id: '48201' }, cancer_type: 'Lung', phase: 'Phase 3', sponsor_type: 'Industry' })), [{ cancer_type: 'lung', phase: '3', sponsor_type: 'industry' }, true]);
+eq('phase "na" → NA', (await TR({ scope: { national: true }, phase: 'na' })).filters.phase, 'NA');
 check('bad scope → error', (await TR({ scope: { planet: 'mars' } })).error);
 check('unknown county in scope → error', /unknown county/.test((await TR({ scope: { county_id: '00000' } })).error || ''));
 
@@ -355,6 +358,10 @@ check('no match → empty with hint', (r => r.matches.length === 0 && r.ambiguou
 check('empty query → error', (await FP('')).error);
 check('unknown kind → error', /unknown kind/.test((await FP({ query: 'x', kind: 'planet' })).error || ''));
 eq('kind narrows: Hidalgo as town', (await FP({ query: 'Hidalgo', kind: 'town', state: 'TX' })).matches[0].how, 'town');
+eq('a state hint beats a state\'s own name: Washington in OR is the county', (await FP({ query: 'Washington', state: 'OR' })).matches.map(m => m.id), ['41067']);
+eq('a state hint that matches keeps the state', (await FP({ query: 'Washington', state: 'WA' })).matches.map(m => m.id), ['WA']);
+eq('Texas with state OK is Texas County, Oklahoma', (await FP({ query: 'Texas', state: 'OK' })).matches.map(m => m.id), ['40139']);
+eq('"Sainte" folds like "Saint"', (await FP('Sainte Genevieve County')).matches.map(m => m.id), ['29186']);
 const fpFull = await engine.run('find_places', { query: 'Orange County' }, 'call-fp');
 eq('full(find_places)', engine.full('call-fp').ids.length, Math.min(10, E.places.orange_counties.length));
 
@@ -375,6 +382,7 @@ eq('placeName', [engine.placeName('48215'), engine.placeName('TX-34'), engine.pl
 eq('unitOf', [engine.unitOf('48215'), engine.unitOf('TX-34'), engine.unitOf('4834'), engine.unitOf('TX'), engine.unitOf('nci:1'), engine.unitOf('zzz')], ['county', 'district', 'district', 'state', null, null]);
 const src = engine.sourcesFor(['counties', 'districts', 'cosponsors', 'bogus']);
 check('sourcesFor', src.length === 3 && src[0].file === 'api/all_counties.json' && /^https:/.test(src[0].url) && src[0].as_of && src[2].table === 'cosponsors', src);
+check('source.url of composite files is the first file (senators, cosponsors)', [engine.sourcesFor(['senators'])[0].url, engine.sourcesFor(['cosponsors'])[0].url].every(u => /^https:\/\/\S+\.(json|js)$/.test(u)), [engine.sourcesFor(['senators'])[0].url, engine.sourcesFor(['cosponsors'])[0].url]);
 const v = engine.vintages();
 check('vintages', v.data_as_of && v.incidence_period && v.mortality_period && v.oncologists_pulled && v.cosponsors_fetched && v.acs, v);
 eq('full(unknown) → null', engine.full('nope'), null);

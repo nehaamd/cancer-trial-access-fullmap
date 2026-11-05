@@ -14,7 +14,7 @@ ALLOWED_ORIGINS = "https://nehaamd.github.io,http://localhost:8080,http://localh
 MODEL = "claude-sonnet-5-5"          # the one model: plans tool calls, reads results, writes the final answer
 MODEL_FAST = ""                      # unused: read and ignored by loop.js (a cheaper model for tools-only steps would lose the prompt cache)
 MAX_STEPS = "8"                      # model calls per question; the last is forced to final_answer
-PER_MINUTE = "12"                    # questions per visitor per minute (best effort, per worker instance; only the first step of a question counts)
+PER_MINUTE = "12"                    # questions per visitor per minute (best effort, per worker instance; the first step of a question counts; later steps have their own budget of MAX_STEPS × this)
 DAILY_CAP = "3000"                   # questions per day across visitors (best effort); the spending limit on the key is the hard stop
 
 [observability]

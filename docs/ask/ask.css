@@ -26,7 +26,7 @@
 .ask-card .ask-fu{margin-top:.5rem}
 /* the results table: sortable headers with an arrow, numbers right-aligned, places as buttons that open the place on the map */
 .ask-tbl{overflow:auto;margin:.5rem 0 .2rem;border:1px solid var(--rule);border-radius:6px;background:var(--card,#fff);max-height:min(60vh,520px)}
-.ask-tbl table{border-collapse:collapse;font-size:.82rem;width:100%;min-width:100%}
+.ask-tbl table{display:table;overflow:visible;border-collapse:collapse;font-size:.82rem;width:100%;min-width:100%}   /* display:table again: map.html's phone rule (table{display:block;overflow-x:auto}) would make the table its own scroller, and the sticky header and the wrapper's scrolling would break */
 .ask-tbl th,.ask-tbl td{text-align:left;padding:.28rem .5rem;border-bottom:1px solid var(--rule);vertical-align:top;white-space:nowrap}
 .ask-tbl th{position:sticky;top:0;background:var(--card,#fff);z-index:1;padding:0;font-weight:600;color:var(--ink-2)} .ask-tbl tr:last-child td{border-bottom:0}
 .ask-tbl td.n{text-align:right;font-variant-numeric:tabular-nums}
@@ -57,7 +57,7 @@
   .ask-card{padding:.8rem 2.1rem .7rem .8rem} .ask-card .ask-a{font-size:1rem}
   .ask-card .ask-pl,.ask-card .ask-new,.ask-card .ask-showall,.ask-card .ask-x,.ask-card .ask-focus,.ask-again button,.ask-card .ask-log summary{min-height:40px} .ask-card .ask-x{min-width:40px;display:flex;align-items:center;justify-content:center;top:.15rem;right:.2rem}
   .ask-card .ask-focus{padding:.2rem .7rem .2rem .5rem} .ask-card .ask-focus input{width:18px;height:18px} .ask-card .ask-log summary{display:inline-flex;align-items:center}
-  .ask-tbl{max-height:min(55vh,440px);max-width:100%} .ask-tbl table{font-size:.84rem} .ask-tbl th,.ask-tbl td{padding:.4rem .55rem} .ask-tbl .ask-sort{min-height:40px;padding:.5rem .55rem} .ask-tbl .ask-place{display:inline-block;min-height:28px;padding:.2rem 0}
+  .ask-tbl{max-height:min(55vh,440px);max-width:100%} .ask-tbl table{font-size:.84rem} .ask-tbl th,.ask-tbl td{padding:.4rem .55rem;vertical-align:middle} .ask-tbl .ask-sort{min-height:40px;padding:.5rem .55rem} .ask-tbl .ask-place{display:inline-block;min-height:28px;padding:.2rem 0}
   .ask-card .ask-new{margin-left:0}
 }
 @media (prefers-reduced-motion:reduce){.ask-card.busy .ask-a p::after{animation:none;border-right-color:var(--gulf,#3F7FB5)}}

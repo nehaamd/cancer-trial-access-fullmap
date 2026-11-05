@@ -82,7 +82,7 @@ export async function step(body, env, callModel, options = {}) {
   const catalog = options.catalog || DEFAULT_CATALOG;
   const req = validateBody(body);
   const secret = options.secret || await secretFor(env || {});
-  for (const [i, t] of req.turns.entries()) if (!(await verifySig(t.assistant, t.sig, secret))) throw bad('bad transcript', `turn ${i}: signature does not match`);
+  for (const [i, t] of req.turns.entries()) { let ok = false; try { ok = await verifySig(t.assistant, t.sig, secret); } catch (e) { ok = false; } if (!ok) throw bad('bad transcript', `turn ${i}: signature does not match`); }   // a malformed block (too deep to canonicalise) is a bad transcript, not a 502
 
   const model = (env && env.MODEL) || DEFAULT_MODEL;
   // env.MODEL_FAST is read and ignored on purpose: one model for every step until the lead decides otherwise (§3 allows a
@@ -101,6 +101,10 @@ export async function step(body, env, callModel, options = {}) {
     const blocks = Array.isArray(res && res.content) ? res.content.filter(b => b && (b.type === 'text' || b.type === 'tool_use')) : [];
     addUsage(usage, res && res.usage);
     const calls = blocks.filter(b => b.type === 'tool_use');
+    if (res && res.stop_reason === 'max_tokens' && retries < MAX_RETRIES) {   // the reply was cut off (usually a final_answer with a long inline table): ask for a shorter one
+      retries++; extra.push({ role: 'assistant', content: blocks.length ? blocks : [{ type: 'text', text: '(cut off)' }] }, { role: 'user', content: 'Your reply was cut off at the token limit. Reply more briefly: use table.from_call instead of inline rows, keep the answer to a few sentences, and call final_answer alone.' });
+      continue;
+    }
     const unknown = calls.find(c => !TOOL_NAMES.includes(c.name)); if (unknown) throw new StepError(502, 'The question box is unavailable right now; the map and its filters still work.', `model called unknown tool ${unknown.name}`);
     const finals = calls.filter(c => c.name === 'final_answer'); const others = calls.filter(c => c.name !== 'final_answer');
 
