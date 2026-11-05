@@ -482,6 +482,18 @@ if (fs.existsSync(enginePath)) {
     const model = fakeModel([[tu('query', { table: 'counties', where: [{ field: 'oncologist_count', op: '>', value: 0 }] })], p => { const tr = p.messages[2].content[0]; assert(tr.is_error === true, 'is_error passed through'); assert(tr.content.includes('oncologist_count')); return [tu('final_answer', { answer: catalog.OTHER_TEXT, answerable: 'no', interpretation: 'x', not_in_data: ['y'] })]; }]);
     const { r } = await drive(Q, model, (name, input, id) => engine.run(name, input, id)); eq(r.kind, 'answer');
   });
+  await test('end to end: a standard method through the real engine, claims on its sub-call, a verified answer', async () => {
+    const { createEngine } = await import(pathToFileURL(enginePath).href);
+    const engine = createEngine({ root: ROOT }); await engine.load(); const mid = tid(); const store = {};
+    const model = fakeModel([
+      [tu('method', { id: 'oncologists_no_trials_counties', params: { state: 'TX' } }, mid)],
+      () => { const r = store[mid]; assert(r && !r.error, JSON.stringify(r).slice(0, 200)); const sub = r.results[0]; const q = sub.result; const top = q.rows[0];
+        return [tu('final_answer', { answer: `${q.count} of ${q.in_scope} Texas counties have oncologists but no recruiting trial with a site in the county; the largest is ${top.name} with ${top['oncologists.count']} oncologists.`, answerable: 'yes', interpretation: 'Standard method: counties with oncologists but no trials.', claims: [{ place: 'TX', field: 'count', value: q.count, call: sub.call }, { place: 'TX', field: 'in_scope', value: q.in_scope, call: sub.call }, { place: top.id, field: 'oncologists.count', value: top['oncologists.count'], call: sub.call }], map: { unit: 'county', layer: 'onc', state: 'TX', highlight: { from_call: mid }, highlight_label: 'x' }, table: { from_call: sub.call } })]; },
+    ]);
+    const { r, responses } = await drive('which counties in texas have oncologists but no trials?', model, async (name, input, id) => { const out = await engine.run(name, input, id); store[id] = out; return out; });
+    eq(responses[0].calls[0].name, 'method'); eq(r.kind, 'answer'); assert(r.verification.ok, JSON.stringify(r.verification.issues));
+    eq(engine.highlightIds(r.answer.map.highlight).ids.length, store[mid].results[0].result.count, 'the method id outlines every match of its primary call');
+  });
 } else console.log('skip end-to-end: docs/ask/engine.js not present');
 
 console.log(`\n${passed} passed, ${failed} failed${failed ? ': ' + failures.join('; ') : ''}`);

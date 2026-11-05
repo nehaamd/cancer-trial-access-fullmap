@@ -134,6 +134,7 @@ function toggleSort(col) { if (!card || !col) return; const s = card.sort; card.
 function sendFeedback(verdict) {
   if (!card || card.feedback) return; card.feedback = verdict === 'yes' ? 'yes' : 'no';
   const st = window.__askState; if (st) st.feedback = card.feedback;
+  try { const hs = history.state; if (hs && hs.ask && hs.ask.q === card.q) history.replaceState({ ...hs, ask: { ...hs.ask, feedback: card.feedback } }, '', location.href); } catch (e) { /* file: pages */ }   // Back / Forward keep the thanks
   rerender();
   if (!FEEDBACK_URL) return;
   try { fetch(FEEDBACK_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(R.feedbackPayload(card, card.feedback)), keepalive: true }).catch(() => {}); } catch (e) { /* feedback is best effort */ }
