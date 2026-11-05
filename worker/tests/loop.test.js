@@ -122,6 +122,12 @@ await test('prompt: tool schemas are valid JSON-schema objects with tight enums 
   for (const g of ag.properties.group_by.enum) assert(Object.keys(catalog.TABLES).some(t => catalog.groupableFields(t).includes(g)), 'groupable ' + g);
 });
 
+await test('prompt: the method tool lists every standard method; final_answer has claims; the prompt lists the methods and the CLAIMS rules', async () => {
+  const M = await import('../../docs/ask/methods.js'); const tools = toolDefinitions(catalog);
+  const mt = tools.find(t => t.name === 'method'); eq(mt.input_schema.properties.id.enum, M.METHOD_IDS); eq(Object.keys(mt.input_schema.properties.params.properties), Object.keys(M.PARAMS));
+  const cl = tools.find(t => t.name === 'final_answer').input_schema.properties.claims; eq(cl.maxItems, 40); eq(cl.items.required, ['place', 'field', 'value', 'call']);
+  const p = systemPrompt(catalog); assert(p.includes('CLAIMS (final_answer.claims') && p.includes('STANDARD METHODS'), 'sections'); for (const m of M.METHODS) assert(p.includes(`  ${m.id}(`), 'method line ' + m.id);
+});
 // ---------- verify.js units ----------
 await test('verify: number extraction handles separators, decimals, money, phones, NCT ids, ordinals, years, negatives, k/million', () => {
   const n = numbersIn('1,234,567 residents; 11.8 million; $2,000; 1-800-4-CANCER; 1-800-227-2345; NCT01234567; 38.2%; -3; the 3rd and the 34th; in 2024; TX-34; 55+; per 100,000; 5k; 2019–2023; 2020-2024; H.R. 3521');
@@ -199,6 +205,15 @@ await test('verify: SCOPE_TEXT and OTHER_TEXT answers pass with answerable "no" 
   eq(verify({ answer: catalog.SCOPE_TEXT, answerable: 'no', interpretation: 'Out of scope: a question about a person\'s care.', not_in_data: ['The data lists trials; it does not match people to them.'] }, ctxOf([], 'which trial is right for my mother with stage 3 lung cancer?')), { ok: true, issues: [] });
   eq(verify({ answer: catalog.OTHER_TEXT, answerable: 'no', interpretation: 'Not a question about the map\'s data.', not_in_data: ['Jokes are not in the data.'] }, ctxOf([], 'tell me a joke')), { ok: true, issues: [] });
   assert(!verify({ answer: catalog.SCOPE_TEXT, answerable: 'no', interpretation: 'x' }, ctxOf([], 'q')).ok, 'still needs not_in_data');
+});
+
+await test('verify: highlight / table from a method call or one of its sub-calls is accepted; claims may cite a sub-call', () => {
+  const sub = { call: 'toolu_m.1', name: 'query', input: { table: 'counties', where: TX_ONLY }, result: COUNTY_ROWS };
+  const turns = [{ assistant: [tu('method', { id: 'oncologists_no_trials_counties', params: { state: 'TX' } }, 'toolu_m')], results: [{ tool_use_id: 'toolu_m', content: JSON.stringify({ method: 'oncologists_no_trials_counties', results: [sub] }) }] }];
+  const a = { answer: '38 of 254 Texas counties match; the largest is Hidalgo County, Texas with 41 oncologists.', answerable: 'yes', interpretation: 'Standard method.', claims: [{ place: 'TX', field: 'count', value: 38, call: 'toolu_m.1' }, { place: 'TX', field: 'in_scope', value: 254, call: 'toolu_m.1' }, { place: '48215', field: 'oncologists.count', value: 41, call: 'toolu_m.1' }] };
+  for (const fc of ['toolu_m', 'toolu_m.1']) { const r = verify({ ...a, map: { unit: 'county', layer: 'onc', highlight: { from_call: fc } }, table: { from_call: fc } }, ctxOf(turns)); assert(r.ok, fc + ' ' + JSON.stringify(r.issues)); }
+  const r2 = verify({ ...a, table: { from_call: 'toolu_m.9' } }, ctxOf(turns)); assert(!r2.ok && includes(r2.issues, 'toolu_m.9'), 'an unknown sub-call is rejected');
+  const r3 = verify({ ...a, claims: a.claims.map(c => ({ ...c, call: 'toolu_m' })) }, ctxOf(turns)); assert(r3.ok, 'a claim on the method id is looked up in its sub-results: ' + JSON.stringify(r3.issues));
 });
 
 // ---------- loop.js: the protocol ----------

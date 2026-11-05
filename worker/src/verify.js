@@ -78,12 +78,12 @@ export function numberWordsIn(text) {
 export function buildContext(ctx) {
   const C = ctx.catalog || DEFAULT_CATALOG;
   const turns = Array.isArray(ctx.turns) ? ctx.turns : [];
-  const resultTexts = []; const callIds = new Map(); const queryResults = [];   // queryResults: truncated query results, to steer highlight.ids to from_call
+  const resultTexts = []; const callIds = new Map(); const queryResults = []; const methodsRead = new Set();   // method calls whose sub-call list could be read   // queryResults: truncated query results, to steer highlight.ids to from_call
   for (const t of turns) {
     for (const b of t.assistant || []) if (b && b.type === 'tool_use') callIds.set(b.id, b.name);
     for (const r of t.results || []) {
       const text = typeof r.content === 'string' ? r.content : JSON.stringify(r.content ?? ''); resultTexts.push(text);
-      if (callIds.get(r.tool_use_id) === 'method') { try { const j = JSON.parse(text); for (const x of (j && Array.isArray(j.results) ? j.results : [])) if (x && typeof x.call === 'string') callIds.set(x.call, String(x.name || '')); } catch (e) { /* a truncated method result: its sub-call ids are accepted by their prefix */ } }
+      if (callIds.get(r.tool_use_id) === 'method') { try { const j = JSON.parse(text); if (j && Array.isArray(j.results)) methodsRead.add(r.tool_use_id); for (const x of (j && Array.isArray(j.results) ? j.results : [])) if (x && typeof x.call === 'string') callIds.set(x.call, String(x.name || '')); } catch (e) { /* a truncated method result: its sub-call ids are accepted by their prefix */ } }
       if (callIds.get(r.tool_use_id) === 'query' && /"ids_truncated":\s*true/.test(text)) { try { const j = JSON.parse(text); if (j && Array.isArray(j.rows)) queryResults.push({ id: r.tool_use_id, count: j.count, returned: j.returned, rowIds: new Set(j.rows.map(x => String(x && x.id))) }); } catch (e) { /* a truncated or non-JSON result: nothing to steer */ } }
     }
   }
@@ -107,7 +107,7 @@ export function buildContext(ctx) {
   const keep = new Set(FIXED_STOP); for (const name of Object.values(C.STATES || {})) for (const w of name.toLowerCase().split(/[^a-z]+/)) keep.add(w);
   for (const T of Object.values(C.TABLES || {})) for (const m of `${T.name_desc || ''} ${T.id_desc || ''}`.match(/"[^"]+"/g) || []) for (const w of wordsOf(m)) if (!keep.has(w)) stop.delete(w);
   for (const fd of Object.values(C.TABLES || {}).flatMap(T => T.fields)) for (const m of String(fd.desc || '').match(/e\.g\. "[^"]+"/g) || []) for (const w of wordsOf(m)) if (!keep.has(w)) stop.delete(w);
-  return { C, turns, question, resultsText, resultsLower, resultDigits, resultValues, questionDigits, questionWords, constants, stop, callIds, queryResults, scope: norm(C.SCOPE_TEXT), other: norm(C.OTHER_TEXT) };
+  return { C, turns, question, resultsText, resultsLower, resultDigits, resultValues, questionDigits, questionWords, constants, stop, callIds, queryResults, methodsRead, scope: norm(C.SCOPE_TEXT), other: norm(C.OTHER_TEXT) };
 }
 const norm = s => String(s || '').replace(/\s+/g, ' ').trim();
 const wordsOf = s => String(s || '').toLowerCase().split(/[^a-z0-9'’]+/).map(w => w.replace(/['’]s$/, '').replace(/['’]/g, '')).filter(Boolean);
@@ -243,7 +243,8 @@ function checkNumber(n, field, ctx, issues, isWord = false) {
 }
 function checkCall(id, field, ctx, issues) {
   let name = ctx.callIds.get(String(id));
-  if (!name && /\.\d+$/.test(String(id)) && ctx.callIds.get(String(id).replace(/\.\d+$/, '')) === 'method') name = 'method';   // a sub-call of a method whose result was cut
+  const base = String(id).replace(/\.\d+$/, '');
+  if (!name && base !== String(id) && ctx.callIds.get(base) === 'method' && !(ctx.methodsRead && ctx.methodsRead.has(base))) name = 'method';   // a sub-call of a method whose result was cut
   if (!name) issues.push(`${field} "${id}" is not the id of a tool call of this question; use the id (toolu_…) of a query, compare, profile, find_places or method call (or a method's sub-call, toolu_….1).`);
   else if (!CALL_TOOLS_WITH_IDS.includes(name)) issues.push(`${field} names a ${name} call; it must be a query, compare, profile, find_places or method call.`);
 }
