@@ -1,5 +1,6 @@
 # Deploys the "Ask the map" helper (worker/) to Cloudflare and turns the question box on.
 # Needs three repository secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID, ANTHROPIC_API_KEY.
+# Optional: ASK_SIGNING_SECRET (HMAC secret for the signed transcript; when absent the worker derives one from the API key).
 # Runs on demand (Actions tab -> "Deploy question-box worker" -> Run workflow) and whenever worker/ changes on main.
 name: Deploy question-box worker
 on:
@@ -16,6 +17,7 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      HAVE_SIGNING_SECRET: ${{ secrets.ASK_SIGNING_SECRET != '' }}   # the secrets context is not available in a step's `if`
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,12 +33,18 @@ jobs:
             echo "$name not available or not permitted: $out"
           done
           echo "::error::Could not register a workers.dev subdomain. Register one in the Cloudflare dashboard (Workers & Pages -> Overview -> set up a subdomain) and re-run."; exit 1
+      - name: Run the offline worker suite (protocol, verification, prompt and tool schemas; no network)
+        run: node worker/tests/loop.test.js
       - name: Deploy the worker
         working-directory: worker
         run: npx --yes wrangler@4 deploy
       - name: Store the Anthropic key inside the worker (never in the site)
         working-directory: worker
         run: printf '%s' "${{ secrets.ANTHROPIC_API_KEY }}" | npx --yes wrangler@4 secret put ANTHROPIC_API_KEY
+      - name: Store the optional transcript-signing secret
+        if: env.HAVE_SIGNING_SECRET == 'true'
+        working-directory: worker
+        run: printf '%s' "${{ secrets.ASK_SIGNING_SECRET }}" | npx --yes wrangler@4 secret put ASK_SIGNING_SECRET
       - name: Find the worker's address
         id: addr
         run: |
@@ -51,7 +59,7 @@ jobs:
           echo "Worker: $url" >> "$GITHUB_STEP_SUMMARY"
       - name: Ask the test questions
         continue-on-error: true
-        run: node worker/tests/run.js "${{ steps.addr.outputs.url }}/ask" | tee -a "$GITHUB_STEP_SUMMARY"
+        run: node worker/tests/eval.js --worker "${{ steps.addr.outputs.url }}/ask" --max 25 | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Point the site at the worker
         run: |
           python3 - "${{ steps.addr.outputs.url }}/ask" <<'PY'

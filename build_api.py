@@ -40,13 +40,14 @@ FIELDS = {
     "median_road_mi_nci": "Median road miles from home to the nearest NCI-designated center (residents with a road route).",
     "median_road_mi_broad_menu": "Median road miles to the nearest broad-menu county.",
     "wmean_trials_within_60rdmi": "Population-weighted mean number of recruiting trials within 60 road-miles.",
-    "trials_listed_here": "Recruiting trials with at least one site in the place (county: in the county; district and state: in any county of it).",
+    "trials_listed_here": "Recruiting trials with at least one site in the place, each trial counted once. County: trials with a site in the county. District: distinct trials with a site in any county that overlaps the district (a trial in a county shared by two districts counts for both, so district figures do not add up to the state's). State: distinct trials with a site in the state. National: all recruiting trials in the pull.",
     "nearest_nci": "The NCI-designated center nearest to most residents.",
     "nearest_broad_menu": "The broad-menu county nearest to most residents.",
     "trials_within_60rdmi_by_cancer_type": "Population-weighted mean trials within 60 road-miles, by cancer type (district and state only).",
     "context": "ACS context: no_vehicle, broadband, uninsured, uninsured_55_64, poverty, all in %, population-weighted.",
     "member": "Districts only: the House member, party, and cosponsorship of the Clinical Trial Modernization Act (H.R. 3521): sponsor, original, cosponsor, or none.",
     "counties": "Districts only: the FIPS codes of counties that overlap the district.",
+    "districts": "Counties only: the ids of the congressional districts that overlap the county, in the district file's form (TX-15, XX-00 for at-large), sorted; the inverse of the districts' counties lists. A county split between districts lists each of them.",
     "links": "map: the map opened on this place; brief: the printable brief for it.",
     "data_as_of": "Registry data date of the ClinicalTrials.gov pull these figures come from.",
     # ---- the data behind the map's other layers (county rows) ----
@@ -137,12 +138,17 @@ def onc_summary(o, level):
         if o.get(k) is not None: out[{"rad": "radiation", "gyn": "gynecologic", "surg": "surgical"}[k]] = o[k]
     return out
 
-def fnum(v, nd=1):
+def fnum(v, nd=1, dist=False):
+    """A number from a CSV cell, rounded to nd decimals (nd=0: an int), or None when blank / NaN.
+    dist=True marks a road-distance field (median_road_mi_*, road_mi_*), where 999 is the pipeline's "no road route" sentinel
+    (NOROAD in route_us.py; never a real distance) and becomes null. Trial counts must NOT pass through that check: a dense district
+    can have 1,000+ trials within 60 road-miles (CA-30: 1,090; New Jersey as a whole: 1,039), and treating those as the sentinel
+    nulled wmean_trials_within_60rdmi for 48 districts and one state."""
     try:
         f = float(v)
     except (TypeError, ValueError):
         return None
-    if f != f or f >= 999: return None   # NaN or the "no road route" sentinel
+    if f != f or (dist and f >= 999): return None   # NaN, or the "no road route" sentinel on a distance field
     return round(f, nd) if nd else int(round(f))
 
 def read_csv(p):
@@ -193,9 +199,9 @@ def main():
                 "pct_lt100_trials_within_60rdmi": fnum(row["pct_lt100_trials_within_60rdmi"]),
                 "pct_gt60rdmi_broad_menu": fnum(row["pct_gt60rdmi_broad_menu"]),
                 "pct_gt60rdmi_nci": fnum(row["pct_gt60rdmi_nci"]),
-                "median_road_mi_nci": fnum(row["median_road_mi_nci"], 0),
-                "median_road_mi_broad_menu": fnum(row["median_road_mi_broad_menu"], 0),
-                "wmean_trials_within_60rdmi": fnum(row["wmean_trials_within_60rdmi"], 0),
+                "median_road_mi_nci": fnum(row["median_road_mi_nci"], 0, dist=True),
+                "median_road_mi_broad_menu": fnum(row["median_road_mi_broad_menu"], 0, dist=True),
+                "wmean_trials_within_60rdmi": fnum(row["wmean_trials_within_60rdmi"], 0),   # a count: no sentinel (see fnum)
                 "nearest_nci": row.get("modal_nearest_nci") or None,
                 "nearest_broad_menu": row.get("modal_nearest_broad") or None}
 
@@ -236,8 +242,10 @@ def main():
         fips = r["state_fips"].zfill(2); usps = usps_of_fips.get(fips)
         if not usps: continue
         sd = D["state_data"][usps]; sctx = sd.get("ctx") or {}; ru = RU["states"].get(usps) if RU else None
+        # trials_listed_here: state_data[usps].trials = distinct recruiting trials with a site in the state (the same figure as the union of
+        # counties[f].tr over the state's counties; checked for all 51). `nt` is the state's census-tract count and was published here by mistake.
         states[usps] = {"id": usps, "level": "state", "name": state_name[usps], "state": usps, "fips": fips, **core(r),
-                        "trials_listed_here": sd.get("nt"), "trials_within_60rdmi_by_cancer_type": by_type(r), "context": ctx_of(sd.get("ctx")),
+                        "trials_listed_here": sd.get("trials"), "trials_within_60rdmi_by_cancer_type": by_type(r), "context": ctx_of(sd.get("ctx")),
                         "nonmetro_pct": nonmetro_pct_of(ru), **split_of(ru),
                         "incidence_all_sites": clean(sctx.get("inc")), "incidence_all_sites_cases_per_year": clean(sctx.get("cases")),
                         "incidence_published": published_inc(sd.get("binc")),
@@ -250,15 +258,25 @@ def main():
     def role(key):
         bid = dmap.get(key); r = (by_member.get(bid, {}).get("ctma_hr") or {}).get("role") if bid else None
         return r or "none"
+    def district_trials(fips_list):
+        """Distinct recruiting trials with a site in any county overlapping the district: the union of counties[f].tr (indices into the trial
+        list, so the same trial in two of the district's counties is counted once). A county shared by two districts contributes its trials to
+        both, so district figures do not add up to the state's. (D.districts[key].nt is the tract count and was published here by mistake.)"""
+        seen = set()
+        for f in fips_list:
+            seen.update((D["counties"].get(f) or {}).get("tr") or [])
+        return len(seen)
     districts = {}
+    districts_of_county = defaultdict(list)   # FIPS -> API district ids (TX-15 form) that overlap it: the inverse of each district's `counties` list
     for r in read_csv(ROOT / "out_adult55" / "district_metrics_v3.csv"):
         key = r["cd_geoid"].zfill(4); dd = D["districts"].get(key)
         if not dd: continue
         usps = dd["st"]; cd = dd["cd"]; num = "00" if cd in ("0", "98", "At-large", "AL") or not str(cd).isdigit() else f"{int(cd):02d}"
         did = f"{usps}-{num}"
         ordinal = "at-large" if num == "00" else f"{int(num)}{'th' if 11 <= int(num) % 100 <= 13 else {1:'st',2:'nd',3:'rd'}.get(int(num) % 10, 'th')}"
+        for f in dd.get("counties", []): districts_of_county[f].append(did)
         districts[did] = {"id": did, "level": "district", "name": f"{dd['stname']} {ordinal}", "state": usps, "geoid": key, "plan": meta.get("plan"), **core(r),
-                          "trials_listed_here": dd.get("nt"), "trials_within_60rdmi_by_cancer_type": by_type(r), "context": ctx_of(dd.get("ctx")),
+                          "trials_listed_here": district_trials(dd.get("counties", [])), "trials_within_60rdmi_by_cancer_type": by_type(r), "context": ctx_of(dd.get("ctx")),
                           "member": {"name": dd.get("member") or None, "party": dd.get("party") or None, "ctma_hr3521": role(key),
                                      "bill": bill["label"], "bill_url": bill["url"]},
                           "counties": dd.get("counties", []),
@@ -278,7 +296,7 @@ def main():
             if n60 == 0: a["z60"] += p
             if n60 < 20: a["l20"] += p
             if n60 < 100: a["l100"] += p
-            mb, mn = fnum(t["road_mi_broad"], 3), fnum(t["road_mi_nci"], 3)
+            mb, mn = fnum(t["road_mi_broad"], 3, dist=True), fnum(t["road_mi_nci"], 3, dist=True)   # 999 = no road route -> counted in nr_b / nr_n
             if mb is None: a["nr_b"] += p
             else:
                 a["mi_b"].append((mb, p))
@@ -334,6 +352,7 @@ def main():
                           "trials_listed_here": c.get("t", 0), "facilities": c.get("f", 0),
                           "nearest_nci": c.get("nn") or None, "nearest_broad_menu": c.get("nbm") or None,
                           "context": ctx_of(c.get("acs")),
+                          "districts": sorted(districts_of_county.get(fips, [])),   # the districts whose `counties` list names this county
                           **county_layers(fips, c),
                           "links": {"map": SITE + f"map.html?c={fips}", "brief": SITE + f"brief.html?c={fips}", "community": SITE + f"community.html?c={fips}", "trials": SITE + f"trials.html?county={fips}"},
                           **common}
@@ -373,7 +392,8 @@ def main():
                 ("incidence.all", lambda c: nested(c, "incidence", "all")), ("incidence.cases_per_year", lambda c: nested(c, "incidence", "cases_per_year")), ("incidence.small_numbers", lambda c: nested(c, "incidence", "small_numbers")), ("incidence.status", lambda c: nested(c, "incidence", "status")), ("incidence.period", lambda c: nested(c, "incidence", "period")),
                 ("mortality.all", lambda c: nested(c, "mortality", "all")), ("mortality.deaths_per_year", lambda c: nested(c, "mortality", "deaths_per_year")), ("mortality.small_numbers", lambda c: nested(c, "mortality", "small_numbers")), ("mortality.status", lambda c: nested(c, "mortality", "status")), ("mortality.period", lambda c: nested(c, "mortality", "period")),
                 ("oncologists.count", lambda c: nested(c, "oncologists", "count")), ("oncologists.within_60rdmi", lambda c: nested(c, "oncologists", "within_60rdmi")), ("oncologists.class", lambda c: nested(c, "oncologists", "class")), ("oncologists.class_label", lambda c: nested(c, "oncologists", "class_label")),
-                ("incidence_above_county_median", lambda c: c.get("incidence_above_county_median")), ("mortality_top_third", lambda c: c.get("mortality_top_third"))]
+                ("incidence_above_county_median", lambda c: c.get("incidence_above_county_median")), ("mortality_top_third", lambda c: c.get("mortality_top_third")),
+                ("districts", lambda c: c["districts"])]   # a list (the only non-scalar column); the worker's expandCounties copies any column value as is
     dump(OUT / "ask" / "counties.json", {"cols": [k for k, _ in ASK_COLS], "data_as_of": data_as_of, "rows": [[f(c) for _, f in ASK_COLS] for c in counties.values()]})
     site_keys = [k for k, _ in BSITES]
     dump(OUT / "ask" / "county_sites.json", {"sites": site_keys, "data_as_of": data_as_of,

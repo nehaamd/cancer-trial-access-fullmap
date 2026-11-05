@@ -1,171 +1,133 @@
-# "Ask the map" helper
+# "Ask the map" helper (v3)
 
-A small Cloudflare Worker behind the question box on the map and the homepage. It holds the Anthropic API key (the site's
-code never sees it), reads the same published data files as the Data API (`docs/api/*.json`, `docs/places.json`,
-`docs/zip_county.json` on the live site), and returns an answer whose every number is read from those files. The site moves
-the map to `view` and outlines the places in `view.hl`.
+A small Cloudflare Worker behind the question box on the map and the homepage. It is a stateless, signed, rate-limited model
+proxy with a verifier: it holds the Anthropic API key (the site's code never sees it), gives a Claude model *tools* that read the
+site's data, and checks every number and place name in the model's final answer against the tool results before the site shows
+it. The tools themselves run in the browser (`docs/ask/engine.js`) against the same files the map draws, so a figure in an answer
+is the figure on the map. The contract for every component is `ASK_CONTRACT.md` at the repository root; this file describes the
+worker's part.
 
-## Parser first, models second
-
-```
-question
-  │
-  ├─ parseQuestion(q, ctx)      deterministic: fixed vocabulary + place indexes built from the data files   ──► plan
-  │     └─ null (not confident) ─► planWithModel(q) (Haiku) ─► checkPlan(q, plan, ctx): the question text overrides the model
-  │
-  ├─ load the files the plan needs (parsed JSON and the place indexes memoised in the isolate for an hour, then the edge cache):
-  │   county names resolve from api/county_names.json (~150 KB); a single county comes from api/county/<FIPS>.json;
-  │   county-wide rankings, counts, thresholds and need-vs-access read the compact api/ask/counties.json (1.1 MB, ~6 ms to parse)
-  │   plus api/ask/county_sites.json (650 KB) only for site-specific incidence / death-rate questions; all_counties.json (9 MB,
-  │   ~35 ms to parse) is never fetched by the worker
-  ├─ execute(plan, data)        pure arithmetic: filter, sort, count, sum ──► table, rows, view, sources, caveats
-  ├─ composeAnswer(plan, result) deterministic sentences from the table (the fallback and the reference)
-  ├─ writer model (Sonnet, 15 s limit) rewrites the draft from the table and summary ─► verifyAnswer(text, table, [summary]):
-  │   every number in the text must be in the table or summary with the same rounding; number words ("one million", "half") only
-  │   if the table has them; every capitalised name must be a place, centre or member in the table (no re-attributed figures);
-  │   the first row's place and one of its figures must appear; at least one table number; no URLs, no "I", no advice, no
-  │   markdown ─► otherwise the draft is used (deterministic: true). The planner has an 8 s limit; a slow or failing model never
-  │   produces a 502, only the fixed reply or the composed answer
-  └─ respond
-```
-
-The models never compute a number, never see anything but the question, the table and the draft, and nothing they write
-becomes a URL, an id or code: ids come only from the data files; the finder's keyword must be a word of the question itself.
-
-### Honest measures
-
-A measure asked at a level where it is not published is never swapped silently: by-site incidence and death rates and
-deaths per year exist for counties only, oncologists per 100,000 for states. The answer moves to the level that has the
-measure ("Lung & bronchus cancer death rate is published for counties only, not states; here are the counties instead"),
-or to a state / national lookup, and says so in the first sentence and in `caveats` (`plan.level_note`). A county question
-about one cancer type's trials ranks all-cancer trials within 60 road-miles and says so (`plan.flags.type_fallback`).
-
-### What the parser reads
-
-- **Places**: state names and codes ("Washington state" vs "Washington County" vs DC; demonyms such as "Texans"), county names
-  with or without County / Parish / Borough / Census Area / independent "city" (St./Saint, DeKalb/De Kalb, Doña Ana), district
-  forms (TX-34, TX34, DE-AL, "Texas 34th", "34th district of Texas", "Texas's 34th", at-large), ZIP codes (via zip_county.json),
-  towns (via places.json; "Houston, TX"), members of Congress by full name or surname (surnames need a title or a cosponsor /
-  represents cue), senators. One or two edits are tolerated in county and state names ("Hildago County Texas", "Texs") and in
-  keywords ("distrcits", "acess").
-- **Ambiguity**: a county name that exists in several states with no state given ("Washington County", "Lincoln County") is
-  returned as `ambiguity: {kind, options}` with an answer that asks which one; the map does not move. When there are only two
-  or three namesakes and one has at least 20× the residents 55+ of each other ("Hidalgo County": Texas 182,206 vs New Mexico
-  1,539), the largest is assumed and a caveat names the others. Territories get an honest
-  out-of-scope reply; unknown places are said to be unknown.
-- **Metric phrases** for every layer and API field (see the table below), the incidence / death-rate site, the ACS variable,
-  the cancer type (synonyms: NSCLC → lung, CRC → colorectal, ovarian → gynecologic, AML → leukemia, glioblastoma → brain_cns, …).
-- **Ordering**: "worst / best" are quality words; "most / highest / fewest / lowest / furthest / closest" are magnitudes mapped
-  through the measure's own sign (`worse: high|low` in `METRICS`, applied to the final metric): "most trials" = best, "most people
-  short" = worst, "most" always puts the maximum first; "20 or more trials" inverts. A cancer word bound to an incidence or
-  death-rate site sets `site=`, never the trial-type filter; `type=` is set only for questions about trials of that type.
-- **Shapes**: ranking (`n` from "top 5", "worst 3 districts", "which single county"), lookup (one place, ZIP, town, member,
-  state, nation), compare (2–4 places; "vs", "compare", "Montana or Wyoming", "against the national average"), count ("how many
-  counties …"), threshold ("counties where more than half …"), who-represents / cosponsor (H.R. 3521 House, S. 4440 Senate;
-  "have not cosponsored"), need-vs-access (high incidence or deaths AND low access, with the map's rule), by cancer type,
-  search (trials near ZIP / town, keyword, age, radius), scope (medical / eligibility), other (definitions, off-topic, injection).
-
-### Metric coverage (question phrase → field → map layer)
-
-| Question phrase | Field | county `m=` | district / state `m=` |
-|---|---|---|---|
-| short of trials, fewer than 20, access, 20 or more (inverted) | `pct_lt20_trials_within_60rdmi` | `short` | `l20` |
-| how many people / residents short | `people_lt20_trials_within_60rdmi` | `short` | `l20` |
-| no trial within 60 | `pct_zero_trials_within_60rdmi` | `short` | `z60` |
-| most people / residents with no trial within 60 | `people_zero_trials_within_60rdmi` | `short` | `z60` |
-| most people / residents beyond 60 miles of an NCI center (broad menu) | computed: `pop55 × pct_gt60rdmi_nci ÷ 100` (`…broad_menu`), rule stated in the table | `rn` / `rb` | `g60n` / `g60b` |
-| fewer than 100 trials | `pct_lt100_trials_within_60rdmi` | `short&lt=100` | `l20&lt=100` |
-| beyond / more than 60 miles from an NCI center | `pct_gt60rdmi_nci` | `rn` | `g60n` |
-| beyond 60 miles of a broad menu / county with 100+ trials | `pct_gt60rdmi_broad_menu` | `rb` | `g60b` |
-| how far / median miles to NCI center, furthest, closest | `median_road_mi_nci` | `rn` | `medn` |
-| median miles to a broad-menu county | `median_road_mi_broad_menu` | `rb` | `g60b` |
-| nearest NCI center (name) | `nearest_nci` | `rn` | `medn` |
-| nearest broad-menu county (name) | `nearest_broad_menu` | `rb` | `g60b` |
-| average trials within 60 miles / nearby | `wmean_trials_within_60rdmi` | `short` | `l20` |
-| trials in the county / with a site / listed, most trials | `trials_listed_here` | `t` | `l20` |
-| facilities, trial sites | `facilities` | `t` | — (county, national) |
-| <cancer type> trials | `trials_within_60rdmi_by_cancer_type[type]` | `short&type=` (caveat: county has no by-type field) | `l20&type=` |
-| no vehicle / broadband / uninsured / uninsured 55–64 / poverty | `context.*` | `acs&acs=veh|bb|unins|unins55|pov` | `gacs&acs=` |
-| rural, nonmetro, most rural | `rucc`, `metro` (county); `nonmetro_pct` (district, state) | `short&rural=1` | `l20&rural=1` |
-| metro vs rural within a state / nationally | `metro.*`, `nonmetro.*` (state, national) | — | `l20&rural=1` |
-| miles from the county center to NCI / broad / limited menu | `road_mi_*_from_center` | `rn` / `rb` | — |
-| drive hours, longest drive | `drive_hours_nci`, `drive_hours_broad_menu` | `rn` / `rb` | — |
-| trials / sites within 60 miles of the county center | `trials_within_60rdmi_of_center`, `facilities_within_60rdmi_of_center` | `short` / `t` | — |
-| incidence, new cases, diagnoses (+ site: breast, lung, … stomach) | `incidence.all` / `incidence.by_site[site]`, `incidence_all_sites` | `inc&site=` | `ginc` |
-| cases per year | `incidence.cases_per_year`, `incidence_all_sites_cases_per_year` | `inc` | `ginc` |
-| deaths, mortality, death rate (+ site) | `mortality.all` / `mortality.by_site[site]` | `mva&site=` | — |
-| deaths per year | `mortality.deaths_per_year` | `mva` | — |
-| oncologists; oncologists within 60; oncologists per 100,000 | `oncologists.count`, `.within_60rdmi`, `.oncologists_per_100k_pop55` | `onc` | `l20` |
-| oncologists but no trials | `oncologists.class == 2` (county filter); `oncologists.pct_pop55_in_counties_with_oncologists_no_trials` | `onc` | `l20` |
-| residents 55 and older | `pop55` | `short` | `l20` |
-| no road route (NCI / broad menu) | `median_road_mi_nci` / `median_road_mi_broad_menu` is null (`no_road_route_reason` only describes why) | `rn` / `rb` | — |
-| cosponsor H.R. 3521 / S. 4440, who represents | `member.ctma_hr3521`, `senators[].s4440`, `counties` | — | `cos_ctma_hr` (district) / `l20` (state) |
-| high incidence (deaths) and low access | `incidence_above_county_median` / `mortality_top_third` × `pct_lt20` or `pct_zero` ≥ thr | `bva` / `mva` + `tab=burden&crit=&thr=&site=` | — |
-
-A field that is missing from a row is "not in the data" — never guessed. Counts and sums are computed in code and the rule is
-stated in the table ("counties in Texas where every resident 55+ has no trial within 60 road-miles").
-
-## Response
-
-`POST /ask` with `{"q": "..."}` returns
+## Design
 
 ```
-{ q, route: "search"|"data"|"scope"|"other", answer, summary: {rule, counts: {label: value}} | null, table: [{column: value, ...}], rows: [{id, level, name, geoid, state}],
-  sources: [{title, url}], view: {page: "map"|"find", qs, hl: [ids], unit, layer} | null, data_as_of, caveats: [..],
-  plan: {route, shape, level, state, metric, site, acs, cancer_type, order, n, cosponsor, bill, rural, places, ...},
-  deterministic: true|false, ambiguity?: {kind, options: [{name, id, state}]}, note }
+browser (docs/ask/ask.js + engine.js)                     worker (this directory)
+  question ─────────────────────────────────────────────► POST /ask {v:3, q, turns:[], prior}
+                                                           limits (step 0; continuation steps capped at MAX_STEPS × those) → step(): prompt + tools from the catalog → model
+  ◄──────────────────────────────── {kind:"tools", assistant, sig, calls:[{id,name,input}]}
+  run every call with the engine (query / aggregate / profile / compare / find_places / trials / site_info)
+  POST again with turns:[…, {assistant, sig, results}] ──► check the signatures, rebuild the transcript, call the model again
+  …                                                        the model's final_answer → verify() against the tool results
+                                                           (on failure: tool_result error to the model, up to 2 more calls)
+  ◄──────────────────────────────── {kind:"answer", assistant, sig, answer, verification:{ok, issues, retries}, model}
 ```
 
-`view.qs` uses only the map's own parameters (`u`, `m`, `site`, `acs`, `crit`, `thr`, `type`, `rural`, `lt`, `tab`, `c`, `d`, `s`;
-`zip`, `type`, `q`, `age`, `mi` for the finder). `view.hl` ids match the unit (county FIPS, district geoid, state USPS).
-`summary` carries the rule a ranking, count, threshold, need-vs-access or cosponsor answer used and its totals (places in scope,
-matches, residents 55+ sums, seats filled / vacant, ties at the top); `table` holds place rows only, every row with the same
-columns. `rows[i]` is the id of `table[i]`; `rows` and `view.hl` are one list in one order (rank order for rankings; highest
-values first for thresholds and counts; highest rate for need-vs-access; largest share short for cosponsor lists), capped at
-400 with a caveat; the counts in `summary` and the answer stay exact.
-`caveats` carry: the assumed namesake, by-type answers at county level, small-numbers incidence / death rates, no-road-route medians, vacant seats,
-the district plan (119th Congress), fields not published yet, the rule assumed when a question gave no cut-off.
+* **The model plans, the engine computes.** The model never computes a number: the system prompt (generated from
+  `docs/ask/catalog.js`) tells it what exists, and `final_answer` is checked by `verify.js`.
+* **No state.** The client carries the transcript. Every assistant turn the worker returns is signed (HMAC-SHA256,
+  `sign.js`) and must come back unchanged; a forged or edited turn is a `400 {error:"bad transcript"}`.
+* **No data reads.** The worker never fetches the data files; it only talks to the model. The catalog (field names, enumerations,
+  definitions, layers, vintages) is the one thing it shares with the engine.
 
-## Exported interface (worker/src/index.js)
+### Files
 
-- `parseQuestion(q, ctx) -> plan | null` — ctx = `{counties, districts, states, national, index, places, zips}` (any subset).
-- `planWithModel(q, env) -> plan` (Haiku), `checkPlan(q, plan, ctx) -> plan` — corrects the model's plan from the question text;
-  a place name the resolver cannot find is reported, never guessed.
-- `execute(plan, data) -> {route, shape, answer_facts, summary, table, rows, view, sources, data_as_of, caveats, ambiguity?}` — pure.
-- `composeAnswer(plan, result) -> string`, `verifyAnswer(text, table, extraAllowed?) -> {ok, badNumbers}`.
-- `answer(q, env, loader?) -> response object` — the pipeline (loader: `path -> Promise<json>`, defaults to the edge cache).
-- `filesForText(q)`, `filesForPlan(plan)`, `expandCounties(compact, sites)` — which files are loaded when, and the compact table → rows.
-Helpers live in `lexicon.js` (vocabulary, METRICS), `places.js` (indexes, resolution, fuzzy matching), `parse.js`, `execute.js`.
+| File | Role |
+|---|---|
+| `src/index.js` | HTTP: CORS, `/health`, `POST /ask`, rate limits, error → status mapping, the model call (`makeCallModel`), one log line per request |
+| `src/loop.js` | `step(body, env, callModel)`: validation (§3), signature checks, messages, the model call, verification retries, signing |
+| `src/prompt.js` | `systemPrompt(catalog)` and `toolDefinitions(catalog)` (the 8 tools' JSON schemas); `node worker/src/prompt.js --print` prints the prompt and its size |
+| `src/verify.js` | `verify(answer, {question, turns})` → `{ok, issues}` (ASK_CONTRACT §6 rules 1–5) |
+| `src/sign.js` | `sign(blocks, secret)`, `verifySig(blocks, sig, secret)`, `secretFor(env)` (Web Crypto; canonical JSON with sorted keys) |
+| `tests/loop.test.js` | the offline suite (scripted fake model; the real engine for one end-to-end case when `docs/ask/engine.js` is present) |
+| `tests/eval.js` | live evaluation through the real model (in-process with `ANTHROPIC_API_KEY`, or `--worker URL` against a deployment) |
+
+Node 22, ES modules, no package.json, no dependencies. `wrangler` bundles `../../docs/ask/catalog.js` into the worker.
+
+## Protocol (what the client must do)
+
+Request: `{v: 3, q, turns: [{assistant, sig, results:[{tool_use_id, content, is_error}]}], prior: [{q, answer}], client}` —
+`q` 3–400 characters, at most 8 turns, at most 3 prior pairs, each result `content` a string of at most 24 KB (truncate with
+`"…(truncated)"` before sending). Responses are JSON with `cache-control: no-store`.
+
+* `kind:"tools"`: run every call, append `{assistant, sig, results}` **exactly as returned** (key order is free; values are not),
+  post again. Every `tool_use` block needs exactly one result.
+* `kind:"answer"`: the loop ends. Show `answer.answer` only when `verification.ok` is true; otherwise show the results
+  (table / highlights) with the notice from ASK_CONTRACT §7.
+* **`final_answer` alongside other calls.** The model is told to call `final_answer` alone, in its own turn. If it nevertheless
+  sends it together with other calls, the worker returns `kind:"tools"` with **all** the calls (and a `note`). The client must
+  run the other calls and answer the `final_answer` call with the JSON string `{"ok":true,"note":"call final_answer alone, after
+  the other results"}` (`is_error: false`). The model then calls `final_answer` again, alone, and that one is verified.
+* **Verification retries happen inside one HTTP step.** A failed `final_answer` is fed back to the model as a `tool_result`
+  error ("Verification failed: … rewrite using only numbers from the tool results, or call a tool to get the figure") and the
+  model is called again, up to 2 extra times; the response carries the last attempt and `verification.retries`. If the model
+  answers a retry by calling tools instead, the step returns `kind:"tools"` for those calls and the failed attempt is dropped
+  from the transcript (the client only ever echoes the turn it was given). A step may therefore take up to 3 model calls
+  (≈ 120 s worst case); the client waits 120 s per step.
+* `step` in a response is the number of the model call that produced it (`turns.length + 1`); `MAX_STEPS` (8) forces the last
+  call to `final_answer` with a user message saying so (current models accept only `tool_choice: auto`).
+* Errors: `400 {error}` (bad body; `"bad transcript"` for signature/bookkeeping failures; a too-large result), `403` (origin),
+  `429 {error, retry_after_s}` (per-visitor minute limit or the daily cap; only requests with `turns.length === 0` count),
+  `502 {error, detail}` (model/internal), `504 {error}` (the model took more than 25 s). Error texts are plain sentences.
+
+## Verification (verify.js)
+
+1. Every number in `answer`, `interpretation`, `caveats`, `not_in_data` (and literal `table.rows`) must be in a tool result of
+   this question (same digits), or a tool-result value rounded to the written precision (≥ 2 significant digits; `million`,
+   `billion`, `thousand`, `k` handled: 11,802,321 may be written 11.8 million, 38.2 as 38, but 38 may not be written 40), or in
+   the question, or a definitional constant (`CONSTANTS` in the catalog, plus `100,000`) or a data vintage. Phone numbers,
+   `NCT` ids, ordinals (`34th`) and district ids are not figures; district ids must appear in a result or the question. Number
+   words above ten are checked the same way; "hundreds / thousands / millions / dozens" are rejected as vague.
+2. Every capitalised token in `answer` outside the stoplist (sentence words, the site's vocabulary, all state names and USPS
+   codes, every word of the catalog text and of the question) must appear in a tool result (case-insensitive) — no
+   re-attributed figures.
+3. `map.highlight.ids` / `map.place` must appear in a result; `*.from_call` must be the id of a `query`, `compare`, `profile`
+   or `find_places` call of this question; `map.unit` / `layer` / `params` / `state` and `sources` are checked against the catalog.
+4. Style: no URLs, markdown or list formatting, first person, advice verbs, eligibility talk (outside a negation) or claims that a
+   trial is "available to" someone; `answer` ≤ 1,200 characters; array caps (alternatives 3, not_in_data 4, caveats 5, follow_ups 3).
+5. `answerable:"no"` needs a non-empty `not_in_data`. `SCOPE_TEXT` / `OTHER_TEXT` answers skip the number and name checks.
+
+Issues are specific sentences ("number 38.7% in answer is not in any tool result (closest: 38.2); …") so the model can act on them.
+
+## Settings (`wrangler.toml`)
+
+- `MODEL` (default `claude-sonnet-5-5`): the one model. `MODEL_FAST` is read and ignored (kept for a later decision; switching
+  models between steps would also lose the prompt cache). `MAX_STEPS` (8).
+- `ALLOWED_ORIGINS`: the pages allowed to call the worker. `SITE_BASE`: reported by `/health`.
+- `PER_MINUTE` (12) per visitor, `DAILY_CAP` (3000) across visitors — best effort, per worker isolate; the spending limit on the
+  key is the hard stop. Only the first step of a question counts.
+
+Secrets (never in the repository or the site):
+- `ANTHROPIC_API_KEY` — required.
+- `ASK_SIGNING_SECRET` — optional HMAC secret for the transcript signatures. When unset the worker uses the SHA-256 of the API
+  key (never returned anywhere); rotating the key then invalidates in-flight questions, which simply restart.
+
+Model calls: `POST https://api.anthropic.com/v1/messages`, `anthropic-version: 2023-06-01`, `max_tokens` 2500, no `temperature`,
+`system` and the last tool carry `cache_control: {type:"ephemeral"}` (the ~14k-token prompt is cached across steps and
+questions), `tool_choice: {type:"auto"}` (any / tool are rejected by current models; the system prompt requires tool calls), 25 s timeout, one retry after 1.5 s on 429/529/5xx.
+
+Logging: one JSON line per request (question text, step, kind, model, verification ok/issues, retries, tool names, elapsed ms,
+token usage). No visitor identifier is logged or stored.
 
 ## Deploy
 
 ```
 cd worker
-npx wrangler login                       # or set CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in the environment
-npx wrangler deploy                      # prints the worker's address, e.g. https://trial-map-ask.<account>.workers.dev
+npx wrangler login                        # or set CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in the environment
+npx wrangler deploy                       # prints the address, e.g. https://trial-map-ask.<account>.workers.dev
 npx wrangler secret put ANTHROPIC_API_KEY
+npx wrangler secret put ASK_SIGNING_SECRET   # optional
 ```
 
-Then set `ASK_URL` in `docs/site.js` to `https://trial-map-ask.<account>.workers.dev/ask`. While `ASK_URL` is empty the
-question boxes stay hidden and the site works as before. `GET /health` on the worker returns `{ok:true}`. Without an API key
-the worker still answers every question the parser understands (deterministic answers); only the model fallback and the
-rewrite are off.
+`.github/workflows/deploy-worker.yml` does the same on demand and whenever `worker/` changes on `main`: offline suite → deploy →
+secrets → `/health` → `node worker/tests/eval.js --worker <url>/ask --max 25` (informational) → sets `ASK_URL` in `docs/site.js`.
 
-## Settings (`wrangler.toml`)
+## Tests
 
-- `SITE_BASE`: where the data files are read from. Change it if the site moves to its own domain.
-- `ALLOWED_ORIGINS`: the pages allowed to call the worker (the site plus localhost for testing). Add a new domain here.
-- `MODEL_PLAN`, `MODEL_WRITE`: the two models. Most questions never reach the planner.
-- `PER_MINUTE`: questions per visitor per minute (best effort, per worker instance). `DAILY_CAP`: questions per day in
-  total across the site, after which the box answers with a "try tomorrow" message. Both protect the API bill.
-
-Nothing about a visitor is stored. Each question is logged (question text, route, shape, whether the answer was deterministic,
-view, first 300 characters of the answer; rejected model texts with the offending numbers) so wrong answers can be found and fixed.
-
-## Testing
-
-- `node tests/offline.js` — no network: loads the data files from `docs/`, runs every question in `tests/questions.json`
-  through parseQuestion → execute → composeAnswer → verifyAnswer and checks routes, plans, views and one recomputed number per
-  case, then property tests (rankings match a direct sort, hl ids exist, qs valid for the map, every county / state / district /
-  ZIP resolves). `--only <substring> --verbose` for one case.
-- `node tests/run.js https://trial-map-ask.<account>.workers.dev/ask` — live, after a deploy.
+- `node worker/tests/loop.test.js` — no network: signatures (round-trip, forged turn → 400), result and call caps, forced final
+  at `MAX_STEPS`, verification accept/reject cases (rounded and million forms accepted; invented numbers, re-attributed places,
+  unknown ids, bad layers/params, markdown, URLs, advice, first person, `answerable:"no"` without `not_in_data` rejected) with
+  the internal retry, text-only replies, `SCOPE_TEXT`, prior Q/A rendering, the `final_answer`-alongside-tools rule, HTTP status
+  codes, rate limits (step 0; continuation budget), body size, `makeCallModel` (request shape, retry, timeout), prompt sections and tool-schema validity
+  (every field path in the prompt exists in the catalog), and — when `docs/ask/engine.js` is present — the canonical Texas
+  question end to end through the real engine with a verified answer.
+- `node worker/src/prompt.js --print` — the rendered system prompt (review it after a catalog change) and its size.
+- `node worker/tests/eval.js [--max N] [--worker URL]` — the live evaluation (see `tests/EVAL.md`).

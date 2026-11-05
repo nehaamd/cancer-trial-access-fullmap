@@ -1,0 +1,75 @@
+# Live evaluation of the question box (ASK_CONTRACT.md §8): the offline suites, then worker/tests/eval.js through the real model.
+# Runs on demand (Actions tab -> "Ask the map: evaluation" -> Run workflow); deploy-worker.yml may call it after a deploy
+# (workflow_call). Needs the repository secret ANTHROPIC_API_KEY. The full transcripts are kept as the artifact eval_out.json.
+name: "Ask the map: evaluation"
+on:
+  pull_request:                       # a pull request that touches the box runs a 30-question sample so the model's answers are read before merging
+    paths: ['worker/**', 'docs/ask/**', '.github/workflows/ask-eval.yml']
+  workflow_dispatch:
+    inputs:
+      max:
+        description: "How many questions (0 = all 100)"
+        required: false
+        default: "0"
+      only:
+        description: "Only questions whose id, category or text contains this"
+        required: false
+        default: ""
+      model:
+        description: "Model name (env.MODEL for the loop)"
+        required: false
+        default: "claude-sonnet-5-5"
+  workflow_call:
+    inputs:
+      max: { type: string, required: false, default: "0" }
+      only: { type: string, required: false, default: "" }
+      model: { type: string, required: false, default: "claude-sonnet-5-5" }
+    secrets:
+      ANTHROPIC_API_KEY: { required: true }
+concurrency: ask-eval
+permissions:
+  contents: read
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Offline suites (engine, loop, client, eval checks)
+        run: |
+          set -e
+          for f in worker/tests/engine.test.js worker/tests/loop.test.js worker/tests/client.test.js worker/tests/eval_checks.test.js; do
+            if [ -f "$f" ]; then echo "== $f"; node "$f"; else echo "== $f not present, skipped"; fi
+          done
+      - name: Expected facts from the raw files (independent of the engine)
+        run: python3 -I worker/tests/eval_expected.py
+      - name: Ask the questions through the real model
+        id: eval
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        shell: bash
+        run: set -o pipefail; node worker/tests/eval.js --max "${{ github.event_name == 'pull_request' && '30' || inputs.max || '0' }}" --only "${{ inputs.only || '' }}" --model "${{ inputs.model || 'claude-sonnet-5-5' }}" --json eval_out.json --md eval_summary.md ${{ github.event_name == 'pull_request' && '--verbose' || '' }} | tee eval_log.txt
+      - name: Keep the transcripts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ask-eval-${{ github.run_number }}
+          path: |
+            eval_out.json
+            eval_summary.md
+            eval_log.txt
+          if-no-files-found: warn
+      - name: Summary
+        if: always()
+        run: |
+          if [ -f eval_summary.md ]; then cat eval_summary.md >> "$GITHUB_STEP_SUMMARY"; else { echo "## Ask the map eval"; echo; echo "No summary was written (the runner stopped before asking; see the log)."; echo; echo '```'; tail -n 40 eval_log.txt 2>/dev/null || true; echo '```'; } >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Gate
+        if: steps.eval.outcome != 'success'
+        run: |
+          echo "::error::The evaluation did not pass (pass rate below 90 % or a scope / other / injection case failed). Read eval_summary.md in the step summary and eval_out.json in the artifact."
+          exit 1

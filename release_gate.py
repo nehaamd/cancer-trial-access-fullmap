@@ -128,6 +128,33 @@ for name, want in (("tracts60.bin", meta.get("tracts_bin", {}).get("bytes")), ("
     if len(raw) != want: gzn.append(f"{name} is {len(raw):,} bytes, the payload says {want}")
 check("Compressed tract files (tracts60.bin.gz, tract_county.bin.gz) decompress to the plain files, whose lengths match data.js and rucc.js", "; ".join(gzn) if gzn else "both match", not gzn)
 
+# 4. the question box's offline suites (ASK_CONTRACT.md §8): the engine's tool semantics against independently computed expectations, the
+# step protocol with a scripted model, and the client's pure half. Each runs when its file exists (a suite not yet written is reported and
+# skipped, as the previous gate did); a suite that fails, or Node missing when a suite exists, stops the refresh (the box answers from the
+# files this refresh publishes). RELEASE_GATE_SKIP_NODE=1 skips the suites on a machine without Node.
+def ask_suites():
+    import shutil
+    suites = [("worker/tests/engine.test.js", "engine"), ("worker/tests/loop.test.js", "loop"), ("worker/tests/client.test.js", "client")]
+    present = [(ROOT / p, label) for p, label in suites if (ROOT / p).exists()]
+    if not present: check("Question-box offline suites (engine, loop, client)", "no suite present yet (worker/tests/*.test.js) — skipped", True); return
+    node = shutil.which("node")
+    if os.environ.get("RELEASE_GATE_SKIP_NODE"): check("Question-box offline suites (engine, loop, client)", f"{len(present)} suite(s) present; skipped: RELEASE_GATE_SKIP_NODE is set", True); return
+    if not node: check("Question-box offline suites (engine, loop, client)", f"{len(present)} suite(s) present but node is not on the PATH (needs Node 22; actions/setup-node, or RELEASE_GATE_SKIP_NODE=1)", False); return
+    if (ROOT / "worker/tests/eval_expected.py").exists():   # the live eval's expectations are rebuilt from this refresh's files so the next eval run reads current facts
+        r = subprocess.run([sys.executable, "-I", str(ROOT / "worker/tests/eval_expected.py")], capture_output=True, text=True, cwd=ROOT)
+        check("Question-box eval expectations rebuilt from the refreshed files (eval_expected.py)", (r.stdout.strip().splitlines() or [r.stderr.strip()[:200]])[-1], r.returncode == 0)
+    for path, label in present:
+        try:
+            r = subprocess.run([node, str(path)], capture_output=True, text=True, cwd=ROOT, timeout=600)
+            lines = [l for l in (r.stdout.strip().splitlines() + r.stderr.strip().splitlines()) if l.strip()]
+            detail = (lines[-1] if lines else "no output")[:200]
+            if r.returncode != 0:
+                fails = [l for l in lines if l.startswith("FAIL")]; detail = f"exit {r.returncode}; " + ("; ".join(fails[:3])[:300] if fails else detail)
+            check(f"Question-box {label} suite ({path.relative_to(ROOT)})", detail, r.returncode == 0)
+        except subprocess.TimeoutExpired:
+            check(f"Question-box {label} suite ({path.relative_to(ROOT)})", "timed out after 600 s", False)
+ask_suites()
+
 # Newer yearly sources (information only; never stops a refresh). The Census and State Cancer Profiles publish once a year and
 # are re-run by hand (config.ACS_YEAR; fetch_cancer_burden.py), so nothing else says when the site falls a release behind.
 def newer_sources():
