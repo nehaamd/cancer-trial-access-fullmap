@@ -51,7 +51,7 @@
 <body>
 <header class="site">
   <div class="brand"><span class="wm-row"><a class="wordmark" href="index.html">Cancer Clinical Trial Access Map</a><span class="beta-tag" title="This site is in beta: methods and figures are reviewed weekly and may change">Beta</span></span><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
-  <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="map.html#methods">Methods &amp; data</a><a href="api.html" aria-current="page">Data API</a><a href="about.html">About</a></nav>
+  <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="api.html" aria-current="page">Data API</a><a href="about.html">About</a></nav>
 </header>
 <main>
   <div class="hero">
@@ -101,7 +101,7 @@ head(d[order(-d$people_lt20_trials_within_60rdmi), c("name", "pop55", "pct_lt20_
 
   <section id="fields">
     <h2>Fields</h2>
-    <p>Every file carries the same core fields, so county, district and state records can be handled alike. Percentages are of residents aged 55 and older; distances are road miles on the highway network from where people live. Full definitions and limits are on <a href="map.html#methods">Methods &amp; data</a>.</p>
+    <p>Every file carries the same core fields, so county, district and state records can be handled alike. Percentages are of residents aged 55 and older; distances are road miles on the highway network from where people live. Full definitions and limits are on <a href="methods.html">Methods &amp; data</a>.</p>
     <table id="fields-table"><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody></tbody></table>
     <p class="small muted">A value of <code>null</code> means not computable for that place (for example, a median road distance where no residents have a road route).</p>
 
@@ -140,7 +140,7 @@ head(d[order(-d$people_lt20_trials_within_60rdmi), c("name", "pop55", "pct_lt20_
     <p>The data files are free to use, share and build on under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0</a>: use them for anything, including commercial work, and credit the source. The underlying sources (ClinicalTrials.gov, the Census Bureau, NCI, CMS) are public data. The site's code is on <a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">GitHub</a>.</p>
     <p class="cite" id="cite"></p>
     <p>If you use the data in a publication, a dashboard or a news story, a note to the <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">issue page</a> is welcome; it helps show where the work is being used.</p>
-    <div class="actions"><a class="btn primary" href="api/index.json">Open index.json</a><a class="btn" href="map.html#methods">Methods &amp; data</a><a class="btn" href="about.html">About the project</a></div>
+    <div class="actions"><a class="btn primary" href="api/index.json">Open index.json</a><a class="btn" href="methods.html">Methods &amp; data</a><a class="btn" href="about.html">About the project</a></div>
   </section>
 
   <section id="notes">
@@ -154,7 +154,7 @@ head(d[order(-d$people_lt20_trials_within_60rdmi), c("name", "pop55", "pct_lt20_
   </section>
 </main>
 <footer class="site">
-<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><p class="foot-beta">This site is in beta: methods and figures are reviewed weekly and may change. Check figures against <a href="map.html#methods">Methods &amp; data</a> before citing them, and <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">report problems</a>.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="map.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><p class="foot-beta">This site is in beta: methods and figures are reviewed weekly and may change. Check figures against <a href="methods.html">Methods &amp; data</a> before citing them, and <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">report problems</a>.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="methods.html">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
 <script>
 (async function () {

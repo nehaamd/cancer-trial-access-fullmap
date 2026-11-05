@@ -186,7 +186,7 @@ def main():
     def ctx_of(c): return {v: c.get(k) for k, v in ctx_keys.items() if c and c.get(k) is not None} if c else {}
 
     common = {"data_as_of": data_as_of, "source": "ClinicalTrials.gov (registry), Census Bureau (tracts, ACS), NCI; see methods", "license": LICENSE["data"],
-              "cite": LICENSE["attribution"], "methods": SITE + "map.html#methods"}
+              "cite": LICENSE["attribution"], "methods": SITE + "methods.html#methods"}
 
     def core(row, pop_key="pop55"):
         pop = int(float(row[pop_key]))
@@ -403,7 +403,7 @@ def main():
              "files": {"national": "national.json", "state": "state/{USPS}.json", "district": "district/{USPS}-{NN}.json (NN = 00 for at-large)",
                        "county": "county/{FIPS5}.json", "county_names": "county_names.json (array of [FIPS5, name, state, pop55])", "ask": {"counties": "ask/counties.json (compact: cols + one array per county, every county field except the by-site rates; for the question box)", "county_sites": "ask/county_sites.json ({sites: [...], rows: {FIPS5: [[incidence rate per site], [death rate per site]]}})"}, "tables": ["all_states.json", "all_districts.json", "all_counties.json"]},
              "counts": {"states": len(states), "districts": len(districts), "counties": len(counties)},
-             "fields": FIELDS, "definitions": SITE + "map.html#methods", "license": LICENSE,
+             "fields": FIELDS, "definitions": SITE + "methods.html#terms", "license": LICENSE,
              "thresholds": {"incidence_county_median_all_sites": inc_median, "mortality_top_third_cut_all_sites": mort_cut,
                             "incidence_period": IPER, "mortality_period": MPER, "small_numbers_below_per_year": ISMALL,
                             "incidence_sites": [k for k, _ in BSITES], "site_labels": {k: v for k, v in BSITES},

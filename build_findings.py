@@ -3,10 +3,14 @@ stays current after a refresh without loading the 7 MB map payload. The map page
 people behind its national headline, so the two pages cannot disagree.
 
 Inputs (repository root or the pipeline folders): data.js, national_metrics_v3.json, state_metrics_v3.csv, tract_access.csv,
-rucc.js, burden.js, cosponsors.js. Run after build_webapp_data_v3.py / build_rucc.py / build_burden_access.py / fetch_cosponsors.py:
+rucc.js, burden.js, cosponsors.js, oncologists.js and geo.js. Run after build_webapp_data_v3.py / build_rucc.py / build_burden_access.py /
+build_oncologists.py / fetch_cosponsors.py:
     python3 build_findings.py
+
+findings.js also carries "methods": the values the Methods & data page (methods.html) prints in its methods text, key terms and
+data dates, so that page does not load the map payload either.
 """
-import json, sys, datetime
+import json, math, sys, datetime
 from pathlib import Path
 import pandas as pd
 
@@ -67,6 +71,65 @@ for k, b in CO["bills"].items():
     bills.append({"key": k, "label": b["label"], "short": b["short"], "chamber": "House" if b["type"] == "hr" else "Senate", "url": b.get("url"), "introduced": b["introduced"],
                   "sponsor": f"{sp['name']} ({sp['party']}-{sp['state']})", "n_cosponsors": b["n_cosponsors"], "parties": b["parties"], "latest_action": b["latest_action"], "topic": b.get("topic")})
 
+def geo_area(geom):
+    """Spherical area (steradians) of a GeoJSON Polygon / MultiPolygon, the same sum d3.geoArea makes (the map used d3.geoArea for
+    the key-terms land shares, so the shares printed on the methods page are the ones the map printed)."""
+    rad, quarter = math.pi / 180, math.pi / 4
+    polys = [geom["coordinates"]] if geom["type"] == "Polygon" else geom["coordinates"] if geom["type"] == "MultiPolygon" else []
+    total = 0.0
+    for poly in polys:
+        ring_sum = 0.0
+        for ring in poly:
+            pts = ring[:-1] if len(ring) > 1 and ring[0] == ring[-1] else ring   # d3 streams a ring without its closing point
+            if not pts: continue
+            lam0, phi0 = pts[0][0] * rad, pts[0][1] * rad / 2 + quarter; cos0, sin0 = math.cos(phi0), math.sin(phi0)
+            for lon, lat in [q[:2] for q in pts[1:]] + [pts[0][:2]]:
+                lam, phi = lon * rad, lat * rad / 2 + quarter
+                dl = lam - lam0; sd = 1 if dl >= 0 else -1; ad = sd * dl
+                c, sn = math.cos(phi), math.sin(phi); k = sin0 * sn
+                ring_sum += math.atan2(k * sd * math.sin(ad), cos0 * c + k * math.cos(ad))
+                lam0, cos0, sin0 = lam, c, sn
+        total += 2 * math.pi + ring_sum if ring_sum < 0 else ring_sum
+    return 2 * total
+
+def key_term_shares():
+    """The three shares the key term "Residents short of trials" quotes: the share of all residents 55+ short of trials who live in a
+    county drawn with a circle (at least 500 such residents), and the shares of land and of residents 55+ in the counties where most
+    residents 55+ are short (over half with fewer than 20 trials within 60 road-miles)."""
+    try: G = load_js("geo.js")
+    except SystemExit: return None
+    ar = {f["properties"]["id"]: geo_area(f["geometry"]) for f in G["counties"]["features"]}
+    allv = drawn = pop = pop_maj = area = area_maj = 0.0
+    for k, c in D["counties"].items():
+        p = c["p"]; u = BU["county"].get(k); pop += p; area += ar.get(k, 0)
+        if not u or u.get("l20") is None: continue
+        n = u["n_l20"] if isinstance(u.get("n_l20"), (int, float)) else p * u["l20"] / 100
+        allv += n
+        if n >= 500: drawn += n
+        if u["l20"] > 50: pop_maj += p; area_maj += ar.get(k, 0)
+    return {"drawn_pct": round(100 * drawn / allv, 6) if allv else None, "area_pct": round(100 * area_maj / area, 6) if area else None,
+            "pop_pct": round(100 * pop_maj / pop, 6) if pop else None}
+
+def methods_block():
+    """Everything methods.html fills in from data: the map payload's meta values the methods text quotes, and the optional layers'
+    source dates (each null when its file is missing, and the page then leaves that paragraph out, as the map did)."""
+    try: ON = load_js("oncologists.js")
+    except SystemExit: ON = None
+    nci = meta.get("nci") or {"locations": len(D["nci"]), "centers": None, "excluded": []}
+    bur = meta["burden"]; sn = {s[0]: s[1] for s in D["states"]}
+    topics = []
+    for t in (CO["meta"].get("topics") or {}).values():
+        if t["name"] not in topics: topics.append(t["name"])
+    return {k: meta.get(k) for k in ("registry_data_timestamp", "pull", "trials", "facilities", "sitepoints", "virtual_sites", "zip_typos", "graph_note",
+                                     "router", "plan", "pct_multi", "pct_unclassified", "acs", "members_pull")} | {
+        "burden": {"period": bur["period"], "pulled": bur.get("pulled"), "not_available_states": bur.get("not_available_states") or []},
+        "state_names": {s: sn.get(s, s) for s in (bur.get("not_available_states") or [])},
+        "nci": {"locations": nci.get("locations"), "centers": nci.get("centers"), "excluded": nci.get("excluded") or []},
+        "rucc": bool(RU), "burden_layer": bool(BU),
+        "oncologists": {"source_modified": ON["meta"].get("source_modified"), "pulled": ON["meta"].get("pulled")} if ON else None,
+        "cosponsors": {"bills": [b["label"] for b in CO["bills"].values()], "topics": topics, "fetched": CO["meta"]["fetched"]} if CO else None,
+        "key_terms": key_term_shares()}
+
 out = {
     "built": datetime.date.today().isoformat(),
     "meta": {"pull": meta["pull"], "registry_data_timestamp": meta.get("registry_data_timestamp"), "trials": meta["trials"], "facilities": meta["facilities"], "sitepoints": meta["sitepoints"],
@@ -79,6 +142,7 @@ out = {
     "districts": districts,
     "burden": {k: BU["summary"]["nat"][k] for k in ("hb_la_counties", "hb_la_pop55", "hb_la_cases", "counties_classified")},
     "bills": bills, "topics": CO["meta"].get("topics", {}),
+    "methods": methods_block(),
 }
 DOCS = ROOT / "docs" if (ROOT / "docs").is_dir() and not (ROOT / "data.js").exists() else ROOT
 Path(DOCS / "findings.js").write_text("window.FINDINGS=" + json.dumps(out, separators=(",", ":")) + ";")
