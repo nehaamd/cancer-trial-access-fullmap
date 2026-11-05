@@ -4,6 +4,7 @@
 # The site (GitHub Pages) calls https://<name>.<account>.workers.dev/ask; see README.md.
 name = "trial-map-ask"
 main = "src/index.js"
+workers_dev = true
 compatibility_date = "2026-10-01"
 
 [vars]
