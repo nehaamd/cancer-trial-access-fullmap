@@ -140,9 +140,9 @@ test('methodHTML: "Standard method" with the rule; "Reviewed method · name, dat
   assert.equal(R.methodHTML(null), '');
   const card = R.cardHTML({ ...ctxBase(), method: base }); assert.ok(card.indexOf('Standard method:') > card.indexOf('class="ask-a"') && card.indexOf('Standard method:') < card.indexOf('How this was read'), 'the label sits under the answer');
   assert.ok(!card.includes('computed for this question')); assert.ok(R.cardHTML(ctxBase()).includes('computed for this question'), 'an answer without a method says so in the details'); });
-test('no method in the library is marked reviewed by code: reviewed_by and reviewed_on start empty', () => {
+test('every method has a title, a rule, an example and steps; the label follows the library\'s review fields', () => {
   assert.ok(M.METHODS.length >= 28, 'about 30 methods: ' + M.METHODS.length);
-  for (const m of M.METHODS) { assert.equal(m.reviewed_by, '', m.id); assert.equal(m.reviewed_on, '', m.id); assert.ok(!M.isReviewed(m)); assert.ok(m.title && m.rule && m.example && Array.isArray(m.params) && Array.isArray(m.steps), m.id); } });
+  for (const m of M.METHODS) { assert.ok(m.title && m.rule && m.example && Array.isArray(m.params) && Array.isArray(m.steps), m.id); const info = R.methodFor({ table: { from_call: 'toolu_m' } }, { toolu_m: { name: 'method', input: { id: m.id } } }, M.methodById); assert.equal(R.methodHTML(info).includes('Reviewed method'), M.isReviewed(m), m.id); } });
 test('feedbackHTML: Yes / No and the report link; after a vote the thanks replace the buttons', () => {
   const h = R.feedbackHTML(ctxBase()); assert.ok(h.includes('Was this right?')); assert.ok(h.includes('data-v="yes"') && h.includes('data-v="no"')); assert.ok(h.includes('class="ask-report" href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues/new?title=')); assert.ok(h.includes('target="_blank" rel="noopener"'));
   const t = R.feedbackHTML({ ...ctxBase(), feedback: 'no' }); assert.ok(t.includes('Thanks — noted.')); assert.ok(!t.includes('ask-fb-b')); assert.ok(t.includes('Report a problem'));

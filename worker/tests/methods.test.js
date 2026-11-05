@@ -4,7 +4,7 @@
 // For every method: run it for a sample state / place and check each sub-result equals the result of the equivalent free-tool
 // call, written out here by hand from the method's rule text (so a change to a method's calls that the rule does not describe
 // fails here); the results carry no error; sub-call ids "<id>.<n>" are kept for engine.full(); the method's own id stands for
-// its primary call; parameters are validated; no method is marked reviewed; the review sheet is current.
+// its primary call; parameters are validated; the review fields are well formed; the review sheet is current.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -69,7 +69,7 @@ for (const m of METHODS) {
   await test(`method ${m.id}: runs exactly the free-tool calls its rule describes`, async () => {
     const id = `toolu_mt${++k}`; const r = await engine.run('method', { id: m.id, params }, id);
     assert(!r.error, `error: ${JSON.stringify(r)}`); assert(r.method === m.id && r.title === m.title && r.rule === m.rule, 'title and rule come back');
-    assert(r.reviewed === false && !('reviewed_by' in r), 'not reviewed');
+    assert(r.reviewed === isReviewed(m) && (r.reviewed ? r.reviewed_by === m.reviewed_by && r.reviewed_on === m.reviewed_on : !('reviewed_by' in r)), 'the review fields come back as the library has them');
     assert(r.results.length === free.length, `${r.results.length} sub-calls, expected ${free.length}: ${JSON.stringify(r.results.map(x => [x.name, x.input]))}`);
     for (const [i, fc] of free.entries()) {
       const sub = r.results[i]; assert(sub.call === `${id}.${i + 1}`, `sub-call id ${sub.call}`); assert(sub.name === fc.name, `sub-call ${i + 1} is ${sub.name}, expected ${fc.name}`);
@@ -97,8 +97,9 @@ await test('parameters are validated: unknown method, unknown or missing paramet
   const ok = await engine.run('method', { id: 'oncologists_no_trials_counties', params: { state: 'Texas' } }, 'toolu_ok'); assert(!ok.error && ok.params.state === 'TX', 'a state name is accepted');
   const d = await engine.run('method', { id: 'district_counties', params: { district: 'tx 34' } }, 'toolu_ok2'); assert(!d.error && d.params.district === 'TX-34', 'district forms are normalised');
 });
-await test('no method is marked reviewed (reviewed_by / reviewed_on are filled by the site owner only)', () => {
-  for (const m of METHODS) assert(m.reviewed_by === '' && m.reviewed_on === '' && !isReviewed(m), m.id);
+await test('reviewed_by / reviewed_on are both empty or both set (a name and a YYYY-MM-DD date); only the site owner sets them', () => {
+  for (const m of METHODS) { const by = String(m.reviewed_by || ''), on = String(m.reviewed_on || ''); assert((by === '' && on === '') || (by.trim().length >= 2 && /^\d{4}-\d{2}-\d{2}$/.test(on)), `${m.id}: reviewed_by "${by}", reviewed_on "${on}"`); assert(isReviewed(m) === !!(by && on), m.id); }
+  console.log(`     ${METHODS.filter(isReviewed).length} of ${METHODS.length} methods reviewed`);
 });
 await test('docs/ask/METHODS_REVIEW.md is the current output of node worker/tests/methods_doc.js', () => {
   const file = path.join(ROOT, 'docs/ask/METHODS_REVIEW.md'); assert(fs.existsSync(file), 'METHODS_REVIEW.md missing: run node worker/tests/methods_doc.js');

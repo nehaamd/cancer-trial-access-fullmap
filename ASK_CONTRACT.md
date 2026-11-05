@@ -25,14 +25,16 @@ those shapes was answered wrongly or not at all, and every new kind of question 
 | Path | Role | Runs in |
 |---|---|---|
 | `docs/ask/catalog.js` | The data dictionary: tables, fields (path, type, unit, meaning, nulls, source), enumerations, key-term definitions, what is NOT in the data, map layers per unit and which layer shows which field, `site_info` topics. ES module, no I/O. | browser, worker, Node |
+| `docs/ask/methods.js` | The standard-method library (§12): ~30 named rules for the core questions (title, plain-English rule, parameters, example question, the exact tool calls), `reviewed_by` / `reviewed_on` (empty until the site owner signs off). ES module, no I/O. | browser, worker, Node |
 | `docs/ask/engine.js` (+ `places.js`) | Loads the data (browser: `window.DATA/BURDEN/…` + fetched `api/*.json`; Node: files on disk), builds indexes, executes tools. Pure functions after load; never throws on well-formed input (returns `{error}` results). | browser, Node |
 | `docs/ask/ask.js` | The client: drives the step protocol, executes tools with the engine, shows progress, renders the answer card and results list, applies the map view, follow-ups. | browser (map.html) |
-| `worker/src/index.js` | HTTP: CORS, limits, `POST /ask` (step protocol), `/health`. | Cloudflare Worker |
+| `worker/src/index.js` | HTTP: CORS, limits, `POST /ask` (step protocol), `POST /feedback` (§7), `/health`. | Cloudflare Worker |
 | `worker/src/prompt.js` | System prompt + tool JSON schemas, generated from the catalog. | worker, Node |
 | `worker/src/verify.js` | Final-answer verification (numbers, names, ids, style). | worker, Node |
+| `worker/src/claims.js` | Rule 6: the per-place claim check (each claim against its call's result; each number in the answer against the claims of the place it is written next to). | worker, Node |
 | `worker/src/sign.js` | HMAC-SHA256 of assistant turns (Web Crypto). | worker, Node |
 | `worker/src/loop.js` | `step(request, env, callModel)`: one protocol step incl. internal verification retries. Pure apart from `callModel`. | worker, Node |
-| `worker/tests/` | `engine.test.js` (tool semantics vs independent Python), `loop.test.js` (protocol/verification with a scripted fake model), `eval.js` (live model evaluation, needs `ANTHROPIC_API_KEY`), `expected.py` (independent expected facts). | Node |
+| `worker/tests/` | `engine.test.js` (tool semantics vs independent Python), `loop.test.js` (protocol/verification with a scripted fake model), `claims.test.js` (rule 6 against real engine results), `methods.test.js` (every method against the equivalent free-tool calls), `methods_doc.js` (writes `docs/ask/METHODS_REVIEW.md`), `eval.js` (live model evaluation, needs `ANTHROPIC_API_KEY`), `expected.py` (independent expected facts). | Node |
 | `build_api.py` | Fixes to the published API (see §9). | Python |
 
 Node 22, ESM, no package.json (syntax detection). No dependencies.
@@ -180,6 +182,15 @@ uses the county's site points within 60 road-miles of its population center (the
 → `{topic, text, url, numbers?: {…}}`. Text is the site's own wording (curated in `catalog.js` `SITE_INFO`), numbers (where
 relevant) are read from FINDINGS / COSPONSORS / CHANGES / MORTALITY / BURDEN / ONCOLOGISTS / RUCC at call time.
 
+### `method`
+`{id: <a METHODS id>, params?: {state?, place?, county?, district?, query?, measure?, n?, cancer_type?, phase?, site?}}` → `{method, title,
+rule, params (normalised), reviewed, reviewed_by?, reviewed_on?, map: {unit, layer, params?} (the method's suggested view), primary_call,
+results: [{call: "<this id>.<n>", name, input, result}], note}`. Runs the method's calls (§12) in order with the engine; each sub-result
+is kept under its sub-call id for `engine.full()` / `highlightIds()` and may be named in `highlight.from_call`, `table.from_call` and
+`claims[].call`; the method's own id stands for `primary_call` (its first query / compare / profile / find_places sub-call). The
+combined result is kept under 22 KB by halving the longest row lists (marked `truncated`; `engine.full()` keeps every row). Unknown
+methods and bad parameters return `{error, hint}`. The model uses a method when one fits the question and the free tools otherwise.
+
 ### `final_answer`
 See §6.
 
@@ -197,8 +208,35 @@ See §6.
            "highlight": { "from_call": "toolu_…", "rows"?: "all"|"returned" } | { "ids": ["48215", …] }, "highlight_label": "Counties with oncologists but no recruiting trial" },
   "table": { "from_call": "toolu_…" } | { "columns": ["…"], "rows": [[…]] },
   "sources": [ "counties", "districts" ],
+  "claims": [ { "place": "48215", "field": "oncologists.count", "value": 41, "call": "toolu_…" }, "… ≤ 40, one per figure in answer (rule 6)" ],
   "follow_ups": [ "≤3 short follow-up questions" ] }
 ```
+
+**Claims** (required whenever `answer` writes a figure; an answer with no figures — scope / other text, definitions, names only —
+needs none). One entry per figure: `{place, field, value, call}`.
+* `call`: the `tool_use` id whose result holds the figure; for a method, the sub-call id `"<id>.<n>"` (the method's own id is
+  accepted and looked up in its sub-results).
+* `value`: the number or string as the result has it (the verifier also accepts it rounded the way the answer writes it, `"87%"`,
+  `"11.8 million"`); the text is then matched against the result's own value.
+* **Row figures**: `place` = the row's `id` as the result spells it (`"48215"`, `"TX-34"`, `"TX"`, `"US"`, `"nci:3"`, a bioguide id);
+  `field` = the column as the row spells it (query / compare rows are flat: `"oncologists.count"`; profile rows nest:
+  `"metro.pct_lt20"`, `"incidence.by_site.lung"`). Any object with that `id` in the result counts (rows, `reference`, `related`
+  headline rows, `matches`). A name instead of the id (`"Texas"`, `"Hidalgo County, Texas"`) is resolved against the result.
+* **Whole-result figures**: `place` = the scope, `field` = a path into the result. Paths are dotted; keys may contain dots
+  (`"oncologists.count:sum"`; the longest key wins), `[k=v]` picks the list element whose `k` is `v`, `[n]` by position, `.length`
+  counts a list. Scopes: query / aggregate → the state filter value(s), else `"US"`, or any id used in a `where` value
+  (`"TX-34"` for `districts includes TX-34`); trials → the scope's id (county FIPS or USPS, or `"US"`); profile / compare → the id(s);
+  site_info and aggregate by state → any place (`"US"` by convention). Examples:
+
+| figure | place | field |
+|---|---|---|
+| query: how many match / table size / residents 55+ in the matches | `"TX"` | `count` / `in_scope` / `sum_pop55_matching` |
+| aggregate by metro, one group | `"KY"` | `groups[group=false].n`, `groups[group=false].sum_pop55`, `groups[group=false].measures.pct_lt20_trials_within_60rdmi:weighted_mean` |
+| aggregate by party | `"US"` | `groups[group=D].n` |
+| trials in a county, by phase / sponsor / type | `"48215"` | `count`, `by_phase.3`, `by_sponsor_type.industry`, `by_cancer_type[type=breast].count` |
+| profile related values | the profile id | `related.senators[name=John Cornyn].party`, `related.districts.length`; headline rows by their own id (`"TX"`, `"US"`) |
+| site_info numbers | `"US"` | `numbers.nat.l20`, `numbers.bills.ctma_hr.n_cosponsors`, `numbers.states_no_broad` |
+| a method's sub-result | as above | as above, with `call` = `"toolu_….2"` |
 
 Which rows a `from_call` outlines (`engine.highlightIds`, used by the client and the eval alike): a ranking — an ordered query
 with no condition beyond the state scope — outlines only the rows returned (the top N the question asked for, so the model sets
@@ -223,6 +261,28 @@ Rules the worker enforces (`verify.js`):
    consult, advisable, talk to / speak with / check with a doctor, eligible…), no claim that a trial is "available to" a person.
    ≤ 1,200 characters in `answer`.
 5. `answerable:"no"` requires `not_in_data` to be non-empty and `answer` to say what the data does have instead (may be short).
+6. **Claims** (`claims.js`; skipped for `SCOPE_TEXT` / `OTHER_TEXT`). (a) When `answer` writes a figure (any number other than a year,
+   a date, a ZIP code, a phase / class / RUCC code, a bill number, a constant or a number of the question) `claims` must be non-empty.
+   (b) Each claim must match its call's result exactly (numbers numerically, allowing the result's own rounding; strings
+   case-insensitively; a number against a list is its length); a whole-result figure must carry its scope as place. A result the
+   client truncated is checked only as far as it goes (a claim whose row was cut is trusted). (c) The text, place by place: place
+   names are found from the result rows (full name, without ", State", the bare county name, district forms "Texas 34th" / "TX-34" /
+   "Texas's 34th district", state names and demonyms, "the state" / "statewide", "nationally" / "the US"), longest match first; "Bexar,
+   Texas" (an unknown name before a state) is not a mention of Texas. Sentences split at `.!?` (not at initials or "H.R."); clauses
+   at `; : ( ) —`, commas that are not inside a number, and the words and / but / while / whereas / against / versus / compared with /
+   than / or / with / to / from. Each number belongs to the place named nearest before it in its clause, else right after it
+   ("33.1% in Montana"); the place right after a number also counts ("161 Texas counties"); a clause with no place continues the last
+   place before it in the sentence (skipping an aside in parentheses that closed before the number, and also the sentence's subject
+   when that last place only qualified an earlier number); a sentence with no place continues the places of the previous sentence
+   that named one; "respectively" sentences only need each figure to belong to one of the sentence's places. The number must equal,
+   or be the written-precision rounding of, a claim value of THAT place; figures of places the answer never names (the scope) pass in
+   a sentence with no place, after "of / out of / among …" ("38 of 254 …"), or after a place that has claims of its own. Constants
+   and question numbers are exempt unless the same field of another place in the sentence holds exactly that value (a swap).
+   Issues are actionable: `"18 trials" is written next to Cameron County, Texas, but the claims give Cameron County, Texas 9
+   trials_listed_here and Hidalgo County, Texas 18 trials_listed_here; write each figure next to its own place.`
+   Limits: interpretation, caveats and not_in_data are checked by rule 1 only; number words are not paired; a place named in words
+   the results do not use ("the Rio Grande Valley") is not recognised; a text-only reply (no final_answer) cannot carry claims, so one
+   that writes a figure fails verification and is not shown.
 On failure the worker sends the model a `tool_result` error for the `final_answer` call listing the issues and retries (≤2).
 
 ## 7. Client behaviour (ask.js)
@@ -241,6 +301,21 @@ On failure the worker sends the model a `tool_result` error for the `final_answe
   `sources`); "How this was answered" (collapsed step log); follow-up chips; the standing note (not medical advice, lists not
   matches). An unverified answer shows the notice: "The written summary could not be checked against the data, so only the data
   is shown." and the table/map.
+* **Standard method label**: when `table.from_call` or `map.highlight.from_call` names a `method` call (or one of its sub-calls), the
+  card shows, under the answer, "Standard method: <title>" with the rule in a tooltip and on a line that opens; if and only if the
+  method has both `reviewed_by` and `reviewed_on` set in `methods.js`, the label reads "Reviewed method · <name>, <date>". Otherwise
+  no label, and the "How this was answered" footer says "computed for this question".
+* **Feedback**: every card (also the plain scope / other card) ends with "Was this right? [Yes] [No] · Report a problem". Yes / No
+  `POST {ASK_URL origin}/feedback` with `{v:3, kind:"feedback", q, verdict:"yes"|"no", answer_text (≤ 1,500 chars), interpretation
+  (≤ 600), steps: [{tool, input (JSON, ≤ 300 chars)}] (≤ 12, final_answer left out), model, data_as_of, verified, method}` (≤ 20 KB;
+  `keepalive`, never awaited, errors ignored); the buttons are replaced by "Thanks — noted." "Report a problem" opens a new GitHub issue
+  (`https://github.com/nehaamd/cancer-trial-access-fullmap/issues/new?title=Ask the map: problem with an answer&body=…`, title and body
+  only, as act.html's "open an issue" link) whose body carries the question, the answer (or a note that it was not shown), how it was
+  read, the method, the steps and the data date, URL-encoded; steps, then the answer, then the interpretation are shortened until the
+  URL is under 6,000 characters.
+* Worker `POST /feedback`: same CORS and origin check as `/ask`; body ≤ 20 KB (413), shape `{kind:"feedback", verdict yes|no, q}`
+  (400), its own per-visitor limit (`FEEDBACK_PER_MINUTE`, default 6; 429); writes one log line `{"feedback":{q, verdict, answer_text,
+  interpretation, steps, model, data_as_of, verified, method}}` and returns `{ok:true}`. No visitor identifier is logged or stored.
 * Map: validate `map` against the catalog and the map's `UNIT_METRICS`; build the query string (`u`, `m`, params, `s`, `c/d`),
   `history.pushState`, `applyURL(false)`, `highlight(ids)`, focus dim; outlines survive repaint/zoom/unit change (existing
   `__askSync`). Ids of a unit other than the current are kept and drawn when the unit matches, as now.
@@ -260,7 +335,7 @@ On failure the worker sends the model a `tool_result` error for the `final_answe
   markdown, advice), internal retry, limits, prompt/tool schema validity (JSON-schema shape, every catalog field referenced
   exists in the engine).
 * `node worker/tests/eval.js [--max N] [--only substr] [--worker URL] [--model NAME] [--verbose] [--json out.json] [--md summary.md]`:
-  100 questions (`eval_questions.json`: rankings, counts, thresholds, lookups by name/town/ZIP/member/district form/state,
+  110 questions (`eval_questions.json`: rankings, counts, thresholds, lookups by name/town/ZIP/member/district form/state,
   comparisons, need- and deaths-vs-access, cancer types, oncologists, cosponsors, rural, household context, NCI centers,
   facilities and trials, "how many people", namesakes and typos, a territory, unanswerable asks, scope, off-topic/injection,
   definitions and methods, follow-ups with `prior`) through the real model: in-process (`ANTHROPIC_API_KEY` in env, loop.js +
@@ -274,8 +349,23 @@ On failure the worker sends the model a `tool_result` error for the `final_answe
   case fails (hard gates). `--fake` smoke-tests the runner with a scripted model (no key). The check logic has its own unit
   test, `eval_checks.test.js`. Runs in `.github/workflows/ask-eval.yml` (workflow_dispatch and workflow_call, for
   deploy-worker.yml to call after a deploy).
-* `release_gate.py` gains: the offline suites that exist (`engine.test.js`, `loop.test.js`, `client.test.js`) must pass, and
-  `eval_expected.json` is rebuilt from the refreshed files.
+* `node worker/tests/claims.test.js`: rule 6 against REAL engine results — 40 realistic correct answers (rankings with five places
+  and figures, comparisons, "which is higher", a ZIP → county → districts answer, a count with the sum of residents, a profile with
+  eight figures, a state against the nation, metro / nonmetro aggregates, trials by phase, methods, site_info numbers, dates, ranges,
+  asides, "respectively") must verify; 16 wrong attributions (swapped pairs, a national figure written as a state's, a figure in a
+  sentence that continues another place, a claim that does not match its row, a whole-result figure with the wrong scope, …) must be
+  rejected with an issue naming the place.
+* `node worker/tests/methods.test.js`: every method of `methods.js` run through the engine for a sample state / place, each sub-result
+  compared with the equivalent free-tool call written out by hand from the rule; parameters validated; no method marked reviewed;
+  `docs/ask/METHODS_REVIEW.md` current (`node worker/tests/methods_doc.js` rewrites it).
+* The eval has 110 questions; `attribution` (AT01–AT10) asks for two or three named places with different values and rankings where
+  each place must carry its own figure, checked with `pairs` (EVAL.md).
+* `.github/workflows/ask-eval.yml` runs on pull requests and pushes to main that touch `docs/api/**`, `docs/ask/**` or `worker/**` (30
+  questions), after "Refresh registry data" and "Refresh cosponsors" complete (`workflow_run`: those workflows push with GITHUB_TOKEN,
+  which triggers no other workflow; 30 questions, `eval_expected.py` first), and on demand. A failing eval after a refresh opens or
+  comments on the issue "Ask the map: evaluation failing after data refresh" (`gh issue`, `issues: write`); nothing is reverted.
+* `release_gate.py` gains: the offline suites that exist (`engine.test.js`, `loop.test.js`, `claims.test.js`, `methods.test.js`,
+  `client.test.js`, `eval_checks.test.js`) must pass, and `eval_expected.json` is rebuilt from the refreshed files.
 
 ## 9. Data fixes (build_api.py)
 
@@ -316,3 +406,26 @@ engine.vintages()                                // { data_as_of, incidence_peri
 * Node: `{ root: '/path/to/repo' }` — the engine reads the same files from `docs/` on disk (the `window.X=` files are parsed by stripping the assignment).
 
 Missing optional files (a map file not loaded) make their fields report `"not loaded"` in results and `loaded.optional.<name> = false`; the engine still answers everything the API files cover.
+
+## 12. Standard methods (docs/ask/methods.js) — the "trusted answers" pattern
+
+The core questions of the site get a named, fixed rule that a person can read and sign off, instead of a query the model composes
+afresh each time (the pattern of Snowflake's verified queries and Databricks' trusted assets; here the reviewer is the site owner).
+
+* A method is `{id, title, rule, params, required, example, map(p), steps: [p => [calls], (p, prev) => [calls], …], reviewed_by: '',
+  reviewed_on: ''}`. `rule` is the exact rule in plain English (the words a clinician reviews); `steps` return the exact engine tool
+  calls, each step seeing the results of the earlier ones (my_representative: ZIP → county → its districts). Parameters are
+  validated and normalised by `checkParams` (state names → USPS, district forms → `TX-34`, FIPS padding, enums, `n` 1–50).
+* 32 methods: the access rankings (counties / districts / states × worst / best, by one of six measures: short of trials, none within
+  60 road-miles, more than 60 road-miles from an NCI center, median road-miles to an NCI center, more than 60 road-miles from a broad
+  menu, average trials within 60 road-miles), counties short of trials, people short of trials in a state, counties with no trial
+  within 60 road-miles, oncologists but no trials (counties, districts), need vs access and deaths vs access in a state, H.R. 3521
+  cosponsors (a state, all), senators on S. 4440, my representative from a ZIP or town, place profile, a state against the nation,
+  rural vs metro (a state, the nation), NCI centers in a state, nearest NCI center to a county, counties far from an NCI center,
+  trials in a county by type, trials near a county by phase, trials in a state, the counties of a district, one cancer type's access
+  in a state, incidence and death-rate rankings, oncologists per resident by state.
+* Review: `node worker/tests/methods_doc.js` writes `docs/ask/METHODS_REVIEW.md` (title, rule, parameters, example question and a
+  sign-off line per method). Only the site owner sets `reviewed_by` / `reviewed_on`, by hand, in `methods.js`; code, tests and
+  scripts never do (`methods.test.js` checks the two fields are both empty or both set, a name and a `YYYY-MM-DD` date). As built,
+  none is set. The card's label follows (§7).
+* The worker's system prompt lists every method in one line (`id(params): title`); the rule text comes back in the method's result.
