@@ -126,7 +126,9 @@ async function fakeModel(payload) {
   if (r.error) return mk('final_answer', { answer: 'The data does not have that.', answerable: 'no', interpretation: 'fake: the tool returned an error', not_in_data: [String(r.error).slice(0, 100)], sources: [] });
   if (r.text) return mk('final_answer', { answer: String(r.text).split(/(?<=\.)\s/).slice(0, 2).join(' ').slice(0, 600), answerable: 'yes', interpretation: 'fake: site text', sources: [], alternatives: [], not_in_data: [], caveats: [] });
   const row = (r.rows || [])[0]; const callId = prevResults[0].tool_use_id; const unit = { counties: 'county', districts: 'district', states: 'state' }[r.table] || 'county';
-  return mk('final_answer', { answer: row ? `${row.name} leads with ${row.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials; ${r.count} places match.` : `${r.count} places match.`, answerable: 'yes', interpretation: 'fake: top rows by the headline measure', alternatives: [], not_in_data: [], caveats: [],
+  const st = Object.entries(catalog.STATES).find(([, nm]) => new RegExp('\\b' + nm + '\\b', 'i').test(q)); const scope = st ? st[0] : 'US';
+  const claims = [{ place: scope, field: 'count', value: r.count, call: callId }, ...(row ? [{ place: row.id, field: 'pct_lt20_trials_within_60rdmi', value: row.pct_lt20_trials_within_60rdmi, call: callId }] : [])];   // ASK_CONTRACT §6 rule 6
+  return mk('final_answer', { answer: row ? `${row.name} leads with ${row.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials; ${r.count} places match.` : `${r.count} places match.`, claims, answerable: 'yes', interpretation: 'fake: top rows by the headline measure', alternatives: [], not_in_data: [], caveats: [],
     map: { unit, layer: unit === 'county' ? 'short' : 'l20', highlight: { from_call: callId }, highlight_label: 'fake' }, table: { from_call: callId }, sources: [r.table], follow_ups: [] });
 }
 
@@ -158,7 +160,8 @@ async function askOne(q) {
   });
   try { await Promise.race([work, new Promise((_, rej) => setTimeout(() => rej(new Error(`timeout after ${TIMEOUT_MS / 1000} s`)), TIMEOUT_MS))]); }
   catch (e) { error = e && e.message || String(e); }
-  const full = {}; for (const id of Object.keys(calls)) { const f = safe(() => engine.full(id)); if (f && Array.isArray(f.ids)) full[id] = { ids: f.ids, returned_ids: f.returned_ids, filtered: f.filtered, ordered: f.ordered, unit: f.unit, n: f.ids.length }; }
+  const full = {}; const allIds = Object.keys(calls).flatMap(id => [id, ...(calls[id].name === 'method' && results[id] && Array.isArray(results[id].results) ? results[id].results.map(x => x.call) : [])]);   // a method's sub-calls "<id>.<n>" too
+  for (const id of allIds) { const f = safe(() => engine.full(id)); if (f && Array.isArray(f.ids)) full[id] = { ids: f.ids, returned_ids: f.returned_ids, filtered: f.filtered, ordered: f.ordered, unit: f.unit, n: f.ids.length }; }
   // the ids the map would outline, by the engine's own rule (a ranking outlines the rows returned; a filter every match)
   const hl = answer && answer.map ? safe(() => engine.highlightIds(answer.map.highlight)) : null; if (hl) full.__highlight = hl;
   const res = { kind, answer, verification, steps, full, error };

@@ -2,13 +2,15 @@
    Nothing here is hand-copied from the data: tables, fields, enumerations, definitions, layers and vintages are rendered from the
    catalog, so a catalog change changes the prompt. `node worker/src/prompt.js --print` prints the prompt and its size. */
 import * as DEFAULT_CATALOG from '../../docs/ask/catalog.js';
+import { METHODS, METHOD_IDS, PARAMS as METHOD_PARAMS, MEASURES } from '../../docs/ask/methods.js';
 
 export const OPS = ['=', '!=', '>', '>=', '<', '<=', 'in', 'not_in', 'is_null', 'not_null', 'contains', 'includes', 'intersects', 'between'];
 export const STATS = ['count', 'count_not_null', 'sum', 'mean', 'weighted_mean', 'median', 'min', 'max', 'share_true', 'share_eq'];
 export const PLACE_KINDS = ['county', 'district', 'state', 'zip', 'town', 'member', 'senator', 'nci_center'];
 export const UNITS = ['county', 'district', 'state'];
-export const TOOL_NAMES = ['find_places', 'query', 'aggregate', 'profile', 'compare', 'trials', 'site_info', 'final_answer'];
-export const CALL_TOOLS_WITH_IDS = ['query', 'compare', 'profile', 'find_places'];   // calls that may be named in highlight.from_call / table.from_call
+export const TOOL_NAMES = ['find_places', 'query', 'aggregate', 'profile', 'compare', 'trials', 'site_info', 'method', 'final_answer'];
+export const CALL_TOOLS_WITH_IDS = ['query', 'compare', 'profile', 'find_places', 'method'];   // calls that may be named in highlight.from_call / table.from_call (a method call, or one of its sub-calls "<id>.<n>")
+export const MAX_CLAIMS = 40;
 
 const cache = new WeakMap();
 const memo = (catalog, key, make) => { const c = catalog || DEFAULT_CATALOG; let m = cache.get(c); if (!m) { m = {}; cache.set(c, m); } if (!(key in m)) m[key] = make(c); return m[key]; };
@@ -48,6 +50,8 @@ function buildTools(C) {
       input_schema: { type: 'object', properties: { scope: { type: 'object', description: 'Exactly one of county_id, within_60_of_county_id, state, national.', properties: { county_id: { type: 'string' }, within_60_of_county_id: { type: 'string' }, state: { type: 'string', enum: states }, national: { type: 'boolean' } }, additionalProperties: false }, cancer_type: { type: 'string', enum: Object.keys(C.CANCER_TYPES) }, phase: { type: 'string', enum: C.PHASES }, sponsor_type: { type: 'string', enum: Object.keys(C.SPONSOR_TYPES) }, keyword: { type: 'string', description: 'A word from the question (drug, gene, intervention), matched case-insensitively.' }, min_age_at_most: { type: 'integer' }, limit: { type: 'integer', minimum: 1, maximum: 25 } }, required: ['scope'], additionalProperties: false } },
     { name: 'site_info', description: 'The site\'s own words on a topic, with live numbers where relevant: bills (the Clinical Trial Modernization Act: what it does, sponsors, cosponsor counts), methods, definitions, sources (files and dates), limits, how_to_act (what a reader can do), findings (headline numbers), history (national numbers per weekly pull), changes (this week\'s registry diff), about, finder (the ZIP trial finder and helplines), rural, need_vs_access, deaths_vs_access, oncologists. For how / why / what-counts-as / what-can-I-do / bill questions. Returns {topic, text, url, numbers}.',
       input_schema: { type: 'object', properties: { topic: { type: 'string', enum: Object.keys(C.SITE_INFO) } }, required: ['topic'], additionalProperties: false } },
+    { name: 'method', description: 'Run a STANDARD METHOD (listed in the system prompt): a fixed, named rule for a core question that runs its exact tool calls and returns {method, title, rule, params, map, primary_call, results:[{call, name, input, result}]}. Each sub-result has its own id in results[].call ("<this id>.<n>") for claims, highlight.from_call and table.from_call. Use it when one fits the question; use the other tools otherwise.',
+      input_schema: { type: 'object', properties: { id: { type: 'string', enum: METHOD_IDS }, params: { type: 'object', properties: Object.fromEntries(Object.entries(METHOD_PARAMS).map(([k, v]) => [k, { type: v.type, ...(v.enum ? { enum: v.enum } : {}), ...(v.type === 'integer' ? { minimum: v.min, maximum: v.max } : {}), description: v.desc }])), additionalProperties: false, description: 'Only the parameters the method lists.' } }, required: ['id'], additionalProperties: false } },
     { name: 'final_answer', description: 'Your last call, made alone in its own turn once every needed result is in. The worker checks every number and place name in it against the tool results of this question and returns an error if any is not there; then rewrite from the results or fetch the figure with a tool.',
       input_schema: { type: 'object', properties: {
         answer: { type: 'string', maxLength: 1200, description: 'Plain prose, 1–6 sentences; no markdown, URLs, advice or first person. Every number is from a tool result (same digits, or that value rounded to the precision written: 11,802,321 as 11.8 million), from the question, or a definitional constant (55, 60, 20, 100, the bill numbers).' },
@@ -66,6 +70,7 @@ function buildTools(C) {
           highlight_label: { type: 'string', description: 'What the outlined places are, in words.' },
         }, required: ['unit', 'layer'], additionalProperties: false },
         table: { type: 'object', description: 'The results table: {from_call} (usually the highlight call) or explicit {columns, rows} with values from tool results.', properties: { from_call: { type: 'string' }, columns: { type: 'array', items: { type: 'string' } }, rows: { type: 'array', items: { type: 'array', items: {} } } }, additionalProperties: false },
+        claims: { type: 'array', maxItems: MAX_CLAIMS, description: 'Required when answer cites figures: one entry per figure written in answer, pairing it with its place (see CLAIMS in the system prompt). Omit only when answer has no figures.', items: { type: 'object', properties: { place: { type: 'string', description: 'The row id the figure belongs to ("48215", "TX-34", "TX", "US"); for a whole-result figure (count, in_scope, sum_pop55_matching, an aggregate group, a trials count) the scope ("TX", "US", the county id of a trials scope).' }, field: { type: 'string', description: 'The column as the row spells it ("pct_lt20_trials_within_60rdmi", "oncologists.count", "metro.pct_lt20") or the result key ("count", "sum_pop55_matching", "groups[group=false].measures.pct_lt20_trials_within_60rdmi:weighted_mean", "by_phase.3").' }, value: { description: 'The number or string exactly as in the result (before any rounding in the answer).' }, call: { type: 'string', description: 'The tool_use id whose result holds the figure; for a method, the sub-call id ("toolu_….2").' } }, required: ['place', 'field', 'value', 'call'], additionalProperties: false } },
         sources: { type: 'array', items: { type: 'string', enum: [...tables, 'trials', 'site_info'] }, description: 'The tables (and trials / site_info) the answer used.' },
         follow_ups: { type: 'array', maxItems: 3, items: { type: 'string' } },
       }, required: ['answer', 'answerable', 'interpretation'], additionalProperties: false } },
@@ -155,6 +160,7 @@ export const EXAMPLES = [
           caveats: ['An oncologist with practice locations in two counties is counted in both.', 'The answer names the three largest counties; the table and the map carry all <count>.'],
           map: { unit: 'county', layer: 'onc', params: {}, state: 'TX', highlight: { from_call: '<id of the county query>' }, highlight_label: 'Texas counties with oncologists but no recruiting trial' },
           table: { from_call: '<id of the county query>' },
+          claims: [{ place: 'TX', field: 'count', value: '<count>', call: '<id of the county query>' }, { place: 'TX', field: 'in_scope', value: '<in_scope>', call: '<id of the county query>' }, { place: 'TX', field: 'sum_pop55_matching', value: '<sum_pop55_matching>', call: '<id of the county query>' }, { place: '<id 1>', field: 'pop55', value: '<pop55>', call: '<id of the county query>' }, { place: '<id 1>', field: 'oncologists.count', value: '<oncologists.count>', call: '<id of the county query>' }, { place: 'TX', field: 'count', value: '<district count>', call: '<id of the district query>' }, { place: '<district id>', field: 'oncologists.pct_pop55_in_counties_with_oncologists_no_trials', value: '<value>', call: '<id of the district query>' }],
           sources: ['counties', 'districts'],
           follow_ups: ['Which of these counties are rural?', 'Who represents the largest of these counties?'],
         } },
@@ -178,6 +184,7 @@ export const EXAMPLES = [
           caveats: ['Rates based on fewer than 16 deaths a year are flagged small_numbers.', 'Death rates cover all ages and 2020–2024; the trial data is the latest weekly registry pull.'],
           map: { unit: 'county', layer: 'mva', params: { site: 'lung' }, state: 'TX', highlight: { from_call: '<id of the county query>' }, highlight_label: 'Counties of Texas 34th with a published lung cancer death rate' },
           table: { from_call: '<id of the county query>' },
+          claims: [{ place: 'TX-34', field: 'count', value: '<count>', call: '<id of the county query>' }, { place: '<id 1>', field: 'mortality.by_site.lung', value: '<rate>', call: '<id of the county query>' }],
           sources: ['counties'],
         } },
       ] },
@@ -199,6 +206,7 @@ export const EXAMPLES = [
           caveats: ['Cosponsorship is one signal of a member\'s position, not a vote; counts are refreshed weekly from congress.gov.'],
           map: { unit: 'district', layer: 'cos_ctma_hr', params: {}, highlight_label: 'Cosponsors of H.R. 3521 by district' },
           sources: ['cosponsors', 'site_info'],
+          claims: [{ place: 'US', field: 'numbers.bills.ctma_hr.n_cosponsors', value: '<cosponsor count>', call: '<id of the site_info call>' }],
           follow_ups: ['Which Texas members cosponsor H.R. 3521?'],
         } },
       ] },
@@ -212,6 +220,12 @@ function renderExamples(C) {
     ex.turns.forEach((t, j) => { lines.push(`Turn ${j + 1}: ${t.note}`); for (const c of t.calls) lines.push(`  ${c.name} ${JSON.stringify(c.input)}`); });
   });
   return lines.join('\n');
+}
+
+// ---------- the standard methods (docs/ask/methods.js), one line each; the rule text comes back in the method's result ----------
+export function methodsText() {
+  const ps = m => m.params.map(k => m.required.includes(k) ? k : k + '?').join(', ');
+  return 'STANDARD METHODS (method {id, params}; ? = optional; place / county / district are ids from find_places; measure = ' + Object.keys(MEASURES).join(' | ') + ', default short):\n' + METHODS.map(m => `  ${m.id}(${ps(m)}): ${m.title}`).join('\n');
 }
 
 // ---------- the system prompt ----------
@@ -232,7 +246,8 @@ HOW TO WORK
 5. Read results carefully. query: count is the number of matching rows (the answer to "how many"), rows are only the first limit rows (never present them as all matches; the table and map carry all through from_call), in_scope is the table size after the state filter, nulls says how many rows had no value for a filtered or ordered field (they never match and sort last), sum_pop55_matching is the residents 55+ in all matching rows. aggregate figures are computed by the engine from the rows and say so; a mean of county rates is not the state's published rate. trials counts are trials listed, never trials available to a person. Rather than counting or subtracting yourself, add a filter (op not_null, a threshold) and read the count.
 6. When a measure is not published at the asked level (see NOT IN THE DATA and the fields' tables), say so, name the level that has it, and answer at that level, with answerable "partly" and the missing measure in not_in_data. Never silently substitute a different measure or level.
 7. For a comparison of two things, get both (compare, or two calls) before answering. For a superlative, order by the measure and read the first rows; mention ties when the first values are equal.
-8. Finish with final_answer, alone. Keep tool calls to what the answer needs.
+8. When one of the STANDARD METHODS below fits the question, call method {id, params} (after find_places for a named place) instead of building the queries yourself: it runs the method's exact, reviewed rule. Use the free tools when no method fits or the question needs more; never bend a question to fit a method.
+9. Finish with final_answer, alone. Keep tool calls to what the answer needs.
 
 INTERPRETATION RULES. Common phrasings and the readings to consider (state the one used in interpretation, offer the others as alternatives):
 ${interpretations}
@@ -241,8 +256,12 @@ ${interpretations}
 WRITING THE ANSWER (final_answer.answer)
 Lead with the direct answer: the count, the figure, or the top place with its figure. Then the next few places with their figures (three to five), then one sentence of scope ("of 254 Texas counties"; "residents 55+"). Plain sentences, at most 6, no markdown, no bullet characters, no URLs, no first person, no questions. Use the data's own digits: thousands separators are fine, and a value may be rounded to the precision you write (11,802,321 as 11.8 million; 38.2% as 38%), but never a figure that is not in a result. Name places exactly as the results do ("Hidalgo County, Texas", "Texas 34th"). Say "residents 55+" when a figure is a share or a count of people; say "per 100,000" and the years for incidence and death rates; say "within 60 road-miles" for access figures. Put small-numbers flags, ties, truncation (rows shown vs count), vacant seats, no-road-route places, assumed namesakes, default cut-offs and the different data periods in caveats. Never advise, never say a trial is available to or right for someone, never infer causes ("because rural areas…"), never compare with figures you were not given. answerable: "yes" when answered as asked; "partly" when answered at another level, under an assumption, or in part; "no" when the data does not have it, in which case not_in_data must be filled and the answer says briefly what the data does have instead. interpretation always states the rule in words; alternatives are questions the reader could ask instead; follow_ups are short next questions.
 
+CLAIMS (final_answer.claims; required whenever answer writes a figure). One entry per figure in answer: {place, field, value, call}. call: the id of the tool call whose result holds the figure (for a method, the sub-call id from results[].call, "toolu_….1"). value: the number or string exactly as the result has it, before your rounding. A figure of a row: place = the row's id ("48215", "TX-34", "TX", "US") and field = the column as the row spells it ("pct_lt20_trials_within_60rdmi", "oncologists.count"; profile rows nest: "metro.pct_lt20", "incidence.by_site.lung"). A figure of the whole result: place = the scope (the query's state filter "TX", else "US"; or the id used in a where condition such as "TX-34"; a trials scope's id; a profile's id; "US" for site_info) and field = the result key: query "count", "in_scope", "sum_pop55_matching"; aggregate "groups[group=false].n", "groups[group=false].sum_pop55", "groups[group=false].measures.<field>:<stat>"; trials "count", "by_phase.3", "by_sponsor_type.industry", "by_cancer_type[type=breast].count"; profile "related.senators[name=<name>].party", "related.districts.length"; site_info "numbers.nat.l20", "numbers.bills.ctma_hr.n_cosponsors". [k=v] picks the list element whose k is v, [0] by position, .length counts a list. The worker checks every claim against the result, then checks the answer text: each number belongs to the place named nearest before it in the same clause (or right after it: "33.1% in Montana"), a clause with no place continues the last place named, and a sentence with no place name carries scope figures. So write each figure next to its own place ("Wyoming at 87%, against 33.1% in Montana"), never "Wyoming and Montana have 87% and 33.1%". An answer with no figures needs no claims.
+
 THE MAP (final_answer.map)
 unit: county for the counties table, district for districts, state for states (for a national single figure use state). layer: the key in MAP LAYERS for that unit whose fields include the main field answered (each field line names its layer as [map unit:layer]); params only those the layer accepts, with values from the field's own params (incidence.by_site.lung → site=lung; context.poverty → acs=pov; a cancer type → type=<type>; rural questions on the county short layer → rural=1; lt for a moved trials line). state: the USPS code when the question is about one state. highlight.from_call: the id of the query / compare / profile / find_places call whose rows should be outlined (prefer the final filtered query). Always use from_call for a query: a filtered query outlines EVERY matching row (all 178, not only the rows returned), and the results table carries them all, so never say only the returned rows are shown; a ranking (an ordered query with no condition beyond the state) outlines only the rows returned, so set limit to the number of places the question asks for ("top 10" → limit 10); highlight.rows = "all" or "returned" overrides. Rows of the cosponsors, senators, facilities and nci_centers tables outline their district / state / county on the map. Use highlight.ids only for ids that came from find_places or profile and have no query to point at. highlight_label in words; place: the id for a single-place answer. table.from_call: the same call (its full result becomes the results table). sources: the tables used (and trials / site_info). Omit map only for scope, other and pure definition answers.
+
+${methodsText()}
 
 ${catalogText(C)}
 

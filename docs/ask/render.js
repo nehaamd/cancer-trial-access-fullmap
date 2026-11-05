@@ -174,7 +174,7 @@ export function cardHTML(ctx) {
   const kind = answerable(a); const tag = kind === 'partly' ? '<span class="ask-tag">Answered in part</span>' : kind === 'no' ? '<span class="ask-tag ask-tag-no">Not in the data</span>' : '';
   const x = '<button type="button" class="ask-x" aria-label="Close answer">×</button>';
   const head = `<p class="ask-q">${esc(ctx.q)}</p>`;
-  if (plain) return `<div class="ask-card plain" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}<div class="ask-a">${paras(a.answer)}</div><p class="ask-note">${esc(STANDING_NOTE_PLAIN)}</p></div>`;
+  if (plain) return `<div class="ask-card plain" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}<div class="ask-a">${paras(a.answer)}</div>${feedbackHTML(ctx)}<p class="ask-note">${esc(STANDING_NOTE_PLAIN)}</p></div>`;
   const body = ok && String(a.answer || '').trim() ? `<div class="ask-a">${tag}${paras(a.answer)}</div>` : `<p class="ask-unverified">${esc(UNVERIFIED_NOTICE)}</p>`;
   const alts = strList(a.alternatives, 3), nid = strList(a.not_in_data, 4), cav = strList(a.caveats, 5), fu = strList(a.follow_ups, 3), interp = String(a.interpretation || '').trim();
   const read = interp || alts.length ? `<section class="ask-sec ask-read"><h4>How this was read</h4>${interp ? `<p>${esc(interp)}</p>` : ''}${alts.length ? `<div class="ask-alts"><span class="ask-lead">Or ask:</span>${chipsHTML(alts, 'ask-alt')}</div>` : ''}</section>` : '';
@@ -187,9 +187,9 @@ export function cardHTML(ctx) {
   const focus = ctx.focus && ctx.focus.show ? ` <label class="ask-focus"><input type="checkbox" id="ask-focus"${ctx.focus.on ? ' checked' : ''}> Focus</label>` : '';
   const mapLine = ctx.mapShows != null ? `<p class="ask-map"><span class="ask-map-lead">Map now shows:</span> <b id="ask-map-shows">${esc(ctx.mapShows)}</b>${hl}${focus} · <a href="map.html" class="ask-reset">Reset map</a></p>` : '';
   const src = sourcesHTML(ctx.sources, ctx.vintages);
-  const log = Array.isArray(ctx.log) && ctx.log.length ? `<details class="ask-log"><summary>How this was answered</summary><ol>${stepsHTML(ctx.log)}</ol><p class="ask-log-foot">${esc([ctx.steps ? `${ctx.steps} model step${ctx.steps === 1 ? '' : 's'}` : '', ctx.model ? `model ${ctx.model}` : '', ctx.verification ? (ok ? 'every number and place name in the summary was found in the tool results' : 'verification failed: ' + strList(ctx.verification.issues, 6).join('; ')) : ''].filter(Boolean).join(' · '))}</p></details>` : '';
+  const log = Array.isArray(ctx.log) && ctx.log.length ? `<details class="ask-log"><summary>How this was answered</summary><ol>${stepsHTML(ctx.log)}</ol><p class="ask-log-foot">${esc([ctx.steps ? `${ctx.steps} model step${ctx.steps === 1 ? '' : 's'}` : '', ctx.model ? `model ${ctx.model}` : '', ctx.method ? '' : 'computed for this question', ctx.verification ? (ok ? 'every number and place name in the summary was found in the tool results' : 'verification failed: ' + strList(ctx.verification.issues, 6).join('; ')) : ''].filter(Boolean).join(' · '))}</p></details>` : '';
   const follow = `<div class="ask-fu">${fu.length ? `<span class="ask-lead">Follow up:</span>${chipsHTML(fu, 'ask-fuq')}` : ''}<button type="button" class="ask-new">New question</button></div>`;
-  return `<div class="ask-card" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}${body}${read}${notin}${table}${sum}${caveats}${dropped}${mapLine}${src}${log}${follow}<p class="ask-note">${esc(ok ? STANDING_NOTE : STANDING_NOTE_UNCHECKED)}</p></div>`;
+  return `<div class="ask-card" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}${body}${methodHTML(ctx.method)}${read}${notin}${table}${sum}${caveats}${dropped}${mapLine}${src}${log}${follow}${feedbackHTML(ctx)}<p class="ask-note">${esc(ok ? STANDING_NOTE : STANDING_NOTE_UNCHECKED)}</p></div>`;
 }
 
 // the table the card shows, from the engine's full result for table.from_call (full: engine.full(id); res: the result the model
@@ -211,3 +211,67 @@ export function prepareTable(table, full, res) {
 }
 // the map id a table row stands for (district rows carry geoid; county and state rows their id)
 export function rowMapId(row, unit) { if (!row || typeof row !== 'object') return null; if (row.geoid && /^\d{4}$/.test(String(row.geoid))) return String(row.geoid); return toMapId(row.id, unit || inferKind(row.id)); }
+
+// ---------- the standard method behind an answer (docs/ask/methods.js) ----------
+// The method whose call the answer's table or highlight came from ({id, title, rule, reviewed_by, reviewed_on}), or null. calls:
+// {callId: {name, input}} of the question; lookup(id) -> the method definition (methodById). A sub-call "<id>.<n>" counts as its method.
+export function methodFor(answer, calls, lookup) {
+  const ids = [answer && answer.table && answer.table.from_call, answer && answer.map && answer.map.highlight && answer.map.highlight.from_call].filter(x => typeof x === 'string' && x);
+  for (const id of ids) {
+    const base = id.replace(/\.\d+$/, ''); const c = calls && (calls[base] || calls[id]);
+    if (!c || c.name !== 'method') continue;
+    const m = typeof lookup === 'function' ? lookup(String(c.input && c.input.id || '')) : null; if (!m) continue;
+    return { id: m.id, title: String(m.title || ''), rule: String(m.rule || ''), reviewed_by: String(m.reviewed_by || '').trim(), reviewed_on: String(m.reviewed_on || '').trim() };
+  }
+  return null;
+}
+// "Standard method: <title>" with the rule on a line that opens; "Reviewed method · <name>, <date>" only when the method carries both
+export function methodHTML(m) {
+  if (!m || !m.title) return '';
+  const reviewed = m.reviewed_by && m.reviewed_on;
+  const label = reviewed ? `Reviewed method · ${esc(m.reviewed_by)}, ${esc(niceDate(m.reviewed_on))}` : 'Standard method';
+  return `<details class="ask-src ask-method"><summary title="${esc(m.rule)}"><span class="ask-lead">${label}:</span> ${esc(m.title)}</summary><p class="ask-method-rule">${esc(m.rule)}</p></details>`;
+}
+
+// ---------- feedback: "Was this right?" and "Report a problem" ----------
+export const FEEDBACK_THANKS = 'Thanks — noted.';
+export const ISSUE_NEW = 'https://github.com/nehaamd/cancer-trial-access-fullmap/issues/new';   // as act.html's "open an issue" link: title (and body) only, no labels
+export const ISSUE_TITLE = 'Ask the map: problem with an answer';
+export const ISSUE_URL_MAX = 6000;
+export const FEEDBACK_MAX_BYTES = 20 * 1024;
+const cut = (s, n) => { s = String(s == null ? '' : s); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
+// the tool calls of a question, compact: [{tool, input}] with each input's JSON capped (no results: they are the site's own data)
+export function compactSteps(calls, maxSteps = 12, maxInput = 300) {
+  const list = Array.isArray(calls) ? calls : calls && typeof calls === 'object' ? Object.values(calls) : [];
+  return list.filter(c => c && c.name && c.name !== 'final_answer').slice(0, maxSteps).map(c => { let j; try { j = JSON.stringify(c.input || {}); } catch (e) { j = '{}'; } return { tool: String(c.name), input: cut(j, maxInput) }; });
+}
+// what the worker's /feedback route receives (ASK_CONTRACT §7): no visitor identifier, nothing beyond the question and the answer
+export function feedbackPayload(ctx, verdict) {
+  const a = ctx && ctx.answer && typeof ctx.answer === 'object' ? ctx.answer : {};
+  const out = { v: 3, kind: 'feedback', q: cut(ctx && ctx.q, 400), verdict: verdict === 'yes' ? 'yes' : 'no', answer_text: cut(a.answer, 1500), interpretation: cut(a.interpretation, 600), steps: compactSteps(ctx && ctx.calls), model: cut(ctx && ctx.model || '', 60), data_as_of: cut(ctx && ctx.vintages && ctx.vintages.data_as_of || '', 30), verified: !!(ctx && ctx.verification && ctx.verification.ok), method: ctx && ctx.method ? ctx.method.id : null };
+  while (byteLen(JSON.stringify(out)) > FEEDBACK_MAX_BYTES && out.steps.length) out.steps.pop();
+  return out;
+}
+// a prefilled GitHub issue: the question, the answer, how it was read, the steps and the data date; the URL stays under ISSUE_URL_MAX
+export function issueURL(ctx) {
+  const a = ctx && ctx.answer && typeof ctx.answer === 'object' ? ctx.answer : {}; const ok = !!(ctx && ctx.verification && ctx.verification.ok);
+  const steps = compactSteps(ctx && ctx.calls);
+  const build = (ans, nSteps, interp) => {
+    const lines = ['**Question:** ' + cut(ctx && ctx.q, 400), '', '**Answer:** ' + (ok || isPlainAnswer(a) ? ans : '(not shown on the site: the written summary did not pass its check) ' + ans), '', '**How it was read:** ' + interp,
+      ...(ctx && ctx.method ? ['', `**Method:** ${ctx.method.title} (${ctx.method.id})`] : []),
+      '', '**Steps:**', ...steps.slice(0, nSteps).map(s => `- ${s.tool} ${s.input}`), ...(steps.length > nSteps ? [`- … ${steps.length - nSteps} more`] : []),
+      '', `**Data as of:** ${(ctx && ctx.vintages && ctx.vintages.data_as_of) || 'unknown'}${ctx && ctx.model ? ` · model ${ctx.model}` : ''} · ${ok ? 'summary verified' : 'summary not verified'}`, '', '**What looks wrong:** ', ''];
+    return `${ISSUE_NEW}?title=${encodeURIComponent(ISSUE_TITLE)}&body=${encodeURIComponent(lines.join('\n'))}`;
+  };
+  let ans = cut(a.answer, 1500), interp = cut(a.interpretation, 600), n = steps.length, url = build(ans, n, interp);
+  while (url.length > ISSUE_URL_MAX && n > 0) url = build(ans, --n, interp);
+  while (url.length > ISSUE_URL_MAX && ans.length > 200) { ans = cut(ans, Math.floor(ans.length * 0.75)); url = build(ans, n, interp); }
+  while (url.length > ISSUE_URL_MAX && interp.length > 100) { interp = cut(interp, Math.floor(interp.length * 0.6)); url = build(ans, n, interp); }
+  return url.length > ISSUE_URL_MAX ? `${ISSUE_NEW}?title=${encodeURIComponent(ISSUE_TITLE)}` : url;
+}
+// the card's feedback line: Yes / No (replaced by the thanks once sent) and the issue link
+export function feedbackHTML(ctx) {
+  const report = `<a class="ask-report" href="${esc(issueURL(ctx || {}))}" target="_blank" rel="noopener">Report a problem</a>`;
+  if (ctx && ctx.feedback) return `<p class="ask-src ask-fb"><span role="status">${esc(FEEDBACK_THANKS)}</span> · ${report}</p>`;
+  return `<p class="ask-src ask-fb"><span class="ask-lead">Was this right?</span> <button type="button" class="ask-pl ask-fb-b" data-v="yes">Yes</button> <button type="button" class="ask-pl ask-fb-b" data-v="no">No</button> · ${report}</p>`;
+}

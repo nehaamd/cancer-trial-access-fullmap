@@ -1,14 +1,27 @@
 # Live evaluation of the question box (ASK_CONTRACT.md §8): the offline suites, then worker/tests/eval.js through the real model.
-# Runs on demand (Actions tab -> "Ask the map: evaluation" -> Run workflow); deploy-worker.yml may call it after a deploy
-# (workflow_call). Needs the repository secret ANTHROPIC_API_KEY. The full transcripts are kept as the artifact eval_out.json.
+# Runs on demand (Actions tab -> "Ask the map: evaluation" -> Run workflow); on a pull request and on a push to main that touch the
+# box or the data it reads (a 30-question spread); and after every weekly data refresh. The refresh workflows commit to main with
+# GITHUB_TOKEN, and pushes made with GITHUB_TOKEN do not trigger other workflows, so the push trigger alone would never see them:
+# the workflow_run trigger below runs the eval when "Refresh registry data" or "Refresh cosponsors" completes successfully, on the
+# refreshed main (eval_expected.py rebuilds the expectations from the refreshed files first). A failing eval after a refresh opens
+# (or comments on) the issue "Ask the map: evaluation failing after data refresh"; it never reverts anything.
+# deploy-worker.yml may call it after a deploy (workflow_call; a caller must grant issues: write for the report job).
+# Needs the repository secret ANTHROPIC_API_KEY. The full transcripts are kept as the artifact eval_out.json.
 name: "Ask the map: evaluation"
 on:
   pull_request:                       # a pull request that touches the box runs a 30-question sample so the model's answers are read before merging
-    paths: ['worker/**', 'docs/ask/**', '.github/workflows/ask-eval.yml']
+    paths: ['worker/**', 'docs/ask/**', 'docs/api/**', '.github/workflows/ask-eval.yml']
+  push:                               # a change to the box, its data API or the worker on main (by a person: GITHUB_TOKEN pushes do not trigger)
+    branches: [main]
+    paths: ['docs/api/**', 'docs/ask/**', 'worker/**']
+  workflow_run:                       # the weekly refreshes commit with GITHUB_TOKEN, which triggers nothing else: run after they finish
+    workflows: ["Refresh registry data", "Refresh cosponsors"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       max:
-        description: "How many questions (0 = all 100)"
+        description: "How many questions (0 = all 110)"
         required: false
         default: "0"
       only:
@@ -31,18 +44,22 @@ permissions:
   contents: read
 jobs:
   eval:
+    # after a refresh only when it succeeded (a failed refresh published nothing)
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || '' }}   # the refreshed main, with the refresh's own commit
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
-      - name: Offline suites (engine, loop, client, eval checks)
+      - name: Offline suites (engine, loop, claims, methods, client, eval checks)
         run: |
           set -e
-          for f in worker/tests/engine.test.js worker/tests/loop.test.js worker/tests/client.test.js worker/tests/eval_checks.test.js; do
+          for f in worker/tests/engine.test.js worker/tests/loop.test.js worker/tests/claims.test.js worker/tests/methods.test.js worker/tests/client.test.js worker/tests/eval_checks.test.js; do
             if [ -f "$f" ]; then echo "== $f"; node "$f"; else echo "== $f not present, skipped"; fi
           done
       - name: Expected facts from the raw files (independent of the engine)
@@ -53,7 +70,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         shell: bash
-        run: set -o pipefail; node worker/tests/eval.js --max "${{ github.event_name == 'pull_request' && '30' || inputs.max || '0' }}" --only "${{ inputs.only || '' }}" --model "${{ inputs.model || 'claude-sonnet-5-5' }}" --json eval_out.json --md eval_summary.md ${{ github.event_name == 'pull_request' && '--verbose' || '' }} | tee eval_log.txt
+        run: set -o pipefail; node worker/tests/eval.js --max "${{ (github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'workflow_run') && '30' || inputs.max || '0' }}" --only "${{ inputs.only || '' }}" --model "${{ inputs.model || 'claude-sonnet-5-5' }}" --json eval_out.json --md eval_summary.md ${{ github.event_name != 'workflow_dispatch' && github.event_name != 'workflow_call' && '--verbose' || '' }} | tee eval_log.txt
       - name: Keep the transcripts
         if: always()
         uses: actions/upload-artifact@v4
@@ -73,3 +90,39 @@ jobs:
         run: |
           echo "::error::The evaluation did not pass (pass rate below 90 % or a scope / other / injection case failed). Read eval_summary.md in the step summary and eval_out.json in the artifact."
           exit 1
+
+  # after a data refresh: a failing eval opens (or comments on) one issue with the summary. Nothing is reverted: the refreshed data
+  # stays published and the question box keeps answering; the issue says where to read the failures.
+  report:
+    needs: eval
+    if: always() && github.event_name == 'workflow_run' && needs.eval.result == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+      actions: read
+    steps:
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: ask-eval-${{ github.run_number }}
+      - name: 'Open or comment on the issue "Ask the map: evaluation failing after data refresh"'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: "Ask the map: evaluation failing after data refresh"
+          REFRESH: ${{ github.event.workflow_run.name }}
+          REFRESH_URL: ${{ github.event.workflow_run.html_url }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          {
+            echo "The question-box evaluation failed after **${REFRESH}** ([refresh run](${REFRESH_URL})); [evaluation run](${RUN_URL}), transcripts in its artifact \`eval_out.json\`."
+            echo
+            echo "Nothing was reverted: the refreshed data stays published. A failure here usually means the new data changed an expected fact the model now misreads, or a question's expectation needs a look (worker/tests/eval_expected.py)."
+            echo
+            if [ -f eval_summary.md ]; then head -c 60000 eval_summary.md; else echo '```'; tail -n 60 eval_log.txt 2>/dev/null || echo "no summary or log was written (the offline suites may have failed; see the run)"; echo '```'; fi
+          } > body.md
+          n=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number,title --jq "map(select(.title == env.TITLE)) | .[0].number // empty")
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file body.md; echo "commented on #$n"; else gh issue create --title "$TITLE" --body-file body.md; fi

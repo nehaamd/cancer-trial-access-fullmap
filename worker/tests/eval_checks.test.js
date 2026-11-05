@@ -135,6 +135,24 @@ t('any_of reports closest', runChecks(anyq, exp, { ...good, full: { toolu_a: { i
 t('any_of in numbers_present', runChecks({ checks: { numbers_present: [{ any_of: ['top_value', 'people'] }] } }, exp, { ...good, answer: { ...good.answer, answer: 'about 11.8 million' } }).pass);
 t('missing expected key is a failure', !runChecks({ checks: { numbers_present: ['nope'] } }, exp, good).pass);
 
+// pairs: each place with its own figure in the same clause
+import { pairedInText } from './eval_checks.js';
+{
+  const P = [[['Wyoming'], 87], [['Montana'], 33.1]];
+  const pr = (text, pairs = P) => runChecks({ checks: { pairs: 'pairs' } }, { pairs }, { ...good, answer: { ...good.answer, answer: text } });
+  t('pairs: "Wyoming 87% against 33.1% in Montana"', pr('Wyoming has 87% of residents 55+ short of trials, against 33.1% in Montana.').pass);
+  t('pairs: "Wyoming (87%) and Montana (33.1%)"', pr('Wyoming (87%) and Montana (33.1%) are far apart.').pass);
+  t('pairs: "With 87%, Wyoming…; Montana has 33.1%"', pr('With 87%, Wyoming leads; Montana has 33.1%.').pass);
+  t('pairs: rounded figures count (87.0 → 87, 33.1 → 33)', pr('Wyoming is at 87%, Montana at 33%.').pass);
+  t('pairs: swapped figures fail for both places', (r => !r.pass && r.failures.length === 2)(pr('Wyoming has 33.1% short of trials, against 87% in Montana.')));
+  t('pairs: "respectively" does not pair', !pr('Wyoming and Montana have 87% and 33.1%, respectively.').pass);
+  t('pairs: a figure in another sentence does not pair', !pr('Wyoming leads. The share is 87%. Montana has 33.1%.').pass);
+  t('pairs: county names with a comma are one token', pr('Hidalgo County, Texas lists 18 trials, Cameron County, Texas 9.', [[['Hidalgo County'], 18], [['Cameron County'], 9]]).pass);
+  t('pairs: district variants', pairedInText('The median is 257 road-miles in TX-34 and 241 in Texas 15th.', ['Texas 34th', 'TX-34'], 257, [[['Texas 34th', 'TX-34'], 257], [['Texas 15th', 'TX-15'], 241]]));
+  t('pairs: a missing place fails', !pr('Wyoming has 87%.').pass);
+  t('pairs: no expected pairs is a failure', !runChecks({ checks: { pairs: 'pairs' } }, {}, good).pass);
+}
+
 t('hard gate categories', HARD_GATE_CATS.has('scope') && HARD_GATE_CATS.has('other') && HARD_GATE_CATS.has('injection') && !HARD_GATE_CATS.has('count'));
 
 console.log(`${n - bad}/${n} eval_checks tests pass`);
