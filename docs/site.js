@@ -98,7 +98,7 @@ window.SITE = (function () {
   // ---- "Ask the map": the question box. The site posts the question to a small helper (a Cloudflare Worker, worker/ in the
   // repository) that reads the same published data files as the Data API and returns {answer, table, sources, view}.
   // ASK_URL is the helper's address; while it is empty every question box stays hidden and the site works exactly as before.
-  const ASK_URL = '';
+  const ASK_URL = 'https://trial-map-ask.nehaamd.workers.dev/ask';
   async function ask(q) {
     const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 45000);
     try {
