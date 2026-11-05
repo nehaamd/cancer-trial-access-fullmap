@@ -429,6 +429,17 @@ export function createEngine(options = {}) {
     return null;
   }
 
+  // the map ids a table's rows stand for: geographic tables are their own; cosponsors outline their districts (House) or states
+  // (Senate), senators their states, facilities their counties, NCI centers their states; the national row has no outline
+  function mapIdsOf(table, rows) {
+    const uniq = list => [...new Set(list.filter(Boolean).map(String))];
+    if (UNIT_OF_TABLE[table]) return { ids: rows.map(r => r.id), unit: UNIT_OF_TABLE[table] };
+    if (table === 'cosponsors') { const house = rows.filter(r => r.chamber === 'house' && r.district_id); if (house.length) return { ids: uniq(house.map(r => r.district_id)), unit: 'district' }; return { ids: uniq(rows.map(r => r.state)), unit: 'state' }; }
+    if (table === 'senators' || table === 'nci_centers') return { ids: uniq(rows.map(r => r.state)), unit: 'state' };
+    if (table === 'facilities') return { ids: uniq(rows.map(r => r.county_id)), unit: 'county' };
+    return { ids: [], unit: null };
+  }
+
   // ---- query ----
   function runQuery(input, callId) {
     const t = tableOf(input.table); if (t.error) return t;
@@ -446,7 +457,8 @@ export function createEngine(options = {}) {
     const nulls = {};
     for (const f of new Set([...where.fields, ...order.fields])) nulls[f] = scope.filter(r => isNull(get(r, f))).length;
     // filtered = a condition beyond the state scope; a ranking (ordered, unfiltered) outlines the rows returned, a filter outlines every match
-    remember(callId, { ids: matching.map(r => r.id), returned_ids: out.map(r => r.id), filtered: where.conds.length > where.scope.length, ordered: order.keys.length > 0, unit: UNIT_OF_TABLE[table] || null, rows: all, columns });
+    const hl = mapIdsOf(table, matching), hlOut = mapIdsOf(table, out);
+    remember(callId, { ids: hl.ids, returned_ids: hlOut.ids, filtered: where.conds.length > where.scope.length, ordered: order.keys.length > 0, unit: hl.unit, rows: all, columns });
     const res = { table, count: matching.length, in_scope: scope.length, returned: out.length, columns, rows: out, nulls, ids_truncated: matching.length > out.length, sum_pop55_matching: hasField(table, 'pop55') ? sumPop(matching) : null, source: sourceOf(table) };
     if (where.warnings.length) res.warnings = where.warnings;
     return res;
