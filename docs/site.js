@@ -101,7 +101,7 @@ window.SITE = (function () {
   // The homepage shows the same box and hands the question to map.html?ask=. ASK_URL is the helper's address; while it is empty every
   // question box stays hidden and the site works exactly as before. ASK_TIMEOUT_S is the client's wait per step (ASK_CONTRACT.md §3).
   const ASK_URL = 'https://trial-map-ask.nehaamd.workers.dev/ask';
-  const ASK_TIMEOUT_S = 90;
+  const ASK_TIMEOUT_S = 120;
   const escA = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   // Example questions showing the breadth of what the box reads: deaths vs access, oncologists vs trials across two units, cosponsors,
   // an NCI distance, a comparison, a rural count, a ZIP lookup, incidence. The short label is what the chip shows; the full question is what it asks.

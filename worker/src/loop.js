@@ -18,7 +18,7 @@ import { sign, verifySig, secretFor } from './sign.js';
 
 export const PROTOCOL_VERSION = 3;
 export const MAX_STEPS = 8;
-export const MAX_TOKENS = 1200;
+export const MAX_TOKENS = 2500;   // a final_answer with interpretation, alternatives, caveats and follow-ups is ~600 tokens; the margin keeps a wordy one from being cut off
 export const MAX_RESULT_BYTES = 24 * 1024;
 export const MAX_CALLS_PER_TURN = 8;
 export const MAX_RETRIES = 2;
@@ -104,7 +104,9 @@ export async function step(body, env, callModel, options = {}) {
     addUsage(usage, res && res.usage);
     const calls = blocks.filter(b => b.type === 'tool_use');
     if (res && res.stop_reason === 'max_tokens' && retries < MAX_RETRIES) {   // the reply was cut off (usually a final_answer with a long inline table): ask for a shorter one
-      retries++; extra.push({ role: 'assistant', content: blocks.length ? blocks : [{ type: 'text', text: '(cut off)' }] }, { role: 'user', content: 'Your reply was cut off at the token limit. Reply more briefly: use table.from_call instead of inline rows, keep the answer to a few sentences, and call final_answer alone.' });
+      const note = 'Your reply was cut off at the token limit. Reply more briefly: use table.from_call instead of inline rows, keep the answer to a few sentences, and call final_answer alone.';
+      // every tool_use in the cut-off turn must be answered with a tool_result, or the API rejects the transcript
+      retries++; extra.push({ role: 'assistant', content: blocks.length ? blocks : [{ type: 'text', text: '(cut off)' }] }, { role: 'user', content: calls.length ? calls.map(c => ({ type: 'tool_result', tool_use_id: c.id, is_error: true, content: note })) : note });
       continue;
     }
     const unknown = calls.find(c => !TOOL_NAMES.includes(c.name)); if (unknown) throw new StepError(502, 'The question box is unavailable right now; the map and its filters still work.', `model called unknown tool ${unknown.name}`);

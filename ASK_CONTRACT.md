@@ -83,8 +83,8 @@ Responses (always JSON, `cache-control: no-store`):
   of the same question count toward a separate continuation budget of `MAX_STEPS ×` those limits, which a question never
   reaches — so a replayed signed turn cannot buy unlimited model calls), `502 {error, detail}` (model or internal failure),
   `504 {error}` (model timed out). Error texts are plain sentences the client shows as-is.
-* Limits: `MAX_STEPS = 8` model calls per question (the 8th is forced to `final_answer` by a user message saying so), `max_tokens` 1200 per call, model timeout 25 s per call. A single HTTP step may contain up to 3 model
-  calls (verification retries), so the client waits up to 90 s per step with a visible progress line.
+* Limits: `MAX_STEPS = 8` model calls per question (the 8th is forced to `final_answer` by a user message saying so), `max_tokens` 2500 per call, model timeout 40 s per call. A single HTTP step may contain up to 3 model
+  calls (verification retries), so the client waits up to 120 s per step with a visible progress line.
 * Model calls: `POST https://api.anthropic.com/v1/messages`, `anthropic-version: 2023-06-01`, body
   `{model, max_tokens, system:[{type:"text", text, cache_control:{type:"ephemeral"}}], tools:[…, last tool with cache_control],
   tool_choice, messages}`. No `temperature` (current models reject it). `MODEL` comes from `env.MODEL` (default
@@ -247,7 +247,7 @@ On failure the worker sends the model a `tool_result` error for the `final_answe
 * Follow-ups: the client keeps the last 3 (q, answer) pairs and sends them as `prior`; "Ask a follow-up" placeholder after an
   answer; "Clear" starts fresh.
 * Errors: 429 → the worker's sentence + retry countdown; 502/504 → "The question box is unavailable right now; the map and its
-  filters still work." + detail; network timeout per step 90 s.
+  filters still work." + detail; network timeout per step 120 s.
 * Everything the model wrote is HTML-escaped; links come only from the engine/catalog (never from model text).
 
 ## 8. Tests and evaluation

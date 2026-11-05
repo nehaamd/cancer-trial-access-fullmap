@@ -45,7 +45,7 @@ export async function handle(request, env, callModel) {
 }
 
 // ---------- the model ----------
-export const MODEL_TIMEOUT_MS = 25000;
+export const MODEL_TIMEOUT_MS = 40000;   // a 2,500-token final answer can take 30 s; the client waits 120 s per step (3 calls worst case)
 export function makeCallModel(env, fetchFn = (typeof fetch === 'function' ? fetch : null)) {
   return async function callModel(payload) {
     if (!env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY is not set on the worker');

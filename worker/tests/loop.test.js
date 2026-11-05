@@ -203,7 +203,7 @@ await test('loop: happy path tools → final, verification ok, signatures round-
   assert(await verifySig(responses[0].assistant, responses[0].sig, SECRET), 'sig verifies');
   eq(r.kind, 'answer'); eq(r.step, 2); eq(r.verification, { ok: true, issues: [], retries: 0 }); eq(r.model, 'claude-sonnet-5-5');
   eq(r.answer.map.highlight.from_call, turns[0].assistant[0].id);
-  eq(model.calls.length, 2); eq(model.calls[0].tool_choice, { type: 'auto' }); eq(model.calls[0].max_tokens, 1200); assert(!('temperature' in model.calls[0]), 'no temperature');
+  eq(model.calls.length, 2); eq(model.calls[0].tool_choice, { type: 'auto' }); eq(model.calls[0].max_tokens, 2500); assert(!('temperature' in model.calls[0]), 'no temperature');
   eq(model.calls[0].system[0].cache_control, { type: 'ephemeral' }); eq(model.calls[0].tools.at(-1).cache_control, { type: 'ephemeral' });
   // the second call saw the question, the assistant turn and the tool results
   const m = model.calls[1].messages; eq(m.length, 3); eq(m[0], { role: 'user', content: Q }); eq(m[1].role, 'assistant'); eq(m[2].content.map(b => b.type), ['tool_result', 'tool_result']); eq(m[2].content[0].tool_use_id, turns[0].assistant[0].id);
@@ -399,7 +399,7 @@ await test('http: makeCallModel posts the §3 shape, retries once on 529, maps t
   const seen = [];
   const fetchOk = async (url, init) => { seen.push({ url, init }); return new Response(JSON.stringify({ content: [txt('hi')], stop_reason: 'end_turn', usage: { input_tokens: 1 }, model: 'm' }), { status: 200 }); };
   const call = makeCallModel({ ANTHROPIC_API_KEY: 'sk-x' }, fetchOk);
-  const out = await call({ model: 'm', max_tokens: 1200, system: [], tools: [], tool_choice: { type: 'auto' }, messages: [] });
+  const out = await call({ model: 'm', max_tokens: 2500, system: [], tools: [], tool_choice: { type: 'auto' }, messages: [] });
   eq(out.content, [txt('hi')]); eq(seen[0].url, 'https://api.anthropic.com/v1/messages'); eq(seen[0].init.headers['x-api-key'], 'sk-x'); eq(seen[0].init.headers['anthropic-version'], '2023-06-01'); eq(seen[0].init.method, 'POST'); assert(seen[0].init.signal, 'abort signal'); assert(!JSON.parse(seen[0].init.body).temperature, 'no temperature');
   let n = 0; const flaky = async () => { n++; return n === 1 ? new Response('overloaded', { status: 529 }) : new Response(JSON.stringify({ content: [] }), { status: 200 }); };
   const t0 = Date.now(); await makeCallModel({ ANTHROPIC_API_KEY: 'k' }, flaky)({ model: 'm', messages: [] }); eq(n, 2); assert(Date.now() - t0 >= 1400, 'waited 1.5 s');

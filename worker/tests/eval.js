@@ -176,6 +176,12 @@ async function worker() { while (next < questions.length) { const i = next++; co
 function report(r) {
   const reason = r.pass ? (r.notes && r.notes.length && VERBOSE ? ` (${r.notes.join('; ')})` : '') : ` — ${r.failures.join('; ')}`;
   console.log(`${r.pass ? 'PASS' : 'FAIL'} ${r.id} [${r.cat}${r.hard_gate ? ', hard gate' : ''}] ${r.steps} steps ${r.latency_ms} ms  ${r.q}${reason}`);
+  if (!r.pass || VERBOSE) {   // enough detail in the log to see what the model did (the artifact is not always reachable)
+    for (const c of r.calls || []) console.log(`       call ${c.name} ${JSON.stringify(c.input || {}).slice(0, 500)}${c.ids !== undefined ? ` -> ${c.ids} ids` : ''}${c.error ? ` ERROR ${String(c.error).slice(0, 200)}` : ''}`);
+    if (r.map) console.log(`       map ${JSON.stringify(r.map).slice(0, 400)}`);
+    if (r.interpretation) console.log(`       read: ${String(r.interpretation).slice(0, 300)}`);
+    if (r.answer_text) console.log(`       answer: ${String(r.answer_text).slice(0, 500)}`);
+  }
   if (VERBOSE) {
     if (r.interpretation) console.log(`      read as: ${r.interpretation}`);
     if (r.answer_text) console.log(`      answer: ${short(r.answer_text, 400)}`);

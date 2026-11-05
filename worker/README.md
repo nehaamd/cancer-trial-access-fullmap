@@ -61,7 +61,7 @@ Request: `{v: 3, q, turns: [{assistant, sig, results:[{tool_use_id, content, is_
   model is called again, up to 2 extra times; the response carries the last attempt and `verification.retries`. If the model
   answers a retry by calling tools instead, the step returns `kind:"tools"` for those calls and the failed attempt is dropped
   from the transcript (the client only ever echoes the turn it was given). A step may therefore take up to 3 model calls
-  (≈ 75 s worst case); the client waits 90 s per step.
+  (≈ 120 s worst case); the client waits 120 s per step.
 * `step` in a response is the number of the model call that produced it (`turns.length + 1`); `MAX_STEPS` (8) forces the last
   call to `final_answer` with a user message saying so (current models accept only `tool_choice: auto`).
 * Errors: `400 {error}` (bad body; `"bad transcript"` for signature/bookkeeping failures; a too-large result), `403` (origin),
@@ -100,7 +100,7 @@ Secrets (never in the repository or the site):
 - `ASK_SIGNING_SECRET` — optional HMAC secret for the transcript signatures. When unset the worker uses the SHA-256 of the API
   key (never returned anywhere); rotating the key then invalidates in-flight questions, which simply restart.
 
-Model calls: `POST https://api.anthropic.com/v1/messages`, `anthropic-version: 2023-06-01`, `max_tokens` 1200, no `temperature`,
+Model calls: `POST https://api.anthropic.com/v1/messages`, `anthropic-version: 2023-06-01`, `max_tokens` 2500, no `temperature`,
 `system` and the last tool carry `cache_control: {type:"ephemeral"}` (the ~14k-token prompt is cached across steps and
 questions), `tool_choice: {type:"auto"}` (any / tool are rejected by current models; the system prompt requires tool calls), 25 s timeout, one retry after 1.5 s on 429/529/5xx.
 
