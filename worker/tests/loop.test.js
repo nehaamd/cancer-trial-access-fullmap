@@ -11,7 +11,7 @@ import { step, validateBody, buildMessages, MAX_STEPS, MAX_RESULT_BYTES, MAX_CAL
 import { sign, verifySig, canonical, constantTimeEqual, secretFor, sha256hex } from '../src/sign.js';
 import { verify, numbersIn, numberWordsIn, capitalisedTokens, buildContext } from '../src/verify.js';
 import { systemPrompt, toolDefinitions, catalogPaths, EXAMPLES, TOOL_NAMES } from '../src/prompt.js';
-import { handle, checkLimits, resetLimits, makeCallModel, MAX_BODY_BYTES } from '../src/index.js';
+import { handle, checkLimits, resetLimits, makeCallModel, MAX_BODY_BYTES, FEEDBACK_MAX_BYTES } from '../src/index.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url)); const ROOT = path.resolve(HERE, '..', '..');
 let passed = 0, failed = 0; const failures = [];
@@ -404,6 +404,23 @@ await test('http: a request body over MAX_BODY_BYTES is refused with 413 before 
   const r = await handle(req(huge, { ip: '8.8.8.8' }), ENV, fakeModel([])); eq(r.status, 413); assert((await r.json()).error.includes('too large'));
   const r2 = await handle(new Request('https://worker.test/ask', { method: 'POST', headers: { 'content-type': 'application/json', Origin: 'https://nehaamd.github.io', 'content-length': String(MAX_BODY_BYTES + 1) }, body: '{}' }), ENV, fakeModel([])); eq(r2.status, 413);
 }));
+await test('http: POST /feedback logs one {feedback} line without visitor identifiers, with CORS, size, shape and rate checks', async () => {
+  resetLimits(); const lines = []; const real = console.log; console.log = (...a) => { lines.push(a.join(' ')); };
+  try {
+    const fb = { v: 3, kind: 'feedback', q: 'which counties in texas have oncologists but no trials?', verdict: 'no', answer_text: '48 of 254 Texas counties…', interpretation: 'Class 2 counties.', steps: [{ tool: 'query', input: '{"table":"counties"}' }], model: 'claude-sonnet-5-5', data_as_of: '2026-11-03', verified: true, method: null };
+    const r = await handle(req(fb, { path: '/feedback', ip: '4.4.4.4' }), ENV, fakeModel([])); eq(r.status, 200); eq(await r.json(), { ok: true }); eq(r.headers.get('Access-Control-Allow-Origin'), 'https://nehaamd.github.io');
+    const logged = lines.map(l => { try { return JSON.parse(l); } catch (e) { return null; } }).filter(x => x && x.feedback); eq(logged.length, 1); eq(logged[0].feedback.verdict, 'no'); eq(logged[0].feedback.q, fb.q); eq(logged[0].feedback.steps, fb.steps);
+    assert(!JSON.stringify(logged).includes('4.4.4.4'), 'no visitor address in the log');
+    eq((await handle(req(null, { method: 'OPTIONS', path: '/feedback' }), ENV, fakeModel([]))).status, 204, 'preflight');
+    eq((await handle(req(fb, { path: '/feedback', origin: 'https://evil.test' }), ENV, fakeModel([]))).status, 403);
+    eq((await handle(req(null, { path: '/feedback', method: 'GET' }), ENV, fakeModel([]))).status, 404);
+    eq((await handle(req({ ...fb, answer_text: 'x'.repeat(FEEDBACK_MAX_BYTES) }, { path: '/feedback', ip: '4.4.4.5' }), ENV, fakeModel([]))).status, 413);
+    for (const badBody of [{ ...fb, verdict: 'maybe' }, { ...fb, kind: 'ask' }, { ...fb, q: '' }, { ...fb, v: 2 }]) eq((await handle(req(badBody, { path: '/feedback', ip: '4.4.4.6' }), ENV, fakeModel([]))).status, 400, JSON.stringify(badBody).slice(0, 60));
+    eq((await handle(req('{oops', { path: '/feedback', ip: '4.4.4.6' }), ENV, fakeModel([]))).status, 400);
+    resetLimits(); let last; for (let i = 0; i < 7; i++) last = await handle(req(fb, { path: '/feedback', ip: '4.4.4.7' }), ENV, fakeModel([])); eq(last.status, 429, 'the seventh in a minute is refused'); assert((await last.json()).retry_after_s >= 1);
+    eq((await handle(req({ v: 3, q: 'hello', turns: [] }, { ip: '4.4.4.7' }), ENV, otherModel())).status, 200, 'feedback has its own budget: questions still pass');
+  } finally { console.log = real; }
+});
 await test('http: makeCallModel posts the §3 shape, retries once on 529, maps timeouts', async () => {
   const seen = [];
   const fetchOk = async (url, init) => { seen.push({ url, init }); return new Response(JSON.stringify({ content: [txt('hi')], stop_reason: 'end_turn', usage: { input_tokens: 1 }, model: 'm' }), { status: 200 }); };

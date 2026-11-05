@@ -19,6 +19,7 @@ export async function handle(request, env, callModel) {
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   const url = new URL(request.url);
   if (url.pathname === '/health') return json({ ok: true, v: PROTOCOL_VERSION, model: env.MODEL || null, site: env.SITE_BASE || null }, cors);
+  if (url.pathname === '/feedback') return feedback(request, env, cors, origin);
   if (url.pathname !== '/ask' || request.method !== 'POST') return json({ error: 'POST /ask with {"v":3,"q":"…","turns":[]}' }, cors, 404);
   if (!allowed(origin, env)) return json({ error: 'This page is not allowed to use the question box.' }, cors, 403);
   if (parseInt(request.headers.get('content-length')) > MAX_BODY_BYTES) return json({ error: 'The request is too large.' }, cors, 413);
@@ -42,6 +43,32 @@ export async function handle(request, env, callModel) {
     console.log(JSON.stringify({ q, step: turns + 1, error: msg.slice(0, 600) }));
     return json({ error: 'The question box is unavailable right now; the map and its filters still work.', detail: msg.slice(0, 300) }, cors, 502);
   }
+}
+
+// ---------- POST /feedback: "Was this right?" from the answer card (ASK_CONTRACT §7) ----------
+// Validates the shape and the size (≤ 20 KB), applies its own per-visitor minute limit, writes ONE log line {feedback: {...}} and
+// returns {ok:true}. Nothing about the visitor is logged or stored (the address is used only for the in-memory limit).
+export const FEEDBACK_MAX_BYTES = 20 * 1024;
+const fbSeen = new Map();
+export function checkFeedbackLimit(ip, env, now = Date.now()) {
+  const per = parseInt(env.FEEDBACK_PER_MINUTE) || 6;
+  const arr = (fbSeen.get(ip) || []).filter(t => now - t < 60000);
+  if (arr.length >= per) return { ok: false, retry_after_s: Math.max(1, Math.ceil((60000 - (now - arr[0])) / 1000)) };
+  arr.push(now); fbSeen.set(ip, arr); if (fbSeen.size > 5000) fbSeen.clear(); return { ok: true };
+}
+const str = (v, n) => typeof v === 'string' ? v.replace(/\s+/g, ' ').trim().slice(0, n) : '';
+async function feedback(request, env, cors, origin) {
+  if (request.method !== 'POST') return json({ error: 'POST /feedback with {"v":3,"kind":"feedback",…}' }, cors, 404);
+  if (!allowed(origin, env)) return json({ error: 'This page is not allowed to send feedback.' }, cors, 403);
+  if (parseInt(request.headers.get('content-length')) > FEEDBACK_MAX_BYTES) return json({ error: 'The feedback is too large.' }, cors, 413);
+  let body; try { const text = await request.text(); if (new TextEncoder().encode(text).length > FEEDBACK_MAX_BYTES) return json({ error: 'The feedback is too large.' }, cors, 413); body = JSON.parse(text); } catch (e) { return json({ error: 'The feedback was not understood.' }, cors, 400); }
+  if (!body || typeof body !== 'object' || Array.isArray(body) || body.kind !== 'feedback' || (body.v !== undefined && body.v !== PROTOCOL_VERSION) || !['yes', 'no'].includes(body.verdict) || typeof body.q !== 'string' || !body.q.trim()) return json({ error: 'The feedback was not understood.' }, cors, 400);
+  const r = checkFeedbackLimit(request.headers.get('CF-Connecting-IP') || 'x', env);
+  if (!r.ok) return json({ error: 'Too much feedback in a minute; please wait a moment.', retry_after_s: r.retry_after_s }, { ...cors, 'retry-after': String(r.retry_after_s) }, 429);
+  const steps = (Array.isArray(body.steps) ? body.steps : []).slice(0, 12).filter(x => x && typeof x === 'object').map(x => ({ tool: str(x.tool, 20), input: str(typeof x.input === 'string' ? x.input : JSON.stringify(x.input ?? null), 300) }));
+  const rec = { q: str(body.q, 400), verdict: body.verdict, answer_text: str(body.answer_text, 1500), interpretation: str(body.interpretation, 600), steps, model: str(body.model, 60), data_as_of: str(body.data_as_of, 30), verified: body.verified === true, method: str(body.method, 60) || null };
+  console.log(JSON.stringify({ feedback: rec }));
+  return json({ ok: true }, cors);
 }
 
 // ---------- the model ----------
@@ -80,7 +107,7 @@ export function checkLimits(ip, env, now = Date.now(), continuation = false) {
   if (continuation) dayCountCont++; else dayCount++;
   return { ok: true };
 }
-export function resetLimits() { seen.clear(); seenCont.clear(); dayCount = 0; dayCountCont = 0; dayStamp = ''; }
+export function resetLimits() { seen.clear(); seenCont.clear(); fbSeen.clear(); dayCount = 0; dayCountCont = 0; dayStamp = ''; }
 
 // ---------- plumbing ----------
 function allowed(origin, env) { if (!origin) return true; return (env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean).includes(origin); }
