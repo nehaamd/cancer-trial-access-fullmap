@@ -311,8 +311,8 @@ await test('loop: a text-only reply becomes kind:"answer" with answerable "partl
   const model2 = fakeModel([[txt('Hello there.')], [tu('final_answer', { answer: catalog.OTHER_TEXT, answerable: 'no', interpretation: 'Not a question about the map\'s data.', not_in_data: ['Greetings are not data.'] })]]);
   const r2 = await step({ v: 3, q: 'hey you', turns: [] }, ENV, model2);
   eq(r2.kind, 'answer'); eq(r2.verification.retries, 1); assert(r2.verification.ok); eq(model2.calls[1].messages[2].role, 'user'); assert(typeof model2.calls[1].messages[2].content === 'string' && model2.calls[1].messages[2].content.includes('Text replies are not shown'));
-  // a text-only reply whose every token checks out passes as it is
-  const model3 = fakeModel([[txt('The data covers 254 counties in Texas.')]]);
+  // a text-only reply whose every token checks out passes as it is (after the two nudges)
+  const model3 = fakeModel([[txt('The data covers 254 counties in Texas.')], [txt('The data covers 254 counties in Texas.')], [txt('The data covers 254 counties in Texas.')]]);
   const b = [tu('query', { table: 'counties' })]; const turns = [{ assistant: b, sig: await sign(b, SECRET), results: [{ tool_use_id: b[0].id, content: '{"in_scope":254}' }] }];
   const r3 = await step({ v: 3, q: 'how many counties in texas', turns }, ENV, model3); eq(r3.kind, 'answer'); eq(r3.verification.ok, true); eq(r3.answer.answerable, 'partly');
 });
