@@ -53,7 +53,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         shell: bash
-        run: set -o pipefail; node worker/tests/eval.js --max "${{ github.event_name == 'pull_request' && '30' || inputs.max || '0' }}" --only "${{ inputs.only || '' }}" --model "${{ inputs.model || 'claude-sonnet-5-5' }}" --json eval_out.json --md eval_summary.md | tee eval_log.txt
+        run: set -o pipefail; node worker/tests/eval.js --max "${{ github.event_name == 'pull_request' && '30' || inputs.max || '0' }}" --only "${{ inputs.only || '' }}" --model "${{ inputs.model || 'claude-sonnet-5-5' }}" --json eval_out.json --md eval_summary.md ${{ github.event_name == 'pull_request' && '--verbose' || '' }} | tee eval_log.txt
       - name: Keep the transcripts
         if: always()
         uses: actions/upload-artifact@v4
