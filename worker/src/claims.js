@@ -13,7 +13,7 @@ import { numbersIn, numbersWithPos, writtenMatches } from './verify.js';
 export const MAX_CLAIMS = 40;
 const PLACE_ID_RE = /^(\d{5}|[A-Z]{2}-\d{2}|[A-Z]{2}|US)$/;
 const MONTHS = 'january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec';
-const CLAUSE_SPLIT = /[;:,()—]|\s(?:and|but|while|whereas|against|versus|vs|compared (?:with|to)|than|or|with|ahead of|behind|followed by|next to|beside|unlike)\s/i;
+const CLAUSE_SPLIT = /[;:,()—]|\s(?:and|but|while|whereas|against|versus|vs|compared (?:with|to)|than|or|with|to|from|ahead of|behind|followed by|next to|beside|unlike)\s/i;
 const SCOPE_LEAD = /\b(?:of|out of|among|across|total of|in all|from)\s+(?:the\s+|all\s+|its\s+)?$/i;   // "38 of 254 …", "182,206 of the 1,180,232 …": a total, not the place's own figure
 const STATE_WORDS = /\b(?:statewide|the state(?:'s|’s)?|state-wide|the whole state|the state as a whole)\b/gi;
 const US_WORDS = /\b(?:nationally|nationwide|national|the nation(?:'s|’s)?|the country(?:'s|’s)?|countrywide|the United States|across the US)\b|\b(?:U\.S\.|US|America)(?![\w.])/g;
@@ -238,9 +238,9 @@ export function checkText(answer, ctx, claims, issues) {
   const display = id => ix.names.get(id) || id;
   // the masked text: one private-use character per mention, abbreviation dots removed (so sentences split cleanly)
   let masked = ''; let pos = 0; mentions.forEach((m, k) => { masked += text.slice(pos, m.start) + PH(k); pos = m.end; }); masked += text.slice(pos);
-  masked = masked.replace(ABBREV_DOTS, m => m.replace(/\./g, ''));
+  masked = masked.replace(ABBREV_DOTS, m => m.replace(/\./g, '')).replace(/(?<![\p{L}\p{N}])(\p{Lu})\.(?=\s)/gu, '$1');   // abbreviations and initials ("Sanford D. Bishop") do not end a sentence
   const sentences = masked.split(/(?<=[.!?])\s+/);
-  let lastPlaceBefore = null;   // the last mention of the earlier sentences
+  let lastSentence = [];   // the mentions of the latest earlier sentence that named a place: a sentence with no place continues it
   const statesOfClaims = new Set(claims.map(c => c.place).filter(p => /^[A-Z]{2}$/.test(p) && (C.STATES || {})[p]));
   const idsOf = (k, inheritedState) => { const m = mentions[k]; if (m.anchor === 'STATE') { const s = new Set(statesOfClaims); if (inheritedState) s.add(inheritedState); return s; } return m.ids; };
   const stateOfIds = ids => { for (const id of ids) { if (/^[A-Z]{2}$/.test(id)) return id; const st = ix.states.get(id) || (/^[A-Z]{2}-\d{2}$/.test(id) ? id.slice(0, 2) : null); if (st) return st; } return null; };
@@ -257,13 +257,16 @@ export function checkText(answer, ctx, claims, issues) {
       const ci = clauseOf(n.index); const cl = clauses[ci] || { off: 0, text: sent };
       const inClause = phPositions.filter(p => p.at >= cl.off && p.at < cl.off + cl.text.length);
       const prevIn = inClause.filter(p => p.at < n.index).pop(), nextIn = inClause.find(p => p.at > n.index);
-      const prevSent = phPositions.filter(p => p.at < cl.off).pop(), nextSent = phPositions.find(p => p.at >= cl.off + cl.text.length);
+      // a clause with no place continues the last place before it, skipping an aside in parentheses that closed before the number
+      // ("Hidalgo County, Texas (Texas 15th and Texas 34th) has 18 trials" continues Hidalgo County)
+      const closedAside = at => { const open = sent.lastIndexOf('(', at), close = sent.indexOf(')', at); return open >= 0 && close > at && close < n.index && sent.lastIndexOf('(', n.index) <= open; };
+      const prevSent = phPositions.filter(p => p.at < cl.off && !closedAside(p.at)).pop(), nextSent = phPositions.find(p => p.at >= cl.off + cl.text.length);
       let mode, k = null;
       if (prevIn) { mode = 'strict'; k = prevIn.k; } else if (nextIn) { mode = 'strict'; k = nextIn.k; }
       else if (prevSent) { mode = 'inherited'; k = prevSent.k; } else if (nextSent) { mode = 'inherited'; k = nextSent.k; }
       else mode = 'placeless';
-      const inheritedState = lastPlaceBefore !== null ? stateOfIds(mentions[lastPlaceBefore].ids) : null;
-      const ids = k !== null ? idsOf(k, stateOfIds(prevSent ? mentions[prevSent.k].ids : []) || inheritedState) : lastPlaceBefore !== null ? idsOf(lastPlaceBefore, null) : new Set();
+      const inheritedState = lastSentence.length ? stateOfIds(new Set(lastSentence.flatMap(j => [...mentions[j].ids]))) : null;
+      const ids = k !== null ? idsOf(k, stateOfIds(prevSent ? mentions[prevSent.k].ids : []) || inheritedState) : new Set(lastSentence.flatMap(j => [...idsOf(j, inheritedState)]));
       const own = claimsOf(byPlace, ids);
       const snippet = `"${n.raw}${(after.replace(PH_RE, '').match(/^\s*%?\s*[\p{L}+-]+/u) || [''])[0].replace(/^%/, '')}"`;
       const ownNames = [...ids].map(display).join(' / ');
@@ -273,8 +276,10 @@ export function checkText(answer, ctx, claims, issues) {
         continue;
       }
       if (matchIn(n, own).length) continue;
-      if (mode !== 'strict' && matchIn(n, scopeClaims).length) continue;
-      if (mode === 'strict' && SCOPE_LEAD.test(before.replace(PH_RE, ' ')) && matchIn(n, scopeClaims).length) continue;
+      // a figure of a place the answer never names (the scope: "1,180,232 residents 55+ live in them") passes in a sentence with no
+      // place; next to a named place only as a total ("of 254 …") or after a place that has figures of its own
+      const lead = SCOPE_LEAD.test(before.replace(PH_RE, ' '));
+      if ((mode === 'placeless' || lead || (mode === 'inherited' && own.length)) && matchIn(n, scopeClaims).length) continue;
       const others = claims.filter(c => !ids.has(c.place));
       const elsewhere = matchIn(n, others);
       if (exempt) {   // a constant or a question number: rejected only when it is plainly another place's figure on a field this place also claims
@@ -283,7 +288,7 @@ export function checkText(answer, ctx, claims, issues) {
         if (!swap) continue;
       }
       if (mode === 'placeless') {
-        if (elsewhere.length) issues.push(`${snippet} is in a sentence that names no place, but the claims give it to ${[...new Set(elsewhere.map(c => display(c.place)))].join(' and ')}; name the place in that sentence.`);
+        if (elsewhere.length) issues.push(`${snippet} is in a sentence that names no place${ids.size ? ` (so it reads as ${ownNames}'s)` : ''}, but the claims give it to ${[...new Set(elsewhere.map(c => display(c.place)))].join(' and ')}; name the place in that sentence.`);
         else issues.push(`${snippet} in answer is not listed in claims; add {place, field, value, call} for it (a whole-result figure takes the scope as place, e.g. "${[...statesOfClaims][0] || 'US'}").`);
         continue;
       }
@@ -292,7 +297,7 @@ export function checkText(answer, ctx, claims, issues) {
       else if (!own.length) issues.push(`${snippet} is written next to ${ownNames}, but no claim lists a figure for ${ownNames}; add the claim (place "${[...ids][0] || '?'}") or move the figure next to the place it belongs to.`);
       else issues.push(`${snippet} is written next to ${ownNames}, but the claims give ${ownNames} only ${ownText}; add the claim for this figure or correct it.`);
     }
-    if (sentMentions.length) lastPlaceBefore = sentMentions[sentMentions.length - 1];
+    if (sentMentions.length) lastSentence = sentMentions;
   }
 }
 
