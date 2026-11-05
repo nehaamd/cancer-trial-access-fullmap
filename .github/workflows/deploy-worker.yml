@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['worker/**', '.github/workflows/deploy-worker.yml']
+    paths: ['worker/**', 'docs/ask/catalog.js', 'docs/ask/methods.js', '.github/workflows/deploy-worker.yml']   # the worker bundles the catalog and the method list (prompt.js)
 concurrency: deploy-worker
 permissions:
   contents: write
@@ -34,7 +34,7 @@ jobs:
           done
           echo "::error::Could not register a workers.dev subdomain. Register one in the Cloudflare dashboard (Workers & Pages -> Overview -> set up a subdomain) and re-run."; exit 1
       - name: Run the offline worker suite (protocol, verification, prompt and tool schemas; no network)
-        run: node worker/tests/loop.test.js
+        run: node worker/tests/loop.test.js && node worker/tests/claims.test.js
       - name: Deploy the worker
         working-directory: worker
         run: npx --yes wrangler@4 deploy

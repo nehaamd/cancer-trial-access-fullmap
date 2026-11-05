@@ -134,7 +134,7 @@ check("Compressed tract files (tracts60.bin.gz, tract_county.bin.gz) decompress 
 # files this refresh publishes). RELEASE_GATE_SKIP_NODE=1 skips the suites on a machine without Node.
 def ask_suites():
     import shutil
-    suites = [("worker/tests/engine.test.js", "engine"), ("worker/tests/loop.test.js", "loop"), ("worker/tests/client.test.js", "client")]
+    suites = [("worker/tests/engine.test.js", "engine"), ("worker/tests/loop.test.js", "loop"), ("worker/tests/claims.test.js", "claims (per-place attribution)"), ("worker/tests/methods.test.js", "standard methods"), ("worker/tests/client.test.js", "client"), ("worker/tests/eval_checks.test.js", "eval checks")]
     present = [(ROOT / p, label) for p, label in suites if (ROOT / p).exists()]
     if not present: check("Question-box offline suites (engine, loop, client)", "no suite present yet (worker/tests/*.test.js) — skipped", True); return
     node = shutil.which("node")
