@@ -1,4 +1,4 @@
-/* Cancer Trial Access Map — helpers for the question-based pages (community.html, act.html, learn.html).
+/* Cancer Clinical Trial Access Map — helpers for the question-based pages (community.html, act.html, learn.html).
    Reads community.js (built by build_community.py from the same files the map reads) so these pages cannot disagree with the map.
    Nothing here depends on a particular data pull. */
 window.EXPLORE = (function () {

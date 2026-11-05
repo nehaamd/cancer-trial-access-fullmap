@@ -226,7 +226,7 @@ def main():
             from validate_extras import run as extras, write_md as extras_md; ex = extras("--browser" in sys.argv); rows.extend(ex); extras_md(ex)
         except Exception as e: check("v3.3 extras", f"validate_extras.py failed: {type(e).__name__} {e}", False)
     # write report
-    md = ["# Validation — National Cancer Trial Access Map v3", "", f"Registry pull {flog['timestamp_utc'][:10]}" + (f" (registry data of {flog['registry_data_timestamp'][:10]})" if flog.get("registry_data_timestamp") else "") + f"; road graph TIGER 2025 (graph version {glog.get('graph_version', 1)}); {config.ACS_LABEL}; State Cancer Profiles {blog['sites']['all']['title'].split(', ')[-1]}. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d', time.gmtime())} (UTC).", "",
+    md = ["# Validation — National Cancer Clinical Trial Access Map v3", "", f"Registry pull {flog['timestamp_utc'][:10]}" + (f" (registry data of {flog['registry_data_timestamp'][:10]})" if flog.get("registry_data_timestamp") else "") + f"; road graph TIGER 2025 (graph version {glog.get('graph_version', 1)}); {config.ACS_LABEL}; State Cancer Profiles {blog['sites']['all']['title'].split(', ')[-1]}. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d', time.gmtime())} (UTC).", "",
           "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
     text = "\n".join(md) + "\n" + (("\n" + Path("VALIDATION_review.md").read_text()) if Path("VALIDATION_review.md").exists() else "")
     (OUT / "VALIDATION_v3.md").write_text(text); Path("VALIDATION_v3.md").write_text(text)

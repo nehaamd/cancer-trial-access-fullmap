@@ -21,7 +21,7 @@ const eq = (a, b, msg) => { if (JSON.stringify(a) !== JSON.stringify(b)) throw n
 const includes = (arr, sub) => arr.some(s => String(s).includes(sub));
 async function rejects(p, status, text) { try { await p; } catch (e) { if (status && e.status !== status) throw new Error(`expected status ${status}, got ${e.status}: ${e.message}`); if (text && !String(e.message).includes(text)) throw new Error(`expected "${text}" in "${e.message}"`); return e; } throw new Error('expected a rejection'); }
 
-const ENV = { ANTHROPIC_API_KEY: 'sk-ant-test-key', MODEL: 'claude-sonnet-5-5', PER_MINUTE: '3', DAILY_CAP: '5', ALLOWED_ORIGINS: 'https://nehaamd.github.io,http://localhost:8080', SITE_BASE: 'https://example.test/' };
+const ENV = { ANTHROPIC_API_KEY: 'sk-ant-test-key', MODEL: 'claude-sonnet-5-5', PER_MINUTE: '3', DAILY_CAP: '5', ALLOWED_ORIGINS: 'https://cancertrialaccess.org, https://www.cancertrialaccess.org,https://nehaamd.github.io,http://localhost:8080', SITE_BASE: 'https://example.test/' };
 const SECRET = await secretFor(ENV);
 let ids = 0; const tid = () => `toolu_${String(++ids).padStart(4, '0')}`;
 const tu = (name, input, id = tid()) => ({ type: 'tool_use', id, name, input });
@@ -196,7 +196,7 @@ await test('verify: rounding, million form, question numbers, constants, vintage
 await test('verify: style catches unicode bullets, bare domains, "dot com" and advice synonyms; common sentence starters pass', () => {
   const bad = (answer, sub) => { const r = verify({ ...good, answer }, ctxOf(TURNS)); assert(!r.ok && includes(r.issues, sub), `${answer} should fail with "${sub}": ${JSON.stringify(r.issues)}`); };
   bad('38 of 254 Texas counties:\n– Hidalgo County, Texas\n– Webb County, Texas', 'markdown'); bad('38 counties.\n‣ Hidalgo County, Texas', 'markdown'); bad('Hidalgo County, Texas is *fully* short of trials.', 'markdown');
-  bad('38 of 254 Texas counties; see example.com for more.', 'URL'); bad('38 of 254 Texas counties; see example dot com.', 'URL'); bad('38 of 254 Texas counties; see nehaamd.github.io.', 'URL');
+  bad('38 of 254 Texas counties; see example.com for more.', 'URL'); bad('38 of 254 Texas counties; see example dot com.', 'URL'); bad('38 of 254 Texas counties; see nehaamd.github.io.', 'URL'); bad('38 of 254 Texas counties; see cancertrialaccess.org.', 'URL');
   bad('38 of 254 Texas counties. It is advisable to talk to a doctor.', 'advice'); bad('38 of 254 Texas counties. Patients ought to speak with a doctor.', 'advice'); bad('38 of 254 Texas counties. It would be wise to check with your oncologist.', 'advice');
   const ok = answer => { const r = verify({ ...good, answer }, ctxOf(TURNS)); assert(r.ok, `${answer} -> ${JSON.stringify(r.issues)}`); };
   ok('Therefore 38 of 254 Texas counties match. Currently 9 districts contain such counties. Counting only those, Hidalgo County, Texas leads. Approximately 38% of Texas 34th lives in them. Ovarian cancer is a type key, as listed on ClinicalTrials.gov and refreshed from congress.gov.');
@@ -373,10 +373,13 @@ await test('loop: unknown env (no key, no secret) fails with a 5xx-mapped error,
 
 // ---------- index.js: HTTP ----------
 const realLog = console.log; const quiet = async fn => { console.log = (...a) => { if (!(typeof a[0] === 'string' && a[0].startsWith('{"q"'))) realLog(...a); }; try { return await fn(); } finally { console.log = realLog; } };
-const req = (body, { origin = 'https://nehaamd.github.io', ip = '1.2.3.4', method = 'POST', path = '/ask' } = {}) => new Request('https://worker.test' + path, { method, headers: { 'content-type': 'application/json', ...(origin ? { Origin: origin } : {}), 'CF-Connecting-IP': ip }, body: method === 'POST' ? (typeof body === 'string' ? body : JSON.stringify(body)) : undefined });
+const req = (body, { origin = 'https://cancertrialaccess.org', ip = '1.2.3.4', method = 'POST', path = '/ask' } = {}) => new Request('https://worker.test' + path, { method, headers: { 'content-type': 'application/json', ...(origin ? { Origin: origin } : {}), 'CF-Connecting-IP': ip }, body: method === 'POST' ? (typeof body === 'string' ? body : JSON.stringify(body)) : undefined });
 await test('http: CORS preflight, /health, origin check, bad JSON, 404', () => quiet(async () => {
   resetLimits();
-  const pre = await handle(req(null, { method: 'OPTIONS' }), ENV, fakeModel([])); eq(pre.status, 204); eq(pre.headers.get('Access-Control-Allow-Origin'), 'https://nehaamd.github.io');
+  const pre = await handle(req(null, { method: 'OPTIONS' }), ENV, fakeModel([])); eq(pre.status, 204); eq(pre.headers.get('Access-Control-Allow-Origin'), 'https://cancertrialaccess.org');
+  for (const o of ['https://www.cancertrialaccess.org', 'https://nehaamd.github.io']) { const p = await handle(req(null, { method: 'OPTIONS', origin: o }), ENV, fakeModel([])); eq(p.headers.get('Access-Control-Allow-Origin'), o, 'allowed origin ' + o); }   // www and, during the move, the old github.io address
+  for (const o of ['http://cancertrialaccess.org', 'https://cancertrialaccess.org.evil.test', 'https://evilcancertrialaccess.org']) eq((await handle(req({ v: 3, q: Q }, { origin: o }), ENV, fakeModel([]))).status, 403, 'exact origins only: ' + o);
+  { const toml = fs.readFileSync(path.join(ROOT, 'worker', 'wrangler.toml'), 'utf8'); const listed = (toml.match(/^ALLOWED_ORIGINS\s*=\s*"([^"]*)"/m) || [])[1].split(',').map(s => s.trim()); for (const o of ['https://cancertrialaccess.org', 'https://www.cancertrialaccess.org', 'https://nehaamd.github.io']) assert(listed.includes(o), 'wrangler.toml allows ' + o); eq((toml.match(/^SITE_BASE\s*=\s*"([^"]*)"/m) || [])[1], catalog.SITE_BASE, 'wrangler.toml SITE_BASE matches docs/ask/catalog.js'); }
   const h = await handle(req(null, { method: 'GET', path: '/health' }), ENV, fakeModel([])); eq(h.status, 200); const hj = await h.json(); eq(hj.ok, true); eq(hj.v, 3); eq(h.headers.get('cache-control'), 'no-store');
   const bad = await handle(req({ v: 3, q: Q }, { origin: 'https://evil.test' }), ENV, fakeModel([])); eq(bad.status, 403); eq(bad.headers.get('Access-Control-Allow-Origin'), 'null');
   const nojson = await handle(req('{not json'), ENV, fakeModel([])); eq(nojson.status, 400);
@@ -417,13 +420,13 @@ await test('http: a request body over MAX_BODY_BYTES is refused with 413 before 
   resetLimits();
   const huge = JSON.stringify({ v: 3, q: Q, turns: [], pad: 'x'.repeat(MAX_BODY_BYTES + 10) });
   const r = await handle(req(huge, { ip: '8.8.8.8' }), ENV, fakeModel([])); eq(r.status, 413); assert((await r.json()).error.includes('too large'));
-  const r2 = await handle(new Request('https://worker.test/ask', { method: 'POST', headers: { 'content-type': 'application/json', Origin: 'https://nehaamd.github.io', 'content-length': String(MAX_BODY_BYTES + 1) }, body: '{}' }), ENV, fakeModel([])); eq(r2.status, 413);
+  const r2 = await handle(new Request('https://worker.test/ask', { method: 'POST', headers: { 'content-type': 'application/json', Origin: 'https://cancertrialaccess.org', 'content-length': String(MAX_BODY_BYTES + 1) }, body: '{}' }), ENV, fakeModel([])); eq(r2.status, 413);
 }));
 await test('http: POST /feedback logs one {feedback} line without visitor identifiers, with CORS, size, shape and rate checks', async () => {
   resetLimits(); const lines = []; const real = console.log; console.log = (...a) => { lines.push(a.join(' ')); };
   try {
     const fb = { v: 3, kind: 'feedback', q: 'which counties in texas have oncologists but no trials?', verdict: 'no', answer_text: '48 of 254 Texas counties…', interpretation: 'Class 2 counties.', steps: [{ tool: 'query', input: '{"table":"counties"}' }], model: 'claude-sonnet-5-5', data_as_of: '2026-11-03', verified: true, method: null };
-    const r = await handle(req(fb, { path: '/feedback', ip: '4.4.4.4' }), ENV, fakeModel([])); eq(r.status, 200); eq(await r.json(), { ok: true }); eq(r.headers.get('Access-Control-Allow-Origin'), 'https://nehaamd.github.io');
+    const r = await handle(req(fb, { path: '/feedback', ip: '4.4.4.4' }), ENV, fakeModel([])); eq(r.status, 200); eq(await r.json(), { ok: true }); eq(r.headers.get('Access-Control-Allow-Origin'), 'https://cancertrialaccess.org');
     const logged = lines.map(l => { try { return JSON.parse(l); } catch (e) { return null; } }).filter(x => x && x.feedback); eq(logged.length, 1); eq(logged[0].feedback.verdict, 'no'); eq(logged[0].feedback.q, fb.q); eq(logged[0].feedback.steps, fb.steps);
     assert(!JSON.stringify(logged).includes('4.4.4.4'), 'no visitor address in the log');
     eq((await handle(req(null, { method: 'OPTIONS', path: '/feedback' }), ENV, fakeModel([]))).status, 204, 'preflight');

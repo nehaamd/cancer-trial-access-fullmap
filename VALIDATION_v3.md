@@ -1,4 +1,4 @@
-# Validation — National Cancer Trial Access Map v3
+# Validation — National Cancer Clinical Trial Access Map v3
 
 Registry pull 2026-11-03 (registry data of 2026-11-03); road graph TIGER 2025 (graph version 2); ACS 2024 5-year; State Cancer Profiles 2019-2023. Checks re-run by `validate_v3.py` on 2026-11-03 (UTC).
 
