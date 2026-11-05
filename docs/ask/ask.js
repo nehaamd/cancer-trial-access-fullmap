@@ -31,7 +31,7 @@ const ERR = {
   steps: 'The question took too many steps to answer; try a narrower question.',
 };
 
-const ui = { form: null, input: null, btn: null, status: null, hint: null };
+const ui = { form: null, input: null, btn: null, status: null, hint: null, box: null };   // box: the map page's one box for places and questions (H().askBox), when it has one
 let engine = null, enginePromise = null, engineReady = false;
 let gen = 0, ctrl = null, cooldownUntil = 0, cooldownTimer = null;
 let prior = [];
@@ -42,8 +42,9 @@ const safe = fn => { try { return fn(); } catch (e) { return undefined; } };
 const short = (o, n = 90) => { let s; try { s = typeof o === 'string' ? o : JSON.stringify(o); } catch (e) { s = String(o); } s = String(s == null ? '' : s); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
 const reduceMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 const setStatus = t => { if (ui.status) ui.status.textContent = String(t == null ? '' : t); };
-function setBusy(on) { if (!ui.form) return; ui.btn.disabled = on || Date.now() < cooldownUntil; ui.btn.textContent = on ? 'Asking…' : 'Ask'; if (on) ui.form.setAttribute('aria-busy', 'true'); else ui.form.removeAttribute('aria-busy'); if (ui.hint) ui.hint.hidden = on || Date.now() < cooldownUntil; if (!on && Date.now() >= cooldownUntil) setStatus(''); }
-function setPlaceholder(follow) { if (!ui.input) return; const ph = follow ? PH_FOLLOW : (ui.input.dataset.ph0 || ''); ui.input.dataset.ph = ph; if (!/^Ask the map a question/.test(ui.input.placeholder)) ui.input.placeholder = ph; }   // the compact one-line box keeps its own placeholder (map.html layoutMap)
+// the shared box's button (ui.box) stays usable while a question runs: it also searches places
+function setBusy(on) { if (!ui.form) return; if (ui.box) ui.btn.setAttribute('aria-label', on ? 'Asking…' : 'Search or ask'); else { ui.btn.disabled = on || Date.now() < cooldownUntil; ui.btn.textContent = on ? 'Asking…' : 'Ask'; } if (on) ui.form.setAttribute('aria-busy', 'true'); else ui.form.removeAttribute('aria-busy'); if (ui.hint) ui.hint.hidden = on || Date.now() < cooldownUntil; if (!on && Date.now() >= cooldownUntil) setStatus(''); }
+function setPlaceholder(follow) { if (!ui.input) return; const ph = follow ? ((ui.box && ui.box.phFollow) || PH_FOLLOW) : (ui.input.dataset.ph0 || ''); ui.input.dataset.ph = ph; if (!/^Ask the map a question/.test(ui.input.placeholder)) ui.input.placeholder = ph; }   // the compact one-line box keeps its own placeholder (map.html layoutMap)
 const focusPref = () => { try { const v = sessionStorage.getItem(FOCUS_KEY); return v === '1' ? true : v === '0' ? false : null; } catch (e) { return null; } };
 const decideFocus = n => { const p = focusPref(); return p !== null ? p && n > 0 : n >= 1 && n <= R.FOCUS_MAX; };
 const known = id => { const h = H(); return h.placeName ? !!safe(() => h.placeName(id)) : true; };
@@ -72,8 +73,8 @@ async function postStep(body, signal) {
 }
 function startCooldown(seconds) {
   cooldownUntil = Date.now() + seconds * 1000; if (cooldownTimer) clearInterval(cooldownTimer);
-  const tick = () => { const left = Math.ceil((cooldownUntil - Date.now()) / 1000); if (left > 0) { setStatus(`Try again in ${left} s.`); if (ui.btn) ui.btn.disabled = true; if (ui.hint) ui.hint.hidden = true; return; }
-    clearInterval(cooldownTimer); cooldownTimer = null; cooldownUntil = 0; if (ui.btn) ui.btn.disabled = false; if (ui.hint) ui.hint.hidden = false; setStatus(''); };
+  const tick = () => { const left = Math.ceil((cooldownUntil - Date.now()) / 1000); if (left > 0) { setStatus(`Try again in ${left} s.`); if (ui.btn && !ui.box) ui.btn.disabled = true; if (ui.hint) ui.hint.hidden = true; return; }
+    clearInterval(cooldownTimer); cooldownTimer = null; cooldownUntil = 0; if (ui.btn && !ui.box) ui.btn.disabled = false; if (ui.hint) ui.hint.hidden = false; setStatus(''); };
   tick(); cooldownTimer = setInterval(tick, 1000);
 }
 function handleError(q, e) {
@@ -85,19 +86,23 @@ function handleError(q, e) {
 }
 
 // ---------- the card in the figures column ----------
-function removeCard() { const old = document.getElementById('ask-card'); if (old) old.remove(); const ag = document.getElementById('ask-again'); if (ag) ag.hidden = true; }
-function sync() {   // after every repaint, tab change or unit change (map.html's __askSync calls this): the "Map now shows" line and the way back to the box
+// The column shows one thing at a time (map.html paneView): the card replaces the place overview while it is open, with "Back to overview"
+// at its top; closing it (×, Escape) brings the overview back. Set aside with "Back to overview", the card stays open (its outlines too)
+// and the overview offers the way back to it.
+const paneView = v => { if (H().paneView) safe(() => H().paneView(v)); };
+const focusBox = () => { if (ui.box && ui.box.focus) ui.box.focus(); else if (ui.input) ui.input.focus({ preventScroll: true }); };
+function removeCard() { const old = document.getElementById('ask-card'); if (old) old.remove(); paneView('overview'); }
+function sync() {   // after every repaint, tab change or unit change (map.html's __askSync calls this): the "Map now shows" line
   const el = document.getElementById('ask-map-shows'); if (el && H().mapShows) el.textContent = safe(() => H().mapShows()) || '';
-  const ag = document.getElementById('ask-again'); if (ag) { ag.hidden = (H().tab ? H().tab() : 'map') === 'map' || !document.getElementById('ask-card'); const sp = ag.querySelector('span'); if (sp) sp.hidden = !(H().hl && safe(() => H().hl().length)); }   // "the Map tab shows the outlined places" only when there are outlines
 }
 function mountCard(html, opts = {}) {
-  removeCard(); const host = H().paneHost ? H().paneHost() : document.querySelector('#pane .tabs'); if (!host) return null;
-  let ag = document.getElementById('ask-again');
-  if (!ag) { host.insertAdjacentHTML('afterend', '<div class="ask-again" id="ask-again" hidden><button type="button" id="ask-again-b">Ask another question</button><span>The Map tab shows the outlined places.</span></div>'); ag = document.getElementById('ask-again');
-    ag.querySelector('button').addEventListener('click', () => { if (H().setTab) H().setTab('map'); if (ui.input) { ui.input.focus(); ui.input.select(); } }); }
-  ag.insertAdjacentHTML('afterend', html); const el = document.getElementById('ask-card'); if (!el) return null;
+  const old = document.getElementById('ask-card'); if (old) old.remove();
+  const host = H().paneHost ? H().paneHost() : null; if (!host) return null;
+  host.insertAdjacentHTML('afterbegin', html); const el = document.getElementById('ask-card'); if (!el) return null;
   el.querySelector('.ask-x').addEventListener('click', closeCard);
+  const back = el.querySelector('.ask-back'); if (back) back.addEventListener('click', () => { paneView('overview'); const r = document.getElementById('pane-ret-b'); if (r) r.focus({ preventScroll: true }); });
   el.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); closeCard(); } });
+  if (!opts.background) paneView('answer');
   sync();
   if (!opts.quiet) { const pane = document.getElementById('pane'); if (pane && !opts.keepScroll) pane.scrollTop = 0; if (opts.focus !== false) el.focus({ preventScroll: true });
     // stacked layout (a phone or a narrow window): the figures sit below the map, so bring the map and the answer under it into view
@@ -108,7 +113,7 @@ function closeCard() {   // the × or Escape: the card, the outlines and the foc
   if (document.querySelector('#ask-card.busy')) { gen++; if (ctrl) ctrl.abort(); setBusy(false); }
   removeCard(); if (H().highlight) H().highlight([]); if (H().setFocus) H().setFocus(false); window.__askState = null; card = null;
   try { history.replaceState(null, '', location.href); } catch (e) { /* file: pages */ }
-  sync(); if (ui.input) ui.input.focus({ preventScroll: true });
+  sync(); focusBox();
 }
 function renderBusy(q, log, lead) { mountCard(R.busyHTML(q, log, lead), { busy: true, focus: false }); }
 function renderSteps(log) { const ol = document.querySelector('#ask-card.busy .ask-steps'); if (ol) ol.innerHTML = R.stepsHTML(log); }
@@ -128,7 +133,7 @@ function renderAnswer(ctx, opts = {}) {
   });
   el.addEventListener('change', e => { if (e.target && e.target.id === 'ask-focus') setFocus(e.target.checked, true); });
 }
-function rerender(o = {}) { if (!card) return; const pane = document.getElementById('pane'), top = pane ? pane.scrollTop : 0; renderAnswer(card, { quiet: true }); if (pane) pane.scrollTop = top; if (o.focusSel) { const t = document.querySelector('#ask-card ' + o.focusSel); if (t && t.focus) t.focus({ preventScroll: true }); } }
+function rerender(o = {}) { if (!card) return; const pane = document.getElementById('pane'), top = pane ? pane.scrollTop : 0, aside = !(pane && pane.classList.contains('answering')); renderAnswer(card, { quiet: true, background: aside }); if (pane) pane.scrollTop = top; if (o.focusSel) { const t = document.querySelector('#ask-card ' + o.focusSel); if (t && t.focus) t.focus({ preventScroll: true }); } }
 function toggleSort(col) { if (!card || !col) return; const s = card.sort; card.sort = s && s.key === col ? (s.dir === 'asc' ? { key: col, dir: 'desc' } : null) : { key: col, dir: 'asc' }; rerender({ focusSel: `.ask-sort[data-col="${col.replace(/"/g, '\\"')}"]` }); }   // ascending, then descending, then the engine's order
 // "Was this right?": one POST to the worker, never waited on and never shown as an error; the buttons give way to the thanks
 function sendFeedback(verdict) {
@@ -230,18 +235,23 @@ function restore(st) {
   if (st && typeof st === 'object' && st.v === 3 && st.answer) { window.__askState = st; if (H().highlight) H().highlight(st.ids || []); if (H().setFocus) H().setFocus(!!st.focus && (st.ids || []).length > 0); renderAnswer(ctxOf(st, null), { quiet: true }); }
   else { window.__askState = null; card = null; removeCard(); if (H().highlight) H().highlight([]); if (H().setFocus) H().setFocus(false); sync(); }
 }
-function newQuestion() { prior = []; setPlaceholder(false); if (ui.input) { ui.input.value = ''; ui.input.focus(); } }
+function newQuestion() { prior = []; setPlaceholder(false); if (ui.input) { ui.input.value = ''; ui.input.focus(); } }   // the shared box opens its Try list on this focus
 function clear() { closeCard(); newQuestion(); setStatus(''); }
 
 // ---------- mount ----------
 function init() {
-  if (!ASK_URL || !SITE.mountAskBox) return;
-  const mount = (H().askMount && H().askMount()) || document.getElementById('ask-mount'); if (!mount) return;
+  if (!ASK_URL) return;
   const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = new URL('./ask.css', import.meta.url).href; document.head.appendChild(link);
-  SITE.askStyles(); ui.form = SITE.mountAskBox(mount, { status: true }); ui.input = document.getElementById('askq'); ui.btn = document.getElementById('askb'); ui.status = document.getElementById('ask-status'); ui.hint = document.getElementById('ask-hint');
+  const box = H().askBox ? safe(() => H().askBox()) : null;
+  if (box && box.input && box.form) {   // the map page: one box for places and questions; the page decides which (map.html) and calls ASK.run
+    ui.box = box; ui.form = box.form; ui.input = box.input; ui.btn = box.btn; ui.status = box.status; ui.hint = null; if (box.enable) box.enable();
+  } else {   // a page with the old two-line question box
+    if (!SITE.mountAskBox) return; const mount = (H().askMount && H().askMount()) || document.getElementById('ask-mount'); if (!mount) return;
+    SITE.askStyles(); ui.form = SITE.mountAskBox(mount, { status: true }); ui.input = document.getElementById('askq'); ui.btn = document.getElementById('askb'); ui.status = document.getElementById('ask-status'); ui.hint = document.getElementById('ask-hint');
+    ui.form.addEventListener('submit', e => { e.preventDefault(); run(ui.input.value); });
+  }
   ui.input.dataset.ph0 = ui.input.placeholder; ui.input.dataset.ph = ui.input.placeholder;
-  if (H().layout) H().layout(); else document.body.classList.add('has-ask');   // the map is laid out around the box
-  ui.form.addEventListener('submit', e => { e.preventDefault(); run(ui.input.value); });
+  if (H().layout) H().layout(); else document.body.classList.add('has-ask');
   H().sync = sync; window.__askRestore = restore;
   window.ASK = { run, clear, restore, newQuestion, get engine() { return engine; }, version: 3 };
   const p = new URLSearchParams(location.search); const q0 = p.get('ask');

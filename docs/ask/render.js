@@ -3,7 +3,7 @@
    builds the view's query string, truncates tool results for the step protocol (rows, never bytes), sorts and formats table
    cells, and writes the answer card's HTML. Everything the model wrote passes through esc(); links come only from the engine's
    source list, and only when they are web addresses or site-relative paths. See ASK_CONTRACT.md §6–§7. */
-import { MAP_LAYERS, MAP_PARAMS, STATES, SCOPE_TEXT, OTHER_TEXT, TABLES, UNIT_OF_TABLE, fieldFor, labelFor } from './catalog.js';
+import { MAP_LAYERS, MAP_PARAMS, STATES, SCOPE_TEXT, OTHER_TEXT, TABLES, UNIT_OF_TABLE, LABELS, fieldFor, labelFor } from './catalog.js';
 
 export const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const STATE_FIPS = { AL: '01', AK: '02', AZ: '04', AR: '05', CA: '06', CO: '08', CT: '09', DE: '10', DC: '11', FL: '12', GA: '13', HI: '15', ID: '16', IL: '17', IN: '18', IA: '19', KS: '20', KY: '21', LA: '22', ME: '23', MD: '24', MA: '25', MI: '26', MN: '27', MS: '28', MO: '29', MT: '30', NE: '31', NV: '32', NH: '33', NJ: '34', NM: '35', NY: '36', NC: '37', ND: '38', OH: '39', OK: '40', OR: '41', PA: '42', RI: '44', SC: '45', SD: '46', TN: '47', TX: '48', UT: '49', VT: '50', VA: '51', WA: '53', WV: '54', WI: '55', WY: '56' };
@@ -11,6 +11,7 @@ export const UNITS = ['county', 'district', 'state'];
 export const NOUNS = { county: 'counties', district: 'districts', state: 'states' };
 export const MAX_RESULT_BYTES = 24 * 1024;
 export const TABLE_LIMIT = 100;
+export const CARD_ROWS = 10;      // rows the answer card shows before "Show all N"
 export const FOCUS_MAX = 400;
 export const UNVERIFIED_NOTICE = 'The written summary could not be checked against the data, so only the data is shown.';
 export const STANDING_NOTE = 'Figures are read from the map’s data files; the written summary was checked against them number by number. The box lists and ranks; it does not match patients to trials or give medical advice.';
@@ -150,11 +151,14 @@ export const chipsHTML = (qs, cls) => qs.map(q => `<button type="button" class="
 export function stepsHTML(log) {
   return (log || []).map(e => `<li${e.error ? ' class="err"' : ''}><span class="ask-log-c">${esc(e.call)}</span>${e.result != null ? `<span class="ask-log-r">→ ${esc(e.result)}</span>` : ''}</li>`).join('');
 }
+// the top row of every card: the way back to the place overview (the card replaces it in the figures column) and the close button
+const TOP = '<div class="ask-top"><button type="button" class="ask-back">← Back to overview</button><button type="button" class="ask-x" aria-label="Close answer">×</button></div>';
+const KICKER = '<p class="ask-kick">Ask the map</p>';
 export function busyHTML(q, log, lead) {
-  return `<div class="ask-card busy" id="ask-card" role="region" aria-label="Answer" aria-busy="true" tabindex="-1"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(lead || 'Asking the map…')}</p></div><ol class="ask-steps">${stepsHTML(log)}</ol></div>`;
+  return `<div class="ask-card busy" id="ask-card" role="region" aria-label="Answer" aria-busy="true" tabindex="-1">${TOP}${KICKER}<p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(lead || 'Asking the map…')}</p></div><ol class="ask-steps">${stepsHTML(log)}</ol></div>`;
 }
 export function errorHTML(q, message, detail) {
-  return `<div class="ask-card err" id="ask-card" role="region" aria-label="Answer" tabindex="-1"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(message)}</p>${detail ? `<p class="ask-detail">${esc(String(detail).slice(0, 400))}</p>` : ''}</div></div>`;
+  return `<div class="ask-card err" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${TOP}${KICKER}<p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(message)}</p>${detail ? `<p class="ask-detail">${esc(String(detail).slice(0, 400))}</p>` : ''}</div></div>`;
 }
 
 // the sources line: file links (only web addresses or site-relative paths, from the engine) with their dates, then the vintages
@@ -166,30 +170,61 @@ export function sourcesHTML(sources, vintages) {
   return `<p class="ask-src">${items.length ? '<span class="ask-lead">Read from:</span> ' + items.join(', ') : ''}${items.length && tail.length ? ' · ' : ''}${tail.join(' · ')}</p>`;
 }
 
+// ---------- "How this was read", in plain words ----------
+// The model's interpretation often quotes the query it ran: "(oncologists.count > 0)", "trials_listed_here = 0". The card says it in words:
+// a parenthesis that holds only such rules is taken out (the rule itself goes under Details), and a field path left in the text is replaced
+// by the catalog's short label ("oncologists.count" -> "oncologists"). Returns { text, rules } — rules: the raw rules taken out, or the
+// whole raw interpretation when the text was changed in any other way.
+const OP = '(?:>=|<=|!=|==|=|>|<|≥|≤|≠)';
+const FIELD = '[a-z_][a-z0-9_]*(?:\\.[a-z0-9_]+)*';
+const RULE = `${FIELD}\\s*${OP}\\s*[^,;()]+?`;
+const PAREN_RULES = new RegExp(`\\s*\\(\\s*(${RULE}(?:\\s*(?:,|;|and|or)\\s*${RULE})*)\\s*\\)`, 'gi');
+const PATH = /\b[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)*\b/g;
+const isField = m => Object.prototype.hasOwnProperty.call(LABELS, m) && /[._]/.test(m) || (/_/.test(m) && /^[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)*$/.test(m));   // a catalog path, or snake_case: never an English word ("e.g." stays)
+export function plainInterpretation(interp) {
+  const raw = String(interp || '').trim(); if (!raw) return { text: '', rules: [] };
+  const rules = []; let text = raw.replace(PAREN_RULES, (m, inner) => { rules.push(inner.trim()); return ''; });
+  let relabelled = false; text = text.replace(PATH, m => { if (!isField(m)) return m; const l = labelFor(m); if (l && l !== m) { relabelled = true; return l; } return m; });
+  text = text.replace(/\s+([,.;:])/g, '$1').replace(/\s{2,}/g, ' ').trim();
+  return { text, rules: relabelled && !rules.length ? [raw] : rules };
+}
+
+// ---------- the answer card, one function per section, in the order the card shows them ----------
+// Each section takes the render context (below) and the derived parts (d: {a, ok, plain}) and returns its HTML ('' to leave it out).
+// To add a section (a method label, feedback buttons, a "Report a problem" link), add a function and put it in CARD_SECTIONS where it belongs.
 // ctx: { q, answer (the final_answer object), verification {ok, issues}, table (see tableHTML) | null, sort {key, dir}, showAll,
 //        placeIdOf, sources, vintages, mapShows (the map's own line) | null, hl {label, count} | null, focus {on, show} | null,
 //        log [{call, result, error}], model, steps, dropped [strings] }
+export const cardSections = {
+  top: () => TOP + KICKER,
+  question: ctx => `<p class="ask-q">${esc(ctx.q)}</p>`,
+  answer: (ctx, d) => { const kind = answerable(d.a); const tag = kind === 'partly' ? '<span class="ask-tag">Answered in part</span>' : kind === 'no' ? '<span class="ask-tag ask-tag-no">Not in the data</span>' : '';
+    return d.ok && String(d.a.answer || '').trim() ? `<div class="ask-a">${tag}${paras(d.a.answer)}</div>` : `<p class="ask-unverified">${esc(UNVERIFIED_NOTICE)}</p>`; },
+  afterAnswer: ctx => methodHTML(ctx.method),   // the standard method the answer follows, when it used one
+  caveats: (ctx, d) => { const cav = strList(d.a.caveats, 5); return cav.length ? `<ul class="ask-cav">${cav.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''; },
+  read: (ctx, d) => { const pi = plainInterpretation(d.a.interpretation), alts = strList(d.a.alternatives, 3);
+    return pi.text || alts.length ? `<section class="ask-sec ask-read"><h4>How this was read</h4>${pi.text ? `<p>${esc(pi.text)}</p>` : ''}${alts.length ? `<div class="ask-alts"><span class="ask-lead">Or ask:</span>${linksHTML(alts, 'ask-alt')}</div>` : ''}</section>` : ''; },
+  notInData: (ctx, d) => { const nid = strList(d.a.not_in_data, 4); return nid.length ? `<section class="ask-sec ask-nid"><h4>Not in the data</h4>${nid.map(s => `<p>${esc(s)}</p>`).join('')}</section>` : ''; },
+  table: ctx => ctx.table ? tableHTML(ctx.table, { sortKey: ctx.sort && ctx.sort.key, sortDir: ctx.sort && ctx.sort.dir, showAll: ctx.showAll, placeIdOf: ctx.placeIdOf, limit: CARD_ROWS }) + (!ctx.table.inline ? summaryHTML(ctx.table) : '') : '',
+  mapLine: ctx => { if (ctx.mapShows == null) return '';
+    const hl = ctx.hl && ctx.hl.count ? ` · <span class="ask-hl-lab">${esc(ctx.hl.label || 'Outlined')} <span class="ask-hl-n">(${Number(ctx.hl.count).toLocaleString('en-US')} outlined)</span></span>` : '';
+    const focus = ctx.focus && ctx.focus.show ? ` <label class="ask-focus"><input type="checkbox" id="ask-focus"${ctx.focus.on ? ' checked' : ''}> Focus</label>` : '';
+    return `<p class="ask-map"><span class="ask-map-lead">Map now shows:</span> <b id="ask-map-shows">${esc(ctx.mapShows)}</b>${hl}${focus} · <a href="map.html" class="ask-reset">Reset map</a></p>`; },
+  followUps: (ctx, d) => { const fu = strList(d.a.follow_ups, 3); return `<div class="ask-fu">${fu.length ? `<span class="ask-lead">Follow up:</span>${linksHTML(fu, 'ask-fuq')}` : ''}<button type="button" class="ask-new">New question</button></div>`; },
+  details: (ctx, d) => { const ok = d.ok; const pi = plainInterpretation(d.a.interpretation);
+    const rules = pi.rules.length ? `<p class="ask-rule"><span class="ask-lead">Rule as read:</span> ${pi.rules.map(r => `<code>${esc(r)}</code>`).join('; ')}</p>` : '';
+    const dropped = Array.isArray(ctx.dropped) && ctx.dropped.length ? `<p class="ask-dropped">Not applied to the map: ${ctx.dropped.map(esc).join('; ')}.</p>` : '';
+    const steps = Array.isArray(ctx.log) && ctx.log.length ? `<p class="ask-lead ask-log-h">How this was answered</p><ol class="ask-log">${stepsHTML(ctx.log)}</ol>` : '';
+    const foot = [ctx.steps ? `${ctx.steps} model step${ctx.steps === 1 ? '' : 's'}` : '', ctx.model ? `model ${ctx.model}` : '', ctx.method ? '' : 'computed for this question', ctx.verification ? (ok ? 'every number and place name in the summary was found in the tool results' : 'verification failed: ' + strList(ctx.verification.issues, 6).join('; ')) : ''].filter(Boolean).join(' · ');
+    return `<details class="ask-details"><summary>Details</summary>${sourcesHTML(ctx.sources, ctx.vintages)}${rules}${dropped}${steps}${foot ? `<p class="ask-log-foot">${esc(foot)}</p>` : ''}<p class="ask-note">${esc(ok ? STANDING_NOTE : STANDING_NOTE_UNCHECKED)}</p></details>`; },
+  end: ctx => feedbackHTML(ctx),   // "Was this right?" and "Report a problem"
+};
+export const CARD_SECTIONS = ['top', 'question', 'answer', 'afterAnswer', 'caveats', 'read', 'notInData', 'table', 'mapLine', 'followUps', 'details', 'end'];
+const linksHTML = (qs, cls) => qs.map(q => `<button type="button" class="ask-link ${cls}" data-q="${esc(q)}">${esc(q)}</button>`).join('');
 export function cardHTML(ctx) {
-  const a = ctx.answer && typeof ctx.answer === 'object' ? ctx.answer : {}; const ok = !!(ctx.verification && ctx.verification.ok); const plain = isPlainAnswer(a);
-  const kind = answerable(a); const tag = kind === 'partly' ? '<span class="ask-tag">Answered in part</span>' : kind === 'no' ? '<span class="ask-tag ask-tag-no">Not in the data</span>' : '';
-  const x = '<button type="button" class="ask-x" aria-label="Close answer">×</button>';
-  const head = `<p class="ask-q">${esc(ctx.q)}</p>`;
-  if (plain) return `<div class="ask-card plain" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}<div class="ask-a">${paras(a.answer)}</div>${feedbackHTML(ctx)}<p class="ask-note">${esc(STANDING_NOTE_PLAIN)}</p></div>`;
-  const body = ok && String(a.answer || '').trim() ? `<div class="ask-a">${tag}${paras(a.answer)}</div>` : `<p class="ask-unverified">${esc(UNVERIFIED_NOTICE)}</p>`;
-  const alts = strList(a.alternatives, 3), nid = strList(a.not_in_data, 4), cav = strList(a.caveats, 5), fu = strList(a.follow_ups, 3), interp = String(a.interpretation || '').trim();
-  const read = interp || alts.length ? `<section class="ask-sec ask-read"><h4>How this was read</h4>${interp ? `<p>${esc(interp)}</p>` : ''}${alts.length ? `<div class="ask-alts"><span class="ask-lead">Or ask:</span>${chipsHTML(alts, 'ask-alt')}</div>` : ''}</section>` : '';
-  const notin = nid.length ? `<section class="ask-sec ask-nid"><h4>Not in the data</h4><ul>${nid.map(s => `<li>${esc(s)}</li>`).join('')}</ul></section>` : '';
-  const table = ctx.table ? tableHTML(ctx.table, { sortKey: ctx.sort && ctx.sort.key, sortDir: ctx.sort && ctx.sort.dir, showAll: ctx.showAll, placeIdOf: ctx.placeIdOf }) : '';
-  const sum = ctx.table && !ctx.table.inline ? summaryHTML(ctx.table) : '';
-  const caveats = cav.length ? `<ul class="ask-cav">${cav.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : '';
-  const dropped = Array.isArray(ctx.dropped) && ctx.dropped.length ? `<p class="ask-dropped">Not applied to the map: ${ctx.dropped.map(esc).join('; ')}.</p>` : '';
-  const hl = ctx.hl && ctx.hl.count ? ` · <span class="ask-hl-lab">${esc(ctx.hl.label || 'Outlined')} <span class="ask-hl-n">(${Number(ctx.hl.count).toLocaleString('en-US')} outlined)</span></span>` : '';
-  const focus = ctx.focus && ctx.focus.show ? ` <label class="ask-focus"><input type="checkbox" id="ask-focus"${ctx.focus.on ? ' checked' : ''}> Focus</label>` : '';
-  const mapLine = ctx.mapShows != null ? `<p class="ask-map"><span class="ask-map-lead">Map now shows:</span> <b id="ask-map-shows">${esc(ctx.mapShows)}</b>${hl}${focus} · <a href="map.html" class="ask-reset">Reset map</a></p>` : '';
-  const src = sourcesHTML(ctx.sources, ctx.vintages);
-  const log = Array.isArray(ctx.log) && ctx.log.length ? `<details class="ask-log"><summary>How this was answered</summary><ol>${stepsHTML(ctx.log)}</ol><p class="ask-log-foot">${esc([ctx.steps ? `${ctx.steps} model step${ctx.steps === 1 ? '' : 's'}` : '', ctx.model ? `model ${ctx.model}` : '', ctx.method ? '' : 'computed for this question', ctx.verification ? (ok ? 'every number and place name in the summary was found in the tool results' : 'verification failed: ' + strList(ctx.verification.issues, 6).join('; ')) : ''].filter(Boolean).join(' · '))}</p></details>` : '';
-  const follow = `<div class="ask-fu">${fu.length ? `<span class="ask-lead">Follow up:</span>${chipsHTML(fu, 'ask-fuq')}` : ''}<button type="button" class="ask-new">New question</button></div>`;
-  return `<div class="ask-card" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${x}${head}${body}${methodHTML(ctx.method)}${read}${notin}${table}${sum}${caveats}${dropped}${mapLine}${src}${log}${follow}${feedbackHTML(ctx)}<p class="ask-note">${esc(ok ? STANDING_NOTE : STANDING_NOTE_UNCHECKED)}</p></div>`;
+  const a = ctx.answer && typeof ctx.answer === 'object' ? ctx.answer : {}; const d = { a, ok: !!(ctx.verification && ctx.verification.ok), plain: isPlainAnswer(a) };
+  if (d.plain) return `<div class="ask-card plain" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${cardSections.top(ctx, d)}${cardSections.question(ctx, d)}<div class="ask-a">${paras(a.answer)}</div>${feedbackHTML(ctx)}<p class="ask-note">${esc(STANDING_NOTE_PLAIN)}</p></div>`;
+  return `<div class="ask-card" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${CARD_SECTIONS.map(k => cardSections[k] ? cardSections[k](ctx, d) : '').join('')}</div>`;
 }
 
 // the table the card shows, from the engine's full result for table.from_call (full: engine.full(id); res: the result the model
