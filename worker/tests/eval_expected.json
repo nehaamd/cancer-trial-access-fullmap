@@ -1,7 +1,7 @@
 {
  "built": "2026-11-04",
  "data_as_of": "2026-11-03",
- "n": 100,
+ "n": 110,
  "questions": {
   "R01": {
    "tx_lt20_max_ids": [
@@ -25564,6 +25564,410 @@
    "numbers": {
     "wy": 87.0,
     "mt": 33.1
+   }
+  },
+  "AT01": {
+   "ids": [
+    "WY",
+    "MT"
+   ],
+   "pairs": [
+    [
+     [
+      "Wyoming"
+     ],
+     87.0
+    ],
+    [
+     [
+      "Montana"
+     ],
+     33.1
+    ]
+   ],
+   "place_first": {
+    "first": [
+     "WY"
+    ],
+    "among": {
+     "WY": [
+      "Wyoming"
+     ],
+     "MT": [
+      "Montana"
+     ]
+    }
+   }
+  },
+  "AT02": {
+   "ids": [
+    "48215",
+    "48061"
+   ],
+   "pairs": [
+    [
+     [
+      "Hidalgo County, Texas",
+      "Hidalgo County"
+     ],
+     18
+    ],
+    [
+     [
+      "Cameron County, Texas",
+      "Cameron County"
+     ],
+     9
+    ]
+   ]
+  },
+  "AT03": {
+   "ids": [
+    "KY",
+    "OH",
+    "WV"
+   ],
+   "pairs": [
+    [
+     [
+      "Kentucky"
+     ],
+     34.5
+    ],
+    [
+     [
+      "Ohio"
+     ],
+     0.6
+    ],
+    [
+     [
+      "West Virginia"
+     ],
+     20.4
+    ]
+   ]
+  },
+  "AT04": {
+   "ids": [
+    "AK",
+    "MT"
+   ],
+   "pairs": [
+    [
+     [
+      "Alaska"
+     ],
+     38.7
+    ],
+    [
+     [
+      "Montana"
+     ],
+     21.9
+    ]
+   ],
+   "place_first": {
+    "first": [
+     "AK"
+    ],
+    "among": {
+     "AK": [
+      "Alaska"
+     ],
+     "MT": [
+      "Montana"
+     ]
+    }
+   }
+  },
+  "AT05": {
+   "ids": [
+    "48201",
+    "48113",
+    "48029"
+   ],
+   "pairs": [
+    [
+     [
+      "Harris County, Texas",
+      "Harris County"
+     ],
+     427
+    ],
+    [
+     [
+      "Dallas County, Texas",
+      "Dallas County"
+     ],
+     246
+    ],
+    [
+     [
+      "Bexar County, Texas",
+      "Bexar County"
+     ],
+     97
+    ]
+   ]
+  },
+  "AT06": {
+   "ids": [
+    "TX-34",
+    "TX-15"
+   ],
+   "pairs": [
+    [
+     [
+      "Texas 34th",
+      "TX-34",
+      "TX-34",
+      "TX34",
+      "Texas's 34th",
+      "Texas’s 34th",
+      "34th district of Texas",
+      "Texas 34th district",
+      "34th congressional district of Texas",
+      "34th district",
+      "34th congressional district"
+     ],
+     257
+    ],
+    [
+     [
+      "Texas 15th",
+      "TX-15",
+      "TX-15",
+      "TX15",
+      "Texas's 15th",
+      "Texas’s 15th",
+      "15th district of Texas",
+      "Texas 15th district",
+      "15th congressional district of Texas",
+      "15th district",
+      "15th congressional district"
+     ],
+     240
+    ]
+   ],
+   "place_first": {
+    "first": [
+     "TX-34"
+    ],
+    "among": {
+     "TX-34": [
+      "Texas 34th",
+      "TX-34",
+      "TX-34",
+      "TX34",
+      "Texas's 34th",
+      "Texas’s 34th",
+      "34th district of Texas",
+      "Texas 34th district",
+      "34th congressional district of Texas",
+      "34th district",
+      "34th congressional district"
+     ],
+     "TX-15": [
+      "Texas 15th",
+      "TX-15",
+      "TX-15",
+      "TX15",
+      "Texas's 15th",
+      "Texas’s 15th",
+      "15th district of Texas",
+      "Texas 15th district",
+      "15th congressional district of Texas",
+      "15th district",
+      "15th congressional district"
+     ]
+    }
+   }
+  },
+  "AT07": {
+   "ids": [
+    "ME",
+    "VT",
+    "NH"
+   ],
+   "pairs": [
+    [
+     [
+      "Maine"
+     ],
+     150
+    ],
+    [
+     [
+      "Vermont"
+     ],
+     77
+    ],
+    [
+     [
+      "New Hampshire"
+     ],
+     52
+    ]
+   ]
+  },
+  "AT08": {
+   "ids": [
+    "MT",
+    "ND",
+    "ID",
+    "LA"
+   ],
+   "pairs": [
+    [
+     [
+      "Montana"
+     ],
+     502
+    ],
+    [
+     [
+      "North Dakota"
+     ],
+     420
+    ],
+    [
+     [
+      "Idaho"
+     ],
+     340
+    ],
+    [
+     [
+      "Louisiana"
+     ],
+     288
+    ]
+   ]
+  },
+  "AT09": {
+   "ids": [
+    "48479",
+    "48061"
+   ],
+   "pairs": [
+    [
+     [
+      "Webb County, Texas",
+      "Webb County"
+     ],
+     52060
+    ],
+    [
+     [
+      "Cameron County, Texas",
+      "Cameron County"
+     ],
+     102626
+    ]
+   ]
+  },
+  "AT10": {
+   "ids": [
+    "FL-02",
+    "GA-08",
+    "AL-05"
+   ],
+   "pairs": [
+    [
+     [
+      "Florida 2nd",
+      "FL-02",
+      "FL-2",
+      "FL02",
+      "Florida's 2nd",
+      "Florida’s 2nd",
+      "2nd district of Florida",
+      "Florida 2nd district",
+      "2nd congressional district of Florida",
+      "2nd district",
+      "2nd congressional district"
+     ],
+     5
+    ],
+    [
+     [
+      "Georgia 8th",
+      "GA-08",
+      "GA-8",
+      "GA08",
+      "Georgia's 8th",
+      "Georgia’s 8th",
+      "8th district of Georgia",
+      "Georgia 8th district",
+      "8th congressional district of Georgia",
+      "8th district",
+      "8th congressional district"
+     ],
+     10
+    ],
+    [
+     [
+      "Alabama 5th",
+      "AL-05",
+      "AL-5",
+      "AL05",
+      "Alabama's 5th",
+      "Alabama’s 5th",
+      "5th district of Alabama",
+      "Alabama 5th district",
+      "5th congressional district of Alabama",
+      "5th district",
+      "5th congressional district"
+     ],
+     14
+    ]
+   ],
+   "place_first": {
+    "first": [
+     "AL-05"
+    ],
+    "among": {
+     "FL-02": [
+      "Florida 2nd",
+      "FL-02",
+      "FL-2",
+      "FL02",
+      "Florida's 2nd",
+      "Florida’s 2nd",
+      "2nd district of Florida",
+      "Florida 2nd district",
+      "2nd congressional district of Florida",
+      "2nd district",
+      "2nd congressional district"
+     ],
+     "GA-08": [
+      "Georgia 8th",
+      "GA-08",
+      "GA-8",
+      "GA08",
+      "Georgia's 8th",
+      "Georgia’s 8th",
+      "8th district of Georgia",
+      "Georgia 8th district",
+      "8th congressional district of Georgia",
+      "8th district",
+      "8th congressional district"
+     ],
+     "AL-05": [
+      "Alabama 5th",
+      "AL-05",
+      "AL-5",
+      "AL05",
+      "Alabama's 5th",
+      "Alabama’s 5th",
+      "5th district of Alabama",
+      "Alabama 5th district",
+      "5th congressional district of Alabama",
+      "5th district",
+      "5th congressional district"
+     ]
+    }
    }
   },
   "N01": {

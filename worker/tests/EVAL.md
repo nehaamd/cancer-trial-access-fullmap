@@ -1,6 +1,6 @@
 # Ask the map v3 — live evaluation
 
-`eval_questions.json` holds 100 questions a visitor might type (patient, caregiver, clinician, advocate, journalist, policy
+`eval_questions.json` holds 110 questions a visitor might type (patient, caregiver, clinician, advocate, journalist, policy
 staffer); `eval_expected.py` computes, from the raw published files and never from the engine, the facts the checks refer to
 (`eval_expected.json`); `eval.js` drives the ASK_CONTRACT §3 step protocol through the real model and the real engine and
 applies the checks; `eval_checks.js` is the check logic, unit-tested by `eval_checks.test.js`.
@@ -58,6 +58,14 @@ two honest readings both are stored (e.g. `ids_center` / `ids_median`) and the c
 | `max_steps` | the question took at most this many model steps. |
 | `table_from_call_matches_highlight` | when both `table.from_call` and `map.highlight.from_call` are set they name the same call or the same id set. |
 | `any_of` | a list of check sets; at least one must pass in full (sibling checks still apply). |
+| `pairs` | a key into the expected record (usually `"pairs"`): a list of `[[name variants], value]`, one per place the question names. Each place must be written with its own figure in one clause of the answer: place names are masked first (so the comma in "Hidalgo County, Texas" does not split), clauses split at `; ,` and the comparison words (against, compared with, than, while, whereas, versus, and, but, with, to, from); a clause with no place takes the nearest place of its sentence; the figure (§6 rounding rule) must have this place as its nearest place in the clause. "Wyoming at 87%, against 33.1% in Montana" pairs both; the swapped figures, or "87% and 33.1%, respectively", do not. |
+
+## Attribution questions (`attribution`, AT01–AT10)
+
+Comparisons of two or three named places with different values ("which is higher, X or Y"), and rankings where each place must
+carry its own figure. They exercise the worker's per-place claim check (ASK_CONTRACT §6 rule 6) from the outside: the `pairs`
+check fails an answer that writes a correct number next to the wrong place. For rankings, only places strictly ahead of the
+cut-off are paired (a tie at the cut-off may be listed either way).
 
 ## Honest cases kept on purpose
 

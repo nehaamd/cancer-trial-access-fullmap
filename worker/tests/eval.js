@@ -126,7 +126,9 @@ async function fakeModel(payload) {
   if (r.error) return mk('final_answer', { answer: 'The data does not have that.', answerable: 'no', interpretation: 'fake: the tool returned an error', not_in_data: [String(r.error).slice(0, 100)], sources: [] });
   if (r.text) return mk('final_answer', { answer: String(r.text).split(/(?<=\.)\s/).slice(0, 2).join(' ').slice(0, 600), answerable: 'yes', interpretation: 'fake: site text', sources: [], alternatives: [], not_in_data: [], caveats: [] });
   const row = (r.rows || [])[0]; const callId = prevResults[0].tool_use_id; const unit = { counties: 'county', districts: 'district', states: 'state' }[r.table] || 'county';
-  return mk('final_answer', { answer: row ? `${row.name} leads with ${row.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials; ${r.count} places match.` : `${r.count} places match.`, answerable: 'yes', interpretation: 'fake: top rows by the headline measure', alternatives: [], not_in_data: [], caveats: [],
+  const st = Object.entries(catalog.STATES).find(([, nm]) => new RegExp('\\b' + nm + '\\b', 'i').test(q)); const scope = st ? st[0] : 'US';
+  const claims = [{ place: scope, field: 'count', value: r.count, call: callId }, ...(row ? [{ place: row.id, field: 'pct_lt20_trials_within_60rdmi', value: row.pct_lt20_trials_within_60rdmi, call: callId }] : [])];   // ASK_CONTRACT §6 rule 6
+  return mk('final_answer', { answer: row ? `${row.name} leads with ${row.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials; ${r.count} places match.` : `${r.count} places match.`, claims, answerable: 'yes', interpretation: 'fake: top rows by the headline measure', alternatives: [], not_in_data: [], caveats: [],
     map: { unit, layer: unit === 'county' ? 'short' : 'l20', highlight: { from_call: callId }, highlight_label: 'fake' }, table: { from_call: callId }, sources: [r.table], follow_ups: [] });
 }
 
