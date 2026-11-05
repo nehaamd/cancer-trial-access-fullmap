@@ -3,7 +3,7 @@
 // real engine, checked against facts computed independently by eval_expected.py (eval_expected.json). Vocabulary: EVAL.md.
 //
 //   node worker/tests/eval.js [--max N] [--only substr] [--worker URL] [--model NAME] [--verbose] [--json out.json] [--md summary.md]
-//                             [--concurrency 3] [--timeout 120] [--origin https://nehaamd.github.io]
+//                             [--concurrency 3] [--timeout 120] [--origin https://cancertrialaccess.org]
 //
 // In-process (default): needs ANTHROPIC_API_KEY; imports step() from worker/src/loop.js and runs the tools with docs/ask/engine.js.
 // Over HTTP (--worker URL): posts each step to a deployed worker; the tools still run locally with the same engine.

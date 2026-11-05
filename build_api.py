@@ -20,9 +20,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "docs" / "api"
-SITE = "https://nehaamd.github.io/cancer-trial-access-fullmap/"   # the published address; change in one place if the site gets a domain
+SITE = "https://cancertrialaccess.org/"   # the published address (custom domain; docs/CNAME); change it here and in docs/ask/catalog.js, worker/wrangler.toml and make_sitemap.py
 LICENSE = {"data": "CC BY 4.0", "url": "https://creativecommons.org/licenses/by/4.0/",
-           "attribution": "Agrawal N. Cancer Trial Access Map. " + SITE}
+           "attribution": "Agrawal N. Cancer Clinical Trial Access Map (beta). " + SITE}
 
 FIELDS = {
     "id": "Place identifier: 5-digit county FIPS, USPS-number for a district (XX-00 is at-large), USPS code for a state, US for the nation.",
@@ -398,7 +398,7 @@ def main():
     site_keys = [k for k, _ in BSITES]
     dump(OUT / "ask" / "county_sites.json", {"sites": site_keys, "data_as_of": data_as_of,
                                              "rows": {fips: [[(nested(c, "incidence", "by_site") or {}).get(k) for k in site_keys], [(nested(c, "mortality", "by_site") or {}).get(k) for k in site_keys]] for fips, c in counties.items()}})   # [incidence rates, death rates] in `sites` order; null = not published
-    index = {"name": "Cancer Trial Access Map data API", "built": datetime.date.today().isoformat(), "data_as_of": data_as_of,
+    index = {"name": "Cancer Clinical Trial Access Map data API", "built": datetime.date.today().isoformat(), "data_as_of": data_as_of,
              "base_url": SITE + "api/", "docs": SITE + "api.html",
              "files": {"national": "national.json", "state": "state/{USPS}.json", "district": "district/{USPS}-{NN}.json (NN = 00 for at-large)",
                        "county": "county/{FIPS5}.json", "county_names": "county_names.json (array of [FIPS5, name, state, pop55])", "ask": {"counties": "ask/counties.json (compact: cols + one array per county, every county field except the by-site rates; for the question box)", "county_sites": "ask/county_sites.json ({sites: [...], rows: {FIPS5: [[incidence rate per site], [death rate per site]]}})"}, "tables": ["all_states.json", "all_districts.json", "all_counties.json"]},

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cancer Trial Access Map · How far are Americans from a cancer clinical trial?</title>
-<meta name="description" content="The Cancer Trial Access Map measures, in road miles, how far Americans live from recruiting cancer clinical trials, by county, congressional district and state, and what would change it. Tools for patients, advocates, Congress and research teams.">
+<title>Cancer Clinical Trial Access Map — where the clinical trial deserts are, by county and congressional district</title>
+<meta name="description" content="Where the clinical trial deserts are, by county and congressional district. The Cancer Clinical Trial Access Map measures, in road miles, how far Americans live from recruiting cancer clinical trials, by county, congressional district and state, and what would change it. Tools for patients, advocates, Congress and research teams.">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-serif-4-latin-600-normal.woff2">
@@ -13,20 +13,20 @@
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#0B3C5D">
-<link rel="canonical" href="https://nehaamd.github.io/cancer-trial-access-fullmap/">
+<link rel="canonical" href="https://cancertrialaccess.org/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Cancer Trial Access Map">
-<meta property="og:title" content="Cancer Trial Access Map · How far are Americans from a cancer clinical trial?">
-<meta property="og:description" content="How far Americans live from a recruiting cancer clinical trial, in road miles, by county, congressional district and state. Tools for patients, advocates, Congress and research teams.">
-<meta property="og:url" content="https://nehaamd.github.io/cancer-trial-access-fullmap/">
-<meta property="og:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta property="og:site_name" content="Cancer Clinical Trial Access Map">
+<meta property="og:title" content="Cancer Clinical Trial Access Map — where the clinical trial deserts are, by county and congressional district">
+<meta property="og:description" content="Where the clinical trial deserts are, by county and congressional district: how far Americans live from a recruiting cancer clinical trial, in road miles, by county, congressional district and state. Tools for patients, advocates, Congress and research teams.">
+<meta property="og:url" content="https://cancertrialaccess.org/">
+<meta property="og:image" content="https://cancertrialaccess.org/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer trials within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Cancer Trial Access Map · How far are Americans from a cancer clinical trial?">
-<meta name="twitter:description" content="How far Americans live from a recruiting cancer clinical trial, in road miles, by county, congressional district and state.">
-<meta name="twitter:image" content="https://nehaamd.github.io/cancer-trial-access-fullmap/assets/og-image.png">
+<meta name="twitter:title" content="Cancer Clinical Trial Access Map — where the clinical trial deserts are, by county and congressional district">
+<meta name="twitter:description" content="Where the clinical trial deserts are, by county and congressional district: how far Americans live from a recruiting cancer clinical trial, in road miles.">
+<meta name="twitter:image" content="https://cancertrialaccess.org/assets/og-image.png">
 <style>
   *{box-sizing:border-box} html{font-size:16px} html,body{margin:0;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
   a{color:var(--link)} a:hover{color:var(--navy)}
@@ -35,6 +35,7 @@
   @media (max-width:860px){.hero{grid-template-columns:1fr;padding-top:1.8rem}}
   .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .6rem;text-transform:uppercase;letter-spacing:.08em;font-weight:650}
   h1{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(2rem,4.6vw,3.2rem);line-height:1.08;letter-spacing:-.022em;margin:0 0 1rem;font-weight:600;max-width:18ch}
+  .hero-tag{font-family:"Source Serif 4",Georgia,serif;font-size:1.15rem;line-height:1.35;color:var(--ink-2);margin:-.25rem 0 1.1rem;max-width:44ch}
   .lede{font-size:1.2rem;line-height:1.5;max-width:52ch;margin:0 0 1.3rem;color:var(--ink)}
   .lede b{font-weight:700}
   .btn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.6rem 1.15rem;font-size:var(--fs-2);color:var(--ink);text-decoration:none;cursor:pointer;min-height:44px}
@@ -64,15 +65,16 @@
 </head>
 <body>
 <header class="site">
-  <div class="brand"><a class="wordmark" href="index.html">Cancer Trial Access Map</a><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
+  <div class="brand"><span class="wm-row"><a class="wordmark" href="index.html">Cancer Clinical Trial Access Map</a><span class="beta-tag" title="This site is in beta: methods and figures are reviewed weekly and may change">Beta</span></span><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
   <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="map.html#methods">Methods &amp; data</a><a href="api.html">Data API</a><a href="about.html">About</a></nav>
 </header>
 <main>
   <div class="hero">
     <div>
-      <p class="kicker">Cancer Trial Access Map · cancer access research</p>
+      <p class="kicker">Cancer Clinical Trial Access Map</p>
+      <p class="hero-tag">Where the clinical trial deserts are, by county and congressional district</p>
       <h1>Where you live shouldn't decide which cancer trials you can join.</h1>
-      <p class="lede">The Cancer Trial Access Map measures, in road miles, how far Americans live from recruiting cancer clinical trials, by county, congressional district and state, and shows what would change it. <b>About <span data-f="people_l20_m">11.8</span> million Americans aged 55 and older</b> have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home.</p>
+      <p class="lede">The Cancer Clinical Trial Access Map measures, in road miles, how far Americans live from recruiting cancer clinical trials, by county, congressional district and state, and shows what would change it. <b>About <span data-f="people_l20_m">11.8</span> million Americans aged 55 and older</b> have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home.</p>
       <div class="actions"><a class="btn primary" href="map.html">Open the map</a><a class="btn" href="findings.html">Key findings</a><a class="btn" href="find.html">Trials near a ZIP</a></div>
       <p class="stamp-line"><span data-site-date>Data as of the latest weekly refresh</span> · ClinicalTrials.gov, Census Bureau, NCI</p>
     </div>
@@ -134,7 +136,7 @@
     <div class="about">
       <div>
         <h2>What this is</h2>
-        <p>The Cancer Trial Access Map is an independent research project on where cancer care reaches and where it doesn't, built by <b>Neha Agrawal, MD</b>, a medical oncologist. It measures access to recruiting cancer clinical trials the way a patient experiences it: in road miles from home, not in counts per state.</p>
+        <p>The Cancer Clinical Trial Access Map is an independent research project on where cancer care reaches and where it doesn't, built by <b>Neha Agrawal, MD</b>, a medical oncologist. It measures access to recruiting cancer clinical trials the way a patient experiences it: in road miles from home, not in counts per state.</p>
         <p>The map is built entirely from public data, refreshed weekly, and checked against the live registry and independent routing. Everything it reports can be traced to its source. <a href="about.html">Read more about the project, how it is built, and how to cite it.</a></p>
       </div>
       <div class="how">
@@ -145,13 +147,13 @@
           <dt>Distance.</dt><dd> Shortest route on the highway network, in road miles; compared against independent routing.</dd>
           <dt>Policy.</dt><dd> Congressional districts, members and cosponsors from public records.</dd>
         </dl>
-        <p class="cite" id="cite">Agrawal N. Cancer Trial Access Map. https://nehaamd.github.io/cancer-trial-access-fullmap/</p>
+        <p class="cite" id="cite">Agrawal N. Cancer Clinical Trial Access Map (beta). https://cancertrialaccess.org/</p>
       </div>
     </div>
   </section>
 </main>
 <footer class="site">
-<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><div class="foot-line"><b>Cancer Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="map.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><p class="foot-beta">This site is in beta: methods and figures are reviewed weekly and may change. Check figures against <a href="map.html#methods">Methods &amp; data</a> before citing them, and <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">report problems</a>.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="map.html#methods">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
 <script src="findings.js"></script>
 <script>
@@ -166,7 +168,7 @@
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
   if (SITE.ASK_URL) { SITE.askStyles(); SITE.mountAskBox(document.getElementById('ask-mount'), { hero: true, action: 'map.html', placeholder: 'e.g. Which districts in Ohio have the least access?' }); document.body.classList.add('has-ask'); }   // the question box appears once the helper is deployed; the form's GET hands the question to map.html?ask=, where ask/ask.js answers it
   const dd = SITE.dataDate(F.meta);
-  document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${SITE.nice(dd)}; accessed ${SITE.nice(SITE.today())}.`;
+  document.getElementById('cite').textContent = `Agrawal N. Cancer Clinical Trial Access Map (beta). https://cancertrialaccess.org/ (data as of ${SITE.nice(dd)}; accessed ${SITE.nice(SITE.today())}).`;
 })();
 </script>
 </body>

@@ -1,4 +1,6 @@
-# US Cancer Trial Access by County and Congressional District — version 3
+# Cancer Clinical Trial Access Map (beta) — US cancer clinical trial access by county and congressional district
+
+**Site: https://cancertrialaccess.org/** — where the clinical trial deserts are, by county and congressional district. The site is in beta: methods and figures are reviewed weekly and may change. (The old GitHub Pages address redirects there.) Cite as: Agrawal N. Cancer Clinical Trial Access Map (beta). https://cancertrialaccess.org/map.html (data as of the date on the page).
 
 **What this is.** For every US county (3,143), congressional district (435 + DC) and state: how many recruiting cancer treatment trials are within reach of residents aged 55+, how far they must drive to a broad menu of trials or to an NCI-designated cancer center, which trials those are, how many people are diagnosed with cancer there, and what household barriers (vehicle, broadband, insurance, poverty) sit alongside the distance. Version 3 brings the national map up to the rigour of the Texas road-network version: shortest highway routes instead of straight-line ×1.2, census-tract population weights instead of land-area weights, and adds trial lists, filters, a cancer-incidence layer and household context. Every page shows the date of the registry data it is built from (also in `data/raw/fetch_log.json`), earlier pulls are kept as snapshots, and the difference is shown in the app's Recent changes tab.
 
@@ -38,6 +40,7 @@ Registry data as of 3 November 2026: 4,035 listed trials at about 9,700 registry
 | `community.js`, `explore.js`, `build_community.py` | One compact record per county, district and state (about 1 MB) built from the files the map reads, so the question pages load without `data.js`; the shared helpers (place lookup, search, the local summary sentences, delegation roles). `validate_extras.py` checks that every figure in `community.js` equals its source |
 | `site.css` | Shared typeface (Source Sans 3, self-hosted under `assets/fonts/`, SIL OFL), colour tokens, header and footer |
 | `assets/` | `favicon.svg` and PNG icons, `og-image.png` (the 1200×630 card shown when a link is shared), `map-national.png` (the findings page's map); regenerate after a data refresh with `python3 make_assets.py` (needs Playwright) |
+| `CNAME`, `robots.txt`, `sitemap.xml` | The custom domain GitHub Pages serves the site at (`cancertrialaccess.org`; DNS on Cloudflare, DNS-only A records to GitHub Pages and a `www` CNAME); the crawler rules; the list of public pages with `<lastmod>` set to the registry data date, rewritten on every refresh by `make_sitemap.py` (in `run_refresh.sh`). The site address appears in `build_api.py`, `make_sitemap.py`, `docs/ask/catalog.js` (`SITE_BASE`), `worker/wrangler.toml` (`SITE_BASE`, `ALLOWED_ORIGINS`) and each page's canonical and `og:` tags. |
 
 ## Files
 | File | What |
