@@ -96,29 +96,134 @@ window.SITE = (function () {
 
 
   // ---- "Ask the map": the question box. The site posts the question to a small helper (a Cloudflare Worker, worker/ in the
-  // repository) that reads the same published data files as the Data API and returns {answer, table, sources, view}.
+  // repository) that reads the same published data files as the Data API and returns {answer, table, rows, summary, sources, view, caveats, ambiguity}.
   // ASK_URL is the helper's address; while it is empty every question box stays hidden and the site works exactly as before.
   const ASK_URL = 'https://trial-map-ask.nehaamd.workers.dev/ask';
+  const ASK_TIMEOUT_S = 45;
   async function ask(q) {
-    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 45000);
+    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), ASK_TIMEOUT_S * 1000);
     try {
       const r = await fetch(ASK_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ q }), signal: ctrl.signal });
       const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || ('HTTP ' + r.status)); return j;
-    } finally { clearTimeout(t); }
+    } catch (e) { if (e && e.name === 'AbortError') throw new Error(`no reply within ${ASK_TIMEOUT_S} seconds`); throw e; }
+    finally { clearTimeout(t); }
   }
   const escA = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  // The answer card: the question, the answer, the rows it was written from, the files it read, and what the box is not.
-  function askCardHTML(q, res) {
-    const rows = Array.isArray(res.table) ? res.table : []; let table = '';
-    if (rows.length) { const cols = Object.keys(rows[0]); table = '<div class="ask-tbl"><table><thead><tr>' + cols.map(c => '<th>' + escA(c) + '</th>').join('') + '</tr></thead><tbody>' + rows.map(r => '<tr>' + cols.map(c => '<td>' + escA(r[c]) + '</td>').join('') + '</tr>').join('') + '</tbody></table></div>'; }
-    const src = (res.sources || []).length ? '<p class="ask-src">Read from: ' + res.sources.map(s => '<a href="' + escA(s.url) + '" target="_blank" rel="noopener">' + escA(s.title) + '</a>').join(', ') + (res.data_as_of ? ' · data as of ' + escA(nice(res.data_as_of)) : '') + '</p>' : '';
-    const note = res.route === 'search' || res.route === 'data' ? '<p class="ask-note">Figures are read from this site’s published data files, not written by the model. The box lists and ranks; it does not match patients to trials or give medical advice.</p>' : '';
-    return '<div class="ask-card" id="ask-card" role="region" aria-label="Answer"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">' + escA(q) + '</p><div class="ask-a">' + escA(res.answer || '').split(/\n+/).map(x => '<p>' + x + '</p>').join('') + '</div>' + table + src + note + '</div>';
+  // Example questions, one per map layer (deaths, oncologists, cosponsors, NCI distance, a comparison, a state ranking, a ZIP lookup, incidence).
+  // The short label is what the chip shows; the full question is what it asks.
+  const ASK_EXAMPLES = [
+    ['Deaths vs access in Texas', 'Which Texas counties have the highest cancer death rates and the least trial access?'],
+    ['Oncologists but no trials', 'Where are the most oncologists but no trials?'],
+    ['Ohio members and H.R. 3521', 'Which Ohio House members have not cosponsored H.R. 3521?'],
+    ['Hidalgo County to an NCI center', 'How far is Hidalgo County from an NCI center?'],
+    ['Harris vs Hidalgo County', 'Compare Harris County and Hidalgo County'],
+    ['States with no trial within 60 mi', 'Which states have the most people with no trial within 60 miles?'],
+    ['Breast cancer trials near 78501', 'Breast cancer trials near 78501'],
+    ['Highest lung cancer incidence', 'Which counties have the highest lung cancer incidence?']
+  ];
+  // what the box can answer, in one line: the long form for the homepage, the short form under the box on the map page
+  const ASK_HINT = 'Answers list, rank and compare places from this map’s published data files and move the map to the matching view. Not medical advice, and not a match of patients to trials.';
+  const ASK_HINT_SHORT = 'Lists, ranks and compares places from map data · not medical advice';
+  // The box itself: the label, a two-line question field, the Ask button, the example chips (one row that scrolls, plus a list of all of
+  // them under "Try"), and the one-line hint (with the busy status in the same line on the map page). ids askf / askq / askb are fixed.
+  // Both pages write the box with this (SITE.mountAskBox), so the markup, the examples and the hint live in one place.
+  // hero: the larger homepage version. action: a form action (the homepage hands the question to map.html?ask=). status: a live status line.
+  const askChipsHTML = cls => ASK_EXAMPLES.map(([l, q]) => `<button type="button" class="${cls}" data-q="${escA(q)}" title="${escA(q)}">${escA(cls === 'ask-ex-q' ? l : q)}</button>`).join('');
+  function askBoxHTML(o) { o = o || {};
+    return `<form class="ask${o.hero ? ' ask-hero' : ''}" id="askf" autocomplete="off"${o.action ? ` action="${escA(o.action)}" method="get"` : ''} aria-labelledby="ask-lab">
+      <label class="ask-lab" id="ask-lab" for="askq">Ask the map</label>
+      <textarea id="askq" name="ask" rows="2" maxlength="400" placeholder="${escA(o.placeholder || 'e.g. Which Texas counties have the least trial access?')}" aria-describedby="ask-hint" enterkeyhint="send"></textarea>
+      <button type="submit" id="askb">Ask</button>
+      <div class="ask-exrow">${o.hero ? '<span class="ask-ex-lead">Try:</span>' : '<details class="ask-more"><summary aria-label="All example questions">Try <span aria-hidden="true">▾</span></summary><div class="ask-ex-list" role="group" aria-label="Example questions">' + askChipsHTML('ask-ex-full') + '</div></details>'}<div class="ask-ex" role="group" aria-label="Example questions">${askChipsHTML('ask-ex-q')}</div></div>
+      <p class="ask-foot"><span class="ask-hint" id="ask-hint">${o.hero ? ASK_HINT : ASK_HINT_SHORT}</span>${o.status ? '<span class="ask-status" id="ask-status" role="status" aria-live="polite"></span>' : ''}</p>
+    </form>`; }
+  // Keyboard and chips: Enter asks (Shift+Enter starts a new line); a chip fills the box and asks; the "Try" list closes on Escape or a click elsewhere.
+  function wireAskBox(form) { const ta = form.querySelector('#askq'); if (!ta) return;
+    const submit = () => { if (form.requestSubmit) form.requestSubmit(); else form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); };
+    ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); submit(); } });
+    const more = form.querySelector('.ask-more');
+    form.querySelectorAll('.ask-ex-q,.ask-ex-full').forEach(b => b.addEventListener('click', () => { if (more) more.open = false; ta.value = b.dataset.q; ta.focus(); submit(); }));
+    if (more) { const host = form.closest('.fcard'); more.addEventListener('toggle', () => { if (host) host.classList.toggle('ask-open', more.open); });   // the open list paints over the map's other cards
+      document.addEventListener('click', e => { if (more.open && !more.contains(e.target)) more.open = false; });
+      more.addEventListener('keydown', e => { if (e.key === 'Escape' && more.open) { e.stopPropagation(); more.open = false; more.querySelector('summary').focus(); } });
+      more.addEventListener('focusout', e => { if (more.open && e.relatedTarget && !more.contains(e.relatedTarget)) more.open = false; }); } }
+  // Writes the box into its mount point and wires it; returns the form. The mount stays empty (and hidden) while ASK_URL is empty.
+  function mountAskBox(el, o) { if (!el) return null; el.innerHTML = askBoxHTML(o); const f = el.querySelector('#askf'); wireAskBox(f); el.hidden = false; return f; }
+  // ids the helper names: a county FIPS (5 digits), a district geoid (4 digits), a state USPS code (2 letters)
+  const idKind = id => /^\d{5}$/.test(String(id)) ? 'county' : /^\d{4}$/.test(String(id)) ? 'district' : /^[A-Z]{2}$/i.test(String(id)) ? 'state' : null;
+  const placeHref = id => { const k = idKind(id); return k === 'county' ? 'map.html?c=' + id : k === 'district' ? 'map.html?d=' + id : k === 'state' ? 'map.html?s=' + String(id).toUpperCase() : null; };
+  // The label of an ambiguity option: its name as the helper wrote it ("Washington County, Oregon"); an older reply that gave the
+  // bare name and the state separately gets the state appended once.
+  const ambLabel = o => { const name = String(o && o.name || '').trim(), st = String(o && o.state || '').trim(); return st && !/,/.test(name) && !name.toLowerCase().includes(st.toLowerCase()) ? `${name}, ${st}` : name; };
+  // The answer card: the question, the answer, the rule and counts the list was drawn by, the rows it was written from, the places
+  // outlined, the files it read, and what the box is not. The table holds uniform place rows; `rows` (same order) carries each row's id,
+  // which is where a row's link comes from. An older reply put the rule in the table's first row: that row becomes the summary line.
+  // opts (map page): placeName(id) for the chips of outlined places; mapShows: the layer the map now shows (kept in step by the map itself).
+  function askCardHTML(q, res, opts) { opts = opts || {};
+    const all = Array.isArray(res.table) ? res.table.filter(r => r && typeof r === 'object' && !Array.isArray(r)) : [];
+    let summary = res.summary && typeof res.summary === 'object' && (res.summary.rule || res.summary.counts) ? res.summary : null;
+    const rows = []; all.forEach(r => { if ('rule' in r && !('place' in r) && !('name' in r)) { if (!summary) { const counts = {}; Object.keys(r).forEach(k => { if (k !== 'rule') counts[k] = r[k]; }); summary = { rule: r.rule, counts }; } } else rows.push(r); });
+    const idRows = Array.isArray(res.rows) ? res.rows.filter(m => m && typeof m === 'object') : [];
+    const ids = idRows.length === rows.length ? idRows : [];   // ids line up with the table by position only when there is one per row
+    const byName = {}; if (!ids.length) idRows.forEach(m => { if (m.name) byName[String(m.name).trim().toLowerCase()] = m; });   // an older reply listed every match: a row finds its id by its exact name
+    const hl = Array.isArray(res.view && res.view.hl) ? res.view.hl.map(String) : [];
+    const ID_KEYS = ['id', 'fips', 'geoid', 'usps'];   // a row may carry its own id; it is used for the link and not shown
+    const cell = v => v === null || v === undefined ? '—' : typeof v === 'number' ? v.toLocaleString('en-US', { maximumFractionDigits: 2 }) : typeof v === 'object' ? JSON.stringify(v) : v;   // 612,000 and 72.1, as the answer text writes them
+    const cols = []; rows.forEach(r => Object.keys(r).forEach(k => { if (!ID_KEYS.includes(k) && !cols.includes(k)) cols.push(k); }));   // the union of the rows' keys, in order of first appearance
+    const placeCol = cols.find(c => /^(place|name)$/i.test(c)) || cols.find(c => /county|district|state|place|name|member/i.test(c)) || cols[0];
+    const idOf = m => { if (m && typeof m === 'object') for (const k of ['geoid', 'id']) if (m[k] != null && idKind(m[k])) return String(m[k]); return null; };   // a district's geoid is its map id; its id is "OH-02"
+    const rowId = (r, i) => { const id = idOf(ids[i]) || idOf(byName[String(r[placeCol] == null ? '' : r[placeCol]).trim().toLowerCase()]); if (id) return id;
+      for (const k of ID_KEYS) if (r[k] != null && idKind(r[k])) return String(r[k]); return null; };
+    const countLabel = k => String(k).replace(/\s*\((count|sum|share|mean|median)\)\s*$/i, '');
+    const rule = summary ? '<p class="ask-rule">' + (summary.rule ? '<span class="ask-rule-lead">Rule:</span> ' + escA(summary.rule) : '') + (summary.counts && typeof summary.counts === 'object' && Object.keys(summary.counts).length ? '<span class="ask-counts">' + Object.keys(summary.counts).map(k => `<span class="ask-count"><b>${escA(cell(summary.counts[k]))}</b> ${escA(countLabel(k))}</span>`).join('<span class="ask-sep"> · </span>') + '</span>' : '') + '</p>' : '';
+    const table = rows.length ? '<div class="ask-tbl"><table><thead><tr>' + cols.map(c => '<th scope="col">' + escA(c) + '</th>').join('') + '</tr></thead><tbody>' + rows.map((r, i) => { const id = rowId(r, i), href = id && placeHref(id);
+      return '<tr>' + cols.map(c => '<td>' + (c === placeCol && href && r[c] != null ? `<a href="${escA(href)}" data-pl="${escA(id)}">${escA(cell(r[c]))}</a>` : escA(cell(r[c]))) + '</td>').join('') + '</tr>'; }).join('') + '</tbody></table></div>' : '';
+    const ambOpts = res.ambiguity && Array.isArray(res.ambiguity.options) ? res.ambiguity.options.filter(o => o && o.name) : [];
+    const amb = ambOpts.length ? '<div class="ask-amb">' + (/\?\s*$/.test(String(res.answer || '')) ? '' : '<p>Which one did you mean?</p>') + '<div class="ask-amb-opts">' + ambOpts.map(o => { const label = ambLabel(o); return `<button type="button" class="ask-amb-q" data-name="${escA(label)}" data-bare="${escA(res.ambiguity.phrase || '')}"${o.id != null && idKind(o.id) ? ` data-pl="${escA(o.id)}"` : ''}>${escA(label)}</button>`; }).join('') + '</div></div>' : '';
+    const named = opts.placeName ? hl.filter(id => idKind(id)) : []; const MAXP = 12;
+    const places = named.length ? '<div class="ask-hl"><span class="ask-hl-lead">Outlined on the map:</span>' + named.map((id, i) => `<button type="button" class="ask-pl${i >= MAXP ? ' ask-pl-more' : ''}" data-pl="${escA(id)}"${i >= MAXP ? ' hidden' : ''}>${escA(opts.placeName(id) || id)}</button>`).join('') + (named.length > MAXP ? `<button type="button" class="ask-pl-x" data-more="1">+${named.length - MAXP} more</button>` : '') + '</div>' : '';
+    const mapLine = opts.mapShows !== undefined ? `<p class="ask-map"><span class="ask-map-lead">Map now shows:</span> <b id="ask-map-shows">${escA(opts.mapShows || '')}</b> · <a href="map.html" class="ask-reset">Reset map</a></p>` : '';
+    const cav = Array.isArray(res.caveats) && res.caveats.length ? '<ul class="ask-cav">' + res.caveats.map(c => '<li>' + escA(c) + '</li>').join('') + '</ul>' : '';
+    const safeUrl = u => /^https?:\/\/[^\s"'<>]+$/i.test(String(u || '')) ? String(u) : null;   // a citation is a link only to a web address (never javascript: or data:)
+    const src = (res.sources || []).length ? '<p class="ask-src">Read from: ' + res.sources.map(s => safeUrl(s.url) ? '<a href="' + escA(s.url) + '" target="_blank" rel="noopener">' + escA(s.title) + '</a>' : escA(s.title)).join(', ') + (res.data_as_of ? ' · data as of ' + escA(nice(res.data_as_of)) : '') + '</p>' : (res.data_as_of ? '<p class="ask-src">Data as of ' + escA(nice(res.data_as_of)) + '</p>' : '');
+    const note = res.route === 'search' || res.route === 'data' ? '<p class="ask-note">Figures are read from this site’s published data files, not written by the model' + (res.deterministic ? '; this answer was composed without a model' : '') + '. The box lists and ranks; it does not match patients to trials or give medical advice.</p>' : '';
+    return '<div class="ask-card" id="ask-card" role="region" aria-label="Answer" tabindex="-1"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">' + escA(q) + '</p><div class="ask-a">' + escA(res.answer || '').split(/\n+/).filter(Boolean).map(x => '<p>' + x + '</p>').join('') + '</div>' + amb + mapLine + rule + table + places + cav + src + note + '</div>';
   }
-  const ASK_CSS = '.ask{display:flex;gap:6px;align-items:stretch}.ask input{flex:1;min-width:0;border:1px solid var(--rule);border-radius:8px;padding:.5rem .65rem;font:inherit;font-size:var(--fs-0,.95rem);background:var(--card,#fff);color:var(--ink)}.ask input:focus{outline:2px solid var(--gulf,#2F6F8F);outline-offset:1px}.ask button{border:0;border-radius:8px;padding:.45rem .8rem;font:inherit;font-weight:600;background:var(--navy,#1B2430);color:#fff;cursor:pointer}.ask button[disabled]{opacity:.6;cursor:progress}.ask-hint{margin:.15rem 0 0;font-size:.8rem;color:var(--ink-3,#6B7280)}'
-    + '.ask-card{position:relative;margin:.8rem 1.25rem 0;padding:.8rem 2.2rem .7rem .9rem;border:1px solid var(--rule);border-left:4px solid var(--rust,#B5452F);border-radius:8px;background:var(--paper,#F7F4EE)}.ask-card .ask-x{position:absolute;top:.35rem;right:.45rem;border:0;background:none;font-size:1.3rem;line-height:1;color:var(--ink-3);cursor:pointer}.ask-card .ask-q{margin:0 0 .35rem;font-weight:600;color:var(--ink-2)}.ask-card .ask-a p{margin:0 0 .4rem}.ask-tbl{overflow:auto;margin:.4rem 0}.ask-tbl table{border-collapse:collapse;font-size:.82rem;width:100%}.ask-tbl th,.ask-tbl td{text-align:left;padding:.25rem .45rem;border-bottom:1px solid var(--rule);vertical-align:top}.ask-tbl th{font-weight:600;color:var(--ink-2)}.ask-src,.ask-note{margin:.35rem 0 0;font-size:.78rem;color:var(--ink-3)}.ask-card.err{border-left-color:var(--ink-3)}'
-    + '@media (max-width:720px){.ask-card{margin:.6rem var(--gutter,1rem) 0}}';
+  // Colours come from the site's tokens (site.css :root); the two tints are mixed from them, with the paper colour as the fallback.
+  const ASK_CSS = '.ask,.ask-card,.ask-again{--ask-tint:var(--paper,#F7F5F0);--ask-tint-2:var(--rule,#E6E2DA);--ask-tint:color-mix(in srgb,var(--sky,#9EC4E0) 22%,var(--card,#fff));--ask-tint-2:color-mix(in srgb,var(--sky,#9EC4E0) 40%,var(--card,#fff))}.ask{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;align-items:stretch}.ask[hidden],.ask-mount[hidden]{display:none!important}'
+    + '.ask .ask-lab{grid-column:1/-1;margin:0;line-height:1.25;font-weight:700;color:var(--navy);font-size:var(--fs-2,1.08rem);letter-spacing:-.01em}'
+    + '.ask textarea,.ask input{grid-column:1;width:100%;min-width:0;border:1px solid var(--rule-2,#CFCBC2);border-radius:8px;padding:.45rem .65rem;font:inherit;font-size:var(--fs-1,.95rem);line-height:1.3;background:var(--card,#fff);color:var(--ink);resize:none;box-sizing:border-box}'
+    + '.ask textarea{min-height:calc(2 * 1.3em + .9rem + 2px)}.ask textarea:focus,.ask input:focus{outline:none;border-color:var(--gulf,#3F7FB5);box-shadow:0 0 0 4px rgba(63,127,181,.15)}'
+    + '.ask button[type=submit]{grid-column:2;align-self:stretch;border:0;border-radius:8px;padding:.45rem 1.1rem;font:inherit;font-size:var(--fs-1,.95rem);font-weight:700;background:var(--navy,#0B3C5D);color:#fff;cursor:pointer;min-width:4.2rem}.ask button[type=submit]:hover{background:var(--gulf,#3F7FB5)}.ask button[type=submit][disabled]{opacity:.65;cursor:progress}'
+    // the example row: "Try ▾" opens the full list; beside it one row of chips scrolls sideways, the last one cut off as the sign that there are more
+    + '.ask .ask-exrow{grid-column:1/-1;display:flex;align-items:center;gap:.3rem;min-width:0}'
+    + '.ask .ask-ex{flex:1 1 auto;display:flex;align-items:center;gap:.3rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:1px 0 2px;margin:0 -2px;min-width:0;mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}.ask .ask-ex::-webkit-scrollbar{display:none}'
+    + '.ask .ask-ex-lead{flex:0 0 auto;font-size:var(--fs-0,.84rem);font-weight:650;color:var(--ink-2);padding-left:2px}'
+    + '.ask .ask-ex-q,.ask .ask-ex-full{flex:0 0 auto;font:inherit;font-size:var(--fs-0,.84rem);font-weight:600;color:var(--navy,#0B3C5D);background:var(--ask-tint);border:1px solid var(--ask-tint-2);border-radius:999px;padding:.26rem .7rem;cursor:pointer;line-height:1.3;white-space:nowrap}.ask .ask-ex-q:hover,.ask .ask-ex-full:hover{background:var(--ask-tint-2);border-color:var(--gulf,#3F7FB5)}'
+    + '.ask .ask-more{position:relative;flex:0 0 auto}.ask .ask-more>summary{list-style:none;cursor:pointer;font-size:var(--fs-0,.84rem);font-weight:650;color:var(--navy);padding:.26rem .4rem .26rem 2px;border-radius:6px;white-space:nowrap}.ask .ask-more>summary::-webkit-details-marker{display:none}.ask .ask-more>summary:hover,.ask .ask-more[open]>summary{background:var(--ask-tint)}'
+    + '.ask .ask-ex-list{position:absolute;left:0;top:calc(100% + 6px);z-index:35;display:grid;gap:.25rem;width:max-content;max-width:min(520px,calc(100vw - 32px));padding:.45rem;background:var(--card,#fff);border:1px solid var(--rule-2,#CFCBC2);border-radius:10px;box-shadow:0 10px 28px rgba(27,36,48,.16)}.ask .ask-ex-full{white-space:normal;text-align:left;border-radius:8px}'
+    + '.ask .ask-foot{grid-column:1/-1;margin:0;font-size:.78rem;line-height:1.3;color:var(--ink-3,#5F6B78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.ask.ask-hero .ask-foot{white-space:normal}.ask .ask-status{color:var(--ink-2);font-weight:600}.ask .ask-hint[hidden]{display:none}'
+    // the homepage: a larger box with the chips wrapping onto several lines
+    + '.ask.ask-hero{gap:8px 10px;padding:1.1rem 1.2rem 1rem;background:var(--card,#fff);border:1px solid var(--rule,#E6E2DA);border-left:5px solid var(--navy,#0B3C5D);border-radius:var(--r,10px);box-shadow:var(--shadow)}'
+    + '.ask.ask-hero .ask-lab{font-family:"Source Serif 4",Georgia,serif;font-size:var(--fs-3,1.35rem);font-weight:600}.ask.ask-hero textarea{font-size:var(--fs-2,1.08rem);padding:.6rem .8rem;min-height:calc(2 * 1.3em + 1.2rem + 2px)}'
+    + '.ask.ask-hero button[type=submit]{font-size:var(--fs-2,1.08rem);padding:.6rem 1.5rem;border-radius:999px;min-width:6rem}.ask.ask-hero .ask-exrow{align-items:baseline;flex-wrap:wrap}.ask.ask-hero .ask-ex{flex:1 1 320px;flex-wrap:wrap;overflow:visible;mask-image:none;-webkit-mask-image:none;margin:2px 0 0}.ask.ask-hero .ask-ex-q{padding:.3rem .75rem}.ask.ask-hero .ask-foot{font-size:var(--fs-0,.84rem)}'
+    // the answer card
+    + '.ask-card{position:relative;margin:.8rem 1.25rem 0;padding:.8rem 2.2rem .7rem .9rem;border:1px solid var(--rule);border-left:4px solid var(--rust,#8A3B1E);border-radius:8px;background:var(--paper,#F7F5F0)}.ask-card:focus{outline:none}.ask-card:focus-visible{outline:3px solid var(--gulf,#3F7FB5);outline-offset:2px}'
+    + '.ask-card .ask-x{position:absolute;top:.35rem;right:.45rem;border:0;background:none;font-size:1.3rem;line-height:1;color:var(--ink-3);cursor:pointer;border-radius:50%;padding:.1rem .4rem}.ask-card .ask-x:hover{color:var(--ink);background:var(--card)}'
+    + '.ask-card .ask-q{margin:0 0 .35rem;font-weight:600;color:var(--ink-2)}.ask-card .ask-a p{margin:0 0 .4rem}'
+    + '.ask-card .ask-map{margin:.3rem 0 .4rem;font-size:var(--fs-0,.84rem);color:var(--ink-2);padding:.35rem .6rem;background:var(--card,#fff);border:1px solid var(--rule);border-radius:6px}.ask-card .ask-map b{color:var(--ink);font-weight:650}.ask-card .ask-map-lead{font-weight:650;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;font-size:.72rem}'
+    + '.ask-card .ask-rule{margin:.4rem 0 .2rem;font-size:var(--fs-0,.84rem);color:var(--ink-2);line-height:1.4}.ask-card .ask-rule-lead{font-weight:650;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;font-size:.72rem}.ask-card .ask-counts{display:block;margin-top:.15rem}.ask-card .ask-count b{color:var(--ink);font-weight:650}'
+    + '.ask-card .ask-amb p{margin:.2rem 0 .3rem;font-weight:600}.ask-card .ask-amb-opts{display:flex;flex-wrap:wrap;gap:.3rem;margin:0 0 .5rem}.ask-card .ask-amb-q,.ask-card .ask-pl,.ask-card .ask-pl-x{font:inherit;font-size:var(--fs-0,.84rem);color:var(--navy);background:var(--card,#fff);border:1px solid var(--rule-2,#CFCBC2);border-radius:999px;padding:.25rem .7rem;cursor:pointer;line-height:1.3;text-align:left}.ask-card .ask-amb-q{font-weight:600;background:var(--ask-tint);border-color:var(--ask-tint-2)}.ask-card .ask-amb-q:hover,.ask-card .ask-pl:hover,.ask-card .ask-pl-x:hover{border-color:var(--navy);background:var(--ask-tint)}'
+    + '.ask-card .ask-hl{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.4rem 0 0}.ask-card .ask-hl-lead{font-size:var(--fs-0,.84rem);color:var(--ink-2);font-weight:650}.ask-card .ask-pl[hidden]{display:none}.ask-card .ask-pl-x{color:var(--ink-2)}'
+    + '.ask-tbl{overflow:auto;margin:.4rem 0}.ask-tbl table{border-collapse:collapse;font-size:.82rem;width:100%}.ask-tbl th,.ask-tbl td{text-align:left;padding:.25rem .45rem;border-bottom:1px solid var(--rule);vertical-align:top}.ask-tbl th{font-weight:600;color:var(--ink-2)}.ask-tbl td a{color:var(--link);font-weight:600}'
+    + '.ask-card .ask-cav{margin:.4rem 0 0;padding-left:1.1rem;font-size:.78rem;color:var(--ink-3)}.ask-card .ask-cav li{margin:.1rem 0}'
+    + '.ask-src,.ask-note{margin:.35rem 0 0;font-size:.78rem;color:var(--ink-3)}.ask-card.err{border-left-color:var(--ink-3)}.ask-card.busy{border-left-color:var(--gulf,#3F7FB5)}'
+    // the way back to the box when the figures column shows a tab instead of the map
+    + '.ask-again{display:flex;align-items:center;flex-wrap:wrap;gap:.2rem .6rem;margin:.6rem 1.25rem 0;font-size:var(--fs-0,.84rem);color:var(--ink-2)}.ask-again[hidden]{display:none}.ask-again button{font:inherit;font-size:var(--fs-0,.84rem);font-weight:650;color:var(--navy);background:var(--ask-tint);border:1px solid var(--ask-tint-2);border-radius:999px;padding:.25rem .7rem;cursor:pointer;line-height:1.3}.ask-again button:hover{border-color:var(--gulf)}'
+    + '@media (max-width:720px){.ask-card,.ask-again{margin-left:var(--gutter,1rem);margin-right:var(--gutter,1rem)}.ask .ask-lab{font-size:var(--fs-1,.95rem)}.ask.ask-hero{padding:.9rem .9rem .8rem}}'
+    + '@media (max-width:640px){.ask textarea,.ask input{font-size:16px}.ask.ask-hero textarea{min-height:calc(3 * 1.3em + 1.2rem + 2px)}.ask .ask-ex-q,.ask .ask-ex-full,.ask button[type=submit],.ask-card .ask-pl,.ask-card .ask-amb-q,.ask .ask-more>summary{min-height:40px}.ask .ask-ex-list{position:fixed;left:12px;right:12px;top:auto;bottom:12px;max-width:none;width:auto;max-height:70vh;overflow:auto}}'
+    + '@media (prefers-reduced-motion:reduce){.ask .ask-ex{scroll-behavior:auto}}';
   function askStyles() { if (document.getElementById('ask-css')) return; const st = document.createElement('style'); st.id = 'ask-css'; st.textContent = ASK_CSS; document.head.appendChild(st); }
 
-  return { ASK_URL, ask, askCardHTML, askStyles, foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, nearestFor, driveTime, rate, period };
+  return { ASK_URL, ASK_TIMEOUT_S, ASK_EXAMPLES, ASK_HINT, ASK_HINT_SHORT, ask, askBoxHTML, mountAskBox, wireAskBox, askCardHTML, ambLabel, askStyles, escA, idKind, placeHref, foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, nearestFor, driveTime, rate, period };
 })();
