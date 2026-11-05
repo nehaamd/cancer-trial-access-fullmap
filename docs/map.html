@@ -52,6 +52,28 @@
   .drawer-beside .legend-card{visibility:visible;left:calc(var(--card-right, 416px) + 16px);transition:left .35s}   /* the map sits beside the open drawer; the legend follows it */
   @media (prefers-reduced-motion:reduce){.drawer-beside .legend-card{transition:none}}
   .search-wrap{position:relative}
+  .search-card .ask-mount{padding-bottom:7px;border-bottom:1px solid var(--rule)} .search-card.ask-open{z-index:8}   /* the open list of example questions paints over the layer switch */ .ask-mount[hidden],form.ask[hidden]{display:none!important} .card-rest{display:contents}
+  /* With the question box shown (body.has-ask) the card must not cost the map its height, so:
+     - from 1200 px up, with the drawer closed, the card is two columns wide instead of tall: the box is the headline on the left; the place
+       search, examples and actions sit on the right. When the layer switch (its quick pills included) no longer fits beside the wide card,
+       #map-wrap gets .card-wide: the switch and the zoom hint move into a band under the card and the map is laid out under that band
+       (layoutMap), so no control sits on the map.
+     - between 981 and 1199 px, and beside the open drawer, the box is compact (#map-wrap.ask-compact): one line, no label row, no chips, no
+       hint; the card keeps the single column and the layer switch sits beside it as before.
+     - at 980 px and below the layout stacks and the box has its full height (the map area grows with the card). */
+  @media (min-width:1200px){
+    .has-ask #map-wrap:not(.drawer-open) .search-card{width:min(812px,calc(100% - 32px));display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 14px;align-items:start;padding:6px 8px}
+    .has-ask #map-wrap:not(.drawer-open) .search-card .ask-mount{border-bottom:0;border-right:1px solid var(--rule);padding:0 14px 0 0;align-self:stretch}
+    .has-ask #map-wrap:not(.drawer-open) .card-rest{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .has-ask #map-wrap:not(.drawer-open) .card-actions{padding-top:3px}
+  }
+  .card-wide .layer-switch{top:calc(var(--card-h,160px) + 4px)}
+  .card-wide .map-hint{top:calc(var(--card-h,160px) + 6px);right:calc(var(--lsw-w,440px) + 28px);max-width:min(360px,calc(100% - var(--lsw-w,440px) - 60px))}
+  .ask-compact .ask .ask-lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .ask-compact .ask .ask-exrow,.ask-compact .ask .ask-foot{display:none} .ask-compact .ask .ask-status:not(:empty){display:block}
+  .ask-compact .ask textarea{min-height:0;height:calc(1.3em + .9rem + 2px);overflow:hidden} .ask-compact .search-card .ask-mount{padding-bottom:6px}
+  .has-ask .explore{max-height:max(240px,calc(100vh - 298px))}   /* the open drawer scrolls within the card, which is taller by the compact box (one line) */
+  @media (max-width:1300px){.has-ask #map-wrap.drawer-open .layer-switch button[data-layer]{display:none}}   /* beside the open drawer only the menu fits */
   #q{width:100%;border:1px solid var(--rule-2);border-radius:8px;padding:.5rem 2.4rem .5rem 2.4rem;font-size:var(--fs-1);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .75rem center}
   #q::-webkit-search-cancel-button,#q::-webkit-search-decoration{-webkit-appearance:none;display:none}
   #q:focus{border-color:var(--gulf);box-shadow:0 0 0 4px rgba(63,127,181,.15)}
@@ -169,7 +191,7 @@
   .unit-district .county,.unit-state .county{fill:#F4F2EC !important;pointer-events:none;stroke:#fff;stroke-width:.2}
   .statefill{fill:none;stroke:#fff;stroke-width:.8;pointer-events:none} .unit-state .statefill{pointer-events:all;cursor:pointer} .unit-state .statefill:hover{stroke:var(--ink);stroke-width:1.6}
   .unit-state .district{display:none} .unit-district .district:not(.fillable){display:none}
-  .hl-outline{fill:none;stroke:var(--rust);stroke-width:2.2;stroke-linejoin:round;pointer-events:none;paint-order:stroke} .hl-halo{fill:none;stroke:#fff;stroke-width:4;stroke-linejoin:round;pointer-events:none}
+  .hl-outline{fill:none;stroke:var(--rust);stroke-width:2.4px;stroke-linejoin:round;pointer-events:none;vector-effect:non-scaling-stroke} .hl-halo{fill:none;stroke:#fff;stroke-width:5.5px;stroke-linejoin:round;pointer-events:none;opacity:.95;vector-effect:non-scaling-stroke}
   .statecase{fill:none;stroke:#fff;stroke-width:2;pointer-events:none;opacity:.8}
   .stateline{fill:none;stroke:#3F3831;stroke-width:.95;pointer-events:none;opacity:.95}
   .district.selected{stroke-width:2.6;stroke:var(--rust);opacity:1} .district.selected-halo{stroke:#fff;stroke-width:5.5;opacity:.95}
@@ -246,7 +268,8 @@
   .foot-grid dl{margin:0} .foot-grid dt{font-weight:650;color:var(--ink);display:inline} .foot-grid dd{display:inline;margin:0} .foot-grid dd::after{content:"";display:block;margin-bottom:.25rem}
   footer details{max-width:140ch} footer summary{cursor:pointer;font-weight:650;color:var(--ink);padding:.2rem 0} footer p{margin:.4rem 0}
 
-  @media (max-width:1280px){.layer-switch button[data-layer]{display:none}}   /* between 981 and 1280 px the pills would sit on the search box; the menu lists them */
+  @media (max-width:1280px){body:not(.has-ask) .layer-switch button[data-layer]{display:none}}   /* between 981 and 1280 px the pills would sit on the search box; the menu lists them */
+  @media (max-width:1199px){.has-ask .layer-switch button[data-layer]{display:none}}   /* with the question box the pills show from 1200 px (in the band under the card when they do not fit beside it) */
   @media (max-width:980px){
     main.stage{flex-direction:column;height:auto}
     #left{flex:0 0 auto} #map-wrap{height:min(62vh,560px)} .panel:not(#map-wrap){min-height:50vh;max-height:72vh}
@@ -310,8 +333,10 @@
 
     <!-- floating search card: the search box, example places, and the "Explore the data" drawer with every control -->
     <div class="fcard search-card" id="search-card">
+      <!-- "Ask the map": the card's headline while the helper is deployed (SITE.ASK_URL); SITE.mountAskBox writes the box here -->
+      <div class="ask-mount" id="ask-mount" hidden></div>
+      <div class="card-rest">
       <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a place, ZIP or member of Congress" aria-label="Search by city, ZIP code, county, congressional district, state or member of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
-      <form class="ask" id="askf" hidden autocomplete="off"><input id="askq" type="text" maxlength="400" placeholder="Ask the map: e.g. which Texas counties have the least access?" aria-label="Ask the map a question"><button type="submit" id="askb">Ask</button></form>
       <div class="invite" id="doors" hidden>
         <div class="invite-row">
           <p class="invite-lead"><b>Try</b></p>
@@ -361,6 +386,7 @@
         </div></details>
         <div class="xsec xfoot"><span class="xhead" style="margin:0">Analysis</span><span class="chips"><button type="button" class="chip" data-xtab="compare">Compare counties in a state</button><button type="button" class="chip" data-xtab="burden">Need vs access</button><button type="button" class="chip" data-xtab="changes">Recent registry changes</button></span><button class="btn primary" id="btn-filters-done" type="button">Done</button></div>
       </div>
+    </div><!-- /card-rest -->
     </div>
 
     <!-- floating layer switch (county view): the two layers most people want, the rest under Explore the data -->
@@ -716,7 +742,7 @@
       const lg = d3.select('#legend'); lg.html(''); const lgt = (metric === 'gacs' ? ACS_LABEL[acsVar] + ', ' + ACSL : geoLabelOf(metric)) + (filtersActive() && (metric === 'l20' || metric === 'z60') ? ' (filtered)' : ''); lg.append('span').attr('class', 'lg-title').text(lgt + ' · by ' + (unit === 'district' ? 'district' : 'state'));
       svg.attr('aria-label', `Map of US ${unit === 'district' ? 'congressional districts' : 'states'}: ${lgt}`);   // the map's name says what it shows
       cls.forEach(k => lg.append('span').html(`<i style="background:${k[3]}"></i>${k[0]}`)); legendStar(lg); drawShort(); lg.append('span').html('<i style="background:var(--nodata)"></i>' + (metric.startsWith('cos_') ? `vacant seat · as of ${SITE.nice(CO.meta.fetched)}` : (metric === 'medn' || metric === 'g60b' || metric === 'g60n') ? 'no road route' : 'no data'));
-      document.getElementById('inc-site').style.display = 'none'; document.getElementById('acs-var').style.display = metric === 'gacs' ? '' : 'none'; return; }
+      document.getElementById('inc-site').style.display = 'none'; document.getElementById('acs-var').style.display = metric === 'gacs' ? '' : 'none'; gHL.raise(); if (window.__askSync) window.__askSync(); return; }
     dpaths.classed('fillable', false).style('fill', null); spaths.style('fill', null); gSt.lower(); gD.raise(); gStLine.style('display', null).raise(); gB.raise(); gS.raise(); gL.raise(); gN.raise();
     if (isBva(metric)) { bvaAutoCrit(); if (bvaNeedsTracts()) { computeFilteredCounty(); return; } }
     if (isShort(metric) && recalc() && !FCo) { computeFilteredCounty(); return; }   // the circles are recomputed from census tracts for the filtered trials or a moved line
@@ -738,7 +764,7 @@
     else if (metric === 'acs') lg.append('span').html('<i style="background:var(--nodata)"></i>no data');
     legendStar(lg);
     document.getElementById('inc-site').style.display = (metric === 'inc' || isBva(metric)) ? '' : 'none'; document.getElementById('acs-var').style.display = metric === 'acs' ? '' : 'none';
-    gHL.raise();
+    gHL.raise(); if (window.__askSync) window.__askSync();
   }
   const incSel = document.getElementById('inc-site'); BSITE.forEach(([k, lab], i) => { const o = document.createElement('option'); o.value = i; o.textContent = lab; incSel.appendChild(o); }); incSel.addEventListener('change', () => { incSite = +incSel.value; if ((isBva(metric) || tab === 'burden') && BU) { const ty = BU.meta.site2type[BSITE[incSite][0]] || ''; if (ty !== filt.type) { filt.type = ty; ft.value = ty; update(); return; } } paint(); if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); refreshTab(); pushURL(); });
   document.getElementById('acs-var').addEventListener('change', e => { acsVar = e.target.value; paint(); renderPane(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
@@ -796,7 +822,7 @@
   const pickS = document.getElementById('pick-s'), pickD = document.getElementById('pick-d');
   D.states.forEach(([usps, name]) => { const o = document.createElement('option'); o.value = usps; o.textContent = name; pickS.appendChild(o); });
   function fillDistricts(st) { pickD.innerHTML = '<option value="">District…</option>'; pickD.disabled = !st; Object.keys(DI).filter(k => DI[k].st === st).sort((a,b) => (+DI[a].cd) - (+DI[b].cd)).forEach(k => { const d = DI[k]; const o = document.createElement('option'); o.value = k; o.textContent = `${st}-${cdLabel(d.cd)} — ${d.member || 'vacant'}${d.party ? ' ('+d.party+')' : ''}`; pickD.appendChild(o); }); }
-  pickS.addEventListener('change', e => { selectedState = e.target.value; selectedD = selectedC = null; fillDistricts(selectedState); if (!selectedState) { clearSelection(); return; } svg.classed('dim', false).classed('dz', false); counties.classed('in-district', false); halo.attr('d', null); sel.attr('d', null); outlineCounty(null); zoomState(selectedState); refreshLabels(); renderStateOverview(selectedState); pushURL(); });
+  pickS.addEventListener('change', e => { selectedState = e.target.value; selectedD = selectedC = null; fillDistricts(selectedState); if (!selectedState) { clearSelection(); return; } svg.classed('dim', false).classed('dz', false); counties.classed('in-district', false); halo.attr('d', null); sel.attr('d', null); outlineCounty(null); zoomState(selectedState); refreshLabels(); renderStateOverview(selectedState); pushURL(); if (window.__askSync) window.__askSync(); });
   pickD.addEventListener('change', e => { if (e.target.value) selectDistrict(e.target.value); });
   const dl = document.getElementById('county-list'); Object.entries(C).sort((a,b) => a[1].n.localeCompare(b[1].n)).forEach(([k,c]) => { const o = document.createElement('option'); o.value = clabel(c); dl.appendChild(o); });
   document.getElementById('pick-c').addEventListener('change', e => { const v = e.target.value.trim().toLowerCase(); const k = CK.find(k => clabel(C[k]).toLowerCase() === v) || CK.find(k => `${C[k].n}, ${C[k].s2}`.toLowerCase() === v); if (k) selectCounty(k); });
@@ -823,7 +849,8 @@
     if ((isBva(metric) || tab === 'burden') && BU) { if (incSite) p.set('site', BSITE[incSite][0]); if (bvaCritUser) p.set('crit', bvaCrit); if (bvaThr !== 50) p.set('thr', bvaThr); if (tab === 'burden' && measure === 'mort' && !isBva(metric)) p.set('meas', 'mort'); }
     if (restoring) return; const q = p.toString(), url = q ? '?' + q : location.pathname, key = placeKey();
     // a new place or tab is a new history entry (so Back returns to the previous place); filters and layers update the entry in place
-    if (lastKey !== null && key !== lastKey) history.pushState(null, '', url); else history.replaceState(null, '', url); lastKey = key; }
+    const st = window.__askState ? { ask: window.__askState } : null;   // an open answer card travels with the entry, so Back and Forward bring it back with its view
+    if (lastKey !== null && key !== lastKey) history.pushState(st, '', url); else history.replaceState(st, '', url); lastKey = key; }
   let lastKey = null, restoring = false; const placeKey = () => (selectedD ? 'd' + selectedD : selectedC ? 'c' + selectedC : selectedState ? 's' + selectedState : 'us') + '|' + tab;
   function readURL() { const p = new URLSearchParams(location.search);
     { const v = parseInt(p.get('lt')); LT = LT_OPTIONS.includes(v) ? v : LT_DEFAULT; }   // the trial-count line; an unknown value is ignored (read before the guide box, whose text quotes it)
@@ -1356,6 +1383,7 @@
     ['map', 'trials', 'sites', 'compare', 'burden', 'changes'].forEach(x => document.getElementById(x === 'map' ? 'map-wrap' : 'tab-' + x).hidden = x !== t);
     syncScope(); if (t === 'trials') renderTrials(); if (t === 'sites') renderSites(); if (t === 'compare') renderCompare(); if (t === 'burden') renderBurden(); if (t === 'changes') renderChanges(); pushURL();
     if (window.__syncMenu) window.__syncMenu();   // the Analysis menu names and marks the view however it was opened (drawer, guide, panel links, Back)
+    if (window.__askSync) window.__askSync();
     if (was !== t && window.innerWidth <= 980 && !(opts && opts.quiet)) document.getElementById('left').scrollIntoView({ ...SCROLL, block: 'start' }); }   // stacked layout: the panel sits above the tabs
   document.querySelectorAll('.tabs button[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
   document.querySelector('.tabs-main').addEventListener('keydown', ev => { if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(ev.key)) return; const bs = [...document.querySelectorAll('.tabs-main [role=tab]')]; let i = bs.indexOf(document.activeElement); if (i < 0) return; ev.preventDefault();
@@ -1364,7 +1392,7 @@
   function syncHint() { const el = document.getElementById('map-hint'), sc = scope();   // on a narrow screen the figures sit below the map: say what is selected and offer a jump
     if (sc.kind !== 'nat' && window.innerWidth <= 980) { if (hintTimer) { clearTimeout(hintTimer); hintTimer = null; } el.classList.remove('gone'); el.dataset.keep = '1'; el.innerHTML = `<b>${esc(sc.label.replace(/ \(counties overlapping the district\)/, ''))}</b> · <button class="linkish" type="button" id="to-pane">figures ↓</button>`; document.getElementById('to-pane').addEventListener('click', () => document.getElementById('pane').scrollIntoView({ ...SCROLL, block: 'start' })); }
     else { delete el.dataset.keep; el.textContent = HINT0; if (!hintTimer && !el.classList.contains('gone')) hintTimer = setTimeout(() => hintEl.classList.add('gone'), 12000); } }
-  function syncScope() { document.getElementById('scope-note').textContent = tab === 'map' ? '' : `Scope: ${scope().label} — change it with the search box or the map`; announce(); }
+  function syncScope() { document.getElementById('scope-note').textContent = tab === 'map' ? '' : `Scope: ${scope().label} — change it with the search box or the map`; announce(); if (window.__askSync) window.__askSync(); }   // the answer card's "Map now shows" names the place in view
   let lastAnnounced = null; const VIEW_NAME = { trials: 'Trials', sites: 'Sites', compare: 'Compare counties', burden: 'Need vs access', changes: 'Recent changes' };
   function announce() { const sc = scope(); const el = document.getElementById('sr-status'); if (!el) return; const msg = tab !== 'map' ? `${VIEW_NAME[tab] || tab} view: ${sc.kind === 'nat' ? 'United States' : sc.label}` : sc.kind === 'nat' ? 'United States: figures updated' : `${sc.label} selected: figures updated`; if (msg !== lastAnnounced) { lastAnnounced = msg; el.textContent = ''; setTimeout(() => { el.textContent = msg; }, 50); } }
   function refreshTab() { syncScope(); syncHint(); if (tab === 'trials') renderTrials(); else if (tab === 'sites') renderSites(); else if (tab === 'compare') renderCompare(); else if (tab === 'burden') renderBurden(); }
@@ -1440,10 +1468,16 @@
     // On a wide screen the open drawer ("Explore the data" / "Filter trials") moves the map beside it instead of covering the West Coast;
     // the legend moves with it. On a narrow screen, or when there is no room beside the card, the drawer overlaps the map as before.
     const cardRight = searchCard.offsetLeft + searchCard.offsetWidth, beside = !narrow && !exploreEl.hidden && aw - cardRight - 2 * m >= 420;
-    wrapEl.classList.toggle('drawer-beside', beside); wrapEl.style.setProperty('--card-right', cardRight + 'px');
+    wrapEl.classList.toggle('drawer-beside', beside); wrapEl.style.setProperty('--card-right', cardRight + 'px'); wrapEl.style.setProperty('--card-h', (searchCard.offsetTop + cardH) + 'px');
+    // the question box: compact (one line) between 981 and 1199 px and beside the open drawer; see the .ask-compact rules
+    const compact = document.body.classList.contains('has-ask') && !narrow && (!matchMedia('(min-width:1200px)').matches || !exploreEl.hidden); wrapEl.classList.toggle('ask-compact', compact);
+    { const ta = document.getElementById('askq'); if (ta) { const ph = compact ? 'Ask the map a question…' : ta.dataset.ph; if (ph && ta.placeholder !== ph) ta.placeholder = ph; } }   // the one-line box names itself (its label is hidden)
+    const lswEl = document.getElementById('layer-switch'), lswW = lswEl.hidden ? 0 : lswEl.offsetWidth, lswH = lswEl.hidden ? 0 : lswEl.offsetHeight; wrapEl.style.setProperty('--lsw-w', lswW + 'px');
+    // the wide two-column card leaves no room beside it for the layer switch: the switch and the hint move into a band under the card, the map under the band
+    const cardWide = !narrow && exploreEl.hidden && cardRight + m + lswW + m > aw; wrapEl.classList.toggle('card-wide', cardWide);
     const lgH = legendCard.offsetHeight || 0; wrapEl.style.setProperty('--lgh', lgH + 'px');
     const left0 = beside ? cardRight + m : 0, aw2 = aw - left0;   // the width the map may use
-    const top0 = beside ? Math.max(m, (document.getElementById('layer-switch').offsetHeight || 0) + 16 + 6) : searchCard.offsetTop + cardH + 6;
+    const top0 = beside ? Math.max(m, lswH + 16 + 6) : searchCard.offsetTop + cardH + (cardWide ? 4 + lswH + 4 : 6);
     if (!narrow && wrapEl.style.height) { wrapEl.style.height = ''; ah = wrapEl.clientHeight; }
     if (narrow) {   // stacked layout: the map area is as tall as the card, a full-width map and the legend need, within most of the screen
       const need = Math.ceil(top0 + 0.915 * (aw - 2 * m) * H / W + lgH + 12), wh = Math.min(need, Math.round(window.innerHeight * 0.8));
@@ -1537,45 +1571,115 @@
       const t = ['trials', 'sites', 'compare', 'burden', 'changes'].includes(u.tab) ? u.tab : 'map'; if (!first || t !== 'map') setTab(t, { quiet: true });
     } finally { restoring = false; lastKey = placeKey(); syncHint(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); }
   }
-  window.addEventListener('popstate', () => applyURL(false));
+  window.addEventListener('popstate', () => { applyURL(false); if (window.__askRestore) window.__askRestore(history.state && history.state.ask); });
   applyURL(true);
 
   // ---- "Ask the map" ----
   // A question goes to the helper (SITE.ask); the reply carries a view {page, qs, hl}. The map moves to that view the same way a
-  // link would (the address changes, applyURL reads it), the places the answer refers to are outlined, and the answer card sits
-  // above the figures. Nothing in the reply is computed by the model: the figures come from the published api/ files.
-  const askForm = document.getElementById('askf'), askIn = document.getElementById('askq'), askBtn = document.getElementById('askb');
-  function highlight(ids) {
-    const want = new Set(ids || []); gHL.selectAll('*').remove(); if (!want.size) return;
+  // link would (one history entry; applyURL reads the address: unit, layer, site, ACS variable, criterion, threshold, measure, filters,
+  // tab and place), the places the answer refers to are outlined, and the answer card sits above the figures. The open answer travels
+  // in the history entry's state, so Back and Forward bring the card and the outlines back with the view, or clear them for a view
+  // that had none. Nothing in the reply is computed by the model: the figures come from the published api/ files.
+  const askMount = document.getElementById('ask-mount'); let askForm = null, askIn = null, askBtn = null, askStatus = null, askHint = null;
+  const idKind = id => SITE.idKind(id);
+  let hlAll = [];   // the ids the open answer outlines (counties, districts or states); the ones of the unit the map shows are drawn
+  function drawHL() {
+    const want = new Set(hlAll.filter(id => idKind(id) === unit)); gHL.selectAll('*').remove(); if (!want.size) return;
     const feats = unit === 'district' ? districtFeatures.filter(f => want.has(String(f.properties.id)))
-      : unit === 'state' ? stateFeatures.filter(f => want.has(String(f.properties.id || f.id)))
+      : unit === 'state' ? stateFeatures.filter(f => want.has(String(f.properties.id || f.id).toUpperCase()))
       : countyFeatures.filter(f => want.has(String(f.properties.id)));
     gHL.selectAll('path.hl-halo').data(feats).join('path').attr('class', 'hl-halo').attr('d', path);
     gHL.selectAll('path.hl-outline').data(feats).join('path').attr('class', 'hl-outline').attr('d', path);
     gHL.raise();
   }
-  function showAnswer(q, res, isErr) {
-    const old = document.getElementById('ask-card'); if (old) old.remove();
-    const tabs = document.querySelector('#pane .tabs'); if (!tabs) return;
-    tabs.insertAdjacentHTML('afterend', res ? SITE.askCardHTML(q, res) : `<div class="ask-card err" id="ask-card" role="region" aria-label="Answer"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(isErr)}</p></div></div>`);
-    const card = document.getElementById('ask-card'); card.querySelector('.ask-x').addEventListener('click', () => { card.remove(); highlight([]); });
-    document.getElementById('pane').scrollTop = 0; card.setAttribute('tabindex', '-1'); card.focus({ preventScroll: true });
+  // outlines the ids (drawn again after every repaint: paint raises the group and calls __askSync; a zoom only changes the viewBox).
+  // An id whose kind (5 digits a county, 4 a district, 2 letters a state) is not the unit on show is kept but not drawn until the unit matches.
+  function highlight(ids) { hlAll = (ids || []).map(id => String(id).trim()).filter(id => idKind(id)).map(id => idKind(id) === 'state' ? id.toUpperCase() : id); drawHL(); }
+  // the label of the layer the map shows now, from the map's own label tables, with the unit and the place in view; or the open view
+  // when the map is hidden behind a tab. The place named is one of the unit on show (a selected county is named by its state on the
+  // district and state maps).
+  function scopeLabelForUnit() { const sc = scope(); if (sc.kind === 'nat') return '';
+    if (sc.kind === 'county' && unit !== 'county') return stName[C[sc.key].s2] || ''; if (sc.kind === 'district' && unit === 'state') return stName[DI[sc.key].st] || '';
+    return sc.label.replace(/ \(counties overlapping the district\)/, ''); }
+  function mapShowsText() {
+    const drawn = hlAll.filter(id => idKind(id) === unit).length;
+    if (tab !== 'map') { const sc = scope(); return `${VIEW_NAME[tab] || tab} view · ${sc.kind === 'nat' ? 'United States' : sc.label.replace(/ \(counties overlapping the district\)/, '')}${hlAll.length ? ' · the Map tab shows the outlined places' : ''}`; }
+    const lab = unit === 'county' ? METRICS[metric].label() : (metric === 'gacs' ? ACS_LABEL[acsVar] + ', ' + ACSL : geoLabelOf(metric));
+    const where = scopeLabelForUnit(); const kinds = { county: 'counties', district: 'districts', state: 'states' };
+    return (/,? by (county|district|state)$/.test(lab) ? lab : `${lab} · by ${unit}`) + (where ? ` · ${where}` : '') + (hlAll.length && !drawn ? ` · the outlined ${kinds[idKind(hlAll[0])] || 'places'} show on the ${idKind(hlAll[0])} map` : ''); }
+  // after every repaint or tab change: the outlines for the unit on show, the "Map now shows" line, the way back to the box from a tab
+  window.__askSync = () => { drawHL(); const el = document.getElementById('ask-map-shows'); if (el) el.textContent = mapShowsText(); const ag = document.getElementById('ask-again'); if (ag) ag.hidden = tab === 'map' || !document.getElementById('ask-card'); };
+  const placeName = id => { const k = idKind(id); if (k === 'county') return C[id] ? clabel(C[id]) : null; if (k === 'district') { const d = DI[id]; return d ? `${d.st}-${cdLabel(d.cd)}${d.member ? ' · ' + d.member : ''}` : null; } return stName[String(id).toUpperCase()] || null; };
+  function selectPlace(id) { const k = idKind(id); id = String(id);
+    if (k === 'county' && C[id]) selectCounty(id); else if (k === 'district' && DI[id]) selectDistrict(id); else if (k === 'state' && stName[id.toUpperCase()]) window.__nav.selectState(id.toUpperCase()); else return;
+    if (tab !== 'map') setTab('map'); }
+  // where the map should look after an answer, as a place parameter for the view's address: a single outlined place is selected (its
+  // figures open); a list within one state frames the state; a list across states keeps the national view. A view whose address
+  // already names a place (c= / d= / s=) is left alone. Only ids of the view's own unit count.
+  function placeParamFor(ids, qs) {
+    const p = new URLSearchParams(qs || ''); if (p.get('c') || p.get('d') || p.get('s')) return null;
+    const u = ['county', 'district', 'state'].includes(p.get('u')) ? p.get('u') : 'county';
+    const list = (ids || []).map(String).filter(id => idKind(id) === u).map(id => u === 'state' ? id.toUpperCase() : id); if (!list.length) return null;
+    if (list.length === 1) { const id = list[0]; return u === 'county' && C[id] ? ['c', id] : u === 'district' && DI[id] ? ['d', id] : u === 'state' && stName[id] ? ['s', id] : null; }
+    const states = new Set(list.map(id => u === 'county' ? (C[id] ? C[id].s2 : null) : u === 'district' ? (DI[id] ? DI[id].st : null) : null).filter(Boolean));
+    return states.size === 1 ? ['s', [...states][0]] : null; }
+  // the chosen reading of an ambiguous place name, put back into the question: the bare phrase the helper flagged ("Washington County"),
+  // with any state already written after it, becomes the option's full name ("Washington County, Oregon"); when the phrase is not in the
+  // question, the full name goes first and the question follows in parentheses.
+  function reask(q, name, bare) { const esc_ = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); name = String(name || '').trim(); q = String(q || '').trim();
+    bare = String(bare || '').trim() || name.replace(/\s*,.*$/, '').trim(); if (!bare) return `${name} (${q})`;
+    const stateNames = Object.values(stName).sort((a, b) => b.length - a.length).map(esc_).join('|'), codes = Object.keys(stName).join('|');
+    const tries = [new RegExp('\\b' + esc_(bare) + '\\s*,?\\s+(?:' + stateNames + ')(?![A-Za-z])', 'i'), new RegExp('\\b' + esc_(bare) + '\\s*,?\\s+(?:' + codes + ')(?![A-Za-z])'), new RegExp('\\b' + esc_(bare) + '(?![A-Za-z])', 'i')];   // the full name, then a code (case matters: "or" is a word), then the bare phrase
+    for (const re of tries) if (re.test(q)) return q.replace(re, name);
+    return `${name} (${q})`; }
+  function removeCard() { const old = document.getElementById('ask-card'); if (old) old.remove(); const ag = document.getElementById('ask-again'); if (ag) ag.hidden = true; }
+  // the card: the answer (or the busy notice, or an error), above the figures; opts.quiet: restored by Back/Forward, so no focus or scroll
+  function showAnswer(q, res, isErr, opts) { opts = opts || {};
+    removeCard(); const tabs = document.querySelector('#pane .tabs'); if (!tabs) return;
+    if (!document.getElementById('ask-again')) { tabs.insertAdjacentHTML('afterend', '<div class="ask-again" id="ask-again" hidden><button type="button" id="ask-again-b">Ask another question</button><span>The Map tab shows the outlined places.</span></div>');
+      document.getElementById('ask-again-b').addEventListener('click', () => { setTab('map'); if (askIn) { askIn.focus(); askIn.select(); } }); }
+    document.getElementById('ask-again').insertAdjacentHTML('afterend', res ? SITE.askCardHTML(q, res, { placeName, mapShows: res.view && res.view.page === 'map' ? mapShowsText() : undefined })
+      : `<div class="ask-card ${isErr === true ? 'busy' : 'err'}" id="ask-card" role="region" aria-label="Answer"${isErr === true ? ' aria-busy="true"' : ''} tabindex="-1"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(isErr === true ? 'Asking the map… reading the published data files.' : isErr)}</p></div></div>`);
+    const card = document.getElementById('ask-card');
+    const close = () => { card.remove(); highlight([]); window.__askState = null; history.replaceState(null, '', location.href); window.__askSync(); if (askIn) askIn.focus({ preventScroll: true }); };
+    card.querySelector('.ask-x').addEventListener('click', close);
+    card.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } });
+    card.querySelectorAll('[data-pl]').forEach(a => a.addEventListener('click', e => { if (a.classList.contains('ask-amb-q')) return; e.preventDefault(); selectPlace(a.dataset.pl); }));   // a row or chip opens its place; the highlights stay
+    card.querySelectorAll('.ask-amb-q').forEach(b => b.addEventListener('click', () => runAsk(reask(q, b.dataset.name, b.dataset.bare))));
+    const more = card.querySelector('.ask-pl-x[data-more]'); if (more) more.addEventListener('click', () => { card.querySelectorAll('.ask-pl-more').forEach(b => { b.hidden = false; }); more.remove(); });
+    const reset = card.querySelector('.ask-reset'); if (reset) reset.addEventListener('click', e => { e.preventDefault(); highlight([]); window.__askState = null; history.pushState(null, '', 'map.html'); applyURL(false); window.__askSync(); });
+    window.__askSync();
+    if (opts.quiet) return;
+    document.getElementById('pane').scrollTop = 0; if (isErr !== true) card.focus({ preventScroll: true });
+    // stacked layout (a phone or a narrow window): the figures sit below the map, so bring the map and the answer under it into view
+    if (isErr !== true && window.innerWidth <= 980) setTimeout(() => { const el = tab === 'map' ? svg.node() : document.getElementById('ask-card'); if (el) el.scrollIntoView({ ...SCROLL, block: 'start' }); }, 120);   // after the card above the map has settled (the examples hide once a place is selected)
   }
+  // Back or Forward: the entry's state carries the answer that was open with that view, or nothing
+  window.__askRestore = st => { if (st && st.res && typeof st.res === 'object') { window.__askState = st; highlight(st.res.view && st.res.view.page === 'map' ? st.res.view.hl : []); showAnswer(st.q, st.res, undefined, { quiet: true }); }
+    else { window.__askState = null; removeCard(); highlight([]); window.__askSync(); } };
+  let askGen = 0;
   async function runAsk(q) {
-    q = String(q || '').trim(); if (!q) return; askIn.value = q; askBtn.disabled = true; askBtn.textContent = 'Asking…';
+    q = String(q || '').trim(); if (!q || !askForm) return; askIn.value = q; const gen = ++askGen;
+    askBtn.disabled = true; askBtn.textContent = 'Asking…'; askForm.setAttribute('aria-busy', 'true'); askHint.hidden = true; askStatus.textContent = 'Reading the map’s data files… (up to ' + SITE.ASK_TIMEOUT_S + ' s)'; showAnswer(q, null, true);
     try {
-      const res = await SITE.ask(q); const v = res.view || {};
-      if (v.page === 'find') { location.href = 'find.html' + (v.qs ? '?' + v.qs : ''); return; }
-      if (v.page === 'map') { history.pushState(null, '', 'map.html' + (v.qs ? '?' + v.qs : '')); applyURL(false); }
-      showAnswer(q, res); highlight(v.page === 'map' ? v.hl : []);
-    } catch (e) { showAnswer(q, null, 'The question box is not available right now; the map, the finder and the Data API still work. (' + (e && e.message ? e.message : 'no reply') + ')'); }
-    finally { askBtn.disabled = false; askBtn.textContent = 'Ask'; }
+      const res = await SITE.ask(q); if (gen !== askGen) return; const v = res && typeof res === 'object' && res.view && typeof res.view === 'object' ? res.view : {};
+      if (v.page === 'find') { location.href = 'find.html' + (v.qs ? '?' + String(v.qs).replace(/^\?/, '') : ''); return; }
+      if (v.page === 'map') {   // one history entry for the answer's view, the place to look at included; applyURL then reads it like a link
+        const p = new URLSearchParams(String(v.qs || '').replace(/^\?/, '')); const pp = placeParamFor(v.hl, p.toString()); if (pp) p.set(pp[0], pp[1]);
+        window.__askState = { q, res }; history.pushState({ ask: window.__askState }, '', 'map.html' + (p.toString() ? '?' + p : '')); applyURL(false);
+        highlight(v.hl); showAnswer(q, res); }   // the outlines first: the card's "Map now shows" line describes them
+      else { window.__askState = null; highlight([]); showAnswer(q, res); }
+    } catch (e) { if (gen !== askGen) return; const m = e && e.message ? e.message : 'no reply'; window.__askState = null;
+      showAnswer(q, null, (/no reply within/.test(m) ? `No answer arrived within ${SITE.ASK_TIMEOUT_S} seconds. Try again in a moment, or use the search box: the map, the finder and the Data API still work.` : 'The question box is not available right now; the map, the finder and the Data API still work.') + ' (' + m + ')'); }
+    finally { if (gen === askGen) { askBtn.disabled = false; askBtn.textContent = 'Ask'; askForm.removeAttribute('aria-busy'); askStatus.textContent = ''; askHint.hidden = false; } }
   }
-  if (SITE.ASK_URL) {
-    SITE.askStyles(); askForm.hidden = false;
+  if (SITE.ASK_URL && askMount) {
+    SITE.askStyles(); askForm = SITE.mountAskBox(askMount, { status: true }); askIn = document.getElementById('askq'); askIn.dataset.ph = askIn.placeholder; askBtn = document.getElementById('askb'); askStatus = document.getElementById('ask-status'); askHint = document.getElementById('ask-hint');
+    document.body.classList.add('has-ask'); layoutMap();   // the card changes shape with the box: the map is laid out around it
     askForm.addEventListener('submit', e => { e.preventDefault(); runAsk(askIn.value); });
     { const p = new URLSearchParams(location.search); const q0 = p.get('ask'); if (q0) { p.delete('ask'); history.replaceState(null, '', 'map.html' + (p.toString() ? '?' + p : '')); runAsk(q0); } }   // a question carried in from the homepage box
   }
+  window.__ask = { runAsk, highlight, showAnswer, mapShowsText, reask, placeParamFor };   // headless checks (test only)
   { const ml = document.getElementById('map-loading'); if (ml) ml.remove(); }
   // "Methods & data" links land on the methods text itself, opened
   const openMethods = () => { if (location.hash !== '#methods') return; const d = document.querySelector('#foot details'); if (d) d.open = true; document.getElementById('methods').scrollIntoView(); };

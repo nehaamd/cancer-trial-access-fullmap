@@ -69,6 +69,8 @@
         <tr><td>state/{USPS}.json</td><td>One state or DC, by two-letter code</td><td><a href="api/state/TX.json">api/state/TX.json</a></td></tr>
         <tr><td>district/{USPS}-{NN}.json</td><td>One congressional district; <code>00</code> for an at-large seat</td><td><a href="api/district/TX-34.json">api/district/TX-34.json</a></td></tr>
         <tr><td>county/{FIPS}.json</td><td>One county, by 5-digit FIPS code</td><td><a href="api/county/48215.json">api/county/48215.json</a></td></tr>
+        <tr><td>county_names.json</td><td>Every county's FIPS, name, state and residents 55+ as one small array of <code>[fips, name, state, pop55]</code>, for resolving a name to its file</td><td><a href="api/county_names.json">api/county_names.json</a></td></tr>
+        <tr><td>ask/counties.json<br>ask/county_sites.json</td><td>Compact copies for the question box: every county field as one <code>cols</code> array plus one array per county (without the by-site rates), and the by-site incidence and death rates keyed by FIPS. The same figures as <code>all_counties.json</code>, in a form that parses in a few milliseconds</td><td><a href="api/ask/counties.json">api/ask/counties.json</a></td></tr>
         <tr><td>all_states.json<br>all_districts.json<br>all_counties.json</td><td>Every place at that level, as one array</td><td><a href="api/all_states.json">api/all_states.json</a></td></tr>
         <tr><td>trial/{NCT}.json</td><td>A plain-language summary (English and Spanish), who the record says it is for and not for, and tags, written by an AI model from the registry record; exists only for trials summarised so far (<code>trials_index.json</code> has the count)</td><td><a href="api/trials_index.json">api/trials_index.json</a></td></tr>
         <tr><td>index.json</td><td>This page as data: files, field definitions, data date, license, the list of district ids</td><td><a href="api/index.json">api/index.json</a></td></tr>
@@ -102,6 +104,35 @@ head(d[order(-d$people_lt20_trials_within_60rdmi), c("name", "pop55", "pct_lt20_
     <p>Every file carries the same core fields, so county, district and state records can be handled alike. Percentages are of residents aged 55 and older; distances are road miles on the highway network from where people live. Full definitions and limits are on <a href="map.html#methods">Methods &amp; data</a>.</p>
     <table id="fields-table"><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody></tbody></table>
     <p class="small muted">A value of <code>null</code> means not computable for that place (for example, a median road distance where no residents have a road route).</p>
+
+    <h3>The map's other layers</h3>
+    <p>Since November 2026 the files also carry the data behind every map layer, so a county's rural code, road distances, incidence, death rates and oncologists can be read from the same file. The cut-offs these use (the county median incidence, the top-third death-rate cut, the periods, site labels) are in <code>index.json</code> under <code>thresholds</code>.</p>
+    <table>
+      <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td colspan="2"><b>County files</b></td></tr>
+        <tr><td>rucc</td><td>USDA Rural-Urban Continuum Code, 1 (metro, 1 million+) to 9 (nonmetro, urban under 5,000, not adjacent); <code>rucc_label</code> is its label.</td></tr>
+        <tr><td>metro</td><td><code>true</code> for codes 1–3, <code>false</code> for 4–9 (counties). In state and national files <code>metro</code> and <code>nonmetro</code> are objects instead: see below.</td></tr>
+        <tr><td>road_mi_nci_from_center</td><td>Road miles from the county population center to the nearest NCI-designated cancer center; <code>null</code> = no road route.</td></tr>
+        <tr><td>road_mi_broad_menu_from_center</td><td>Road miles from the population center to the nearest county with 100+ recruiting trials (0 when the county hosts one).</td></tr>
+        <tr><td>road_mi_limited_menu_from_center</td><td>Road miles to the nearest county with 20+ recruiting trials (0 when the county hosts one).</td></tr>
+        <tr><td>no_road_route_reason</td><td><code>null</code> when road distances exist; <code>island</code> (no road connection to a broad menu or NCI center); <code>off</code> (population center more than 30 miles from any primary or secondary road).</td></tr>
+        <tr><td>drive_hours_nci, drive_hours_broad_menu</td><td>Estimated driving time in hours from the population center to the nearest NCI center / broad-menu county.</td></tr>
+        <tr><td>trials_within_60rdmi_of_center</td><td>Recruiting trials with a site within 60 road-miles of the population center (the count on the county card); <code>facilities_within_60rdmi_of_center</code> counts the sites.</td></tr>
+        <tr><td>incidence</td><td>State Cancer Profiles incidence, age-adjusted per 100,000, all ages: <code>all</code> (all-sites rate), <code>cases_per_year</code>, <code>small_numbers</code> (fewer than 16 cases a year: interpret with caution), <code>status</code> (<code>ok</code> / <code>suppressed</code> / <code>no data</code>), <code>status_text</code> (as the map prints it), <code>period</code>, <code>by_site</code> (rate per site key, <code>null</code> where not published).</td></tr>
+        <tr><td>mortality</td><td>State Cancer Profiles cancer death rates, the same shape with <code>deaths_per_year</code>.</td></tr>
+        <tr><td>oncologists</td><td><code>count</code> (CMS Care Compare: medical oncology, hematology/oncology, hematology, with a practice location in the county), <code>radiation</code>, <code>gynecologic</code>, <code>surgical</code>, <code>within_60rdmi</code>, <code>class</code> 1–4 with <code>class_label</code> (Oncologists and trials / Oncologists, no trials / Trials, no oncologist listed / Neither), <code>all_also_elsewhere</code> (every oncologist counted also practises in another county).</td></tr>
+        <tr><td>incidence_above_county_median</td><td><code>true</code> when the all-sites incidence is above the median of US counties with a published rate (the map's "high incidence"); <code>null</code> when not published.</td></tr>
+        <tr><td>mortality_top_third</td><td><code>true</code> when the all-sites death rate is in the top third of US counties with a published rate (the map's "high mortality"); <code>null</code> when not published.</td></tr>
+        <tr><td colspan="2"><b>District, state and national files</b></td></tr>
+        <tr><td>nonmetro_pct</td><td>Share (%) of residents 55+ living in nonmetro counties (RUCC 4–9).</td></tr>
+        <tr><td>incidence_all_sites</td><td>All-sites age-adjusted incidence per 100,000 as the map's incidence layer paints it: the residents-55+-weighted mean of county rates; <code>incidence_all_sites_cases_per_year</code> is the matching annual case count.</td></tr>
+        <tr><td>incidence_published</td><td>States and the nation only: the published state/national rate (<code>all</code>, <code>cases_per_year</code>, <code>by_site</code>), the figure the state card leads with.</td></tr>
+        <tr><td>oncologists</td><td><code>count</code> of oncologists practising in the place (district: in counties touching it), <code>pct_pop55_in_counties_with_oncologists_no_trials</code>, <code>…_with_both</code>, <code>…_with_trials_no_oncologist</code>, <code>…_with_neither</code>, <code>counties_with_oncologists_no_trials</code> (a count; the FIPS codes for a district), <code>oncologists_per_100k_pop55</code> (state, nation).</td></tr>
+        <tr><td>metro, nonmetro</td><td>States and the nation only: the access figures for residents of metro (RUCC 1–3) and nonmetro (4–9) counties: <code>pop55</code>, <code>counties</code>, <code>pct_lt20_trials_within_60rdmi</code>, <code>people_lt20_trials_within_60rdmi</code>, <code>pct_zero_trials_within_60rdmi</code>, <code>people_zero_trials_within_60rdmi</code>, <code>pct_lt100_trials_within_60rdmi</code>, <code>mean_trials_within_60rdmi</code>, <code>pct_gt60rdmi_nci</code>, <code>pct_gt60rdmi_broad_menu</code>, <code>median_road_mi_nci</code>, <code>median_road_mi_broad_menu</code> (and the short aliases <code>pct_lt20</code>, <code>pct_zero</code>, <code>mean_trials_60</code>). <code>nonmetro</code> is <code>null</code> for DC.</td></tr>
+        <tr><td>senators</td><td>States only: the two senators (<code>name</code>, <code>party</code>, <code>bioguide</code>) and <code>s4440</code>, each one's position on the Senate Clinical Trial Modernization Act (S. 4440): <code>sponsor</code>, <code>original</code> (original cosponsor), <code>cosponsor</code> or <code>none</code>. Empty for DC.</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="license">
@@ -116,7 +147,7 @@ head(d[order(-d$people_lt20_trials_within_60rdmi), c("name", "pop55", "pct_lt20_
     <h2>Good to know</h2>
     <ul>
       <li><b>Freshness.</b> Files are rebuilt with each weekly registry refresh; <code>data_as_of</code> in every file is the registry date the figures come from. Trials change weekly, so cache with that in mind.</li>
-      <li><b>Stability.</b> Field names will not be renamed or removed without a version note here. New fields may be added.</li>
+      <li><b>Stability.</b> Field names will not be renamed or removed without a version note here. New fields may be added. November 2026: the map-layer fields above were added (rural codes, road distances from the population center, incidence, death rates, oncologists, senators); nothing was renamed, and <code>all_counties.json</code> grew to about 9 MB, so fetch one county file when you need one place.</li>
       <li><b>Counties.</b> County shares are computed from census tracts weighted by residents 55+, the same way as districts and states, so the three levels add up.</li>
       <li><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible.</li>
     </ul>
