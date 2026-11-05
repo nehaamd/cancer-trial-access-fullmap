@@ -1,0 +1,18 @@
+# "Ask the map": the small helper that holds the AI key for the site's question box. Deployed to Cloudflare Workers (free tier).
+#   deploy:  cd worker && npx wrangler deploy
+#   key:     npx wrangler secret put ANTHROPIC_API_KEY      (pasted once; never in the repository or the site)
+# The site (GitHub Pages) calls https://<name>.<account>.workers.dev/ask; see README.md.
+name = "trial-map-ask"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+SITE_BASE = "https://nehaamd.github.io/cancer-trial-access-fullmap/"   # where api/*.json and places.json are read from; change with the domain
+ALLOWED_ORIGINS = "https://nehaamd.github.io,http://localhost:8080,http://localhost:8077"
+MODEL_PLAN = "claude-haiku-5-5"      # reads the question, returns a structured plan (cheap)
+MODEL_WRITE = "claude-sonnet-5-5"    # writes two or three sentences from the numbers the worker computed
+PER_MINUTE = "12"                    # questions per visitor per minute (best effort, per worker instance)
+DAILY_CAP = "3000"                   # questions per day across visitors (best effort); the spending limit on the key is the hard stop
+
+[observability]
+enabled = true                       # question and answer text appear in the dashboard logs (no visitor identifiers are logged)
