@@ -1,0 +1,51 @@
+# Deploys the "Ask the map" helper (worker/) to Cloudflare and turns the question box on.
+# Needs three repository secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID, ANTHROPIC_API_KEY.
+# Runs on demand (Actions tab -> "Deploy question-box worker" -> Run workflow) and whenever worker/ changes on main.
+name: Deploy question-box worker
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['worker/**', '.github/workflows/deploy-worker.yml']
+concurrency: deploy-worker
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Deploy the worker
+        working-directory: worker
+        run: npx --yes wrangler@4 deploy
+      - name: Store the Anthropic key inside the worker (never in the site)
+        working-directory: worker
+        run: printf '%s' "${{ secrets.ANTHROPIC_API_KEY }}" | npx --yes wrangler@4 secret put ANTHROPIC_API_KEY
+      - name: Find the worker's address
+        id: addr
+        run: |
+          sub=$(curl -sS "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"]["subdomain"])')
+          url="https://trial-map-ask.$sub.workers.dev"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          sleep 10; curl -sS --fail "$url/health"; echo
+          echo "Worker: $url" >> "$GITHUB_STEP_SUMMARY"
+      - name: Ask the test questions
+        continue-on-error: true
+        run: node worker/tests/run.js "${{ steps.addr.outputs.url }}/ask" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Point the site at the worker
+        run: |
+          python3 - "${{ steps.addr.outputs.url }}/ask" <<'PY'
+          import re, sys
+          p = 'docs/site.js'; s = open(p).read()
+          new = re.sub(r"const ASK_URL = '[^']*';", "const ASK_URL = '%s';" % sys.argv[1], s, count=1)
+          if new != s: open(p, 'w').write(new); print('ASK_URL set')
+          else: print('ASK_URL already set')
+          PY
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/site.js
+          git diff --cached --quiet || (git commit -m "Point the question box at the deployed worker" && git pull --rebase && git push)
