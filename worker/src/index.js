@@ -34,7 +34,7 @@ Return exactly one JSON object with keys:
   search: {zip: 5-digit string or null, city: string or null, state: 2-letter code or null, cancer_type: key or null, keyword: short string (a drug, gene or biomarker) or null, age: integer or null, radius: 30|60|120|200 or null}
   data: {level: "county"|"district"|"state"|"national", state: 2-letter code or null, metric: one field name above or "cancer_type", cancer_type: key or null, order: "worst"|"best", n: integer 1-10, cosponsor: "none"|"yes"|null, place: a single place name as written (e.g. "Hidalgo County", "TX-34", "Texas 34th", "Vermont") or null}
   reason: one short sentence on why that route.
-Rules: a ZIP code or a city means "search". "Worst", "least", "lowest access", "furthest" mean order "worst"; "best", "most" mean "best". A single named place with no ranking word means a lookup (place set, n 1). If the question names a state, set state. If it asks who represents or cosponsors, level is "district". Never invent a ZIP. Use null when unsure. JSON only.`;
+Rules: a ZIP code or a city means "search". "Worst", "least", "lowest access", "furthest" mean order "worst"; "best", "most" mean "best". A single named place with no ranking word means a lookup (place set, n 1). If the question names a state, set state. If it asks who represents or cosponsors, level is "district". Never invent a ZIP. Use null when unsure. Reply with the JSON object only: the first character of your reply is { and the last is }. No explanation before or after it.`;
 
 const WRITE_SYSTEM = `You write the answer to a question about cancer clinical trial access, using ONLY the table of numbers you are given. You are not a medical adviser.
 Rules: two or three plain sentences, then nothing else. Speak about the places and their numbers directly; never say "this table", "the table" or "listed". If the question asks for the least or the worst, the rows are already in that order: say so with the first place's figure, then the next one or two. Use the numbers exactly as given (same rounding). Name places as given. Do not compute new numbers, do not compare with anything outside the table, do not speculate about causes, do not advise anyone, do not mention trials being "available" to a person. If the table cannot answer the question, say what it does show and that the rest is not in the data. Mention nothing about yourself.`;
@@ -154,10 +154,9 @@ function parsePlan(txt) {
   return null;
 }
 async function planFor(q, env) {
-  const txt = await claude(env, env.MODEL_PLAN, PLAN_SYSTEM, `Question: ${q}\n\nReturn the JSON plan.`, 400);
+  const txt = await claude(env, env.MODEL_PLAN, PLAN_SYSTEM, `Question: ${q}\n\nReturn the JSON plan.`, 900);
   let plan = parsePlan(txt);
-  if (!plan) { const again = await claude(env, env.MODEL_PLAN, PLAN_SYSTEM, `Question: ${q}\n\nYour previous reply was not valid JSON. Return ONLY the JSON plan, with double-quoted keys and strings and no comments.`, 400); plan = parsePlan(again); }
-  if (!plan) throw new Error('planner returned no usable JSON');
+  if (!plan) { const again = await claude(env, env.MODEL_PLAN, PLAN_SYSTEM, `Question: ${q}\n\nYour previous reply was not valid JSON. Return ONLY the JSON plan, with double-quoted keys and strings and no comments.`, 900); plan = parsePlan(again); if (!plan) throw new Error('planner returned no usable JSON: ' + String(again).replace(/\s+/g, ' ').slice(0, 160)); }
   if (!['search', 'data', 'scope', 'other'].includes(plan.route)) plan.route = 'other';
   return plan;
 }
