@@ -37,7 +37,7 @@ Return exactly one JSON object with keys:
 Rules: a ZIP code or a city means "search". "Worst", "least", "lowest access", "furthest" mean order "worst"; "best", "most" mean "best". A single named place with no ranking word means a lookup (place set, n 1). If the question names a state, set state. If it asks who represents or cosponsors, level is "district". Never invent a ZIP. Use null when unsure. JSON only.`;
 
 const WRITE_SYSTEM = `You write the answer to a question about cancer clinical trial access, using ONLY the table of numbers you are given. You are not a medical adviser.
-Rules: two or three plain sentences, then nothing else. Use the numbers exactly as given (same rounding). Name places as given. Do not compute new numbers, do not compare with anything outside the table, do not speculate about causes, do not advise anyone, do not mention trials being "available" to a person. If the table cannot answer the question, say what it does show and that the rest is not in the data. Mention nothing about yourself.`;
+Rules: two or three plain sentences, then nothing else. Speak about the places and their numbers directly; never say "this table", "the table" or "listed". If the question asks for the least or the worst, the rows are already in that order: say so with the first place's figure, then the next one or two. Use the numbers exactly as given (same rounding). Name places as given. Do not compute new numbers, do not compare with anything outside the table, do not speculate about causes, do not advise anyone, do not mention trials being "available" to a person. If the table cannot answer the question, say what it does show and that the rest is not in the data. Mention nothing about yourself.`;
 
 const SCOPE_TEXT = 'This box answers questions about where trials are and the numbers behind the map. It cannot say whether a trial is right for someone, who qualifies, or what treatment to choose; the study team and your care team decide that. For help finding and understanding trials, call the NCI Cancer Information Service at 1-800-4-CANCER or use the "Understand trials" page.';
 const OTHER_TEXT = 'This box answers two kinds of question: trials near a ZIP code or town, and questions about the numbers on the map (for example "which Texas districts have the least lung-cancer trial access?" or "how far is Hidalgo County from an NCI center?"). For how the map is built, see Methods & data; for definitions, see the Key terms there.';
@@ -120,7 +120,7 @@ async function doData(q, d, env) {
     rows = [hit];
   } else {
     rows = rows.filter(r => valueOf(r) !== null && valueOf(r) !== undefined);
-    const worst = (d.order || 'worst') === 'worst'; const sign = (M.worse === 'high') === worst ? -1 : 1;   // worst & higher-is-worse -> descending
+    const worst = (d.order || 'worst') === 'worst'; const sign = (M.worse === 'high') === worst ? 1 : -1;   // sort((a,b) => sign*(b-a)): +1 is descending, so 'worst' with a higher-is-worse metric puts the largest value first
     rows.sort((a, b) => sign * (valueOf(b) - valueOf(a)) || (b.pop55 - a.pop55));
     rows = rows.slice(0, Math.min(10, Math.max(1, parseInt(d.n) || 5)));
   }
@@ -147,10 +147,18 @@ async function finish(q, rows, metricKey, ctype, M, asOf, env, view, level) {
 }
 
 // ---------- model calls ----------
+function parsePlan(txt) {
+  const m = String(txt || '').replace(/```[a-z]*/gi, '').match(/\{[\s\S]*\}/); if (!m) return null;
+  const tries = [m[0], m[0].replace(/\/\/[^\n]*/g, '').replace(/,\s*([}\]])/g, '$1').replace(/'([^'\n]*)'/g, '"$1"')];
+  for (const t of tries) { try { const o = JSON.parse(t); if (o && typeof o === 'object') return o; } catch (e) {} }
+  return null;
+}
 async function planFor(q, env) {
   const txt = await claude(env, env.MODEL_PLAN, PLAN_SYSTEM, `Question: ${q}\n\nReturn the JSON plan.`, 400);
-  const m = txt.match(/\{[\s\S]*\}/); if (!m) throw new Error('planner returned no JSON');
-  const plan = JSON.parse(m[0]); if (!['search', 'data', 'scope', 'other'].includes(plan.route)) plan.route = 'other';
+  let plan = parsePlan(txt);
+  if (!plan) { const again = await claude(env, env.MODEL_PLAN, PLAN_SYSTEM, `Question: ${q}\n\nYour previous reply was not valid JSON. Return ONLY the JSON plan, with double-quoted keys and strings and no comments.`, 400); plan = parsePlan(again); }
+  if (!plan) throw new Error('planner returned no usable JSON');
+  if (!['search', 'data', 'scope', 'other'].includes(plan.route)) plan.route = 'other';
   return plan;
 }
 async function write(q, table, asOf, env) {
