@@ -4,6 +4,7 @@ const qs = require('./questions.json');
 (async () => {
   let bad = 0;
   for (const t of qs) {
+    if (qs.indexOf(t)) await new Promise(r => setTimeout(r, 5000));   // stay under the per-visitor rate limit
     const t0 = Date.now();
     const r = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json', 'origin': 'http://localhost:8080' }, body: JSON.stringify({ q: t.q }) });
     const j = await r.json().catch(() => ({}));
