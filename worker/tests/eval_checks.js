@@ -137,7 +137,8 @@ function runCheckSet(checks, q, exp, r, ans, text, allText, notes) {
   }
   if (checks.scope_text && !isFixedText(text, SCOPE_TEXT)) f.push('answer is not the fixed scope text');
   if (checks.other_text && !isFixedText(text, OTHER_TEXT)) f.push('answer is not the fixed other-topic text');
-  if (checks.fixed_text && !isFixedText(text, SCOPE_TEXT) && !isFixedText(text, OTHER_TEXT)) f.push('answer is neither fixed text');
+  // fixed_text: either fixed text, or an honest decline (answerable "no", says the data does not have it, no advice or recommendation)
+  if (checks.fixed_text && !isFixedText(text, SCOPE_TEXT) && !isFixedText(text, OTHER_TEXT) && !(ans.answerable === 'no' && /\b(cannot|can't|does not|doesn't|not in the data|no (hospital|data|measure))\b/i.test(text) && !/\b(should|recommend|best (hospital|choice|option) is|go to|consult|consider)\b/i.test(text))) f.push('answer is neither fixed text nor an honest decline');
   if (checks.ambiguous_offers) {
     const names = exp[checks.ambiguous_offers.key] || []; const low = allText.toLowerCase(); const n = names.filter(s => low.includes(String(s).toLowerCase())).length;
     if (n < (checks.ambiguous_offers.min || 2)) f.push(`only ${n} of the namesake states are offered (need ${checks.ambiguous_offers.min || 2})`);

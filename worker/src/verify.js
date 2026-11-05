@@ -65,10 +65,13 @@ export function numberWordsIn(text) {
 export function buildContext(ctx) {
   const C = ctx.catalog || DEFAULT_CATALOG;
   const turns = Array.isArray(ctx.turns) ? ctx.turns : [];
-  const resultTexts = []; const callIds = new Map();
+  const resultTexts = []; const callIds = new Map(); const queryResults = [];   // queryResults: truncated query results, to steer highlight.ids to from_call
   for (const t of turns) {
     for (const b of t.assistant || []) if (b && b.type === 'tool_use') callIds.set(b.id, b.name);
-    for (const r of t.results || []) resultTexts.push(typeof r.content === 'string' ? r.content : JSON.stringify(r.content ?? ''));
+    for (const r of t.results || []) {
+      const text = typeof r.content === 'string' ? r.content : JSON.stringify(r.content ?? ''); resultTexts.push(text);
+      if (callIds.get(r.tool_use_id) === 'query' && /"ids_truncated":\s*true/.test(text)) { try { const j = JSON.parse(text); if (j && Array.isArray(j.rows)) queryResults.push({ id: r.tool_use_id, count: j.count, returned: j.returned, rowIds: new Set(j.rows.map(x => String(x && x.id))) }); } catch (e) { /* a truncated or non-JSON result: nothing to steer */ } }
+    }
   }
   const resultsText = resultTexts.join('\n'); const resultsLower = resultsText.toLowerCase();
   const resultNums = numbersIn(resultsText); const resultDigits = new Set(resultNums.map(n => n.digits)); const resultValues = [...new Set(resultNums.map(n => n.value))];
@@ -89,7 +92,7 @@ export function buildContext(ctx) {
   const keep = new Set(FIXED_STOP); for (const name of Object.values(C.STATES || {})) for (const w of name.toLowerCase().split(/[^a-z]+/)) keep.add(w);
   for (const T of Object.values(C.TABLES || {})) for (const m of `${T.name_desc || ''} ${T.id_desc || ''}`.match(/"[^"]+"/g) || []) for (const w of wordsOf(m)) if (!keep.has(w)) stop.delete(w);
   for (const fd of Object.values(C.TABLES || {}).flatMap(T => T.fields)) for (const m of String(fd.desc || '').match(/e\.g\. "[^"]+"/g) || []) for (const w of wordsOf(m)) if (!keep.has(w)) stop.delete(w);
-  return { C, turns, question, resultsText, resultsLower, resultDigits, resultValues, questionDigits, questionWords, constants, stop, callIds, scope: norm(C.SCOPE_TEXT), other: norm(C.OTHER_TEXT) };
+  return { C, turns, question, resultsText, resultsLower, resultDigits, resultValues, questionDigits, questionWords, constants, stop, callIds, queryResults, scope: norm(C.SCOPE_TEXT), other: norm(C.OTHER_TEXT) };
 }
 const norm = s => String(s || '').replace(/\s+/g, ' ').trim();
 const wordsOf = s => String(s || '').toLowerCase().split(/[^a-z0-9'’]+/).map(w => w.replace(/['’]s$/, '').replace(/['’]/g, '')).filter(Boolean);
@@ -172,7 +175,10 @@ export function verify(answer, context) {
         if (typeof map.highlight !== 'object') issues.push('map.highlight must be {from_call} or {ids}.');
         else {
           if (map.highlight.from_call !== undefined) checkCall(map.highlight.from_call, 'map.highlight.from_call', ctx, issues);
-          if (map.highlight.ids !== undefined) { if (!Array.isArray(map.highlight.ids)) issues.push('map.highlight.ids must be a list of ids.'); else { const bad = map.highlight.ids.filter(id => !idInResults(String(id), ctx)); if (bad.length) issues.push(`map.highlight.ids not in any tool result: ${bad.slice(0, 5).join(', ')}${bad.length > 5 ? ` and ${bad.length - 5} more` : ''}; use highlight.from_call instead.`); } }
+          if (map.highlight.ids !== undefined) { if (!Array.isArray(map.highlight.ids)) issues.push('map.highlight.ids must be a list of ids.'); else { const bad = map.highlight.ids.filter(id => !idInResults(String(id), ctx)); if (bad.length) issues.push(`map.highlight.ids not in any tool result: ${bad.slice(0, 5).join(', ')}${bad.length > 5 ? ` and ${bad.length - 5} more` : ''}; use highlight.from_call instead.`);
+            // the returned rows of a truncated query are not "the matches": a filtered query outlines every matching row through from_call
+            const ids = map.highlight.ids.map(String); const partial = ids.length && (ctx.queryResults || []).find(qr => qr.count > ids.length && ids.every(id => qr.rowIds.has(id)));
+            if (partial) issues.push(`map.highlight.ids lists ${ids.length} of the ${partial.count} rows matched by call ${partial.id}; set map.highlight = {from_call: "${partial.id}"} (and table.from_call the same) so the map outlines all ${partial.count} and the table carries them; the answer may still name the first few.`); } }
         }
       }
     }
