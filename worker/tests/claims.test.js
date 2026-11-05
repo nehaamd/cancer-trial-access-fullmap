@@ -218,6 +218,12 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   ok('method: phase 3 trials near a county, with the industry count', sc, `${r.count} phase 3 recruiting trials have a site within 60 road-miles of the Cameron County, Texas population center; ${r.by_sponsor_type.industry} of them are sponsored by industry.`, [claim('48061', 'count', r.count, sub.call), claim('48061', 'by_sponsor_type.industry', r.by_sponsor_type.industry, sub.call)]);
 }
 
+{ // 27. a county's distance with the NCI centers of its state listed by name (center names are not anchors without claims)
+  const sc = await scenario('How far is Hidalgo County, Texas from an NCI center, and which centers are in Texas?', [{ name: 'query', input: { table: 'counties', where: [{ field: 'id', op: '=', value: '48215' }], columns: ['nearest_nci', 'road_mi_nci_from_center', 'drive_hours_nci'] } }, { name: 'query', input: { table: 'nci_centers', where: TX, columns: ['full_name', 'tier'] } }]);
+  const [a, b] = sc.id; const r = sc.R[a].rows[0]; const centers = sc.R[b].rows; const near = centers.find(c => r.nearest_nci.startsWith(c.name)) || centers[0];
+  ok('county distance next to a named NCI center row', sc, `From the Hidalgo County, Texas population center, the nearest NCI-designated center is ${near.name}, ${r.road_mi_nci_from_center} road-miles away (about ${r.drive_hours_nci} hours by road). Texas has ${sc.R[b].count} NCI center locations, among them ${centers.slice(0, 2).map(c => c.name).join(' and ')}.`, [claim('48215', 'road_mi_nci_from_center', r.road_mi_nci_from_center, a), claim('48215', 'drive_hours_nci', r.drive_hours_nci, a), claim('TX', 'count', sc.R[b].count, b)]);
+}
+
 // ======================= run them =======================
 await test(`at least 20 realistic correct answers (${correct.length}) and 10 wrong attributions (${wrong.length}) are defined`, () => { assert(correct.length >= 20 && wrong.length >= 10, `${correct.length} / ${wrong.length}`); });
 for (const c of correct) await test(`correct: ${c.name}`, () => { const r = run(c.sc, c.answer, c.claims); assert(r.ok, `rejected: ${JSON.stringify(r.issues)}\n     answer: ${c.answer}`); });

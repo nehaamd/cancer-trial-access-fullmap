@@ -160,7 +160,8 @@ async function askOne(q) {
   });
   try { await Promise.race([work, new Promise((_, rej) => setTimeout(() => rej(new Error(`timeout after ${TIMEOUT_MS / 1000} s`)), TIMEOUT_MS))]); }
   catch (e) { error = e && e.message || String(e); }
-  const full = {}; for (const id of Object.keys(calls)) { const f = safe(() => engine.full(id)); if (f && Array.isArray(f.ids)) full[id] = { ids: f.ids, returned_ids: f.returned_ids, filtered: f.filtered, ordered: f.ordered, unit: f.unit, n: f.ids.length }; }
+  const full = {}; const allIds = Object.keys(calls).flatMap(id => [id, ...(calls[id].name === 'method' && results[id] && Array.isArray(results[id].results) ? results[id].results.map(x => x.call) : [])]);   // a method's sub-calls "<id>.<n>" too
+  for (const id of allIds) { const f = safe(() => engine.full(id)); if (f && Array.isArray(f.ids)) full[id] = { ids: f.ids, returned_ids: f.returned_ids, filtered: f.filtered, ordered: f.ordered, unit: f.unit, n: f.ids.length }; }
   // the ids the map would outline, by the engine's own rule (a ranking outlines the rows returned; a filter every match)
   const hl = answer && answer.map ? safe(() => engine.highlightIds(answer.map.highlight)) : null; if (hl) full.__highlight = hl;
   const res = { kind, answer, verification, steps, full, error };

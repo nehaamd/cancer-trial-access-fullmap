@@ -236,7 +236,9 @@ export function checkText(answer, ctx, claims, issues) {
   const C = ctx.C; const text = String(answer.answer || '');
   const ix = placeIndex(ctx, C, claims);
   const byPlace = new Map(); for (const c of claims) { if (!byPlace.has(c.place)) byPlace.set(c.place, []); byPlace.get(c.place).push(c); }
-  const mentions = findMentions(text, ix);
+  // names of centers, sites and people anchor a figure only when a claim belongs to them; otherwise they are just named
+  // ("the nearest is Mays Cancer Center, 238 road-miles away" keeps the county's figure with the county)
+  const mentions = findMentions(text, ix).filter(m => m.anchor || [...m.ids].some(id => PLACE_ID_RE.test(id) || ix.claimPlaces.has(id)));
   const mentioned = new Set(mentions.flatMap(m => [...m.ids]));
   const scopeClaims = claims.filter(c => !mentioned.has(c.place));   // figures of places the answer never names: the scope
   const display = id => ix.names.get(id) || id;
