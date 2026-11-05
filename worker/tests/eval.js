@@ -77,13 +77,13 @@ if (WORKER) {
   // the model call: the worker's own when it exports one, else the fetch exactly as §3 describes it
   let base = null;
   if (FAKE) { base = fakeModel; modeLabel = 'in-process (FAKE scripted model — smoke test, results are not an evaluation)'; }
-  else for (const [file, names] of [['worker/src/loop.js', ['callModel', 'defaultCallModel']], ['worker/src/model.js', ['callModel', 'default']]]) {
-    const p = path.join(ROOT, file); if (!exists(p)) continue;
-    try { const m = await import(pathToFileURL(p).href); const n = names.find(x => typeof m[x] === 'function'); if (n) { base = m[n]; modeLabel = `in-process (${file} ${n})`; break; } } catch (e) { /* try the next */ }
+  else {   // the worker's own model call (worker/src/index.js makeCallModel: timeouts, one retry on 429/529/5xx), built on this env
+    const p = path.join(ROOT, 'worker/src/index.js');
+    try { const m = await import(pathToFileURL(p).href); if (typeof m.makeCallModel === 'function') { base = m.makeCallModel(env); modeLabel = 'in-process (worker/src/index.js makeCallModel)'; } } catch (e) { /* fall through to the eval fetch */ }
   }
   if (!base) {
     modeLabel = 'in-process (eval fetch)';
-    base = async (payload, env2, extra) => {
+    base = async (payload, env2 = env, extra) => {
       const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 25000);
       try {
         const r = await fetch((process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/$/, '') + '/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': env2.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' }, body: JSON.stringify({ model: MODEL, ...payload }), signal: (extra && extra.signal) || ctrl.signal });
