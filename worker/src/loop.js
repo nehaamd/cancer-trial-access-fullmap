@@ -122,7 +122,7 @@ export async function step(body, env, callModel, options = {}) {
     }
     // a text-only reply (possible with tool_choice auto) is a lost turn, not an answer: nudge the model back to the tools, up to the retry cap
     if (!calls.length && retries < MAX_RETRIES) {
-      retries++; extra.push({ role: 'assistant', content: blocks.length ? blocks : [{ type: 'text', text: '(empty)' }] }, { role: 'user', content: 'Text replies are not shown to the visitor. Continue with tool calls (find_places, query, aggregate, profile, compare, trials, site_info) and then call final_answer alone with the answer.' });
+      retries++; extra.push({ role: 'assistant', content: blocks.length ? blocks : [{ type: 'text', text: '(empty)' }] }, { role: 'user', content: 'Text replies are not shown to the visitor. Continue with tool calls (find_places, query, aggregate, profile, compare, trials, site_info, method) and then call final_answer alone with the answer.' });
       continue;
     }
     // an answer: a final_answer call, or (after the nudges) a text-only reply

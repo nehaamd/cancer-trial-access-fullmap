@@ -7,6 +7,7 @@
    No dependencies, no build step; plain ES module for Node 22 and modern browsers. */
 import { TABLES, DEFAULT_COLUMNS, FILES, SOURCES, STATES, CANCER_TYPES, SITE_INFO, PHASES, SPONSOR_TYPES, SITE_BASE, UNIT_OF_TABLE, TYPE_KEYS_BY_TYPE_ACCESS, fieldFor, allPaths, groupableFields } from './catalog.js';
 import { buildPlaceIndex, findPlaces, stateCode, editDistance } from './places.js';
+import { methodById, checkParams, METHOD_IDS, isReviewed } from './methods.js';
 
 const API_FILES = { counties: 'api/all_counties.json', districts: 'api/all_districts.json', states: 'api/all_states.json', national: 'api/national.json' };
 const MAP_FILES = {   // key → [file under docs/, window global]
@@ -16,7 +17,8 @@ const MAP_FILES = {   // key → [file under docs/, window global]
 const STRIP = ['source', 'license', 'cite', 'methods', 'links', 'level', 'data_as_of'];
 const OPS = ['=', '!=', '>', '>=', '<', '<=', 'in', 'not_in', 'is_null', 'not_null', 'contains', 'includes', 'intersects', 'between'];
 const STATS = ['count', 'count_not_null', 'sum', 'mean', 'weighted_mean', 'median', 'min', 'max', 'share_true', 'share_eq'];
-const TOOLS = ['find_places', 'query', 'aggregate', 'profile', 'compare', 'trials', 'site_info', 'final_answer'];
+const TOOLS = ['find_places', 'query', 'aggregate', 'profile', 'compare', 'trials', 'site_info', 'method', 'final_answer'];
+const METHOD_RESULT_BYTES = 22000;   // a method's combined result stays under the protocol's 24 KB per tool result; engine.full() keeps every row
 const RUCC_KEYS = { p: 'pop55', n: 'counties', l20: 'pct_lt20', z60: 'pct_zero', l100: 'pct_lt100', t60: 'mean_trials_60', g60n: 'pct_gt60rdmi_nci', g60b: 'pct_gt60rdmi_broad_menu', medn: 'median_road_mi_nci', medb: 'median_road_mi_broad_menu' };
 const METRO_ALIASES = { people_lt20: 'people_lt20_trials_within_60rdmi', people_zero: 'people_zero_trials_within_60rdmi', pct_lt100: 'pct_lt100_trials_within_60rdmi', pct_lt20: 'pct_lt20_trials_within_60rdmi', pct_zero: 'pct_zero_trials_within_60rdmi', mean_trials_60: 'mean_trials_within_60rdmi' };
 const AGG_NOTE = 'Computed by the engine across the matching rows; a mean of county rates is not the published state rate (use the states table for that).';
@@ -702,6 +704,56 @@ export function createEngine(options = {}) {
     return res;
   }
 
+  // ---- method (the standard-method library, docs/ask/methods.js) ----
+  // Runs the method's calls in order, each under the id `<callId>.<n>` (n from 1) so engine.full() / highlightIds() / the verifier's
+  // claims can name one sub-result; a method step may depend on the results of the earlier steps (my_representative: ZIP → county).
+  // The method's own id stands for its first query / compare / profile / find_places sub-call in full() (highlight.from_call).
+  function runOne(name, input, id) {
+    switch (name) {
+      case 'find_places': return runFindPlaces(input, id);
+      case 'query': return runQuery(input, id);
+      case 'aggregate': return runAggregate(input);
+      case 'profile': return runProfile(input, id);
+      case 'compare': return runCompare(input, id);
+      case 'trials': return runTrials(input);
+      case 'site_info': return runSiteInfo(input);
+      default: return { error: `unknown tool '${name}'` };
+    }
+  }
+  function runMethod(input, callId) {
+    const m = methodById(String(input.id || ''));
+    if (!m) return { error: `unknown method '${input.id}'`, hint: 'methods: ' + METHOD_IDS.join(', ') };
+    const chk = checkParams(m, input.params); if (chk.error) return chk;
+    const p = chk.params; const results = []; const prev = []; let n = 0;
+    for (const stepFn of m.steps) {
+      let calls; try { calls = stepFn(p, prev) || []; } catch (e) { return { error: `method '${m.id}' could not build its calls: ${String(e && e.message || e).slice(0, 120)}` }; }
+      for (const c of calls) {
+        const id = callId ? `${callId}.${++n}` : `${++n}`;
+        const r = runOne(c.name, clone(c.input), callId ? id : null);
+        results.push({ call: id, name: c.name, input: c.input, result: r }); prev.push(r);
+      }
+    }
+    const primary = results.find(x => ['query', 'compare', 'profile', 'find_places'].includes(x.name) && x.result && !x.result.error);
+    if (callId) { if (primary && S.calls.has(primary.call)) S.calls.set(String(callId), S.calls.get(primary.call)); else S.calls.delete(String(callId)); }
+    const res = { method: m.id, title: m.title, rule: m.rule, params: p, reviewed: isReviewed(m), ...(isReviewed(m) ? { reviewed_by: m.reviewed_by, reviewed_on: m.reviewed_on } : {}),
+      map: safeMap(m, p), primary_call: primary ? primary.call : null, results,
+      note: 'Run by the engine exactly as the method\'s rule says. Cite a figure with call = the sub-call id in results[].call; highlight.from_call / table.from_call may name a sub-call id or this call (= primary_call).' };
+    return fitMethod(res);
+  }
+  const safeMap = (m, p) => { try { return typeof m.map === 'function' ? m.map(p) : null; } catch (e) { return null; } };
+  // keeps the combined result under METHOD_RESULT_BYTES by halving the longest row list of the largest sub-result (engine.full keeps all)
+  function fitMethod(res) {
+    const size = o => JSON.stringify(o).length;
+    for (let guard = 0; guard < 40 && size(res) > METHOD_RESULT_BYTES; guard++) {
+      let best = null;
+      for (const x of res.results) { const r = x.result; if (!r || typeof r !== 'object') continue; for (const k of ['rows', 'sample', 'matches', 'groups']) if (Array.isArray(r[k]) && r[k].length > 1) { const s = size(r[k]); if (!best || s > best.s) best = { r, k, s }; } }
+      if (!best) break;
+      const all = best.r[best.k].length; best.r[best.k] = best.r[best.k].slice(0, Math.max(1, Math.floor(all / 2)));
+      best.r.truncated = `…(truncated): ${best.k} cut to ${best.r[best.k].length} of ${best.r.returned ?? all}`; if (best.k === 'rows') best.r.returned = best.r.rows.length;
+    }
+    return res;
+  }
+
   // ---- public surface ----
   async function run(name, input, callId) {
     try {
@@ -717,6 +769,7 @@ export function createEngine(options = {}) {
         case 'compare': return runCompare(inp, callId);
         case 'trials': return runTrials(inp);
         case 'site_info': return runSiteInfo(inp);
+        case 'method': return runMethod(inp, callId);
         default: return { error: `unknown tool '${name}'` };
       }
     } catch (e) { return { error: 'internal: ' + String(e && e.message || e).slice(0, 200) }; }
@@ -793,6 +846,7 @@ export function createEngine(options = {}) {
         case 'compare': return `Comparing ${joinAnd((Array.isArray(i.ids) ? i.ids : []).map(nameOf))}`;
         case 'trials': return describeTrials(i);
         case 'site_info': return `Reading the site's text on ${i.topic}`;
+        case 'method': { const m = methodById(String(i.id || '')); const ps = i.params && typeof i.params === 'object' ? Object.entries(i.params).map(([k, v]) => k === 'state' ? (STATES[stateCode(v)] || v) : ['place', 'county', 'district'].includes(k) ? nameOf(v) : String(v)).join(', ') : ''; return `Standard method: ${m ? m.title : i.id}${ps ? ` (${ps})` : ''}`; }
         case 'final_answer': return 'Writing the answer';
         default: return `Running ${name}`;
       }
@@ -832,6 +886,7 @@ export function createEngine(options = {}) {
       case 'compare': return `${(r.rows || []).length} rows compared`;
       case 'trials': return plural(r.count || 0, 'trial');
       case 'site_info': return r.title || r.topic || 'text';
+      case 'method': return (r.results || []).map(x => describeResult(x.name, x.input, x.result)).join('; ') || 'no calls';
       case 'final_answer': return 'answer written';
       default: return 'done';
     }
