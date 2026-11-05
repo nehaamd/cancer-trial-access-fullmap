@@ -73,7 +73,7 @@ Responses (always JSON, `cache-control: no-store`):
 ```
 
 * `kind:"tools"`: the client runs every call with the engine (in parallel is fine), appends `{assistant, sig, results}` to `turns`,
-  and posts again. The worker calls the model with `tool_choice: {type:"any"}`, so every step ends in tool calls; a text-only
+  and posts again. The worker calls the model with `tool_choice: {type:"auto"}` (current models reject `any` / `tool`) and the system prompt requires tool calls, so every step ends in tool calls; a text-only
   reply is returned as `kind:"answer"` with `answer:{answer:<text>, answerable:"partly"}` and verified like any other.
 * `kind:"answer"`: the loop ends. If `verification.ok` is false the client MUST NOT show `answer.answer`; it shows the results
   (table / highlights) with the notice in §7 instead. The worker has already retried verification failures internally
@@ -83,8 +83,7 @@ Responses (always JSON, `cache-control: no-store`):
   of the same question count toward a separate continuation budget of `MAX_STEPS ×` those limits, which a question never
   reaches — so a replayed signed turn cannot buy unlimited model calls), `502 {error, detail}` (model or internal failure),
   `504 {error}` (model timed out). Error texts are plain sentences the client shows as-is.
-* Limits: `MAX_STEPS = 8` model calls per question (the 8th is forced to `final_answer` with `tool_choice:{type:"tool",
-  name:"final_answer"}`), `max_tokens` 1200 per call, model timeout 25 s per call. A single HTTP step may contain up to 3 model
+* Limits: `MAX_STEPS = 8` model calls per question (the 8th is forced to `final_answer` by a user message saying so), `max_tokens` 1200 per call, model timeout 25 s per call. A single HTTP step may contain up to 3 model
   calls (verification retries), so the client waits up to 90 s per step with a visible progress line.
 * Model calls: `POST https://api.anthropic.com/v1/messages`, `anthropic-version: 2023-06-01`, body
   `{model, max_tokens, system:[{type:"text", text, cache_control:{type:"ephemeral"}}], tools:[…, last tool with cache_control],

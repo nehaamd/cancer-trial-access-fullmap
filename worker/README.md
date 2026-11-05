@@ -63,7 +63,7 @@ Request: `{v: 3, q, turns: [{assistant, sig, results:[{tool_use_id, content, is_
   from the transcript (the client only ever echoes the turn it was given). A step may therefore take up to 3 model calls
   (≈ 75 s worst case); the client waits 90 s per step.
 * `step` in a response is the number of the model call that produced it (`turns.length + 1`); `MAX_STEPS` (8) forces the last
-  call to `final_answer` with `tool_choice: {type:"tool", name:"final_answer"}`.
+  call to `final_answer` with a user message saying so (current models accept only `tool_choice: auto`).
 * Errors: `400 {error}` (bad body; `"bad transcript"` for signature/bookkeeping failures; a too-large result), `403` (origin),
   `429 {error, retry_after_s}` (per-visitor minute limit or the daily cap; only requests with `turns.length === 0` count),
   `502 {error, detail}` (model/internal), `504 {error}` (the model took more than 25 s). Error texts are plain sentences.
@@ -102,7 +102,7 @@ Secrets (never in the repository or the site):
 
 Model calls: `POST https://api.anthropic.com/v1/messages`, `anthropic-version: 2023-06-01`, `max_tokens` 1200, no `temperature`,
 `system` and the last tool carry `cache_control: {type:"ephemeral"}` (the ~14k-token prompt is cached across steps and
-questions), `tool_choice: {type:"any"}`, 25 s timeout, one retry after 1.5 s on 429/529/5xx.
+questions), `tool_choice: {type:"auto"}` (any / tool are rejected by current models; the system prompt requires tool calls), 25 s timeout, one retry after 1.5 s on 429/529/5xx.
 
 Logging: one JSON line per request (question text, step, kind, model, verification ok/issues, retries, tool names, elapsed ms,
 token usage). No visitor identifier is logged or stored.

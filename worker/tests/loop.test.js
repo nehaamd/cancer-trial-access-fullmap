@@ -203,7 +203,7 @@ await test('loop: happy path tools → final, verification ok, signatures round-
   assert(await verifySig(responses[0].assistant, responses[0].sig, SECRET), 'sig verifies');
   eq(r.kind, 'answer'); eq(r.step, 2); eq(r.verification, { ok: true, issues: [], retries: 0 }); eq(r.model, 'claude-sonnet-5-5');
   eq(r.answer.map.highlight.from_call, turns[0].assistant[0].id);
-  eq(model.calls.length, 2); eq(model.calls[0].tool_choice, { type: 'any' }); eq(model.calls[0].max_tokens, 1200); assert(!('temperature' in model.calls[0]), 'no temperature');
+  eq(model.calls.length, 2); eq(model.calls[0].tool_choice, { type: 'auto' }); eq(model.calls[0].max_tokens, 1200); assert(!('temperature' in model.calls[0]), 'no temperature');
   eq(model.calls[0].system[0].cache_control, { type: 'ephemeral' }); eq(model.calls[0].tools.at(-1).cache_control, { type: 'ephemeral' });
   // the second call saw the question, the assistant turn and the tool results
   const m = model.calls[1].messages; eq(m.length, 3); eq(m[0], { role: 'user', content: Q }); eq(m[1].role, 'assistant'); eq(m[2].content.map(b => b.type), ['tool_result', 'tool_result']); eq(m[2].content[0].tool_use_id, turns[0].assistant[0].id);
@@ -254,17 +254,17 @@ await test('loop: body validation (q length, protocol version, prior, result boo
   const v = validateBody({ q: '  how   many counties  ', prior: [{ q: 'a', answer: 'b' }, { q: '', answer: 'x' }, { q: 'c', answer: 'd' }, { q: 'e', answer: 'f' }, { q: 'g', answer: 'h' }], client: { page: 'map', unit: 'county' } });
   eq(v.q, 'how many counties'); eq(v.prior.length, 3); eq(v.prior[0].q, 'c'); eq(v.client, { page: 'map', unit: 'county' });
 });
-await test('loop: MAX_STEPS forces final_answer with tool_choice {type:"tool", name:"final_answer"}', async () => {
+await test('loop: MAX_STEPS forces final_answer with a user instruction (tool_choice stays auto: current models reject any/tool)', async () => {
   // seven signed earlier turns, each one query with an empty result
   const turns = [];
   for (let i = 0; i < MAX_STEPS - 1; i++) { const b = [tu('query', { table: 'states' })]; turns.push({ assistant: b, sig: await sign(b, SECRET), results: [{ tool_use_id: b[0].id, content: JSON.stringify({ count: 51 }) }] }); }
-  const model = fakeModel([p => { eq(p.tool_choice, { type: 'tool', name: 'final_answer' }, 'forced final'); return [tu('final_answer', { answer: 'The data covers 51 states.', answerable: 'partly', interpretation: 'x' })]; }]);
+  const model = fakeModel([p => { eq(p.tool_choice, { type: 'auto' }, 'auto'); assert(JSON.stringify(p.messages[p.messages.length - 1]).includes('Call final_answer now'), 'forced final in words'); return [tu('final_answer', { answer: 'The data covers 51 states.', answerable: 'partly', interpretation: 'x' })]; }]);
   const r = await step({ v: 3, q: Q, turns }, ENV, model);
   eq(r.kind, 'answer'); eq(r.step, MAX_STEPS); eq(r.verification.ok, true);
   // at step 7 it is still free to call tools; env.MAX_STEPS overrides
-  const model2 = fakeModel([p => { eq(p.tool_choice, { type: 'any' }); return [tu('query', { table: 'states' })]; }]);
+  const model2 = fakeModel([p => { eq(p.tool_choice, { type: 'auto' }); assert(!JSON.stringify(p.messages).includes('Call final_answer now')); return [tu('query', { table: 'states' })]; }]);
   const r2 = await step({ v: 3, q: Q, turns: turns.slice(0, MAX_STEPS - 2) }, ENV, model2); eq(r2.kind, 'tools');
-  const model3 = fakeModel([p => { eq(p.tool_choice, { type: 'tool', name: 'final_answer' }); return [tu('final_answer', { answer: 'The data covers 51 states.', answerable: 'partly', interpretation: 'x' })]; }]);
+  const model3 = fakeModel([p => { eq(p.tool_choice, { type: 'auto' }); assert(JSON.stringify(p.messages[p.messages.length - 1]).includes('Call final_answer now')); return [tu('final_answer', { answer: 'The data covers 51 states.', answerable: 'partly', interpretation: 'x' })]; }]);
   await step({ v: 3, q: Q, turns: turns.slice(0, 2) }, { ...ENV, MAX_STEPS: '3' }, model3);
 });
 await test('loop: a verification failure is fed back as a tool_result error and the retry passes', async () => {
@@ -304,12 +304,13 @@ await test('loop: each rejected style/number case triggers a retry and the corre
 await test('loop: a text-only reply becomes kind:"answer" with answerable "partly" and is verified', async () => {
   const model = fakeModel([[txt('There are 254 counties in Texas.')], [txt('There are 254 counties in Texas.')], [txt('There are 254 counties in Texas.')]]);
   const r = await step({ v: 3, q: 'how many counties are in texas', turns: [] }, ENV, model);
+  // two nudges back to the tools, then the third text reply is taken as the answer and verified (it fails: no result holds 254)
   eq(r.kind, 'answer'); eq(r.answer.answerable, 'partly'); eq(r.answer.answer, 'There are 254 counties in Texas.'); eq(r.verification.ok, false); eq(r.verification.retries, 2); assert(includes(r.verification.issues, 'number 254'), 'no result holds 254');
-  eq(model.calls.length, 3);
+  eq(model.calls.length, 3); assert(String(model.calls[1].messages[2].content).includes('Text replies are not shown'), 'the nudge is a plain user message');
   // the retry for a text-only reply is a plain user message; a final_answer that then follows is accepted
   const model2 = fakeModel([[txt('Hello there.')], [tu('final_answer', { answer: catalog.OTHER_TEXT, answerable: 'no', interpretation: 'Not a question about the map\'s data.', not_in_data: ['Greetings are not data.'] })]]);
   const r2 = await step({ v: 3, q: 'hey you', turns: [] }, ENV, model2);
-  eq(r2.kind, 'answer'); eq(r2.verification.retries, 1); assert(r2.verification.ok); eq(model2.calls[1].messages[2].role, 'user'); assert(typeof model2.calls[1].messages[2].content === 'string' && model2.calls[1].messages[2].content.startsWith('Verification failed'));
+  eq(r2.kind, 'answer'); eq(r2.verification.retries, 1); assert(r2.verification.ok); eq(model2.calls[1].messages[2].role, 'user'); assert(typeof model2.calls[1].messages[2].content === 'string' && model2.calls[1].messages[2].content.includes('Text replies are not shown'));
   // a text-only reply whose every token checks out passes as it is
   const model3 = fakeModel([[txt('The data covers 254 counties in Texas.')]]);
   const b = [tu('query', { table: 'counties' })]; const turns = [{ assistant: b, sig: await sign(b, SECRET), results: [{ tool_use_id: b[0].id, content: '{"in_scope":254}' }] }];
@@ -398,7 +399,7 @@ await test('http: makeCallModel posts the §3 shape, retries once on 529, maps t
   const seen = [];
   const fetchOk = async (url, init) => { seen.push({ url, init }); return new Response(JSON.stringify({ content: [txt('hi')], stop_reason: 'end_turn', usage: { input_tokens: 1 }, model: 'm' }), { status: 200 }); };
   const call = makeCallModel({ ANTHROPIC_API_KEY: 'sk-x' }, fetchOk);
-  const out = await call({ model: 'm', max_tokens: 1200, system: [], tools: [], tool_choice: { type: 'any' }, messages: [] });
+  const out = await call({ model: 'm', max_tokens: 1200, system: [], tools: [], tool_choice: { type: 'auto' }, messages: [] });
   eq(out.content, [txt('hi')]); eq(seen[0].url, 'https://api.anthropic.com/v1/messages'); eq(seen[0].init.headers['x-api-key'], 'sk-x'); eq(seen[0].init.headers['anthropic-version'], '2023-06-01'); eq(seen[0].init.method, 'POST'); assert(seen[0].init.signal, 'abort signal'); assert(!JSON.parse(seen[0].init.body).temperature, 'no temperature');
   let n = 0; const flaky = async () => { n++; return n === 1 ? new Response('overloaded', { status: 529 }) : new Response(JSON.stringify({ content: [] }), { status: 200 }); };
   const t0 = Date.now(); await makeCallModel({ ANTHROPIC_API_KEY: 'k' }, flaky)({ model: 'm', messages: [] }); eq(n, 2); assert(Date.now() - t0 >= 1400, 'waited 1.5 s');

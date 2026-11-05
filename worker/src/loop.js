@@ -26,6 +26,7 @@ export const MAX_PRIOR = 3;
 export const Q_MIN = 3, Q_MAX = 400;
 export const DEFAULT_MODEL = 'claude-sonnet-5-5';
 export const FINAL_NOTE = 'call final_answer alone, after the other results';   // what the client answers a premature final_answer with
+export const FORCE_FINAL_TEXT = 'You have used all the tool steps for this question. Call final_answer now, alone, with what the results so far show; say in not_in_data what could not be looked up.';
 
 export class StepError extends Error { constructor(status, message, detail) { super(message); this.status = status; this.detail = detail; } }
 const bad = (msg, detail) => new StepError(400, msg, detail);
@@ -96,7 +97,8 @@ export async function step(body, env, callModel, options = {}) {
   let retries = 0, last = null;
   for (;;) {
     // on a verification retry the model may still fetch a missing figure, so only the forced last step pins final_answer
-    const payload = { ...base, tool_choice: forceFinal ? { type: 'tool', name: 'final_answer' } : { type: 'any' }, messages: buildMessages(req, extra) };
+    // current models accept only tool_choice auto (type "any" / "tool" are rejected with HTTP 400), so the last step is forced in words
+    const payload = { ...base, tool_choice: { type: 'auto' }, messages: buildMessages(req, forceFinal && !extra.length ? [{ role: 'user', content: FORCE_FINAL_TEXT }] : extra) };
     const res = await callModel(payload);
     const blocks = Array.isArray(res && res.content) ? res.content.filter(b => b && (b.type === 'text' || b.type === 'tool_use')) : [];
     addUsage(usage, res && res.usage);
@@ -116,7 +118,12 @@ export async function step(body, env, callModel, options = {}) {
       if (calls.length > MAX_CALLS_PER_TURN) throw new StepError(502, 'The question box is unavailable right now; the map and its filters still work.', `model returned ${calls.length} tool calls`);
       return { v: PROTOCOL_VERSION, kind: 'tools', step: stepNo, assistant: blocks, sig: await sign(blocks, secret), calls: calls.map(c => ({ id: c.id, name: c.name, input: c.input && typeof c.input === 'object' ? c.input : {} })), ...(finals.length ? { note: `final_answer must be called alone; answer its call with {"ok":true,"note":"${FINAL_NOTE}"}` } : {}), model, usage, retries };
     }
-    // an answer: a final_answer call, or a text-only reply
+    // a text-only reply (possible with tool_choice auto) is a lost turn, not an answer: nudge the model back to the tools, up to the retry cap
+    if (!calls.length && retries < MAX_RETRIES) {
+      retries++; extra.push({ role: 'assistant', content: blocks.length ? blocks : [{ type: 'text', text: '(empty)' }] }, { role: 'user', content: 'Text replies are not shown to the visitor. Continue with tool calls (find_places, query, aggregate, profile, compare, trials, site_info) and then call final_answer alone with the answer.' });
+      continue;
+    }
+    // an answer: a final_answer call, or (after the nudges) a text-only reply
     const final = finals[0] || null;
     const answer = final ? (final.input && typeof final.input === 'object' ? final.input : {}) : { answer: blocks.filter(b => b.type === 'text').map(b => b.text).join('\n').trim(), answerable: 'partly', interpretation: 'Answered in text without a final_answer call.' };
     const verification = verify(answer, buildContext({ question: req.q, turns: req.turns, catalog }));
