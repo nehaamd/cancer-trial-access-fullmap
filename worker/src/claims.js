@@ -13,7 +13,7 @@ import { numbersIn, numbersWithPos, writtenMatches } from './verify.js';
 export const MAX_CLAIMS = 40;
 const PLACE_ID_RE = /^(\d{5}|[A-Z]{2}-\d{2}|[A-Z]{2}|US)$/;
 const MONTHS = 'january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec';
-const CLAUSE_SPLIT = /[;:,()—]|\s(?:and|but|while|whereas|against|versus|vs|compared (?:with|to)|than|or|with|to|from|ahead of|behind|followed by|next to|beside|unlike)\s/i;
+const CLAUSE_SPLIT = /[;:()—]|,(?!\d{3})|\s(?:and|but|while|whereas|against|versus|vs|compared (?:with|to)|than|or|with|to|from|ahead of|behind|followed by|next to|beside|unlike)\s/i;
 const SCOPE_LEAD = /\b(?:of|out of|among|across|total of|in all|from)\s+(?:the\s+|all\s+|its\s+)?$/i;   // "38 of 254 …", "182,206 of the 1,180,232 …": a total, not the place's own figure
 const STATE_WORDS = /\b(?:statewide|the state(?:'s|’s)?|state-wide|the whole state|the state as a whole)\b/gi;
 const US_WORDS = /\b(?:nationally|nationwide|national|the nation(?:'s|’s)?|the country(?:'s|’s)?|countrywide|the United States|across the US)\b|\b(?:U\.S\.|US|America)(?![\w.])/g;
@@ -22,7 +22,7 @@ const PH = i => String.fromCharCode(0xE000 + i);   // one private-use character 
 const PH_RE = /[-]/g;
 
 const isNum = v => typeof v === 'number' && Number.isFinite(v);
-const toNum = v => isNum(v) ? v : typeof v === 'string' && v.trim() !== '' && !Number.isNaN(+v.replace(/,/g, '')) ? +v.replace(/,/g, '') : null;
+const toNum = v => { if (isNum(v)) return v; if (typeof v !== 'string' || !v.trim()) return null; const t = v.replace(/[,\s$%]/g, ''); if (t !== '' && !Number.isNaN(+t)) return +t; const n = numbersIn(v)[0]; return n && /^[\s\d.,$%-]*(?:million|billion|thousand|k)?\s*$/i.test(v) ? n.value : null; };
 const looseEq = (a, b) => String(a).toLowerCase() === String(b).toLowerCase();
 const short = (v, n = 60) => { const s = typeof v === 'string' ? v : JSON.stringify(v); return s && s.length > n ? s.slice(0, n - 1) + '…' : s; };
 
@@ -85,8 +85,11 @@ function valueMatches(claim, actual) {
   if (Array.isArray(actual)) { const c = toNum(claim); if (c !== null) return c === actual.length; return actual.some(x => looseEq(x, claim)) || looseEq(actual.join(', '), claim); }
   if (actual === null) return claim === null || /^(null|none|—|-)$/i.test(String(claim));
   if (typeof actual === 'object') return false;
-  const a = toNum(actual), c = toNum(claim);
-  if (a !== null && c !== null) { const n = numbersIn(String(claim).replace(/,/g, ''))[0]; return n ? writtenMatches({ ...n, value: c }, a) : a === c; }
+  const a = toNum(actual);
+  if (a !== null && (typeof claim === 'number' || typeof claim === 'string')) {   // "87", "87%", "11.8 million", "$2,000": the number as written
+    const n = numbersIn(String(claim).replace(/[$]/g, ''))[0];
+    if (n && String(claim).replace(/[\s,$%]|percent|million|billion|thousand|k\b/gi, '').replace(/^-/, '') === n.digits.replace(/^-/, '')) return writtenMatches(n, a);
+  }
   return looseEq(String(actual).trim(), String(claim).trim());
 }
 
@@ -143,7 +146,7 @@ function checkOneClaim(cl, i, ctx, C, known, issues) {
     return null;
   }
   if (!valueMatches(cl.value, r.value)) { issues.push(`${tag}: ${r.place} ${field} is ${short(r.value)} in call ${callId}, not ${short(cl.value)}; copy the value from the result.`); return null; }
-  return { place: r.place, field, value: cl.value, call: callId };
+  return { place: r.place, field, value: Array.isArray(r.value) ? r.value.length : toNum(r.value) ?? cl.value, call: callId };   // the text is matched against the result's own value
 }
 // finds the value a claim names: a row with the place's id (or name), else the result itself when the place is its scope
 function locate(entry, place, field, known) {
@@ -158,7 +161,8 @@ function locate(entry, place, field, known) {
   const top = resolvePath(res, field);
   if (top !== undefined) {
     const scopes = scopePlaces(entry);
-    if (scopes.has('*') || scopes.has(place) || rows.some(o => o === res)) return { found: true, value: top, place, rows };
+    const m = field.match(/^([\w.]+)\[(\d+)\]/); const el = m ? resolvePath(res, `${m[1]}[${m[2]}]`) : null;   // "rows[0].pop55" of the row whose id is the place
+    if (scopes.has('*') || scopes.has(place) || rows.some(o => o === res) || (el && String(el.id) === place) || field.includes(`[id=${place}]`)) return { found: true, value: top, place, rows };
     return { found: false, scopeError: true, scopes, place, rows };
   }
   return { found: false, place, rows };
@@ -262,12 +266,20 @@ export function checkText(answer, ctx, claims, issues) {
       const closedAside = at => { const open = sent.lastIndexOf('(', at), close = sent.indexOf(')', at); return open >= 0 && close > at && close < n.index && sent.lastIndexOf('(', n.index) <= open; };
       const prevSent = phPositions.filter(p => p.at < cl.off && !closedAside(p.at)).pop(), nextSent = phPositions.find(p => p.at >= cl.off + cl.text.length);
       let mode, k = null;
+      // the place right after the number ("161 Texas counties", "33.1% in Montana", "87% nationally") counts as well as the one before
+      const adjacent = nextIn && prevIn && /^\s*(?:%|percent)?[^\d\uE000-\uF8FF]{0,30}$/.test(sent.slice(n.end, nextIn.at)) ? nextIn : null;
       if (prevIn) { mode = 'strict'; k = prevIn.k; } else if (nextIn) { mode = 'strict'; k = nextIn.k; }
       else if (prevSent) { mode = 'inherited'; k = prevSent.k; } else if (nextSent) { mode = 'inherited'; k = nextSent.k; }
       else mode = 'placeless';
       const inheritedState = lastSentence.length ? stateOfIds(new Set(lastSentence.flatMap(j => [...mentions[j].ids]))) : null;
       const ids = k !== null ? idsOf(k, stateOfIds(prevSent ? mentions[prevSent.k].ids : []) || inheritedState) : new Set(lastSentence.flatMap(j => [...idsOf(j, inheritedState)]));
-      const own = claimsOf(byPlace, ids);
+      // inherited from a place that only qualified an earlier number ("the largest of 48 Texas counties, with 59,433 residents"):
+      // the place named before that one (the sentence's subject) counts as well
+      const qualifier = p => /\d(?:\s*(?:%|percent|million|billion|thousand))?[^\d\uE000-\uF8FF;:()]{0,30}$/.test(sent.slice(Math.max(0, p.at - 40), p.at));
+      const subject = mode === 'inherited' && prevSent && qualifier(prevSent) ? phPositions.filter(p => p.at < prevSent.at && !qualifier(p) && !closedAside(p.at)).pop() : null;
+      let ownIds = adjacent ? new Set([...ids, ...idsOf(adjacent.k, null)]) : ids;
+      if (subject) ownIds = new Set([...ownIds, ...idsOf(subject.k, null)]);
+      const own = claimsOf(byPlace, ownIds);
       const snippet = `"${n.raw}${(after.replace(PH_RE, '').match(/^\s*%?\s*[\p{L}+-]+/u) || [''])[0].replace(/^%/, '')}"`;
       const ownNames = [...ids].map(display).join(' / ');
       if (respectively) {   // "Wyoming and Montana have 87% and 33.1%, respectively": the figure must belong to a place of the sentence
@@ -280,7 +292,7 @@ export function checkText(answer, ctx, claims, issues) {
       // place; next to a named place only as a total ("of 254 …") or after a place that has figures of its own
       const lead = SCOPE_LEAD.test(before.replace(PH_RE, ' '));
       if ((mode === 'placeless' || lead || (mode === 'inherited' && own.length)) && matchIn(n, scopeClaims).length) continue;
-      const others = claims.filter(c => !ids.has(c.place));
+      const others = claims.filter(c => !ownIds.has(c.place));
       const elsewhere = matchIn(n, others);
       if (exempt) {   // a constant or a question number: rejected only when it is plainly another place's figure on a field this place also claims
         const sentIds = new Set(sentMentions.flatMap(j => [...idsOf(j, null)]));

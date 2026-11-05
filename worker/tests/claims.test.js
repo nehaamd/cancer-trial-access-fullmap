@@ -86,6 +86,8 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   ok('count with sum of residents and the three largest', sc, answer, claims);
   ok('count with the sum rounded to millions / thousands', sc, `${r.count} Texas counties have oncologists but no trial site; about ${(r.sum_pop55_matching / 1e6).toPrecision(2)} million residents 55+ live in them, the most in ${a.name} with about ${f(Math.round(a.pop55 / 1000) * 1000)}.`, claims);
   ok('count, then a sentence with no place name carrying the scope figure', sc, `The largest such county is ${a.name}, with ${a['oncologists.count']} oncologists. In all, ${f(r.sum_pop55_matching)} residents 55+ live in the ${r.count} counties.`, claims);
+  ok('count: "<county> is one of <n> Texas counties" (the place right after the number)', sc, `${a.name} is the largest of ${r.count} Texas counties with oncologists but no trial site, with ${f(a.pop55)} residents 55+.`, claims);
+  ok('count: claim values written as in the answer ("1.2 million", "48") and a rows[0] field', sc, `${r.count} Texas counties match; ${(r.sum_pop55_matching / 1e6).toPrecision(2)} million residents 55+ live in them, ${f(a.pop55)} in ${a.name}.`, [claim('TX', 'count', String(r.count), id), claim('TX', 'sum_pop55_matching', `${(r.sum_pop55_matching / 1e6).toPrecision(2)} million`, id), claim(a.id, 'rows[0].pop55', a.pop55, id)]);
   bad('count: a county\'s residents written next to another county', sc, `The largest are ${a.name} (${f(b.pop55)} residents 55+) and ${b.name} (${f(a.pop55)}).`, claims, a.name);
   bad('count: the oncologists of the second county given to the first in a following sentence', sc, `The largest is ${a.name}. ${b.name} follows. It has ${a['oncologists.count']} oncologists.`, claims, b.name);
   bad('count: figures written but no claims at all', sc, answer, [], 'claims is empty');
@@ -192,6 +194,28 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   const claims = [claim('TX-15', 'wmean_trials_within_60rdmi', a.wmean_trials_within_60rdmi, id), claim('TX-34', 'wmean_trials_within_60rdmi', b.wmean_trials_within_60rdmi, id), claim('TX-15', 'pop55', a.pop55, id), claim('TX-34', 'pop55', b.pop55, id)];
   ok('two districts compared (ids TX-15 / TX-34 written in the text)', sc, `Residents 55+ of Texas 15th (TX-15) have ${a.wmean_trials_within_60rdmi} recruiting trials within 60 road-miles on average, against ${b.wmean_trials_within_60rdmi} in Texas 34th; the districts have ${f(a.pop55)} and ${f(b.pop55)} residents 55+, respectively.`, claims);
   if (a.wmean_trials_within_60rdmi !== b.wmean_trials_within_60rdmi) bad('two districts: average trials swapped', sc, `Residents 55+ of Texas 15th have ${b.wmean_trials_within_60rdmi} recruiting trials within 60 road-miles on average, against ${a.wmean_trials_within_60rdmi} in Texas 34th.`, claims, 'Texas 15th');
+}
+
+{ // 23. the cosponsors from a state through the standard method, with dates
+  const sc = await scenario('Which Texas members of Congress cosponsor H.R. 3521?', [{ name: 'method', input: { id: 'hr3521_cosponsors_state', params: { state: 'TX' } } }]);
+  const [id] = sc.id; const sub = sc.R[id].results[0]; const r = sub.result; const first = r.rows[0];
+  const d = new Date(first.date + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  ok('method: cosponsors from a state, names and a written-out date', sc, `${r.count} members of the House from Texas are listed on H.R. 3521: ${r.rows.map(x => `${x.name} (${x.party}, ${x.district_id})`).join(', ')}. The first to sign on was ${first.name}, on ${d}.`, [claim('TX', 'count', r.count, sub.call)]);
+}
+{ // 24. the site's headline numbers (site_info, scope US)
+  const sc = await scenario('What are the key findings?', [{ name: 'site_info', input: { topic: 'findings' } }]);
+  const [id] = sc.id; const nb = sc.R[id].numbers; const nat = nb.nat;
+  ok('site_info: national headline figures, scope US', sc, `Nationally, ${nat.l20}% of residents 55+ are short of trials and ${nat.z60}% have no trial within 60 road-miles; the median distance to an NCI-designated center is ${nat.medn} road-miles. ${nb.states_no_broad} states have no county with a broad trial menu.`, [claim('US', 'numbers.nat.l20', nat.l20, id), claim('US', 'numbers.nat.z60', nat.z60, id), claim('US', 'numbers.nat.medn', nat.medn, id), claim('US', 'numbers.states_no_broad', nb.states_no_broad, id)]);
+}
+{ // 25. a state's people short of trials through the standard method, with the nation
+  const sc = await scenario('How many people in Ohio are short of cancer trials?', [{ name: 'method', input: { id: 'people_short_of_trials_state', params: { state: 'OH' } } }]);
+  const [id] = sc.id; const [s1, s2] = sc.R[id].results; const oh = s1.result.rows[0], us = s2.result.rows[0];
+  ok('method: a state\'s people short of trials against the nation', sc, `In Ohio, ${f(oh.people_lt20_trials_within_60rdmi)} residents 55+ (${oh.pct_lt20_trials_within_60rdmi}%) are short of trials, against ${us.pct_lt20_trials_within_60rdmi}% nationally; ${f(oh.people_zero_trials_within_60rdmi)} Ohioans 55+ have no trial within 60 road-miles.`, [claim('OH', 'people_lt20_trials_within_60rdmi', oh.people_lt20_trials_within_60rdmi, s1.call), claim('OH', 'pct_lt20_trials_within_60rdmi', oh.pct_lt20_trials_within_60rdmi, s1.call), claim('US', 'pct_lt20_trials_within_60rdmi', us.pct_lt20_trials_within_60rdmi, s2.call), claim('OH', 'people_zero_trials_within_60rdmi', oh.people_zero_trials_within_60rdmi, s1.call)]);
+}
+{ // 26. phase 3 trials within 60 road-miles of a county (method), the share in words
+  const sc = await scenario('How many phase 3 trials are within 60 miles of Cameron County, Texas?', [{ name: 'find_places', input: { query: 'Cameron County, Texas' } }, { name: 'method', input: { id: 'trials_near_county', params: { county: '48061', phase: '3' } } }]);
+  const [, id] = sc.id; const sub = sc.R[id].results[0]; const r = sub.result;
+  ok('method: phase 3 trials near a county, with the industry count', sc, `${r.count} phase 3 recruiting trials have a site within 60 road-miles of the Cameron County, Texas population center; ${r.by_sponsor_type.industry} of them are sponsored by industry.`, [claim('48061', 'count', r.count, sub.call), claim('48061', 'by_sponsor_type.industry', r.by_sponsor_type.industry, sub.call)]);
 }
 
 // ======================= run them =======================

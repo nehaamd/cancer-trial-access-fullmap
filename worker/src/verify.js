@@ -96,6 +96,7 @@ export function buildContext(ctx) {
   const catText = ctx.catalogText || catalogText(C);
   const stop = new Set(FIXED_STOP);
   for (const [code, name] of Object.entries(C.STATES || {})) { stop.add(code.toLowerCase()); for (const w of name.toLowerCase().split(/[^a-z]+/)) if (w) stop.add(w); }
+  for (const d of Object.keys(C.DEMONYMS || {})) for (const w of d.split(/\s+/)) { stop.add(w); stop.add(w + 's'); }   // Ohioans, Texans, New Yorkers
   for (const w of wordsOf(catText)) stop.add(w);
   for (const w of wordsOf(question)) stop.add(w);
   for (const w of wordsOf(C.SCOPE_TEXT + ' ' + C.OTHER_TEXT)) stop.add(w);

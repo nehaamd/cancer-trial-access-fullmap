@@ -66,7 +66,7 @@ export function firstPlace(text, among) {
 // place and a number matching the value (the §6 rounding rule), and that number's nearest place in the clause (the one before it,
 // else the one after it) is this place. Place names are masked first, so "Hidalgo County, Texas" is one token and its comma does
 // not split the clause; clauses split at ; , and the comparison words (against, compared with, than, while, whereas, versus, and, but).
-const PAIR_SPLIT = /[;,]|\s(?:and|but|while|whereas|against|versus|vs\.?|compared (?:with|to)|than|with|to|from)\s/i;
+const PAIR_SPLIT = /;|,(?!\d{3})|\s(?:and|but|while|whereas|against|versus|vs\.?|compared (?:with|to)|than|with|to|from)\s/i;
 export function pairedInText(text, names, value, allPairs) {
   const t = String(text || ''); const mentions = [];
   const all = (allPairs && allPairs.length ? allPairs : [[names, value]]).map(([ns], i) => ({ i, ns: (Array.isArray(ns) ? ns : [ns]).map(String).filter(Boolean) }));
