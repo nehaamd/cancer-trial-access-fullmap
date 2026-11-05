@@ -1,0 +1,686 @@
+{
+ "cosponsors": {
+  "hr_n_cosponsors": 30,
+  "n_house": 31,
+  "n_senate": 2,
+  "roles": [
+   "cosponsor",
+   "original",
+   "sponsor"
+  ],
+  "ruiz_district_id": "CA-25",
+  "ruiz_row": "R000599:ctma_hr",
+  "s_introduced": "2026-04-29"
+ },
+ "counties_by_rucc": {
+  "1": 444,
+  "2": 384,
+  "3": 358,
+  "4": 200,
+  "5": 76,
+  "6": 379,
+  "7": 247,
+  "8": 466,
+  "9": 589
+ },
+ "counts": {
+  "cosponsor_rows": 33,
+  "counties": 3143,
+  "districts": 436,
+  "facilities": 9655,
+  "facilities_unresolved": 400,
+  "history": 10,
+  "nci": 67,
+  "senators": 100,
+  "states": 51,
+  "trials": 4035
+ },
+ "districts": {
+  "cosponsoring": 31,
+  "not_cosponsor": 405,
+  "not_cosponsor_seated": 403,
+  "ruiz": "CA-25",
+  "ruiz_date": "2025-05-20",
+  "tx34_bioguide": "G000581",
+  "tx34_county_names": [
+   "Cameron County",
+   "Hidalgo County",
+   "Kenedy County",
+   "Kleberg County",
+   "Willacy County"
+  ],
+  "tx34_deaths_vs_access": {
+   "classified": 4,
+   "hh": [],
+   "n": 5
+  },
+  "vacant": [
+   "FL-20",
+   "TX-23"
+  ]
+ },
+ "districts_by_party": {
+  "D": 215,
+  "I": 1,
+  "R": 218,
+  "null": 2
+ },
+ "hidalgo": {
+  "districts": [
+   "TX-15",
+   "TX-34"
+  ],
+  "facilities": 13,
+  "high_incidence_low_access": false,
+  "menu": "few",
+  "namesake_ratio_ge_20": true,
+  "nm_namesake_pop55": 1539,
+  "per_100k": 9.3,
+  "pop55": 182206,
+  "t60_api": 18,
+  "trials": 18,
+  "trials_industry": 17,
+  "trials_lung": 4,
+  "trials_phase3": 12,
+  "trials_within_60": 18,
+  "zt_lung": 0.0
+ },
+ "medn_nulls_last": {
+  "last_ids_are_null": true,
+  "nulls": 34,
+  "tail5_ids": [
+   "02230",
+   "02060",
+   "02164",
+   "02282",
+   "15005"
+  ],
+  "top_id": "30019",
+  "top_value": 732
+ },
+ "mt_medn": {
+  "count_not_null": 56,
+  "max": 732,
+  "median": 528.0,
+  "min": 356,
+  "n": 56,
+  "sum": 30460
+ },
+ "national": {
+  "by_rucc_9_pct_lt20": 70.7,
+  "counties_by_class_2": 673,
+  "deaths": {
+   "cells": {
+    "h_only": 535,
+    "hh": 472,
+    "l_only": 771,
+    "neither": 1305
+   },
+   "counties_classified": 3083,
+   "hh_counties": 472,
+   "hh_deaths": 27140,
+   "hh_pop55": 3341107,
+   "hh_small": 84,
+   "pop55_classified": 99993773,
+   "tertile_counties": {
+    "1": 1098,
+    "2": 978,
+    "3": 1007
+   },
+   "tertile_low_access": {
+    "1": 438,
+    "2": 333,
+    "3": 472
+   },
+   "top": [
+    {
+     "deaths": 469,
+     "f": "28047",
+     "l20": 78.8,
+     "name": "Harrison County",
+     "p": 62334,
+     "rate": 180.8,
+     "small": false,
+     "st": "MS"
+    },
+    {
+     "deaths": 456,
+     "f": "47163",
+     "l20": 100.0,
+     "name": "Sullivan County",
+     "p": 58723,
+     "rate": 179.0,
+     "small": false,
+     "st": "TN"
+    },
+    {
+     "deaths": 356,
+     "f": "41019",
+     "l20": 90.4,
+     "name": "Douglas County",
+     "p": 45595,
+     "rate": 175.4,
+     "small": false,
+     "st": "OR"
+    },
+    {
+     "deaths": 275,
+     "f": "01015",
+     "l20": 72.2,
+     "name": "Calhoun County",
+     "p": 36069,
+     "rate": 179.4,
+     "small": false,
+     "st": "AL"
+    },
+    {
+     "deaths": 282,
+     "f": "48485",
+     "l20": 60.1,
+     "name": "Wichita County",
+     "p": 35089,
+     "rate": 189.0,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 267,
+     "f": "01055",
+     "l20": 70.5,
+     "name": "Etowah County",
+     "p": 34033,
+     "rate": 182.5,
+     "small": false,
+     "st": "AL"
+    },
+    {
+     "deaths": 247,
+     "f": "21227",
+     "l20": 94.8,
+     "name": "Warren County",
+     "p": 33769,
+     "rate": 173.6,
+     "small": false,
+     "st": "KY"
+    },
+    {
+     "deaths": 241,
+     "f": "45085",
+     "l20": 100.0,
+     "name": "Sumter County",
+     "p": 31676,
+     "rate": 177.6,
+     "small": false,
+     "st": "SC"
+    },
+    {
+     "deaths": 244,
+     "f": "21059",
+     "l20": 100.0,
+     "name": "Daviess County",
+     "p": 31644,
+     "rate": 181.2,
+     "small": false,
+     "st": "KY"
+    },
+    {
+     "deaths": 246,
+     "f": "48135",
+     "l20": 100.0,
+     "name": "Ector County",
+     "p": 31573,
+     "rate": 187.9,
+     "small": false,
+     "st": "TX"
+    }
+   ]
+  },
+  "history_first": {
+   "g60b": 38.8,
+   "g60n": 44.2,
+   "l20": 12.8,
+   "medn": 50.0,
+   "method": 1,
+   "pull": "2026-09-09",
+   "registry_data": null,
+   "trials": 3919,
+   "z60": 4.6
+  },
+  "history_len": 10,
+  "metro_pct_lt20": 6.0,
+  "mortality_all": {
+   "deaths": 609828.0,
+   "rate": 143.2
+  },
+  "mortality_lung": {
+   "deaths": 132544.0,
+   "rate": 30.2
+  },
+  "need": {
+   "cells": {
+    "hb_la": 480,
+    "hb_ok": 1042,
+    "lb_la": 809,
+    "lb_ok": 799
+   },
+   "counties_classified": 3130,
+   "hb_la_cases": 87409,
+   "hb_la_counties": 480,
+   "hb_la_pop55": 4241986,
+   "hb_la_small_numbers": 23,
+   "top": [
+    "12073",
+    "22055",
+    "06007",
+    "28047",
+    "12113",
+    "12005",
+    "22019",
+    "18163",
+    "13215",
+    "34009"
+   ]
+  },
+  "pct_lt20": 11.8,
+  "pop55": 100019672,
+  "states_no_broad": 15,
+  "states_no_broad_list": [
+   "Alaska",
+   "Arkansas",
+   "Delaware",
+   "Hawaii",
+   "Idaho",
+   "Louisiana",
+   "Maine",
+   "Mississippi",
+   "Nevada",
+   "New Hampshire",
+   "New Mexico",
+   "North Dakota",
+   "Vermont",
+   "West Virginia",
+   "Wyoming"
+  ],
+  "trials_listed_here": 4035
+ },
+ "oh_by_metro": {
+  "metro": {
+   "n": 41,
+   "sum_pop55": 3008622,
+   "wmean_pct_lt20": 0.0
+  },
+  "nonmetro": {
+   "mean_pct_lt20": 3.6,
+   "n": 47,
+   "sum_pop55": 702306,
+   "wmean_pct_lt20": 2.9
+  }
+ },
+ "ops": {
+  "center_gt_wmean": 1101,
+  "districts_intersect_48215": [
+   "TX-15",
+   "TX-34"
+  ],
+  "name_contains_hidalgo": 2,
+  "no_route_island": 18,
+  "no_route_not_null": 35,
+  "no_route_null": 3108,
+  "states_in_tx_ok": [
+   "OK",
+   "TX"
+  ],
+  "tx34_counties": [
+   "48061",
+   "48215",
+   "48261",
+   "48273",
+   "48489"
+  ],
+  "tx_any_of_class2_or_broad": 53,
+  "tx_incidence_ne_ok": 3,
+  "tx_metro_false": 168,
+  "tx_pct_between_40_60": 7,
+  "tx_pct_ge_50": 161,
+  "tx_pct_le_0": 64,
+  "tx_pct_lt_1": 64,
+  "tx_rucc_in_8_9": 92,
+  "tx_rucc_not_in_1_2_3": 168,
+  "tx_trials_gt_100": 5
+ },
+ "places": {
+  "cornyn_state": "TX",
+  "gonzalez_districts": [
+   "TX-34"
+  ],
+  "houston_counties": [
+   "01069",
+   "13153",
+   "27055",
+   "47083",
+   "48225"
+  ],
+  "houston_top": "48201",
+  "mayo_count": 3,
+  "mcallen": [
+   [
+    "TX",
+    "48215"
+   ]
+  ],
+  "md_anderson": "nci:61",
+  "orange_counties": [
+   "06059",
+   "12095",
+   "18117",
+   "36071",
+   "37135",
+   "48361",
+   "50017",
+   "51137"
+  ],
+  "tim_scott_state": "SC",
+  "tx34_geoid": "4834",
+  "washington_counties": 31,
+  "wy_at_large": "WY-00",
+  "zip_77030": "48201",
+  "zip_78501": "48215"
+ },
+ "senators": {
+  "n_not_none": 2,
+  "sponsor_s4440": [
+   "S001184"
+  ],
+  "tim_scott_date": "2026-04-29"
+ },
+ "states": {
+  "ca_nci": 8,
+  "dc_by_rucc_9_missing": true,
+  "n_with_1_cosponsoring": 2,
+  "sc_cosponsoring": 1,
+  "sc_nci": 1,
+  "sc_s4440": [
+   "sponsor",
+   "none"
+  ],
+  "sc_senator_names": [
+   "Tim Scott",
+   "Darline Graham"
+  ],
+  "states_with_2_cosponsoring": [],
+  "top3_pct_lt20": [
+   "WY",
+   "SD",
+   "ND"
+  ],
+  "tx_broad": 5,
+  "tx_by_rucc_1_pct_lt20": 0.3,
+  "tx_by_rucc_1_pop55": 4813283,
+  "tx_counties": 254,
+  "tx_counties_with_trials": 36,
+  "tx_deaths": {
+   "cells": {
+    "h_only": 25,
+    "hh": 61,
+    "l_only": 88,
+    "neither": 68
+   },
+   "counties_classified": 242,
+   "hh_counties": 61,
+   "hh_deaths": 3069,
+   "hh_pop55": 377829,
+   "hh_small": 20,
+   "pop55_classified": 7394759,
+   "tertile_counties": {
+    "1": 80,
+    "2": 76,
+    "3": 86
+   },
+   "tertile_low_access": {
+    "1": 43,
+    "2": 45,
+    "3": 61
+   },
+   "top": [
+    {
+     "deaths": 282,
+     "f": "48485",
+     "l20": 60.1,
+     "name": "Wichita County",
+     "p": 35089,
+     "rate": 189.0,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 246,
+     "f": "48135",
+     "l20": 100.0,
+     "name": "Ector County",
+     "p": 31573,
+     "rate": 187.9,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 220,
+     "f": "48037",
+     "l20": 100.0,
+     "name": "Bowie County",
+     "p": 27142,
+     "rate": 186.2,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 182,
+     "f": "48361",
+     "l20": 100.0,
+     "name": "Orange County",
+     "p": 24457,
+     "rate": 174.7,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 157,
+     "f": "48373",
+     "l20": 89.0,
+     "name": "Polk County",
+     "p": 19012,
+     "rate": 278.5,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 131,
+     "f": "48277",
+     "l20": 100.0,
+     "name": "Lamar County",
+     "p": 16250,
+     "rate": 185.2,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 103,
+     "f": "48217",
+     "l20": 57.7,
+     "name": "Hill County",
+     "p": 12759,
+     "rate": 186.8,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 91,
+     "f": "48223",
+     "l20": 88.9,
+     "name": "Hopkins County",
+     "p": 11897,
+     "rate": 176.1,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 98,
+     "f": "48241",
+     "l20": 100.0,
+     "name": "Jasper County",
+     "p": 11471,
+     "rate": 202.4,
+     "small": false,
+     "st": "TX"
+    },
+    {
+     "deaths": 81,
+     "f": "48007",
+     "l20": 100.0,
+     "name": "Aransas County",
+     "p": 10941,
+     "rate": 175.2,
+     "small": false,
+     "st": "TX"
+    }
+   ]
+  },
+  "tx_limited": 9,
+  "tx_metro_pct_lt20": 13.1,
+  "tx_metro_people_lt20": 844186,
+  "tx_need": {
+   "cells": {
+    "hb_la": 50,
+    "hb_ok": 35,
+    "lb_la": 108,
+    "lb_ok": 58
+   },
+   "counties_classified": 251,
+   "hb_la_cases": 7405,
+   "hb_la_counties": 50,
+   "hb_la_pop55": 357924,
+   "hb_la_small_numbers": 7,
+   "top": [
+    "48485",
+    "48451",
+    "48037",
+    "48361",
+    "48373",
+    "48199",
+    "48277",
+    "48217",
+    "48241",
+    "48223"
+   ]
+  },
+  "tx_nonmetro_pct_lt100": 87.0,
+  "tx_pct_lt20": 19.6,
+  "tx_sum_county_pop55": 7398511,
+  "tx_trials_distinct": 1462,
+  "va_cosponsoring": 1
+ },
+ "tie_break": {
+  "first3": [
+   "48215",
+   "01089",
+   "48061"
+  ],
+  "n": 1063
+ },
+ "trials": {
+  "national": 4035,
+  "national_lung": 562,
+  "national_min_age_at_most_18": 3901,
+  "national_phase3": 385,
+  "tx_distinct": 1462,
+  "tx_keyword_pembrolizumab": 174,
+  "tx_state_data": 1462
+ },
+ "tx_agg": {
+  "count": 254,
+  "count_not_null_incidence": 251,
+  "max_pop55": 1080228,
+  "mean_incidence": 453.3,
+  "min_pop55": 31,
+  "share_class_eq_2": 18.9,
+  "share_metro_true": 33.9,
+  "sum_pop55": 7398511
+ },
+ "tx_onc_no_trials": {
+  "class2_count": 48,
+  "count": 48,
+  "first3": [
+   "48209",
+   "48139",
+   "48187"
+  ],
+  "ids": [
+   "48209",
+   "48139",
+   "48187",
+   "48451",
+   "48213",
+   "48231",
+   "48397",
+   "48021",
+   "48037",
+   "48221",
+   "48469",
+   "48005",
+   "48265",
+   "48291",
+   "48203",
+   "48053",
+   "48471",
+   "48499",
+   "48373",
+   "48347",
+   "48099",
+   "48259",
+   "48349",
+   "48401",
+   "48073",
+   "48097",
+   "48473",
+   "48049",
+   "48477",
+   "48481",
+   "48323",
+   "48223",
+   "48241",
+   "48143",
+   "48363",
+   "48185",
+   "48449",
+   "48227",
+   "48225",
+   "48293",
+   "48051",
+   "48057",
+   "48463",
+   "48503",
+   "48455",
+   "48063",
+   "48487",
+   "48075"
+  ],
+  "in_scope": 254,
+  "sum_pop55": 875455
+ },
+ "tx_top5_mortality": {
+  "ids": [
+   "48373",
+   "48385",
+   "48229",
+   "48105",
+   "48023"
+  ],
+  "nulls": 12,
+  "values": [
+   278.5,
+   276.3,
+   275.2,
+   253.4,
+   250.9
+  ]
+ }
+}

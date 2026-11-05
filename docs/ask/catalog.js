@@ -404,6 +404,37 @@ export const OTHER_TEXT = 'This box answers questions about the numbers on the m
 // numbers the verifier always allows: the measures' own definitions and the bills
 export const CONSTANTS = ['55', '60', '20', '100', '30', '120', '200', '400', '50', '25', '75', '5', '10', '3521', '4440', '119', '2000', '16', '1.2', '800', '422', '6237', '227', '2345', '955', '4572', '471.1', '172.6', '151.4', '2016', '2019', '2020', '2023', '2024', '2025', '2026', '65', '67', '84,397', '84397'];
 
+// short column labels for the results table (the field path stays in the tooltip); labelFor() humanises any path not listed
+export const LABELS = {
+  id: 'id', name: 'place', state: 'state', geoid: 'map id', pop55: 'residents 55+', fips: 'FIPS',
+  pct_lt20_trials_within_60rdmi: 'short of trials (% of 55+)', people_lt20_trials_within_60rdmi: 'residents 55+ short of trials', pct_zero_trials_within_60rdmi: 'no trial within 60 mi (% of 55+)', people_zero_trials_within_60rdmi: 'residents 55+ with no trial within 60 mi', pct_lt100_trials_within_60rdmi: 'fewer than 100 trials within 60 mi (%)',
+  pct_gt60rdmi_broad_menu: '> 60 mi from a broad menu (%)', pct_gt60rdmi_nci: '> 60 mi from an NCI center (%)', median_road_mi_nci: 'median road-mi to NCI center', median_road_mi_broad_menu: 'median road-mi to broad menu', wmean_trials_within_60rdmi: 'avg trials within 60 mi', trials_listed_here: 'trials with a site here', facilities: 'trial sites', nearest_nci: 'nearest NCI center', nearest_broad_menu: 'nearest broad-menu county',
+  'context.no_vehicle': 'no vehicle (%)', 'context.broadband': 'broadband (%)', 'context.uninsured': 'uninsured (%)', 'context.uninsured_55_64': 'uninsured 55–64 (%)', 'context.poverty': 'poverty (%)',
+  districts: 'districts', rucc: 'RUCC', rucc_label: 'RUCC label', metro: 'metro', road_mi_nci_from_center: 'road-mi to NCI center (county center)', road_mi_broad_menu_from_center: 'road-mi to broad menu (county center)', road_mi_limited_menu_from_center: 'road-mi to limited menu (county center)', no_road_route_reason: 'no road route', drive_hours_nci: 'drive hours to NCI center', drive_hours_broad_menu: 'drive hours to broad menu', trials_within_60rdmi_of_center: 'trials within 60 mi of county center', facilities_within_60rdmi_of_center: 'trial sites within 60 mi of center',
+  'incidence.all': 'incidence, all sites (per 100k)', 'incidence.cases_per_year': 'new cases / year', 'incidence.small_numbers': 'small numbers (incidence)', 'incidence.status': 'incidence status', 'mortality.all': 'death rate, all sites (per 100k)', 'mortality.deaths_per_year': 'deaths / year', 'mortality.small_numbers': 'small numbers (deaths)', 'mortality.status': 'death-rate status',
+  'oncologists.count': 'oncologists', 'oncologists.radiation': 'radiation oncologists', 'oncologists.gynecologic': 'gyn oncologists', 'oncologists.surgical': 'surgical oncologists', 'oncologists.within_60rdmi': 'oncologists within 60 mi', 'oncologists.class': 'oncologists vs trials (class)', 'oncologists.class_label': 'oncologists vs trials', 'oncologists.all_also_elsewhere': 'all oncologists also elsewhere', 'oncologists.per_100k_pop55': 'oncologists per 100k 55+', 'oncologists.oncologists_per_100k_pop55': 'oncologists per 100k 55+',
+  'oncologists.pct_pop55_in_counties_with_oncologists_no_trials': '55+ in counties with oncologists, no trials (%)', 'oncologists.pct_pop55_in_counties_with_both': '55+ in counties with both (%)', 'oncologists.pct_pop55_in_counties_with_trials_no_oncologist': '55+ in counties with trials, no oncologist (%)', 'oncologists.pct_pop55_in_counties_with_neither': '55+ in counties with neither (%)', 'oncologists.counties_with_oncologists_no_trials': 'counties with oncologists, no trials',
+  incidence_above_county_median: 'incidence above county median', mortality_top_third: 'death rate in top third', high_incidence_low_access: 'high incidence × low access', high_deaths_low_access: 'high deaths × low access', menu: 'trial menu',
+  'member.name': 'House member', 'member.party': 'party', 'member.ctma_hr3521': 'H.R. 3521', 'member.cosponsor_date': 'cosponsor date', 'member.bioguide': 'bioguide', 'member.vacant': 'vacant', counties: 'counties', county_names: 'counties', nonmetro_pct: 'nonmetro share of 55+ (%)', incidence_all_sites: 'incidence, all sites (per 100k)', incidence_all_sites_cases_per_year: 'new cases / year', plan: 'district plan',
+  'incidence_published.all': 'published incidence (per 100k)', 'incidence_published.cases_per_year': 'published new cases / year', senator_names: 'senators', senators_s4440: 'S. 4440', senators_cosponsoring_s4440: 'senators on S. 4440', trials_distinct: 'distinct trials', counties_with_trials: 'counties with trials', broad_menu_counties: 'broad-menu counties', limited_menu_counties: 'limited-menu counties', nci_centers_count: 'NCI centers', nci_center_names: 'NCI centers',
+  full_name: 'full name', tier: 'tier', lat: 'lat', lon: 'lon', city: 'city', zip: 'ZIP', county_id: 'county FIPS', county_name: 'county', trials: 'trials', unresolved: 'unresolved name', party: 'party', s4440: 'S. 4440', cosponsor_date: 'cosponsor date', chamber: 'chamber', district_id: 'district', bill: 'bill', bill_label: 'bill', role: 'role', date: 'date',
+};
+const SPLIT_LABELS = { pct_lt20: 'short of trials (% of 55+)', people_lt20: 'residents 55+ short of trials', pct_zero: 'no trial within 60 mi (%)', people_zero: 'residents 55+ with no trial within 60 mi', pct_lt100: 'fewer than 100 trials within 60 mi (%)', mean_trials_60: 'avg trials within 60 mi', counties: 'counties' };
+export function labelFor(path) {
+  if (LABELS[path]) return LABELS[path];
+  if (SPLIT_LABELS[path]) return SPLIT_LABELS[path];
+  let m;
+  if ((m = path.match(/^incidence\.by_site\.([a-z_]+)$/))) return `${SITES[m[1]] || m[1]} incidence (per 100k)`;
+  if ((m = path.match(/^mortality\.by_site\.([a-z_]+)$/))) return `${SITES[m[1]] || m[1]} death rate (per 100k)`;
+  if ((m = path.match(/^incidence_published\.by_site\.([a-z_]+)$/))) return `published ${SITES[m[1]] || m[1]} incidence (per 100k)`;
+  if ((m = path.match(/^trials_within_60rdmi_by_cancer_type\.([a-z_]+)$/))) return `avg ${CANCER_TYPES[m[1]] || m[1]} trials within 60 mi`;
+  if ((m = path.match(/^zero_trial_share_by_type\.([a-z_]+)$/))) return `no ${CANCER_TYPES[m[1]] || m[1]} trial within 60 mi (% of 55+)`;
+  if ((m = path.match(/^(metro|nonmetro)\.(.+)$/))) return `${m[1]}: ${labelFor(m[2]).replace(/^short of trials/, 'short of trials')}`;
+  if ((m = path.match(/^by_rucc\.(\d)\.(.+)$/))) return `RUCC ${m[1]}: ${labelFor(m[2])}`;
+  if ((m = path.match(/^(need_vs_access|deaths_vs_access)\.(.+)$/))) return `${m[1] === 'need_vs_access' ? 'incidence vs access' : 'deaths vs access'}: ${m[2].replace(/_/g, ' ')}`;
+  return path.replace(/\./g, ' · ').replace(/_/g, ' ');
+}
+
 // paths that take a key: expand "<key>" for validation and prompt rendering
 export function expandPath(field) { if (!field.keys) return [field.path]; const first = field.keys.map(k => field.path.replace(/<[a-z]+>/, String(k))); if (!field.keys2) return first; return first.flatMap(p => field.keys2.map(k => p.replace(/<[a-z]+>/, String(k)))); }
 export function tableFields(table) { return TABLES[table] ? TABLES[table].fields : []; }

@@ -77,8 +77,9 @@
       <p class="stamp-line"><span data-site-date>Data as of the latest weekly refresh</span> · ClinicalTrials.gov, Census Bureau, NCI</p>
     </div>
     <div class="hero-side">
-    <!-- "Ask the map": a question typed here opens map.html?ask=…, where the helper answers it and the map moves to the matching view.
-         Written by SITE.mountAskBox (the box, its examples and its hint live in site.js) once the helper is deployed (SITE.ASK_URL) -->
+    <!-- "Ask the map": a question typed here opens map.html?ask=…, where the question box answers it from the map's own data files (any question
+         over the counties, districts, states, trials, oncologists and cosponsors; the written answer is checked against the data number by number)
+         and the map moves to the matching view. Written by SITE.mountAskBox (the box, its examples and its hint live in site.js) once the helper is deployed (SITE.ASK_URL) -->
     <div class="ask-mount" id="ask-mount" hidden></div>
     <figure>
       <a href="map.html" aria-label="Open the interactive map"><img src="assets/map-national.png" width="1600" height="1000" alt="Map of US counties, each with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; NCI-designated cancer centers marked"></a>
@@ -163,7 +164,7 @@
   const vals = { people_l20_m: M(N.people_l20), people_z60_m: M(N.people_z60), l20: pct(N.l20), z60: pct(N.z60), nm_l20: pct0(R.nonmetro.l20), m_l20: pct0(R.metro.l20), trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities) };
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
-  if (SITE.ASK_URL) { SITE.askStyles(); SITE.mountAskBox(document.getElementById('ask-mount'), { hero: true, action: 'map.html', placeholder: 'e.g. Which districts in Ohio have the least access?' }); document.body.classList.add('has-ask'); }   // the question box appears once the helper is deployed
+  if (SITE.ASK_URL) { SITE.askStyles(); SITE.mountAskBox(document.getElementById('ask-mount'), { hero: true, action: 'map.html', placeholder: 'e.g. Which districts in Ohio have the least access?' }); document.body.classList.add('has-ask'); }   // the question box appears once the helper is deployed; the form's GET hands the question to map.html?ask=, where ask/ask.js answers it
   const dd = SITE.dataDate(F.meta);
   document.getElementById('cite').textContent = `Agrawal N. Cancer Trial Access Map. https://nehaamd.github.io/cancer-trial-access-fullmap/ Data as of ${SITE.nice(dd)}; accessed ${SITE.nice(SITE.today())}.`;
 })();

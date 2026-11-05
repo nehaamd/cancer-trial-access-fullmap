@@ -194,11 +194,16 @@ See §6.
   "caveats": [ "Small-numbers rates, ties, truncation, vacant seats, no-road-route places, different data periods … (≤5)" ],
   "map": { "unit": "county"|"district"|"state", "layer": "<key in MAP_LAYERS[unit]>", "params": {"site"?,"acs"?,"type"?,"lt"?,"rural"?,"crit"?,"thr"?},
            "state": "TX" (focus; optional), "place": "<id to select>" (optional, single-place answers),
-           "highlight": { "from_call": "toolu_…" } | { "ids": ["48215", …] }, "highlight_label": "Counties with oncologists but no recruiting trial" },
+           "highlight": { "from_call": "toolu_…", "rows"?: "all"|"returned" } | { "ids": ["48215", …] }, "highlight_label": "Counties with oncologists but no recruiting trial" },
   "table": { "from_call": "toolu_…" } | { "columns": ["…"], "rows": [[…]] },
   "sources": [ "counties", "districts" ],
   "follow_ups": [ "≤3 short follow-up questions" ] }
 ```
+
+Which rows a `from_call` outlines (`engine.highlightIds`, used by the client and the eval alike): a ranking — an ordered query
+with no condition beyond the state scope — outlines only the rows returned (the top N the question asked for, so the model sets
+`limit` to N); a filtered query outlines every match; `highlight.rows` overrides. Table headers show `catalog.labelFor(path)`
+(short human labels) with the field path and description in the tooltip.
 
 Rules the worker enforces (`verify.js`):
 1. Every number in `answer`, `interpretation`, `caveats`, `not_in_data` must be (a) present in some tool result of this question
@@ -250,12 +255,23 @@ On failure the worker sends the model a `tool_result` error for the `final_answe
   forced final at MAX_STEPS, verification accept/reject cases (rounded numbers, invented numbers, re-attributed places, bad ids,
   markdown, advice), internal retry, limits, prompt/tool schema validity (JSON-schema shape, every catalog field referenced
   exists in the engine).
-* `node worker/tests/eval.js [--max N] [--worker URL]`: ~80 questions (`eval_questions.json`) through the real model: either
-  in-process (`ANTHROPIC_API_KEY` in env, loop.js + engine.js in Node) or against a deployed worker (`--worker`). Each question
-  carries machine checks written by `expected.py`: expected highlight set (exact / superset / subset), numbers that must appear,
-  `answerable` expected, phrases that must/must not appear ("not in the data", no advice). Prints per-question PASS/FAIL and a
-  pass rate; exits 1 below 90 %. Runs in `.github/workflows/ask-eval.yml` (workflow_dispatch) and after each worker deploy.
-* `release_gate.py` gains: the two offline suites must pass.
+* `node worker/tests/eval.js [--max N] [--only substr] [--worker URL] [--model NAME] [--verbose] [--json out.json] [--md summary.md]`:
+  100 questions (`eval_questions.json`: rankings, counts, thresholds, lookups by name/town/ZIP/member/district form/state,
+  comparisons, need- and deaths-vs-access, cancer types, oncologists, cosponsors, rural, household context, NCI centers,
+  facilities and trials, "how many people", namesakes and typos, a territory, unanswerable asks, scope, off-topic/injection,
+  definitions and methods, follow-ups with `prior`) through the real model: in-process (`ANTHROPIC_API_KEY` in env, loop.js +
+  engine.js in Node) or against a deployed worker (`--worker`; the tools still run locally). Each question carries machine checks
+  (vocabulary in `worker/tests/EVAL.md`) against facts computed independently of the engine by `python3 -I
+  worker/tests/eval_expected.py` → `eval_expected.json` (named apart from the engine suite's `expected.py`): expected highlight
+  set (exact / superset / subset / exact-or-whole-scope for rankings), numbers that must appear under the §6 rounding rule,
+  `answerable`, first place named, phrases that must/must not appear, the fixed scope/other texts, namesake offers, step
+  limits. Three questions at a time, 120 s each; prints PASS/FAIL per question with the reason, a pass rate, mean steps and
+  latency and token usage; the `--json` file holds every transcript. Exit 1 below 90 % or when any scope / other / injection
+  case fails (hard gates). `--fake` smoke-tests the runner with a scripted model (no key). The check logic has its own unit
+  test, `eval_checks.test.js`. Runs in `.github/workflows/ask-eval.yml` (workflow_dispatch and workflow_call, for
+  deploy-worker.yml to call after a deploy).
+* `release_gate.py` gains: the offline suites that exist (`engine.test.js`, `loop.test.js`, `client.test.js`) must pass, and
+  `eval_expected.json` is rebuilt from the refreshed files.
 
 ## 9. Data fixes (build_api.py)
 

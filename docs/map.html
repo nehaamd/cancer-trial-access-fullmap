@@ -192,6 +192,10 @@
   .statefill{fill:none;stroke:#fff;stroke-width:.8;pointer-events:none} .unit-state .statefill{pointer-events:all;cursor:pointer} .unit-state .statefill:hover{stroke:var(--ink);stroke-width:1.6}
   .unit-state .district{display:none} .unit-district .district:not(.fillable){display:none}
   .hl-outline{fill:none;stroke:var(--rust);stroke-width:2.4px;stroke-linejoin:round;pointer-events:none;vector-effect:non-scaling-stroke} .hl-halo{fill:none;stroke:#fff;stroke-width:5.5px;stroke-linejoin:round;pointer-events:none;opacity:.95;vector-effect:non-scaling-stroke}
+  /* the answer card's Focus toggle (ask/ask.js): the places an answer names keep their colour (drawHL tags them .ask-hit), the rest of the unit on show fades back */
+  #map.ask-focus:not(.unit-district):not(.unit-state) .county:not(.ask-hit){opacity:.3} #map.ask-focus:not(.unit-district):not(.unit-state) .county.ask-hit{opacity:1}
+  #map.ask-focus:not(.unit-district):not(.unit-state) .bub:not(.ask-hit),#map.ask-focus:not(.unit-district):not(.unit-state) .county-overlay path:not(.ask-hit){opacity:.2}
+  #map.ask-focus.unit-district .district.fillable:not(.ask-hit){opacity:.3} #map.ask-focus.unit-state .statefill:not(.ask-hit){opacity:.3}
   .statecase{fill:none;stroke:#fff;stroke-width:2;pointer-events:none;opacity:.8}
   .stateline{fill:none;stroke:#3F3831;stroke-width:.95;pointer-events:none;opacity:.95}
   .district.selected{stroke-width:2.6;stroke:var(--rust);opacity:1} .district.selected-halo{stroke:#fff;stroke-width:5.5;opacity:.95}
@@ -333,7 +337,7 @@
 
     <!-- floating search card: the search box, example places, and the "Explore the data" drawer with every control -->
     <div class="fcard search-card" id="search-card">
-      <!-- "Ask the map": the card's headline while the helper is deployed (SITE.ASK_URL); SITE.mountAskBox writes the box here -->
+      <!-- "Ask the map": the card's headline while the helper is deployed (SITE.ASK_URL); ask/ask.js writes the box here (SITE.mountAskBox) and answers from it -->
       <div class="ask-mount" id="ask-mount" hidden></div>
       <div class="card-rest">
       <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a place, ZIP or member of Congress" aria-label="Search by city, ZIP code, county, congressional district, state or member of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><button id="q-clear" type="button" aria-label="Clear search" hidden>×</button><div id="q-list" role="listbox" hidden></div></div>
@@ -651,7 +655,7 @@
   const counties = gC.selectAll('path').data(countyFeatures).join('path').attr('class', 'county').attr('d', path)
     .on('mousemove', (ev, f) => showTip(ev, C[f.properties.id]))
     .on('mouseleave', () => tip.style.display = 'none').on('click', (ev, f) => { const k = f.properties.id; if (coarse && !selectedState && !freeZoom) window.__nav.selectState(C[k].s2); else selectCounty(k); });
-  const overlay = gC.append('g').attr('pointer-events', 'none');
+  const overlay = gC.append('g').attr('class', 'county-overlay').attr('pointer-events', 'none');
   const gB = svg.append('g').attr('class', 'bubbles');   // the default layer's circles: residents 55+ short of trials, one per county
   function showTip(ev, c) { tip.style.display = 'block'; const r = wrap.getBoundingClientRect(); const x = ev.clientX - r.left, y = ev.clientY - r.top; tip.style.left = (x > r.width - 320 ? x - 310 : x + 14) + 'px'; tip.style.top = (y + 14) + 'px'; tip.innerHTML = tipHTML(c); }
   const districtFeatures = GEO.districts.features;
@@ -1574,19 +1578,24 @@
   window.addEventListener('popstate', () => { applyURL(false); if (window.__askRestore) window.__askRestore(history.state && history.state.ask); });
   applyURL(true);
 
-  // ---- "Ask the map" ----
-  // A question goes to the helper (SITE.ask); the reply carries a view {page, qs, hl}. The map moves to that view the same way a
-  // link would (one history entry; applyURL reads the address: unit, layer, site, ACS variable, criterion, threshold, measure, filters,
-  // tab and place), the places the answer refers to are outlined, and the answer card sits above the figures. The open answer travels
-  // in the history entry's state, so Back and Forward bring the card and the outlines back with the view, or clear them for a view
-  // that had none. Nothing in the reply is computed by the model: the figures come from the published api/ files.
-  const askMount = document.getElementById('ask-mount'); let askForm = null, askIn = null, askBtn = null, askStatus = null, askHint = null;
+  // ---- "Ask the map" (v3) ----
+  // The question box, the step loop, the answer card and the follow-ups live in ask/ask.js (an ES module loaded after this script;
+  // ASK_CONTRACT.md §7). This block keeps what the map itself must own: the outlines of the places an answer names (drawn again after
+  // every repaint, zoom or unit change), the Focus dimming (named features keep their colour, the rest of the unit on show fades), the
+  // "Map now shows" text, and the hooks the module calls (window.__askHooks). The open answer travels in the history entry's state
+  // (pushURL copies window.__askState), so Back and Forward bring the card and the outlines back with the view (window.__askRestore).
   const idKind = id => SITE.idKind(id);
-  let hlAll = [];   // the ids the open answer outlines (counties, districts or states); the ones of the unit the map shows are drawn
+  let hlAll = [], askFocus = false;   // hlAll: the ids the open answer outlines (counties, districts or states); the ones of the unit the map shows are drawn
   function drawHL() {
-    const want = new Set(hlAll.filter(id => idKind(id) === unit)); gHL.selectAll('*').remove(); if (!want.size) return;
-    const feats = unit === 'district' ? districtFeatures.filter(f => want.has(String(f.properties.id)))
-      : unit === 'state' ? stateFeatures.filter(f => want.has(String(f.properties.id || f.id).toUpperCase()))
+    const want = new Set(hlAll.filter(id => idKind(id) === unit)); gHL.selectAll('*').remove();
+    // tag the unit's own features so the focus rule (#map.ask-focus, in the styles above) can fade the ones the answer does not name
+    const co = unit === 'county', di = unit === 'district', st = unit === 'state';
+    counties.classed('ask-hit', f => co && want.has(String(f.properties.id))); overlay.selectAll('path').classed('ask-hit', f => co && want.has(String(f.properties.id))); gB.selectAll('circle').classed('ask-hit', d => co && want.has(String(d.k)));
+    dpaths.classed('ask-hit', f => di && want.has(String(f.properties.id))); spaths.classed('ask-hit', f => st && want.has(String(f.properties.id || f.id).toUpperCase()));
+    svg.classed('ask-focus', askFocus && want.size > 0);
+    if (!want.size) return;
+    const feats = di ? districtFeatures.filter(f => want.has(String(f.properties.id)))
+      : st ? stateFeatures.filter(f => want.has(String(f.properties.id || f.id).toUpperCase()))
       : countyFeatures.filter(f => want.has(String(f.properties.id)));
     gHL.selectAll('path.hl-halo').data(feats).join('path').attr('class', 'hl-halo').attr('d', path);
     gHL.selectAll('path.hl-outline').data(feats).join('path').attr('class', 'hl-outline').attr('d', path);
@@ -1607,79 +1616,22 @@
     const lab = unit === 'county' ? METRICS[metric].label() : (metric === 'gacs' ? ACS_LABEL[acsVar] + ', ' + ACSL : geoLabelOf(metric));
     const where = scopeLabelForUnit(); const kinds = { county: 'counties', district: 'districts', state: 'states' };
     return (/,? by (county|district|state)$/.test(lab) ? lab : `${lab} · by ${unit}`) + (where ? ` · ${where}` : '') + (hlAll.length && !drawn ? ` · the outlined ${kinds[idKind(hlAll[0])] || 'places'} show on the ${idKind(hlAll[0])} map` : ''); }
-  // after every repaint or tab change: the outlines for the unit on show, the "Map now shows" line, the way back to the box from a tab
-  window.__askSync = () => { drawHL(); const el = document.getElementById('ask-map-shows'); if (el) el.textContent = mapShowsText(); const ag = document.getElementById('ask-again'); if (ag) ag.hidden = tab === 'map' || !document.getElementById('ask-card'); };
+  // after every repaint, tab change or unit change: the outlines and focus for the unit on show, then the card's own lines (ask.js registers hooks.sync)
+  window.__askSync = () => { drawHL(); if (window.__askHooks && window.__askHooks.sync) window.__askHooks.sync(); };
   const placeName = id => { const k = idKind(id); if (k === 'county') return C[id] ? clabel(C[id]) : null; if (k === 'district') { const d = DI[id]; return d ? `${d.st}-${cdLabel(d.cd)}${d.member ? ' · ' + d.member : ''}` : null; } return stName[String(id).toUpperCase()] || null; };
+  const stateOf = id => { const k = idKind(id); return k === 'county' ? (C[id] ? C[id].s2 : null) : k === 'district' ? (DI[id] ? DI[id].st : null) : k === 'state' ? (stName[String(id).toUpperCase()] ? String(id).toUpperCase() : null) : null; };
   function selectPlace(id) { const k = idKind(id); id = String(id);
     if (k === 'county' && C[id]) selectCounty(id); else if (k === 'district' && DI[id]) selectDistrict(id); else if (k === 'state' && stName[id.toUpperCase()]) window.__nav.selectState(id.toUpperCase()); else return;
     if (tab !== 'map') setTab('map'); }
-  // where the map should look after an answer, as a place parameter for the view's address: a single outlined place is selected (its
-  // figures open); a list within one state frames the state; a list across states keeps the national view. A view whose address
-  // already names a place (c= / d= / s=) is left alone. Only ids of the view's own unit count.
-  function placeParamFor(ids, qs) {
-    const p = new URLSearchParams(qs || ''); if (p.get('c') || p.get('d') || p.get('s')) return null;
-    const u = ['county', 'district', 'state'].includes(p.get('u')) ? p.get('u') : 'county';
-    const list = (ids || []).map(String).filter(id => idKind(id) === u).map(id => u === 'state' ? id.toUpperCase() : id); if (!list.length) return null;
-    if (list.length === 1) { const id = list[0]; return u === 'county' && C[id] ? ['c', id] : u === 'district' && DI[id] ? ['d', id] : u === 'state' && stName[id] ? ['s', id] : null; }
-    const states = new Set(list.map(id => u === 'county' ? (C[id] ? C[id].s2 : null) : u === 'district' ? (DI[id] ? DI[id].st : null) : null).filter(Boolean));
-    return states.size === 1 ? ['s', [...states][0]] : null; }
-  // the chosen reading of an ambiguous place name, put back into the question: the bare phrase the helper flagged ("Washington County"),
-  // with any state already written after it, becomes the option's full name ("Washington County, Oregon"); when the phrase is not in the
-  // question, the full name goes first and the question follows in parentheses.
-  function reask(q, name, bare) { const esc_ = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); name = String(name || '').trim(); q = String(q || '').trim();
-    bare = String(bare || '').trim() || name.replace(/\s*,.*$/, '').trim(); if (!bare) return `${name} (${q})`;
-    const stateNames = Object.values(stName).sort((a, b) => b.length - a.length).map(esc_).join('|'), codes = Object.keys(stName).join('|');
-    const tries = [new RegExp('\\b' + esc_(bare) + '\\s*,?\\s+(?:' + stateNames + ')(?![A-Za-z])', 'i'), new RegExp('\\b' + esc_(bare) + '\\s*,?\\s+(?:' + codes + ')(?![A-Za-z])'), new RegExp('\\b' + esc_(bare) + '(?![A-Za-z])', 'i')];   // the full name, then a code (case matters: "or" is a word), then the bare phrase
-    for (const re of tries) if (re.test(q)) return q.replace(re, name);
-    return `${name} (${q})`; }
-  function removeCard() { const old = document.getElementById('ask-card'); if (old) old.remove(); const ag = document.getElementById('ask-again'); if (ag) ag.hidden = true; }
-  // the card: the answer (or the busy notice, or an error), above the figures; opts.quiet: restored by Back/Forward, so no focus or scroll
-  function showAnswer(q, res, isErr, opts) { opts = opts || {};
-    removeCard(); const tabs = document.querySelector('#pane .tabs'); if (!tabs) return;
-    if (!document.getElementById('ask-again')) { tabs.insertAdjacentHTML('afterend', '<div class="ask-again" id="ask-again" hidden><button type="button" id="ask-again-b">Ask another question</button><span>The Map tab shows the outlined places.</span></div>');
-      document.getElementById('ask-again-b').addEventListener('click', () => { setTab('map'); if (askIn) { askIn.focus(); askIn.select(); } }); }
-    document.getElementById('ask-again').insertAdjacentHTML('afterend', res ? SITE.askCardHTML(q, res, { placeName, mapShows: res.view && res.view.page === 'map' ? mapShowsText() : undefined })
-      : `<div class="ask-card ${isErr === true ? 'busy' : 'err'}" id="ask-card" role="region" aria-label="Answer"${isErr === true ? ' aria-busy="true"' : ''} tabindex="-1"><button type="button" class="ask-x" aria-label="Close answer">×</button><p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(isErr === true ? 'Asking the map… reading the published data files.' : isErr)}</p></div></div>`);
-    const card = document.getElementById('ask-card');
-    const close = () => { card.remove(); highlight([]); window.__askState = null; history.replaceState(null, '', location.href); window.__askSync(); if (askIn) askIn.focus({ preventScroll: true }); };
-    card.querySelector('.ask-x').addEventListener('click', close);
-    card.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } });
-    card.querySelectorAll('[data-pl]').forEach(a => a.addEventListener('click', e => { if (a.classList.contains('ask-amb-q')) return; e.preventDefault(); selectPlace(a.dataset.pl); }));   // a row or chip opens its place; the highlights stay
-    card.querySelectorAll('.ask-amb-q').forEach(b => b.addEventListener('click', () => runAsk(reask(q, b.dataset.name, b.dataset.bare))));
-    const more = card.querySelector('.ask-pl-x[data-more]'); if (more) more.addEventListener('click', () => { card.querySelectorAll('.ask-pl-more').forEach(b => { b.hidden = false; }); more.remove(); });
-    const reset = card.querySelector('.ask-reset'); if (reset) reset.addEventListener('click', e => { e.preventDefault(); highlight([]); window.__askState = null; history.pushState(null, '', 'map.html'); applyURL(false); window.__askSync(); });
-    window.__askSync();
-    if (opts.quiet) return;
-    document.getElementById('pane').scrollTop = 0; if (isErr !== true) card.focus({ preventScroll: true });
-    // stacked layout (a phone or a narrow window): the figures sit below the map, so bring the map and the answer under it into view
-    if (isErr !== true && window.innerWidth <= 980) setTimeout(() => { const el = tab === 'map' ? svg.node() : document.getElementById('ask-card'); if (el) el.scrollIntoView({ ...SCROLL, block: 'start' }); }, 120);   // after the card above the map has settled (the examples hide once a place is selected)
-  }
-  // Back or Forward: the entry's state carries the answer that was open with that view, or nothing
-  window.__askRestore = st => { if (st && st.res && typeof st.res === 'object') { window.__askState = st; highlight(st.res.view && st.res.view.page === 'map' ? st.res.view.hl : []); showAnswer(st.q, st.res, undefined, { quiet: true }); }
-    else { window.__askState = null; removeCard(); highlight([]); window.__askSync(); } };
-  let askGen = 0;
-  async function runAsk(q) {
-    q = String(q || '').trim(); if (!q || !askForm) return; askIn.value = q; const gen = ++askGen;
-    askBtn.disabled = true; askBtn.textContent = 'Asking…'; askForm.setAttribute('aria-busy', 'true'); askHint.hidden = true; askStatus.textContent = 'Reading the map’s data files… (up to ' + SITE.ASK_TIMEOUT_S + ' s)'; showAnswer(q, null, true);
-    try {
-      const res = await SITE.ask(q); if (gen !== askGen) return; const v = res && typeof res === 'object' && res.view && typeof res.view === 'object' ? res.view : {};
-      if (v.page === 'find') { location.href = 'find.html' + (v.qs ? '?' + String(v.qs).replace(/^\?/, '') : ''); return; }
-      if (v.page === 'map') {   // one history entry for the answer's view, the place to look at included; applyURL then reads it like a link
-        const p = new URLSearchParams(String(v.qs || '').replace(/^\?/, '')); const pp = placeParamFor(v.hl, p.toString()); if (pp) p.set(pp[0], pp[1]);
-        window.__askState = { q, res }; history.pushState({ ask: window.__askState }, '', 'map.html' + (p.toString() ? '?' + p : '')); applyURL(false);
-        highlight(v.hl); showAnswer(q, res); }   // the outlines first: the card's "Map now shows" line describes them
-      else { window.__askState = null; highlight([]); showAnswer(q, res); }
-    } catch (e) { if (gen !== askGen) return; const m = e && e.message ? e.message : 'no reply'; window.__askState = null;
-      showAnswer(q, null, (/no reply within/.test(m) ? `No answer arrived within ${SITE.ASK_TIMEOUT_S} seconds. Try again in a moment, or use the search box: the map, the finder and the Data API still work.` : 'The question box is not available right now; the map, the finder and the Data API still work.') + ' (' + m + ')'); }
-    finally { if (gen === askGen) { askBtn.disabled = false; askBtn.textContent = 'Ask'; askForm.removeAttribute('aria-busy'); askStatus.textContent = ''; askHint.hidden = false; } }
-  }
-  if (SITE.ASK_URL && askMount) {
-    SITE.askStyles(); askForm = SITE.mountAskBox(askMount, { status: true }); askIn = document.getElementById('askq'); askIn.dataset.ph = askIn.placeholder; askBtn = document.getElementById('askb'); askStatus = document.getElementById('ask-status'); askHint = document.getElementById('ask-hint');
-    document.body.classList.add('has-ask'); layoutMap();   // the card changes shape with the box: the map is laid out around it
-    askForm.addEventListener('submit', e => { e.preventDefault(); runAsk(askIn.value); });
-    { const p = new URLSearchParams(location.search); const q0 = p.get('ask'); if (q0) { p.delete('ask'); history.replaceState(null, '', 'map.html' + (p.toString() ? '?' + p : '')); runAsk(q0); } }   // a question carried in from the homepage box
-  }
-  window.__ask = { runAsk, highlight, showAnswer, mapShowsText, reask, placeParamFor };   // headless checks (test only)
+  window.__askHooks = {
+    applyURL, highlight, drawHL, placeName, selectPlace, setTab, stateOf, mapShows: mapShowsText,
+    layers: () => UNIT_METRICS, unit: () => unit, tab: () => tab, hl: () => hlAll.slice(),
+    setFocus: on => { askFocus = !!on; drawHL(); }, focus: () => askFocus,
+    paneHost: () => document.querySelector('#pane .tabs'), askMount: () => document.getElementById('ask-mount'),
+    layout: () => { document.body.classList.add('has-ask'); layoutMap(); },   // the card changes shape with the box: the map is laid out around it
+    sync: null,   // set by ask.js: updates the card's "Map now shows" line and the way back to the box from a tab
+  };
+  window.__ask = { highlight, mapShowsText, placeName, stateOf };   // headless checks (test only)
   { const ml = document.getElementById('map-loading'); if (ml) ml.remove(); }
   // "Methods & data" links land on the methods text itself, opened
   const openMethods = () => { if (location.hash !== '#methods') return; const d = document.querySelector('#foot details'); if (d) d.open = true; document.getElementById('methods').scrollIntoView(); };
@@ -1794,5 +1746,8 @@
   const pane = document.getElementById('pane-body'); let glossing = false; const mo = new MutationObserver(() => { if (glossing) return; glossing = true; try { gloss(pane); } finally { glossing = false; } }); mo.observe(pane, { childList: true }); gloss(pane);
 })();
 </script>
+<!-- "Ask the map" (v3): the question box, the step loop, the answer card (ASK_CONTRACT.md §7). A module, so it runs after the map's own scripts above
+     and finds window.__askHooks; it loads ask/engine.js and the data API files on the first question. -->
+<script type="module" src="ask/ask.js"></script>
 </body>
 </html>
