@@ -74,7 +74,7 @@
   "incidence_published": "States and the nation: the published state/national rates from State Cancer Profiles, all = all-sites rate, cases_per_year, by_site = rate per site key (the figure the state card leads with; districts have only the county-weighted mean).",
   "senators": "States only: the two senators (name, party) and, as s4440, each one's position on the Senate Clinical Trial Modernization Act (S. 4440): sponsor, original (original cosponsor), cosponsor, or none; bill and bill_url name the bill. Empty for DC."
  },
- "definitions": "https://cancertrialaccess.org/map.html#methods",
+ "definitions": "https://cancertrialaccess.org/methods.html#terms",
  "license": {
   "data": "CC BY 4.0",
   "url": "https://creativecommons.org/licenses/by/4.0/",

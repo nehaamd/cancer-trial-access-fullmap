@@ -10,7 +10,7 @@ from pathlib import Path
 
 SITE = "https://cancertrialaccess.org/"   # keep in step with build_api.py, docs/ask/catalog.js and worker/wrangler.toml
 PAGES = [("", "1.0"), ("map.html", "0.9"), ("findings.html", "0.8"), ("find.html", "0.8"), ("community.html", "0.7"), ("act.html", "0.7"),
-         ("learn.html", "0.6"), ("brief.html", "0.5"), ("api.html", "0.5"), ("about.html", "0.5")]
+         ("learn.html", "0.6"), ("methods.html", "0.6"), ("brief.html", "0.5"), ("api.html", "0.5"), ("about.html", "0.5")]
 DOCS = Path(__file__).resolve().parent / "docs"
 
 
