@@ -131,13 +131,15 @@ export function findCities(q, ix, states, takenSpans, excludeKeys) {
     const k = key(span.map(t => t.t).join(' ')); if (k.length < 3) continue; if (excludeKeys && span.some(t => excludeKeys.has(t.t))) continue; let hits = ix.places.get(k); if (!hits) continue;
     hits = hits.filter(h => h.name.split(/[\s-]+/).length === len); if (!hits.length) continue;   // "DE-AL" is not Deal, NJ
     const after = n.slice(e, e + 40); const commaState = after.match(/^,?\s*([a-z. ]+)/); const prev = n.slice(Math.max(0, s - 12), s);
-    const stAfter = (states || []).find(st => st.start >= e && st.start <= e + 4 && /^,?\s*$/.test(n.slice(e, st.start)));
+    let stAfter = (states || []).find(st => st.start >= e && st.start <= e + 4 && /^,?\s*$/.test(n.slice(e, st.start)));
+    if (!stAfter) { const cm = n.slice(e).match(/^,?\s+([a-z]{2})(?=$|[\s,.?!])/); const code = cm && cm[1].toUpperCase(); if (code && STATES[code] && hits.some(h => h.state === code)) stAfter = { usps: code, start: e + cm[0].length - 2, end: e + cm[0].length, form: 'code-after-city' }; }   // "Meadville PA", "meadville pa": the code binds when the town exists in that state
     if (stAfter) hits = hits.filter(h => h.state === stAfter.usps); else if (stateSet.size) { const inState = hits.filter(h => stateSet.has(h.state)); if (inState.length) hits = inState; }
     if (!hits.length) continue;
     const cap = capital(s, e); const cue = /\b(in|near|around|at|from|for|of|to|about)\s*$/.test(prev) || !!stAfter || !!commaState;
     if (!cap && !cue) continue;
     if (!stAfter && len === 1 && COMMON_WORDS.has(span[0].t)) continue;   // "ages", "between", "single": English words that are also town names need a state after them
     if (!cap && !stAfter && !stateSet.size) { const sorted = hits.slice().sort((a, b) => b.pop - a.pop); if (sorted.length > 1 && sorted[0].pop - sorted[1].pop < 1) continue; }   // lowercase "springfield" with no state: too ambiguous to guess
+    if (!cap && !stAfter && len === 1 && COMMON_WORDS.has(span[0].t)) continue;
     hits = hits.slice().sort((a, b) => b.pop - a.pop); const top = hits[0]; const rivals = hits.filter(h => h.state !== top.state && top.pop - h.pop < 0.8);
     out.push({ phrase: n.slice(s, e), start: s, end: e, hits, best: top, ambiguous: !stAfter && !stateSet.size && rivals.length > 0, state: stAfter ? stAfter.usps : null });
     i += len - 1;
