@@ -10,7 +10,7 @@ const qs = require('./questions.json');
     const vq = (j.view && j.view.qs) || '';
     const ok = r.ok && j.route === t.route && t.qs_has.every(s => vq.includes(s));
     if (!ok) bad++;
-    console.log(`${ok ? 'ok  ' : 'FAIL'} ${Date.now() - t0}ms  [${j.route || r.status}] ${t.q}\n      view: ${vq || '-'}  hl: ${(j.view && j.view.hl || []).join(',') || '-'}\n      ${(j.answer || j.error || '').replace(/\s+/g, ' ').slice(0, 280)}\n`);
+    console.log(`${ok ? 'ok  ' : 'FAIL'} ${Date.now() - t0}ms  [${j.route || r.status}] ${t.q}\n      view: ${vq || '-'}  hl: ${(j.view && j.view.hl || []).join(',') || '-'}\n      ${(j.answer || j.error || '').replace(/\s+/g, ' ').slice(0, 280)}${j.detail ? '\n      detail: ' + String(j.detail).slice(0, 300) : ''}\n`);
   }
   console.log(`${qs.length - bad}/${qs.length} as expected`); process.exit(bad ? 1 : 0);
 })();
