@@ -108,7 +108,7 @@ def run(browser=False):
                   f"{len(wt):,} weighted centers: {bad_place} outside their ZIP area (or not tested), {bad_cov} outside the coverage band; {len(off)} of {len(used):,} finder ZIPs not at their center" + (f" (e.g. {off[:5]})" if off else ""),
                   bad_place == 0 and bad_cov == 0 and not off)
         ui = (find("find.html") or Path("find.html")).read_text(encoding="utf-8"); check("ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present)", "all phrases present" if all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]) else "MISSING", all(s in ui for s in ["For information only", "decided by each study team", "stays in your browser", "1-800-4-CANCER"]))
-    ui = (find("index.html") or Path("index.html")).read_text(encoding="utf-8")
+    ui = (find("map.html") or Path("map.html")).read_text(encoding="utf-8")   # the map page (index.html has been the homepage since 4 Nov 2026)
     check("Map page loads the three new data files and states the burden view is a cross-tabulation, not a score", "rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present" if all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]) else "MISSING", all(s in ui for s in ['src="rucc.js"', 'src="cosponsors.js"', 'src="burden.js"', "never a combined score"]))
     # ---- optional: in-browser recomputation against the pipeline ----
     if browser:
@@ -118,7 +118,7 @@ def run(browser=False):
             docs = "docs" if Path("docs").is_dir() and not Path("data.js").exists() else "."
             srv = subprocess.Popen([sys.executable, "-m", "http.server", "8766"], cwd=docs, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); time.sleep(1.2)
             with sync_playwright() as p:
-                b = p.chromium.launch(); pg = b.new_page(); pg.goto("http://localhost:8766/index.html", wait_until="networkidle", timeout=120000); pg.wait_for_timeout(300)
+                b = p.chromium.launch(); pg = b.new_page(); pg.goto("http://localhost:8766/map.html", wait_until="networkidle", timeout=120000); pg.wait_for_timeout(300)
                 r = pg.evaluate("""async () => { const V = window.__validate; await V.loadTractsAll(); const F = V.filteredCounty(); const B = window.BURDEN.county; let over = 0, maxd = 0, worst = '';
                   V.CK.forEach((k,i) => { const d = Math.max(Math.abs(F.l20[i]-B[k].l20), Math.abs(F.z60[i]-B[k].z60)); if (d > 0.55) over++; if (d > maxd) { maxd = d; worst = k; } });
                   const R = V.filteredRural('nat', 0); return { over, maxd, worst, metro: R.metro.l20, nonmetro: R.nonmetro.l20 }; }""")
