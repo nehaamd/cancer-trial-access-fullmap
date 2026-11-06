@@ -141,8 +141,8 @@ def main():
         nz = g.get("zip_centroid", 0); ncity = sum(v for k, v in g.items() if k.startswith("city_centroid")); nlarge = g.get("city_centroid_large_zip", 0)
         check("Facility-level routing: recruiting sites located below county level", f"{nz:,} ZIP-centroid + {ncity:,} city-centroid ({nlarge:,} of them because the ZIP is larger than 100 sq mi) of {rs['site_rows']:,} site rows ({100*(nz+ncity)/rs['site_rows']:.1f}%); {g.get('county_centroid_city_disagrees',0)+g.get('county_centroid',0)} fell back to the county center; {rs['site_points']:,} distinct locations", (nz+ncity)/rs['site_rows'] > 0.95, "city fallback rejected when >40 mi from the assigned county's center (e.g. a registry row with city Dallas but a Cass County ZIP)")
         check("Facility-level routing: residents whose own county's trials are >60 road-miles away are no longer scored at 0 mi", f"{inv['tracts_where_own_county_trials_exceed_60mi_pool']:,} tracts, {inv['pop55_in_those_tracts']:,} residents 55+", True, "this population was previously counted as having every trial in its county at zero distance")
-    ui = open("docs/index.html").read()
-    check("UI text matches validation evidence: router accuracy is qualified in the deployed page (guard against claiming a fix that was not made)", "phrase 'not yet against an independent routing engine' present in index.html" if "independent routing engine" in ui else "MISSING", "independent routing engine" in ui and "approximate" in ui)
+    ui = open("docs/map.html").read()   # the map page (index.html has been the homepage since 4 Nov 2026)
+    check("UI text matches validation evidence: router accuracy is qualified in the deployed page (guard against claiming a fix that was not made)", "phrase 'not yet against an independent routing engine' present in map.html" if "independent routing engine" in ui else "MISSING", "independent routing engine" in ui and "approximate" in ui)
     # 10c live-filter data file: the browser's tract-level recount must reproduce the pipeline exactly when every trial passes
     if Path("docs/tracts60.bin").exists():
         import struct
