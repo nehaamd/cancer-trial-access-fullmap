@@ -1,6 +1,6 @@
 # Validation — v3.3 additions (rural/urban, cosponsors, burden vs access, ZIP lookup)
 
-Checks re-run by `validate_extras.py` on 2026-11-03 (UTC).
+Checks re-run by `validate_extras.py` on 2026-11-09 (UTC).
 
 | Check | Result | Pass | Context |
 |---|---|---|---|
@@ -10,13 +10,13 @@ Checks re-run by `validate_extras.py` on 2026-11-03 (UTC).
 | RUCC: state metro + nonmetro populations equal state totals | 0 mismatches | ✓ |  |
 | RUCC: exact residents 55+ with fewer than 20 / no trials within 60 road-mi (n_l20, n_z60) on every metro and nonmetro group, recounted from tract_access.csv | 101 groups, 0 differ; nation 11,755,917 short of trials (6,684,882 nonmetro + 5,071,035 metro) | ✓ |  |
 | tract_county.bin: every tract maps back to its own county through meta.county_order | 84,397 of 84,397 tracts; 3143 counties in order list | ✓ |  |
-| Cosponsors: every sponsor / cosponsor bioguide ID resolves to a current member of Congress | 33 members on 2 bills; unresolved: none | ✓ |  |
-| Cosponsors: the tracked bills are the Clinical Trial Modernization Act only (Ruiz H.R. 3521, Scott S. 4440) | H.R. 3521 Raul Ruiz (30 cosponsors); S. 4440 Tim Scott (1 cosponsors) | ✓ |  |
+| Cosponsors: every sponsor / cosponsor bioguide ID resolves to a current member of Congress | 36 members on 2 bills; unresolved: none | ✓ |  |
+| Cosponsors: the tracked bills are the Clinical Trial Modernization Act only (Ruiz H.R. 3521, Scott S. 4440) | H.R. 3521 Raul Ruiz (33 cosponsors); S. 4440 Tim Scott (1 cosponsors) | ✓ |  |
 | Cosponsors: TX-11 (Pfluger) is an original cosponsor of H.R. 3521, not its sponsor (corrects the v3.2 label) | role = original (2025-05-20) | ✓ |  |
 | Cosponsors: district → member map covers every non-vacant House seat (+ DC delegate) | 434 mapped; 2 vacant in the payload; 436 district rows | ✓ |  |
 | Cosponsors: 100 senators mapped to states | 100 senators across 50 states | ✓ |  |
 | Cosponsors: House bills carry only representatives, Senate bills only senators | chambers consistent | ✓ |  |
-| Cosponsors: freshness of the pull | fetched 2026-11-03 (0 days ago) from govinfo BILLSTATUS XML… | ✓ | re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date |
+| Cosponsors: freshness of the pull | fetched 2026-11-09 (0 days ago) from govinfo BILLSTATUS XML… | ✓ | re-run fetch_cosponsors.py before a Hill Day; the deployed page states the fetch date |
 | Burden: county '<20 within 60 road-mi' shares recomputed from tract_access.csv; their population-weighted mean equals the national share | max |diff| 0.05 pts (rounding); weighted mean 11.75% vs national 11.8% | ✓ |  |
 | Burden: national median and the high-burden/low-access cell recomputed independently | median 471.1 vs 471.1; cell 480 counties / 4,241,986 residents 55+ vs burden.js 480 / 4,241,986; 3130 classified | ✓ |  |
 | Burden: the four cells partition the classified counties | 480 + 1042 + 809 + 799 = 3130 vs 3130 | ✓ |  |
@@ -31,7 +31,7 @@ Checks re-run by `validate_extras.py` on 2026-11-03 (UTC).
 | ZIP lookup page states its limits (information only; eligibility decided by the study team; ZIP stays in the browser; NCI 1-800-4-CANCER present) | all phrases present | ✓ |  |
 | Map page loads the three new data files and states the burden view is a cross-tabulation, not a score | rucc.js, cosponsors.js, burden.js referenced; 'never a combined score' present | ✓ |  |
 | community.js reproduces data.js / burden.js for every county, district and state | 3143 counties (0 differ), 436 districts (0 differ), 51 states (0 differ); nation 11.8% vs 11.8% | ✓ | built by build_community.py from the same files the map reads; the Your community and What could help pages read this file |
-| community.js carries the tracked bills with the cosponsor fetch date | H.R. 3521: 30 cosponsors, S. 4440: 1 cosponsors; fetched 2026-11-03 | ✓ |  |
+| community.js carries the tracked bills with the cosponsor fetch date | H.R. 3521: 33 cosponsors, S. 4440: 1 cosponsors; fetched 2026-11-09 | ✓ |  |
 | Oncologists: every county has a row, and each county's category follows from its oncologist count and its trial count in data.js | 3,143 counties (0 missing, 0 extra); 0 categories disagree | ✓ |  |
 | Oncologists: residents 55+ by category, recounted from tract_access.csv, equal oncologists.js (and the four shares sum to 100) | recounted {1: np.float64(78.3), 2: np.float64(11.2), 3: np.float64(0.7), 4: np.float64(9.9)} vs published {1: 78.3, 2: 11.2, 3: 0.7, 4: 9.9}; sum 100.1 | ✓ |  |
 | Oncologists: state and district residents 55+ equal data.js | 51 states (0 differ), 436 districts (0 differ by more than 1) | ✓ |  |
