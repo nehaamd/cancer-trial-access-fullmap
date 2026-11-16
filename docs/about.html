@@ -30,12 +30,12 @@
   a{color:var(--link)} a:hover{color:var(--navy)}
   main{max-width:900px;margin:0 auto;padding:0 var(--gutter) 2rem}
   .hero{padding:2.2rem 0 1.4rem;border-bottom:1px solid var(--rule)}
-  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
-  h1{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(1.9rem,4.2vw,2.8rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .9rem;font-weight:600;max-width:24ch}
-  .lede{font-size:1.2rem;line-height:1.5;max-width:60ch;margin:0}
+  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;font-weight:650}
+  h1{font-family:"Source Serif 4",Georgia,serif;font-size:var(--fs-h1);line-height:1.1;letter-spacing:-.02em;margin:0 0 .9rem;font-weight:600;max-width:24ch}
+  .lede{font-size:var(--fs-2);line-height:1.5;max-width:60ch;margin:0}
   section{padding:1.8rem 0 1.2rem;border-bottom:1px solid var(--rule)} section:last-of-type{border-bottom:0}
   h2{font-size:var(--fs-4);line-height:1.15;letter-spacing:-.02em;margin:0 0 .6rem;font-weight:700}
-  h3{font-size:var(--fs-1);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin:1.1rem 0 .3rem;font-weight:700}
+  h3{font-size:var(--fs-1);color:var(--ink);margin:1.1rem 0 .3rem;font-weight:700}
   p{max-width:68ch} ul{max-width:68ch;padding-left:1.2rem} li{margin:.3rem 0}
   .person{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:1.2rem 2rem;align-items:start} @media (max-width:700px){.person{grid-template-columns:1fr}}
   .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);font-size:var(--fs-1)} .card b{display:block;margin-bottom:.3rem} .card p{margin:0 0 .4rem}
@@ -49,7 +49,7 @@
 <body>
 <header class="site">
   <div class="brand"><span class="wm-row"><a class="wordmark" href="index.html">Cancer Clinical Trial Access Map</a><span class="beta-tag" title="This site is in beta: methods and figures are reviewed weekly and may change">Beta</span></span><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
-  <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="api.html">Data API</a><a href="about.html" aria-current="page">About</a></nav>
+  <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="about.html" aria-current="page">About</a></nav>
 </header>
 <main>
   <div class="hero">
@@ -109,7 +109,7 @@
   </section>
 </main>
 <footer class="site">
-<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><p class="foot-beta">This site is in beta: methods and figures are reviewed weekly and may change. Check figures against <a href="methods.html">Methods &amp; data</a> before citing them, and <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">report problems</a>.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="methods.html">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<p class="foot-disc"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov. <b>Beta.</b> Methods and figures are reviewed weekly and may change: check figures against <a href="methods.html">Methods &amp; data</a> before citing them.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="methods.html">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
 <script src="findings.js"></script>
 <script>
