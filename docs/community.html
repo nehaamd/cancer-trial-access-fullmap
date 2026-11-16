@@ -27,10 +27,10 @@
   a{color:var(--link)} a:hover{color:var(--navy)} :focus-visible{outline:3px solid var(--gulf);outline-offset:2px;border-radius:3px}
   main{max-width:1040px;margin:0 auto;padding:0 var(--gutter) 2rem;font-size:17px}
   .hero{padding:2rem 0 1.2rem}
-  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:650}
-  h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.08;letter-spacing:-.025em;margin:0 0 .7rem;font-weight:700;max-width:26ch}
-  .lede{font-size:1.15rem;line-height:1.5;max-width:66ch;margin:0 0 1rem;color:var(--ink)}
-  .lede .quiet{color:var(--ink-2);font-size:1rem}
+  .kicker{color:var(--ink-3);font-size:var(--fs-0);margin:0 0 .4rem;font-weight:650}
+  h1{font-size:var(--fs-h1);line-height:1.08;letter-spacing:-.025em;margin:0 0 .7rem;font-weight:700;max-width:26ch}
+  .lede{font-size:var(--fs-2);line-height:1.5;max-width:66ch;margin:0 0 1rem;color:var(--ink)}
+  .lede-more{color:var(--ink-2);font-size:var(--fs-0);margin:.8rem 0 0;max-width:80ch}
   .search-wrap{position:relative;max-width:720px}
   #q{width:100%;border:1.5px solid var(--rule-2);border-radius:999px;padding:.75rem 2.8rem .75rem 2.6rem;font-size:1.05rem;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%237C8794' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat .95rem center;color:var(--ink);font-family:inherit}
   #q:focus{border-color:var(--gulf);outline:none;box-shadow:0 0 0 3px rgba(63,127,181,.18)}
@@ -48,15 +48,15 @@
   .member{margin:0 0 .6rem;color:var(--ink-2);font-size:var(--fs-1)}
   .facts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.9rem}
   .fact{display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:.2rem 1rem;align-items:baseline;border-top:1px solid var(--rule);padding-top:.8rem} .fact:first-child{border-top:0;padding-top:0}
-  .fact .num{font-size:2rem;font-weight:700;letter-spacing:-.03em;line-height:1;white-space:nowrap} .fact .num small{font-size:1rem;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-left:.1rem}
+  .fact .num{font-size:var(--fs-4);font-weight:700;letter-spacing:-.03em;line-height:1;white-space:nowrap} .fact .num small{font-size:var(--fs-1);font-weight:500;color:var(--ink-2);letter-spacing:0;margin-left:.1rem}
   .fact.hot .num{color:var(--rust)}
   .fact .text{margin:0;font-size:var(--fs-2);line-height:1.45} .fact .cmp{margin:.25rem 0 0;color:var(--ink-3);font-size:var(--fs-0)}
   .fact details{grid-column:2;font-size:var(--fs-0);color:var(--ink-2);margin:.2rem 0 0} .fact summary{cursor:pointer;color:var(--link)} .fact details p{margin:.3rem 0 0;max-width:72ch}
-  .fact.na .num{color:var(--ink-3);font-size:1.4rem}
+  .fact.na .num{color:var(--ink-3);font-size:var(--fs-3)}
   .btns{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.1rem 0 .2rem}
   .btn{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--rule-2);background:var(--card);border-radius:999px;padding:.6rem 1.1rem;font-size:var(--fs-1);color:var(--ink);text-decoration:none;cursor:pointer;font-family:inherit;font-weight:600} .btn:hover{border-color:var(--navy);color:var(--navy)}
   .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)} .btn.primary:hover{background:#082B43;color:#fff}
-  .btn small{font-weight:400;color:inherit;opacity:.8;font-size:.75rem}
+  .btn small{font-weight:400;color:inherit;opacity:.8;font-size:var(--fs-00)}
   h2.qs{font-size:var(--fs-3);margin:2rem 0 .2rem;letter-spacing:-.01em} .qs-sub{margin:0 0 .6rem;color:var(--ink-2)}
   .questions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:.9rem;align-items:start}   /* each card is as tall as its own text: no blank band above the link in the shorter ones */
   .q{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.5rem}
@@ -68,22 +68,23 @@
   .flag{background:#FBF1E8;border-left:3px solid var(--rust);padding:.4rem .7rem;border-radius:0 8px 8px 0;margin:.6rem 0;font-size:var(--fs-1)}
   .dlist{display:flex;gap:.4rem;flex-wrap:wrap;margin:.4rem 0 0}
   .ind{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.3rem;vertical-align:baseline}
-  @media (max-width:640px){ .chip{min-height:40px} .btns{display:grid;grid-template-columns:1fr 1fr;gap:.45rem} .btns .btn{justify-content:center;text-align:center;padding:.55rem .6rem;font-size:var(--fs-0)} .btns .btn.primary{grid-column:1 / -1} .fact{grid-template-columns:1fr} .fact details{grid-column:1} .fact .num{font-size:1.7rem} main{font-size:16px} }
+  @media (max-width:640px){ .chip{min-height:40px} .btns{display:grid;grid-template-columns:1fr 1fr;gap:.45rem} .btns .btn{justify-content:center;text-align:center;padding:.55rem .6rem;font-size:var(--fs-0)} .btns .btn.primary{grid-column:1 / -1} .fact{grid-template-columns:1fr} .fact details{grid-column:1} .fact .num{font-size:var(--fs-4)} main{font-size:16px} }
   @media print{ .search-wrap,.try,.btns,.questions,h2.qs,.qs-sub{display:none} }
 </style>
 </head>
 <body>
 <header class="site">
   <div class="brand"><span class="wm-row"><a class="wordmark" href="index.html">Cancer Clinical Trial Access Map</a><span class="beta-tag" title="This site is in beta: methods and figures are reviewed weekly and may change">Beta</span></span><span class="tagline">How far are Americans from a cancer clinical trial?</span></div>
-  <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group on"><summary>Patients &amp; families</summary><div><a href="community.html" aria-current="page">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="api.html">Data API</a><a href="about.html">About</a></nav>
+  <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group on"><summary>Patients &amp; families</summary><div><a href="community.html" aria-current="page">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="about.html">About</a></nav>
 </header>
 <main>
   <div class="hero">
     <p class="kicker">Exploring cancer research access near your community</p>
     <h1>What does access to cancer research look like where you live?</h1>
-    <p class="lede">Enter a county, ZIP code, city, congressional district, state or member of Congress. You will get a short local summary with the numbers behind it, and three ways to go further. <span class="quiet">For communities, clinicians, advocates and research teams. You do not need to know how clinical trials work to start here; if you would like to, <a href="learn.html">Understand clinical trials</a> explains the words as questions, and <a href="learn.html#research-teams">Tools for research teams</a> lists the filters, tables and method behind every figure.</span></p>
+    <p class="lede">Enter a county, ZIP code, city, congressional district, state or member of Congress. You will get a short local summary with the numbers behind it, and three ways to go further.</p>
     <div class="search-wrap"><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a place, ZIP code or member of Congress" aria-label="Find a place: county, ZIP code, city, district (for example KY-2), state or member of Congress" role="combobox" aria-expanded="false" aria-controls="q-list" aria-autocomplete="list"><div id="q-list" role="listbox" hidden></div></div>
     <div class="try" id="try"><span>Try:</span></div>
+    <p class="lede-more">New to clinical trials? <a href="learn.html">Understand clinical trials</a> explains the words as questions. Research teams: <a href="learn.html#research-teams">the filters, tables and method behind every figure</a>.</p>
   </div>
   <div id="out"></div>
   <h2 class="qs" id="qs-h">Questions to explore</h2>
@@ -94,7 +95,7 @@
   <p class="about-est" style="margin:1.2rem 0 0;padding:.6rem 0;font-size:var(--fs-0);color:var(--ink-2)"><b>About these estimates:</b> This tool uses public data to explore geographic availability of cancer clinical trials. Trial listings may be incomplete or outdated, and distances use approximate locations. A listed trial does not establish patient eligibility, current enrollment availability, or access to treatment. See <a href="methods.html#limits">Methods &amp; data</a> for sources, assumptions, and validation status.</p>
 </main>
 <footer class="site">
-<p class="foot-disc" style="margin:0 0 .6rem;font-size:.9em"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov.</p><p class="foot-beta">This site is in beta: methods and figures are reviewed weekly and may change. Check figures against <a href="methods.html">Methods &amp; data</a> before citing them, and <a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">report problems</a>.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="methods.html">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
+<p class="foot-disc"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov. <b>Beta.</b> Methods and figures are reviewed weekly and may change: check figures against <a href="methods.html">Methods &amp; data</a> before citing them.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="methods.html">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
 <script src="community.js"></script>
 <script src="explore.js"></script>
