@@ -10,6 +10,11 @@
 #   other_named / Recurrent and Refractory Ganglioneuroblastoma: NCT07437963 (NCI / Children's Oncology Group, ages 1-30); "neuroblastoma" is read
 #   inside the longer word. Ganglioneuroblastoma is a neuroblastic tumour and belongs with neuroblastoma in "Other named cancer". The trial's
 #   upper age of 30 keeps it out of the 55+ analysis; the audit reads the raw pull, so the string still needs recording.
+# 16 Nov 2026, registry review (the scheduled refresh of 9 Nov stopped on this one string, so the site stayed on the 3 Nov pull):
+#   brain_cns / Survivors of Pediatric Brain Tumors: NCT07923370 (Children's Hospital of Philadelphia, FEATURE study, not a drug trial: a computer-based
+#   social-skills program for children aged 6-13 who have finished tumor-directed treatment). "Survivors" reads as supportive care to the audit, and it is.
+#   The trial's upper age of 13 keeps it out of the 55+ analysis, so no published figure or filter is affected; the audit reads the raw pull,
+#   so the string still needs recording. Accepted as reviewed.
 bladder_urothelial	Urinary Tract Infection
 brain_cns	Anaplastic Oligoastrocytoma
 brain_cns	Anaplastic Pleomorphic Xanthoastrocytoma
@@ -17,6 +22,7 @@ brain_cns	Benign Centrally-Located Intracranial Tumors
 brain_cns	Ganglioglioma
 brain_cns	Oligoastrocytoma
 brain_cns	Pleomorphic Xanthoastrocytoma
+brain_cns	Survivors of Pediatric Brain Tumors
 breast	Breast Cancer Survivor
 breast	Lymphedema, Breast Cancer
 colorectal	Anorectal Cancer
