@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://cancertrialaccess.org/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer trials within 60 road-miles of home, and the national total">
+<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have no recruiting cancer trial within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Key findings — Cancer Clinical Trial Access Map">
 <meta name="twitter:description" content="How many Americans 55 and older live far from a recruiting cancer clinical trial, in road miles: the headline numbers, the rural gap, the states most affected, and what would change it.">
@@ -77,16 +77,16 @@
   <div class="hero">
     <p class="kicker">Key findings for residents 55 and older, data as of <span data-f="pull"></span></p>
     <h1>Cancer clinical trials are close for most Americans and out of reach for millions</h1>
-    <p class="lede"><b><span data-f="people_l20_m"></span> million Americans aged 55 and older</b> (<span data-f="l20"></span>%) have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; <span data-f="people_z60_m"></span> million have none within 60 road-miles. In rural (nonmetro) counties the share with fewer than 20 is <span data-f="nm_l20"></span>%; in metro counties it is <span data-f="m_l20"></span>%.</p>
+    <p class="lede"><b>The typical American aged 55 or older has about <span data-f="t60_typ"></span> recruiting cancer treatment trials within 60 road-miles of home. <span data-f="people_z60_m"></span> million have none.</b> In rural (nonmetro) counties <span data-f="nm_z60"></span>% of residents 55 and older have none within 60 road-miles; in metro counties, <span data-f="m_z60"></span>%.</p>
     <nav class="toc" aria-label="Sections"><a href="#numbers">The numbers</a><a href="#rural">Rural vs metro</a><a href="#states">States</a><a href="#need">Need vs access</a><a href="#deaths">Deaths vs access</a><a href="#policy">What would change it</a><a href="#how">How it was measured</a><a href="#about">About &amp; cite</a></nav>
   </div>
 
   <section id="numbers">
-    <figure><img src="assets/map-national.png" alt="Map of US counties, each with an orange circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; NCI-designated cancer centers marked with stars"><figcaption>Residents 55 and older short of recruiting cancer treatment trials, by county: each circle's area is the number of residents with fewer than 20 listed trials within 60 road-miles of home (the map's opening layer; counties with at least 500 such residents are drawn). Stars: NCI-designated cancer centers. Registry data as of <span data-f="pull"></span>. <a href="map.html">Open the interactive map</a>.</figcaption></figure>
+    <figure><img src="assets/map-national.png" alt="Map of US counties, each with an orange circle sized by the number of residents 55 and older who have no recruiting cancer treatment trial within 60 road-miles of home; NCI-designated cancer centers marked with stars"><figcaption>Residents 55 and older with no recruiting cancer treatment trial within reach, by county: each circle's area is the number of residents with no listed trial within 60 road-miles of home (the map's opening layer; counties with at least 500 such residents are drawn). Stars: NCI-designated cancer centers. Registry data as of <span data-f="pull"></span>. <a href="map.html">Open the interactive map</a>.</figcaption></figure>
     <h2 style="margin-top:1.6rem">Five numbers</h2>
     <div class="kpis">
-      <div class="kpi hot"><p class="v"><span data-f="l20"></span><small>%</small></p><p class="l">of Americans 55+ have fewer than 20 recruiting trials within 60 road-miles of home</p><p class="s"><span data-f="people_l20_m"></span> million people</p></div>
-      <div class="kpi hot"><p class="v"><span data-f="z60"></span><small>%</small></p><p class="l">have no recruiting trial at all within 60 road-miles</p><p class="s"><span data-f="people_z60_m"></span> million people</p></div>
+      <div class="kpi hot"><p class="v"><span data-f="z60"></span><small>%</small></p><p class="l">of Americans 55+ have no recruiting trial within 60 road-miles of home</p><p class="s"><span data-f="people_z60_m"></span> million people</p></div>
+      <div class="kpi"><p class="v"><small>about </small><span data-f="t60_typ"></span></p><p class="l">recruiting trials within 60 road-miles for the typical American 55+</p><p class="s">median <span data-f="t60_med"></span>; a few very large metro areas pull the average up to <span data-f="t60_mean"></span></p></div>
       <div class="kpi"><p class="v"><span data-f="g60b"></span><small>%</small></p><p class="l">live more than 60 road-miles from a county with a broad menu of trials (100 or more)</p><p class="s"><span data-f="g120b"></span>% live more than 120 road-miles away</p></div>
       <div class="kpi"><p class="v"><span data-f="medn"></span><small> miles</small></p><p class="l">median road distance to the nearest NCI-designated cancer center</p><p class="s"><span data-f="g60n"></span>% are more than 60 road-miles from one</p></div>
       <div class="kpi"><p class="v"><span data-f="states_no_broad"></span><small> states</small></p><p class="l">have no county with a broad menu of trials</p><p class="s"><span data-f="districts_all_beyond"></span> congressional districts where every resident 55+ is more than 60 road-miles from one</p></div>
@@ -96,12 +96,12 @@
 
   <section id="rural">
     <h2>The gap is rural</h2>
-    <p>The <span data-f="nm_share"></span>% of Americans 55 and older who live in nonmetro counties are <span data-f="nm_ratio"></span> times as likely as metro residents to have fewer than 20 trials within 60 road-miles, and their median distance to an NCI-designated cancer center is <span data-f="nm_medn"></span> road-miles, against <span data-f="m_medn"></span> in metro counties.</p>
+    <p>The <span data-f="nm_share"></span>% of Americans 55 and older who live in nonmetro counties are about <span data-f="nm_ratio"></span> times as likely as metro residents to have no recruiting trial within 60 road-miles, and their median distance to an NCI-designated cancer center is <span data-f="nm_medn"></span> road-miles, against <span data-f="m_medn"></span> in metro counties.</p>
     <div class="chart" id="chart-rural">
       <h3>Access to recruiting cancer trials, metro vs nonmetro counties</h3>
       <p class="sub">Share of residents 55 and older · USDA Rural-Urban Continuum Codes 2023 (metro 1–3, nonmetro 4–9)</p>
       <div class="legend"><span><i style="background:#3F7FB5"></i>Metro counties</span><span><i style="background:#D98B4A"></i>Nonmetro counties</span></div>
-      <svg id="svg-rural" role="img" aria-labelledby="rural-title"><title id="rural-title">Grouped bar chart comparing metro and nonmetro counties on four access measures</title></svg>
+      <svg id="svg-rural" role="img" aria-labelledby="rural-title"><title id="rural-title">Grouped bar chart comparing metro and nonmetro counties on three access measures</title></svg>
       <div class="tip" id="tip-rural"></div>
       <details class="tbl"><summary>Show as a table</summary><div id="tbl-rural"></div></details>
     </div>
@@ -109,16 +109,16 @@
 
   <section id="states">
     <h2><span data-f="states_no_broad_cap">Several</span> states have no county with a broad menu of trials</h2>
-    <p>A broad menu (a county with at least 100 recruiting trials, the cut-off ASCO's 2024 county analysis used for a “broad portfolio”) exists in <span data-f="broad_counties"></span> counties nationally. <span data-f="states_no_broad_names"></span> have none. The chart ranks every state by the share of residents 55 and older with fewer than 20 recruiting trials within 60 road-miles; click a state to open it on the map.</p>
+    <p>A broad menu (a county with at least 100 recruiting trials, the cut-off ASCO's 2024 county analysis used for a “broad portfolio”) exists in <span data-f="broad_counties"></span> counties nationally. <span data-f="states_no_broad_names"></span> have none. The chart ranks every state by the share of residents 55 and older with no recruiting trial within 60 road-miles; click a state to open it on the map.</p>
     <div class="chart" id="chart-states">
-      <h3>Residents 55 and older with fewer than 20 recruiting trials within 60 road-miles, by state</h3>
+      <h3>Residents 55 and older with no recruiting trial within 60 road-miles, by state</h3>
       <p class="sub">Percent of residents 55+ · ◇ marks a state with no broad-menu county</p>
       <svg id="svg-states" role="img" aria-labelledby="states-title"><title id="states-title">Ranked bar chart of all states and DC</title></svg>
       <div class="tip" id="tip-states"></div>
       <details class="tbl"><summary>Show as a table</summary><div id="tbl-states"></div></details>
     </div>
     <h3>Congressional districts with the least access</h3>
-    <p class="small">Share of residents 55+ with fewer than 20 trials within 60 road-miles, <span data-f="plan"></span>. Every district has a page with its own numbers, cosponsor status and a printable brief.</p>
+    <p class="small">Share of residents 55+ with no recruiting trial within 60 road-miles, <span data-f="plan"></span>. Every district has a page with its own numbers, cosponsor status and a printable brief.</p>
     <div id="worst-districts"></div>
   </section>
 
@@ -180,7 +180,7 @@
   const numWord = n => (['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'])[n] || String(n);
   const noBroad = F.states_no_broad_list; const listNames = a => a.length > 1 ? a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1] : a.join('');
   const dataDate = (F.meta.registry_data_timestamp || F.meta.pull).slice(0, 10); const vals = { acs: F.meta.acs || 'ACS 5-year', pull: nice(dataDate), people_l20_m: M(N.people_l20), people_z60_m: M(N.people_z60), l20: pct(N.l20), z60: pct(N.z60), g60b: pct(N.g60b), g120b: pct(N.g120b), medn: fmt(N.medn), g60n: pct(N.g60n),
-    nm_l20: pct(R.nonmetro.l20), m_l20: pct(R.metro.l20), nm_share: pct(100 * R.nonmetro.p / (R.nonmetro.p + R.metro.p)), nm_ratio: (R.nonmetro.l20 / R.metro.l20).toFixed(1), nm_medn: fmt(R.nonmetro.medn), m_medn: fmt(R.metro.medn),
+    nm_z60: pct(R.nonmetro.z60), m_z60: pct(R.metro.z60), t60_typ: Math.round(N.t60_med / 10) * 10, t60_med: fmt(N.t60_med), t60_mean: fmt(N.t60), nm_share: pct(100 * R.nonmetro.p / (R.nonmetro.p + R.metro.p)), nm_ratio: Math.round(R.nonmetro.z60 / R.metro.z60), nm_medn: fmt(R.nonmetro.medn), m_medn: fmt(R.metro.medn),
     states_no_broad: F.states_no_broad, states_no_broad_cap: numWord(F.states_no_broad), states_no_broad_names: listNames(noBroad), nci_text: (F.meta.nci_centers ? F.meta.nci_centers + ' centers at ' : '') + F.meta.n_nci + ' locations' + ((F.meta.nci_excluded || []).length ? '; ' + F.meta.nci_excluded.join(', ') + ', which treats children, is not counted' : ''), districts_all_beyond: F.districts.all_beyond_60_broad, broad_counties: fmt(F.states.reduce((s, x) => s + x.broad, 0)), plan: F.meta.plan,
     hb_counties: fmt(F.burden.hb_la_counties), hb_pop: fmt(F.burden.hb_la_pop55), hb_cases: fmt(F.burden.hb_la_cases), cos_date: nice(F.meta.cosponsors_fetched), trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities), n_tracts: fmt(F.meta.n_tracts), router_mean: F.meta.router.mean_pct, n_nci: F.meta.n_nci };
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
@@ -210,7 +210,8 @@
   const cardW = wrap => Math.max(320, Math.round(wrap.clientWidth - 2 * 17.6));
   const onResize = (() => { const fns = []; let last = 0; window.addEventListener('resize', () => { const w = window.innerWidth; if (Math.abs(w - last) < 24) return; last = w; fns.forEach(f => f()); }); return f => fns.push(f); })();
   (function () {
-    const rows = [['Fewer than 20 trials within 60 road-miles', 'l20'], ['No trial within 60 road-miles', 'z60'], ['More than 60 road-miles from an NCI-designated center', 'g60n'], ['More than 60 road-miles from a broad menu (100+ trials)', 'g60b']];
+    const rows = [['No trial within 60 road-miles', 'z60'], ['More than 60 road-miles from an NCI-designated center', 'g60n'], ['More than 60 road-miles from a broad menu (100+ trials)', 'g60b']];
+    const tblRows = rows.concat([['Fewer than 20 trials within 60 road-miles', 'l20']]);   // the 20-trial line stays in the table for anyone who cited it
     const series = [['Metro', 'metro', '#3F7FB5'], ['Nonmetro', 'nonmetro', '#D98B4A']];
     const wrap = document.getElementById('chart-rural'), tip = document.getElementById('tip-rural'); const on = tipOn(tip, wrap), off = tipOff(tip);
     function draw() { const W = cardW(wrap), ml = 14, mr = 52, rowH = W < 520 ? 86 : 70, barH = 18, gap = 2, mt = 18, mb = 22, H = mt + rows.length * rowH + mb; const x = d3.scaleLinear().domain([0, 100]).range([ml, W - mr]);
@@ -225,29 +226,29 @@
           .on('mousemove', ev => on(ev, `<b>${name} counties</b><br>${label}: ${pct(v)}%<br><span style="color:#c7d0da">${fmt(R[k].p)} residents 55+ in ${fmt(R[k].n)} counties</span>`)).on('mouseleave', off);
         svg.append('text').attr('class', 'val').attr('x', x(v) + 6).attr('y', y + barH / 2 + 4).text(pct(v) + '%'); }); }); }
     draw(); onResize(draw);
-    document.getElementById('tbl-rural').innerHTML = `<table><thead><tr><th>Measure</th><th class="n">Metro</th><th class="n">Nonmetro</th></tr></thead><tbody>${rows.map(([l, k]) => `<tr><td>${l}</td><td class="n">${pct(R.metro[k])}%</td><td class="n">${pct(R.nonmetro[k])}%</td></tr>`).join('')}<tr><td>Median road-miles to an NCI-designated center</td><td class="n">${fmt(R.metro.medn)}</td><td class="n">${fmt(R.nonmetro.medn)}</td></tr><tr><td>Residents 55+</td><td class="n">${fmt(R.metro.p)}</td><td class="n">${fmt(R.nonmetro.p)}</td></tr></tbody></table>`;
+    document.getElementById('tbl-rural').innerHTML = `<table><thead><tr><th>Measure</th><th class="n">Metro</th><th class="n">Nonmetro</th></tr></thead><tbody>${tblRows.map(([l, k]) => `<tr><td>${l}</td><td class="n">${pct(R.metro[k])}%</td><td class="n">${pct(R.nonmetro[k])}%</td></tr>`).join('')}<tr><td>Median road-miles to an NCI-designated center</td><td class="n">${fmt(R.metro.medn)}</td><td class="n">${fmt(R.nonmetro.medn)}</td></tr><tr><td>Residents 55+</td><td class="n">${fmt(R.metro.p)}</td><td class="n">${fmt(R.nonmetro.p)}</td></tr></tbody></table>`;
   })();
 
   // ---- chart 2: every state ranked (single hue; value at each bar tip because the chart is a ranked list; click opens the map) ----
   (function () {
-    const S = F.states; const wrap = document.getElementById('chart-states'), tip = document.getElementById('tip-states'); const on = tipOn(tip, wrap), off = tipOff(tip);
+    const S = F.states.slice().sort((a, b) => b.z60 - a.z60 || b.l20 - a.l20); const wrap = document.getElementById('chart-states'), tip = document.getElementById('tip-states'); const on = tipOn(tip, wrap), off = tipOff(tip);
     function draw() { const W = cardW(wrap), narrow = W < 560, ml = narrow ? 48 : 150, mr = narrow ? 48 : 60, rowH = 17, barH = 12, mt = 6, H = mt + S.length * rowH + 22; const x = d3.scaleLinear().domain([0, 100]).range([ml, W - mr]);
     const svg = d3.select('#svg-states').attr('viewBox', `0 0 ${W} ${H}`); svg.selectAll(':not(title)').remove();   // the accessible <title> stays through redraws
     svg.append('g').attr('class', 'grid').attr('transform', `translate(0,${H - 18})`).call(d3.axisTop(x).ticks(5).tickSize(H - 18 - mt).tickFormat(''));
     svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 18})`).call(d3.axisBottom(x).ticks(5).tickFormat(v => v + '%').tickSize(0)).select('.domain').remove();
     const g = svg.append('g').selectAll('g').data(S).join('g').attr('transform', (d, i) => `translate(0,${mt + i * rowH})`).style('cursor', 'pointer')
       .on('click', (ev, d) => location.href = `map.html?s=${d.usps}`)
-      .on('mousemove', (ev, d) => on(ev, `<b>${esc(d.name)}</b><br>${pct(d.l20)}% have fewer than 20 trials within 60 road-miles; ${pct(d.z60)}% have none<br><span style="color:#c7d0da">${d.broad} broad-menu and ${d.limited} limited-menu counties of ${d.counties} · median ${d.medn === null ? 'no road route' : d.medn + ' road-mi'} to an NCI center · ${fmt(d.pop55)} residents 55+</span>`)).on('mouseleave', off);
+      .on('mousemove', (ev, d) => on(ev, `<b>${esc(d.name)}</b><br>${pct(d.z60)}% have no recruiting trial within 60 road-miles<br><span style="color:#c7d0da">${d.broad} broad-menu and ${d.limited} limited-menu counties of ${d.counties} · median ${d.medn === null ? 'no road route' : d.medn + ' road-mi'} to an NCI center · ${fmt(d.pop55)} residents 55+</span>`)).on('mouseleave', off);
     g.append('rect').attr('x', 0).attr('y', 0).attr('width', W).attr('height', rowH).attr('fill', 'transparent');
     g.append('text').attr('class', 'lab').attr('x', ml - 8).attr('y', barH).attr('text-anchor', 'end').text(d => (narrow ? d.usps : d.name) + (d.broad === 0 ? ' ◇' : ''));
-    g.append('path').attr('d', d => { const w = Math.max(0, x(d.l20) - x(0)); return `M${x(0)},1h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z`; }).attr('fill', '#3F7FB5');
-    g.append('text').attr('class', 'val').attr('x', d => x(d.l20) + 5).attr('y', barH).text(d => pct(d.l20) + '%'); }
+    g.append('path').attr('d', d => { const w = Math.max(0, x(d.z60) - x(0)); return `M${x(0)},1h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z`; }).attr('fill', '#3F7FB5');
+    g.append('text').attr('class', 'val').attr('x', d => x(d.z60) + 5).attr('y', barH).text(d => pct(d.z60) + '%'); }
     draw(); onResize(draw);
-    document.getElementById('tbl-states').innerHTML = `<table><thead><tr><th>State</th><th class="n">Fewer than 20 within 60 mi</th><th class="n">None within 60 mi</th><th class="n">Median mi to NCI center</th><th class="n">Broad-menu counties</th><th class="n">Residents 55+</th></tr></thead><tbody>${S.map(d => `<tr><td><a href="map.html?s=${d.usps}">${esc(d.name)}</a></td><td class="n">${pct(d.l20)}%</td><td class="n">${pct(d.z60)}%</td><td class="n">${d.medn === null ? 'no route' : fmt(d.medn)}</td><td class="n">${d.broad}</td><td class="n">${fmt(d.pop55)}</td></tr>`).join('')}</tbody></table>`;
+    document.getElementById('tbl-states').innerHTML = `<table><thead><tr><th>State</th><th class="n">None within 60 mi</th><th class="n">Fewer than 20 within 60 mi</th><th class="n">Median mi to NCI center</th><th class="n">Broad-menu counties</th><th class="n">Residents 55+</th></tr></thead><tbody>${S.map(d => `<tr><td><a href="map.html?s=${d.usps}">${esc(d.name)}</a></td><td class="n">${pct(d.z60)}%</td><td class="n">${pct(d.l20)}%</td><td class="n">${d.medn === null ? 'no route' : fmt(d.medn)}</td><td class="n">${d.broad}</td><td class="n">${fmt(d.pop55)}</td></tr>`).join('')}</tbody></table>`;
   })();
 
   // ---- worst districts ----
-  document.getElementById('worst-districts').innerHTML = `<table><thead><tr><th>District</th><th>Member</th><th class="n">Fewer than 20 within 60 mi</th><th class="n">None within 60 mi</th><th class="n">Median mi to NCI center</th><th>Brief</th></tr></thead><tbody>${F.districts.worst.map(d => `<tr><td><a href="map.html?d=${d.k}">${d.label}</a></td><td>${d.member ? esc(d.member) + (d.party ? ` (${d.party})` : '') : 'vacant'}</td><td class="n">${pct(d.l20)}%</td><td class="n">${pct(d.z60)}%</td><td class="n">${d.medn === null ? 'no route' : fmt(d.medn)}</td><td><a href="brief.html?d=${d.k}">brief</a></td></tr>`).join('')}</tbody></table>`;
+  document.getElementById('worst-districts').innerHTML = `<table><thead><tr><th>District</th><th>Member</th><th class="n">None within 60 mi</th><th class="n">Fewer than 20 within 60 mi</th><th class="n">Median mi to NCI center</th><th>Brief</th></tr></thead><tbody>${(F.districts.worst_none || F.districts.worst).map(d => `<tr><td><a href="map.html?d=${d.k}">${d.label}</a></td><td>${d.member ? esc(d.member) + (d.party ? ` (${d.party})` : '') : 'vacant'}</td><td class="n">${pct(d.z60)}%</td><td class="n">${pct(d.l20)}%</td><td class="n">${d.medn === null ? 'no route' : fmt(d.medn)}</td><td><a href="brief.html?d=${d.k}">brief</a></td></tr>`).join('')}</tbody></table>`;
 
   // ---- bills ----
   document.getElementById('bills').innerHTML = F.bills.map(b => `<div class="card"><p class="kicker" style="margin-bottom:.2rem">${b.chamber}, introduced ${nice(b.introduced)}</p><div class="bill"><span class="n">${fmt(b.n_cosponsors)}</span><span><b>cosponsor${b.n_cosponsors === 1 ? '' : 's'}</b> of <a href="${b.url}" target="_blank" rel="noopener">${b.label}</a>, the ${esc(b.short)}<br><span class="small">${b.parties.R} Republican${b.parties.R === 1 ? '' : 's'}, ${b.parties.D} Democrat${b.parties.D === 1 ? '' : 's'}${b.parties.I ? `, ${b.parties.I} independent` : ''} · sponsor ${esc(b.sponsor)}</span></span></div><p class="small" style="margin:.6rem 0 0">Latest action: ${esc(b.latest_action.text.length > 140 ? b.latest_action.text.slice(0, 140).replace(/\s+\S*$/, '') : b.latest_action.text)}${b.latest_action.text.length > 140 ? '…' : ''} (${nice(b.latest_action.date)})</p></div>`).join('');

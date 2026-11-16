@@ -51,6 +51,13 @@ test('buildQS: state view, no layer (default), many states -> national view; the
   const ids = R.resolveIds(mv.highlight.ids, unitOf); assert.equal(R.placeParamFor(ids, mv, null), null); assert.equal(R.buildQS(mv, null), 'u=state');
   const mv2 = R.validateMap({ unit: 'state', layer: 'z60', place: 'OH', highlight: { ids: ['TX', 'OH'] } }, PAGE_LAYERS, unitOf);
   assert.equal(R.buildQS(mv2, R.placeParamFor(['TX', 'OH'], mv2, null)), 'u=state&m=z60&s=OH'); });
+test('buildQS: a line-following layer names the 20-trial line unless the view carries another (the map opens on "no trial")', () => {
+  const mv = R.validateMap({ unit: 'county', layer: 'short', state: 'KY' }, PAGE_LAYERS, unitOf);
+  assert.equal(R.buildQS(mv, R.placeParamFor([], mv, null)), 'm=short&lt=20&s=KY');
+  const mv2 = R.validateMap({ unit: 'state', layer: 'l20', params: { type: 'lung' } }, PAGE_LAYERS, unitOf);
+  assert.equal(R.buildQS(mv2, null), 'u=state&m=l20&type=lung&lt=20');
+  const mv3 = R.validateMap({ unit: 'district', layer: 'g60n' }, PAGE_LAYERS, unitOf);
+  assert.equal(R.buildQS(mv3, null), 'u=district&m=g60n'); });
 test('placeParamFor: counties in one state frame the state; across states the nation; a single county opens it', () => {
   const mv = R.validateMap({ unit: 'county', layer: 't' }, PAGE_LAYERS, unitOf); const st = { 48215: 'TX', 48201: 'TX', 39001: 'OH' };
   assert.deepEqual(R.placeParamFor(['48215', '48201'], mv, id => st[id]), ['s', 'TX']); assert.equal(R.placeParamFor(['48215', '39001'], mv, id => st[id]), null); assert.deepEqual(R.placeParamFor(['48215'], mv, id => st[id]), ['c', '48215']);

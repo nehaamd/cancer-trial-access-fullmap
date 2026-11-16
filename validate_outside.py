@@ -298,8 +298,8 @@ def headline_recompute(D, FI, CM):
         for k, v in g.items(): rec("headline", f"{name} {k}: recomputed vs findings.js", f"{v} vs {R[name].get(k)}", R[name].get(k) == v)
     nm_share = 100 * gn['p'] / (gm['p'] + gn['p']); nm_readme = readme_num(r"Nonmetro counties hold ([\d.]+)% of residents 55\+")
     rec("headline", "nonmetro share of residents 55+", f"{nm_share:.1f}% (README says {nm_readme}%)", nm_readme is not None and abs(nm_share - nm_readme) < 0.05)
-    rd_l20 = readme_num(r"([\d.]+)% of residents 55\+ in nonmetro counties \(codes 4–9\) have fewer than 20 recruiting trials within 60 road-miles, vs ([\d.]+)% in metro counties; ([\d.]+)% vs ([\d.]+)% have none; median road distance to an NCI-designated center (\d+) vs (\d+) miles")
-    rec("headline", "README rural sentence (nonmetro / metro: fewer than 20, none, median to an NCI center) equals the recomputation", f"README {rd_l20} vs recomputed {(gn['l20'], gm['l20'], gn['z60'], gm['z60'], gn['medn'], gm['medn'])}", rd_l20 == (gn['l20'], gm['l20'], gn['z60'], gm['z60'], gn['medn'], gm['medn']))
+    rd_l20 = readme_num(r"([\d.]+)% of residents 55\+ in nonmetro counties \(codes 4–9\) have no recruiting trial within 60 road-miles, vs ([\d.]+)% in metro counties; ([\d.]+)% vs ([\d.]+)% have fewer than 20; median road distance to an NCI-designated center (\d+) vs (\d+) miles")
+    rec("headline", "README rural sentence (nonmetro / metro: none, fewer than 20, median to an NCI center) equals the recomputation", f"README {rd_l20} vs recomputed {(gn['z60'], gm['z60'], gn['l20'], gm['l20'], gn['medn'], gm['medn'])}", rd_l20 == (gn['z60'], gm['z60'], gn['l20'], gm['l20'], gn['medn'], gm['medn']))
     # counties and states from county_metrics, against the counts the build logs (metrics_log.json) and the README states
     cm = CM; broad = int((cm.trials_in_county >= 100).sum()); lim = int((cm.trials_in_county >= 20).sum()); anyt = int((cm.trials_in_county > 0).sum())
     st_of = cm.county_fips.str[:2]; st_broad = cm[cm.trials_in_county >= 100].county_fips.str[:2].unique(); usps = {}
@@ -529,7 +529,7 @@ def cross_page(D, CO, FI, tr, seed, port, ncounty=8, ndist=3, nstate=2):
         for k in sample_c:
             exp = {"l20": float(cty_l20.get(k, float("nan"))), "t": int(cm.loc[k, "trials_in_county"]), "rn": rd.loc[k, "road_mi_nci"]}
             got = {}
-            t = grab(pg, f"index.html?c={k}", "#pane"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ in the county", t); got["index.l20"] = float(m.group(1)) if m else None
+            t = grab(pg, f"map.html?c={k}&lt=20", "#pane"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ in the county", t); got["index.l20"] = float(m.group(1)) if m else None
             m = re.search(r"(\d[\d,]*)\s*trials?\s*with a recruiting site in the county", t); got["index.t"] = int(m.group(1).replace(",", "")) if m else None
             m = re.search(r"(\d[\d,]*)\s*road-miles\s*from the county population center to the nearest NCI", t); got["index.rn"] = int(m.group(1).replace(",", "")) if m else noroute(t)
             t = grab(pg, f"community.html?c={k}", "main"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55 and older in", t); got["community.l20"] = float(m.group(1)) if m else None
@@ -546,14 +546,14 @@ def cross_page(D, CO, FI, tr, seed, port, ncounty=8, ndist=3, nstate=2):
                 tol = 0.051 if base == "l20" else 0.5
                 if not (abs(v - e) <= tol): mism.append((k, key, v, e))
         for k in sample_d:
-            t = grab(pg, f"index.html?d={k}", "#pane"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ have fewer than 20", t); a = float(m.group(1)) if m else None
+            t = grab(pg, f"map.html?d={k}&lt=20", "#pane"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ have fewer than 20", t); a = float(m.group(1)) if m else None
             t2 = grab(pg, f"community.html?d={k}", "main"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55 and older in", t2); bb = float(m.group(1)) if m else None
             t3 = grab(pg, f"brief.html?d={k}", "body"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ have fewer than 20", t3); c = float(m.group(1)) if m else None
             e = float(dist_l20.get(k, float("nan"))); checked += 1
             for name, v in (("index", a), ("community", bb), ("brief", c)):
                 if v is None or e is None or abs(v - e) > 0.051: mism.append((k, name + ".l20", v, e))
         for k in sample_s:
-            t = grab(pg, f"index.html?s={k}", "#pane"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ have fewer than 20", t); a = float(m.group(1)) if m else None
+            t = grab(pg, f"map.html?s={k}&lt=20", "#pane"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ have fewer than 20", t); a = float(m.group(1)) if m else None
             t2 = grab(pg, f"community.html?s={k}", "main"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55 and older in", t2); bb = float(m.group(1)) if m else None
             t3 = grab(pg, f"brief.html?s={k}", "body"); m = re.search(r"(\d{1,3}\.\d)\s*%\s*of residents 55\+ have fewer than 20", t3); c = float(m.group(1)) if m else None
             e = float(state_l20.get(fips_of.get(k), float("nan"))); checked += 1
@@ -569,7 +569,7 @@ def page_health(port, axe_path=None):
     for cand in [axe_path, os.environ.get("AXE_CORE_JS"), ROOT / "node_modules/axe-core/axe.min.js"]:
         if cand and Path(cand).exists():
             axe = Path(cand).read_text(encoding="utf-8"); m = re.search(r"axe v([\d.]+)", axe[:400]); axe_ver = m.group(1) if m else "?"; break
-    pages = ["index.html", "findings.html", "community.html", "learn.html", "find.html", "act.html", "brief.html?s=KY", "trials.html?county=48215", "sites.html", "community.html?c=21227", "act.html?c=21227", "index.html?u=district&m=cos_ctma_hr", "index.html?c=48215", "index.html?s=KY&rural=1&guide=rural-urban"]
+    pages = ["index.html", "findings.html", "community.html", "learn.html", "find.html", "act.html", "brief.html?s=KY", "trials.html?county=48215", "sites.html", "community.html?c=21227", "act.html?c=21227", "map.html", "map.html?u=district&m=cos_ctma_hr", "map.html?c=48215", "map.html?s=KY&rural=1&guide=rural-urban"]
     errs_all = {}; viol = 0; hs = []
     with sync_playwright() as p:
         b = p.chromium.launch()

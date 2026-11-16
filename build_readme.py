@@ -24,12 +24,12 @@ def main():
     lines = [START,
         "## Headline results (residents 55+, trials accepting some adults aged 55 or older, road-miles from each census tract's central point)",
         f"Registry data as of {nice(m.get('registry_data_timestamp') or m['pull'])}: {m['trials']:,} listed trials at about {round(m['facilities'], -2):,} registry-listed facilities ({m['sitepoints']:,} distinct site locations).",
-        f"- **{n['l20']}% of Americans 55+ have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; {n['z60']}% have none.** ({n['zc']}% live in a county with no trial — a county-boundary statistic that overstates isolation and is not the lead number.)",
+        f"- **The typical American 55+ has about {round(n['t60_med'], -1)} recruiting cancer treatment trials within 60 road-miles of home (median {n['t60_med']}, mean {n['t60']}); {n['z60']}% ({n['people_z60'] / 1e6:.1f} million) have none.** {n['l20']}% have fewer than 20, the lead figure until 16 November 2026 and still in every data file. ({n['zc']}% live in a county with no trial — a county-boundary statistic that overstates isolation and is not the lead number.)",
         f"- **{n['g60b']}% live more than 60 road-miles from a broad menu** (a county with 100 or more trials); {n['g120b']}% more than 120; {n['nr']}% (Alaska, Hawaii) have no road connection to one at all.",
         f"- **{n['g60n']}% live more than 60 road-miles from an NCI-designated cancer center that treats adults** ({nci}); the median resident 55+ is {n['medn']} road-miles from one; {n['g120n']}% are more than 120.",
         f"- {ml['limited_menu_counties']} counties host at least a limited menu (20 or more trials), {ml['broad_menu_counties']} of them a broad menu; **{F['states_no_broad']} states have no broad-menu county**; {di['all_beyond_60_broad']} congressional districts have every resident 55+ (100.0% to one decimal; a few dozen residents of split tracts aside in two of them) beyond 60 road-miles of one.",
         f"- Road distance / straight-line distance to the nearest broad menu: median {rr['median']:.2f} (10th–90th percentile {rr['p10']:.2f}–{rr['p90']:.2f}); the common ×1.2 convention is too low for {rr['counties_where_x1_2_underestimated']:,} of {rr['counties_compared']:,} counties.",
-        f"- **Rural vs urban (USDA Rural-Urban Continuum Codes, 2023): {non['l20']}% of residents 55+ in nonmetro counties (codes 4–9) have fewer than 20 recruiting trials within 60 road-miles, vs {met['l20']}% in metro counties; {non['z60']}% vs {met['z60']}% have none; median road distance to an NCI-designated center {non['medn']} vs {met['medn']} miles.** Nonmetro counties hold {100 * non['p'] / (non['p'] + met['p']):.1f}% of residents 55+.",
+        f"- **Rural vs urban (USDA Rural-Urban Continuum Codes, 2023): {non['z60']}% of residents 55+ in nonmetro counties (codes 4–9) have no recruiting trial within 60 road-miles, vs {met['z60']}% in metro counties; {non['l20']}% vs {met['l20']}% have fewer than 20; median road distance to an NCI-designated center {non['medn']} vs {met['medn']} miles.** Nonmetro counties hold {100 * non['p'] / (non['p'] + met['p']):.1f}% of residents 55+.",
         f"- **Need vs access: {bu['hb_la_counties']:,} counties ({bu['hb_la_pop55']:,} residents 55+, about {bu['hb_la_cases']:,} new cancer diagnoses a year) have above-median all-sites incidence AND at least half of residents 55+ with fewer than 20 trials within 60 road-miles** — a cross-tabulation of the two published measures, never a combined score (the page lets the reader change the cancer site, the access criterion and the threshold).",
         f"- Router check: {m['router']['pairs']} published city-pair driving distances, mean difference {m['router']['mean_pct']}%" + (f"; {m['router']['local']['pairs']} local routes (short in-town trips and water crossings), {m['router']['local']['note']}" if m["router"].get("local") else "") + ". Reference distances are approximate; see VALIDATION_v3.md.",
         END]
@@ -37,7 +37,7 @@ def main():
     if START not in s or END not in s: sys.exit("README.md has no headline markers; nothing rewritten")
     a, b = s.index(START), s.index(END) + len(END); new = s[:a] + "\n".join(lines) + s[b:]
     if new != s: p.write_text(new, encoding="utf-8")
-    print("README.md headline block", "updated" if new != s else "unchanged", f"({n['l20']}% <20 within 60 mi; {n['z60']}% none; {m['trials']:,} trials)")
+    print("README.md headline block", "updated" if new != s else "unchanged", f"({n['z60']}% none within 60 mi; median {n['t60_med']}; {m['trials']:,} trials)")
 
 
 if __name__ == "__main__":

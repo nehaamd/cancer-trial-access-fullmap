@@ -1,7 +1,7 @@
 {
  "cosponsors": {
-  "hr_n_cosponsors": 30,
-  "n_house": 31,
+  "hr_n_cosponsors": 33,
+  "n_house": 34,
   "n_senate": 2,
   "roles": [
    "cosponsor",
@@ -24,7 +24,7 @@
   "9": 589
  },
  "counts": {
-  "cosponsor_rows": 33,
+  "cosponsor_rows": 36,
   "counties": 3143,
   "districts": 436,
   "facilities": 9655,
