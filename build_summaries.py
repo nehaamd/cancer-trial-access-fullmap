@@ -25,6 +25,11 @@ OUT = ROOT / "docs" / "api" / "trial"
 MODEL = os.environ.get("SUMMARY_MODEL", "claude-haiku-5-5")
 LIMIT = int(os.environ.get("SUMMARY_LIMIT", "0") or 0)
 WORKERS = int(os.environ.get("SUMMARY_WORKERS", "4") or 4)
+# A time budget and a give-up rule, so this optional step can never use up the refresh job's time limit: the manual refresh of 5 Nov 2026
+# was cancelled at 90 minutes inside this step (every call failed, each failure waited and retried, about 4,000 trials were queued) and
+# nothing was published. Whatever is not written this run is picked up by the next one.
+MINUTES = float(os.environ.get("SUMMARY_MINUTES", "20") or 20)
+GIVE_UP_AFTER = int(os.environ.get("SUMMARY_GIVE_UP_AFTER", "25") or 25)   # consecutive failures
 VERSION = "1"   # bump to regenerate every summary (prompt or schema change)
 
 SYSTEM = """You write plain-language summaries of cancer clinical trial registry records for patients, families and patient navigators.
@@ -116,7 +121,10 @@ def main():
     done = failed = 0
     if todo:
         client = anthropic.Anthropic(api_key=key)
+        import threading
+        stop = threading.Event(); deadline = time.time() + 60 * MINUTES; streak = 0; left = 0; why = ""
         def one(n, u):
+            if stop.is_set() or time.time() > deadline: stop.set(); return n, u, None, "left for the next run"
             text = raw.get(n) or rows.get(n)
             if not text: return n, u, None, "no record text"
             for attempt in (1, 2):
@@ -132,9 +140,14 @@ def main():
             futs = [ex.submit(one, n, u) for n, u in todo]
             for f in as_completed(futs):
                 n, u, res, err = f.result()
-                if res: cache[n] = {"upd": u, "v": VERSION, "model": MODEL, "generated": today, **res}; done += 1
-                else: failed += 1; print(f"summaries: {n} skipped ({err})")
+                if res: cache[n] = {"upd": u, "v": VERSION, "model": MODEL, "generated": today, **res}; done += 1; streak = 0
+                elif err == "left for the next run": left += 1; why = why or f"the {MINUTES:g}-minute budget was used"
+                else:
+                    failed += 1; streak += 1
+                    if failed <= 20: print(f"summaries: {n} skipped ({err})")
+                    if streak >= GIVE_UP_AFTER and not stop.is_set(): stop.set(); why = f"{GIVE_UP_AFTER} calls in a row failed (last: {err})"
                 if (done + failed) % 200 == 0: print(f"summaries: {done} generated, {failed} skipped so far"); CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0), encoding="utf-8")
+        if left: print(f"summaries: stopped early because {why}; {left} trials left for the next run")
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0), encoding="utf-8")
     # ---- publish: one file per listed trial that has a summary; drop files for trials no longer listed ----

@@ -143,6 +143,11 @@ def ask_suites():
     if (ROOT / "worker/tests/eval_expected.py").exists():   # the live eval's expectations are rebuilt from this refresh's files so the next eval run reads current facts
         r = subprocess.run([sys.executable, "-I", str(ROOT / "worker/tests/eval_expected.py")], capture_output=True, text=True, cwd=ROOT)
         check("Question-box eval expectations rebuilt from the refreshed files (eval_expected.py)", (r.stdout.strip().splitlines() or [r.stderr.strip()[:200]])[-1], r.returncode == 0)
+    if (ROOT / "worker/tests/expected.py").exists():   # the engine suite's expected values are an independent Python recount of THIS refresh's files.
+        # Until November 2026 the suite was compared with the committed file from an earlier pull, so any refresh that changed a count it
+        # pins (cosponsors, facilities, trials) would have stopped here; no refresh had reached this point since the suites joined the gate.
+        r = subprocess.run([sys.executable, "-I", str(ROOT / "worker/tests/expected.py")], capture_output=True, text=True, cwd=ROOT)
+        check("Question-box engine expectations rebuilt from the refreshed files (expected.py)", (r.stdout.strip().splitlines() or [r.stderr.strip()[-200:]])[-1][:200], r.returncode == 0)
     for path, label in present:
         try:
             r = subprocess.run([node, str(path)], capture_output=True, text=True, cwd=ROOT, timeout=600)
