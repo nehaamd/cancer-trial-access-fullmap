@@ -113,6 +113,8 @@
   .legend-bar{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .9rem;padding:7px 16px 9px;border-top:1px solid var(--rule);background:var(--paper);position:relative}
   .legend-bar .legend{flex:1 1 auto;min-width:0}
   .legend-bar .fchip{flex:0 0 auto}
+  /* on a wide screen the legend sits above the map, so the title and key are read before the picture (title, then chart); phones keep it below */
+  @media (min-width:1200px){.legend-bar{order:-1;border-top:0;border-bottom:1px solid var(--rule);padding:9px 16px 8px} .legend-bar .map-hint{position:absolute;right:16px;top:calc(100% + 8px);z-index:5;margin:0;pointer-events:none}}
   .zoomctl{position:absolute;z-index:6;right:12px;bottom:12px;display:flex;flex-direction:column;overflow:hidden;border-radius:8px;background:var(--card);border:1px solid var(--rule);box-shadow:0 2px 8px rgba(27,36,48,.08)}
   .zoomctl button{width:36px;height:36px;border:0;background:none;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center} .zoomctl button + button{border-top:1px solid var(--rule)} .zoomctl button:hover{background:var(--paper)}
   #q-list{position:absolute;left:0;right:0;top:calc(100% + 6px);min-width:min(420px,calc(100vw - 24px));background:var(--card);border:1px solid var(--rule-2);border-radius:12px;box-shadow:0 12px 32px rgba(27,36,48,.18);z-index:45;overflow:hidden;max-height:min(70vh,560px);overflow-y:auto} #q-list[hidden]{display:none}
