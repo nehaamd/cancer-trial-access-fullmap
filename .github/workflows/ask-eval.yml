@@ -56,6 +56,10 @@ jobs:
         with: { node-version: '22' }
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
+      # expected.json is the Python recount the engine test is compared with. It is rebuilt here from the files being tested, so a
+      # refresh that changes a count (cosponsors, facilities) is compared with its own data instead of with last month's file.
+      - name: Rebuild the engine test's expected values from the data files
+        run: python3 -I worker/tests/expected.py
       - name: Offline suites (engine, loop, claims, methods, client, eval checks)
         run: |
           set -e

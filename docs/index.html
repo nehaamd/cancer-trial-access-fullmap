@@ -181,7 +181,7 @@
       <div class="stats">
         <div class="stat"><p class="v"><span data-f="people_z60_m">4.3</span><small>million</small></p><p>Americans 55 and older with no recruiting cancer trial within 60 road-miles of home</p><p class="s"><span data-f="z60">4.3</span>% of residents 55 and older</p></div>
         <div class="stat calm"><p class="v"><small class="pre">about</small><span data-f="t60_typ">250</span></p><p>recruiting cancer trials within 60 road-miles for the typical older American</p><p class="s">The median is <span data-f="t60_med">247</span>; a few very large metro areas pull the average up to <span data-f="t60">362</span></p></div>
-        <div class="stat quiet"><p class="v"><span data-f="trials">4,035</span></p><p>recruiting cancer treatment trials with a US site, at <span data-f="facilities">9,655</span> facilities</p><p class="s">Refreshed weekly from ClinicalTrials.gov</p></div>
+        <div class="stat quiet"><p class="v"><span data-f="trials">4,035</span></p><p>recruiting cancer treatment trials with a US site, at <span data-f="facilities">9,655</span> <span data-f="fac_word">facilities</span></p><p class="s">Refreshed weekly from ClinicalTrials.gov</p></div>
       </div>
     </div>
   </section>
@@ -292,7 +292,7 @@
   const med = N.t60_med, nmZ = Math.round(R.nonmetro.z60), mZ = Math.round(R.metro.z60);
   const vals = { people_z60_m: M(N.people_z60), z60: pct(N.z60), nm_z60: String(nmZ), m_z60: String(mZ), nm_have: nmZ === 1 ? 'has' : 'have', m_have: mZ === 1 ? 'has' : 'have',
                  nm_share_z60: R.nonmetro.n_z60 && N.people_z60 ? pct0(100 * R.nonmetro.n_z60 / N.people_z60) : undefined,
-                 trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities), t60: fmt(N.t60), t60_med: med ? fmt(med) : undefined, t60_typ: med ? fmt(Math.round(med / 10) * 10) : undefined };
+                 trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities_named || F.meta.facilities), fac_word: F.meta.facilities_named ? 'named facilities' : 'facilities', t60: fmt(N.t60), t60_med: med ? fmt(med) : undefined, t60_typ: med ? fmt(Math.round(med / 10) * 10) : undefined };
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
   if (SITE.ASK_URL) { SITE.askStyles(); SITE.mountAskBox(document.getElementById('ask-mount'), { hero: true, action: 'map.html', placeholder: 'e.g. Which districts in Ohio have the least access?' }); document.getElementById('ask-band').hidden = false; document.body.classList.add('has-ask'); }   // the question box appears once the helper is deployed; the form's GET hands the question to map.html?ask=, where ask/ask.js answers it

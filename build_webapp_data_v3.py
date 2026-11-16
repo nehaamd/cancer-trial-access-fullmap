@@ -1,11 +1,12 @@
 """Build the v3 web-app payload: docs/data.js (window.DATA) and docs/geo.js (window.GEO). Static; no backend.
 
-Facility definition (Tier 1.1): a distinct recruiting facility = distinct (normalised facility name, county). Registry facility
-names are free text, so two spellings of one hospital can count twice and one name can cover two campuses; the count is
-therefore approximate and is labelled as "facilities (registry-listed, deduplicated by name)".
+Facility definition: one institution at one ZIP code in one county. Registry facility names are free text; since November 2026 the
+spellings of one institution are folded together by site_names.py (same words, one misspelled word, the same distinctive name, or
+a line of data/ref/site_families.csv), and every spelling folded in is listed in out_adult55/site_merges.csv. Sponsor placeholders
+("Research Site") name no institution: they are flagged unresolved and counted apart from the named facilities.
 """
 import gzip, json, re
-import config
+import config, site_names
 from pathlib import Path
 import numpy as np, pandas as pd, geopandas as gpd
 from shapely.geometry import mapping
@@ -116,6 +117,14 @@ def main():
     if (REF / "site_aliases.csv").exists():
         for r_ in pd.read_csv(REF / "site_aliases.csv", dtype=str).fillna("").itertuples(): ALIAS[(r_.county_fips, r_.alias_norm)] = r_.canonical_norm
     sites["fac"] = [ALIAS.get((c, f), f) for c, f in zip(sites.county_fips, sites.fac)]
+    # Then the spellings of one institution at one ZIP code are folded together (site_names.py: same words, one misspelled word, the same
+    # distinctive name, or one line of data/ref/site_families.csv). Before November 2026 "MD Anderson Cancer Center" was 46 facilities in
+    # Harris County. Every spelling folded in is listed in site_merges.csv beside the other QC tables. This changes which rows are listed together as one
+    # facility and the facility counts; no site moves and no access figure changes.
+    MERGE, merges = site_names.merge_map(site_names.spellings_from_rows(sites), site_names.load_families(REF / "site_families.csv"))
+    sites["fac"] = [MERGE.get((c, f), f) for c, f in zip(sites.county_fips, sites.fac)]
+    canon = lambda c, f: MERGE.get((c, ALIAS.get((c, f), f)), ALIAS.get((c, f), f))   # the same two steps, for the other tables that carry names
+    pd.DataFrame(merges, columns=["county_fips", "zip", "kept", "merged", "rows", "rule"]).to_csv(OUT / "site_merges.csv", index=False)
     PLACEHOLDER = re.compile(r"^(research site|local institution|study site|clinical site|investigational site|investigative site|site|clinical research site|research facility|central recruiting site|recruiting site)$|^\s*$", re.I)
     # A facility's own ZIP comes from rows that were placed at their own ZIP: a row whose ZIP was a typing error (zip_typo_corrected) or no
     # usable place (facility_listing) was placed at another ZIP, and its own would print an address that is not there ("Albany Medical
@@ -123,8 +132,10 @@ def main():
     sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
     fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", lambda s: s.value_counts().index[0]), city=("city", lambda s: s.value_counts().index[0]), zip=("zip_own", lambda s: s[s.str.len() == 5].value_counts().index[0] if (s.str.len() == 5).any() else ""),
                                                    trials=("nct_id", lambda s: sorted({j_of[n] for n in s})), n_rows=("nct_id", "size")).reset_index()
+    # a sponsor's placeholder is judged on the name as the registry gives it ("Exelixis Clinical Site #12"), before the site code is trimmed
+    placeholder = [site_names.is_placeholder(n) for n in fac.name]
     fac["name"] = fac.name.map(clean_name)
-    fac["unresolved"] = [int(bool(PLACEHOLDER.match(f)) or code_like(n)) for f, n in zip(fac.fac, fac.name)]
+    fac["unresolved"] = [int(bool(PLACEHOLDER.match(f)) or code_like(n) or ph) for f, n, ph in zip(fac.fac, fac.name, placeholder)]
     fac = fac.sort_values(["county_fips", "fac"]).reset_index(drop=True); fac["site_id"] = [f"S{i:05d}" for i in range(len(fac))]
     fac_idx = {}; ct_fac = {}
     for f, g in fac.groupby("county_fips"):
@@ -163,7 +174,7 @@ def main():
     # The third item is the city of those registry rows (one entry per ZIP and city spelling, so every trial carries the city of
     # its own row): a facility's own record keeps one city for all its addresses, which printed "Shirley 11776" for a clinic the
     # registry lists in Port Jefferson Station 11776.
-    sg = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); sg["fac"] = sg.facility.map(norm); sg["fac"] = [ALIAS.get((c, f), f) for c, f in zip(sg.county_fips, sg.fac)]
+    sg = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); sg["fac"] = sg.facility.map(norm); sg["fac"] = [canon(c, f) for c, f in zip(sg.county_fips, sg.fac)]
     zip_used = sg.geocode.isin(["zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"]) & (sg.zip5.str.len() == 5)
     sg["zip_ok"] = np.where(zip_used, sg.zip5, "")
     SPI = [[] for _ in range(int(zs["S_shape"][0]))]; SPX = [[] for _ in range(int(zs["S_shape"][0]))]; sg["city_row"] = sg.city.str.strip()
@@ -171,6 +182,9 @@ def main():
         if (cf, fc) in fac_idx:
             SPI[int(spi)].append([cf, fac_idx[(cf, fc)]]); SPX[int(spi)].append([zz, sorted({j_of[n] for n in g_.nct_id}), cty])
     pool60 = {f: len(set().union(*[set(SP[i]) for i in nb60.get(f, [])])) if nb60.get(f) else 0 for f in cm.index}
+    # facilities at each site point, counted from the list just built so the count and the list agree after the names are folded together
+    # (until November 2026 it came from the routing step's own count of spellings; the two were equal at every site point)
+    SPF = [len({(cf_, i_) for cf_, i_ in SPI[k]}) for k in range(len(SPI))]
     fac60 = {f: sum(SPF[i] for i in nb60.get(f, [])) for f in cm.index}
     burden = pd.read_csv(REF / "cancer_incidence_county.csv", dtype={"county_fips": str})
     bsites = ["all", "breast", "colorectal", "lung", "prostate", "melanoma_skin", "lymphoma", "leukemia", "pancreatic", "liver_biliary", "bladder_urothelial", "kidney", "brain_cns",
@@ -271,7 +285,7 @@ def main():
     nat_binc = {site: [blog_sites[site]["us_rate"], int(blog_sites[site]["us_avg_annual_count"]) if blog_sites[site]["us_avg_annual_count"] else None, "ok"] for site in bsites if site in blog_sites}
     nat_core = core_of(pd.Series(nat))
     llog = json.load(open(REF / "legislators_log.json")) if (REF / "legislators_log.json").exists() else {}; lc = rlog.get("local_checks")
-    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2024 election maps)", "virtual_sites": {"rows": int(len(virt)), "trials": int(virt.nct_id.nunique())}, "zip_typos": n_typo, "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
+    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "site_spellings_folded": len(MERGE), "facilities_named": int((fac.unresolved == 0).sum()), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2024 election maps)", "virtual_sites": {"rows": int(len(virt)), "trials": int(virt.nct_id.nunique())}, "zip_typos": n_typo, "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
             "router": {"pairs": rlog["router_validation"]["pairs"], "mean_pct": rlog["router_validation"]["mean_abs_pct_diff"], "max_pct": rlog["router_validation"]["max_abs_pct_diff"],
                        **({"local": {"pairs": lc["routes"], "failed": lc["failed"], "note": ("all within tolerance" if not lc["failed"] else f"{lc['failed']} outside tolerance: " + "; ".join(lc["failed_routes"]))}} if lc else {})},
             "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(), "acs": ACS_RELEASE["label"], "acs_year": ACS_RELEASE["year"], "acs_span": ACS_RELEASE["span"],

@@ -134,7 +134,7 @@ def methods_block():
     topics = []
     for t in (CO["meta"].get("topics") or {}).values():
         if t["name"] not in topics: topics.append(t["name"])
-    return {k: meta.get(k) for k in ("registry_data_timestamp", "pull", "trials", "facilities", "sitepoints", "virtual_sites", "zip_typos", "graph_note",
+    return {k: meta.get(k) for k in ("registry_data_timestamp", "pull", "trials", "facilities", "facilities_named", "sites_unresolved", "sitepoints", "virtual_sites", "zip_typos", "graph_note",
                                      "router", "plan", "pct_multi", "pct_unclassified", "acs", "members_pull")} | {
         "burden": {"period": bur["period"], "pulled": bur.get("pulled"), "not_available_states": bur.get("not_available_states") or []},
         "state_names": {s: sn.get(s, s) for s in (bur.get("not_available_states") or [])},
@@ -146,7 +146,7 @@ def methods_block():
 
 out = {
     "built": datetime.date.today().isoformat(),
-    "meta": {"pull": meta["pull"], "registry_data_timestamp": meta.get("registry_data_timestamp"), "trials": meta["trials"], "facilities": meta["facilities"], "sitepoints": meta["sitepoints"],
+    "meta": {"pull": meta["pull"], "registry_data_timestamp": meta.get("registry_data_timestamp"), "trials": meta["trials"], "facilities": meta["facilities"], "facilities_named": meta.get("facilities_named"), "sites_unresolved": meta.get("sites_unresolved"), "sitepoints": meta["sitepoints"],
              "plan": meta["plan"], "incidence_period": meta["burden"]["period"], "acs": meta.get("acs"), "members_pull": meta["members_pull"].split(" ")[0], "cosponsors_fetched": CO["meta"]["fetched"], "router": meta["router"], "n_tracts": core["nt"], "n_nci": len(D["nci"]),
              "nci_centers": (meta.get("nci") or {}).get("centers"), "nci_excluded": (meta.get("nci") or {}).get("excluded", []), "graph_note": meta.get("graph_note")},
     "nat": {**{k: core[k] for k in ("p", "l20", "z60", "l100", "zc", "g60b", "g120b", "g60l", "g60n", "g120n", "nr", "medb", "medn", "medl", "t30", "t60", "t120", "own")},

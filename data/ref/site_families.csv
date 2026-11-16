@@ -1,0 +1,197 @@
+# Institutions whose registry spellings do not share words: a university and the name its cancer program goes by, a hospital and its
+# school of medicine, a practice network and its local names. Read by site_names.py.
+#   family   the institution (a label for the review file; the name shown on the site is the spelling most registry rows use)
+#   states   postal codes where the line applies, separated by |  (blank = anywhere)
+#   pattern  a regular expression tested against the name in lower case with punctuation, brackets, "the/of/at/and" and legal
+#            suffixes removed and abbreviations spelled out ("Univ. of Texas M.D. Anderson Ctr" -> "university texas md anderson center")
+#   zips     optional: ZIP codes that are one campus (a university's own ZIP beside the street ZIP), separated by |
+# Two spellings are merged only when they match the SAME line, in the SAME county, at the SAME ZIP code (or the same campus).
+# The first matching line wins, so a more specific line goes above a more general one. Written 16 Nov 2026; add lines as needed.
+family,states,pattern,zips
+# ---- Alabama
+UAB / O'Neal Comprehensive Cancer Center,AL,\buab\b|university alabama|oneal (comprehensive )?cancer|kirklin clinic,35233|35249|35294
+# ---- Arizona
+Banner MD Anderson Cancer Center,AZ,banner.*anderson|anderson.*banner|\bbanner md\b,
+Mayo Clinic Arizona,AZ,\bmayo\b,
+University of Arizona Cancer Center,AZ,university arizona|\buacc\b|banner university medical,
+HonorHealth Research Institute,AZ,honor ?health,
+# ---- California
+City of Hope,CA|IL|GA|AZ,city hope|\bcoh\b,
+UCLA / Jonsson Comprehensive Cancer Center,CA,\bucla\b|university california los angeles|\buc los angeles\b|jonsson,
+USC Norris Comprehensive Cancer Center,CA,\busc\b|university southern california|\bnorris\b|keck (medical|medicine|hospital|school),
+Stanford,CA,stanford,94304|94305
+UCSF,CA,\bucsf\b|university california san francisco|\buc san francisco\b|helen diller,
+UC Davis,CA,\buc davis\b|university california davis|\bucdavis\b,
+UC Irvine / Chao Family Comprehensive Cancer Center,CA,\buci\b|\buc irvine\b|university california irvine|chao family,
+UC San Diego / Moores Cancer Center,CA,\bucsd\b|\buc san diego\b|university california san diego|moores,
+Cedars-Sinai,CA,cedars,
+Kaiser Permanente,CA|CO|OR|WA|HI|GA|MD|VA,kaiser,
+Hoag,CA,\bhoag\b,
+Scripps,CA,scripps,
+Sutter,CA,sutter,
+MemorialCare,CA,memorialcare|memorial care,
+# ---- Colorado
+University of Colorado / UCHealth,CO,university colorado|\buchealth\b|\buc health\b|anschutz|\bcu cancer\b|colorado university,
+Colorado Blood Cancer Institute,CO,colorado blood cancer|\bcbci\b,
+Sarah Cannon Research Institute at HealthONE,CO,sarah cannon|\bscri\b|healthone|health one,
+Rocky Mountain Cancer Centers,CO,rocky mountain cancer|\brmcc\b,
+# ---- Connecticut
+Yale / Smilow Cancer Hospital,CT,\byale\b|smilow,06510|06511|06519|06520
+# ---- District of Columbia
+Georgetown Lombardi Comprehensive Cancer Center,DC,georgetown|lombardi,
+MedStar Washington Hospital Center,DC,washington hospital center|medstar washington,
+George Washington University,DC,george washington|\bgwu\b|\bgw (cancer|medical)\b,
+Sibley Memorial Hospital (Johns Hopkins),DC,sibley,
+# ---- Florida
+Mayo Clinic Florida,FL,\bmayo\b,
+Sylvester Comprehensive Cancer Center (University of Miami),FL,sylvester|university miami|\bum (sylvester|miller)\b|miller school,
+Moffitt Cancer Center,FL,moffitt|moffit\b,
+University of Florida Health,FL,university florida|\buf health\b|\bshands\b,
+Florida Cancer Specialists,FL,florida cancer specialists|\bfcs\b,
+Miami Cancer Institute (Baptist Health South Florida),FL,miami cancer institute|baptist health south florida|baptist health miami,
+Mount Sinai Medical Center (Miami Beach),FL,mount sinai,
+AdventHealth,FL,advent ?health|florida hospital,
+Orlando Health,FL,orlando health|\bmd anderson cancer center orlando\b,
+Cleveland Clinic Florida,FL,cleveland clinic,
+Baptist MD Anderson Cancer Center,FL,baptist md anderson|baptist.*anderson,
+# ---- Georgia
+Winship Cancer Institute (Emory),GA,\bemory\b|winship,
+Piedmont Cancer Institute (an independent practice),GA,piedmont cancer institute,
+Piedmont Healthcare,GA,piedmont,
+Northside Hospital,GA,northside,
+# ---- Illinois
+Northwestern / Lurie Comprehensive Cancer Center,IL,northwestern|north western university|lurie (comprehensive |cancer),
+University of Chicago,IL,university chicago|\buchicago\b|\buc medicine\b,
+University of Illinois Chicago,IL,university illinois|\buic\b|\bui health\b,
+# ---- Indiana
+IU Simon Comprehensive Cancer Center,IN,indiana university|\biu\b|simon (comprehensive )?cancer|\biupui\b,
+# ---- Iowa
+University of Iowa / Holden Comprehensive Cancer Center,IA,university iowa|holden|\bui health care\b|\buihc\b,
+# ---- Kansas / Missouri
+University of Kansas Cancer Center,KS|MO,university kansas|\bku (medical|cancer|med)\b|\bkumc\b|kansas university,
+Siteman Cancer Center (Washington University),MO|IL,washington university|siteman|barnes jewish|\bwustl\b,63110|63108
+Mercy Hospital St. Louis,MO,\bmercy\b,
+# ---- Kentucky
+Markey Cancer Center (University of Kentucky),KY,markey|university kentucky|\buk health\b,
+Brown Cancer Center (University of Louisville),KY,university louisville|brown cancer|\buofl\b,
+Norton Cancer Institute,KY,norton,
+# ---- Louisiana
+Ochsner,LA,ochsner,
+LSU Health,LA,\blsu\b|louisiana state university,
+Tulane,LA,tulane,
+# ---- Maryland
+Johns Hopkins / Sidney Kimmel Comprehensive Cancer Center,MD|DC,hopkins|sidney kimmel|\bjhu\b|\bjhh\b,21287|21231|21205
+University of Maryland / Greenebaum Comprehensive Cancer Center,MD,university maryland|greenebaum|\bumgccc\b,
+Maryland Oncology Hematology,MD,maryland oncology hematology|\bmoh\b,
+# ---- Massachusetts
+Dana-Farber Cancer Institute,MA|NH,farber|faber cancer|\bdfci\b,
+Massachusetts General Hospital,MA,massachusetts general|mass general|\bmgh\b,
+Beth Israel Deaconess Medical Center,MA,deaconess|\bbidmc\b,
+Brigham and Women's Hospital,MA,brigham,
+Tufts Medical Center,MA,tufts,
+Boston Medical Center,MA,boston medical center|boston university medical,
+UMass Memorial,MA,university massachusetts|\bumass\b,
+# ---- Michigan
+University of Michigan Rogel Cancer Center,MI,university michigan|rogel|michigan medicine,
+Karmanos Cancer Institute,MI,karmanos|wayne state,
+Henry Ford Health,MI,henry ford,
+Corewell Health,MI,corewell|spectrum health|william beaumont|beaumont (hospital|health),
+# ---- Minnesota
+Mayo Clinic Rochester,MN,\bmayo\b,
+University of Minnesota / Masonic Cancer Center,MN,university minnesota|masonic|\bm health\b|\bmhealth\b,
+Minnesota Oncology,MN,minnesota oncology|\bmno\b,
+HealthPartners,MN,health ?partners|regions hospital|frauenshuh,
+# ---- Nebraska
+University of Nebraska Medical Center / Buffett Cancer Center,NE,university nebraska|\bunmc\b|buffett|nebraska medicine,
+Nebraska Cancer Specialists,NE,nebraska cancer specialists,
+# ---- New Hampshire
+Dartmouth Cancer Center,NH,dartmouth|norris cotton,
+# ---- New Jersey
+Memorial Sloan Kettering Cancer Center,NY|NJ,sloan|kettering|\bmsk\b|\bmskcc\b,
+Rutgers Cancer Institute,NJ,rutgers|\bcinj\b|cancer institute new jersey|robert wood johnson,
+Hackensack / John Theurer Cancer Center,NJ,hackensack|theurer,
+MD Anderson Cancer Center at Cooper,NJ,\bcooper\b,
+Atlantic Health,NJ,atlantic health|morristown (medical|memorial),
+# ---- New Mexico
+UNM Comprehensive Cancer Center,NM,university new mexico|\bunm\b,
+# ---- New York
+NYU Langone / Perlmutter Cancer Center,NY,\bnyu\b|langone|lagone|longone|perlmutter|pe lmutter|perimutter|new york university|nyc university|tisch hospital,
+Mount Sinai / Tisch Cancer Institute,NY,mount sinai|icahn|icahan|ichan|tisch cancer,
+Columbia / Herbert Irving Comprehensive Cancer Center,NY,columbia|herbert irving,
+Weill Cornell Medicine,NY,weill|cornell,
+Montefiore Einstein,NY,montefiore|einstein,
+Roswell Park Comprehensive Cancer Center,NY,roswell,
+University of Rochester / Wilmot Cancer Institute,NY,university rochester|wilmot|strong memorial,
+Northwell Health,NY,northwell|zuckerberg|north shore university hospital|long island jewish,
+Stony Brook,NY,stony brook,
+New York Cancer and Blood Specialists,NY,new york cancer blood specialists|\bnycbs\b|north shore hematology oncology,
+SUNY Upstate,NY,upstate|state university new york,
+# ---- North Carolina
+Duke Cancer Institute,NC,\bduke\b,27710|27705
+UNC Lineberger Comprehensive Cancer Center,NC,\bunc\b|university north carolina|lineberger,27599|27514
+Wake Forest Baptist,NC,wake forest|atrium health wake,
+Levine Cancer Institute (Atrium Health),NC,levine|atrium health|carolinas medical center,
+Novant Health,NC,novant,
+# ---- Ohio
+Ohio State / James Cancer Hospital,OH,ohio state|\bosu\b|james cancer|\bjames\b.*solove|solove|wexner|\bosuccc\b,
+Cleveland Clinic,OH,cleveland clinic|taussig,
+University Hospitals Seidman / Case Comprehensive Cancer Center,OH,seidman|case western|case comprehensive|university hospitals? cleveland|\buh (cleveland|seidman)\b,
+University of Cincinnati,OH,university cincinnati|\buc health\b|barrett cancer,
+OhioHealth,OH,ohiohealth|ohio health|riverside methodist,
+# ---- Oklahoma
+OU Health Stephenson Cancer Center,OK,stephenson|university oklahoma|\bou (health|medical|medicine)\b|\bouhsc\b,
+# ---- Oregon
+OHSU Knight Cancer Institute,OR,\bohsu\b|oregon health science|knight cancer,
+Providence,OR|WA|CA|AK|MT,providence,
+# ---- Pennsylvania
+Sidney Kimmel Cancer Center (Jefferson),PA,jefferson|sidney kimmel,
+Abramson Cancer Center (Penn Medicine),PA,university pennsylvania|abramson|perelman|penn medicine|\bupenn\b|hospital university pennsylvania|\bhup\b,
+Fox Chase Cancer Center,PA,fox chase,
+UPMC Hillman Cancer Center,PA,hillman|university pittsburgh cancer|upmc cancer|upmc shadyside|\bupci\b,
+UPMC Magee-Womens Hospital,PA,magee,
+Allegheny Health Network,PA,allegheny,
+Penn State Hershey,PA,penn state|hershey,
+Lehigh Valley Health Network,PA,lehigh valley,
+St. Luke's University Health Network,PA,saint lukes,
+Lancaster General / Ann B. Barshinger Cancer Institute,PA,lancaster general|barshinger,
+# ---- Rhode Island
+Rhode Island Hospital / Lifespan,RI,rhode island hospital|lifespan|brown university health,
+# ---- South Carolina
+MUSC Hollings Cancer Center,SC,\bmusc\b|medical university south carolina|hollings,
+Prisma Health,SC,prisma|greenville health|\bghs\b,
+# ---- South Dakota
+Sanford,SD|ND|MN,sanford,
+Avera,SD,avera,
+# ---- Tennessee
+Vanderbilt-Ingram Cancer Center,TN,vanderbilt|ingram cancer,
+Tennessee Oncology,TN,tennessee oncology,
+Sarah Cannon Research Institute,TN|FL,sarah cannon|\bscri\b,
+St. Jude Children's Research Hospital,TN,saint jude,
+Baptist Memorial (Memphis),TN,baptist (memorial|cancer|clinical),
+# ---- Texas
+Mays Cancer Center (UT Health San Antonio),TX,\bmays\b|ut health san antonio|\buthscsa\b|university texas health science center san antonio|cancer therapy research center|\bctrc\b,
+MD Anderson Cancer Center,TX,\bmd ?anderson\b|\bmdacc\b,
+UT Southwestern / Simmons Comprehensive Cancer Center,TX,southwestern|\butsw\b|simmons (comprehensive )?cancer,75390|75235
+Baylor College of Medicine / Dan L Duncan Comprehensive Cancer Center,TX,baylor college|dan l duncan|duncan (comprehensive )?cancer,
+Texas Oncology,TX,texas oncology,
+Baylor University Medical Center / Sammons Cancer Center,TX,baylor (university medical|sammons|charles|scott)|sammons cancer|scott white,
+START (South Texas Accelerated Research Therapeutics),TX|MI|UT|NY|CA,\bstart\b|south texas accelerated,
+NEXT Oncology,TX|VA,^next\b,
+Mary Crowley Cancer Research,TX,mary crowley,
+Houston Methodist / Methodist Hospital,TX,houston methodist|methodist hospital,
+# ---- Utah
+Huntsman Cancer Institute (University of Utah),UT,huntsman|university utah,
+# ---- Virginia
+VCU Massey Comprehensive Cancer Center,VA,massey|virginia commonwealth|\bvcu\b,
+University of Virginia,VA,university virginia|\buva\b|emily couric,22903|22908
+Virginia Cancer Specialists,VA,virginia cancer specialists,
+Virginia Oncology Associates,VA,virginia oncology associates,
+Inova Schar Cancer Institute,VA,inova|schar,
+# ---- Washington
+Fred Hutchinson Cancer Center / University of Washington,WA,hutch|university washington|seattle cancer care|\bscca\b|\buw medical\b,
+Swedish Cancer Institute,WA,swedish,
+# ---- West Virginia
+West Virginia University,WV,west virginia university|\bwvu\b,
+# ---- Wisconsin
+UW Carbone Cancer Center,WI,university wisconsin|carbone|\buw (health|carbone|hospital)\b,
+Medical College of Wisconsin / Froedtert,WI,medical college wisconsin|froedtert|\bmcw\b,

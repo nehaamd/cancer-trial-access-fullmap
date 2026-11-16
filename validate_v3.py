@@ -208,6 +208,22 @@ def main():
             check("Registry rows with a mistyped ZIP are located where the registry lists that facility", f"{len(ty)} rows (" + "; ".join(f"{r_.facility[:28]}, {r_.city} {r_.zip[:5]}" for r_ in ty.head(4).itertuples()) + ("; ..." if len(ty) > 4 else "") + f"); {at_zip} still drawn at the ZIP", at_zip == 0,
                   "judged a typing error only when the same named facility is listed repeatedly near the stated city and never near the ZIP (metrics_us.zip_typos)")
     check("Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted)", f"{bad_idx} bad facility trial indices; {sp_bad} bad sitepoint→facility refs; {nbd_unsorted} unsorted nearby lists; sponsor names {sum(1 for x in T2['spn'] if x):,}/{N2:,}, last-update dates {sum(1 for x in T2['upd'] if x):,}/{N2:,}", bad_idx == 0 and sp_bad == 0 and nbd_unsorted == 0 and sum(1 for x in T2['spn'] if x) == N2)
+    # facility names (site_names.py): the registry's spellings of one institution at one ZIP code are one facility. The rules are tested on
+    # fixed examples; the payload must agree with the list of spellings folded in; a sponsor placeholder is never folded into a named facility.
+    try:
+        import site_names, io, contextlib
+        with contextlib.redirect_stdout(io.StringIO()) as buf_: st_ok = site_names._selftest()
+        facs_ = [f_ for c_ in Dj2["counties"].values() for f_ in c_.get("fac", [])]; mfile = OUT / "site_merges.csv"
+        if mfile.exists() and "site_spellings_folded" in Dj2["meta"]:
+            mg_ = pd.read_csv(mfile, dtype=str).fillna(""); ph_bad = int(sum(site_names.is_placeholder(x) for x in pd.concat([mg_.kept, mg_.merged])))
+            named_ = sum(1 for f_ in facs_ if not f_[5]); dup_ = sum(len(c_.get("fac", [])) - len({(f_[0], f_[2]) for f_ in c_.get("fac", [])}) for c_ in Dj2["counties"].values())
+            check("Facility names: one institution at one ZIP code is one facility (site_names.py)", f"{buf_.getvalue().strip()}; {len(mg_):,} spellings folded in (payload says {Dj2['meta']['site_spellings_folded']:,}); {len(facs_):,} facilities, {named_:,} named (payload says {Dj2['meta'].get('facilities_named'):,}); {ph_bad} placeholders among the folded names; {dup_} facilities in a county still sharing a name and ZIP",
+                  st_ok and len(mg_) == Dj2["meta"]["site_spellings_folded"] and named_ == Dj2["meta"].get("facilities_named") and len(facs_) == Dj2["meta"]["facilities"] and ph_bad == 0,
+                  "changes which registry rows are listed together and the facility counts; no site moves and no access figure changes")
+        else:
+            check("Facility names: one institution at one ZIP code is one facility (site_names.py)", f"{buf_.getvalue().strip()}; the payload predates the rule (it takes effect at the next registry refresh)", st_ok)
+    except Exception as e_:
+        check("Facility names: one institution at one ZIP code is one facility (site_names.py)", f"could not run ({type(e_).__name__}: {str(e_)[:80]})", False)
     if (OUT / "refresh_diff.json").exists():
         rd_ = json.load(open(OUT / "refresh_diff.json"))["summary"]
         this_pull = rd_["current_pull"][:19] == flog["timestamp_utc"][:19] and rd_["trials_current"] == N2
