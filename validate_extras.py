@@ -118,7 +118,7 @@ def run(browser=False):
             docs = "docs" if Path("docs").is_dir() and not Path("data.js").exists() else "."
             srv = subprocess.Popen([sys.executable, "-m", "http.server", "8766"], cwd=docs, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); time.sleep(1.2)
             with sync_playwright() as p:
-                b = p.chromium.launch(); pg = b.new_page(); pg.goto("http://localhost:8766/map.html", wait_until="networkidle", timeout=120000); pg.wait_for_timeout(300)
+                b = p.chromium.launch(); pg = b.new_page(); pg.goto("http://localhost:8766/map.html?lt=20", wait_until="networkidle", timeout=120000); pg.wait_for_timeout(300)   # the published 20-trial line (the page opens at "no trial" since 16 Nov 2026)
                 r = pg.evaluate("""async () => { const V = window.__validate; await V.loadTractsAll(); const F = V.filteredCounty(); const B = window.BURDEN.county; let over = 0, maxd = 0, worst = '';
                   V.CK.forEach((k,i) => { const d = Math.max(Math.abs(F.l20[i]-B[k].l20), Math.abs(F.z60[i]-B[k].z60)); if (d > 0.55) over++; if (d > maxd) { maxd = d; worst = k; } });
                   const R = V.filteredRural('nat', 0); return { over, maxd, worst, metro: R.metro.l20, nonmetro: R.nonmetro.l20 }; }""")
@@ -126,6 +126,7 @@ def run(browser=False):
                 # shares the page computes; compared below with an independent recount from tract_access.csv at the same line
                 lines = {}
                 for lt in (5, 10, 50, 100):
+                    pg.evaluate("() => document.querySelectorAll('#pane-body details.cut').forEach(d => d.open = true)")   # the pills sit behind "Draw your own line"
                     pg.click(f'.thr-btn[data-lt="{lt}"]'); pg.wait_for_function("() => !document.querySelector('#pane-body .computing')", timeout=120000); pg.wait_for_timeout(150)
                     lines[lt] = pg.evaluate("""() => { const V = window.__validate; const F = V.FS(); const co = {}; V.CK.forEach(k => { const v = V.shortOf(k); co[k] = v ? v.s : null; });
                       return { lt: V.getLT(), nat: V.filteredGeo('nat', 0).l20, tx: F ? F.l20[F.idx['TX']] : null, co, text: document.querySelector('#stat-access .main').textContent }; }""")

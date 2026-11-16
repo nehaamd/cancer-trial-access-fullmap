@@ -69,10 +69,14 @@ export function placeParamFor(ids, mv, stateOf) {
 }
 
 // the view's address: u (unless county), m, the layer's parameters in the catalog's order, then the place (c / d / s)
+const LINE_LAYERS = new Set(['short', 'shortt', 'l20']);   // layers that follow the map's trial-count line
 export function buildQS(mv, placeParam) {
   const p = new URLSearchParams(); if (!mv) { if (placeParam) p.set(placeParam[0], placeParam[1]); return p.toString(); }
   if (mv.unit !== 'county') p.set('u', mv.unit); if (mv.layer) p.set('m', mv.layer);
-  for (const k of Object.keys(MAP_PARAMS)) if (mv.params && mv.params[k] != null) p.set(k, mv.params[k]);
+  // The map opens on "no trial within 60 road-miles" (since November 2026). The answers' "short of trials" figures are drawn at the
+  // 20-trial line, so a view on a line-following layer names its line: lt=20 unless the view carries another.
+  const line = LINE_LAYERS.has(mv.layer) && !(mv.params && mv.params.lt != null) ? '20' : null;
+  for (const k of Object.keys(MAP_PARAMS)) { const v = mv.params && mv.params[k] != null ? mv.params[k] : (k === 'lt' ? line : null); if (v != null) p.set(k, v); }
   if (placeParam) p.set(placeParam[0], placeParam[1]); else if (mv.state) p.set('s', mv.state);
   return p.toString();
 }

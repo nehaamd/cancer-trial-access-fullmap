@@ -17,7 +17,7 @@ p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:440px}
 <div class="txt"><div class="brand">Cancer Clinical Trial Access Map</div>
 <h1>How far are Americans from a cancer clinical trial?</h1>
 <div class="num"><span id="n"></span><small> million</small></div>
-<p>Americans 55 and older have fewer than 20 recruiting cancer trials within 60 road-miles of home.</p></div>
+<p>Americans 55 and older have no recruiting cancer trial within 60 road-miles of home. <span id="typ"></span></p></div>
 <svg id="map" viewBox="0 0 975 610"></svg>
 <div class="url">cancertrialaccess.org</div><div class="bar"></div>
 <script src="../d3.v7.min.js"></script><script src="../data.js"></script><script src="../geo.js"></script><script src="../burden.js"></script><script src="../findings.js"></script>
@@ -25,16 +25,17 @@ p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:440px}
 if (location.search.includes('plain')) document.body.classList.add('plain');
 const D=window.DATA,C=D.counties,G=window.GEO;
 // The headline number is the one the map and the Key findings page print: the tract sum in findings.js (residents 55+ whose own
-// tract has fewer than 20 trials within 60 road-miles), not the rounded national share times the population, which can differ by 0.1 million.
+// tract has no trial within 60 road-miles), not the rounded national share times the population, which can differ by 0.1 million.
 const FN=window.FINDINGS&&window.FINDINGS.meta&&window.FINDINGS.meta.pull===D.meta.pull?window.FINDINGS.nat:null;
-document.getElementById('n').textContent=((FN&&FN.people_l20?FN.people_l20:D.meta.nat_core.p*D.meta.nat_core.l20/100)/1e6).toFixed(1);
+document.getElementById('n').textContent=((FN&&FN.people_z60?FN.people_z60:D.meta.nat_core.p*D.meta.nat_core.z60/100)/1e6).toFixed(1);
+if(FN&&FN.t60_med)document.getElementById('typ').textContent='The typical older American has about '+(Math.round(FN.t60_med/10)*10).toLocaleString()+'.';
 const proj=d3.geoAlbersUsa().fitSize([959,594],G.counties);proj.translate([proj.translate()[0]+8,proj.translate()[1]+8]);const path=d3.geoPath(proj);
-// The same layer the map opens on: one neutral fill for every county, and a circle per county sized by residents 55+ with fewer than
-// 20 listed trials within 60 road-miles (area proportional to people; 180,000 residents is a 17-unit radius, as in index.html), drawn for
+// The same layer the map opens on: one neutral fill for every county, and a circle per county sized by residents 55+ with no
+// listed trial within 60 road-miles (area proportional to people; 80,000 residents is a 17-unit radius, as in map.html), drawn for
 // counties with at least 500 such residents. Keeping the findings page and the shared card on this encoding means a reader moving between
 // pages sees one story, not two colour schemes.
-const BU=window.BURDEN,bubR=d3.scaleSqrt().domain([0,180000]).range([0,17]);
-const shortOf=k=>{const u=BU&&BU.county[k];return u&&u.l20!==null&&u.l20!==undefined?C[k].p*u.l20/100:null;};
+const BU=window.BURDEN,bubR=d3.scaleSqrt().domain([0,80000]).range([0,17]);
+const shortOf=k=>{const u=BU&&BU.county[k];return u&&u.z60!==null&&u.z60!==undefined?(Number.isFinite(u.n_z60)?u.n_z60:C[k].p*u.z60/100):null;};
 const svg=d3.select('#map');svg.append('g').selectAll('path').data(G.counties.features.filter(f=>C[f.properties.id])).join('path').attr('class','county').attr('d',path);
 const gs=svg.append('g');gs.selectAll('path.c').data(G.states.features).join('path').attr('class','c').attr('d',path).attr('fill','none').attr('stroke','#fff').attr('stroke-width',2).attr('opacity',.8);gs.selectAll('path.l').data(G.states.features).join('path').attr('class','l').attr('d',path).attr('fill','none').attr('stroke','#3F3831').attr('stroke-width',.95).attr('opacity',.95);
 const bubs=G.counties.features.map(f=>{const k=f.properties.id,n=C[k]?shortOf(k):null;return n&&n>=500?{k,c:path.centroid(f),n}:null;}).filter(d=>d&&isFinite(d.c[0])).sort((a,b)=>b.n-a.n);

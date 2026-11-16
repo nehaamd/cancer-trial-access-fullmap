@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://cancertrialaccess.org/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer trials within 60 road-miles of home, and the national total">
+<meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have no recruiting cancer trial within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cancer Clinical Trial Access Map — where the clinical trial deserts are, by county and congressional district">
 <meta name="twitter:description" content="Where the clinical trial deserts are, by county and congressional district: how far Americans live from a recruiting cancer clinical trial, in road miles.">
@@ -79,6 +79,7 @@
   .national .nat-sub{color:var(--ink-2);margin:0 0 1.4rem;max-width:70ch}
   .stat .v{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(2.6rem,4.4vw,3.4rem);font-weight:600;letter-spacing:-.03em;line-height:1;margin:0 0 .4rem;color:var(--crimson)}
   .stat .v small{font-size:.38em;font-weight:400;letter-spacing:0;color:var(--ink-2);margin-left:.3rem}
+  .stat.calm{border-top-color:var(--slate)} .stat.calm .v{color:var(--slate)} .stat .v small.pre{margin:0 .35rem 0 0}
   .stat.quiet .v{color:var(--slate);font-size:clamp(2rem,3.2vw,2.5rem)}
   .stat p{margin:0;font-size:var(--fs-1);line-height:1.4;max-width:36ch} .stat .s{color:var(--ink-3);font-size:var(--fs-0);margin-top:.3rem}
 
@@ -91,7 +92,7 @@
   .hundred{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.4rem 1.6rem;align-items:center}
   .dots{display:grid;grid-template-columns:repeat(10,14px);grid-auto-rows:14px;gap:6px;grid-row:span 2}
   .dots i{display:block;border-radius:50%;background:var(--pale-dot);transition:background-color .25s ease}
-  .dots i.z{background:var(--rust-dot)} .dots i.l{background:var(--clay-dot)}
+  .dots i.z{background:var(--rust-dot)}
   @media (max-width:420px){.dots{grid-template-columns:repeat(10,11px);grid-auto-rows:11px;gap:5px}}
   .hundred h3{font-family:"Source Serif 4",Georgia,serif;font-size:var(--fs-3);font-weight:600;margin:0;align-self:end}
   .hundred .big{font-family:"Source Serif 4",Georgia,serif;font-size:3.6rem;line-height:1;font-weight:600;letter-spacing:-.03em;color:var(--crimson);margin:.2rem 0 .3rem}
@@ -139,7 +140,7 @@
       <div>
         <p class="hero-tag">Every US county and congressional district</p>
         <h1>Where you live shouldn't decide which cancer trials you can join.</h1>
-        <p class="lede"><b>About <span data-f="one_in">1 in 8</span> Americans aged 55 and older, <span data-f="people_l20_m">11.8</span> million people,</b> have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. The national average is <span data-f="t60">362</span>.</p>
+        <p class="lede"><b>The typical older American has about <span data-f="t60_typ">250</span> cancer clinical trials within 60 road-miles of home. <span data-f="people_z60_m">4.3</span> million have none.</b></p>
         <p class="lede what-for">This map shows where they live, which trials and cancer centers are within reach, and what would close the gap.</p>
         <div class="actions"><a class="btn primary" href="map.html">Open the map</a><a class="btn" href="findings.html">Key findings</a><a class="btn" href="find.html">Trials near a ZIP</a></div>
         <p class="stamp-line"><span data-site-date>Data as of the latest weekly refresh</span>. Sources: ClinicalTrials.gov, Census Bureau, NCI.</p>
@@ -148,11 +149,11 @@
            before choosing anything. The picture is assets/map-national.png (rewritten by make_assets.py after each refresh). -->
       <figure class="hero-map">
         <a href="map.html" aria-label="Open the interactive map">
-          <img src="assets/map-national.png" width="1600" height="1000" alt="Map of US counties, each with a circle sized by the number of residents 55 and older who have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home; NCI-designated cancer centers marked">
+          <img src="assets/map-national.png" width="1600" height="1000" alt="Map of US counties, each with a circle sized by the number of residents 55 and older who have no recruiting cancer treatment trial within 60 road-miles of home; NCI-designated cancer centers marked">
           <figcaption>
-            <p class="key-t">Each circle is a county's older adults who are short of trials</p>
+            <p class="key-t">Each circle is a county's older adults with no cancer trial within reach</p>
             <ul class="key">
-              <li><span class="c" aria-hidden="true"><i style="width:6px;height:6px"></i><i style="width:11px;height:11px"></i><i style="width:17px;height:17px"></i></span>Bigger circle, more people with fewer than 20 trials within 60 road-miles</li>
+              <li><span class="c" aria-hidden="true"><i style="width:6px;height:6px"></i><i style="width:11px;height:11px"></i><i style="width:17px;height:17px"></i></span>Bigger circle, more people with no recruiting trial within 60 road-miles</li>
               <li><span class="st" aria-hidden="true">&#9733;</span>NCI-designated cancer center</li>
             </ul>
             <span class="open">Explore any county, district or state &rarr;</span>
@@ -178,8 +179,8 @@
       <h2 id="nat-h">Across the United States</h2>
       <p class="nat-sub">Distance is measured along the road network from where people live, not as counts per state, for residents aged 55 and older.</p>
       <div class="stats">
-        <div class="stat"><p class="v"><span data-f="people_l20_m">11.8</span><small>million</small></p><p>Americans 55 and older with fewer than 20 recruiting cancer trials within 60 road-miles</p><p class="s"><span data-f="l20">11.8</span>% of residents 55 and older</p></div>
-        <div class="stat"><p class="v"><span data-f="people_z60_m">4.3</span><small>million</small></p><p>with no recruiting cancer trial at all within 60 road-miles</p><p class="s"><span data-f="z60">4.3</span>% of residents 55 and older</p></div>
+        <div class="stat"><p class="v"><span data-f="people_z60_m">4.3</span><small>million</small></p><p>Americans 55 and older with no recruiting cancer trial within 60 road-miles of home</p><p class="s"><span data-f="z60">4.3</span>% of residents 55 and older</p></div>
+        <div class="stat calm"><p class="v"><small class="pre">about</small><span data-f="t60_typ">250</span></p><p>recruiting cancer trials within 60 road-miles for the typical older American</p><p class="s">The median is <span data-f="t60_med">247</span>; a few very large metro areas pull the average up to <span data-f="t60">362</span></p></div>
         <div class="stat quiet"><p class="v"><span data-f="trials">4,035</span></p><p>recruiting cancer treatment trials with a US site, at <span data-f="facilities">9,655</span> facilities</p><p class="s">Refreshed weekly from ClinicalTrials.gov</p></div>
       </div>
     </div>
@@ -188,23 +189,22 @@
   <section class="gap" aria-labelledby="gap-h">
     <div class="wrap">
       <h2 id="gap-h">For every 100 older adults, rural and metro</h2>
-      <p class="sub">Each dot is one resident aged 55 or older. Rural (nonmetro) counties hold about one in six older Americans, and most of the people the map counts as short of trials.</p>
+      <p class="sub">Each dot is one resident aged 55 or older. Rural (nonmetro) counties hold about one in six older Americans, and <span data-f="nm_share_z60">75</span>% of those with no cancer trial within reach.</p>
       <div class="pair">
         <div class="hundred">
-          <div class="dots" data-z="nm_z60" data-l="nm_l20" aria-hidden="true"></div>
+          <div class="dots" data-z="nm_z60" aria-hidden="true"></div>
           <h3>Rural counties</h3>
-          <div><p class="big"><span data-f="nm_l20">42</span></p><p>of 100 have fewer than 20 trials within 60 road-miles, and <span data-f="nm_z60">21</span> have none at all</p></div>
+          <div><p class="big"><span data-f="nm_z60">21</span></p><p>of 100 <span data-f="nm_have">have</span> no recruiting cancer trial within 60 road-miles of home</p></div>
         </div>
         <div class="hundred">
-          <div class="dots" data-z="m_z60" data-l="m_l20" aria-hidden="true"></div>
+          <div class="dots" data-z="m_z60" aria-hidden="true"></div>
           <h3>Metro counties</h3>
-          <div><p class="big low"><span data-f="m_l20">6</span></p><p>of 100 have fewer than 20 trials within 60 road-miles, and <span data-f="m_z60">1</span> has none at all</p></div>
+          <div><p class="big low"><span data-f="m_z60">1</span></p><p>of 100 <span data-f="m_have">has</span> no recruiting cancer trial within 60 road-miles of home</p></div>
         </div>
       </div>
       <ul class="legend">
         <li><i style="background:var(--rust-dot)"></i>No recruiting trial within 60 road-miles</li>
-        <li><i style="background:var(--clay-dot)"></i>1 to 19 trials</li>
-        <li><i style="background:var(--pale-dot)"></i>20 or more trials</li>
+        <li><i style="background:var(--pale-dot)"></i>At least one</li>
         <li>USDA Rural-Urban Continuum Codes, 2023</li>
       </ul>
       <p class="more"><a href="findings.html">See every state and district in Key findings</a></p>
@@ -288,9 +288,11 @@
   const pct = v => (Math.round(v * 10) / 10).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const pct0 = v => Math.round(v).toLocaleString();
   const fmt = v => Number(v).toLocaleString();
-  const vals = { people_l20_m: M(N.people_l20), people_z60_m: M(N.people_z60), l20: pct(N.l20), z60: pct(N.z60), nm_l20: pct0(R.nonmetro.l20), m_l20: pct0(R.metro.l20),
-                 nm_z60: pct0(R.nonmetro.z60), m_z60: pct0(R.metro.z60), trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities),
-                 t60: fmt(N.t60), one_in: '1 in ' + Math.round(100 / N.l20) };   // "about 1 in 8" follows the share itself, so the sentence cannot drift from the figure
+  // the headline: the typical resident (the median over census tracts, rounded to the nearest ten for the sentence) and the residents with no trial within reach
+  const med = N.t60_med, nmZ = Math.round(R.nonmetro.z60), mZ = Math.round(R.metro.z60);
+  const vals = { people_z60_m: M(N.people_z60), z60: pct(N.z60), nm_z60: String(nmZ), m_z60: String(mZ), nm_have: nmZ === 1 ? 'has' : 'have', m_have: mZ === 1 ? 'has' : 'have',
+                 nm_share_z60: R.nonmetro.n_z60 && N.people_z60 ? pct0(100 * R.nonmetro.n_z60 / N.people_z60) : undefined,
+                 trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities), t60: fmt(N.t60), t60_med: med ? fmt(med) : undefined, t60_typ: med ? fmt(Math.round(med / 10) * 10) : undefined };
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
   if (SITE.ASK_URL) { SITE.askStyles(); SITE.mountAskBox(document.getElementById('ask-mount'), { hero: true, action: 'map.html', placeholder: 'e.g. Which districts in Ohio have the least access?' }); document.getElementById('ask-band').hidden = false; document.body.classList.add('has-ask'); }   // the question box appears once the helper is deployed; the form's GET hands the question to map.html?ask=, where ask/ask.js answers it
@@ -299,13 +301,13 @@
 
   // "For every 100 older adults": 100 dots per group, from the same rounded shares the text prints (none, then 1-19 trials, then the rest).
   // The dots fill once, the first time the section scrolls into view; with reduced motion they are drawn filled.
-  const num = { nm_z60: R.nonmetro.z60, nm_l20: R.nonmetro.l20, m_z60: R.metro.z60, m_l20: R.metro.l20 };
+  const num = { nm_z60: R.nonmetro.z60, m_z60: R.metro.z60 };
   const grids = [...document.querySelectorAll('.dots')];
   grids.forEach(g => { for (let i = 0; i < 100; i++) g.appendChild(document.createElement('i')); });
   const fill = () => grids.forEach(g => {
-    const z = Math.round(num[g.dataset.z]), l = Math.round(num[g.dataset.l]);
+    const z = Math.round(num[g.dataset.z]);
     [...g.children].forEach((d, i) => {
-      const cls = i < z ? 'z' : i < l ? 'l' : '';
+      const cls = i < z ? 'z' : '';
       if (!cls) return;
       if (still) d.className = cls; else setTimeout(() => { d.className = cls; }, i * 18);
     });

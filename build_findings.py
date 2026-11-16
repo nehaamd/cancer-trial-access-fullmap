@@ -46,7 +46,11 @@ def people_counts():
     if int(t.pop55.sum()) != int(core["p"]): sys.exit(f"tract_access.csv population {int(t.pop55.sum()):,} differs from data.js {int(core['p']):,}")
     for k, v in n.items():
         if abs(100 * v / core["p"] - core[k]) > 0.051: sys.exit(f"tract count for {k} ({100 * v / core['p']:.2f}%) disagrees with the published share ({core[k]}%)")
-    return {"people_" + k: int(v) for k, v in n.items()}
+    # the typical resident: the population-weighted median number of trials within 60 road-miles (the mean, t60, is pulled up by a few
+    # very large metropolitan areas: more than half of residents 55+ have fewer trials within reach than the mean)
+    t = t.sort_values("trials_within_60rdmi"); cum = t.pop55.cumsum()
+    med = int(t.trials_within_60rdmi[cum >= t.pop55.sum() / 2].iloc[0])
+    return {**{"people_" + k: int(v) for k, v in n.items()}, "t60_med": med}
 
 states = []
 for _, r in st.iterrows():
@@ -62,8 +66,10 @@ for _, r in st.iterrows():
 states.sort(key=lambda x: -x["l20"])
 
 worst_d = sorted(DI.items(), key=lambda kv: -kv[1]["l20"])[:10]
+worst_z = sorted(DI.items(), key=lambda kv: (-kv[1]["z60"], -kv[1]["l20"]))[:10]   # the same table at the "no trial" line, the map's opening line since 16 Nov 2026
+drow = lambda k, d: {"k": k, "label": f"{d['st']}-{'AL' if d['cd'] in ('0', '98') else d['cd']}", "member": d.get("member"), "party": d.get("party"), "l20": d["l20"], "z60": d["z60"], "medn": d.get("medn"), "pop55": d["p"]}
 districts = {"n": len(DI), "all_beyond_60_broad": sum(1 for d in DI.values() if d["g60b"] >= 99.95), "half_lt20": sum(1 for d in DI.values() if d["l20"] >= 50),
-             "worst": [{"k": k, "label": f"{d['st']}-{'AL' if d['cd'] in ('0', '98') else d['cd']}", "member": d.get("member"), "party": d.get("party"), "l20": d["l20"], "z60": d["z60"], "medn": d.get("medn"), "pop55": d["p"]} for k, d in worst_d]}
+             "worst": [drow(k, d) for k, d in worst_d], "worst_none": [drow(k, d) for k, d in worst_z]}
 
 bills = []
 for k, b in CO["bills"].items():
@@ -100,6 +106,7 @@ def key_term_shares():
     except SystemExit: return None
     ar = {f["properties"]["id"]: geo_area(f["geometry"]) for f in G["counties"]["features"]}
     allv = drawn = pop = pop_maj = area = area_maj = 0.0
+    allz = drawnz = popz = areaz = 0.0
     for k, c in D["counties"].items():
         p = c["p"]; u = BU["county"].get(k); pop += p; area += ar.get(k, 0)
         if not u or u.get("l20") is None: continue
@@ -107,8 +114,15 @@ def key_term_shares():
         allv += n
         if n >= 500: drawn += n
         if u["l20"] > 50: pop_maj += p; area_maj += ar.get(k, 0)
+        # the same three figures at the "no trial" line, the map's opening line since 16 Nov 2026
+        nz = u["n_z60"] if isinstance(u.get("n_z60"), (int, float)) else p * (u.get("z60") or 0) / 100
+        allz += nz
+        if nz >= 500: drawnz += nz
+        if (u.get("z60") or 0) > 50: popz += p; areaz += ar.get(k, 0)
     return {"drawn_pct": round(100 * drawn / allv, 6) if allv else None, "area_pct": round(100 * area_maj / area, 6) if area else None,
-            "pop_pct": round(100 * pop_maj / pop, 6) if pop else None}
+            "pop_pct": round(100 * pop_maj / pop, 6) if pop else None,
+            "drawn_pct_none": round(100 * drawnz / allz, 6) if allz else None, "area_pct_none": round(100 * areaz / area, 6) if area else None,
+            "pop_pct_none": round(100 * popz / pop, 6) if pop else None}
 
 def methods_block():
     """Everything methods.html fills in from data: the map payload's meta values the methods text quotes, and the optional layers'
