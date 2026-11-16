@@ -103,3 +103,13 @@ header.site .product:hover{color:var(--navy)} header.site .product[aria-current=
 
 /* ---- crimson accent line under the header on every page (drawn inside the header, so no page layout moves) ---- */
 header.site{box-shadow:inset 0 -3px 0 #8E1B2E}
+
+/* ---- long reference pages: sections open from their headings (site.js foldSections) ---- */
+.sec-btn{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;align-items:baseline;gap:1rem;width:100%;cursor:pointer;text-align:left}
+.sec-btn::after{content:"\2212";font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;font-weight:400;font-size:1.1em;line-height:1;color:var(--ink-3);flex:0 0 auto}
+section.folded > h2 > .sec-btn::after{content:"+"}
+.sec-btn:hover{color:var(--link)} .sec-btn:focus-visible{outline:3px solid var(--gulf);outline-offset:4px;border-radius:3px}
+main[data-fold] section.folded{padding-top:1.1rem;padding-bottom:1.1rem} main[data-fold] section.folded > h2{margin-bottom:0;max-width:none;font-size:var(--fs-3)}
+main[data-fold] section[id] > h2:has(> .sec-btn){max-width:none}
+.fold-all{margin:1.2rem 0 0;font-size:var(--fs-0);text-align:right} .fold-all-btn{all:unset;cursor:pointer;color:var(--link);font-weight:600} .fold-all-btn:hover{text-decoration:underline} .fold-all-btn:focus-visible{outline:3px solid var(--gulf);outline-offset:3px;border-radius:3px}
+@media print{.fold-all{display:none} .sec-btn::after{content:none}}
