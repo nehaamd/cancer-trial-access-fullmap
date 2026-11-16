@@ -94,6 +94,32 @@ window.SITE = (function () {
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireHeader); else wireHeader();
 
+  // Long reference pages: under <main data-fold="ids that start open"> every <section id> with a heading opens and closes from that heading
+  // (data-fold-only="ids" limits it to those sections). Without JavaScript the page is simply all open. The text stays in the page, so a link
+  // to a place inside a closed section opens it, the browser's find-in-page opens it where hidden="until-found" is supported, and printing opens everything.
+  function foldSections() {
+    const main = document.querySelector('main[data-fold]'); if (!main || main.dataset.folded) return; main.dataset.folded = '1';
+    const keep = new Set((main.dataset.fold || '').split(/\s+/).filter(Boolean)), only = main.dataset.foldOnly ? new Set(main.dataset.foldOnly.split(/\s+/)) : null;
+    const secs = Array.from(main.querySelectorAll('section[id]')).filter(x => x.querySelector(':scope > h2') && (!only || only.has(x.id)) && !x.hidden);
+    if (!secs.length) return;
+    let all = null; const sync = () => { if (all) all.textContent = secs.some(x => x.classList.contains('folded')) ? 'Open all sections' : 'Close all sections'; };
+    const set = (x, open) => { const body = x.querySelector(':scope > .sec-body'), btn = x.querySelector(':scope > h2 > .sec-btn'); x.classList.toggle('folded', !open); btn.setAttribute('aria-expanded', String(open));
+      if (open) body.removeAttribute('hidden'); else body.setAttribute('hidden', 'until-found'); sync(); };
+    secs.forEach(x => { const h = x.querySelector(':scope > h2'), body = document.createElement('div'); body.className = 'sec-body'; body.id = x.id + '-text';
+      let n = h.nextSibling; while (n) { const nx = n.nextSibling; body.appendChild(n); n = nx; } x.appendChild(body);
+      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'sec-btn'; btn.setAttribute('aria-controls', body.id); while (h.firstChild) btn.appendChild(h.firstChild); h.appendChild(btn);
+      btn.addEventListener('click', () => set(x, x.classList.contains('folded'))); body.addEventListener('beforematch', () => set(x, true)); set(x, keep.has(x.id)); });
+    const openFor = scroll => { let id = ''; try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return; } const t = id && document.getElementById(id); if (!t) return;
+      const x = t.closest('section[id]'); if (x && secs.includes(x) && x.classList.contains('folded')) { set(x, true); scroll = true; } if (scroll) requestAnimationFrame(() => t.scrollIntoView()); };
+    window.addEventListener('hashchange', () => openFor(true)); openFor(false);
+    document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[href^="#"]'); if (a && a.getAttribute('href') === location.hash) openFor(true); });   // the same link pressed again
+    const bar = document.createElement('p'); bar.className = 'fold-all'; all = document.createElement('button'); all.type = 'button'; all.className = 'fold-all-btn';
+    all.addEventListener('click', () => { const open = secs.some(x => x.classList.contains('folded')); secs.forEach(x => set(x, open)); }); bar.appendChild(all); secs[0].parentNode.insertBefore(bar, secs[0]); sync();
+    let was = null; window.addEventListener('beforeprint', () => { was = secs.map(x => x.classList.contains('folded')); secs.forEach(x => set(x, true)); });
+    window.addEventListener('afterprint', () => { if (was) secs.forEach((x, i) => set(x, !was[i])); was = null; });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', foldSections); else foldSections();
+
 
   // ---- "Ask the map": the question box. On the map page, ask/ask.js (an ES module) owns the box's behaviour: it posts the question to the
   // helper (a Cloudflare Worker, worker/ in the repository) one model step at a time, runs the model's data tools in the browser over the
