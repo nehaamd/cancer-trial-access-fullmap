@@ -137,7 +137,7 @@ window.SITE = (function () {
     ['Ohio members and H.R. 3521', 'Which Ohio House members have not cosponsored H.R. 3521?'],
     ['Hidalgo County to an NCI center', 'How far is Hidalgo County from an NCI center?'],
     ['Harris vs Hidalgo County', 'Compare Harris County and Hidalgo County'],
-    ['Rural Ohio: no trial within 60 mi', 'How many rural Ohio counties have no trial within 60 miles?'],
+    ['Rural Montana: no trial within 60 mi', 'How many rural Montana counties have no trial within 60 miles?'],
     ['Breast cancer trials near 78501', 'Breast cancer trials near 78501'],
     ['Highest lung cancer incidence', 'Which counties have the highest lung cancer incidence?']
   ];

@@ -670,8 +670,8 @@ export function createEngine(options = {}) {
     const d = F.districts || null; const m = F.meta || null;
     return {
       nat: F.nat, states_no_broad: F.states_no_broad, states_no_broad_list: F.states_no_broad_list,
-      districts: d ? { n: d.n, all_beyond_60_broad: d.all_beyond_60_broad, half_lt20: d.half_lt20, worst: d.worst } : null,
-      meta: m ? { pull: m.pull, trials: m.trials, facilities: m.facilities, n_tracts: m.n_tracts, n_nci: m.n_nci, nci_centers: m.nci_centers } : null,
+      districts: d ? { n: d.n, all_beyond_60_broad: d.all_beyond_60_broad, half_lt20: d.half_lt20, worst: d.worst, worst_none: d.worst_none || null } : null,   // worst: by the share with fewer than 20; worst_none: by the share with none (the table Key findings shows)
+      meta: m ? { pull: m.pull, trials: m.trials, facilities: m.facilities, facilities_named: m.facilities_named ?? null, sites_unresolved: m.sites_unresolved ?? null, n_tracts: m.n_tracts, n_nci: m.n_nci, nci_centers: m.nci_centers } : null,
     };
   }
   // CHANGES → the week's summary and short lists (capped at 12 each)

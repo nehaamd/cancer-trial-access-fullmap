@@ -30,7 +30,7 @@ FIELDS = {
     "name": "Place name. Districts: 'Texas 34th'; counties: 'Hidalgo County, Texas'.",
     "state": "USPS code of the state.",
     "pop55": "Residents aged 55 and older (ACS 5-year, summed from census tracts).",
-    "pct_lt20_trials_within_60rdmi": "Share (%) of residents 55+ with fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. The site's headline 'short of trials' measure.",
+    "pct_lt20_trials_within_60rdmi": "Share (%) of residents 55+ with fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. What 'short of trials' means on this site; the lead figure until 16 Nov 2026 (the site now leads with pct_zero_trials_within_60rdmi and the typical trial count).",
     "people_lt20_trials_within_60rdmi": "The same, as a count of people.",
     "pct_zero_trials_within_60rdmi": "Share (%) with no recruiting trial within 60 road-miles.",
     "people_zero_trials_within_60rdmi": "The same, as a count of people (pop55 x share, rounded; the rule used for people_lt20_trials_within_60rdmi).",

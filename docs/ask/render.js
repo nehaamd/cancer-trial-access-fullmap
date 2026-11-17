@@ -75,7 +75,9 @@ export function buildQS(mv, placeParam) {
   if (mv.unit !== 'county') p.set('u', mv.unit); if (mv.layer) p.set('m', mv.layer);
   // The map opens on "no trial within 60 road-miles" (since November 2026). The answers' "short of trials" figures are drawn at the
   // 20-trial line, so a view on a line-following layer names its line: lt=20 unless the view carries another.
-  const line = LINE_LAYERS.has(mv.layer) && !(mv.params && mv.params.lt != null) ? '20' : null;
+  // A "no trial" view carries lt=1 from its method or field tag. A view with no layer at all opens the unit's default layer, which also
+  // follows the line, so it gets lt=20 too (it opened at 20 before the map's opening line changed).
+  const line = (LINE_LAYERS.has(mv.layer) || !mv.layer) && !(mv.params && mv.params.lt != null) ? '20' : null;
   for (const k of Object.keys(MAP_PARAMS)) { const v = mv.params && mv.params[k] != null ? mv.params[k] : (k === 'lt' ? line : null); if (v != null) p.set(k, v); }
   if (placeParam) p.set(placeParam[0], placeParam[1]); else if (mv.state) p.set('s', mv.state);
   return p.toString();

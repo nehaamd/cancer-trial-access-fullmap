@@ -2,14 +2,14 @@
 <link rel="stylesheet" href="../site.css">
 <style>
 body{margin:0;width:1200px;height:630px;overflow:hidden;background:#F7F5F0;font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;color:#1B2430;position:relative}
-#map{position:absolute;right:-40px;top:20px;width:820px;height:auto}
+#map{position:absolute;right:-2px;top:20px;width:782px;height:auto}
 body.plain{width:1600px;height:1000px} body.plain #map{position:static;width:1600px;height:1000px} body.plain .txt,body.plain .bar,body.plain .url{display:none}
 .txt{position:absolute;left:56px;top:56px;width:470px}
 .brand{font-size:26px;font-weight:700;color:#0B3C5D;letter-spacing:-.01em}
 h1{font-size:44px;line-height:1.08;letter-spacing:-.02em;margin:18px 0 22px;font-weight:700}
 .num{font-size:96px;font-weight:700;letter-spacing:-.03em;line-height:1;color:#8A3B1E}
 .num small{font-size:34px;color:#4B5563;font-weight:500;letter-spacing:0}
-p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:440px}
+p{font-size:24px;line-height:1.35;margin:10px 0 0;color:#1B2430;max-width:372px}
 .bar{position:absolute;left:0;right:0;bottom:0;height:14px;background:#0B3C5D}
 .url{position:absolute;left:56px;bottom:34px;font-size:20px;color:#4B5563}
 .county{fill:#EFEBE3;stroke:#fff;stroke-width:.35}.nci{fill:#0B3C5D;stroke:#fff;stroke-width:1}.bub{fill:rgba(200,98,42,.72);stroke:#fff;stroke-width:.6}
@@ -28,7 +28,7 @@ const D=window.DATA,C=D.counties,G=window.GEO;
 // tract has no trial within 60 road-miles), not the rounded national share times the population, which can differ by 0.1 million.
 const FN=window.FINDINGS&&window.FINDINGS.meta&&window.FINDINGS.meta.pull===D.meta.pull?window.FINDINGS.nat:null;
 document.getElementById('n').textContent=((FN&&FN.people_z60?FN.people_z60:D.meta.nat_core.p*D.meta.nat_core.z60/100)/1e6).toFixed(1);
-if(FN&&FN.t60_med)document.getElementById('typ').textContent='The typical older American has about '+(Math.round(FN.t60_med/10)*10).toLocaleString()+'.';
+if(FN&&FN.t60_med)document.getElementById('typ').textContent='The typical older American has about '+(Math.round(FN.t60_med/10)*10).toLocaleString()+' within reach.';
 const proj=d3.geoAlbersUsa().fitSize([959,594],G.counties);proj.translate([proj.translate()[0]+8,proj.translate()[1]+8]);const path=d3.geoPath(proj);
 // The same layer the map opens on: one neutral fill for every county, and a circle per county sized by residents 55+ with no
 // listed trial within 60 road-miles (area proportional to people; 80,000 residents is a 17-unit radius, as in map.html), drawn for
