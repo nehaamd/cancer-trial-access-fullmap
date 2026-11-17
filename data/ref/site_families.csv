@@ -34,9 +34,9 @@ UCSF,CA,\bucsf\b|university california san francisco|\buc san francisco\b|helen 
 UC Davis,CA,\buc davis\b|university california davis|\bucdavis\b,
 UC Irvine / Chao Family Comprehensive Cancer Center,CA,\buci\b|\buc irvine\b|university california irvine|chao family,
 UC San Diego / Moores Cancer Center,CA,\bucsd\b|\buc san diego\b|university california san diego|\bmoores\b,92093|92037
+The Angeles Clinic,CA,angeles clinic,
 Cedars-Sinai,CA,cedars? ?sinai|\bcedars\b|samuel oschin,
 Kaiser Permanente,CA|CO|OR|WA|HI|GA|MD|VA|DC,kaiser,
-The Angeles Clinic,CA,angeles clinic,
 Los Angeles Cancer Network,CA,los angeles cancer network|\blacn\b|oncura,
 Hoag,CA,\bhoag\b,
 Scripps,CA,scripps,
@@ -97,7 +97,7 @@ University of Iowa / Holden Comprehensive Cancer Center,IA,university iowa|holde
 Nebraska Cancer Specialists,IA,nebraska cancer specialists,
 # ---- Kansas / Missouri
 University of Kansas Cancer Center,KS|MO,university kansas|\bku (medical|cancer|med)\b|\bkumc\b|kansas university,
-Siteman Cancer Center (Washington University),MO|IL,washington university|siteman|barnes jewish|\bwustl\b|\bwashu\b,63110|63108|63130
+Siteman Cancer Center (Washington University),MO|IL,washington university|siteman|barnes jewish|\bwustl\b|\bwashu\b|\bwash u\b|^wa university school,63110|63108|63130
 Mercy Hospital St. Louis,MO,\bmercy\b,
 # ---- Kentucky
 Markey Cancer Center (University of Kentucky),KY,markey|university kentucky|\buk health\b,
@@ -127,7 +127,7 @@ Karmanos Cancer Institute,MI,karmanos|wayne state,
 Henry Ford Health,MI,henry ford,
 Corewell Health,MI,corewell|spectrum health|william beaumont|beaumont (hospital|health),
 # ---- Minnesota
-Mayo Clinic,MN|WI,\bmayo\b,55905|55902
+Mayo Clinic,MN|WI,\bmayo\b|\bmay clinic\b,55905|55902
 University of Minnesota / Masonic Cancer Center,MN,university minnesota|masonic|\bm health\b|\bmhealth\b,
 Minnesota Oncology,MN,minnesota oncology|\bmno\b,
 HealthPartners,MN,health ?partners|regions hospital|frauenshuh,
@@ -186,6 +186,7 @@ Willamette Valley Cancer Institute,OR,willamette valley cancer|oncology associat
 # ---- Pennsylvania
 Allegheny Health Network,PA,allegheny|\bahn\b|west penn|western pennsylvania hospital,
 Lancaster General / Ann B. Barshinger Cancer Institute,PA,lancaster general|barshinger,
+Wills Eye Hospital,PA,wills eye,
 Sidney Kimmel Cancer Center (Jefferson),PA,jefferson|sidney kimmel,
 Abramson Cancer Center (Penn Medicine),PA,university pennsylvania|abramson|perelman|penn medicine|\bupenn\b|hospital university pennsylvania|\bhup\b,
 Fox Chase Cancer Center,PA,fox chase,
@@ -212,12 +213,12 @@ St. Jude Children's Research Hospital,TN,saint jude,
 Baptist Memorial,TN|MS|AR,baptist (memorial|cancer|clinical),
 # ---- Texas
 Mays Cancer Center (UT Health San Antonio),TX,\bmays\b|ut health san antonio|\buthscsa\b|university texas health science center san antonio|cancer therapy research center|\bctrc\b,
-MD Anderson Cancer Center,TX,\bmd ?anderson\b|\bmdacc\b,
+MD Anderson Cancer Center,TX,\bmd ?anderson\b|\bmdacc?\b,
 UT Southwestern / Simmons Comprehensive Cancer Center,TX,southwestern|\butsw\b|simmons (comprehensive )?cancer|texas southwest\b|ut southwest\b,75390|75235
 Baylor College of Medicine / Dan L Duncan Comprehensive Cancer Center,TX,baylor college|dan l duncan|duncan (comprehensive )?cancer,
 Texas Oncology,TX,texas oncology,
 Baylor University Medical Center / Sammons Cancer Center,TX,baylor (university medical|sammons|charles|scott)|sammons cancer|scott white,
-NEXT Oncology,TX|VA,^next\b,
+NEXT Oncology,TX|VA,^next\b|\bnext oncology\b,
 Mary Crowley Cancer Research,TX,mary crowley,
 Houston Methodist / Methodist Hospital,TX,houston methodist|methodist (hospital|willowbrook|west|sugar land|san jacinto|woodlands|baytown|clear lake),
 UT Health Houston,TX,ut ?health houston|\buthealth\b|university texas health science center houston|mcgovern,
@@ -230,7 +231,7 @@ Huntsman Cancer Institute (University of Utah),UT,huntsman|university utah,84112
 Intermountain Health,UT,intermountain|lds hospital,
 # ---- Virginia
 VCU Massey Comprehensive Cancer Center,VA,massey|virginia commonwealth|\bvcu\b,
-University of Virginia,VA,university virginia|\buva\b|emily couric,22903|22908
+University of Virginia,VA,universt?i?t?y virgini?a|\buva\b|emily couric,22903|22908
 Virginia Cancer Specialists,VA,virginia cancer specialists,
 Virginia Oncology Associates,VA,virginia oncology associates,
 Inova Schar Cancer Institute,VA,inova|schar,

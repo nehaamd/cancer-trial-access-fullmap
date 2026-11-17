@@ -196,7 +196,7 @@ def main():
     sa_ = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna("")
     if "assign_method" in sa_.columns:
         import re as _re
-        vrx = _re.compile(config.VIRTUAL_SITE_PATTERN, _re.I); is_v = sa_.facility.map(lambda x: bool(vrx.search(x)))
+        vrx = _re.compile(config.VIRTUAL_SITE_PATTERN, _re.I); is_v = sa_.facility.map(lambda x: bool(vrx.search(x))) | (sa_.assign_method == "virtual_site")   # the second term: rows of a telemedicine service written without the word (metrics_us.virtual_by_context)
         located = int((is_v & (sa_.county_fips != "")).sum()); n_v = int(is_v.sum()); tele = Dj2["T"].get("tele", {})
         if not config.VIRTUAL_SITES_ARE_LOCATIONS:
             want = {n_ for n_ in sa_[is_v].nct_id if n_ in set(T2["id"])}
@@ -220,9 +220,21 @@ def main():
             got_ = {(s_i, T2["id"][j_], e_[3][0]) for s_i, ents in enumerate(Dj2["SPX"]) for e_ in ents if len(e_) > 3 for j_ in e_[1]}
             zm_ = Dj2["meta"].get("zip_city") or {}
             check("Registry rows whose ZIP and city disagree: decided where the registry's other rows decide, flagged where they do not", f"{zb_.getvalue().strip().splitlines()[0]}; {int((rv_.zip_city == 'zip').sum())} rows keep the ZIP and print its place, {int((rv_.zip_city == 'ambiguous').sum())} are undecided; {len(want_)} trial listings to flag, {len(got_)} flagged in the page data ({len(want_ ^ got_)} differ); {off_zip} reviewed rows not placed by their ZIP; {no_place} corrected rows without a place name",
-                  z_ok and want_ == got_ and off_zip == 0 and no_place == 0 and zm_.get("flagged", -1) == int(((sa_.zip_city == "ambiguous") & (sa_.county_fips != "") & sa_.nct_id.isin(ids_)).sum()),
+                  z_ok and want_ == got_ and off_zip == 0 and no_place == 0 and not (gq2_[gq2_.zip_city != ""].geocode.str.startswith("city_centroid_zip_spans") | (gq2_[gq2_.zip_city != ""].geocode == "city_centroid")).any() and zm_.get("flagged", -1) == int(((sa_.zip_city == "ambiguous") & (sa_.county_fips != "") & sa_.nct_id.isin(ids_)).sum()),
                   "the city printed for a corrected row changes; no row moves except those whose ZIP was judged the error, which are counted with the mistyped ZIPs above (out_adult55/zip_city_review.csv lists every decision)")
         else: check("Registry rows whose ZIP and city disagree: decided where the registry's other rows decide, flagged where they do not", "site_geocode_qc.csv or the page data predates the review (route_sites_us.py and build_webapp_data_v3.py not re-run?)", False)
+    # the county panel's "within 60 road-miles" counts and the lists the panel opens (built on the page from nbd) say the same thing
+    if "SPX" in Dj2:
+        t60_bad = f60_bad = 0
+        for c_ in Dj2["counties"].values():
+            tr_, fa_ = set(), set()
+            for sp_, mi_ in c_["nbd"]:
+                if mi_ > 60: break
+                for e_ in Dj2["SPX"][sp_]: tr_.update(e_[1])
+                for r_ in Dj2["SPI"][sp_]: fa_.add(tuple(r_))
+            t60_bad += len(tr_) != c_["t60"]; f60_bad += c_.get("f60") is not None and len(fa_) != c_["f60"]
+        check("County panel and its lists agree on trials and sites within 60 road-miles", f"{t60_bad} counties where the trial count differs from the list; {f60_bad} where the site count does", t60_bad == 0 and f60_bad == 0,
+              "a site just over 60 road-miles is stored as 61, not rounded onto 60; a facility with several locations in range is counted once")
     check("Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted)", f"{bad_idx} bad facility trial indices; {sp_bad} bad sitepoint→facility refs; {nbd_unsorted} unsorted nearby lists; sponsor names {sum(1 for x in T2['spn'] if x):,}/{N2:,}, last-update dates {sum(1 for x in T2['upd'] if x):,}/{N2:,}", bad_idx == 0 and sp_bad == 0 and nbd_unsorted == 0 and sum(1 for x in T2['spn'] if x) == N2)
     # facility names (site_names.py): the registry's spellings of one institution at one ZIP code are one facility. The rules are tested on
     # fixed examples; the payload must agree with the list of spellings folded in; a sponsor placeholder is never folded into a named facility.
