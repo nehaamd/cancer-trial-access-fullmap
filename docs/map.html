@@ -341,6 +341,61 @@
   @media (max-width:640px) and (pointer:coarse){.zoomctl{display:none}}   /* on a phone, pinching replaces the zoom buttons */
   @media (prefers-reduced-motion:reduce){.county{transition:none}#busy i{animation:none}html{scroll-behavior:auto}}
   @media (forced-colors:active){.layer-list button[aria-pressed="true"],.thr-btn[aria-pressed="true"],.lm-units button[aria-pressed="true"]{outline:2px solid Highlight;outline-offset:-2px} .mb-quick button[aria-pressed="true"]{outline:3px solid CanvasText;outline-offset:-3px} .legend i,.layer-list .sw i,.mb-sw i{forced-color-adjust:none}}
+  /* ==== November 2026 design pass: one stage, one story ====
+     The left side is one sheet of paper: the search box and the view switch, the map's caption, the map. Nothing is boxed around the
+     map. The right side reads top to bottom like a short article: the claim, the number, the next step, three supporting facts,
+     places to look. Rules above this block still size and place things; this block sets how they look. */
+  @media (min-width:981px){
+    /* the bar sits on the same paper as the map; the search box and the view switch lead, the tools are quiet until used */
+    .mapbar{background:var(--paper);border-bottom:0;padding:14px 16px 4px;gap:.6rem}
+    #q{height:42px;border-color:var(--rule-2);border-radius:10px;box-shadow:0 1px 2px rgba(27,36,48,.05)} .mb-go{border-radius:7px}
+    .mb-quick{height:42px;padding:3px;border-radius:10px;background:var(--card);box-shadow:0 1px 2px rgba(27,36,48,.05)} .mb-quick button{border-radius:7px;padding:0 .8rem}
+    .mbtn{height:42px;border-color:transparent;background:none;color:var(--ink-2);padding:0 .65rem;border-radius:10px}
+    .mbtn:hover{background:rgba(11,60,93,.07);border-color:transparent;color:var(--navy)}
+    .mbtn[aria-expanded="true"],.mbtn.on{background:var(--card);border-color:var(--rule-2);color:var(--navy)}
+    .mbtn.mb-icon{width:42px}
+  }
+  /* the legend is the map's caption: a title in the headline face on the paper, the key under it, no strip and no rules.
+     The pointer hint sits beside the title at the right and takes no height of its own. */
+  @media (min-width:1200px){
+    .legend-bar{background:none;border-bottom:0;padding:10px 16px 2px;align-items:flex-start}
+    .legend-bar .legend{gap:.2rem .95rem}
+    .legend .lg-title{flex-basis:100%;box-sizing:border-box;padding-right:16.5rem;font-family:"Source Serif 4",Georgia,serif;font-size:1.12rem;font-weight:600;letter-spacing:-.008em;line-height:1.25;color:var(--ink);margin:0 0 .05rem}
+    /* the circle key reads in one order: sizes, what size means, the star, then the help link */
+    .legend .lg-k{order:1} .legend .lg-mean{order:2} .legend .lg-star{order:3} .legend .lg-how{order:4}
+    .legend-bar .map-hint{position:absolute;right:16px;top:12px;margin:0;max-width:15rem;text-align:right;line-height:1.35;color:var(--ink-3);pointer-events:none}
+  }
+  /* the figures column: a little more air, a larger headline, and rules only between sections */
+  @media (min-width:981px){
+    aside{box-shadow:-10px 0 30px -22px rgba(27,36,48,.35);border-left-color:var(--rule)}
+    #pane-body{padding:1.25rem 1.5rem 0}
+    .card.hero > h2{font-size:1.62rem !important;line-height:1.14;letter-spacing:-.018em;margin-bottom:.55rem !important;text-wrap:balance}
+    .kicker{letter-spacing:.005em;margin-bottom:.35rem}
+  }
+  /* the figure that is on the map: a dot in the map's own color ties the number to the circles */
+  .maptag{font-weight:600;color:var(--ink-2);margin-bottom:.35rem;line-height:1.4}   /* two words: the sentence under the number says what is counted, so the tag only says this is the figure the map draws (the layer's name is its tooltip) */ .maptag.dot{position:relative;padding-left:1.05rem} .maptag.dot::before{content:"";position:absolute;left:0;top:.33em;width:.62rem;height:.62rem;border-radius:50%;background:#D98B63;border:1px solid #B8623A}   /* only when the map is drawing circles */
+  .stat.on-map .num{font-size:3.9rem;letter-spacing:-.03em} .stat.on-map .num small{font-size:1.02rem} .stat.on-map > p.main{font-size:1.02rem;line-height:1.45;margin-top:.35rem}
+  /* the supporting figures run in: the number opens its sentence, so each is two lines instead of four */
+  .card.hero:has(.stat.on-map) .stat:not(.on-map){display:block;padding:.62rem 2rem .6rem 0;position:relative}
+  .card.hero:has(.stat.on-map) .stat:not(.on-map) .num{float:left;display:inline-flex;align-items:baseline;gap:.12rem;font-size:1.36rem;line-height:1.38rem;height:1.38rem;margin:0 .45rem 0 0;color:var(--navy)}   /* one text line tall, so only the first line is indented */
+  .card.hero:has(.stat.on-map) .stat:not(.on-map).hot .num{color:#A6461C}
+  .card.hero:has(.stat.on-map) .stat:not(.on-map) .num small{display:inline;font-size:.8rem;margin:0;color:var(--ink-2)}
+  .card.hero:has(.stat.on-map) .stat:not(.on-map) .num.small{font-size:1.16rem}
+  .card.hero:has(.stat.on-map) .stat:not(.on-map) > p.main{margin:0;font-size:.92rem;line-height:1.5;color:var(--ink-2)}
+  .card.hero:has(.stat.on-map) .stat:not(.on-map) > p.sub,.card.hero:has(.stat.on-map) .stat:not(.on-map) > p.cmp,.card.hero:has(.stat.on-map) .stat:not(.on-map) > .thin-tag,.card.hero:has(.stat.on-map) .stat:not(.on-map) > details,.card.hero:has(.stat.on-map) .stat:not(.on-map) > .chips{clear:left}
+  .card.hero:has(.stat.on-map) .stat:not(.on-map) .stat-x{position:absolute;right:-.35rem;top:.42rem}
+  /* the next step sits right under the headline figure: one button, three quiet links */
+  .share.up{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem 1.1rem;margin:1rem 0 .3rem;padding:0;border-top:0;font-size:var(--fs-0)} .share.up .btn.go{margin-right:100%}   /* the button has its own line; the links sit under it */
+  .share.up .btn{border:0;background:none;padding:.3rem 0;border-radius:0;color:var(--link);font-weight:600;text-decoration:none} .share.up .btn:hover{color:var(--navy);text-decoration:underline;text-underline-offset:3px}
+  .share.up .btn.go{background:var(--navy);color:#fff;border-radius:999px;padding:.55rem 1.05rem .55rem 1.15rem;font-size:var(--fs-1);box-shadow:0 1px 2px rgba(11,60,93,.25)} .share.up .btn.go::after{content:"\2192";margin-left:.15rem;transition:transform .15s} .share.up .btn.go:hover{background:#0d4a72;text-decoration:none} .share.up .btn.go:hover::after{transform:translateX(2px)}
+  .share.up #share-ok{flex-basis:100%} .share.up + .stat{border-top:1px solid var(--rule);margin-top:.55rem}
+  @media (prefers-reduced-motion:reduce){.share.up .btn.go::after{transition:none}}
+  /* the selected state stands forward: paper over the rest of the map, a navy line around the state */
+  .veil{fill:var(--paper);opacity:.62;transition:opacity .25s} .st-focus{fill:none;stroke:var(--navy);stroke-width:1.7px;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+  @media (prefers-reduced-motion:reduce){.veil{transition:none}}
+  /* a ranked list shows each share as a thin bar in the map's color under the row (the share of 100%, so rows compare across lists) */
+  .rows li.bar{position:relative;align-items:center;padding:.4rem 0 .62rem;border-top:0} .rows li.bar::after{content:"";position:absolute;left:0;right:0;bottom:.12rem;height:3px;border-radius:2px;background:var(--rule)} .rows li.bar::before{content:"";position:absolute;left:0;bottom:.12rem;height:3px;width:var(--w);min-width:3px;border-radius:2px;background:#D98B63;z-index:1}
+  .bub.ring{stroke:var(--navy) !important;stroke-width:2.4px !important;vector-effect:non-scaling-stroke;fill-opacity:1;opacity:1 !important}
 </style>
 </head>
 <body>
@@ -697,6 +752,13 @@
   const chalo = gS.append('path').attr('class', 'csel-halo'), csel = gS.append('path').attr('class', 'csel');   // outline of the selected county
   const outlineCounty = k => { const f = k ? countyFeatures.find(f => f.properties.id === k) : null; chalo.attr('d', f ? path(f) : null); csel.attr('d', f ? path(f) : null); };
   const gHL = svg.append('g').attr('class', 'hl');   // outlines of the places an answer from the question box refers to
+  // A veil of paper over everything outside the selected state, and the state's own outline: the place in the panel is where the eye lands.
+  // One path (the whole sheet with the state cut out of it), under the state lines so borders stay crisp; clicks pass through it.
+  const veil = svg.append('path').attr('class', 'veil').attr('fill-rule', 'evenodd').attr('pointer-events', 'none');
+  const stFocus = svg.append('path').attr('class', 'st-focus').attr('pointer-events', 'none');
+  function focusVeil() { const f = selectedState ? stateFeatures.find(x => String(x.properties.id) === selectedState) : null, d = f ? path(f) : null;
+    if (veil.node().nextSibling !== stFocus.node() || stFocus.node().nextSibling !== gS.node()) { gS.node().before(veil.node()); gS.node().before(stFocus.node()); }   // above every fill, circle and border (the groups are re-ordered as layers change), under the selection outline, the labels and the stars
+    if (veil.attr('data-st') === (d ? selectedState : '')) return; veil.attr('data-st', d ? selectedState : '').attr('d', d ? `M-6000,-6000H7000V7000H-6000Z${d}` : null); stFocus.attr('d', d); }
   gN.selectAll('path').data(NCI).join('path').attr('class', 'nci').attr('d', d3.symbol().type(d3.symbolStar).size(52)).attr('transform', n => { const p = proj([n.lon, n.lat]); return p ? `translate(${p})` : 'translate(-100,-100)'; });
   // ---- the default layer: residents 55+ with fewer than 20 trials within 60 road-miles, as circles sized by people ----
   const bubR = d3.scaleSqrt().domain([0, 180000]).range([0, 17]);   // area ∝ residents; 180,000 (about the largest county) is a 17-unit radius on the 975-unit map
@@ -746,7 +808,7 @@
     const t = shortTotals(); const how = lg.append('details').attr('class', 'lg-how').property('open', howOpen).on('toggle', function () { howOpen = this.open; });
     how.append('summary').text('How to read this map'); how.append('p').html(METRICS[metric].how() + (t ? ` Nationally ${(t.all / 1e6).toFixed(1)} million residents 55+ (${pct(100 * t.all / t.pop)}%) have ${fewer(filtersActive() ? true : 'listed')} within 60 road-miles: ${millionsPair(t.nonmetro, t.metro)[0]} million in nonmetro counties, ${millionsPair(t.nonmetro, t.metro)[1]} million in metro counties.` : '')); }
   let howOpen = false;
-  function legendStar(lg) { if (document.getElementById('lyr-n').checked) lg.append('span').html('<svg width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><path d="' + d3.symbol().type(d3.symbolStar).size(80)() + '" fill="#0B3C5D" stroke="#fff" stroke-width="1"/></svg>NCI-designated cancer center'); }
+  function legendStar(lg) { if (document.getElementById('lyr-n').checked) lg.append('span').attr('class', 'lg-star').html('<svg width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><path d="' + d3.symbol().type(d3.symbolStar).size(80)() + '" fill="#0B3C5D" stroke="#fff" stroke-width="1"/></svg>NCI-designated cancer center'); }
   function tipHTML(c) { const i = CI[c.k], fa = filtersActive();
     const l1 = fa ? `${fmt(cnt[i])} of ${fmt(c.t)} trial${c.t===1?'':'s'} match${cnt[i]===1?'es':''} · ${fmt(c.f)} facilit${c.f===1?'y':'ies'}` : `${fmt(c.t)} trial${c.t===1?'':'s'} · ${fmt(c.f)} facilit${c.f===1?'y':'ies'}`;
     const road = c.noroad === 'island' ? (c.rn !== null ? `${c.rn} road-mi to ${esc(c.nn)}<br>no road connection to a broad menu` : 'no road connection to a broad menu or NCI center') : c.noroad === 'off' ? 'population center >30 mi from any highway' : `${c.rn} road-mi to ${esc(c.nn)}<br>${c.rb ? c.rb + ' road-mi to a broad menu' : 'hosts a broad menu'}`;
@@ -804,7 +866,7 @@
   document.getElementById('acs-var').addEventListener('change', e => { acsVar = e.target.value; paint(); renderPane(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
   document.getElementById('metric').addEventListener('change', e => { metric = e.target.value; paint(); renderPane(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });
   const renderPane = () => { const top = pane.scrollTop; if (selectedC) selectCounty(selectedC); else if (selectedD) selectDistrict(selectedD); else if (selectedState) renderStateOverview(selectedState); else renderNational(); pane.scrollTop = top; };
-  document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); refreshView(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });   // refreshView: the panel's "Shown on the map" tag and its county chips follow the unit (they stayed on the old unit until a reload)
+  document.getElementById('unit').addEventListener('change', e => { unit = e.target.value; fillMetricSelect(); refreshView(); pushURL(); if (window.__syncLayerSwitch) window.__syncLayerSwitch(); });   // refreshView: the panel's "On the map" tag and its county chips follow the unit (they stayed on the old unit until a reload)
   // District lines and numbers are drawn by default only where districts are the subject (areas shown as districts, a district selected, a cosponsor layer);
   // on the county and state views they start off, and the two boxes under Layer › Also show turn them on. A box the reader has set is left alone.
   const lyrD = document.getElementById('lyr-d'), lyrL = document.getElementById('lyr-l');
@@ -885,7 +947,7 @@
     el.querySelector('.x').addEventListener('click', () => { guideKey = null; renderGuide(); pushURL(); });
     el.querySelectorAll('[data-gact]').forEach(b => b.addEventListener('click', () => { const a = b.dataset.gact; if (a === 'compare') setTab('compare', { focus: true }); else if (a === 'burden') setTab('burden', { focus: true }); else if (a === 'filters') { window.__openFilters(); document.getElementById('f-type').focus(); } else if (a === 'search') { const q_ = document.getElementById('q'); q_.focus(); q_.scrollIntoView({ ...SCROLL, block: 'center' }); } else if (a === 'state') { const ps = document.getElementById('pick-s'); if (window.__openMenu) window.__openMenu('explore-menu'); document.getElementById('finder').open = true; ps.focus(); } })); }
   // ---------- URL state (shareable views) ----------
-  function pushURL() { const p = new URLSearchParams(); if (selectedD) p.set('d', selectedD); else if (selectedC) p.set('c', selectedC); else if (selectedState) p.set('s', selectedState); if (guideKey) p.set('guide', guideKey);
+  function pushURL() { focusVeil(); const p = new URLSearchParams(); if (selectedD) p.set('d', selectedD); else if (selectedC) p.set('c', selectedC); else if (selectedState) p.set('s', selectedState); if (guideKey) p.set('guide', guideKey);
     if (unit !== 'county') p.set('u', unit); if (metric !== defaultMetric()) p.set('m', metric); if (metroOn() && metroApplies()) p.set('rural', '1'); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if ((metric === 'acs' || metric === 'gacs') && acsVar !== 'veh') p.set('acs', acsVar);
     p.set('lt', LT); if (tab !== 'map') p.set('tab', tab); if (filt.type) p.set('type', filt.type); if (filt.age !== null) p.set('age', filt.age); if (filt.phase.size < T.phases.length) p.set('ph', filt.phase.size ? [...filt.phase].join(',') : 'none'); if (filt.sponsor.size < T.sponsors.length) p.set('sp', filt.sponsor.size ? [...filt.sponsor].join(',') : 'none');
     if ((isBva(metric) || tab === 'burden') && BU) { if (incSite) p.set('site', BSITE[incSite][0]); if (bvaCritUser) p.set('crit', bvaCrit); if (bvaThr !== 50) p.set('thr', bvaThr); if (tab === 'burden' && measure === 'mort' && !isBva(metric)) p.set('meas', 'mort'); }
@@ -915,7 +977,7 @@
     if (p.get('crit') && ['l20', 'z60'].includes(p.get('crit'))) { bvaCrit = p.get('crit'); bvaCritUser = true; } if (p.get('thr') && [25, 50, 75].includes(+p.get('thr'))) bvaThr = +p.get('thr');
     if (metric === 'z60') { metric = 'l20'; LT = 1; document.getElementById('metric').value = metric; }   // the old "no trial" district / state layer is the line's opening position
     return { d: p.get('d'), c: p.get('c'), s: (p.get('s') || '').toUpperCase(), tab: p.get('tab') }; }
-  const shareHTML = () => `<div class="share"><button class="btn go" type="button" data-tabgo="trials">See the trials</button><button class="btn" type="button" data-tabgo="sites">Trial sites</button><button class="btn" id="btn-share" type="button">Copy link</button><a class="btn" id="btn-brief" href="brief.html" target="_blank" rel="noopener">Printable brief</a><span id="share-ok" role="status" style="color:var(--ink-3)"></span></div>`;
+  const shareHTML = up => `<div class="share${up ? ' up' : ''}"><button class="btn go" type="button" data-tabgo="trials">See the trials</button><button class="btn" type="button" data-tabgo="sites">Trial sites</button><button class="btn" id="btn-share" type="button">Copy link</button><a class="btn" id="btn-brief" href="brief.html" target="_blank" rel="noopener">Printable brief</a><span id="share-ok" role="status" style="color:var(--ink-3)"></span></div>`;
   function wireShare() { const bl = document.getElementById('btn-brief'); if (bl) { const q_ = selectedD ? 'd=' + selectedD : selectedC ? 'c=' + selectedC : selectedState ? 's=' + selectedState : ''; const fd_ = filtersActive() ? 'filters=' + encodeURIComponent(filterDesc()) : ''; const lt_ = ltOn() ? 'lt=' + LT : ''; const qs_ = [q_, fd_, lt_].filter(Boolean).join('&'); bl.href = 'brief.html' + (qs_ ? '?' + qs_ : ''); } const bh = document.getElementById('brief-link'); if (bh) bh.href = bl ? bl.href : 'brief.html'; const mb = document.getElementById('more-brief'); if (mb) mb.href = bl ? bl.href : 'brief.html'; const b = document.getElementById('btn-share'); if (!b) return; b.addEventListener('click', () => { if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(() => { document.getElementById('share-ok').textContent = 'copied'; setTimeout(() => { const s = document.getElementById('share-ok'); if (s) s.textContent = ''; }, 1800); }); }); }
 
   // ---------- tract-level data for live filtered aggregates (loaded on first use) ----------
@@ -981,7 +1043,7 @@
   // The panel has one headline: the figure the map shows (.on-map) is set large; the others follow as short rows (number, one sentence, comparison),
   // each with a small button (.stat-x) that opens its secondary line. The trial-count line sits behind "Change the cut-off" (details.cut), kept open across redraws once opened.
   let cutOpen = false;
-  const stat = o => `<div class="stat${o.cls ? ' ' + o.cls : ''}${o.tag ? ' on-map' : ''}"${o.id ? ` id="${o.id}"` : ''}>${o.tag ? `<span class="maptag">Shown on the map: ${esc(o.tag)}</span>` : ''}<div class="num${String(o.num).replace(/<[^>]+>/g, '').length > 6 ? ' small' : ''}">${o.num}<small>${o.unit || ''}</small></div><p class="main">${o.text}</p>${o.sub ? `<p class="sub">${o.sub}</p>` : ''}${o.cmp ? `<p class="cmp">${o.cmp}</p>` : ''}${o.thin ? `<p class="thin-tag"><b>Under the ${LT}-trial line, but close.</b> ${fmt(o.thin)} trial${o.thin === 1 ? '' : 's'} within reach: on the map these residents count as short of trials, not as without them.</p>` : ''}${o.ctl ? `<details class="cut"${cutOpen ? ' open' : ''}><summary>Draw your own line <span>(now: ${lineWords()})</span></summary><div class="thr" role="group" aria-label="Trial-count line">${o.ctl}</div></details>` : ''}${o.chips ? `<div class="chips">${o.chips}</div>` : ''}${o.sub || o.ctl || o.thin ? '<button type="button" class="stat-x" aria-expanded="false" aria-label="More about this figure"></button>' : ''}</div>`;
+  const stat = o => `<div class="stat${o.cls ? ' ' + o.cls : ''}${o.tag ? ' on-map' : ''}"${o.id ? ` id="${o.id}"` : ''}>${o.tag ? `<span class="maptag${isShort(metric) ? ' dot' : ''}" title="The map shows ${esc(o.tag)}">On the map</span>` : ''}<div class="num${String(o.num).replace(/<[^>]+>/g, '').length > 6 ? ' small' : ''}">${o.num}<small>${o.unit || ''}</small></div><p class="main">${o.text}</p>${o.sub ? `<p class="sub">${o.sub}</p>` : ''}${o.cmp ? `<p class="cmp">${o.cmp}</p>` : ''}${o.thin ? `<p class="thin-tag"><b>Under the ${LT}-trial line, but close.</b> ${fmt(o.thin)} trial${o.thin === 1 ? '' : 's'} within reach: on the map these residents count as short of trials, not as without them.</p>` : ''}${o.ctl ? `<details class="cut"${cutOpen ? ' open' : ''}><summary>Draw your own line <span>(now: ${lineWords()})</span></summary><div class="thr" role="group" aria-label="Trial-count line">${o.ctl}</div></details>` : ''}${o.chips ? `<div class="chips">${o.chips}</div>` : ''}${o.sub || o.ctl || o.thin ? '<button type="button" class="stat-x" aria-expanded="false" aria-label="More about this figure"></button>' : ''}</div>`;
   const statHTML = (num, unit, text, cls, id) => stat({ num, unit, text, cls, id });
   const people = n => n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));
   const peoplePair = (a, b) => a >= 9.95e5 && b >= 9.95e5 ? millionsPair(a, b).map(x => x + ' million') : [people(a), people(b)];   // two parts shown beside their sum
@@ -1067,7 +1129,9 @@
         sub: `${fmt(o.onc)} oncologist${o.onc === 1 ? '' : 's'} practice ${level === 'dist' ? 'in counties touching the district' : level === 'nat' ? 'in the 50 states and DC' : 'in the state'}${o.per100k ? ` (${rateTxt(o.per100k)} per 100,000 residents 55+)` : ''} · ${pct(o.c1)}% live in a county with both · ${pct(o.c4)}% with neither${level === 'nat' ? ` · ${fmt(o.counties['2'])} counties have oncologists and no trial` : level === 'state' ? ` · ${fmt(o.c2_counties)} ${o.c2_counties === 1 ? 'county has' : 'counties have'} oncologists and no trial` : o.c2_counties.length ? ` · ${o.c2_counties.length} such ${o.c2_counties.length === 1 ? 'county' : 'counties'}` : ''}`,
         cls: o.c2 >= 25 ? 'hot' : '', tag: layerName() }); }
     const order = ['access', 'rural', 'broad', 'nci']; const first = S[key] ? key : null;
-    const html = (first ? [first] : []).concat(order.filter(k => k !== first)).map(k => S[k] || '').join('') + shortChips;
+    // the figure that is on the map, then the next step (see the trials, copy the link), then the supporting figures and the places to look
+    const rest = order.filter(k => k !== first).map(k => S[k] || '').join('');
+    const html = first ? S[first] + shareHTML(true) + rest + shortChips : rest + shortChips + shareHTML();
     if (rc) setTimeout(() => fillFilteredHero(level, idx, g, hg), 0);
     return html; }
   // the same hero figure for a county (whole-county figures; the access share is population-weighted over the county's tracts)
@@ -1103,6 +1167,10 @@
       const rs = filteredGeo('state', D.meta.state_order.indexOf(D.state_data[c.s2].fips)), rn = filteredGeo('nat', 0); const e3 = document.getElementById('stat-access'); const cs = e3.querySelector('[data-cmp="state"]'), cn = e3.querySelector('[data-cmp="nat"]'); if (cs && rs) cs.textContent = `State ${pct(rs.l20)}%`; if (cn && rn) cn.textContent = `National ${pct(rn.l20)}%`; if (filtersActive()) e3.querySelector('.num small').insertAdjacentHTML('beforeend', ' ' + ftag); })
       .catch(() => { const e2 = document.getElementById('stat-access'); if (e2 && live()) e2.querySelector('.sub').innerHTML = '<span class="flag">Tract-level figures need tracts60.bin and tract_county.bin (served on GitHub Pages).</span>'; }); }
   const wireChips = () => pane.querySelectorAll('.chip[data-c]').forEach(b => b.addEventListener('click', () => selectCounty(b.dataset.c)));
+  // A county named in the panel points at its circle: hovering a county chip, or tabbing to it, rings that circle on the map.
+  { const ring = k => gB.selectAll('circle').classed('ring', d => !!k && d.k === k), chipOf = e => e.target && e.target.closest ? e.target.closest('.chip[data-c]') : null;
+    pane.addEventListener('mouseover', e => { const b = chipOf(e); if (b) ring(b.dataset.c); }); pane.addEventListener('mouseout', e => { if (chipOf(e)) ring(null); });
+    pane.addEventListener('focusin', e => { const b = chipOf(e); if (b) ring(b.dataset.c); }); pane.addEventListener('focusout', e => { if (chipOf(e)) ring(null); }); }
   const utag = () => filtersActive() ? '<span class="unfiltered-tag" title="Pools every phase, sponsor and cancer type; does not change with the filters.">All trials&nbsp;· unfiltered</span>' : '';
   const ftag = '<span class="unfiltered-tag" style="color:var(--navy);border-color:var(--navy)">Filtered</span>';
   const rowsHTML = rows => `<ul class="rows">${rows.map(([a, b]) => `<li><span>${a}</span><span>${b}</span></li>`).join('')}</ul>`;
@@ -1228,14 +1296,14 @@
     const ranked = rows.filter(r => r[2] !== null && r[2] !== undefined && !isNaN(r[2])).sort((a, b) => b[2] - a[2]);
     // a list of places tied at 0.0% ranks nothing: say so (every Ohio district is 0.0% at the opening line), and drop zeros from a mixed list
     if (ranked.length && Math.round(ranked[0][2] * 10) === 0) return `<li><span>${level === 'nat' ? 'Every state' : 'Every district here'} is at 0.0%: no residents 55+ counted at this line.</span><span></span></li>`;
-    return ranked.filter(r => Math.round(r[2] * 10) > 0).slice(0, 5).map(([k, d, v]) => level === 'nat' ? `<li><span><button type="button" class="chip" data-s="${k}">${esc(d.name)}</button></span><span>${pct(v)}%</span></li>` : `<li><span><button type="button" class="chip" data-d="${k}">${st}-${cdLabel(d.cd)}</button> ${esc(d.member || 'vacant')}</span><span>${pct(v)}%</span></li>`).join(''); }
+    return ranked.filter(r => Math.round(r[2] * 10) > 0).slice(0, 5).map(([k, d, v]) => level === 'nat' ? `<li class="bar" style="--w:${Math.max(0, Math.min(100, v)).toFixed(1)}%"><span><button type="button" class="chip" data-s="${k}">${esc(d.name)}</button></span><span>${pct(v)}%</span></li>` : `<li class="bar" style="--w:${Math.max(0, Math.min(100, v)).toFixed(1)}%"><span><button type="button" class="chip" data-d="${k}">${st}-${cdLabel(d.cd)}</button> ${esc(d.member || 'vacant')}</span><span>${pct(v)}%</span></li>`).join(''); }
   function fillWorst(level, st) { if (!recalc() || (level === 'nat' ? FS : FD)) return; const hg = heroGen;
     loadTracts().then(() => { if (hg !== heroGen || !recalc()) return; filteredAll(); const el = document.getElementById('worst-list'); if (!el) return; el.innerHTML = worstRows(level, st);
       el.querySelectorAll('.chip[data-s]').forEach(b => b.addEventListener('click', () => { pickS.value = b.dataset.s; pickS.dispatchEvent(new Event('change')); })); el.querySelectorAll('[data-d]').forEach(b => b.addEventListener('click', () => selectDistrict(b.dataset.d))); })
       .catch(() => { const el = document.getElementById('worst-list'); if (el && hg === heroGen) el.innerHTML = '<li><span class="flag">Needs the data file tracts60.bin (served on GitHub Pages).</span><span></span></li>'; }); }
   function renderNational() { const g = D.meta.nat_core, ctx = D.meta.nat_ctx; doors(true);
     pane.innerHTML = `<div class="card hero"><p class="kicker">United States, residents 55 and older</p><h2 style="font-size:var(--fs-3);margin-bottom:.3rem">How far are Americans from a cancer clinical trial?</h2>${paneLinks()}
-      ${filterCaution('the whole country')}${heroStats('nat', g, 0)}${shareHTML()}</div>
+      ${filterCaution('the whole country')}${heroStats('nat', g, 0)}</div>
       <div class="card"><h3 style="margin-top:0">States with the least access: residents 55+ with ${fewer(filtersActive())} within 60 road-miles</h3><ul class="rows" id="worst-list">${worstRows('nat', 0)}</ul>
         <div class="chips" style="margin-top:.7rem"><button type="button" class="chip" id="st-d">Browse states and districts</button><button type="button" class="chip" id="st-c">Find a county</button></div></div>
       ${moreFigs('road distances · rural vs metro · cancer burden · legislation · by cancer type · household context · counts and notes', roadCard(g) + ruralCard('nat', 0, 'the country') + burdenCard('nat') + legislationNational() + breakdownCard(g) + contextCard(ctx, D.meta.nat_binc, BSITE[incSite][0]) + notesCard(`<p class="member" style="margin:0 0 .5rem"><button class="linkish" data-open="in">${fmt(D.meta.trials)} recruiting trials</button> accepting some adults aged 55 or older, at ${fmt(D.meta.facilities_named || D.meta.facilities)} ${D.meta.facilities_named ? 'named ' : ''}facilities in ${fmt(D.meta.sitepoints)} locations · ${fmt(g.p)} residents 55+ in ${fmt(g.nt)} census tracts</p>${teleNote('')}
@@ -1251,7 +1319,7 @@
   pane.addEventListener('click', e => { const b = e.target.closest('[data-tabgo]'); if (!b) return; if (b.dataset.tabgo === 'trials') openTrials('in', { focus: true }); else { trMode = 'in'; document.getElementById('tr-mode').value = 'in'; setTab('sites', { focus: true }); } });
   function renderStateOverview(st) { doors(false); const g = D.state_data[st]; const rows = Object.entries(DI).filter(([k, d]) => d.st === st).sort((a, b) => (+a[1].cd) - (+b[1].cd));
     pane.innerHTML = `<div class="card hero"><p class="kicker">State</p><h2>${esc(g.name)}</h2>${paneLinks()}
-      ${filterCaution(g.name)}${heroStats('state', g, st)}${shareHTML()}</div>
+      ${filterCaution(g.name)}${heroStats('state', g, st)}</div>
       <div class="card"><h3 style="margin-top:0">Districts</h3><div class="chips">${rows.map(([k, d]) => `<button type="button" class="chip" data-d="${k}">${st}-${cdLabel(d.cd)}</button>`).join('')}</div>
       <h3>Least access: residents 55+ with ${fewer(filtersActive())} within 60 road-miles</h3><ul class="rows" id="worst-list">${worstRows('state', st)}</ul></div>
       ${moreFigs('road distances · rural vs metro · cancer burden · delegation · by cancer type · household context · counts and notes', roadCard(g) + ruralCard('state', st, g.name) + burdenCard('state', st) + legislationState(st) + breakdownCard(g) + contextCard(g.ctx, g.binc, BSITE[incSite][0]) + notesCard(`<p class="member" style="margin:0 0 .5rem"><button class="linkish" data-open="in">${fmt(g.trials)} recruiting trials</button> at <button class="linkish" data-open-sites="in">${fmt(g.fac)} sites</button> · ${g.broad} broad-menu and ${g.limited} limited-menu ${g.broad + g.limited === 1 ? 'county' : 'counties'} of ${g.counties} (${g.counties_with_trials} with any trial) · ${fmt(g.p)} residents 55+ · ${g.ndist} district${g.ndist === 1 ? '' : 's'}</p>${teleNote(st)}
@@ -1267,7 +1335,7 @@
     pane.innerHTML = `<div class="card hero"><p class="kicker">Congressional district, ${D.meta.plan}</p><h2>${d.st}-${cdLabel(d.cd)}</h2>${paneLinks()}
       <p class="member">${d.member ? `<span class="dot" style="background:${partyColor(d.party)}"></span>${esc(d.member)} (${partyName(d.party)}) — ${cos}` : 'This seat is vacant.'}</p>
       <div class="chips"><span class="chip static">${fmt(d.p)} residents 55+</span>${ru}</div>
-      ${filterCaution('this district')}${heroStats('dist', d, k)}${shareHTML()}</div>
+      ${filterCaution('this district')}${heroStats('dist', d, k)}</div>
       ${legislationDistrict(k, d)}${moreFigs('road distances · by cancer type · household context · notes', roadCard(d) + breakdownCard(d) + contextCard(d.ctx, null, BSITE[incSite][0]) + notesCard(`${teleNote(d.st)}
       <p class="note">District figures are population-55+-weighted over ${fmt(d.nt)} census tracts (tracts split by the boundary apportioned by land area).${RU && RU.districts[k] ? ` Most residents 55+ (${pct(RU.districts[k].modal_pct)}%) live in counties coded RUCC ${RU.districts[k].modal} (${RUCC_SHORT[RU.districts[k].modal]}).` : ''}</p>`))}`;
     pane.scrollTop = 0; wireChips(); wireLT(); wireShare(); wireMore(); wireLegislation(); facFilter = null; cmpSel = []; refreshTab(); pushURL(); }
@@ -1287,7 +1355,9 @@
       S.onc = stat({ num: fmt(r[0]), unit: r[0] === 1 ? ' oncologist' : ' oncologists', text: `practice in the county (Medicare practice locations: medical oncology, hematology/oncology, hematology)${r[0] && r[7] ? ' — every one of them also lists a location in another county, so this is likely a part-time or outreach clinic' : ''}. <b>${ONC_CLASSES[q][0]}</b>${filtersActive() ? ' (matching trials)' : ''}.`,
         sub: `${fmt(r[2])} radiation · ${fmt(r[3])} gynecologic · ${fmt(r[4])} surgical oncologists · ${fmt(r[5])} oncologists within 60 road-miles${r[0] ? ` · ${fmt(Math.round(c.p / r[0]))} residents 55+ per oncologist` : ''}`, cls: q === 1 ? 'hot' : '', tag: tag('onc') }); }
     const first = S[key] ? key : (key === 'nci' || key === 'broad') ? 'road' : null;
-    return (first ? [first] : []).concat(['trials', 't60', 'road', 'access'].filter(x => x !== first)).map(x => S[x] || '').join(''); }
+    // as on the national, state and district panels: the figure that is on the map, the next step, then the supporting figures
+    const rest = ['trials', 't60', 'road', 'access'].filter(x => x !== first).map(x => S[x] || '').join('');
+    return first ? S[first] + shareHTML(true) + rest : rest + shareHTML(); }
   function selectCounty(k) { doors(false); selectedC = k; selectedD = null; const hg = ++heroGen; const c = C[k]; if (c.s2 !== selectedState || svg.classed('dz')) { selectedState = c.s2; pickS.value = c.s2; fillDistricts(c.s2); svg.classed('dz', false);
       const f = countyFeatures.find(f => f.properties.id === k); if (freeZoom && f && boundsInView(path.bounds(f))) insetVisibility(); else zoomState(c.s2);   // a view the reader framed by hand is kept when the county is already in it
       refreshLabels(); }
@@ -1323,7 +1393,7 @@
     const oc = ON && ON.county[k]; const oncRows = !oc ? '' : `<h3>Oncologists: CMS Care Compare, ${esc(ON.meta.source_modified || ON.meta.pulled)}</h3><ul class="rows"><li><span>Oncologists practicing in the county (medical, hematology/oncology, hematology)</span><span>${fmt(oc[0])}${oc[0] && oc[7] ? ' <small style="font-weight:400;color:var(--ink-3)">(all also practice elsewhere)</small>' : ''}</span></li><li><span>Radiation · gynecologic · surgical oncologists</span><span>${fmt(oc[2])} · ${fmt(oc[3])} · ${fmt(oc[4])}</span></li><li><span>Oncologists within 60 road-miles</span><span>${fmt(oc[5])}</span></li></ul><p class="note" style="margin:.5rem 0 0"><b>${ONC_CLASSES[oncCat(k)][0]}.</b> <button class="linkish" data-metric="onc">Map oncologists vs trials</button></p>`;
     pane.innerHTML = `<div class="card hero"><p class="kicker">${/ County$/.test(cname(c)) ? 'County' : 'County equivalent'}</p><h2>${esc(clabel(c))}</h2>${paneLinks()}<p class="member">${fmt(c.p)} residents 55+${ruc}</p>
       ${countyHero(k, c, { fa, n, nB, n60, n60B, nm, basket, menu, roadStat })}
-      ${c.tr.length ? `<p style="margin:.6rem 0 0"><a class="chip" href="trials.html?county=${k}${filt.type ? '&type=' + filt.type : ''}">See the ${fmt(c.t)} trial${c.t === 1 ? '' : 's'} and ${fmt(c.f)} facilit${c.f === 1 ? 'y' : 'ies'} in ${esc(cname(c))} →</a></p>` : ''}${shareHTML()}</div>
+      ${c.tr.length ? `<p style="margin:.6rem 0 0"><a class="chip" href="trials.html?county=${k}${filt.type ? '&type=' + filt.type : ''}">See the ${fmt(c.t)} trial${c.t === 1 ? '' : 's'} and ${fmt(c.f)} facilit${c.f === 1 ? 'y' : 'ies'} in ${esc(cname(c))} →</a></p>` : ''}</div>
       ${moreFigs('cancer incidence and deaths · oncologists · household context · notes', `<div class="card">${burden}${bvaLine}</div>${mortRows ? `<div class="card">${mortRows}</div>` : ''}${oncRows ? `<div class="card">${oncRows}</div>` : ''}<div class="card">${acs.replace(/^<p class="note">/, '<h3>Household context</h3><p class="note">')}</div>` + notesCard(`${teleNote(c.s2)}
       <p class="teach">${SITE.TRIPS} ${filt.type ? esc(SITE.teach(filt.type)) + ' ' : ''}<a href="learn.html#barriers">Why near is not the same as available.</a></p>
       <p class="note">County trial counts and distances are measured from the county's population center; the share of residents with no trial (or few trials) within reach is weighted over the county's census tracts, as district and state figures are. "Within 60 road-miles" counts recruiting sites (located by ZIP code or city) within 60 road-miles of the county's population center.</p>`))}`;
@@ -1589,7 +1659,8 @@
       // the text around the map: the legend's title, the place, the legend entries, the source line
       const lgEl = document.getElementById('legend'), title = (lgEl.querySelector('.lg-title') || {}).textContent || '', sc = scope();
       const sub = sc.kind === 'nat' ? '' : (sc.kind === 'district' ? sc.label.replace(' (counties overlapping the district)', '') : sc.label) + (filtersActive() ? ' · ' + ((document.getElementById('fchip').textContent || '').replace(/×\s*$/, '').trim() || 'filtered') : '');
-      const entries = [...lgEl.children].filter(el => el.tagName === 'SPAN' && !el.classList.contains('lg-title') && el.textContent.trim()).map(el => { const sw = el.querySelector('i'), ci = el.querySelector('circle'), pa = el.querySelector('path');
+      // a grouped key (the three circle sizes, the metro and nonmetro pair) is read item by item; read as one entry it printed "5,00025,000100,000 residents 55+"
+      const entries = [...lgEl.children].flatMap(el => el.classList.contains('lg-sizes') ? [...el.children] : [el]).filter(el => el.tagName === 'SPAN' && !el.classList.contains('lg-title') && el.textContent.trim()).map(el => { const sw = el.querySelector('i'), ci = el.querySelector('circle'), pa = el.querySelector('path');
         return { text: el.textContent.trim(), kind: sw ? 'rect' : ci ? 'circle' : pa ? 'star' : 'none', color: sw ? getComputedStyle(sw).backgroundColor : ci ? ci.getAttribute('fill') : pa ? pa.getAttribute('fill') : null, hatch: !!(sw && sw.classList.contains('hatch')), r: ci ? (el.dataset.n ? bubR(+el.dataset.n) * bubScale() * mapW / curVB[2] : Math.min(+ci.getAttribute('r'), 14)) : 0, stroke: ci ? ci.getAttribute('stroke') : null }; });
       const cv = document.createElement('canvas'), ctx = cv.getContext('2d'); const font = (w, px) => `${w} ${px}px "Source Sans 3", "Segoe UI", Arial, sans-serif`;
       // measure the legend rows first so the canvas is exactly as tall as it needs to be
