@@ -1589,7 +1589,8 @@
       // the text around the map: the legend's title, the place, the legend entries, the source line
       const lgEl = document.getElementById('legend'), title = (lgEl.querySelector('.lg-title') || {}).textContent || '', sc = scope();
       const sub = sc.kind === 'nat' ? '' : (sc.kind === 'district' ? sc.label.replace(' (counties overlapping the district)', '') : sc.label) + (filtersActive() ? ' · ' + ((document.getElementById('fchip').textContent || '').replace(/×\s*$/, '').trim() || 'filtered') : '');
-      const entries = [...lgEl.children].filter(el => el.tagName === 'SPAN' && !el.classList.contains('lg-title') && el.textContent.trim()).map(el => { const sw = el.querySelector('i'), ci = el.querySelector('circle'), pa = el.querySelector('path');
+      // a grouped key (the three circle sizes, the metro and nonmetro pair) is read item by item; read as one entry it printed "5,00025,000100,000 residents 55+"
+      const entries = [...lgEl.children].flatMap(el => el.classList.contains('lg-sizes') ? [...el.children] : [el]).filter(el => el.tagName === 'SPAN' && !el.classList.contains('lg-title') && el.textContent.trim()).map(el => { const sw = el.querySelector('i'), ci = el.querySelector('circle'), pa = el.querySelector('path');
         return { text: el.textContent.trim(), kind: sw ? 'rect' : ci ? 'circle' : pa ? 'star' : 'none', color: sw ? getComputedStyle(sw).backgroundColor : ci ? ci.getAttribute('fill') : pa ? pa.getAttribute('fill') : null, hatch: !!(sw && sw.classList.contains('hatch')), r: ci ? (el.dataset.n ? bubR(+el.dataset.n) * bubScale() * mapW / curVB[2] : Math.min(+ci.getAttribute('r'), 14)) : 0, stroke: ci ? ci.getAttribute('stroke') : null }; });
       const cv = document.createElement('canvas'), ctx = cv.getContext('2d'); const font = (w, px) => `${w} ${px}px "Source Sans 3", "Segoe UI", Arial, sans-serif`;
       // measure the legend rows first so the canvas is exactly as tall as it needs to be
