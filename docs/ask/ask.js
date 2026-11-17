@@ -63,7 +63,7 @@ async function ensureEngine() {
   if (!enginePromise) enginePromise = (async () => {
     const url = new URL(devOverride('askEngineUrl') || './engine.js', import.meta.url).href;
     const mod = await import(url);
-    engine = mod.createEngine({ globals: window, fetchJSON: u => fetch(u).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${u}`); return r.json(); }), base: '', onProgress: t => { if (ui.form && ui.form.hasAttribute('aria-busy')) setStatus(t); } });   // only while a question runs: the load goes on after a closed card, and its "Data loaded." must not stay in the box
+    engine = mod.createEngine({ globals: window, fetchJSON: u => fetch(u).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status} for ${u}`); return r.json(); }), base: '', onProgress: t => { if (ui.form && ui.form.hasAttribute('aria-busy')) setStatus(/\.(json|js|bin)\b/.test(String(t)) ? 'Loading the map’s data…' : t); } });   // only while a question runs: the load goes on after a closed card, and its "Data loaded." must not stay in the box
     await engine.load(); engineReady = true; return engine;
   })().catch(e => { enginePromise = null; throw e; });
   return enginePromise;
@@ -76,16 +76,20 @@ async function postStep(body, signal) {
   if (!r.ok) { const e = new Error(typeof j.error === 'string' && j.error ? j.error : `HTTP ${r.status}`); e.status = r.status; e.detail = j.detail; e.retry_after_s = j.retry_after_s; throw e; }
   return j && typeof j === 'object' ? j : {};
 }
+let cooldownMsg = '';
 function startCooldown(seconds) {
   cooldownUntil = Date.now() + seconds * 1000; if (cooldownTimer) clearInterval(cooldownTimer);
   const tick = () => { const left = Math.ceil((cooldownUntil - Date.now()) / 1000); if (left > 0) { setStatus(`Try again in ${left} s.`); if (ui.btn && !ui.box) ui.btn.disabled = true; if (ui.hint) ui.hint.hidden = true; return; }
-    clearInterval(cooldownTimer); cooldownTimer = null; cooldownUntil = 0; if (ui.btn && !ui.box) ui.btn.disabled = false; if (ui.hint) ui.hint.hidden = false; setStatus(''); };
+    clearInterval(cooldownTimer); cooldownTimer = null; cooldownUntil = 0; cooldownMsg = ''; if (ui.btn && !ui.box) ui.btn.disabled = false; if (ui.hint) ui.hint.hidden = false; setStatus(''); };
   tick(); cooldownTimer = setInterval(tick, 1000);
 }
 function handleError(q, e) {
   const st = e && e.status;
   if (e && e.name === 'AbortError') { renderError(q, ERR.timeout); return; }
-  if (st === 429) { const n = Math.max(1, Math.min(600, Math.round(Number(e.retry_after_s) || 30))); renderError(q, `${e.message.replace(/\.?\s*$/, '.')} Try again in ${n} s.`); startCooldown(n); return; }
+  // A limit reply. The worker's own sentence is shown; a reply that did not come from the worker (no sentence) gets a plain one. A long
+  // wait (the daily limit, "Try again tomorrow") is not followed by a countdown that contradicts it.
+  if (st === 429) { const ra = Number(e.retry_after_s) || 30, n = Math.max(1, Math.min(600, Math.round(ra))); const own = /^HTTP \d+$/.test(e.message || '') ? 'The question box is busy right now.' : e.message.replace(/\.?\s*$/, '.');
+    cooldownMsg = ra > 600 ? own : ''; renderError(q, ra > 600 ? own : `${own} Try again in ${n} s.`); startCooldown(n); return; }
   if (st >= 400) { renderError(q, ERR.unavailable, e.detail || e.message); return; }
   renderError(q, ERR.network, e && e.message);
 }
@@ -174,7 +178,7 @@ const capTable = t => !t ? null : t.rows.length > HISTORY_ROWS ? { ...t, rows: t
 async function run(q) {
   q = String(q || '').trim(); if (!q || !ui.form) return;
   if (q.length < 3) { setStatus('Ask a longer question.'); return; }
-  if (Date.now() < cooldownUntil) { setStatus(`Please wait ${Math.ceil((cooldownUntil - Date.now()) / 1000)} s before the next question.`); return; }
+  if (Date.now() < cooldownUntil) { const wait = `Please wait ${Math.ceil((cooldownUntil - Date.now()) / 1000)} s before the next question.`; setStatus(wait); renderError(q, cooldownMsg || wait); return; }   // said on the card too: the status line is for screen readers only on the map page
   ui.input.value = q; ui.input.scrollTop = 0; ui.input.scrollLeft = 0; const g = ++gen; if (ctrl) ctrl.abort();   // the box shows the start of the question while it runs (a long one scrolls while typed)
   const log = [], results = {}, calls = {}; let step = 0;
   setBusy(true); renderBusy(q, log, engineReady ? LEAD_TEXT : LOAD_TEXT); if (!engineReady) setStatus(LOAD_TEXT); else setStatus('Looking this up…');

@@ -60,6 +60,7 @@
   <nav class="hdr-links" aria-label="Pages"><a href="map.html">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr&amp;lt=1">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="about.html">About</a></nav>
 </header>
 <main>
+<noscript><p style="max-width:68ch;margin:1rem auto;padding:.6rem .8rem;border:1px solid #E6D08A;background:#FFF7DF;border-radius:6px">This list is built in your browser and needs JavaScript. The <a href="findings.html">key findings</a> and <a href="methods.html">methods</a> pages can be read without it.</p></noscript>
 <div class="page-head"><p class="kicker">County trial list</p><h1 id="title">Trials in this county</h1><p id="sub"></p></div>
 <div class="filters" role="group" aria-label="Trial filters">
   <span><b>Phase</b> <span id="f-phase"></span></span>
@@ -87,7 +88,7 @@
   { const cl = document.querySelector('link[rel=canonical]'); if (cl) cl.href = 'https://cancertrialaccess.org/trials.html?county=' + fips; }   // each county's list is its own page
   const st = FIPS2USPS[c.s], place = SITE.countyLabel(c, fips), dataDay = SITE.nice(SITE.dataDate(D.meta)); document.title = `Recruiting cancer clinical trials in ${place} — Cancer Clinical Trial Access Map`;
   document.getElementById('title').textContent = `${place}: ${c.t.toLocaleString()} recruiting cancer treatment trial${c.t===1?'':'s'} accepting some adults 55+`;
-  document.getElementById('sub').textContent = `At ${c.f.toLocaleString()} registry-listed facilit${c.f===1?'y':'ies'} (distinct names after removing sponsor site codes). Registry data as of ${dataDay}. A trial counts once here even if it has several sites in the county. Eligibility criteria are on each trial's ClinicalTrials.gov page.`;
+  document.getElementById('sub').textContent = `At ${c.f.toLocaleString()} recruiting site${c.f===1?'':'s'}${(u => u ? ` (${(c.f - u).toLocaleString()} named institution${c.f - u === 1 ? '' : 's'}, each counted once whatever its spelling, and ${u.toLocaleString()} ${u === 1 ? 'entry' : 'entries'} the registry does not name)` : ' (each institution counted once, whatever its spelling in the registry)')((c.fac || []).filter(f => f[5]).length)}. Registry data as of ${dataDay}. A trial counts once here even if it has several sites in the county. Eligibility criteria are on each trial's ClinicalTrials.gov page.`;
   { const a = document.createElement('a'); a.href = 'map.html?c=' + fips + '&lt=1'; a.textContent = 'Open ' + SITE.countyName(c, fips) + ' on the map →'; const pp = document.createElement('p'); pp.appendChild(a); document.getElementById('sub').after(pp);
     // trials the registry lists for this state under a telemedicine service instead of a clinic (DATA.T.tele): named, not listed below
     const tele = Object.keys(T.tele || {}).filter(j => T.tele[j].includes(st)).map(Number).filter(j => !c.tr.includes(j));   // one with a clinic in this county is already in the list
@@ -117,14 +118,14 @@
         return `<tr><td class="n"><a href="https://clinicaltrials.gov/study/${T.id[j]}" target="_blank" rel="noopener">${T.id[j]}</a></td><td>${esc(T.title[j])}</td><td class="n">${SITE.phaseLabel(T.phases[T.ph[j]])}</td><td>${spLabel[T.sponsors[T.sp[j]][0]]}</td><td>${ctCell}</td><td class="f">${esc(facs.join('; '))}</td></tr>`; }).join('') + '</tbody></table>';
   }
   const fl = document.getElementById('fac'); const facs = c.fac || [];
-  document.getElementById('fac-note').textContent = facs.length ? 'Facility names are as listed in the registry (one line per distinct name in this county); a hospital with two spellings may appear twice.' : 'No facilities listed.';
+  document.getElementById('fac-note').textContent = facs.length ? 'One line per institution, under the spelling most registry rows use; the registry\'s other spellings of it are folded in. An entry marked “name not given” is a sponsor site code or placeholder.' : 'No facilities listed.';
   // Where each name is listed: the city and ZIP of its registry rows at each location (DATA.SPX), most trials first. One name is
   // often listed at several addresses, and the facility's own record keeps a single city and a single ZIP for all of them.
   const places = new Map(); if (D.SPX) D.SPI.forEach((arr, sp) => arr.forEach(([cf, k], n) => { if (cf !== fips) return; let a = places.get(k); if (!a) places.set(k, a = []); a.push(D.SPX[sp][n]); }));
   const where = (f, i) => { const pl = places.get(i); if (!pl || !pl.length) return `${f[1] || ''}${f[2] ? ' ' + f[2] : ''}`;
     const m = new Map(); pl.forEach(p => { const lab = `${p[2] || f[1] || ''}${p[0] ? ' ' + p[0] : ''}`.trim(); m.set(lab, (m.get(lab) || 0) + p[1].length); });
     const labs = [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(e => e[0]); return labs[0] + (labs.length > 1 ? ` (+${labs.length - 1} more address${labs.length > 2 ? 'es' : ''})` : ''); };
-  fl.innerHTML = facs.map((f, i) => [f, i]).sort((a, b) => a[0][0].localeCompare(b[0][0])).map(([f, i]) => `<li>${esc(f[0])} <span>${esc(where(f, i))} · ${f[3].length} trial${f[3].length===1?'':'s'}</span>${(d => d ? `<span class="doubt"><b>Check this address.</b> ${esc(d.text)}</span>` : '')(SITE.placeDoubtAll(places.get(i), f[3].length))}</li>`).join('');
+  fl.innerHTML = facs.map((f, i) => [f, i]).sort((a, b) => a[0][0].localeCompare(b[0][0])).map(([f, i]) => `<li>${esc(f[0])}${f[5] ? ' <span>(name not given in registry)</span>' : ''} <span>${esc(where(f, i))} · ${f[3].length} trial${f[3].length===1?'':'s'}</span>${(d => d ? `<span class="doubt"><b>Check this address.</b> ${esc(d.text)}</span>` : '')(SITE.placeDoubtAll(places.get(i), f[3].length))}</li>`).join('');
   render();
 })();
 </script>

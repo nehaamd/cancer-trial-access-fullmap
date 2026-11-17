@@ -114,7 +114,7 @@ window.SITE = (function () {
     let all = null; const sync = () => { if (all) all.textContent = secs.some(x => x.classList.contains('folded')) ? 'Open all sections' : 'Close all sections'; };
     const set = (x, open) => { const body = x.querySelector(':scope > .sec-body'), btn = x.querySelector(':scope > h2 > .sec-btn'); x.classList.toggle('folded', !open); btn.setAttribute('aria-expanded', String(open));
       if (open) body.removeAttribute('hidden'); else body.setAttribute('hidden', 'until-found'); sync(); };
-    secs.forEach(x => { const h = x.querySelector(':scope > h2'), body = document.createElement('div'); body.className = 'sec-body'; body.id = x.id + '-text';
+    secs.forEach(x => { const h = x.querySelector(':scope > h2'), body = document.createElement('div'); body.className = 'sec-body'; body.id = x.id + '-body';
       let n = h.nextSibling; while (n) { const nx = n.nextSibling; body.appendChild(n); n = nx; } x.appendChild(body);
       const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'sec-btn'; btn.setAttribute('aria-controls', body.id); while (h.firstChild) btn.appendChild(h.firstChild); h.appendChild(btn);
       btn.addEventListener('click', () => set(x, x.classList.contains('folded'))); body.addEventListener('beforematch', () => set(x, true)); set(x, keep.has(x.id)); });
