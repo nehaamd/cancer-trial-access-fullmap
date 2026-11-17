@@ -128,7 +128,11 @@ def main():
     # facility and the facility counts; no site moves and no access figure changes.
     # A row whose ZIP was a typing error (zip_typo_corrected) or no usable place (facility_listing) was placed at another ZIP: its own ZIP
     # says nothing about where the facility is, so it is not used to decide which spellings share a place either
-    sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
+    # zip_own: the ZIP a row was placed by. Blank when the row was placed elsewhere (a ZIP judged a typing error, a ZIP of another state
+    # set aside for the city) and when the ZIP/city review could not confirm it: such a ZIP must not be printed as the facility's own,
+    # and must not fold the row into whatever institution is at that ZIP ("Yale ... North Haven Medical Center" at Waterford's 06385
+    # was shown under the Waterford centre's name; "The Johns Hopkins Hospital" carried ZIP 10017).
+    sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing", "city_gazetteer"]) & ~(sites.get("zip_city", pd.Series("", index=sites.index)) == "ambiguous"), "")
     MERGE, merges, SHOWN = site_names.merge_map(site_names.spellings_from_rows(sites), site_names.load_families(REF / "site_families.csv"))
     sites["fac"] = [MERGE.get((c, f), f) for c, f in zip(sites.county_fips, sites.fac)]
     canon = lambda c, f: MERGE.get((c, ALIAS.get((c, f), f)), ALIAS.get((c, f), f))   # the same two steps, for the other tables that carry names
@@ -175,7 +179,11 @@ def main():
     SPF = [int(x) for x in zs["sp_n_facilities"]]
     cfips = list(zs["county_fips"]); pc = pd.DataFrame({"c": zs["pc_c"], "sp": zs["pc_src"], "mi": zs["pc_mi"]})
     nb60 = {cfips[c]: sorted(g.sp.tolist()) for c, g in pc[pc.mi <= 60].groupby("c")}
-    nbd = {cfips[c]: [[int(a), int(round(b))] for a, b in sorted(zip(g.sp.tolist(), g.mi.tolist()), key=lambda x: x[1])] for c, g in pc.groupby("c")}  # all site points within 120 road-mi, nearest first
+    # Whole miles, nearest first. A distance just over one of the page's three list limits (30, 60, 120) must not round onto it: the
+    # county panel counts sites within 60.0 road-miles, and a site at 60.3 that printed as 60 was in the list the panel opens
+    # (Rice County MN: 242 trials in the panel, 464 in its list; found 17 Nov 2026).
+    def whole_mi(b): r = int(round(b)); return next((t + 1 for t in (30, 60, 120) if b > t and r <= t), r)
+    nbd = {cfips[c]: [[int(a), whole_mi(b)] for a, b in sorted(zip(g.sp.tolist(), g.mi.tolist()), key=lambda x: x[1])] for c, g in pc.groupby("c")}  # all site points within 120 road-mi, nearest first
     # sitepoint -> facilities: [county_fips, index into that county's fac list]
     # SPX runs parallel to SPI: for each facility at a site point, the ZIP the registry gives for it THERE and the trials it runs
     # THERE. A facility is a name in a county, and one name is often listed at several addresses ("Texas Oncology - Central South"
@@ -206,7 +214,13 @@ def main():
     # facilities at each site point, counted from the list just built so the count and the list agree after the names are folded together
     # (until November 2026 it came from the routing step's own count of spellings; the two were equal at every site point)
     SPF = [len({(cf_, i_) for cf_, i_ in SPI[k]}) for k in range(len(SPI))]
-    fac60 = {f: sum(SPF[i] for i in nb60.get(f, [])) for f in cm.index}
+    fac60 = {f: len({(cf_, i_) for k in nb60.get(f, []) for cf_, i_ in SPI[k]}) for f in cm.index}
+    # counties whose every listing is a registry row with a city and a ZIP code that disagree and that the review could not settle
+    # (the SPX entries with a fourth item): whether such a county has a trial at all rests on those rows, and every page says so
+    _dz = {}
+    for k_, refs_ in enumerate(SPI):
+        for n_, (cf_, i_) in enumerate(refs_): _dz.setdefault(cf_, [0, 0])[1 if len(SPX[k_][n_]) > 3 else 0] += 1
+    doubt_only = {cf_ for cf_, (firm_, flagged_) in _dz.items() if flagged_ and not firm_}   # each facility once, however many of its locations are in range: the count the Sites list shows (it was summed per location: DC 224 against a list of 182)
     burden = pd.read_csv(REF / "cancer_incidence_county.csv", dtype={"county_fips": str})
     bsites = ["all", "breast", "colorectal", "lung", "prostate", "melanoma_skin", "lymphoma", "leukemia", "pancreatic", "liver_biliary", "bladder_urothelial", "kidney", "brain_cns",
               "gynecologic_ovary", "gynecologic_uterus", "gynecologic_cervix", "head_neck", "thyroid", "esophagus", "stomach"]
@@ -226,7 +240,7 @@ def main():
         c = cm.loc[f]; r = rd.loc[f]; v = cov.loc[f] if f in cov.index else None
         def road(lab):
             mi = float(r[f"road_mi_{lab}"]); return None if mi >= NOROAD else round(mi)
-        counties[f] = {"n": c.county_name, "nl": namelsad.get(f) or None, "s": str(c.state_fips).zfill(2), "p": int(c.pop55), "t": int(c.trials_in_county), "f": len(ct_fac.get(f, [])),
+        counties[f] = {"n": c.county_name, "nl": namelsad.get(f) or None, "s": str(c.state_fips).zfill(2), "p": int(c.pop55), "t": int(c.trials_in_county), "f": len(ct_fac.get(f, [])), **({"da": 1} if f in doubt_only else {}),
                        "tr": ct_trials.get(f, []), "fac": ct_fac.get(f, []), "nb": nb60.get(f, []), "nbd": nbd.get(f, []), "t60": pool60[f], "f60": fac60[f],
                        "rb": road("broad"), "rl": road("limited"), "rn": road("nci"), "hb": None if r.road_mi_broad >= NOROAD else round(float(r.drive_hr_broad), 1),
                        "hn": None if r.road_mi_nci >= NOROAD else round(float(r.drive_hr_nci), 1), "nn": r.nearest_nci, "nbm": r.nearest_broad,

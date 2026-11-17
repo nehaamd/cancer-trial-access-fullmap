@@ -147,7 +147,8 @@ _GROUPS = set("""swog|swog cancer research network|nrg oncology|ecog acrin|ecog 
 |aids malignancy consortium|canadian cancer trials group|nsabp|nsabp foundation|gog foundation|gynecologic oncology group|rtog|rtog foundation""".replace("\n", "").split("|"))
 _GROUP_TAIL = re.compile(r"\s+(operations (office|center)|headquarters|statistical center|statistics and data management center|group chair office|national office)$")
 _OFFICE = re.compile(r"\b(corporate|central|regulatory affairs)\s+office\b|\bheadquarters\b", re.I)
-_PHARMACY = re.compile(r"\b([il]nvestigational drug services?|ids pharmacy|research pharmacy|drug depot)\b", re.I)
+_PHARMACY = re.compile(r"\b([il]nvestigational drug services?|ids pharmacy|research pharmacy|drug depot|investigation(?:al)? products? cent(?:er|re)|kit storage)\b", re.I)   # "US Oncology Investigational Products Center (IPC)", Irving TX: the network's drug depot, listed as the site of clinics in other states
+_STATE_NAMES = {"alabama", "alaska", "arizona", "arkansas", "california", "colorado", "connecticut", "delaware", "district of columbia", "florida", "georgia", "hawaii", "idaho", "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine", "maryland", "massachusetts", "michigan", "minnesota", "mississippi", "missouri", "montana", "nebraska", "nevada", "new hampshire", "new jersey", "new mexico", "new york", "north carolina", "north dakota", "ohio", "oklahoma", "oregon", "pennsylvania", "rhode island", "south carolina", "south dakota", "tennessee", "texas", "utah", "vermont", "virginia", "washington", "west virginia", "wisconsin", "wyoming"}
 _plain = lambda x: re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", re.sub(r"[’'`]", "", _unbracket(x).lower()))).strip()
 _LISTED = None
 def _listed():
@@ -181,6 +182,8 @@ def no_institution(raw, families=None, city=""):
     if not re.search(r"[A-Za-z]", s): return "placeholder"
     plain = _plain(raw)
     if plain in _listed(): return _listed()[plain]
+    if re.sub(r"[^a-z ]", "", s.lower()).strip() in _STATE_NAMES: return "placeholder"   # the name field holds only a state ("UTAH", "West Virginia", "New York")
+    if _PHARMACY.search(s) and re.search(r"investigation(?:al)? products? cent|kit storage", s, re.I): return "pharmacy"   # a depot is not a clinic even when it carries a network's name
     if _GROUP_TAIL.sub("", plain) in _GROUPS: return "office"
     flat = " ".join(flat_tokens(s))
     if any(rx.search(flat) for _, _, rx, _ in (_default_families() if families is None else families)): return ""   # a listed institution's own office or pharmacy stays with it
@@ -404,7 +407,7 @@ def _selftest():
           ("Clinical Study Site", True), ("Memorial Sloan Kettering Cancer Center", False), ("Palo Alto Medical Foundation Research Center", False), ("Rocky Mountain Cancer Centers (RMCC) ( Site 0123)", False),
           ("Mayo Clinic", False), ("START San Antonio", False), ("Kaiser Permanente - Santa Clara ( Site 0123)", False), ("City of Hope - Duarte Main Site", False), ("VA Long Beach Healthcare System ( Site 0041)", False),
           ("NEO-811 NYC Site", True), ("I-Mab Site 1002", True), ("Avenzo Therapeutics Recruiting Site", True), ("010", True), ("Clinical Study Sites", True), ("CBCC Global Research Site 0010", False),
-          ("Site 0221 - Tufts Medical Center - PPDS", False), ("US Oncology Research Investigational Products Center", False), ("ALX Center 7", True), ("Study Center 12", True),
+          ("Site 0221 - Tufts Medical Center - PPDS", False),  ("ALX Center 7", True), ("Study Center 12", True),
           ("MD Anderson Site 12", False), ("Houston Methodist Site", False), ("Research Site - Los Angeles", True), ("Oncology Investigational Site", True), ("(UCLA Medical Center", False),
           ("Mayo Clinic Research Site", False)]
     # not a placeholder, and not a treating institution either: (name, city, kind expected; "" = an institution)

@@ -50,14 +50,18 @@ def locate(sites, loc=None):
         fix = getattr(r, "zip_fix", "") if m in ("zip_typo_corrected", "facility_listing") else ""
         zf = loc.by_zip(fix, st, r.city) if fix else None
         if zf: lat.append(zf[0]); lon.append(zf[1]); how.append(m); continue
-        zcty = z2c.get(r.zip5); z = loc.by_zip(r.zip5, st, r.city) if (zcty and zcty[:2] == r.county_fips[:2] and not fix) else None
+        # A row the ZIP/city review kept at its ZIP (metrics_us.zip_city_review) is located by that ZIP and never by the city the
+        # review set aside ("zip": the ZIP's own place stands in) or could not confirm ("ambiguous": no city is used). Before
+        # 17 Nov 2026 such a row could be counted in the ZIP's county and measured from the stated city 30 miles away.
+        zc_ = getattr(r, "zip_city", ""); city_z = r.city if not zc_ else (getattr(r, "city_fix", "") if zc_ == "zip" else "")
+        zcty = z2c.get(r.zip5); z = loc.by_zip(r.zip5, st, city_z) if (zcty and zcty[:2] == r.county_fips[:2] and not fix) else None
         la0, lo0 = clat[r.county_fips], clon[r.county_fips]; c = loc.city(st, r.city, near=(la0, lo0))
         # the city name must agree with the assigned county: a registry row like city "Dallas" + ZIP 75521 (Atlanta, TX) was
         # assigned to Cass County by ZIP, and must not be drawn 180 miles away in Dallas. 40 mi ~ the radius of a large county.
         city_ok = bool(c) and np.hypot((c[0] - la0) * 69.0, (c[1] - lo0) * 69.0 * np.cos(np.radians(la0))) <= 40
         # A site assigned to the county where its ZIP's residents live rather than where its land is ("zip_pop", metrics_us.py)
         # is placed at its city: the ZIP centroid is in the other county.
-        if z and m == "zip_pop" and city_ok and z[2] == "zip_centroid": z = (c[0], c[1], "city_centroid_zip_spans_counties")
+        if z and m == "zip_pop" and city_ok and z[2] == "zip_centroid" and not zc_: z = (c[0], c[1], "city_centroid_zip_spans_counties")
         if z: lat.append(z[0]); lon.append(z[1]); how.append(z[2]); continue
         if c:
             if city_ok: lat.append(c[0]); lon.append(c[1]); how.append("city_centroid"); continue

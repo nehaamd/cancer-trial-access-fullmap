@@ -140,7 +140,8 @@ export const TABLES = {
     fields: [
       f('id', 'string', '', '5-digit FIPS code.'), f('name', 'string', '', 'County name with state, e.g. "Hidalgo County, Texas".'), f('state', 'string', '', 'USPS state code.', { enum: Object.keys(STATES), groupable: true }),
       ...CORE_ACCESS('county'),
-      f('facilities', 'integer', 'sites', 'Trial sites in the county with a recruiting trial (counted by registry facility name; spellings of one institution at one ZIP code are combined where the site\'s rules match them).', { layer: { county: 't' } }),
+      f('facilities', 'integer', 'sites', 'Trial sites in the county with a recruiting trial: one institution counted once, whatever its spelling in the registry. The count includes entries the registry does not name (sponsor site codes and placeholders; unresolved = true in the facilities table).', { layer: { county: 't' } }),
+      f('only_site_address_unverified', 'boolean', '', 'true when every site listed in the county comes from a registry row whose city and ZIP code are far apart and that the registry\'s other rows do not settle, so the site, and the county\'s trial count, may belong to another county. Say so when you describe such a county.', { optional: true }),
       f('districts', 'array', '', 'Ids of the congressional districts that overlap the county (e.g. ["TX-15","TX-34"]). Most counties sit in one district; large counties in several.', { source: 'districts' }),
       f('rucc', 'integer', 'code', 'USDA Rural-Urban Continuum Code 1 (large metro) … 9 (most rural). 1–3 metro, 4–9 nonmetro.', { enum: [1, 2, 3, 4, 5, 6, 7, 8, 9], groupable: true, source: 'rucc', layer: { county: 'short' }, params: { rural: '1' } }),
       f('rucc_label', 'string', '', 'Short label for the code in the map\'s wording ("Metro, 1 million or more" … "Nonmetro, urban population under 5,000, not adjacent").', { source: 'rucc' }),
@@ -152,7 +153,7 @@ export const TABLES = {
       f('drive_hours_nci', 'number', 'hours', 'Driving time from the county population center to the nearest NCI-designated center (one decimal).', { nulls: 'no road route', layer: { county: 'rn' }, source: 'roads' }),
       f('drive_hours_broad_menu', 'number', 'hours', 'Driving time from the population center to the nearest broad-menu county.', { nulls: 'no road route', layer: { county: 'rb' }, source: 'roads' }),
       f('trials_within_60rdmi_of_center', 'integer', 'trials', 'Recruiting trials with a site within 60 road-miles of the county population center (the county card\'s "trials within 60 road-miles"; the resident-weighted figure is wmean_trials_within_60rdmi).', { layer: { county: 'short' } }),
-      f('facilities_within_60rdmi_of_center', 'integer', 'sites', 'Trial sites within 60 road-miles of the county population center.'),
+      f('facilities_within_60rdmi_of_center', 'integer', 'sites', 'Trial sites within 60 road-miles of the county population center (each institution counted once).'),
       f('incidence.all', 'number', 'per 100,000', 'All-sites cancer incidence rate, age-adjusted, all ages, 2019–2023 (State Cancer Profiles).', { nulls: 'suppressed by the source or not available (see incidence.status)', source: 'incidence', layer: { county: 'inc' } }),
       f('incidence.cases_per_year', 'integer', 'cases per year', 'Average annual new cancer cases, all sites.', { nulls: 'not published', source: 'incidence', layer: { county: 'inc' } }),
       f('incidence.small_numbers', 'boolean', '', 'true when fewer than 16 cases a year: the rate is published but should be read with caution.', { source: 'incidence' }),

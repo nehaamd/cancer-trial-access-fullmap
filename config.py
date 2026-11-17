@@ -263,6 +263,22 @@ METHOD_CHANGES = [
         "beyond 60 road-miles of a broad menu 38.1% to 38.0%; of an NCI center 43.7% (unchanged); no state moved more than half a point; no district's share beyond 60 road-miles moved a full point before rounding (AZ-9 and TX-36 show 1.0 after rounding), and in VA-9 the share living in a county with no trial site rose 80.2% to 84.0%. "
         "The new population split moved ZIP 24273 from Wise County to Norton city, Virginia, so two Ballad Health Norton site listings now count in Norton (0 to 2) instead of Wise (2 to 0). "
         "Counties with a published or small-numbers incidence rate 3,026 to 3,130 (Kansas); high-incidence, low-access counties 495 to 492.")},
+    {"version": 7, "date": "2026-11-16", "first_pull": "2026-11-17", "note": (
+        "Registry rows whose ZIP code and city disagree are reviewed against the registry's other rows (metrics_us.zip_city_review). A row whose ZIP is judged the error "
+        "is placed in its stated city; a row whose city is judged the error keeps its ZIP and prints the ZIP's own place; a row the review cannot settle keeps its ZIP and is flagged on the pages. "
+        "Registered on 17 Nov 2026, after the pull of that date had used the rule. Measured on the unchanged registry rows of 3 Nov 2026, the rule moves 11 rows and changes twelve county trial counts: "
+        "Orange CA 431 to 432, Philadelphia PA 399 to 400, DeKalb GA 321 to 323, Fulton GA 170 to 169, Forsyth NC 117 to 119, Volusia FL 34 to 35, Chester PA 34 to 33, Gwinnett GA 10 to 9, "
+        "Lapeer MI 10 to 12, Alamance NC 8 to 7, Sanilac MI 4 to 2, Chatham NC 1 to 0. One census tract crosses the headline line: tract 26063951200 (Huron County MI, 1,527 residents 55+) "
+        "goes from two trials within 60 road-miles to none, because both were Karmanos at McLaren Lapeer rows carrying the ZIP of Peck, Sanilac County. No national share moves at one decimal.")},
+    {"version": 8, "date": "2026-11-17", "note": (
+        "Placement rules corrected after the error review of 17 Nov 2026. A registry ZIP field is read one way everywhere: a field of six or more digits run together is no ZIP and the row is placed by its city "
+        "(a Winston-Salem row typed 272157 had been read as 27215, Burlington; a New Brunswick NJ row typed 088901 as 08890, Somerset County). A second row of the same trial for the same name in the same city "
+        "is another location, not a typing error (a Reno row of a Las Vegas practice had been placed in Las Vegas); it keeps its ZIP and is flagged. A row of a telemedicine service written without the word "
+        "is not mapped (one row of NCT06906562 was Tioga County PA's only trial and the only site within 60 road-miles of Potter County). A city field that only repeats the state, with no usable ZIP, is no location. "
+        "A facility named for its stated city and listed there by other trials is placed there even when another facility of the institution is at the ZIP. "
+        "Measured on the registry rows of 16 Nov 2026: 16 rows change and nine county trial counts move by one: Miami-Dade FL 380 to 379, Washoe NV 72 to 73, Middlesex NJ 209 to 210, Somerset NJ 223 to 222, "
+        "Alamance NC 7 to 6, Forsyth NC 118 to 119, Tioga PA 1 to 0, Bexar TX 311 to 312, Comal TX 6 to 5. Separately, the count of sites within 60 road-miles of a county now counts each institution once "
+        "(it was summed per location), and the facility list folds more spellings together; neither moves an access share.")},
 ]
 METHOD_VERSION = METHOD_CHANGES[-1]["version"]
 
