@@ -569,7 +569,7 @@ def page_health(port, axe_path=None):
     for cand in [axe_path, os.environ.get("AXE_CORE_JS"), ROOT / "node_modules/axe-core/axe.min.js"]:
         if cand and Path(cand).exists():
             axe = Path(cand).read_text(encoding="utf-8"); m = re.search(r"axe v([\d.]+)", axe[:400]); axe_ver = m.group(1) if m else "?"; break
-    pages = ["index.html", "findings.html", "community.html", "learn.html", "find.html", "act.html", "brief.html?s=KY", "trials.html?county=48215", "sites.html", "community.html?c=21227", "act.html?c=21227", "map.html", "map.html?u=district&m=cos_ctma_hr", "map.html?c=48215", "map.html?s=KY&rural=1&guide=rural-urban"]
+    pages = ["index.html", "findings.html", "community.html", "learn.html", "find.html", "act.html", "brief.html?s=KY", "trials.html?county=48215", "sites.html", "community.html?c=21227", "act.html?c=21227", "map.html", "map.html?u=district&m=cos_ctma_hr&lt=1", "map.html?c=48215&lt=1", "map.html?s=KY&rural=1&lt=20&guide=rural-urban"]
     errs_all = {}; viol = 0; hs = []
     with sync_playwright() as p:
         b = p.chromium.launch()

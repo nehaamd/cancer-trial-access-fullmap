@@ -31,7 +31,7 @@ Registry data as of 3 November 2026: 4,035 listed trials at about 9,700 registry
 | `about.html` | About the project: who builds it, how it is built, how to cite, independence. |
 | `methods.html` | **Methods & data**: limits and intended use, key terms, the full methods, sources and limits, data sources and dates, and how to cite (the text that used to sit beneath the map). Its figures come from the `methods` block of `findings.js` (built by `build_findings.py`), so it does not load `data.js`; old links to `map.html#methods` forward there. |
 | `map.html` | The map: counties (opening on residents 55+ with no trial within 60 road-miles, as circles sized by people; a cut-off control moves the line to fewer than 5, 10, 20, 50 or 100), districts and states; a figures panel whose first card is the figure the map shows, with state and national comparisons; filters; Trials / Sites / Analysis tabs; every view has a shareable link |
-| `findings.html` | Key findings: the headline numbers, metro vs nonmetro, every state ranked, the districts with least access, need vs access, the tracked bills, methods in brief, how to cite. Reads `findings.js`, built by `build_findings.py` (in `run_refresh.sh`) |
+| `findings.html` | Key findings: the headline numbers, metro vs nonmetro, every state ranked, the districts with least access, need vs access, the tracked bills, methods in brief, how to cite. Reads `findings.js`, built by `build_findings.py` (in `run_refresh.sh`); `prerender_findings.js` then writes the same figures into the page so they show with JavaScript off |
 | `community.html` | **Your community**: enter a county, ZIP code, city, district, state or member of Congress and get a short local summary (the same figures as the map and brief, each with a “why this measure” note), three buttons (Explore the map · Understand these findings · What could help) and five questions to explore, personalised to the place. Reads `community.js` and `explore.js` |
 | `learn.html` | **Understand clinical trials**: question-based explanations (what a trial is, the phases, how a trial reaches a hospital, why “recruiting” is not “available for me”, what the map measures, which barriers it leaves out, a glossary) and four guided explorations that open the map with prompts (`map.html?…&guide=…`) |
 | `act.html` | **What could help, and what can I do?**: for any place, three clearly labelled parts — descriptive findings with sources and limits; policy options in plain language (the tracked Clinical Trial Modernization Act with dated status, official links, the barriers it addresses and leaves, the delegation’s cosponsorship; other approaches often discussed) ; ways to contribute for patients, clinicians and organisations. Reads `community.js` and `explore.js` |
@@ -112,6 +112,8 @@ python build_webapp_data_v3.py                  # 12. docs/data.js + docs/geo.js
 #     facility names: site_names.py folds the registry's spellings of one institution at one ZIP code into one facility
 #     (rules + data/ref/site_families.csv, the hand-written list of large institutions); every spelling folded in is listed
 #     in out_adult55/site_merges.csv. `python site_names.py --test` runs its examples; `python site_names.py` reports the effect.
+#     An entry that names no treating institution (a sponsor placeholder, an investigator, a group office, a research pharmacy,
+#     or a name in data/ref/site_not_institutions.csv) is listed where it is, tagged unresolved, and not counted as a named facility.
 python build_tract_context.py                   # 12a0. district / state / national household context and cancer cases from tract tables (data.js ctx_src = tract)
 python build_rucc.py                            # 12a. rural/urban layer -> docs/rucc.js, docs/tract_county.bin  (needs Ruralurbancontinuumcodes2023.csv + ruralurbancodes2013.csv from ers.usda.gov in data/ref/)
 python build_burden_access.py                   # 12b. burden-vs-access layer -> docs/burden.js
@@ -125,7 +127,7 @@ python tier4_covering.py                        # 14. Tier 4 ranking + greedy se
 #    when www.facs.org and ncorp.cancer.gov are reachable: python fetch_candidates_coc_ncorp.py (see its docstring; not yet run), then
 #    python tier4_covering.py --candidates data/ref/candidates_coc_ncorp.csv --label "CoC-accredited programs + NCORP affiliates"
 python diff_snapshots.py                        # 15. what changed vs the previous snapshot (data/snapshots/<date>/) -> docs/changes.js
-python build_findings.py && python build_readme.py   # 15b. findings page numbers -> docs/findings.js; the Headline results block of this README
+python build_findings.py && node prerender_findings.js && python build_readme.py   # 15b. findings page numbers -> docs/findings.js, written into docs/findings.html for readers without JavaScript; the Headline results block of this README
 python build_community.py                       # 15c. per-place records for community.html, act.html, learn.html -> docs/community.js (after fetch_cosponsors.py and build_findings.py)
 python validate_v3.py                           # 16. re-runs every check (incl. 25 live registry re-fetches) -> VALIDATION_v3.md
 python release_gate.py                          # 17. plausibility, drift and road-network checks -> RELEASE_GATE.md (a failure stops a refresh)

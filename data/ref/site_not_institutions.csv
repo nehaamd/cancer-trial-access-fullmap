@@ -1,0 +1,18 @@
+# Registry "facility" names that do not name a treating institution and that no general rule in site_names.py can tell from one.
+# Read by site_names.no_institution(). The registry row is real and stays where it is; the entry is shown as "unresolved" on the
+# site and is not counted as a named facility. Matched on the whole name (case, punctuation and bracketed asides set aside).
+# The state column is for the reader; it is not used in matching. Written by Claude on 16 Nov 2026 from the 3 Nov 2026 pull and not
+# yet reviewed by a person. kind: person (an investigator's own name), office, address, laboratory.
+name,state,kind,note
+"Yonemoto,Lisa",CA,person,a personal name with no institution
+Sant P Chawla,CA,person,a personal name with no institution
+Ryan Nguyen,IL,person,a personal name with no institution
+Luana Colloca,MD,person,a personal name with no institution
+Keary Janet,VA,person,a personal name with no institution
+Caitlin Guzowski,GA,person,a personal name with no institution
+Amber Michalik,MD,person,a personal name with no institution
+Aaron Cumpston,WV,person,a personal name with no institution
+2400 Pratt Street,NC,address,a street address with no institution
+"Roche Tissue Diagnostics, Companion Diagnostics",AZ,laboratory,a diagnostics company
+ProMedica Laboratories Perrysburg,OH,laboratory,a laboratory
+"VA Central Office, Washington, DC",DC,office,the department's headquarters; listed here because the name also matches the VA hospitals line

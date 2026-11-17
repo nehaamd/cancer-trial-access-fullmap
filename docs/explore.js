@@ -23,7 +23,7 @@ window.EXPLORE = (function () {
   const param = pl => pl.kind === 'county' ? 'c=' + pl.k : pl.kind === 'district' ? 'd=' + pl.k : pl.kind === 'state' ? 's=' + pl.k : '';
   // a place's summary here leads with the fewer-than-20 share, so its map link carries lt=20 (the map opens on "no trial"); the national
   // summary leads with the share with none, which is what the map opens on
-  const links = pl => { const q = param(pl); return { map: 'map.html' + (q ? '?' + q + '&lt=20' : ''), brief: 'brief.html' + (q ? '?' + q : ''), act: 'act.html' + (q ? '?' + q : ''), community: 'community.html' + (q ? '?' + q : ''), compare: pl.kind === 'county' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'district' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'state' ? `map.html?s=${pl.k}&tab=compare` : 'map.html?tab=compare', trials: pl.kind === 'county' ? `trials.html?county=${pl.k}` : null }; };
+  const links = pl => { const q = param(pl); return { map: 'map.html' + (q ? '?' + q + '&lt=20' : ''), brief: 'brief.html' + (q ? '?' + q : ''), act: 'act.html' + (q ? '?' + q : ''), community: 'community.html' + (q ? '?' + q : ''), compare: pl.kind === 'county' ? `map.html?s=${pl.st}&tab=compare&lt=1` : pl.kind === 'district' ? `map.html?s=${pl.st}&tab=compare&lt=1` : pl.kind === 'state' ? `map.html?s=${pl.k}&tab=compare&lt=1` : 'map.html?tab=compare&lt=1', trials: pl.kind === 'county' ? `trials.html?county=${pl.k}` : null }; };
 
   // ---- comparisons ----
   function stateOf(pl) { return pl.kind === 'state' ? pl : pl.kind === 'nat' ? null : state(pl.st); }

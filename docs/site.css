@@ -64,9 +64,9 @@ abbr.g{text-decoration:none;border-bottom:1px dotted var(--gulf);cursor:help}
 
 @media (max-width:1560px){header.site .tagline{display:none}}   /* the tagline needs the room the longer wordmark and its Beta tag took */ @media (max-width:1400px) and (min-width:981px){header.site .stamp{display:none}}
 /* tablets: the links take a row of their own under the wordmark instead of crowding beside it */
-/* 981 to 1140 px (a small laptop, a shared screen): the links sit closer so the menu does not run over the site name; under 1060 px About, which is in every footer, leaves the header. */
+/* 981 to 1140 px (a small laptop, a shared screen): the links sit closer so the menu does not run over the site name; under 1060 px the site name is set a little smaller so that every link, About included, stays. */
 @media (max-width:1140px) and (min-width:981px){header.site .hdr-links a,header.site .hdr-group>summary{padding:.5rem .45rem} header.site{gap:.5rem}}
-@media (max-width:1060px) and (min-width:981px){header.site .hdr-links>a[href="about.html"]{display:none} header.site .hdr-links a,header.site .hdr-group>summary{padding:.5rem .32rem}}
+@media (max-width:1060px) and (min-width:981px){header.site .wordmark{font-size:1.1rem} header.site .hdr-links a,header.site .hdr-group>summary{padding:.5rem .3rem}}
 @media (max-width:980px) and (min-width:641px){header.site{flex-wrap:wrap;row-gap:.1rem} header.site .hdr-links{flex-basis:100%;justify-content:flex-start;margin-left:-.7rem}}
 .page-head h1,.hero h1,main > h1,.lede-wrap h1{font-family:"Source Serif 4",Georgia,serif;font-weight:600}
 h1,h2{text-wrap:balance}

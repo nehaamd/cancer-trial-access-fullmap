@@ -14,7 +14,9 @@ registry gives them the same ZIP code, and one of four rules says they name the 
 
 A satellite at another ZIP code ("MD Anderson West Houston", 77079) is never merged into the main campus (77030), whatever it is called.
 Sponsor placeholders ("Research Site", "GSK Investigational Site", "Site 0173") name no institution: they are never merged with a named
-facility and are flagged, not guessed at.
+facility and are flagged, not guessed at. The same holds for an entry that names something other than a treating institution: an
+investigator ("Tania Jain, MD"), a cooperative group's or a company's office ("SWOG", "VA Central Office"), a research pharmacy
+("IDS Pharmacy"), and the few entries listed by hand in data/ref/site_not_institutions.csv. See no_institution().
 
 Nothing here touches where a site is placed on the map or any access figure: those are computed per trial and per registry row.
 It changes which rows are listed together as one facility, and therefore the facility count.
@@ -128,20 +130,77 @@ _PH_CODE = re.compile(r"^(?:site|study site|center|centre|location)?[\s#:.-]*(?:
 _PH_NUMBERED = re.compile(r"^\W*(\S{1,10})\s+(study\s+)?(cent(er|re)|location)\s*#?\s*\d+\W*$", re.I)       # "ALX Center 7", "Study Center 12"
 # words that mark a real institution; a specialty alone ("Oncology Investigational Site") does not
 _INST = re.compile(r"\b(hospital|universit|clinics?\b|institute|college|associates|specialists|physicians|cent(er|re)s?\b|foundation|permanente|health)", re.I)
-def is_placeholder(raw, families=None):
+# An entry that is not a sponsor's placeholder but does not name a treating institution either. The registry row is real and stays where
+# it is; the entry is shown as "unresolved" and is not counted as a named facility.
+#   person    an investigator's own name: "Tania Jain, MD", "Dr. Karandeep Singh MD". A practice that carries a doctor's name and a
+#             company form ("Ann M Wierman MD LTD", "James R. Berenson M.D. Inc.") is a practice and keeps its name. "MD" after a city
+#             is Maryland ("Silver Spring, MD"), so a name that ends in the row's own city is not read as a person.
+#   office    a cooperative group itself ("SWOG", "NRG Oncology", "ECOG-ACRIN Cancer Research Group") or a corporate, central or
+#             regulatory office ("United States Oncology Regulatory Affairs Corporate Office")
+#   pharmacy  a research pharmacy or investigational drug service
+#             (an office or pharmacy whose name matches a line of the institution list stays with that institution)
+#   listed    data/ref/site_not_institutions.csv: names read by a person that no rule can tell from an institution (a bare personal
+#             name, a street address, a diagnostics company)
+_CREDS = set("md do phd pharmd mbbs mph facs facp rn np dds msc".split())
+_COMPANY = re.compile(r"\b(inc|llc|pllc|ltd|corp|pc|pa|psc|apc|llp|lp|sc)\b\W*$", re.I)
+_GROUPS = set("""swog|swog cancer research network|nrg oncology|ecog acrin|ecog acrin cancer research group|alliance for clinical trials in oncology|childrens oncology group
+|aids malignancy consortium|canadian cancer trials group|nsabp|nsabp foundation|gog foundation|gynecologic oncology group|rtog|rtog foundation""".replace("\n", "").split("|"))
+_GROUP_TAIL = re.compile(r"\s+(operations (office|center)|headquarters|statistical center|statistics and data management center|group chair office|national office)$")
+_OFFICE = re.compile(r"\b(corporate|central|regulatory affairs)\s+office\b|\bheadquarters\b", re.I)
+_PHARMACY = re.compile(r"\b([il]nvestigational drug services?|ids pharmacy|research pharmacy|drug depot)\b", re.I)
+_plain = lambda x: re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", re.sub(r"[’'`]", "", _unbracket(x).lower()))).strip()
+_LISTED = None
+def _listed():
+    """data/ref/site_not_institutions.csv -> {plain name: kind}. Read once; an absent file is an empty list."""
+    global _LISTED
+    if _LISTED is None:
+        _LISTED = {}
+        f = Path(__file__).parent / "data/ref/site_not_institutions.csv"
+        if f.exists():
+            with open(f, newline="", encoding="utf-8") as fh:
+                for r in csv.DictReader(row for row in fh if not row.lstrip().startswith("#")):
+                    if (r.get("name") or "").strip(): _LISTED[_plain(r["name"])] = (r.get("kind") or "listed").strip()
+    return _LISTED
+
+
+def _is_person(s, city=""):
+    w = [x.strip(".").lower() for x in re.split(r"[\s,;/]+", s) if x.strip(".")]
+    if not w or _COMPANY.search(s): return False
+    dr = w[0] in ("dr", "doctor"); w = w[1:] if dr else w; creds = 0
+    while w and w[-1].replace(".", "") in _CREDS: w.pop(); creds += 1
+    if not (dr or creds) or not 2 <= len(w) <= 4: return False
+    if not all(re.fullmatch(r"[a-z][a-z'’.\-]*", x) for x in w) or set(ABBR.get(x, x) for x in w) & (GENERIC | WEAK): return False
+    c = _plain(city).split()
+    return not (c and w[-len(c):] == c)                                              # "Silver Spring, MD"
+
+
+def no_institution(raw, families=None, city=""):
+    """"" when the name is an institution's; otherwise why not: "placeholder", "person", "office", "pharmacy", or the kind given in
+    data/ref/site_not_institutions.csv."""
     s = _unbracket(raw).strip(" -,/#:;")
-    if not re.search(r"[A-Za-z]", s): return True
+    if not re.search(r"[A-Za-z]", s): return "placeholder"
+    plain = _plain(raw)
+    if plain in _listed(): return _listed()[plain]
+    if _GROUP_TAIL.sub("", plain) in _GROUPS: return "office"
     flat = " ".join(flat_tokens(s))
-    if any(rx.search(flat) for _, _, rx, _ in (_default_families() if families is None else families)): return False
-    if _PH_CODE.match(s): return True
+    if any(rx.search(flat) for _, _, rx, _ in (_default_families() if families is None else families)): return ""   # a listed institution's own office or pharmacy stays with it
+    if _OFFICE.search(s): return "office"
+    if _PHARMACY.search(s): return "pharmacy"
+    if _is_person(s, city): return "person"
+    if _PH_CODE.match(s): return "placeholder"
     m = _PH_NUMBERED.match(s)
-    if m: return not _INST.search(m.group(1))
-    if _PH_PHRASE.search(s): return not _INST.search(_PH_PHRASE.sub(" ", s))         # "Mayo Clinic Research Site" keeps its name
+    if m: return "" if _INST.search(m.group(1)) else "placeholder"
+    if _PH_PHRASE.search(s): return "" if _INST.search(_PH_PHRASE.sub(" ", s)) else "placeholder"   # "Mayo Clinic Research Site" keeps its name
     m = _PH_ENDS_SITE.match(s)
     if m:                                                                            # "Zai Lab Site 02002", "NEO-811 NYC Site"; not "City of Hope - Duarte Main Site"
         head = m.group(1)
-        return not _INST.search(head) and (bool(re.search(r"\d", head)) or len(re.findall(r"[A-Za-z0-9]+", head)) <= 2)
-    return not flat
+        return "" if _INST.search(head) or not (bool(re.search(r"\d", head)) or len(re.findall(r"[A-Za-z0-9]+", head)) <= 2) else "placeholder"
+    return "" if flat else "placeholder"
+
+
+def is_placeholder(raw, families=None, city=""):
+    """True when the registry name does not name a treating institution (a sponsor's placeholder, or one of the kinds in no_institution())."""
+    return bool(no_institution(raw, families, city))
 
 
 _CHILD = re.compile(r"\b(childrens?|pediatrics?|paediatrics?|kids)\b")
@@ -188,7 +247,7 @@ def merge_map(spellings, families=()):
     The result does not depend on the order of the input."""
     groups = defaultdict(list)
     for s in sorted(spellings, key=lambda x: (x["county_fips"], x["fac"])):
-        if not s["zip"] or is_placeholder(s["name"], families): continue
+        if not s["zip"] or is_placeholder(s["name"], families, s.get("city", "")): continue
         s = dict(s); s["_tok"] = flat_tokens(s["name"]); s["_child"] = is_childrens(s["name"], s["_tok"])
         s["_fam"], campus = family_of(s["_tok"], USPS.get(s["county_fips"][:2]), families, s["_child"])
         groups[(s["county_fips"], campus[0] if s["zip"] in campus else s["zip"])].append(s)   # a family's campus ZIPs are one place
@@ -348,8 +407,20 @@ def _selftest():
           ("Site 0221 - Tufts Medical Center - PPDS", False), ("US Oncology Research Investigational Products Center", False), ("ALX Center 7", True), ("Study Center 12", True),
           ("MD Anderson Site 12", False), ("Houston Methodist Site", False), ("Research Site - Los Angeles", True), ("Oncology Investigational Site", True), ("(UCLA Medical Center", False),
           ("Mayo Clinic Research Site", False)]
-    bad = [n for n, got, want in ok if got != want] + [f"placeholder: {n}" for n, want in ph if is_placeholder(n) != want]
-    print(f"site_names self-test: {len(ok) + len(ph) - len(bad)}/{len(ok) + len(ph)} pass" + ("" if not bad else " | FAILED: " + "; ".join(bad)))
+    # not a placeholder, and not a treating institution either: (name, city, kind expected; "" = an institution)
+    ni = [("Tania Jain, MD", "Baltimore", "person"), ("Dr. Karandeep Singh MD", "Oxnard", "person"), ("Michael Birrer, MD, PhD", "Little Rock", "person"), ("Elizabeth C. Neil, M.D.", "Minneapolis", "person"),
+          ("Ann M Wierman MD LTD", "Las Vegas", ""), ("James R. Berenson M.D. Inc.", "West Hollywood", ""), ("Dr. Sudarshan K. Sharma, Ltd.", "Hinsdale", ""), ("Michael G Oefelein, MD Clinical Trials", "Bakersfield", ""),
+          ("Silver Spring, MD", "Silver Spring", ""), ("Holy Cross Germantown, MD", "Germantown", ""), ("Mercy Medical Center, MD", "Baltimore", ""), ("Charlotte Hungerford", "Torrington", ""), ("Sheppard Pratt", "Towson", ""),
+          ("SWOG", "Sacramento", "office"), ("NRG Oncology", "Philadelphia", "office"), ("ECOG-ACRIN Cancer Research Group", "Philadelphia", "office"), ("Alliance for Clinical Trials in Oncology", "Chicago", "office"),
+          ("VA Central Office, Washington, DC", "Washington D.C.", "office"), ("United States Oncology Regulatory Affairs Corporate Office", "Nashville", "office"),
+          ("Michigan Cancer Research Consortium NCORP", "Ann Arbor", ""), ("Highlands Oncology Group", "Springdale", ""), ("Kaiser Permanente- Marshall Medical Offices", "Redwood City", ""), ("Alliance Cancer Specialists", "Bensalem", ""),
+          ("IDS Pharmacy", "Milwaukee", "pharmacy"), ("Oncology Research Pharmacy and lnvestigational Drug Service", "Baltimore", "pharmacy"), ("Mayo Clinic Research Pharmacy", "Rochester", ""),
+          ("Novant Cancer Institute Radiation Oncology - Supply", "Supply", ""), ("Ryan Nguyen", "Chicago", "person"), ("2400 Pratt Street", "Durham", "address"), ("Research Site", "", "placeholder"), ("Mayo Clinic", "", "")]
+    apart = together(S("24510", "Johns Hopkins Hospital", "21287", 60, "Baltimore"), S("24510", "Tania Jain, MD", "21287", 1, "Baltimore"))
+    bad = [n for n, got, want in ok if got != want] + [f"placeholder: {n}" for n, want in ph if is_placeholder(n) != want] + [f"no institution: {n} -> {no_institution(n, F, c)!r}" for n, c, want in ni if no_institution(n, F, c) != want] \
+        + ([] if not apart else ["an investigator's name was folded into the hospital at its ZIP"])
+    total = len(ok) + len(ph) + len(ni) + 1
+    print(f"site_names self-test: {total - len(bad)}/{total} pass" + ("" if not bad else " | FAILED: " + "; ".join(bad)))
     return not bad
 
 
@@ -359,8 +430,11 @@ def main():
     norm = lambda x: re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", SITECODE.sub(" ", str(x)).lower())).strip()
     s = pd.read_csv("out_adult55/site_assignment_qc.csv", dtype=str).fillna(""); s = s[s.county_fips != ""].copy(); s["fac"] = s.facility.map(norm)
     sp = spellings_from_rows(s); alias, audit, _ = merge_map(sp, load_families("data/ref/site_families.csv"))
-    after = len({(x["county_fips"], alias.get((x["county_fips"], x["fac"]), x["fac"])) for x in sp}); ph = sum(is_placeholder(x["name"]) for x in sp)
-    print(f"{len(sp):,} spellings -> {after:,} facilities ({len(alias):,} spellings folded in); {ph:,} of the spellings are sponsor placeholders")
+    after = len({(x["county_fips"], alias.get((x["county_fips"], x["fac"]), x["fac"])) for x in sp}); kinds = defaultdict(int)
+    for x in sp:
+        k = no_institution(x["name"], None, x.get("city", ""))
+        if k: kinds[k] += 1
+    print(f"{len(sp):,} spellings -> {after:,} facilities ({len(alias):,} spellings folded in); {sum(kinds.values()):,} of the spellings name no institution: {dict(kinds)}")
     by = defaultdict(int)
     for a in audit: by[a["rule"].split(":")[0]] += 1
     print("by rule:", dict(by))

@@ -346,7 +346,7 @@
 <div class="app">
 <header class="site">
   <div class="brand"><span class="wm-row"><a class="wordmark" href="index.html">Cancer Clinical Trial Access Map</a><span class="beta-tag" title="This site is in beta: methods and figures are reviewed weekly and may change">Beta</span></span><span class="stamp" id="stamp"></span></div>
-  <nav class="hdr-links" aria-label="Pages"><a href="map.html" aria-current="page">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="about.html">About</a></nav>
+  <nav class="hdr-links" aria-label="Pages"><a href="map.html" aria-current="page">Map</a><a href="findings.html">Key findings</a><details class="hdr-group"><summary>Patients &amp; families</summary><div><a href="community.html">Your community</a><a href="learn.html">Understand trials</a><a href="find.html">Trials near a ZIP</a></div></details><details class="hdr-group"><summary>Advocates &amp; Congress</summary><div><a href="act.html">What could help</a><a href="brief.html" id="brief-link">Printable brief</a><a href="map.html?u=district&amp;m=cos_ctma_hr&amp;lt=1">Cosponsor map</a></div></details><a href="methods.html">Methods &amp; data</a><a href="about.html">About</a></nav>
 </header>
 <main class="stage"><h1 class="sr-only">Cancer Clinical Trial Access Map</h1>
   <div id="left" class="stage-map">
@@ -379,10 +379,10 @@
           <button type="button" class="mi" data-xtab="burden">Need vs access<span>Counties with high cancer incidence and low trial access</span></button>
           <button type="button" class="mi" data-xtab="changes">Recent changes<span>What changed in the registry since the last refresh</span></button>
           <div class="lh">Guided explorations</div>
-          <a class="mi" href="map.html?s=KY&amp;rural=1&amp;guide=rural-urban">Compare a rural and an urban community</a>
-          <a class="mi" href="map.html?type=sarcoma&amp;guide=rare">Explore access for a less common cancer</a>
-          <a class="mi" href="map.html?u=district&amp;guide=district">Investigate your congressional district</a>
-          <a class="mi" href="map.html?m=mva&amp;guide=deaths">Where cancer deaths are high and trials are far</a>
+          <a class="mi" href="map.html?s=KY&amp;rural=1&amp;lt=20&amp;guide=rural-urban">Compare a rural and an urban community</a>
+          <a class="mi" href="map.html?type=sarcoma&amp;lt=1&amp;guide=rare">Explore access for a less common cancer</a>
+          <a class="mi" href="map.html?u=district&amp;lt=1&amp;guide=district">Investigate your congressional district</a>
+          <a class="mi" href="map.html?m=mva&amp;lt=1&amp;guide=deaths">Where cancer deaths are high and trials are far</a>
           <div class="lh">Questions to explore</div>
           <button type="button" class="mi" id="inv-type">Would the picture change for a particular cancer?</button>
           <a class="mi" href="learn.html#research-teams">Planning where a trial runs? Tools for research teams</a>
@@ -463,7 +463,7 @@
     <div id="pane-overview">
     <p class="pane-ret" id="pane-ret" hidden><button type="button" class="linkish" id="pane-ret-b">Back to the answer →</button></p>
     <div class="guide" id="guide" hidden></div>
-    <div id="pane-body"><div class="card hero"><p class="kicker">United States, residents 55 and older</p><p class="member">Loading the figures…</p><noscript><p class="member">This map needs JavaScript. The <a href="methods.html">methods</a> page and the <a href="https://github.com/nehaamd/cancer-trial-access-fullmap">data files</a> can be read without it.</noscript></div></div>
+    <div id="pane-body"><div class="card hero"><p class="kicker">United States, residents 55 and older</p><p class="member">Loading the figures…</p><noscript><p class="member">This map needs JavaScript. The <a href="findings.html">key findings</a> and <a href="methods.html">methods</a> pages and the <a href="https://github.com/nehaamd/cancer-trial-access-fullmap">data files</a> can be read without it.</noscript></div></div>
     <p class="about-est"><b>Not medical advice.</b> Counts are of listed trials, not trials a given patient qualifies for, and a listed trial may not be enrolling today. Road distances are calculated on the highway network to approximate trial-site locations. <a href="methods.html#limits">About these estimates, their sources and limits</a>.</p>
     </div>
   </aside>
@@ -543,7 +543,8 @@
   // Since November 2026 the opening line is "no trial" (LT = 1: fewer than one). It needs no chosen number, and the published files carry it
   // (z60, n_z60) beside the 20-trial figures (l20, n_l20), so both lines are read from the files; 5, 10, 50 and 100 are recounted from the tracts.
   const LT_DEFAULT = 1, LT_OPTIONS = [1, 5, 10, 20, 50, 100]; let LT = LT_DEFAULT;
-  const ltOn = () => LT !== LT_DEFAULT;                    // a line other than the opening one (kept in the view's link)
+  const ltOn = () => LT !== LT_DEFAULT;                    // a line other than the opening one
+  const VIEW_KEYS = ['d', 'c', 's', 'u', 'm', 'rural', 'site', 'acs', 'tab', 'type', 'age', 'ph', 'sp', 'crit', 'thr', 'meas', 'guide'];   // what pushURL writes besides the line
   const pubLine = () => LT === 1 || LT === 20;             // the two lines the published files carry
   const PK = () => LT === 1 ? 'z60' : 'l20';               // the published field for the current line (read only when pubLine())
   const recalc = () => filtersActive() || !pubLine();      // the access figures must come from the tract file (filters, a recounted line, or both)
@@ -881,15 +882,19 @@
   // ---------- URL state (shareable views) ----------
   function pushURL() { const p = new URLSearchParams(); if (selectedD) p.set('d', selectedD); else if (selectedC) p.set('c', selectedC); else if (selectedState) p.set('s', selectedState); if (guideKey) p.set('guide', guideKey);
     if (unit !== 'county') p.set('u', unit); if (metric !== defaultMetric()) p.set('m', metric); if (metroOn() && metroApplies()) p.set('rural', '1'); if (metric === 'inc' && incSite) p.set('site', BSITE[incSite][0]); if ((metric === 'acs' || metric === 'gacs') && acsVar !== 'veh') p.set('acs', acsVar);
-    if (ltOn()) p.set('lt', LT); if (tab !== 'map') p.set('tab', tab); if (filt.type) p.set('type', filt.type); if (filt.age !== null) p.set('age', filt.age); if (filt.phase.size < T.phases.length) p.set('ph', filt.phase.size ? [...filt.phase].join(',') : 'none'); if (filt.sponsor.size < T.sponsors.length) p.set('sp', filt.sponsor.size ? [...filt.sponsor].join(',') : 'none');
+    p.set('lt', LT); if (tab !== 'map') p.set('tab', tab); if (filt.type) p.set('type', filt.type); if (filt.age !== null) p.set('age', filt.age); if (filt.phase.size < T.phases.length) p.set('ph', filt.phase.size ? [...filt.phase].join(',') : 'none'); if (filt.sponsor.size < T.sponsors.length) p.set('sp', filt.sponsor.size ? [...filt.sponsor].join(',') : 'none');
     if ((isBva(metric) || tab === 'burden') && BU) { if (incSite) p.set('site', BSITE[incSite][0]); if (bvaCritUser) p.set('crit', bvaCrit); if (bvaThr !== 50) p.set('thr', bvaThr); if (tab === 'burden' && measure === 'mort' && !isBva(metric)) p.set('meas', 'mort'); }
+    if (!ltOn() && [...p.keys()].length === 1) p.delete('lt');   // the opening view keeps a bare address; any other view names its line, so the link reads the same whatever the map later opens on
     if (restoring) return; const q = p.toString(), url = q ? '?' + q : location.pathname, key = placeKey();
     // a new place or tab is a new history entry (so Back returns to the previous place); filters and layers update the entry in place
     const st = window.__askState ? { ask: window.__askState } : null;   // an open answer card travels with the entry, so Back and Forward bring it back with its view
     if (lastKey !== null && key !== lastKey) history.pushState(st, '', url); else history.replaceState(st, '', url); lastKey = key; }
   let lastKey = null, restoring = false; const placeKey = () => (selectedD ? 'd' + selectedD : selectedC ? 'c' + selectedC : selectedState ? 's' + selectedState : 'us') + '|' + tab;
   function readURL() { const p = new URLSearchParams(location.search);
-    { const v = parseInt(p.get('lt')); LT = LT_OPTIONS.includes(v) ? v : LT_DEFAULT; }   // the trial-count line; an unknown value is ignored (read before the guide box, whose text quotes it)
+    // The trial-count line (read before the guide box, whose text quotes it); an unknown value is ignored. A link that names a view (a place,
+    // a layer, a filter ...) but no line was made before 16 Nov 2026, when the map opened at fewer than 20 and left that out of the
+    // address: it opens at 20, as it did when it was shared. Since then every link with a view carries its line (pushURL).
+    { const v = parseInt(p.get('lt')); LT = LT_OPTIONS.includes(v) ? v : VIEW_KEYS.some(k => p.has(k)) ? 20 : LT_DEFAULT; }
     guideKey = GUIDES[p.get('guide')] ? p.get('guide') : null; renderGuide();
     if (p.get('u') && ['county', 'district', 'state'].includes(p.get('u'))) { unit = p.get('u'); document.getElementById('unit').value = unit; fillMetricSelect(); }
     if (p.get('m') && UNIT_METRICS[unit].includes(p.get('m'))) { metric = p.get('m'); document.getElementById('metric').value = metric; }
@@ -1391,7 +1396,7 @@
     document.getElementById('si-scope').textContent = nearby ? `Recruiting sites within ${trMode} road-miles of ${sc.label}` : `Recruiting sites in ${sc.label}`; document.getElementById('si-count').textContent = `${fmt(rows.length)} site${rows.length === 1 ? '' : 's'} · ${fmt(rows.filter(r => r.n > 0).length)} with a matching trial · ${fmt(rows.filter(r => r.fa[5]).length)} unresolved ${rows.filter(r => r.fa[5]).length === 1 ? 'name' : 'names'}`;
     const el = document.getElementById('si-table'); if (!rows.length) { el.innerHTML = '<div class="empty">No recruiting sites here.</div>'; return; }
     el.innerHTML = `<table class="dt"><thead><tr>${th('Institution', 'name', siSort)}${th('City', 'city', siSort)}<th>ZIP</th>${th('County', 'county', siSort)}${nearby ? th('Road-mi', 'mi', siSort) : ''}${th('Matching trials', 'n', siSort)}<th>Site ID</th><th style="position:relative"><span class="sr-only">Trials at this site</span></th></tr></thead><tbody>` +
-      rows.slice(0, siShow).map(r => `<tr><td>${esc(r.fa[0])}${r.fa[5] ? ' <span class="unfiltered-tag" title="Sponsor placeholder name: the location is real but the institution is not identified in the registry">unresolved</span>' : ''}</td><td>${(c => esc(c[0]) + (c.length > 1 ? ` <span class="sub" title="This name is also listed in ${esc(c.slice(1).join(', '))}">+${c.length - 1} more</span>` : ''))(citiesOf(r.cf, r.i))}</td><td class="mono">${(z => z.length > 1 ? `${z[0]} <span class="sub" title="This name is also listed at ${z.slice(1).join(', ')}">+${z.length - 1} more</span>` : (z[0] || ''))(zipsOf(r.cf, r.i))}</td><td>${esc(clabel(C[r.cf]))}</td>${nearby ? `<td class="n">${r.mi}</td>` : ''}<td class="n">${r.n}</td><td class="mono sub">${r.fa[4]}</td><td>${r.n ? `<button class="linkish" data-fac="${r.fa[4]}">View trials</button>` : ''}</td></tr>`).join('') + '</tbody></table>' + (rows.length > siShow ? `<p class="more"><button class="btn" id="si-more">Show more (${fmt(rows.length - siShow)} remaining)</button></p>` : '');
+      rows.slice(0, siShow).map(r => `<tr><td>${esc(r.fa[0])}${r.fa[5] ? ' <span class="unfiltered-tag" title="The registry entry names no treating institution (a sponsor placeholder such as Research Site, the name of an investigator, a group office or a research pharmacy). The location is real.">unresolved</span>' : ''}</td><td>${(c => esc(c[0]) + (c.length > 1 ? ` <span class="sub" title="This name is also listed in ${esc(c.slice(1).join(', '))}">+${c.length - 1} more</span>` : ''))(citiesOf(r.cf, r.i))}</td><td class="mono">${(z => z.length > 1 ? `${z[0]} <span class="sub" title="This name is also listed at ${z.slice(1).join(', ')}">+${z.length - 1} more</span>` : (z[0] || ''))(zipsOf(r.cf, r.i))}</td><td>${esc(clabel(C[r.cf]))}</td>${nearby ? `<td class="n">${r.mi}</td>` : ''}<td class="n">${r.n}</td><td class="mono sub">${r.fa[4]}</td><td>${r.n ? `<button class="linkish" data-fac="${r.fa[4]}">View trials</button>` : ''}</td></tr>`).join('') + '</tbody></table>' + (rows.length > siShow ? `<p class="more"><button class="btn" id="si-more">Show more (${fmt(rows.length - siShow)} remaining)</button></p>` : '');
     el.querySelectorAll('th[data-k]').forEach(h => h.addEventListener('click', () => { const k = h.dataset.k; siSort = siSort[0] === k ? [k, -siSort[1]] : [k, 1]; renderSites(); }));
     el.querySelectorAll('button[data-fac]').forEach(b => b.addEventListener('click', () => { facFilter = b.dataset.fac; setTab('trials'); }));
     const m = document.getElementById('si-more'); if (m) m.addEventListener('click', () => { siShow += 300; renderSites(); }); }
