@@ -5,7 +5,7 @@
    is a count/sum/mean of row values; nothing is reformatted. run() never throws: errors come back as {error, hint}.
    Loading: browser → options.globals (window.DATA, BURDEN, …) + options.fetchJSON(base + 'api/…'); Node → options.root (files on disk).
    No dependencies, no build step; plain ES module for Node 22 and modern browsers. */
-import { TABLES, DEFAULT_COLUMNS, FILES, SOURCES, STATES, CANCER_TYPES, SITE_INFO, PHASES, SPONSOR_TYPES, SITE_BASE, UNIT_OF_TABLE, TYPE_KEYS_BY_TYPE_ACCESS, fieldFor, allPaths, groupableFields } from './catalog.js';
+import { TABLES, DEFAULT_COLUMNS, FILES, SOURCES, STATES, CANCER_TYPES, SITES, SITE_INFO, PHASES, SPONSOR_TYPES, SITE_BASE, UNIT_OF_TABLE, TYPE_KEYS_BY_TYPE_ACCESS, fieldFor, allPaths, groupableFields } from './catalog.js';
 import { buildPlaceIndex, findPlaces, stateCode, editDistance } from './places.js';
 import { methodById, checkParams, METHOD_IDS, isReviewed } from './methods.js';
 
@@ -874,6 +874,33 @@ export function createEngine(options = {}) {
       i.keyword ? `"${i.keyword}"` : null, !isNull(i.min_age_at_most) ? `minimum age ≤ ${i.min_age_at_most}` : null].filter(Boolean);
     return `Trials ${where}` + (f.length ? ` (${f.join(', ')})` : '');
   }
+  // The same step in words a first-time reader can follow, with no field names and no query text: what the card shows while a question
+  // runs. The exact call (describeCall) and its result stay under the finished card's Details.
+  const PLAIN_TABLE = { counties: 'county figures', districts: 'congressional-district figures', states: 'state figures', national: 'the national figures', nci_centers: 'the list of NCI-designated cancer centers', facilities: 'the list of trial sites', senators: 'the list of senators', cosponsors: 'the cosponsor lists' };
+  function plainScope(i) {
+    const list = Array.isArray(i.where) ? i.where.filter(n => n && typeof n === 'object') : [];
+    const st = list.filter(n => n.field === 'state' && ['=', 'in'].includes(n.op)).flatMap(n => Array.isArray(n.value) ? n.value : [n.value]).filter(v => typeof v === 'string').map(v => STATES[stateCode(v)] || v);
+    const types = [...new Set((safeJSON(i).match(/(?:by_type|by_cancer_type|by_site)\.([a-z_]+)/g) || []).map(x => x.split('.').pop()))].map(k => String(CANCER_TYPES[k] || SITES[k] || k).split(' (')[0].toLowerCase());
+    return (st.length ? ' for ' + joinAnd(st.slice(0, 4)) + (st.length > 4 ? ' and other states' : '') : '') + (types.length ? ` (${types.slice(0, 3).join(', ')})` : '');
+  }
+  const safeJSON = o => { try { return JSON.stringify(o) || ''; } catch (e) { return ''; } };
+  function describeCallPlain(name, input) {
+    const i = input && typeof input === 'object' ? input : {};
+    try {
+      switch (name) {
+        case 'find_places': return `Looking up “${String(i.query || '').slice(0, 60)}”`;
+        case 'query': return `Reading ${PLAIN_TABLE[i.table] || 'the figures'}${plainScope(i)}`;
+        case 'aggregate': return `Adding up ${PLAIN_TABLE[i.table] || 'the figures'}${plainScope(i)}`;
+        case 'profile': return `Reading the figures for ${nameOf(i.id)}`;
+        case 'compare': return `Comparing ${joinAnd((Array.isArray(i.ids) ? i.ids : []).slice(0, 4).map(nameOf))}`;
+        case 'trials': return describeTrials(i).replace(/^Trials/, 'Checking recruiting trials');
+        case 'site_info': return 'Reading the site’s own notes';
+        case 'method': { const m = methodById(String(i.id || '')); return m ? `Using a standard method: ${m.title}` : 'Using a standard method'; }
+        case 'final_answer': return 'Writing the answer';
+        default: return 'Working on it';
+      }
+    } catch (e) { return 'Working on it'; }
+  }
   function describeResult(name, input, result) {
     const r = result || {};
     if (r.error) return `error: ${r.error}`;
@@ -892,5 +919,5 @@ export function createEngine(options = {}) {
     }
   }
 
-  return { load, run, describeCall, describeResult, full, highlightIds, sourcesFor, placeName, unitOf, vintages, get loaded() { return S.loaded; }, table: t => (S.tables && S.tables[t]) || null, get: (t, id) => resolveRow(t, id) };
+  return { load, run, describeCall, describeCallPlain, describeResult, full, highlightIds, sourcesFor, placeName, unitOf, vintages, get loaded() { return S.loaded; }, table: t => (S.tables && S.tables[t]) || null, get: (t, id) => resolveRow(t, id) };
 }

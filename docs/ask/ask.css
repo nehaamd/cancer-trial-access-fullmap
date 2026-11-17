@@ -15,7 +15,7 @@
 .ask-card .ask-tag{display:inline-block;font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;font-size:.72rem;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--rule-2,#CFCBC2);border-radius:3px;padding:.02rem .4rem;margin:0 0 .35rem}
 .ask-card .ask-tag-no{color:var(--warn,#7A5A00);border-color:#E6CB8E}
 .ask-card .ask-unverified{margin:0 0 .5rem;padding:.1rem 0 .1rem .7rem;border-left:3px solid var(--rule-2,#CFCBC2);color:var(--ink-2);font-size:var(--fs-0,.84rem)}
-.ask-card .ask-detail{font-size:.78rem;color:var(--ink-3);overflow-wrap:anywhere}
+.ask-card .ask-detail{font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;font-size:.78rem;color:var(--ink-3);overflow-wrap:anywhere} .ask-card .ask-detail summary{cursor:pointer} .ask-card .ask-detail p{margin:.2rem 0 0}
 /* the sections: a small uppercase heading, quiet text, a thin rule above */
 .ask-card .ask-sec{margin:.8rem 0 0;padding-top:.6rem;border-top:1px solid var(--rule)} .ask-card .ask-sec h4{margin:0 0 .2rem;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
 .ask-card .ask-sec p{margin:0 0 .25rem;font-size:var(--fs-0,.84rem);color:var(--ink-2)}
@@ -53,7 +53,7 @@
 .ask-card .ask-src,.ask-card .ask-note{margin:.35rem 0 0;font-size:.78rem;color:var(--ink-3)} .ask-card .ask-src a{color:var(--link,#2F6A9C)} .ask-card .ask-asof{color:var(--ink-3)}
 .ask-card .ask-rule code{font-size:.95em;background:var(--paper,#F7F5F0);padding:0 .25rem;border-radius:3px;overflow-wrap:anywhere} .ask-card .ask-log-h{margin-bottom:0}
 .ask-card .ask-log,.ask-card .ask-steps{margin:.3rem 0 0;padding-left:1.3rem;color:var(--ink-2)} .ask-card .ask-log li,.ask-card .ask-steps li{margin:.12rem 0;line-height:1.4} .ask-card .ask-log-r{display:block;color:var(--ink-3);padding-left:.4rem} .ask-card li.err .ask-log-r{color:var(--rust,#8A3B1E)} .ask-card .ask-log-foot{margin:.3rem 0 0;color:var(--ink-3)}
-.ask-card .ask-steps{font-size:.8rem;list-style:decimal} .ask-card.busy .ask-a p::after{content:"";display:inline-block;width:.9em;height:.9em;margin-left:.4rem;vertical-align:-.15em;border:2px solid var(--gulf,#3F7FB5);border-right-color:transparent;border-radius:50%;animation:ask-spin .9s linear infinite} @keyframes ask-spin{to{transform:rotate(360deg)}}
+.ask-card .ask-steps{font-size:.85rem;list-style:none;padding-left:0} .ask-card .ask-steps li{padding-left:1.25rem;position:relative} .ask-card .ask-steps li.done{color:var(--ink-3)} .ask-card .ask-steps li.done::before{content:"\2713";position:absolute;left:.1rem;color:var(--ink-3)} .ask-card .ask-steps li.run{color:var(--ink)} .ask-card.busy .ask-a p::after{content:"";display:inline-block;width:.9em;height:.9em;margin-left:.4rem;vertical-align:-.15em;border:2px solid var(--gulf,#3F7FB5);border-right-color:transparent;border-radius:50%;animation:ask-spin .9s linear infinite} @keyframes ask-spin{to{transform:rotate(360deg)}}
 /* a phone: tap targets of at least 40 px, the table scrolls sideways inside the bottom sheet, the card keeps its reading size */
 @media (max-width:640px){
   .ask-card{padding:.6rem var(--gutter,16px) 1rem} .ask-card .ask-a{font-size:1.02rem} .ask-card .ask-q{font-size:var(--fs-2,1.08rem)}

@@ -378,6 +378,15 @@ eq('describeResult(find_places single)', engine.describeResult('find_places', {}
 eq('describeResult(find_places ambiguous)', engine.describeResult('find_places', {}, orange), `${E.places.orange_counties.length} candidates (ambiguous)`);
 eq('describeResult(trials)', engine.describeResult('trials', {}, th), `${E.hidalgo.trials} trials`);
 check('describeResult(error)', /^error: /.test(engine.describeResult('query', {}, bad)));
+// the same steps in plain words, for the working card: no field names, no query text
+eq('describeCallPlain(query)', engine.describeCallPlain('query', { table: 'counties', where: [{ field: 'state', op: '=', value: 'WY' }, { field: 'zero_trial_share_by_type.breast', op: '<', value: 100 }] }), 'Reading county figures for Wyoming (breast)');
+eq('describeCallPlain(query, bad where)', engine.describeCallPlain('query', { table: 'counties', where: { field: 'state', op: '=', value: 'WY' } }), 'Reading county figures');
+eq('describeCallPlain(aggregate)', engine.describeCallPlain('aggregate', { table: 'districts', where: [{ field: 'state', op: 'in', value: ['TX', 'OK'] }], measures: [{ stat: 'mean', field: 'pct_lt20_trials_within_60rdmi' }] }), 'Adding up congressional-district figures for Texas and Oklahoma');
+eq('describeCallPlain(find_places)', engine.describeCallPlain('find_places', { query: 'Hidalgo county' }), 'Looking up “Hidalgo county”');
+check('describeCallPlain(trials)', /^Checking recruiting trials with a site in Hidalgo County, Texas \(lung/.test(engine.describeCallPlain('trials', { scope: { county_id: '48215' }, cancer_type: 'lung' })));
+eq('describeCallPlain(profile)', engine.describeCallPlain('profile', { table: 'districts', id: 'TX-34' }), 'Reading the figures for ' + engine.placeName('TX-34'));
+for (const [n, i] of [['query', {}], ['aggregate', {}], ['trials', {}], ['compare', {}], ['site_info', { topic: 'bills' }], ['method', { id: 'no-such-method' }], ['final_answer', {}], ['nonsense', null]]) {
+  const t = engine.describeCallPlain(n, i); check(`describeCallPlain(${n}) is plain`, typeof t === 'string' && t.length > 5 && !/[_{}\[\]]|undefined|null/.test(t), t); }
 eq('placeName', [engine.placeName('48215'), engine.placeName('TX-34'), engine.placeName('4834'), engine.placeName('TX'), engine.placeName('US')], ['Hidalgo County, Texas', 'Texas 34th', 'Texas 34th', 'Texas', 'United States']);
 eq('unitOf', [engine.unitOf('48215'), engine.unitOf('TX-34'), engine.unitOf('4834'), engine.unitOf('TX'), engine.unitOf('nci:1'), engine.unitOf('zzz')], ['county', 'district', 'district', 'state', null, null]);
 const src = engine.sourcesFor(['counties', 'districts', 'cosponsors', 'bogus']);

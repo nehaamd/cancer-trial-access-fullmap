@@ -22,6 +22,10 @@ const PRIOR_MAX = 3;           // earlier (question, answer) pairs sent with a f
 const HISTORY_ROWS = 2000;     // table rows kept in the history entry (Back/Forward restores the card without the engine)
 const PH_FOLLOW = 'Ask a follow-up, or a new question…';
 const LOAD_TEXT = 'Loading the data files (first question only)…';
+// What the card says while it works. The time is from the live evaluation runs: half of 30 test questions were answered within 10 seconds
+// and nine in ten within 20 (November 2026).
+const LEAD_TEXT = 'Looking this up in the map’s data. This usually takes 10 to 20 seconds.';
+const LEAD_LONG = 'Still working: this question needs several lookups.';
 const FOCUS_KEY = 'askFocus';  // sessionStorage: the reader's own Focus choice, kept for the session
 const ERR = {
   unavailable: 'The question box is unavailable right now; the map and its filters still work.',
@@ -50,6 +54,7 @@ const decideFocus = n => { const p = focusPref(); return p !== null ? p && n > 0
 const known = id => { const h = H(); return h.placeName ? !!safe(() => h.placeName(id)) : true; };
 const placeIdOf = unit => row => { const id = R.rowMapId(row, unit); return id && known(id) ? id : null; };
 const describeCall = (name, input) => safe(() => String(engine.describeCall(name, input))) || `${name} ${short(input)}`;
+const describeCallPlain = (name, input) => safe(() => String(engine.describeCallPlain(name, input))) || 'Working on it';   // what the card shows while it works: no field names, no query text
 const describeResult = (name, input, r) => safe(() => String(engine.describeResult(name, input, r))) || (r && r.error ? `error: ${short(r.error, 120)}` : short(r, 100));
 
 // ---------- the engine (created once; the data files load on the first question) ----------
@@ -116,7 +121,7 @@ function closeCard() {   // the × or Escape: the card, the outlines and the foc
   sync(); focusBox();
 }
 function renderBusy(q, log, lead) { mountCard(R.busyHTML(q, log, lead), { busy: true, focus: false }); }
-function renderSteps(log) { const ol = document.querySelector('#ask-card.busy .ask-steps'); if (ol) ol.innerHTML = R.stepsHTML(log); }
+function renderSteps(log) { const ol = document.querySelector('#ask-card.busy .ask-steps'); if (ol) ol.innerHTML = R.busyStepsHTML(log); }
 function setLead(text) { const p = document.querySelector('#ask-card.busy .ask-a p'); if (p) p.textContent = text; }
 function renderError(q, message, detail) { window.__askState = null; card = null; mountCard(R.errorHTML(q, message, detail), { focus: true }); }
 function renderAnswer(ctx, opts = {}) {
@@ -172,13 +177,13 @@ async function run(q) {
   if (Date.now() < cooldownUntil) { setStatus(`Please wait ${Math.ceil((cooldownUntil - Date.now()) / 1000)} s before the next question.`); return; }
   ui.input.value = q; ui.input.scrollTop = 0; ui.input.scrollLeft = 0; const g = ++gen; if (ctrl) ctrl.abort();   // the box shows the start of the question while it runs (a long one scrolls while typed)
   const log = [], results = {}, calls = {}; let step = 0;
-  setBusy(true); renderBusy(q, log, engineReady ? 'Asking the map…' : LOAD_TEXT); if (!engineReady) setStatus(LOAD_TEXT); else setStatus('Asking the map…');
+  setBusy(true); renderBusy(q, log, engineReady ? LEAD_TEXT : LOAD_TEXT); if (!engineReady) setStatus(LOAD_TEXT); else setStatus('Looking this up…');
   try {
     try { await ensureEngine(); } catch (e) { if (g !== gen) return; renderError(q, ERR.engine, e && e.message); return; }
     if (g !== gen) return;
     const turns = [];
     for (let i = 0; i < MAX_TURNS; i++) {
-      setLead(`Asking the map… (step ${Math.min(i + 1, 8)} of up to 8)`); setStatus(i === 0 ? 'Asking the map…' : `Step ${step + 1}: reading the results…`);
+      setLead(i < 4 ? LEAD_TEXT : LEAD_LONG); setStatus(i === 0 ? 'Looking this up…' : 'Reading the results…');
       const my = new AbortController(); ctrl = my; const timer = setTimeout(() => my.abort(), TIMEOUT_S * 1000); let resp;
       try { resp = await postStep({ v: 3, q, turns, prior, client: { page: 'map', unit: safe(() => H().unit()) || 'county' } }, my.signal); }
       catch (e) { if (g !== gen) return; handleError(q, e); return; }
@@ -191,9 +196,9 @@ async function run(q) {
           const id = String(c && c.id || ''), name = String(c && c.name || ''), input = c && c.input && typeof c.input === 'object' ? c.input : {};
           calls[id] = { name, input };
           if (name === 'final_answer') return { tool_use_id: id, content: JSON.stringify(many ? { ok: true, note: 'call final_answer alone, after the other results' } : { ok: true, note: 'final_answer is read by the server' }), is_error: false };
-          const entry = { call: describeCall(name, input), result: null, error: false }; log.push(entry); renderSteps(log); setStatus(`Step ${step}: ${entry.call}`);
+          const entry = { call: describeCall(name, input), plain: describeCallPlain(name, input), result: null, error: false }; log.push(entry); renderSteps(log); setStatus(entry.plain + '…');
           let r; try { r = await engine.run(name, input, id); } catch (e) { r = { error: 'engine failure: ' + (e && e.message || e) }; } if (r === undefined || r === null) r = { error: 'the tool returned nothing' };
-          results[id] = r; entry.error = !!(r && typeof r === 'object' && r.error); entry.result = describeResult(name, input, r); if (g === gen) { renderSteps(log); setStatus(`→ ${entry.result}`); }
+          results[id] = r; entry.error = !!(r && typeof r === 'object' && r.error); entry.result = describeResult(name, input, r); if (g === gen) renderSteps(log);   // the result (and any error text) is kept for Details; the working card shows only that the step is done
           return { tool_use_id: id, content: R.truncateResult(r), is_error: entry.error };
         }));
         if (g !== gen) return;
