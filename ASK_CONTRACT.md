@@ -288,9 +288,11 @@ On failure the worker sends the model a `tool_result` error for the `final_answe
 ## 7. Client behaviour (ask.js)
 
 * Mount: the existing box (`SITE.mountAskBox`) on map.html and the homepage hero (homepage keeps the GET redirect to
-  `map.html?ask=`). The box shows live progress per step in `#ask-status` and in the busy card: "Finding Texas counties with
-  oncologists and no trials… (step 2 of up to 8)"; each executed tool call is described in plain words from its input
-  (e.g. "Counties where oncologists.count > 0 and trials_listed_here = 0, in TX → 38 match").
+  `map.html?ask=`). The box shows live progress per step in `#ask-status` and in the busy card. Since November 2026 the busy
+  card speaks to a first-time visitor: a lead with the usual wait ("Looking this up in the map's data. This usually takes 10 to
+  20 seconds.") and each step in plain words with no field names, query text or error messages ("Reading county figures for
+  Wyoming (breast)", from `engine.describeCallPlain`). The exact call and its result ("Counties in TX where oncologists.count > 0
+  and trials_listed_here = 0 → 38 match", from `describeCall` / `describeResult`) are kept for the finished card's Details.
 * First question: load `api/all_counties.json`, `all_districts.json`, `all_states.json`, `national.json` (≈ 800 KB gzipped)
   with the status "Loading the data files (first question only)…"; the map's own globals are used as loaded.
 * Answer card (right pane, as now) shows in order: the question; the answer (only if verified); "How this was read"

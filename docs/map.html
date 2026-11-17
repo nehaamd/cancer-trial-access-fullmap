@@ -10,8 +10,8 @@
   if (t) location.replace('methods.html#' + encodeURIComponent(t)); }; go(); window.addEventListener('hashchange', go); })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cancer Clinical Trial Access Map — trial deserts by county and congressional district</title>
-<meta name="description" content="Where the clinical trial deserts are, by county and congressional district: an interactive map of recruiting cancer clinical trials open to patients 55 and older, by county, congressional district and state, measured in road-miles from where people live.">
+<title>Cancer Clinical Trial Access Map — distance to cancer trials by county and congressional district</title>
+<meta name="description" content="An interactive map of recruiting cancer clinical trials open to patients 55 and older, by county, congressional district and state, measured in road-miles from where people live.">
 <link rel="stylesheet" href="site.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
@@ -20,16 +20,16 @@
 <link rel="canonical" href="https://cancertrialaccess.org/map.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Cancer Clinical Trial Access Map">
-<meta property="og:title" content="Cancer Clinical Trial Access Map — trial deserts by county and congressional district">
-<meta property="og:description" content="Where the clinical trial deserts are, by county and congressional district: recruiting cancer clinical trials by county, congressional district and state, in road-miles from where people live.">
+<meta property="og:title" content="Cancer Clinical Trial Access Map — distance to cancer trials by county and congressional district">
+<meta property="og:description" content="Recruiting cancer clinical trials by county, congressional district and state, in road-miles from where people live.">
 <meta property="og:url" content="https://cancertrialaccess.org/map.html">
 <meta property="og:image" content="https://cancertrialaccess.org/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Map of US counties with a circle sized by the number of residents 55 and older who have no recruiting cancer trial within 60 road-miles of home, and the national total">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Cancer Clinical Trial Access Map — trial deserts by county and congressional district">
-<meta name="twitter:description" content="Where the clinical trial deserts are, by county and congressional district: recruiting cancer clinical trials by county, congressional district and state, in road-miles from where people live.">
+<meta name="twitter:title" content="Cancer Clinical Trial Access Map — distance to cancer trials by county and congressional district">
+<meta name="twitter:description" content="Recruiting cancer clinical trials by county, congressional district and state, in road-miles from where people live.">
 <meta name="twitter:image" content="https://cancertrialaccess.org/assets/og-image.png">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-400-normal.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/source-sans-3-latin-600-normal.woff2">
@@ -162,6 +162,7 @@
   .map-hint .linkish{font-size:inherit}
   /* the legend inside its card */
   .legend{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .8rem;font-size:var(--fs-0);color:var(--ink-2);min-height:1.2rem}
+  .legend .lg-k{order:5} .legend .lg-sizes{gap:.75rem;white-space:nowrap} .legend .lg-mean{color:var(--ink-2)}
   .legend .lg-title{font-weight:650;color:var(--ink);flex-basis:auto;line-height:1.3;margin-right:.3rem} .legend .lg-how{color:var(--ink-2)} .legend .lg-how[open]{flex-basis:100%;order:10} .legend .lg-how summary{cursor:pointer;color:var(--link);font-weight:600;display:inline} .legend .lg-how p{margin:.3rem 0 0;max-width:110ch;max-height:40vh;overflow:auto} .legend .lg-note{flex-basis:100%;color:var(--ink-2)} .legend .chips-lead{font-weight:650;color:var(--ink-2)}
   .legend span{display:inline-flex;align-items:center;gap:.35rem} .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)} .legend i.hatch{background:repeating-linear-gradient(45deg,#fff 0 3px,#bbb 3px 5px)}
   .tabnote{display:block;font-size:var(--fs-0);color:var(--ink-3);padding:.5rem 1.25rem 0} .tabnote:empty{display:none}
@@ -736,8 +737,12 @@
     placeBubbles(); }
   const circleSVG = (r, fill, stroke, w) => `<svg width="${2 * r + 2}" height="${2 * r + 2}" aria-hidden="true"><circle cx="${r + 1}" cy="${r + 1}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${w || .7}"/></svg>`;
   function legendShort(lg) {
-    if (metroOn()) { lg.append('span').html(circleSVG(6, BUB_FILL(true), BUB_LINE(true), .8) + 'metro county (solid)'); lg.append('span').html(circleSVG(6, BUB_FILL(false), BUB_LINE(false), 1.6) + 'nonmetro county (ring)'); }
-    [5000, 25000, 100000].forEach(n => lg.append('span').attr('class', 'lg-size').attr('data-n', n).html(circleSVG(legendR(n), BUB_ONE, BUB_ONE_LINE, .8) + fmt(n) + ' residents 55+'));
+    // The key to the circles comes after the help link and the star (CSS order), so the first line says what is drawn and the next is the
+    // key. The three sizes stay together on one line with the unit said once, then what size means: a large circle in a populous
+    // county is many people, not a worse share.
+    if (metroOn()) { const pr = lg.append('span').attr('class', 'lg-k lg-sizes'); pr.append('span').html(circleSVG(6, BUB_FILL(true), BUB_LINE(true), .8) + 'metro county (solid)'); pr.append('span').html(circleSVG(6, BUB_FILL(false), BUB_LINE(false), 1.6) + 'nonmetro county (ring)'); }   // the pair stays together too
+    const sz = lg.append('span').attr('class', 'lg-k lg-sizes'); [5000, 25000, 100000].forEach((n, j) => sz.append('span').attr('class', 'lg-size').attr('data-n', n).html(circleSVG(legendR(n), BUB_ONE, BUB_ONE_LINE, .8) + fmt(n) + (j === 2 ? ' residents 55+' : '')));
+    lg.append('span').attr('class', 'lg-k lg-mean').text('Bigger circle = more people, not worse access');
     const t = shortTotals(); const how = lg.append('details').attr('class', 'lg-how').property('open', howOpen).on('toggle', function () { howOpen = this.open; });
     how.append('summary').text('How to read this map'); how.append('p').html(METRICS[metric].how() + (t ? ` Nationally ${(t.all / 1e6).toFixed(1)} million residents 55+ (${pct(100 * t.all / t.pop)}%) have ${fewer(filtersActive() ? true : 'listed')} within 60 road-miles: ${millionsPair(t.nonmetro, t.metro)[0]} million in nonmetro counties, ${millionsPair(t.nonmetro, t.metro)[1]} million in metro counties.` : '')); }
   let howOpen = false;

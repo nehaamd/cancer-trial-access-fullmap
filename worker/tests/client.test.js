@@ -152,8 +152,21 @@ test('a restored table capped at the history limit says how many rows were kept'
   assert.ok(R.tableHTML(t, { showAll: true }).includes('120 of 3,143 rows were kept for this restored view'));
   assert.ok(!R.tableHTML({ ...t, rows_capped: false }, { showAll: true }).includes('were kept'), 'a full table says nothing'); });
 test('busy and error cards escape the question and the detail', () => {
-  const b = R.busyHTML('<x>', [{ call: 'Counties where a > 1', result: null }, { call: 'c', result: 'r <y>', error: true }]); assert.ok(b.includes('&lt;x&gt;')); assert.ok(b.includes('aria-busy="true"')); assert.ok(b.includes('→ r &lt;y&gt;')); assert.ok(b.includes('<li class="err">'));
-  const e = R.errorHTML('<x>', 'The question box is unavailable right now; the map and its filters still work.', '<detail>'); assert.ok(e.includes('class="ask-card err"')); assert.ok(e.includes('&lt;detail&gt;')); });
+  const b = R.busyHTML('<x>', [{ call: 'Counties where a > 1', plain: 'Reading county figures <b>', result: null }]); assert.ok(b.includes('&lt;x&gt;')); assert.ok(b.includes('aria-busy="true"')); assert.ok(b.includes('Reading county figures &lt;b&gt;…'));
+  const e = R.errorHTML('<x>', 'The question box is unavailable right now; the map and its filters still work.', '<detail>'); assert.ok(e.includes('class="ask-card err"')); assert.ok(e.includes('&lt;detail&gt;')); assert.ok(e.includes('<details class="ask-detail"><summary>Technical detail</summary>'), 'the raw detail is folded away'); });
+test('the working card shows steps in plain words: no field names, no query text, no error messages', () => {
+  const log = [{ call: 'Counties in WY where zero_trial_share_by_type.breast < 100 (first 20)', plain: 'Reading county figures for Wyoming (breast)', result: 'error: `where` must be an array of conditions', error: true },
+    { call: 'Counties in WY where zero_trial_share_by_type.breast < 100 (first 20)', plain: 'Reading county figures for Wyoming (breast)', result: '4 match; showing 4', error: false },
+    { call: 'Trials with a site in Wyoming (breast)', plain: 'Checking recruiting trials with a site in Wyoming (breast)', result: null, error: false }];
+  const b = R.busyHTML('Is there a breast trial near me in Wyoming?', log, 'Looking this up in the map’s data. This usually takes 10 to 20 seconds.');
+  assert.ok(!/zero_trial_share|where|error|must be an array|→/.test(b.replace(/aria-[a-z]+="[^"]*"/g, '')), 'nothing internal in the working card');
+  assert.ok(!/step \d+ of/i.test(b)); assert.ok(b.includes('usually takes 10 to 20 seconds'));
+  assert.equal((b.match(/Reading county figures for Wyoming \(breast\)/g) || []).length, 1, 'a step that was tried again is one line'); assert.ok(b.includes('<li class="done">Reading county figures for Wyoming (breast)</li>'));
+  assert.ok(b.includes('<li class="run">Checking recruiting trials with a site in Wyoming (breast)…</li>'));
+  const again = R.busyStepsHTML(log.slice(0, 1)); assert.ok(again.includes('(trying another way)') && !again.includes('must be'));
+  // the record under Details keeps the call and says a failed lookup did not run; a field path reads as its column label, the exact call is the tooltip
+  const d = R.stepsHTML(log); assert.ok(d.includes('this lookup did not run: `where` must be an array of conditions')); assert.ok(!d.includes('→ error:'));
+  assert.ok(d.includes('>Counties in WY where no breast trial within 60 mi (% of 55+) &lt; 100 (first 20)<'), d.slice(0, 300)); assert.ok(d.includes('title="Counties in WY where zero_trial_share_by_type.breast &lt; 100 (first 20)"')); });
 
 // ---------- the standard-method label and feedback (ASK_CONTRACT §7) ----------
 const M = await import(pathToFileURL(path.resolve(HERE, '..', '..', 'docs', 'ask', 'methods.js')).href);

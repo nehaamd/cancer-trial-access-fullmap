@@ -154,17 +154,29 @@ const strList = (a, n) => (Array.isArray(a) ? a : []).filter(x => typeof x === '
 const paras = text => String(text || '').split(/\n+/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('');
 export const chipsHTML = (qs, cls) => qs.map(q => `<button type="button" class="ask-pl ${cls}" data-q="${esc(q)}">${esc(q)}</button>`).join('');
 
+// The record of the steps, under the finished card's Details: each call in words (a field path is replaced by its column label; the
+// exact call is the tooltip) and what came back. A call that could not run says so plainly instead of printing "error:".
+const relabel = text => String(text == null ? '' : text).replace(PATH, m => { if (!isField(m)) return m; const l = labelFor(m); return l && l !== m ? l : m; });
 export function stepsHTML(log) {
-  return (log || []).map(e => `<li${e.error ? ' class="err"' : ''}><span class="ask-log-c">${esc(e.call)}</span>${e.result != null ? `<span class="ask-log-r">→ ${esc(e.result)}</span>` : ''}</li>`).join('');
+  return (log || []).map(e => { const res = e.result == null ? '' : e.error ? 'this lookup did not run: ' + String(e.result).replace(/^error:\s*/i, '') : String(e.result);
+    return `<li${e.error ? ' class="err"' : ''}><span class="ask-log-c" title="${esc(e.call)}">${esc(relabel(e.call))}</span>${res ? `<span class="ask-log-r">→ ${esc(res)}</span>` : ''}</li>`; }).join('');
+}
+// While a question runs: the same steps in plain words (engine.describeCallPlain), with no field names, query text or error messages.
+// A step that could not run is shown as tried again, which is what happens next; a repeated line is shown once.
+export function busyStepsHTML(log) {
+  const out = []; for (const e of (log || [])) { const t = String(e.plain || 'Working on it'); const last = out[out.length - 1];
+    if (last && last.t === t) { last.done = e.result != null && !e.error; last.again = last.again || !!e.error; continue; }
+    out.push({ t, done: e.result != null && !e.error, again: !!e.error }); }
+  return out.map(x => `<li class="${x.done ? 'done' : 'run'}">${esc(x.t)}${x.again && !x.done ? ' (trying another way)' : ''}${x.done ? '' : '…'}</li>`).join('');
 }
 // the top row of every card: the way back to the place overview (the card replaces it in the figures column) and the close button
 const TOP = '<div class="ask-top"><button type="button" class="ask-back">← Back to overview</button><button type="button" class="ask-x" aria-label="Close answer">×</button></div>';
 const KICKER = '<p class="ask-kick">Ask the map</p>';
 export function busyHTML(q, log, lead) {
-  return `<div class="ask-card busy" id="ask-card" role="region" aria-label="Answer" aria-busy="true" tabindex="-1">${TOP}${KICKER}<p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(lead || 'Asking the map…')}</p></div><ol class="ask-steps">${stepsHTML(log)}</ol></div>`;
+  return `<div class="ask-card busy" id="ask-card" role="region" aria-label="Answer" aria-busy="true" tabindex="-1">${TOP}${KICKER}<p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(lead || 'Looking this up in the map’s data…')}</p></div><ul class="ask-steps">${busyStepsHTML(log)}</ul></div>`;
 }
 export function errorHTML(q, message, detail) {
-  return `<div class="ask-card err" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${TOP}${KICKER}<p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(message)}</p>${detail ? `<p class="ask-detail">${esc(String(detail).slice(0, 400))}</p>` : ''}</div></div>`;
+  return `<div class="ask-card err" id="ask-card" role="region" aria-label="Answer" tabindex="-1">${TOP}${KICKER}<p class="ask-q">${esc(q)}</p><div class="ask-a"><p>${esc(message)}</p>${detail ? `<details class="ask-detail"><summary>Technical detail</summary><p>${esc(String(detail).slice(0, 400))}</p></details>` : ''}</div></div>`;
 }
 
 // the sources line: file links (only web addresses or site-relative paths, from the engine) with their dates, then the vintages
