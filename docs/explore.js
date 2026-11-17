@@ -21,7 +21,9 @@ window.EXPLORE = (function () {
   const nation = () => ({ k: 'US', kind: 'nat', ...NAT, label: 'United States', name: 'the United States' });
   function fromParams(p) { if (p.get('c') && X.counties[p.get('c')]) return county(p.get('c')); if (p.get('d') && X.districts[p.get('d')]) return district(p.get('d')); if (p.get('s') && X.states[(p.get('s') || '').toUpperCase()]) return state(p.get('s').toUpperCase()); return null; }
   const param = pl => pl.kind === 'county' ? 'c=' + pl.k : pl.kind === 'district' ? 'd=' + pl.k : pl.kind === 'state' ? 's=' + pl.k : '';
-  const links = pl => { const q = param(pl); return { map: 'map.html' + (q ? '?' + q : ''), brief: 'brief.html' + (q ? '?' + q : ''), act: 'act.html' + (q ? '?' + q : ''), community: 'community.html' + (q ? '?' + q : ''), compare: pl.kind === 'county' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'district' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'state' ? `map.html?s=${pl.k}&tab=compare` : 'map.html?tab=compare', trials: pl.kind === 'county' ? `trials.html?county=${pl.k}` : null }; };
+  // a place's summary here leads with the fewer-than-20 share, so its map link carries lt=20 (the map opens on "no trial"); the national
+  // summary leads with the share with none, which is what the map opens on
+  const links = pl => { const q = param(pl); return { map: 'map.html' + (q ? '?' + q + '&lt=20' : ''), brief: 'brief.html' + (q ? '?' + q : ''), act: 'act.html' + (q ? '?' + q : ''), community: 'community.html' + (q ? '?' + q : ''), compare: pl.kind === 'county' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'district' ? `map.html?s=${pl.st}&tab=compare` : pl.kind === 'state' ? `map.html?s=${pl.k}&tab=compare` : 'map.html?tab=compare', trials: pl.kind === 'county' ? `trials.html?county=${pl.k}` : null }; };
 
   // ---- comparisons ----
   function stateOf(pl) { return pl.kind === 'state' ? pl : pl.kind === 'nat' ? null : state(pl.st); }
@@ -36,9 +38,15 @@ window.EXPLORE = (function () {
   function facts(pl) {
     const F = []; const st = stateOf(pl); const n20 = pl.kind === 'nat' && pl.people_l20 ? pl.people_l20 : Number.isFinite(pl.n_l20) ? pl.n_l20 : pl.p * pl.l20 / 100, n0 = pl.kind === 'nat' && pl.people_z60 ? pl.people_z60 : Number.isFinite(pl.n_z60) ? pl.n_z60 : pl.p * pl.z60 / 100;   // nation and counties: tract sums, as on the map; states and districts: rounded back from the share
     const where = pl.kind === 'county' ? 'in ' + pl.n : pl.kind === 'district' ? 'in ' + pl.label : pl.kind === 'state' ? 'in ' + pl.name : 'in the United States';
+    if (pl.kind === 'nat') {   // the nation: the figures the homepage and the map lead with
+      const typ = Number.isFinite(pl.t60_med) ? pl.t60_med : null;
+      F.push({ id: 'short', num: pct(pl.z60), unit: '%', hot: false,
+        text: `of residents 55 and older ${where} — ${people(n0)} people — have no recruiting cancer treatment trial within 60 road-miles of home. ${typ ? `The typical resident has about ${fmt(Math.round(typ / 10) * 10)} within reach (median ${fmt(typ)}).` : `Residents have an average of ${fmt(pl.t60)} within reach.`} ${pct(pl.l20)}% (${people(n20)}) have fewer than 20.`,
+        cmp: '', why: 'No trial within reach needs no chosen number. Fewer than 20 is an exploratory line, not a clinical cut-off: any one person qualifies for only some trials, so it asks whether there is some choice nearby. Distance is measured in road-miles; how long the drive takes varies with roads, traffic and where people live. Trials often need repeated visits.' });
+    } else
     F.push({ id: 'short', num: pct(pl.l20), unit: '%', hot: pl.l20 >= 50,
-      text: `of residents 55 and older ${where} — ${people(n20)} people — have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. ${n0 < 1 ? (n20 >= 1 ? 'None has fewer than one: everyone here has at least one listed trial within 60 road-miles.' : 'Everyone here has at least one listed trial within that distance.') : `${pct(pl.z60)}% (${people(n0)}) have none.`}`,
-      cmp: pl.kind === 'nat' ? '' : `${st && pl.kind !== 'state' ? `${esc(st.name)}: ${pct(st.l20)}% · ` : ''}United States: ${pct(NAT.l20)}%`,
+      text: `of residents 55 and older ${where} — ${people(n20)} people — have fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. ${n0 < 1 ? 'Everyone here has at least one listed trial within that distance.' : `${pct(pl.z60)}% (${people(n0)}) have none.`}`,
+      cmp: `${st && pl.kind !== 'state' ? `${esc(st.name)}: ${pct(st.l20)}% · ` : ''}United States: ${pct(NAT.l20)}%`,
       why: 'Twenty trials is an exploratory threshold chosen for this map, not a clinical cut-off: any one person qualifies for only some trials, so it asks whether there is some choice nearby. Distance is measured in road-miles; how long the drive takes varies with roads, traffic and where people live. Trials often need repeated visits.' });
     if (pl.kind === 'county') {
       F.push({ id: 'trials', num: fmt(pl.t), unit: pl.t === 1 ? ' trial' : ' trials', hot: pl.t === 0,
@@ -61,7 +69,11 @@ window.EXPLORE = (function () {
         cmp: `United States: ${SITE.rate(NAT.mort_rate)} per 100,000`, why: 'A death rate says how heavy the burden of cancer is here; it does not say why. The two measures are shown side by side, never combined into a score.' });
     }
     if (pl.kind !== 'county' && pl.rural) {
-      const [mp, ml] = pl.rural.metro, [np_, nl] = pl.rural.nonmetro; if (np_ && mp) F.push({ id: 'rural', num: pct(nl), unit: '%', hot: nl >= 50,
+      const [mp, ml, mz] = pl.rural.metro, [np_, nl, nz] = pl.rural.nonmetro;
+      if (np_ && mp && pl.kind === 'nat' && Number.isFinite(nz) && Number.isFinite(mz)) F.push({ id: 'rural', num: pct(nz), unit: '%', hot: false,
+        text: `of residents 55+ in nonmetro (rural) counties ${where} have no trial within 60 road-miles; in metro counties, ${pct(mz)}%. (Fewer than 20: ${pct(nl)}% and ${pct(ml)}%.) ${pct(100 * np_ / (np_ + mp))}% of residents 55+ live in nonmetro counties.`,
+        cmp: '', why: 'Metro and nonmetro follow the USDA rural-urban continuum codes (metro = codes 1–3). The gap is the single largest pattern in the data.' });
+      else if (np_ && mp) F.push({ id: 'rural', num: pct(nl), unit: '%', hot: nl >= 50,
         text: `of residents 55+ in nonmetro (rural) counties ${where} have fewer than 20 trials within 60 road-miles; in metro counties, ${pct(ml)}%. ${pct(100 * np_ / (np_ + mp))}% of residents 55+ here live in nonmetro counties.`,
         cmp: `United States: nonmetro ${pct(NAT.rural.nonmetro[1])}%, metro ${pct(NAT.rural.metro[1])}%`, why: 'Metro and nonmetro follow the USDA rural-urban continuum codes (metro = codes 1–3). The gap is the single largest pattern in the data.' });
     }

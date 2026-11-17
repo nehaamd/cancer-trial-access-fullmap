@@ -12,7 +12,7 @@ import { STATES, CANCER_TYPES, PHASES, SITES } from './catalog.js';
 // layer: the map layer that shows the field, per unit; words: the measure in the site's words (used in the rule text).
 export const MEASURES = {
   short: { field: 'pct_lt20_trials_within_60rdmi', worst: 'desc', extra: ['people_lt20_trials_within_60rdmi'], layer: { county: 'short', district: 'l20', state: 'l20' }, words: 'the share of residents 55+ with fewer than 20 recruiting trials within 60 road-miles ("short of trials")' },
-  none: { field: 'pct_zero_trials_within_60rdmi', worst: 'desc', extra: ['people_zero_trials_within_60rdmi'], layer: { county: 'short', district: 'z60', state: 'z60' }, words: 'the share of residents 55+ with no recruiting trial within 60 road-miles' },
+  none: { field: 'pct_zero_trials_within_60rdmi', worst: 'desc', extra: ['people_zero_trials_within_60rdmi'], layer: { county: 'short', district: 'z60', state: 'z60' }, params: { county: { lt: '1' } }, words: 'the share of residents 55+ with no recruiting trial within 60 road-miles' },
   far_nci: { field: 'pct_gt60rdmi_nci', worst: 'desc', extra: ['median_road_mi_nci'], layer: { county: 'rn', district: 'g60n', state: 'g60n' }, words: 'the share of residents 55+ more than 60 road-miles from an NCI-designated cancer center' },
   median_nci: { field: 'median_road_mi_nci', worst: 'desc', extra: ['nearest_nci'], layer: { county: 'rn', district: 'medn', state: 'medn' }, words: 'the median road-miles from residents 55+ to the nearest NCI-designated cancer center (farther is worse)' },
   far_broad: { field: 'pct_gt60rdmi_broad_menu', worst: 'desc', extra: ['median_road_mi_broad_menu'], layer: { county: 'rb', district: 'g60b', state: 'g60b' }, words: 'the share of residents 55+ more than 60 road-miles from a broad trial menu (a county with 100 or more recruiting trials)' },
@@ -50,7 +50,7 @@ function ranking(table, worst) {
     rule: `Ranks ${noun}${table === 'states' ? '' : ' (in one state, or nationwide)'} by one access measure, ${worst ? 'worst' : 'best'} first. The default measure is the share of residents 55+ with fewer than 20 recruiting trials within 60 road-miles ("short of trials"); the others are: no trial within 60 road-miles, more than 60 road-miles from an NCI-designated center, median road-miles to an NCI center, more than 60 road-miles from a broad trial menu, and the average number of trials within 60 road-miles. ${TIES} Lists the first n (default 10).`,
     params: table === 'states' ? ['measure', 'n'] : ['state', 'measure', 'n'], required: [],
     example: table === 'states' ? `Which states have the ${worst ? 'worst' : 'best'} access to cancer trials?` : table === 'districts' ? `Which congressional districts in Georgia have the ${worst ? 'worst' : 'best'} trial access?` : `Which Texas counties have the ${worst ? 'worst' : 'best'} trial access?`,
-    map: p => ({ unit, layer: MEASURES[p.measure || 'short'].layer[unit] }),
+    map: p => { const m = MEASURES[p.measure || 'short']; const lp = m.params && m.params[unit]; return { unit, layer: m.layer[unit], ...(lp ? { params: { ...lp } } : {}) }; },   // "none" at county level is the line-following layer at lt=1
     steps: [p => { const m = MEASURES[p.measure || 'short']; return [{ name: 'query', input: { table, where: table === 'states' ? [] : stateWhere(p), order_by: [{ field: m.field, dir: worst ? m.worst : (m.worst === 'desc' ? 'asc' : 'desc') }], limit: p.n || 10, columns: [m.field, ...m.extra] } }]; }],
     describe: p => { const m = MEASURES[p.measure || 'short']; return `${noun}${table === 'states' ? '' : inState(p)} by ${m.words}, ${dirWords(m, worst)}`; },
   };
@@ -60,7 +60,7 @@ function ranking(table, worst) {
 export const METHODS = [
   ranking('counties', true), ranking('counties', false), ranking('districts', true), ranking('districts', false), ranking('states', true), ranking('states', false),
   { id: 'counties_short_of_trials', title: 'Counties where most residents are short of trials',
-    rule: 'Counties (in one state, or nationwide) where at least half of residents 55+ have fewer than 20 recruiting trials within 60 road-miles (the map\'s default line: pct_lt20_trials_within_60rdmi of 50 or more), largest first by residents 55+. Also reads the state\'s (or the nation\'s) own share and number of residents 55+ short of trials.',
+    rule: 'Counties (in one state, or nationwide) where at least half of residents 55+ have fewer than 20 recruiting trials within 60 road-miles (the 20-trial line: pct_lt20_trials_within_60rdmi of 50 or more), largest first by residents 55+. Also reads the state\'s (or the nation\'s) own share and number of residents 55+ short of trials.',
     params: ['state'], required: [], example: 'Which counties in Kentucky are short of trials?', map: () => ({ unit: 'county', layer: 'short' }),
     steps: [p => [{ name: 'query', input: { table: 'counties', where: [...stateWhere(p), { field: 'pct_lt20_trials_within_60rdmi', op: '>=', value: 50 }], order_by: [{ field: 'pop55', dir: 'desc' }], limit: 20, columns: ['pct_lt20_trials_within_60rdmi', 'people_lt20_trials_within_60rdmi'] } },
       p.state ? { name: 'query', input: { table: 'states', where: [{ field: 'id', op: '=', value: p.state }], columns: ['pct_lt20_trials_within_60rdmi', 'people_lt20_trials_within_60rdmi'] } } : { name: 'query', input: { table: 'national', columns: ['pct_lt20_trials_within_60rdmi', 'people_lt20_trials_within_60rdmi'] } }]] },
@@ -71,7 +71,7 @@ export const METHODS = [
       { name: 'query', input: { table: 'national', columns: ['pct_lt20_trials_within_60rdmi', 'people_lt20_trials_within_60rdmi', 'pct_zero_trials_within_60rdmi', 'people_zero_trials_within_60rdmi'] } }]] },
   { id: 'counties_no_trial_within_60', title: 'Counties with no trial within 60 road-miles',
     rule: 'Counties (in one state, or nationwide) whose population center has no recruiting-trial site within 60 road-miles (trials_within_60rdmi_of_center = 0), largest first by residents 55+; and the state\'s (or nation\'s) share of residents 55+ with no trial within 60 road-miles of where they live.',
-    params: ['state'], required: [], example: 'Which counties in Montana have no trial within 60 miles?', map: () => ({ unit: 'county', layer: 'short' }),
+    params: ['state'], required: [], example: 'Which counties in Montana have no trial within 60 miles?', map: () => ({ unit: 'county', layer: 'short', params: { lt: '1' } }),
     steps: [p => [{ name: 'query', input: { table: 'counties', where: [...stateWhere(p), { field: 'trials_within_60rdmi_of_center', op: '=', value: 0 }], order_by: [{ field: 'pop55', dir: 'desc' }], limit: 20, columns: ['trials_within_60rdmi_of_center', 'pct_zero_trials_within_60rdmi'] } },
       p.state ? { name: 'query', input: { table: 'states', where: [{ field: 'id', op: '=', value: p.state }], columns: ['pct_zero_trials_within_60rdmi', 'people_zero_trials_within_60rdmi'] } } : { name: 'query', input: { table: 'national', columns: ['pct_zero_trials_within_60rdmi', 'people_zero_trials_within_60rdmi'] } }]] },
   { id: 'oncologists_no_trials_counties', title: 'Counties with oncologists but no trials',
@@ -117,7 +117,7 @@ export const METHODS = [
     params: ['place'], required: ['place'], example: 'Tell me about Hidalgo County, Texas.', map: p => ({ unit: unitOfId(p.place) || 'county', layer: unitOfId(p.place) === 'county' || !unitOfId(p.place) ? 'short' : 'l20' }),
     steps: [p => [{ name: 'profile', input: { table: tableOfId(p.place), id: p.place } }]] },
   { id: 'state_vs_nation', title: 'A state against the national figures',
-    rule: 'The published headline access figures of one state beside the same figures for the whole country (short of trials, none within 60 road-miles, more than 60 road-miles from an NCI center or a broad menu, median road-miles to an NCI center, average trials within 60 road-miles, nonmetro share).',
+    rule: 'The published access figures of one state beside the same figures for the whole country (short of trials, none within 60 road-miles, more than 60 road-miles from an NCI center or a broad menu, median road-miles to an NCI center, average trials within 60 road-miles, nonmetro share).',
     params: ['state'], required: ['state'], example: 'How does Kentucky compare with the national average on trial access?', map: () => ({ unit: 'state', layer: 'l20' }),
     steps: [p => { const cols = ['pct_lt20_trials_within_60rdmi', 'people_lt20_trials_within_60rdmi', 'pct_zero_trials_within_60rdmi', 'pct_gt60rdmi_nci', 'pct_gt60rdmi_broad_menu', 'median_road_mi_nci', 'wmean_trials_within_60rdmi', 'nonmetro_pct']; return [{ name: 'query', input: { table: 'states', where: [{ field: 'id', op: '=', value: p.state }], columns: cols } }, { name: 'query', input: { table: 'national', columns: cols } }]; }] },
   { id: 'rural_vs_metro_state', title: 'Rural against metro access in a state',
@@ -161,7 +161,7 @@ export const METHODS = [
       { name: 'query', input: { table: 'districts', where: [{ field: 'id', op: '=', value: p.district }], columns: ['pct_lt20_trials_within_60rdmi', 'trials_listed_here', 'member.name', 'member.party', 'member.ctma_hr3521'] } }]] },
   { id: 'trial_type_access_state', title: 'Access to one cancer type\'s trials in a state',
     rule: 'Counties in a state ranked by the share of residents 55+ with no recruiting trial of one cancer type within 60 road-miles, highest first; and the state\'s average number of that type\'s trials within 60 road-miles.',
-    params: ['state', 'cancer_type', 'n'], required: ['state', 'cancer_type'], example: 'Where in Texas is there no breast cancer trial nearby?', map: p => ({ unit: 'county', layer: 'short', params: { type: p.cancer_type } }),
+    params: ['state', 'cancer_type', 'n'], required: ['state', 'cancer_type'], example: 'Where in Texas is there no breast cancer trial nearby?', map: p => ({ unit: 'county', layer: 'short', params: { type: p.cancer_type, lt: '1' } }),
     steps: [p => [{ name: 'query', input: { table: 'counties', where: [{ field: 'state', op: '=', value: p.state }], order_by: [{ field: `zero_trial_share_by_type.${p.cancer_type}`, dir: 'desc' }], limit: p.n || 10, columns: [`zero_trial_share_by_type.${p.cancer_type}`] } },
       { name: 'query', input: { table: 'states', where: [{ field: 'id', op: '=', value: p.state }], columns: [`trials_within_60rdmi_by_cancer_type.${p.cancer_type}`] } }]] },
   { id: 'incidence_rank_counties', title: 'Counties with the highest cancer incidence',

@@ -48,7 +48,7 @@ test('buildQS: district view, the layer params in catalog order, a single distri
   const pp = R.placeParamFor(ids, mv, null); assert.deepEqual(pp, ['d', '4834']); assert.equal(R.buildQS(mv, pp), 'u=district&m=l20&type=lung&lt=10&d=4834'); });
 test('buildQS: state view, no layer (default), many states -> national view; the model\'s place wins over the list', () => {
   const mv = R.validateMap({ unit: 'state', highlight: { ids: ['TX', 'OH', 'CA'] } }, PAGE_LAYERS, unitOf);
-  const ids = R.resolveIds(mv.highlight.ids, unitOf); assert.equal(R.placeParamFor(ids, mv, null), null); assert.equal(R.buildQS(mv, null), 'u=state');
+  const ids = R.resolveIds(mv.highlight.ids, unitOf); assert.equal(R.placeParamFor(ids, mv, null), null); assert.equal(R.buildQS(mv, null), 'u=state&lt=20');   // no layer = the unit's default layer, which follows the line
   const mv2 = R.validateMap({ unit: 'state', layer: 'z60', place: 'OH', highlight: { ids: ['TX', 'OH'] } }, PAGE_LAYERS, unitOf);
   assert.equal(R.buildQS(mv2, R.placeParamFor(['TX', 'OH'], mv2, null)), 'u=state&m=z60&s=OH'); });
 test('buildQS: a line-following layer names the 20-trial line unless the view carries another (the map opens on "no trial")', () => {
@@ -58,6 +58,15 @@ test('buildQS: a line-following layer names the 20-trial line unless the view ca
   assert.equal(R.buildQS(mv2, null), 'u=state&m=l20&type=lung&lt=20');
   const mv3 = R.validateMap({ unit: 'district', layer: 'g60n' }, PAGE_LAYERS, unitOf);
   assert.equal(R.buildQS(mv3, null), 'u=district&m=g60n'); });
+const { METHODS, MEASURES } = await import('../../docs/ask/methods.js');
+test('buildQS: a "no trial" county view carries lt=1, with or without a cancer type (the methods and the field tags supply it)', () => {
+  const none = METHODS.find(m => m.id === 'counties_no_trial_within_60').map({ state: 'MT' });
+  const mv = R.validateMap({ ...none, state: 'MT' }, PAGE_LAYERS, unitOf); assert.equal(R.buildQS(mv, R.placeParamFor([], mv, null)), 'm=short&lt=1&s=MT');
+  const byType = METHODS.find(m => m.id === 'trial_type_access_state').map({ state: 'TX', cancer_type: 'breast' });
+  const mv2 = R.validateMap({ ...byType, state: 'TX' }, PAGE_LAYERS, unitOf); assert.equal(R.buildQS(mv2, R.placeParamFor([], mv2, null)), 'm=short&type=breast&lt=1&s=TX');
+  assert.deepEqual(MEASURES.none.params, { county: { lt: '1' } });
+  const rank = METHODS.find(m => /counties/.test(m.id) && /worst/.test(m.id)).map({ measure: 'none' }); assert.deepEqual(rank, { unit: 'county', layer: 'short', params: { lt: '1' } });
+  const rankD = METHODS.find(m => /districts/.test(m.id) && /worst/.test(m.id)).map({ measure: 'none' }); assert.deepEqual(rankD, { unit: 'district', layer: 'z60' }); });
 test('placeParamFor: counties in one state frame the state; across states the nation; a single county opens it', () => {
   const mv = R.validateMap({ unit: 'county', layer: 't' }, PAGE_LAYERS, unitOf); const st = { 48215: 'TX', 48201: 'TX', 39001: 'OH' };
   assert.deepEqual(R.placeParamFor(['48215', '48201'], mv, id => st[id]), ['s', 'TX']); assert.equal(R.placeParamFor(['48215', '39001'], mv, id => st[id]), null); assert.deepEqual(R.placeParamFor(['48215'], mv, id => st[id]), ['c', '48215']);

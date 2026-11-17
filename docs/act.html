@@ -110,7 +110,7 @@
     // ---- Part 1 ----
     const F = E.facts(pl);
     document.getElementById('findings-body').innerHTML = `<h2>What the data shows for ${esc(where)}</h2>
-      <p class="small">Registry data as of ${SITE.nice(E.dataDate())}. These are the same figures the map and the printable brief show. ${place ? `<a href="${L.community}">Your community</a> explains each measure; ` : ''}<a href="learn.html#measure">What this map measures</a>.</p>
+      <p class="small">Registry data as of ${SITE.nice(E.dataDate())}. The same data as the map and the printable brief${place ? '. For a place this page leads with the share of residents who have fewer than 20 trials within reach; the map opens on the share with none' : ''}. ${place ? `<a href="${L.community}">Your community</a> explains each measure; ` : ''}<a href="learn.html#measure">What this map measures</a>.</p>
       <div class="card"><ul class="facts">${F.map(f => `<li class="${f.hot ? 'hot' : ''}"><div class="num">${f.num}<small>${f.unit}</small></div><div><p>${f.text}</p>${f.cmp ? `<p class="cmp">${f.cmp}</p>` : ''}</div></li>`).join('')}</ul></div>
       <div class="two"><div><h3 class="h4">Sources</h3><ul class="small">
         <li>ClinicalTrials.gov (NIH/NLM), registry data of ${SITE.nice(E.dataDate())}: recruiting interventional treatment trials with a US site, open to some adults 55+.</li>
