@@ -15,6 +15,15 @@ window.SITE = (function () {
     return n + ' County';
   }
   const countyLabel = (c, fips) => countyName(c, fips) + ', ' + (USPS[String(fips || '').slice(0, 2)] || '');
+  // A registry row whose ZIP code and city are far apart, and which the registry's other rows could not settle (the fourth item of
+  // a DATA.SPX entry: [the row's ZIP, the place that ZIP is in, miles between them]; build_webapp_data_v3.py). The site is drawn
+  // at the ZIP. Returns the short label and the sentence the pages show, or null for every other entry.
+  const placeDoubt = p => { const f = p && p[3]; if (!f) return null;
+    return { tag: 'check address', text: `The registry lists this site in ${p[2] || 'one city'} with ZIP ${f[0]}${f[1] ? ', which is in ' + f[1] : ''}${f[2] != null ? `, about ${f[2]} miles away` : ''}. It is shown at the ZIP. Confirm the address with the study team.` }; };
+  // The same for a whole facility (every SPX entry of one name in a county; total = the trials it lists): one mistaken listing does
+  // not put a large centre's address in doubt, so the label counts the listings it applies to.
+  const placeDoubtAll = (pl, total) => { const d = (pl || []).filter(p => p[3]); if (!d.length) return null; const n = new Set(d.flatMap(p => p[1])).size; const one = placeDoubt(d[0]);
+    return n >= total ? one : { tag: `check ${n} listing${n === 1 ? '' : 's'}`, text: `For ${n} of the ${total} trials listed at this site: ${one.text[0].toLowerCase()}${one.text.slice(1)}` }; };
 
   // Dates. The "data as of" date is the registry's own data timestamp when the pull recorded one.
   const dataDate = meta => String(meta.registry_data_timestamp || meta.pull || '').slice(0, 10);
@@ -196,5 +205,5 @@ window.SITE = (function () {
     + '@media (prefers-reduced-motion:reduce){.ask .ask-ex{scroll-behavior:auto}}';
   function askStyles() { if (document.getElementById('ask-css')) return; const st = document.createElement('style'); st.id = 'ask-css'; st.textContent = ASK_CSS; document.head.appendChild(st); }
 
-  return { ASK_URL, ASK_TIMEOUT_S, ASK_EXAMPLES, ASK_HINT, ASK_HINT_SHORT, askBoxHTML, mountAskBox, wireAskBox, askStyles, escA, idKind, placeHref, foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, nearestFor, driveTime, rate, period };
+  return { ASK_URL, ASK_TIMEOUT_S, ASK_EXAMPLES, ASK_HINT, ASK_HINT_SHORT, askBoxHTML, mountAskBox, wireAskBox, askStyles, escA, idKind, placeHref, foldOnPhone, teach, TRIPS, USPS, countyName, countyLabel, placeDoubt, placeDoubtAll, dataDate, nice, today, daysOld, stampText, isStale, STALE_DAYS, phaseLabel, namedCancers, cancerLine, plural, listJoin, ordinal, nearestFor, driveTime, rate, period };
 })();

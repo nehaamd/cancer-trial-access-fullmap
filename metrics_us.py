@@ -1,6 +1,6 @@
 """National county / district / state access metrics. Same definitions as the Texas pipeline.
 Usage: python metrics_us.py [--min-max-age 55] [--out out_adult55]"""
-import argparse, collections, json, re
+import argparse, collections, json, re, sys
 from pathlib import Path
 import numpy as np, pandas as pd
 import config
@@ -103,6 +103,141 @@ def zip_typos(sites):
     return out
 
 
+CITY_GAP_MI = 15.0     # a ZIP whose residents' centre lies more than this beyond the edge of the stated city (and beyond the ZIP's own radius) disagrees with it
+AGREE_MI = 5.0         # a row whose ZIP lies within this of the stated city agrees with it: such rows are the evidence the review weighs
+
+
+def zip_city_review(sites, skip=()):
+    """Registry rows whose ZIP code and city disagree, and what the registry's own other rows say about which is right.
+    Returns {row index: {"verdict": "zip" | "city" | "ambiguous", "rule", "note", "mi", "zip_place", "fix_zip"}}.
+
+    A row is reviewed when its ZIP is a Census ZIP area in the stated state, the stated city is a Census place of that state, and the
+    ZIP's population centre lies more than CITY_GAP_MI beyond the edge of every place of that name (the city's edge is its point
+    plus the radius of a circle of its land area) and beyond the ZIP's own radius. Rows in `skip` (already judged a typing error by
+    zip_typos) are not reviewed. About 90 of 55,000 rows qualify. Each is weighed on two sides.
+
+    Evidence that the site is at the ZIP:
+      - the facility's name names a place that lies at the ZIP ("Georgia Cancer Center Augusta University, Atlanta, 30912");
+      - the same facility name is listed at this ZIP by other trials whose city agrees with the ZIP;
+      - the same institution (data/ref/site_families.csv) is listed at this ZIP by other trials whose city agrees.
+    Evidence that the site is in the stated city:
+      - the facility's name names the stated city ("Karmanos Cancer Institute at McLaren Lapeer Region, Lapeer, 48466");
+      - the same facility name, or the same institution, is listed in the stated city by other trials (rows whose ZIP agrees with
+        the city, and rows whose ZIP is not a Census ZIP area and so cannot disagree).
+    A city that carries no information counts for nothing: "New York" is written for clinics all over Long Island
+    (MULTI_COUNTY_PLACE), and "Florida City", "Texas City", "Ohio City" and "Arkansas City" appear where the form repeated the state
+    (no registry row is located in the place of that name).
+
+    Listings weigh more than the name: a row counts as listed at the ZIP (or in the city) when at least MIN_LISTINGS other trials
+    list the same name or institution there in rows whose own ZIP and city do not disagree. The name alone decides only when
+    neither side has a listing.
+
+    Verdict "zip": listed at the ZIP (or named for a place at it) and not listed in the city at all, or the city carries no
+    information. The row stays where it is and the pages print the ZIP's own place instead of the registry's city ("Jacksonville",
+    not "Florida City"). Verdict "city": listed in the city (or named for it) and not listed at the ZIP at all, with no facility of
+    a longer or shorter form of the name at the ZIP (a second campus). The ZIP is the error; the row is placed like a mistyped
+    ZIP (assign_sites), at the ZIP where the registry's other rows list the facility in that city. Verdict "ambiguous": listed in
+    both places, or in neither (a sponsor's placeholder name says nothing). The row stays at its ZIP, which is usually the better
+    half of an address, and the pages flag it. data/ref/zip_city_overrides.csv holds the few rows a person has checked against the
+    institution's own address; it is applied first."""
+    import site_names
+    from tier4_covering import norm, gazetteer_frame
+    zc = pd.read_csv(REF / "zcta_pop55.csv", dtype={"zcta": str}); zxy = {z: (float(a), float(b)) for z, a, b in zip(zc.zcta, zc.lat, zc.lon)}
+    if (REF / "zcta_popcenter.csv").exists():     # where the ZIP's residents live: a ZIP's own centroid can be far from them (99701, Fairbanks, by 184 miles)
+        pc = pd.read_csv(REF / "zcta_popcenter.csv", dtype={"zcta": str}); zxy.update({z: (float(a), float(b)) for z, a, b in zip(pc.zcta, pc.lat, pc.lon) if z in zxy})
+    z2c = dict(pd.read_csv(REF / "zcta_county.csv", dtype=str).values); radius = {}
+    if (REF / "zcta_land_area.csv").exists():
+        ar = pd.read_csv(REF / "zcta_land_area.csv", dtype={"zcta": str}); radius = {z: float(np.sqrt(a / np.pi)) for z, a in zip(ar.zcta, ar.land_sqmi.astype(float))}
+    fams = site_names.load_families(REF / "site_families.csv") if (REF / "site_families.csv").exists() else []
+    gz = gazetteer_frame(); places = collections.defaultdict(list)
+    for st, pl, la, lo, nm, a in zip(gz.state, gz.place, gz.lat, gz.lon, gz.name, gz.aland_sqmi): places[st].append((pl, float(la), float(lo), nm, float(np.sqrt(float(a) / np.pi))))
+    state_name = {USPS[k]: str(v).lower() for k, v in pd.read_csv(REF / "county_centroids.csv", dtype=str)[["state_fips", "state_name"]].drop_duplicates().values if k in USPS}
+    edge = lambda q, p: max(0.0, _mi(q, (p[1], p[2])) - p[4])                    # miles from a point to the edge of a place
+    ckey = lambda c: re.sub(r"\s+", " ", str(c or "").strip().lower()).strip(" .,")
+    over = {}
+    if (REF / "zip_city_overrides.csv").exists():
+        with open(REF / "zip_city_overrides.csv", newline="", encoding="utf-8") as fh:
+            import csv
+            for r in csv.DictReader(row for row in fh if not row.lstrip().startswith("#")):
+                if (r.get("facility") or "").strip(): over[(r["state"].strip(), norm(r["facility"]), ckey(r["city"]), r["zip"].strip()[:5])] = (r["verdict"].strip(), (r.get("note") or "").strip())
+    rows = []                                                                    # every row with a location statement the review can use
+    for i, st, city, z, fac, sf, nct in zip(sites.index, sites.state, sites.city, sites.zip, sites.facility, sites.state_fips, sites.nct_id):
+        z = (z or "")[:5]; usable = z.isdigit() and len(z) == 5 and z in zxy and z2c.get(z, "")[:2] == sf
+        pts = _city_pts(st, city)
+        if not pts: continue                                                      # the city is not a Census place: nothing to compare
+        ph = site_names.is_placeholder(fac, fams, city) or bool(GENERIC_NAME.search(norm(fac)))
+        tok = site_names.flat_tokens(fac); key = " ".join(tok)
+        fam = None if ph else site_names.family_of(tok, st, fams, site_names.is_childrens(fac))[0]
+        out = min(max(0.0, _mi(zxy[z], q) - q[2]) for q in pts) if usable else None
+        rows.append((i, st, ckey(city), z if usable else "", key if not ph and len(tok) >= 2 else "", fam, out, nct, city, norm(fac)))
+    conflict = lambda z, out: out > max(CITY_GAP_MI, radius.get(z, 0.0))
+    at_zip_name, at_zip_fam, in_city_name, in_city_fam = [collections.defaultdict(set) for _ in range(4)]
+    in_city_zip, in_city_any, zip_city, near_zip = [collections.defaultdict(list) for _ in range(4)]
+    for i, st, ck, z, key, fam, out, nct, city, nm in rows:
+        if z and not conflict(z, out):                                            # ZIP and city do not disagree: the row is evidence for both
+            if key: at_zip_name[(st, key, z)].add(nct); in_city_name[(st, key, ck)].add(nct); in_city_zip[(st, key, ck)].append(z); near_zip[st].append((frozenset(key.split()), zxy[z]))
+            if fam: at_zip_fam[(st, fam, z)].add(nct); in_city_fam[(st, fam, ck)].add(nct); in_city_zip[(st, "\0" + fam, ck)].append(z)
+            in_city_any[(st, ck)].append(z); zip_city[(st, z)].append(city.strip())
+        elif not z:                                                               # no usable ZIP: the city is the row's only statement of place
+            if key: in_city_name[(st, key, ck)].add(nct)
+            if fam: in_city_fam[(st, fam, ck)].add(nct)
+    others = lambda d, k, nct: len(d.get(k, set()) - {nct})   # trials other than the row's own
+    city_zips = collections.defaultdict(set)                  # every ZIP the registry writes with a city, Census ZIP area or not (27157 is Wake Forest Baptist's own)
+    for st_, c_, z_ in zip(sites.state, sites.city, sites.zip):
+        if re.fullmatch(r"\d{5}", (z_ or "")[:5]): city_zips[(st_, ckey(c_))].add(z_[:5])
+
+    def slip(z, used):                                        # one digit changed, or two neighbours swapped, gives a ZIP used in the city
+        near = {z[:k] + d + z[k + 1:] for k in range(5) for d in "0123456789"} | {z[:k] + z[k + 1] + z[k] + z[k + 2:] for k in range(4)}
+        return bool((near - {z}) & set(used))
+
+    def place_of(st, z):                                                          # the name to print for a ZIP: the city the registry most often gives with it, else the Census place it lies in
+        if zip_city.get((st, z)): return collections.Counter(zip_city[(st, z)]).most_common(1)[0][0]
+        best = min(places[st], key=lambda p: (edge(zxy[z], p), _mi(zxy[z], (p[1], p[2]))), default=None)   # of the places whose circle covers the ZIP, the one whose centre is nearest
+        return best[3] if best and edge(zxy[z], best) <= 3.0 else ""
+
+    res = {}
+    for i, st, ck, z, key, fam, out, nct, city, nm in rows:
+        if i in skip or not z or out is None or not conflict(z, out): continue
+        cty = city.strip(); zp = place_of(st, z); base = (f"ZIP {z} is in {zp}, " if zp else f"ZIP {z} is ") + f"{out:.0f} miles from {cty}"
+        r = {"verdict": "ambiguous", "rule": "", "note": base, "mi": round(out), "zip_place": zp, "fix_zip": ""}
+        padded = f" {nm} "; own = set(city_keys(st, city)); generic = site_names.GENERIC | site_names.WEAK
+        names_zip = [p for p in places[st] if len(p[0]) >= 4 and p[0] not in own and p[0] not in generic and f" {norm(p[0])} " in padded and edge(zxy[z], p) <= max(5.0, radius.get(z, 0.0))]
+        rest = padded
+        for p_ in names_zip: rest = rest.replace(f" {norm(p_[0])} ", "  ")       # "North Chicago" names North Chicago, not Chicago
+        names_city = any(len(k) >= 4 and k not in generic and f" {norm(k)} " in rest for k in own)
+        loose = (st, ck) in MULTI_COUNTY_PLACE or (ck == state_name.get(st, "\0") + " city" and not in_city_any.get((st, ck)))
+        lz_n, lz_f = (others(at_zip_name, (st, key, z), nct) if key else 0), (others(at_zip_fam, (st, fam, z), nct) if fam else 0)
+        lc_n, lc_f = (others(in_city_name, (st, key, ck), nct) if key else 0), (others(in_city_fam, (st, fam, ck), nct) if fam else 0)
+        listed_zip, listed_city = max(lz_n, lz_f), max(lc_n, lc_f)
+        tok = frozenset(key.split())
+        campus = bool(key) and any((t <= tok or tok <= t) and len(t & tok) >= 2 and _mi(q, zxy[z]) <= AGREE_MI for t, q in near_zip[st])   # a facility whose name contains this name, or is contained in it, is listed at the ZIP: a second campus
+        o = over.get((st, nm, ck, z))
+        if o and o[0] in ("zip", "city"):
+            r.update(verdict=o[0], rule="checked by a person", note=f"{base}; {o[1]}" if o[1] else base)
+            if o[0] == "city": r["fix_zip"] = (collections.Counter(in_city_zip.get((st, key, ck), []) or in_city_zip.get((st, "\0" + (fam or ""), ck), []) or in_city_any.get((st, ck), [])).most_common(1) or [("", 0)])[0][0]
+        elif loose:
+            why = f'"{cty}" is written for sites across the metropolitan area' if (st, ck) in MULTI_COUNTY_PLACE else f"no registry row is located in {cty}; the city field repeats the state"
+            r.update(verdict="zip", rule="the city carries no information", note=f"{base}; {why}")
+        elif names_zip and not names_city and lc_n == 0:                          # a name that names the ZIP's own town is specific; the institution having another site in the stated city does not outweigh it
+            r.update(verdict="zip", rule="the name names the ZIP's place", note=f"{base}; the facility's name names {names_zip[0][3]}, and no other row lists this name in {cty}")
+        elif listed_city == 0 and listed_zip >= MIN_LISTINGS:
+            why = f"the same name is listed at this ZIP by {lz_n} other trials" if lz_n >= MIN_LISTINGS else f"{fam} is listed at this ZIP by {lz_f} other trials"
+            r.update(verdict="zip", rule="listed at the ZIP, not in the city", note=f"{base}; {why}, and no other row lists it in {cty}")
+        elif listed_zip == 0 and not campus and (lc_n >= MIN_LISTINGS or (names_city and not names_zip) or (lc_f >= MIN_LISTINGS and slip(z, city_zips.get((st, ck), ())))):
+            # An institution with many sites may have one at the ZIP that no other trial lists, so its presence in the city decides only
+            # when the ZIP is also one slip of the keyboard from a ZIP the registry uses in that city. The same name, or a name that
+            # names the city, needs no such support.
+            fz = (collections.Counter(in_city_zip.get((st, key, ck), []) or in_city_zip.get((st, "\0" + (fam or ""), ck), []) or in_city_any.get((st, ck), [])).most_common(1) or [("", 0)])[0][0]
+            if fz:
+                why = f"the same name is listed in {cty} by {lc_n} other trials" if lc_n >= MIN_LISTINGS else (f"the facility's name names {cty}" if names_city and not names_zip else f"{fam} is listed in {cty} by {lc_f} other trials and the ZIP is one keystroke from a ZIP used there")
+                r.update(verdict="city", rule="listed in the city, not at the ZIP", note=f"{base}; {why}, and no other row lists it at ZIP {z}; placed at ZIP {fz}", fix_zip=fz)
+        elif (listed_zip or campus) and listed_city: r["note"] = base + "; the registry lists the same institution in both places"
+        if r["verdict"] == "city" and not r["fix_zip"]: r["verdict"] = "ambiguous"
+        if r["verdict"] == "zip" and not zp: r["verdict"] = "ambiguous"          # no name to print for the ZIP's place: the stated city stays, so the row is flagged
+        res[i] = r
+    return res
+
+
 # A Census place that spans several counties has one internal point (New York's is in Brooklyn); a row in such a place keeps its
 # ZIP-prefix county when that county is one the place covers ("New York, NY 100xx" stays in Manhattan).
 MULTI_COUNTY_PLACE = {("NY", "new york"): {"36005", "36047", "36061", "36081", "36085"}, ("NY", "new york city"): {"36005", "36047", "36061", "36081", "36085"}}
@@ -190,6 +325,11 @@ def assign_sites(sites, cent):
     virtual = None if config.VIRTUAL_SITES_ARE_LOCATIONS else re.compile(config.VIRTUAL_SITE_PATTERN, re.I)
     from tier4_covering import norm
     typos = zip_typos(sites); listed = facility_listings(sites); at_zip = listed_at_zip(sites)
+    # ZIP and city that disagree (zip_city_review): where the registry's other rows show the ZIP to be the error, the row is placed like a
+    # mistyped ZIP; where they show the city to be the error, or cannot tell, the row stays at its ZIP and carries the verdict
+    review = zip_city_review(sites, skip=set(typos))
+    for i_, r_ in review.items():
+        if r_["verdict"] == "city": typos[i_] = (r_["note"], r_["fix_zip"])
     method, county, fixz, note = [], [], [], []
     for s in sites.itertuples():
         m = c = None; zf = ""; nt = ""
@@ -238,12 +378,74 @@ def assign_sites(sites, cent):
     sites = sites.copy(); sites["county_fips"] = county; sites["assign_method"] = method
     sites["assign_note"] = note
     sites["zip_fix"] = fixz   # where route_sites_us.py puts the row (zip_typo_corrected, facility_listing)
+    # zip_city: "zip" (the city is the error: the pages print city_fix, the ZIP's own place), "ambiguous" (the pages flag the row), or
+    # "" (ZIP and city agree, cannot be compared, or the ZIP was the error and the row is a zip_typo_corrected row)
+    at_own_zip = [m_ in ("zip", "zip_pop") for m_ in method]
+    kept = [review.get(i_) if ok_ else None for i_, ok_ in zip(sites.index, at_own_zip)]
+    sites["zip_city"] = [r_["verdict"] if r_ and r_["verdict"] in ("zip", "ambiguous") else "" for r_ in kept]
+    sites["city_fix"] = [r_["zip_place"] if r_ and r_["verdict"] == "zip" else "" for r_ in kept]
+    sites["zip_place"] = [r_["zip_place"] if r_ and r_["verdict"] in ("zip", "ambiguous") else "" for r_ in kept]      # the place the ZIP is in, for the flag's wording
+    sites["zip_city_mi"] = [str(r_["mi"]) if r_ and r_["verdict"] in ("zip", "ambiguous") else "" for r_ in kept]      # miles from the ZIP to the edge of the stated city
+    sites["zip_city_note"] = [r_["note"] if r_ and r_["verdict"] in ("zip", "ambiguous") else "" for r_ in kept]
     return sites
+
+
+def _selftest_zip_city():
+    """zip_city_review on fixed, made-up registry rows (the places and ZIP codes are real). Prints one line and returns True when
+    every verdict is the expected one. validate_v3.py runs it at every refresh, so a change to the rules that breaks one of these
+    stops the release."""
+    fips = {v: k for k, v in USPS.items()}; rows = []; want = []; n = [0]
+
+    def add(fac, city, st, z, times=1):
+        for _ in range(times): n[0] += 1; rows.append({"nct_id": f"NCT9{n[0]:07d}", "facility": fac, "city": city, "state_fips": fips[st], "state": st, "zip": z, "site_status": "RECRUITING"})
+        return len(rows) - 1
+
+    def case(label, fac, city, st, z, verdict, key=None, value=None): want.append((label, add(fac, city, st, z), verdict, key, value))
+    add("Mayo Clinic", "Jacksonville", "FL", "32224", 3)
+    case("a city field that repeats the state", "Mayo Clinic", "Florida City", "FL", "32224", "zip", "zip_place", "Jacksonville")
+    case('"New York" written for a Long Island clinic', "Memorial Sloan Kettering Commack", "New York", "NY", "11725", "zip", "zip_place", "Commack")
+    case("the name names the place of the ZIP", "UC San Diego Moores Cancer Center", "Sacramento", "CA", "92093", "zip")
+    add("Georgia Cancer Center", "Augusta", "GA", "30912", 3)
+    case("listed at the ZIP by other trials, never in the city", "Georgia Cancer Center", "Atlanta", "GA", "30912", "zip", "zip_place", "Augusta")
+    add("Karmanos Cancer Institute at McLaren Lapeer Region", "Lapeer", "MI", "48446", 3)
+    case("listed in the city by other trials, never at the ZIP", "Karmanos Cancer Institute at McLaren Lapeer Region", "Lapeer", "MI", "48466", "city", "fix_zip", "48446")
+    add("Lone Star Oncology Group", "Tyler", "TX", "75702", 2); add("Lone Star Oncology Group", "McAllen", "TX", "78503", 2)
+    case("listed in both places", "Lone Star Oncology Group", "Tyler", "TX", "78503", "ambiguous")
+    case("a sponsor placeholder says nothing", "GSK Investigational Site", "Sioux Falls", "SD", "57501", "ambiguous")
+    add("Orange Coast Cancer Center", "Duarte", "CA", "91010", 3); add("Orange Coast Cancer Center Irvine Campus", "Irvine", "CA", "92618", 3)
+    case("a second campus of the name at the ZIP", "Orange Coast Cancer Center Irvine Campus", "Irvine", "CA", "91010", "ambiguous")
+    case("a row a person has checked (zip_city_overrides.csv)", "Saint Catherine Hospital", "Indianapolis", "IN", "46312", "zip", "zip_place", "East Chicago")
+    case("a suburb's ZIP under the main city's name is not a conflict", "Lakeside Cancer Clinic", "Orlando", "FL", "32804", None)
+    df = pd.DataFrame(rows); res = zip_city_review(df); bad = []
+    for label, i, verdict, key, value in want:
+        got = res.get(i)
+        if (got["verdict"] if got else None) != verdict or (key and got[key] != value): bad.append(f"{label}: expected {verdict}{' ' + str(value) if key else ''}, got {(got['verdict'], got.get(key)) if got else None}")
+    print(f"ZIP and city rules: {len(want) - len(bad)} of {len(want)} fixed examples pass" + ("".join("\n  FAILED " + b for b in bad)))
+    return not bad
+
+
+ZIP_CITY_DECISION = {"zip": "ZIP kept, city corrected", "ambiguous": "undecided, flagged on the pages", "city": "city kept, ZIP corrected"}
+
+
+def zip_city_audit(sites):
+    """One line per registry row whose ZIP and city disagreed, with what was decided and why (written to zip_city_review.csv by
+    main, so anyone can check a decision against the registry). Covers the rows judged by zip_city_review and the rows whose ZIP
+    was judged a typing error by zip_typos; both of the latter are assign_method zip_typo_corrected."""
+    s = sites[(sites.zip_city != "") | (sites.assign_method == "zip_typo_corrected")].copy()
+    s["decision"] = [ZIP_CITY_DECISION[v or "city"] for v in s.zip_city]
+    s["zip_used"] = [zf if v == "" else z[:5] for v, zf, z in zip(s.zip_city, s.zip_fix, s.zip)]
+    s["city_shown"] = [cf if v == "zip" else c.strip() for v, cf, c in zip(s.zip_city, s.city_fix, s.city)]
+    s["why"] = [n if v else an for v, n, an in zip(s.zip_city, s.zip_city_note, s.assign_note)]
+    s["zip"] = s.zip.str[:5]
+    return s.sort_values(["decision", "state", "city", "facility", "nct_id"])[["nct_id", "facility", "city", "state", "zip", "decision", "county_fips", "zip_used", "city_shown", "why"]]
 
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--min-max-age", type=float); ap.add_argument("--out", default="out")
-    a = ap.parse_args(); OUT = Path(a.out); OUT.mkdir(exist_ok=True)
+    ap.add_argument("--test-zip-city", action="store_true", help="run the fixed examples of the ZIP/city review and exit")
+    a = ap.parse_args()
+    if a.test_zip_city: sys.exit(0 if _selftest_zip_city() else 1)
+    OUT = Path(a.out); OUT.mkdir(exist_ok=True)
     trials = pd.read_csv(RAW / "trials.csv", dtype=str)
     sites = pd.read_csv(RAW / "us_sites.csv", dtype=str).fillna("")
     age_note = "all ages"
@@ -257,6 +459,7 @@ def main():
     nci = config.nci_targets()
 
     sites = assign_sites(sites, cent); sites.to_csv(OUT / "site_assignment_qc.csv", index=False)
+    audit = zip_city_audit(sites); audit.to_csv(OUT / "zip_city_review.csv", index=False)
     qc = sites.assign_method.value_counts().to_dict()
     oral = dict(zip(trials.nct_id, trials.oral_candidate.astype(int))); indet = dict(zip(trials.nct_id, trials.oral_indeterminate.astype(int)))
     ct = sites.dropna(subset=["county_fips"]).groupby("county_fips").nct_id.agg(set).to_dict()
@@ -311,7 +514,7 @@ def main():
     states["n_districts"] = states.state_fips.map(dist.groupby("state_fips").size())
     states.to_csv(OUT / "state_metrics.csv", index=False)
     us = agg(c.assign(w=c.pop55), {"scope": "US (50 states + DC)"})
-    log = {"age_filter": age_note, "site_rows": len(sites), "site_assignment": qc, "distinct_trials": int(trials.nct_id.nunique()),
+    log = {"age_filter": age_note, "site_rows": len(sites), "site_assignment": qc, "zip_city_review": {k: int(v) for k, v in audit.decision.value_counts().items()}, "distinct_trials": int(trials.nct_id.nunique()),
            "counties": len(c), "counties_with_any_trial": int((c.trials_in_county > 0).sum()), "broad_menu_counties": int(len(brd_idx)), "limited_menu_counties": int(len(lim_idx)),
            "districts": len(dist), "us": us}
     json.dump(log, open(OUT / "metrics_log.json", "w"), indent=2); print(json.dumps(log, indent=2))

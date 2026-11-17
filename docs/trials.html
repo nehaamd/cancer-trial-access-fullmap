@@ -43,7 +43,7 @@
   table{border-collapse:collapse;width:100%;font-size:var(--fs-1);background:var(--card);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)} th,td{text-align:left;vertical-align:top;padding:.5rem .65rem;border-top:1px solid var(--rule)} th{font-weight:650;color:var(--ink-2);font-size:var(--fs-0);border-top:0;background:var(--paper)}
   tbody tr:hover{background:#FCFBF8} td.n{white-space:nowrap;font-variant-numeric:tabular-nums} td.f{color:var(--ink-2);font-size:var(--fs-0)}
   .empty{padding:1.2rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);max-width:60ch;background:var(--card)}
-  ul.fac{margin:0;padding:0;list-style:none;columns:2;column-gap:2rem;font-size:var(--fs-1)} ul.fac li{break-inside:avoid;padding:.3rem 0;border-top:1px solid var(--rule)} ul.fac li span{color:var(--ink-2);font-size:var(--fs-0)}
+  ul.fac{margin:0;padding:0;list-style:none;columns:2;column-gap:2rem;font-size:var(--fs-1)} ul.fac li{break-inside:avoid;padding:.3rem 0;border-top:1px solid var(--rule)} ul.fac li span{color:var(--ink-2);font-size:var(--fs-0)} ul.fac li span.doubt{display:block;color:var(--ink);background:#FFF7DF;border:1px solid #E6D08A;border-radius:6px;padding:.25rem .5rem;margin:.25rem 0 .1rem}
   @media (max-width:800px){ul.fac{columns:1} td.f{display:none}}
 @media (max-width:640px){
   table{display:block;overflow-x:auto;max-width:100%}
@@ -124,7 +124,7 @@
   const where = (f, i) => { const pl = places.get(i); if (!pl || !pl.length) return `${f[1] || ''}${f[2] ? ' ' + f[2] : ''}`;
     const m = new Map(); pl.forEach(p => { const lab = `${p[2] || f[1] || ''}${p[0] ? ' ' + p[0] : ''}`.trim(); m.set(lab, (m.get(lab) || 0) + p[1].length); });
     const labs = [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(e => e[0]); return labs[0] + (labs.length > 1 ? ` (+${labs.length - 1} more address${labs.length > 2 ? 'es' : ''})` : ''); };
-  fl.innerHTML = facs.map((f, i) => [f, i]).sort((a, b) => a[0][0].localeCompare(b[0][0])).map(([f, i]) => `<li>${esc(f[0])} <span>${esc(where(f, i))} · ${f[3].length} trial${f[3].length===1?'':'s'}</span></li>`).join('');
+  fl.innerHTML = facs.map((f, i) => [f, i]).sort((a, b) => a[0][0].localeCompare(b[0][0])).map(([f, i]) => `<li>${esc(f[0])} <span>${esc(where(f, i))} · ${f[3].length} trial${f[3].length===1?'':'s'}</span>${(d => d ? `<span class="doubt"><b>Check this address.</b> ${esc(d.text)}</span>` : '')(SITE.placeDoubtAll(places.get(i), f[3].length))}</li>`).join('');
   render();
 })();
 </script>

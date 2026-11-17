@@ -183,7 +183,8 @@ def main():
         if any(len(e_) > 2 for ents in SPX_ for e_ in ents):
             allq = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); jx = {n_: j_ for j_, n_ in enumerate(T2["id"])}
             said = {}
-            for r_ in allq.itertuples(): said.setdefault((int(r_.sp), jx.get(r_.nct_id)), set()).add(r_.city.strip())
+            fixc = allq.city_fix.where(allq.zip_city == "zip", "") if "zip_city" in allq.columns else pd.Series("", index=allq.index)   # where the ZIP was judged right and the city wrong, the ZIP's own place is printed (metrics_us.zip_city_review)
+            for r_, fx_ in zip(allq.itertuples(), fixc): said.setdefault((int(r_.sp), jx.get(r_.nct_id)), set()).add(fx_ or r_.city.strip())
             ents_n = 0; city_bad = 0
             for s_i, ents in enumerate(SPX_):
                 for e_ in ents:
@@ -207,6 +208,21 @@ def main():
             at_zip = sum(1 for r_ in gq_.itertuples() if (r_.nct_id, r_.facility, r_.zip5) in k_ and r_.geocode in ("zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"))
             check("Registry rows with a mistyped ZIP are located where the registry lists that facility", f"{len(ty)} rows (" + "; ".join(f"{r_.facility[:28]}, {r_.city} {r_.zip[:5]}" for r_ in ty.head(4).itertuples()) + ("; ..." if len(ty) > 4 else "") + f"); {at_zip} still drawn at the ZIP", at_zip == 0,
                   "judged a typing error only when the same named facility is listed repeatedly near the stated city and never near the ZIP (metrics_us.zip_typos)")
+    # registry rows whose ZIP and city disagree (metrics_us.zip_city_review): the rules pass their fixed examples; a reviewed row was
+    # placed by its own ZIP; a row whose city was corrected has a place to print; and the pages flag exactly the undecided rows
+    if "zip_city" in sa_.columns:
+        import metrics_us as mu_, io as io_, contextlib as cl_
+        with cl_.redirect_stdout(io_.StringIO()) as zb_: z_ok = mu_._selftest_zip_city()
+        rv_ = sa_[sa_.zip_city != ""]; off_zip = int((~rv_.assign_method.isin(["zip", "zip_pop"])).sum()); no_place = int(((rv_.zip_city == "zip") & (rv_.city_fix == "")).sum())
+        gq2_ = pd.read_csv(OUT / "site_geocode_qc.csv", dtype=str).fillna(""); ids_ = set(T2["id"])
+        if "zip_city" in gq2_.columns and "SPX" in Dj2:
+            want_ = {(int(r_.sp), r_.nct_id, r_.zip5) for r_ in gq2_[gq2_.zip_city == "ambiguous"].itertuples() if r_.nct_id in ids_}
+            got_ = {(s_i, T2["id"][j_], e_[3][0]) for s_i, ents in enumerate(Dj2["SPX"]) for e_ in ents if len(e_) > 3 for j_ in e_[1]}
+            zm_ = Dj2["meta"].get("zip_city") or {}
+            check("Registry rows whose ZIP and city disagree: decided where the registry's other rows decide, flagged where they do not", f"{zb_.getvalue().strip().splitlines()[0]}; {int((rv_.zip_city == 'zip').sum())} rows keep the ZIP and print its place, {int((rv_.zip_city == 'ambiguous').sum())} are undecided; {len(want_)} trial listings to flag, {len(got_)} flagged in the page data ({len(want_ ^ got_)} differ); {off_zip} reviewed rows not placed by their ZIP; {no_place} corrected rows without a place name",
+                  z_ok and want_ == got_ and off_zip == 0 and no_place == 0 and zm_.get("flagged", -1) == int(((sa_.zip_city == "ambiguous") & (sa_.county_fips != "") & sa_.nct_id.isin(ids_)).sum()),
+                  "the city printed for a corrected row changes; no row moves except those whose ZIP was judged the error, which are counted with the mistyped ZIPs above (out_adult55/zip_city_review.csv lists every decision)")
+        else: check("Registry rows whose ZIP and city disagree: decided where the registry's other rows decide, flagged where they do not", "site_geocode_qc.csv or the page data predates the review (route_sites_us.py and build_webapp_data_v3.py not re-run?)", False)
     check("Payload: trial/site tables are internally consistent (facility→trial indices, sitepoint→facility index, nearby lists sorted)", f"{bad_idx} bad facility trial indices; {sp_bad} bad sitepoint→facility refs; {nbd_unsorted} unsorted nearby lists; sponsor names {sum(1 for x in T2['spn'] if x):,}/{N2:,}, last-update dates {sum(1 for x in T2['upd'] if x):,}/{N2:,}", bad_idx == 0 and sp_bad == 0 and nbd_unsorted == 0 and sum(1 for x in T2['spn'] if x) == N2)
     # facility names (site_names.py): the registry's spellings of one institution at one ZIP code are one facility. The rules are tested on
     # fixed examples; the payload must agree with the list of spellings folded in; a sponsor placeholder is never folded into a named facility.

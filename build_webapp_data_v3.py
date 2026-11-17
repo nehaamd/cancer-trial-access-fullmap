@@ -66,6 +66,11 @@ def main():
     trials = load_trials(); j_of = {n: j for j, n in enumerate(trials.nct_id)}
     ctype = pd.read_csv(RAW / "trial_cancer_type.csv", dtype=str).set_index("nct_id")
     sites = pd.read_csv(OUT / "site_assignment_qc.csv", dtype=str).fillna(""); sites = sites[(sites.county_fips != "") & sites.nct_id.isin(j_of)].copy()
+    # Rows whose ZIP and city disagree (metrics_us.zip_city_review). Where the ZIP was judged right and the city wrong, the pages print
+    # the ZIP's own place ("Mayo Clinic, Jacksonville 32224", which the registry lists once under "Florida City"). The undecided rows
+    # keep the registry's city and are flagged on the pages (fourth item of an SPX entry, below).
+    if "city_fix" in sites.columns: sites["city"] = sites.city.where(sites.city_fix == "", sites.city_fix)
+    zc_meta = {"city_corrected": int((sites.zip_city == "zip").sum()), "flagged": int((sites.zip_city == "ambiguous").sum()), "flagged_trials": int(sites[sites.zip_city == "ambiguous"].nct_id.nunique())} if "zip_city" in sites.columns else None
     sites["fac"] = sites.facility.map(norm)
     fetch_log = json.load(open(RAW / "fetch_log.json")); pull_date = fetch_log["timestamp_utc"][:10]
     # ---- trial table (compact arrays) ----
@@ -184,9 +189,19 @@ def main():
     zip_used = sg.geocode.isin(["zip_centroid", "city_centroid_large_zip", "city_centroid_zip_spans_counties"]) & (sg.zip5.str.len() == 5)
     sg["zip_ok"] = np.where(zip_used, sg.zip5, "")
     SPI = [[] for _ in range(int(zs["S_shape"][0]))]; SPX = [[] for _ in range(int(zs["S_shape"][0]))]; sg["city_row"] = sg.city.str.strip()
-    for (spi, cf, fc, zz, cty), g_ in sg.groupby(["sp", "county_fips", "fac", "zip_ok", "city_row"]):   # one entry per ZIP (two large ZIPs can share a city centroid) and per city spelling
+    # Rows whose ZIP and city disagree (metrics_us.zip_city_review, carried here by route_sites_us.py). Verdict "zip": the entry prints
+    # the ZIP's own place instead of the registry's city. Verdict "ambiguous": the entry keeps the registry's city and gets a fourth
+    # item, [the row's ZIP, the place that ZIP is in ("" when it has no name), miles from the ZIP to the stated city], which the pages
+    # turn into a visible note. Such a row gets an entry of its own, so the note is shown only with the trials it applies to.
+    sg["flag"] = ""
+    if "zip_city" in sg.columns:
+        fixed = (sg.zip_city == "zip") & (sg.city_fix != ""); sg.loc[fixed, "city_row"] = sg.city_fix[fixed]
+        amb = sg.zip_city == "ambiguous"; sg.loc[amb, "flag"] = sg.zip5[amb] + "|" + sg.zip_place[amb] + "|" + sg.zip_city_mi[amb]
+    for (spi, cf, fc, zz, cty, flg), g_ in sg.groupby(["sp", "county_fips", "fac", "zip_ok", "city_row", "flag"]):   # one entry per ZIP (two large ZIPs can share a city centroid) and per city spelling
         if (cf, fc) in fac_idx:
-            SPI[int(spi)].append([cf, fac_idx[(cf, fc)]]); SPX[int(spi)].append([zz, sorted({j_of[n] for n in g_.nct_id}), cty])
+            ent = [zz, sorted({j_of[n] for n in g_.nct_id}), cty]
+            if flg: z_, pl_, mi_ = flg.split("|"); ent.append([z_, pl_, int(mi_) if mi_.isdigit() else None])
+            SPI[int(spi)].append([cf, fac_idx[(cf, fc)]]); SPX[int(spi)].append(ent)
     pool60 = {f: len(set().union(*[set(SP[i]) for i in nb60.get(f, [])])) if nb60.get(f) else 0 for f in cm.index}
     # facilities at each site point, counted from the list just built so the count and the list agree after the names are folded together
     # (until November 2026 it came from the routing step's own count of spellings; the two were equal at every site point)
@@ -291,7 +306,7 @@ def main():
     nat_binc = {site: [blog_sites[site]["us_rate"], int(blog_sites[site]["us_avg_annual_count"]) if blog_sites[site]["us_avg_annual_count"] else None, "ok"] for site in bsites if site in blog_sites}
     nat_core = core_of(pd.Series(nat))
     llog = json.load(open(REF / "legislators_log.json")) if (REF / "legislators_log.json").exists() else {}; lc = rlog.get("local_checks")
-    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "site_spellings_folded": len(MERGE), "facilities_named": int((fac.unresolved == 0).sum()), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2024 election maps)", "virtual_sites": {"rows": int(len(virt)), "trials": int(virt.nct_id.nunique())}, "zip_typos": n_typo, "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
+    meta = {"version": "3.2", "registry_data_timestamp": fetch_log.get("registry_data_timestamp"), "pull_utc": fetch_log["timestamp_utc"][:16].replace("T", " ") + " UTC", "sites_unresolved": int(fac.unresolved.sum()), "site_alias_rules": len(ALIAS), "site_spellings_folded": len(MERGE), "facilities_named": int((fac.unresolved == 0).sum()), "nat_ctx": nat_ctx, "nat_binc": nat_binc, "nat_core": nat_core, "pull": pull_date, "trials": len(trials), "facilities": int(fac.shape[0]), "plan": "119th Congress (2024 election maps)", "virtual_sites": {"rows": int(len(virt)), "trials": int(virt.nct_id.nunique())}, "zip_typos": n_typo, "zip_city": zc_meta, "members_pull": f"{llog.get('fetched', '2026-09-09')} (unitedstates/congress-legislators, gh-pages)",
             "router": {"pairs": rlog["router_validation"]["pairs"], "mean_pct": rlog["router_validation"]["mean_abs_pct_diff"], "max_pct": rlog["router_validation"]["max_abs_pct_diff"],
                        **({"local": {"pairs": lc["routes"], "failed": lc["failed"], "note": ("all within tolerance" if not lc["failed"] else f"{lc['failed']} outside tolerance: " + "; ".join(lc["failed_routes"]))}} if lc else {})},
             "graph_note": (rlog.get("graph") or {}).get("note"), "nci": config.nci_summary(), "acs": ACS_RELEASE["label"], "acs_year": ACS_RELEASE["year"], "acs_span": ACS_RELEASE["span"],

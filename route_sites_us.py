@@ -127,7 +127,10 @@ def main():
                         S_indptr=S.indptr, S_indices=S.indices, S_shape=np.array(S.shape), trial_ids=trials.nct_id.values.astype(str),
                         pt_src=pt_src, pt_t=pt_t, pt_mi=pt_mi, pc_src=pc_src, pc_c=pc_c, pc_mi=pc_mi)
     pts[["sp", "lat", "lon", "county_fips", "geocode", "n_trials", "n_facilities"]].to_csv(OUT / "sitepoints.csv", index=False)
-    sites[["nct_id", "facility", "city", "state", "zip5", "county_fips", "geocode", "sp"]].to_csv(OUT / "site_geocode_qc.csv", index=False)
+    # zip_city, city_fix, zip_place and zip_city_mi: the review of rows whose ZIP and city disagree (metrics_us.zip_city_review), carried
+    # along so the page data can print the corrected city and flag the undecided rows (build_webapp_data_v3.py)
+    review_cols = [c_ for c_ in ("zip_city", "city_fix", "zip_place", "zip_city_mi") if c_ in sites.columns]
+    sites[["nct_id", "facility", "city", "state", "zip5", "county_fips", "geocode", "sp"] + review_cols].to_csv(OUT / "site_geocode_qc.csv", index=False)
     log["seconds"] = round(time.time() - t0); json.dump(log, open(OUT / "route_sites_log.json", "w"), indent=2); print(json.dumps(log, indent=1))
 
 
