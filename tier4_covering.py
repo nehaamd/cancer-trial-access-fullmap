@@ -7,8 +7,9 @@ METHODOLOGY (this text is reproduced verbatim in the output and the web page):
   Cancer-accredited programs plus NCORP affiliates; the stand-in used when those were unreachable is every US facility that hosted an
   interventional oncology treatment trial started 2016 or later on ClinicalTrials.gov). Candidates are excluded if (a) their county
   already hosts a limited menu (20 or more listed trials) or (b) the facility itself already hosts a listed trial
-  today; an entry that is a telemedicine service rather than a place, or is listed under a mistyped ZIP code, is not a
-  candidate. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and
+  today. A facility is one institution at one ZIP code, as on the map: a candidate spelled differently from a recruiting
+  site of the same institution at the same ZIP is that site, and spellings of one candidate are ranked once. An entry
+  that is a telemedicine service rather than a place, or is listed under a mistyped ZIP code, is not a candidate. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and
   joined to the highway network like every other point in this project.
   Objective (primary). Residents aged 55+ who today have no listed cancer treatment trial within 60 road-miles of their
   census tract's population center, and who would have one if a trial opened at the candidate (i.e. the candidate is within 60
@@ -25,7 +26,7 @@ import numpy as np, pandas as pd, geopandas as gpd
 from scipy import sparse
 from scipy.spatial import cKDTree
 from scipy.sparse.csgraph import dijkstra, connected_components
-import config
+import config, site_names
 
 REF, OUT, ROADS, DOCS = Path("data/ref"), Path("out_adult55"), Path("data/roads"), Path("docs")
 M2MI = 1 / 1609.344; SPEED_ACCESS = 35.0; MAX_ACCESS_MI = 30.0; BAND = 60.0; GREEDY_STEPS = 25
@@ -194,6 +195,26 @@ class SiteLocator:
         return z[0], z[1], "zip_centroid"
 
 
+def facility_keys(cand, sites):
+    """One institution at one ZIP code in one county is one facility (site_names.py), for candidates as for recruiting sites.
+
+    cand: DataFrame with name, city, zip, county_fips and fac (norm(name)). sites: site_assignment_qc rows with county_fips, facility,
+    city, zip, nct_id, fac (and assign_method). Returns (key, hosting): key[i] is the facility key of candidate row i, the same for
+    every spelling the rules fold together; hosting maps a facility key to the number of listed trials recruiting there today.
+    Until November 2026 the key was the exact spelling, so "Mayo Clinic Health System-Franciscan Healthcare" was ranked as a
+    candidate while "Mayo Clinic Health System - Franciscan Healthcare" recruited at the same ZIP."""
+    fams = site_names.load_families(REF / "site_families.csv")
+    own = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
+    sp = {(x["county_fips"], x["fac"]): x for x in site_names.spellings_from_rows(sites.assign(zip_own=own))}
+    for r in cand.itertuples():                      # a spelling the recruiting sites also use keeps the ZIP their rows give
+        z = str(r.zip)[:5]
+        sp.setdefault((r.county_fips, r.fac), {"county_fips": r.county_fips, "fac": r.fac, "name": r.name, "city": r.city, "zip": z if re.fullmatch(r"\d{5}", z) else "", "n": 1})
+    alias, _, _ = site_names.merge_map(list(sp.values()), fams)
+    canon = lambda c, f: (c, alias.get((c, f), f))
+    hosting = sites.assign(_k=[canon(c, f) for c, f in zip(sites.county_fips, sites.fac)]).groupby("_k").nct_id.nunique().to_dict()
+    return [canon(c, f) for c, f in zip(cand.county_fips, cand.fac)], hosting
+
+
 def prepare_graph():
     """Same graph preparation as route_us.py: attachable components (mainland + AK/HI >=100 nodes), fragments >=50 nodes bridged within 5 km."""
     z = np.load(ROADS / "graph_us.npz"); nodes = z["nodes"]; n = len(nodes); comp = z["comp"]
@@ -232,12 +253,17 @@ def main():
     drop = np.array([(virt is not None and bool(virt.search(r.name))) or (r.state, r.fac, str(r.zip)[:5]) in typo_keys for r in cand.itertuples()], bool)
     log["excluded_not_a_place_or_mistyped_zip"] = int(drop.sum()); cand = cand[~drop].copy()
     sites = sites[sites.county_fips != ""]; sites["fac"] = sites.facility.map(norm)
-    hosting = sites.groupby(["county_fips", "fac"]).nct_id.nunique()
+    cand["fkey"], hosting = facility_keys(cand, sites)
     cand["county_trials"] = cand.county_fips.map(cm.trials_in_county).fillna(0).astype(int)
-    cand["eligible_trials_at_facility"] = [int(hosting.get((r.county_fips, r.fac), 0)) for r in cand.itertuples()]
+    cand["eligible_trials_at_facility"] = [int(hosting.get(k, 0)) for k in cand.fkey]
     excl_a = cand.county_trials >= 20; excl_b = cand.eligible_trials_at_facility > 0
     log["excluded_county_has_limited_menu"] = int(excl_a.sum()); log["excluded_facility_already_recruiting"] = int((~excl_a & excl_b).sum())
     cand = cand[~excl_a & ~excl_b].copy()
+    # spellings of one candidate facility are one candidate: the spelling with the most trials hosted since 2016 stands for it (ties: the tidiest name)
+    hosted = pd.to_numeric(cand["n_trials_hosted_2016plus"], errors="coerce").fillna(0) if "n_trials_hosted_2016plus" in cand.columns else pd.Series(0, index=cand.index)
+    order = sorted(cand.index, key=lambda i: (-hosted[i], site_names._tidy(cand.at[i, "name"])))
+    first = cand.loc[order].drop_duplicates("fkey").index
+    log["excluded_other_spelling_of_a_candidate"] = int(len(cand) - len(first)); cand = cand.loc[sorted(first)].copy()
     # geocode: ZIP centroid, then city gazetteer
     loc = SiteLocator(); lat, lon, how = [], [], []
     for r in cand.itertuples():
@@ -257,7 +283,7 @@ def main():
     # the last exclusion bucket, so that read - excluded - evaluated closes exactly (sites.html prints the four buckets)
     log["excluded_unlocated_or_far"] = n_none + n_off + int((~keep).sum())
     log["excluded_unlocated_or_far_detail"] = {"not_geocoded": n_none, f"more_than_{MAX_ACCESS_MI:g}_mi_from_a_road": n_off, "more_than_70_mi_from_an_underserved_tract": int((~keep).sum())}
-    assert log["candidates_read"] - log["excluded_not_a_place_or_mistyped_zip"] - log["excluded_county_has_limited_menu"] - log["excluded_facility_already_recruiting"] - log["excluded_unlocated_or_far"] == log["candidates_evaluated"]
+    assert log["candidates_read"] - log["excluded_not_a_place_or_mistyped_zip"] - log["excluded_county_has_limited_menu"] - log["excluded_facility_already_recruiting"] - log["excluded_other_spelling_of_a_candidate"] - log["excluded_unlocated_or_far"] == log["candidates_evaluated"]
     # ---- one bounded Dijkstra per candidate ----
     cutoff = BAND + float(np.nanmax(t_acc[np.isfinite(t_acc)])) + float(c_acc.max()) + 0.01
     prim, sec, ntr, cover_zero = np.zeros(len(cand), np.int64), np.zeros(len(cand), np.int64), np.zeros(len(cand), np.int32), []
@@ -271,8 +297,8 @@ def main():
         if (b0 // B) % 25 == 0: print(f"  {b0+len(idx)}/{len(cand)} {time.time()-t0:.0f}s", flush=True)
     cand["pop55_newly_covered_zero"] = prim; cand["pop55_newly_covered_lt20"] = sec; cand["tracts_within_60rdmi"] = ntr; cand["access_mi"] = np.round(c_acc, 1)
     cand["state_name"] = cand.county_fips.map(cm.state_name); cand["county_name"] = cand.county_fips.map(cm.county_name)
-    PLACEHOLDER = re.compile(r"recruiting site|investigative site|investigational site|research site|clinical site|study site|trial site|^site\b|site \d+$", re.I)
-    cand["name_is_placeholder"] = [int(bool(PLACEHOLDER.search(str(n))) or norm(n) == norm(c) or norm(n) == "") for n, c in zip(cand.name, cand.city)]  # sponsor placeholder or bare city name: location real, facility not identified
+    # a sponsor placeholder, a name that is no institution's (site_names.no_institution) or a bare city name: location real, facility not identified
+    cand["name_is_placeholder"] = [int(site_names.is_placeholder(n, None, c) or norm(n) == norm(c) or norm(n) == "") for n, c in zip(cand.name, cand.city)]
     ranked = cand.sort_values(["pop55_newly_covered_zero", "pop55_newly_covered_lt20"], ascending=False).reset_index(drop=True); ranked["rank_zero"] = np.arange(1, len(ranked) + 1)
     ranked["rank_lt20"] = ranked.pop55_newly_covered_lt20.rank(ascending=False, method="first").astype(int)
     cols = ["rank_zero", "rank_lt20", "name", "name_is_placeholder", "city", "state", "zip", "county_name", "county_fips", "pop55_newly_covered_zero", "pop55_newly_covered_lt20", "tracts_within_60rdmi", "county_trials", "n_trials_hosted_2016plus", "geocode", "access_mi", "lat", "lon", "source"]
@@ -290,10 +316,10 @@ def main():
     log["seconds"] = round(time.time() - t0); json.dump(log, open(OUT / "tier4_log.json", "w"), indent=2)
     # web payload (top 200 ranked + greedy + method)
     top = ranked.head(200)[["rank_zero", "name", "name_is_placeholder", "city", "state", "county_name", "pop55_newly_covered_zero", "pop55_newly_covered_lt20", "tracts_within_60rdmi", "county_trials", "lat", "lon"]]
-    web = {"label": a.label, "method": METHOD, "generated": time.strftime("%Y-%m-%d"), "uncovered": log["uncovered_pop55"], "counts": {k: log[k] for k in ("candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "excluded_unlocated_or_far", "candidates_evaluated")},
+    web = {"label": a.label, "method": METHOD, "generated": time.strftime("%Y-%m-%d"), "uncovered": log["uncovered_pop55"], "counts": {k: log[k] for k in ("candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "excluded_other_spelling_of_a_candidate", "excluded_unlocated_or_far", "candidates_evaluated")},
            "ranked": [[int(r.rank_zero), r.name, int(r.name_is_placeholder), r.city, r.state, r.county_name, int(r.pop55_newly_covered_zero), int(r.pop55_newly_covered_lt20), int(r.tracts_within_60rdmi), int(r.county_trials), round(float(r.lat), 3), round(float(r.lon), 3)] for r in top.itertuples()], "greedy": seq}
     (DOCS / "tier4.js").write_text("window.TIER4=" + json.dumps(web, separators=(",", ":"), ensure_ascii=False) + ";", encoding="utf-8")
-    pd.set_option("display.width", 220); print(pd.DataFrame(seq)[["step", "name", "city", "state", "pop55_newly_covered", "cumulative_pop55_covered", "pct_of_uncovered_pop55"]].to_string(index=False)); print(json.dumps({k: log[k] for k in ("uncovered_pop55", "candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "geocode", "excluded_unlocated_or_far", "excluded_unlocated_or_far_detail", "candidates_evaluated", "seconds")}, indent=1))
+    pd.set_option("display.width", 220); print(pd.DataFrame(seq)[["step", "name", "city", "state", "pop55_newly_covered", "cumulative_pop55_covered", "pct_of_uncovered_pop55"]].to_string(index=False)); print(json.dumps({k: log[k] for k in ("uncovered_pop55", "candidates_read", "excluded_not_a_place_or_mistyped_zip", "excluded_county_has_limited_menu", "excluded_facility_already_recruiting", "excluded_other_spelling_of_a_candidate", "geocode", "excluded_unlocated_or_far", "excluded_unlocated_or_far_detail", "candidates_evaluated", "seconds")}, indent=1))
 
 
 if __name__ == "__main__":

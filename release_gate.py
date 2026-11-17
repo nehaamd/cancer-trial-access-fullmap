@@ -160,6 +160,21 @@ def ask_suites():
             check(f"Question-box {label} suite ({path.relative_to(ROOT)})", "timed out after 600 s", False)
 ask_suites()
 
+
+# 3c. Key findings carries its figures in the page itself, for readers without JavaScript (prerender_findings.js writes them from
+# findings.js at each refresh). A page whose written figures are not this refresh's would show old numbers to those readers.
+def findings_page():
+    import shutil
+    if not (ROOT / "prerender_findings.js").exists(): return
+    node = shutil.which("node"); name = "Key findings: the figures written into the page are this refresh's (prerender_findings.js --check)"
+    if os.environ.get("RELEASE_GATE_SKIP_NODE"): check(name, "skipped: RELEASE_GATE_SKIP_NODE is set", True); return
+    if not node: check(name, "node is not on the PATH", False); return
+    r = subprocess.run([node, str(ROOT / "prerender_findings.js"), "--check"], capture_output=True, text=True, cwd=ROOT)
+    check(name, ((r.stdout.strip() or r.stderr.strip()).splitlines() or ["no output"])[-1][:200], r.returncode == 0)
+
+
+findings_page()
+
 # Newer yearly sources (information only; never stops a refresh). The Census and State Cancer Profiles publish once a year and
 # are re-run by hand (config.ACS_YEAR; fetch_cancer_burden.py), so nothing else says when the site falls a release behind.
 def newer_sources():

@@ -137,7 +137,9 @@ def main():
                                                    trials=("nct_id", lambda s: sorted({j_of[n] for n in s})), n_rows=("nct_id", "size")).reset_index()
     # a sponsor's placeholder is judged on the name as the registry gives it ("Exelixis Clinical Site #12"), before the site code is trimmed
     fac["name"] = [SHOWN.get((c, f), n) for c, f, n in zip(fac.county_fips, fac.fac, fac.name)]   # a facility that absorbed spellings shows the wording most rows use (site_merges.csv "kept")
-    placeholder = [site_names.is_placeholder(n) for n in fac.name]
+    # ... and so is an entry that names an investigator, a cooperative group's office or a research pharmacy rather than a treating
+    # institution (site_names.no_institution): listed where it is, shown as unresolved, not counted as a named facility
+    placeholder = [site_names.is_placeholder(n, None, c) for n, c in zip(fac.name, fac.city)]
     fac["name"] = fac.name.map(clean_name)
     fac["unresolved"] = [int(bool(PLACEHOLDER.match(f)) or code_like(n) or ph) for f, n, ph in zip(fac.fac, fac.name, placeholder)]
     fac = fac.sort_values(["county_fips", "fac"]).reset_index(drop=True); fac["site_id"] = [f"S{i:05d}" for i in range(len(fac))]

@@ -215,7 +215,7 @@ def main():
         with contextlib.redirect_stdout(io.StringIO()) as buf_: st_ok = site_names._selftest()
         facs_ = [f_ for c_ in Dj2["counties"].values() for f_ in c_.get("fac", [])]; mfile = OUT / "site_merges.csv"
         if mfile.exists() and "site_spellings_folded" in Dj2["meta"]:
-            mg_ = pd.read_csv(mfile, dtype=str).fillna(""); ph_bad = int(sum(site_names.is_placeholder(x) for x in pd.concat([mg_.kept, mg_.merged])))
+            mg_ = pd.read_csv(mfile, dtype=str).fillna(""); ph_bad = int(sum(site_names.no_institution(x) not in ("", "person") for x in pd.concat([mg_.kept, mg_.merged])))   # "person" needs the row's city to tell "Jane Doe, MD" from "Silver Spring, MD", and this file has none
             named_ = sum(1 for f_ in facs_ if not f_[5]); dup_ = sum(len(c_.get("fac", [])) - len({(f_[0], f_[2]) for f_ in c_.get("fac", [])}) for c_ in Dj2["counties"].values())
             check("Facility names: one institution at one ZIP code is one facility (site_names.py)", f"{buf_.getvalue().strip()}; {len(mg_):,} spellings folded in (payload says {Dj2['meta']['site_spellings_folded']:,}); {len(facs_):,} facilities, {named_:,} named (payload says {Dj2['meta'].get('facilities_named'):,}); {ph_bad} placeholders among the folded names; {dup_} facilities in a county still sharing a name and ZIP",
                   st_ok and len(mg_) == Dj2["meta"]["site_spellings_folded"] and named_ == Dj2["meta"].get("facilities_named") and len(facs_) == Dj2["meta"]["facilities"] and ph_bad == 0,
