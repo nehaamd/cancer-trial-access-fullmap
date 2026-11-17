@@ -27,13 +27,13 @@
   "cosponsor_rows": 39,
   "counties": 3143,
   "districts": 436,
-  "facilities": 9655,
-  "facilities_unresolved": 400,
-  "history": 10,
+  "facilities": 4991,
+  "facilities_unresolved": 1153,
+  "history": 11,
   "nci": 67,
   "senators": 100,
   "states": 51,
-  "trials": 4035
+  "trials": 4029
  },
  "districts": {
   "cosponsoring": 37,
@@ -70,19 +70,19 @@
    "TX-15",
    "TX-34"
   ],
-  "facilities": 13,
+  "facilities": 6,
   "high_incidence_low_access": false,
   "menu": "few",
   "namesake_ratio_ge_20": true,
   "nm_namesake_pop55": 1539,
   "per_100k": 9.3,
   "pop55": 182206,
-  "t60_api": 18,
-  "trials": 18,
-  "trials_industry": 17,
+  "t60_api": 17,
+  "trials": 17,
+  "trials_industry": 16,
   "trials_lung": 4,
-  "trials_phase3": 12,
-  "trials_within_60": 18,
+  "trials_phase3": 11,
+  "trials_within_60": 17,
   "zt_lung": 0.0
  },
  "medn_nulls_last": {
@@ -107,19 +107,19 @@
   "sum": 30460
  },
  "national": {
-  "by_rucc_9_pct_lt20": 70.7,
-  "counties_by_class_2": 673,
+  "by_rucc_9_pct_lt20": 71.3,
+  "counties_by_class_2": 670,
   "deaths": {
    "cells": {
-    "h_only": 535,
-    "hh": 472,
-    "l_only": 771,
-    "neither": 1305
+    "h_only": 534,
+    "hh": 473,
+    "l_only": 773,
+    "neither": 1303
    },
    "counties_classified": 3083,
-   "hh_counties": 472,
-   "hh_deaths": 27140,
-   "hh_pop55": 3341107,
+   "hh_counties": 473,
+   "hh_deaths": 27163,
+   "hh_pop55": 3343480,
    "hh_small": 84,
    "pop55_classified": 99993773,
    "tertile_counties": {
@@ -129,8 +129,8 @@
    },
    "tertile_low_access": {
     "1": 438,
-    "2": 333,
-    "3": 472
+    "2": 335,
+    "3": 473
    },
    "top": [
     {
@@ -246,7 +246,7 @@
    "trials": 3919,
    "z60": 4.6
   },
-  "history_len": 10,
+  "history_len": 11,
   "metro_pct_lt20": 6.0,
   "mortality_all": {
    "deaths": 609828.0,
@@ -258,15 +258,15 @@
   },
   "need": {
    "cells": {
-    "hb_la": 480,
-    "hb_ok": 1042,
-    "lb_la": 809,
-    "lb_ok": 799
+    "hb_la": 481,
+    "hb_ok": 1041,
+    "lb_la": 811,
+    "lb_ok": 797
    },
    "counties_classified": 3130,
-   "hb_la_cases": 87409,
-   "hb_la_counties": 480,
-   "hb_la_pop55": 4241986,
+   "hb_la_cases": 87457,
+   "hb_la_counties": 481,
+   "hb_la_pop55": 4244359,
    "hb_la_small_numbers": 23,
    "top": [
     "12073",
@@ -301,7 +301,7 @@
    "West Virginia",
    "Wyoming"
   ],
-  "trials_listed_here": 4035
+  "trials_listed_here": 4029
  },
  "oh_by_metro": {
   "metro": {
@@ -317,7 +317,7 @@
   }
  },
  "ops": {
-  "center_gt_wmean": 1101,
+  "center_gt_wmean": 1105,
   "districts_intersect_48215": [
    "TX-15",
    "TX-34"
@@ -337,7 +337,7 @@
    "48273",
    "48489"
   ],
-  "tx_any_of_class2_or_broad": 53,
+  "tx_any_of_class2_or_broad": 51,
   "tx_incidence_ne_ok": 3,
   "tx_metro_false": 168,
   "tx_pct_between_40_60": 7,
@@ -417,7 +417,7 @@
   "tx_by_rucc_1_pct_lt20": 0.3,
   "tx_by_rucc_1_pop55": 4813283,
   "tx_counties": 254,
-  "tx_counties_with_trials": 36,
+  "tx_counties_with_trials": 38,
   "tx_deaths": {
    "cells": {
     "h_only": 25,
@@ -546,7 +546,7 @@
   },
   "tx_limited": 9,
   "tx_metro_pct_lt20": 13.1,
-  "tx_metro_people_lt20": 844186,
+  "tx_metro_people_lt20": 845156,
   "tx_need": {
    "cells": {
     "hb_la": 50,
@@ -572,7 +572,7 @@
     "48223"
    ]
   },
-  "tx_nonmetro_pct_lt100": 87.0,
+  "tx_nonmetro_pct_lt100": 87.4,
   "tx_pct_lt20": 19.6,
   "tx_sum_county_pop55": 7398511,
   "tx_trials_distinct": 1462,
@@ -584,12 +584,12 @@
    "01089",
    "48061"
   ],
-  "n": 1063
+  "n": 1064
  },
  "trials": {
-  "national": 4035,
-  "national_lung": 562,
-  "national_min_age_at_most_18": 3901,
+  "national": 4029,
+  "national_lung": 557,
+  "national_min_age_at_most_18": 3892,
   "national_phase3": 385,
   "tx_distinct": 1462,
   "tx_keyword_pembrolizumab": 174,
@@ -601,21 +601,19 @@
   "max_pop55": 1080228,
   "mean_incidence": 453.3,
   "min_pop55": 31,
-  "share_class_eq_2": 18.9,
+  "share_class_eq_2": 18.1,
   "share_metro_true": 33.9,
   "sum_pop55": 7398511
  },
  "tx_onc_no_trials": {
-  "class2_count": 48,
-  "count": 48,
+  "class2_count": 46,
+  "count": 46,
   "first3": [
-   "48209",
-   "48139",
-   "48187"
+   "48187",
+   "48451",
+   "48213"
   ],
   "ids": [
-   "48209",
-   "48139",
    "48187",
    "48451",
    "48213",
@@ -664,7 +662,7 @@
    "48075"
   ],
   "in_scope": 254,
-  "sum_pop55": 875455
+  "sum_pop55": 763240
  },
  "tx_top5_mortality": {
   "ids": [

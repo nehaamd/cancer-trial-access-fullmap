@@ -1,9 +1,9 @@
 {
- "built": "2026-11-04",
- "listed_trials": 4035,
+ "built": "2026-11-17",
+ "listed_trials": 4029,
  "with_summary": 0,
  "generated_this_run": 0,
- "skipped_this_run": 0,
+ "skipped_this_run": 29,
  "model": "claude-haiku-5-5",
  "version": "1",
  "file": "api/trial/{NCT}.json",

@@ -127,8 +127,8 @@
     "nci": 321,
     "pop55_no_route_to_broad": 668701
   },
-  "tract_pairs_within_120rdmi": 1485236,
-  "county_pairs_within_120rdmi": 35959,
+  "tract_pairs_within_120rdmi": 1487777,
+  "county_pairs_within_120rdmi": 36059,
   "router_validation": {
     "pairs": 38,
     "mean_abs_pct_diff": 3.1,
@@ -154,11 +154,11 @@
     "note": "a node at least every 400 m and at every crossing; junctions within 500 m joined; highway dead ends within 5 km of another road linked across the gap; no link crosses a county line or coastal water"
   },
   "road_over_straightline_ratio_broad": {
-    "median": 1.181,
+    "median": 1.18,
     "p10": 1.088,
     "p90": 1.337,
-    "counties_where_x1_2_underestimated": 1274,
-    "counties_compared": 3023
+    "counties_where_x1_2_underestimated": 1273,
+    "counties_compared": 3024
   },
-  "seconds": 316
+  "seconds": 192
 }

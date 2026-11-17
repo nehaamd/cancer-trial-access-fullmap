@@ -1,14 +1,13 @@
 # Cancer-type classification audit
 
-5,338 distinct condition strings across 4,293 eligible trials · 67 strings flagged · **0 not yet reviewed**
+5,303 distinct condition strings across 4,283 eligible trials · 66 strings flagged · **0 not yet reviewed**
 
-## Matched inside a longer word (43)
+## Matched inside a longer word (41)
 
 | Reviewed | Category | Condition string | Trials | Example |
 |---|---|---|---|---|
 | yes | sarcoma | Advanced Leiomyosarcoma | 2 | NCT06498648 |
 | yes | brain_cns | Anaplastic Oligoastrocytoma | 2 | NCT02800486 |
-| yes | brain_cns | Anaplastic Pleomorphic Xanthoastrocytoma | 1 | NCT04541082 |
 | yes | colorectal | Anorectal Cancer | 1 | NCT06669572 |
 | yes | sarcoma | Dermatofibrosarcoma Protuberans, Fibrosarcomatous | 1 | NCT06239272 |
 | yes | head_neck | Erythroleukoplakia | 1 | NCT03603223 |
@@ -41,7 +40,6 @@
 | yes | brain_cns | Oligoastrocytoma | 1 | NCT04623931 |
 | yes | liver_biliary | Pancreatobiliary Cancers | 1 | NCT07769502 |
 | yes | liver_biliary | Pancreatobiliary Carcinoma | 1 | NCT04221893 |
-| yes | brain_cns | Pleomorphic Xanthoastrocytoma | 1 | NCT04541082 |
 | yes | other_named | Recurrent Ganglioneuroblastoma | 1 | NCT07437963 |
 | yes | other_named | Refractory Ganglioneuroblastoma | 1 | NCT07437963 |
 | yes | sarcoma | Sclerosing Epithelioid Fibrosarcoma | 1 | NCT06239272 |
@@ -50,7 +48,7 @@
 | yes | sarcoma | Uterine Adenosarcoma | 1 | NCT07467772 |
 | yes | sarcoma | Uterine Leiomyosarcoma | 3 | NCT05649956 |
 
-## Reads as non-neoplastic or supportive care (24)
+## Reads as non-neoplastic or supportive care (25)
 
 | Reviewed | Category | Condition string | Trials | Example |
 |---|---|---|---|---|
@@ -77,6 +75,7 @@
 | yes | head_neck | Oral Cavity Dysplasia | 1 | NCT05865028 |
 | yes | head_neck | Oropharyngeal Dysplasia | 1 | NCT05865028 |
 | yes | prostate | Prostatic Hyperplasia | 1 | NCT06161506 |
+| yes | brain_cns | Survivors of Pediatric Brain Tumors | 1 | NCT07923370 |
 | yes | bladder_urothelial | Urinary Tract Infection | 1 | NCT06689176 |
 
 ## Names melanoma and reaches another category (0)
