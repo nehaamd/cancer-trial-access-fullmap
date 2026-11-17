@@ -132,7 +132,7 @@ def main():
     # set aside for the city) and when the ZIP/city review could not confirm it: such a ZIP must not be printed as the facility's own,
     # and must not fold the row into whatever institution is at that ZIP ("Yale ... North Haven Medical Center" at Waterford's 06385
     # was shown under the Waterford centre's name; "The Johns Hopkins Hospital" carried ZIP 10017).
-    sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing", "city_gazetteer"]) & ~(sites.get("zip_city", pd.Series("", index=sites.index)) == "ambiguous"), "")
+    sites["zip_own"] = site_names.own_zip(sites)
     MERGE, merges, SHOWN = site_names.merge_map(site_names.spellings_from_rows(sites), site_names.load_families(REF / "site_families.csv"))
     sites["fac"] = [MERGE.get((c, f), f) for c, f in zip(sites.county_fips, sites.fac)]
     canon = lambda c, f: MERGE.get((c, ALIAS.get((c, f), f)), ALIAS.get((c, f), f))   # the same two steps, for the other tables that carry names

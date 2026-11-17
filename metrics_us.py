@@ -364,7 +364,10 @@ def assign_sites(sites, cent):
     # One reading of the ZIP field for every later step (clean_zip): the registry's own text is kept in zip_registry.
     sites = sites.copy(); sites["zip_registry"] = sites.zip.fillna("").astype(str); sites["zip"] = sites.zip_registry.map(clean_zip)
     st_names = {sf: str(n).lower() for sf, n in zip(cent.state_fips, cent.state_name)}
-    located = {(s_, (c_ or "").strip().lower(), z2c[z_]) for s_, c_, z_, sf_ in zip(sites.state, sites.city, sites.zip, sites.state_fips) if z2c.get(z_, "")[:2] == sf_}   # (state, city as written, county of a usable ZIP written with it)
+    # (state, city as written, county of a usable ZIP written with it). "z_ in z2c" first: a row with no state code (a territory in
+    # build_oncologists.py's practice locations) and a ZIP outside the Census table compared "" with "" and then looked the ZIP up,
+    # which stopped the refresh of 17 Nov 2026 with KeyError '00725'.
+    located = {(s_, (c_ or "").strip().lower(), z2c[z_]) for s_, c_, z_, sf_ in zip(sites.state, sites.city, sites.zip, sites.state_fips) if z_ in z2c and sf_ and z2c[z_][:2] == sf_}
     cxy = {f: (float(a), float(b)) for f, a, b in zip(cent.county_fips, cent.lat, cent.lon)}
     known = set(cxy)   # the 3,143 counties of the 50 states and DC: a row placed anywhere else (Puerto Rico is in the Gazetteer and the
     # county file) gets no county, so nothing downstream looks it up (route_sites_us.py reads the county's population centre)
@@ -504,6 +507,15 @@ def _selftest_zip_city():
                         {"nct_id": "NCT9V", "facility": "Lakes State University Cancer Center", "city": "Erie", "state": "PA"}, {"nct_id": "NCT9W", "facility": "Lakes State University", "city": "Columbus", "state": "OH"}])
     got = virtual_by_context(v, re.compile(config.VIRTUAL_SITE_PATTERN, re.I)); extra += 1
     if got != {12}: bad.append(f"telemedicine row written without the word: expected row 12 only, got {sorted(got)}")
+    # the county assignment as its other callers use it: build_oncologists.py passes practice locations with no facility name, and
+    # with no state code for a territory (the row that stopped the refresh of 17 Nov 2026); diff_snapshots.py passes no centroid table
+    extra += 1
+    try:
+        t = assign_sites(pd.DataFrame([{"nct_id": "L0", "facility": "", "city": "Cayey", "state": "PR", "state_fips": "", "zip": "00725", "site_status": ""},
+                                       {"nct_id": "L1", "facility": "", "city": "Houston", "state": "TX", "state_fips": "48", "zip": "77030", "site_status": ""},
+                                       {"nct_id": "L2", "facility": "", "city": "", "state": "", "state_fips": "", "zip": "", "site_status": ""}]), None)
+        if t.county_fips.iloc[1] != "48201": bad.append(f"practice location Houston 77030: expected county 48201, got {t.county_fips.iloc[1]!r}")
+    except Exception as e: bad.append(f"a location with no state code stopped the county assignment: {e!r}")
     print(f"ZIP and city rules: {len(want) + extra - len(bad)} of {len(want) + extra} fixed examples pass" + ("".join("\n  FAILED " + b for b in bad)))
     return not bad
 
