@@ -6,7 +6,7 @@ a line of data/ref/site_families.csv), and every spelling folded in is listed in
 ("Research Site") name no institution: they are flagged unresolved and counted apart from the named facilities.
 """
 import gzip, json, re
-import config, site_names
+import config, site_names, people_counts
 from pathlib import Path
 import numpy as np, pandas as pd, geopandas as gpd
 from shapely.geometry import mapping
@@ -298,6 +298,14 @@ def main():
             "vacant": [k for k, v in districts.items() if not v["member"]]}
     statelist = sorted({(v["st"], v["stname"]) for v in districts.values()}, key=lambda x: x[1])
     meta["routing"] = "facility-level: every recruiting site located by ZIP centroid (state-checked; city centroid for a ZIP larger than 100 square miles), city centroid, or county center; pools count sites within the road-mile band of the resident's tract or county population center"
+    # people behind the two published shares of each district, as tract sums (people_counts.py), so a district panel prints the same count
+    # as its state's panel where they are the same area (Wyoming at large: 115,824 from the rounded share, 115,793 from the tracts)
+    try:
+        PCd = people_counts.exact_counts()["district"]
+        for k_, d_ in districts.items():
+            e_ = PCd.get(k_) or {}; d_["n_l20"], d_["n_z60"] = people_counts.pick(e_.get("l20"), d_["p"], d_["l20"]), people_counts.pick(e_.get("z60"), d_["p"], d_["z60"])
+    except Exception as ex_:   # never stops the build: the page falls back to population x share
+        print("district people counts skipped:", type(ex_).__name__, str(ex_)[:80])
     data = {"meta": meta, "T": T, "SP": SP, "SPF": SPF, "SPI": SPI, "SPX": SPX, "counties": counties, "districts": districts, "state_data": states_d, "nci": ncil, "states": statelist, "district_keys": list(districts.keys())}
     # ---- tract-level binary for live filtered aggregates (loaded on demand by the page) ----
     # layout (little-endian): u32 magic 0x54524331 ('TRC1'), u32 n_tracts, u32 n_split, u32 n_pairs, u32 n_states, then

@@ -89,7 +89,7 @@ const NONE_LINE = { county: { lt: '1' } };
 const CORE_ACCESS = (lv) => [
   f('pop55', 'integer', 'people', 'Residents aged 55 and older (ACS 5-year, summed from census tracts).', { source: 'acs' }),
   PCT({ path: 'pct_lt20_trials_within_60rdmi', desc: 'Share of residents 55+ with fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. This is what "short of trials" means here; it was the site\'s lead figure until November 2026 (the site now leads with the share with none and the typical trial count). Higher = worse access.', layer: { county: 'short', district: 'l20', state: 'l20' } }),
-  f('people_lt20_trials_within_60rdmi', 'integer', 'people', 'The same as a count of people (pop55 × share, rounded).', { layer: { county: 'short', district: 'l20', state: 'l20' } }),
+  f('people_lt20_trials_within_60rdmi', 'integer', 'people', 'The same as a count of people (summed over census tracts, so it need not equal pop55 × the rounded share).', { layer: { county: 'short', district: 'l20', state: 'l20' } }),
   PCT({ path: 'pct_zero_trials_within_60rdmi', desc: 'Share of residents 55+ with no recruiting trial at all within 60 road-miles. The figure the site leads with and the map opens on.', layer: { county: 'short', district: 'z60', state: 'z60' }, unit_params: NONE_LINE }),
   f('people_zero_trials_within_60rdmi', 'integer', 'people', 'The same as a count of people.', { layer: { county: 'short', district: 'z60', state: 'z60' }, unit_params: NONE_LINE }),
   PCT({ path: 'pct_lt100_trials_within_60rdmi', desc: 'Share of residents 55+ with fewer than 100 trials within 60 road-miles.' }),

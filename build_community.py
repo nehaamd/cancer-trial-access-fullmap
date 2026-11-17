@@ -6,6 +6,7 @@ pages cannot disagree with the map. Runs in run_refresh.sh after build_findings.
 county -> district index (inverted from each district's county list).
 """
 import json, re
+import people_counts
 from datetime import date
 from pathlib import Path
 
@@ -54,6 +55,10 @@ def main():
         districts[k] = {"st": d["st"], "cd": d["cd"], "p": d["p"], "l20": d["l20"], "z60": d["z60"], "t60": d["t60"], "g60n": d["g60n"], "g60b": d["g60b"], "medn": d["medn"], "medb": d["medb"], "nrn": d.get("nrn", 0),
                         "nr": d.get("nr", 0), "member": d["member"], "party": d["party"], "bio": bid, "nm": ru.get("nonmetro_pct"), "ct": (d.get("bd") or {}).get("ct"), "counties": d.get("counties", []),
                         "mnci": d.get("mnci"), "mbroad": d.get("mbroad"), "ns": d.get("ns"), "bs": d.get("bs"), **({"nick": nick[bid]} if bid in nick else {})}
+    # people behind the two shares, as tract sums (people_counts.py): the pages printed population x the rounded share for districts and states
+    PC = people_counts.exact_counts()
+    for k, d in districts.items():
+        e = PC["district"].get(k) or {}; d["n_l20"], d["n_z60"] = people_counts.pick(e.get("l20"), d["p"], d["l20"]), people_counts.pick(e.get("z60"), d["p"], d["z60"])
     states = {}
     for st, g in SD.items():
         ru = RU["states"].get(st) or {}; bs = BU["summary"]["states"].get(st) or {}; ms = (MO.get("summary") or {}).get("states", {}).get(st) or {}
@@ -77,6 +82,8 @@ def main():
     nat["ct"] = [nat["ct"].get(t) for t in type_keys]
     FI = load("findings.js")
     if FI.get("meta", {}).get("pull") == meta.get("pull"): nat["people_l20"], nat["people_z60"], nat["t60_med"] = FI["nat"].get("people_l20"), FI["nat"].get("people_z60"), FI["nat"].get("t60_med")   # same tract sums the map's national card shows
+    for st, g in states.items():
+        e = PC["state"].get(g["fips"]) or {}; g["n_l20"], g["n_z60"] = people_counts.pick(e.get("l20"), g["p"], g["l20"]), people_counts.pick(e.get("z60"), g["p"], g["z60"])
     out = {"ccols": CCOLS, "meta": {"built": str(date.today()), "registry_data_timestamp": meta.get("registry_data_timestamp"), "pull": meta.get("pull"), "plan": meta.get("plan"), "trials": meta.get("trials"), "members_pull": meta.get("members_pull"), "nci": nci_meta, "pct_multi": meta.get("pct_multi"),
                     "cosponsors_fetched": CO["meta"].get("fetched"), "cosponsors_note": CO["meta"].get("note"), "topics": CO["meta"].get("topics"), "inc_period": meta["burden"]["period"], "acs": meta.get("acs"), "acs_span": meta.get("acs_span"), "mort_period": MO["meta"]["period"],
                     "inc_median": BU["meta"]["median_all"], "mort_tertile": (MO["meta"].get("tertiles") or {}).get("all"), "types": types, "btypes": btypes, "nat": nat, "bills": bills, "roles": roles, "rucc_labels": RU["meta"]["labels"]},
