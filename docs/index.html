@@ -140,7 +140,7 @@
       <div>
         <p class="hero-tag">Every US county and congressional district</p>
         <h1>Where you live shouldn't decide which cancer trials you can join.</h1>
-        <p class="lede"><b>The typical older American has about <span data-f="t60_typ">250</span> cancer clinical trials within 60 road-miles of home. <span data-f="people_z60_m">4.3</span> million have none.</b></p>
+        <p class="lede"><b>The typical older American has about <span data-f="t60_typ">250</span> cancer clinical trials within 60 road-miles of home. <span data-f="people_z60_m">4.2</span> million have none.</b></p>
         <p class="lede what-for">This map shows where they live, which trials and cancer centers are within reach, and what would close the gap.</p>
         <div class="actions"><a class="btn primary" href="map.html">Open the map</a><a class="btn" href="findings.html">Key findings</a><a class="btn" href="find.html">Trials near a ZIP</a></div>
         <p class="stamp-line"><span data-site-date>Data as of the latest weekly refresh</span>. Sources: ClinicalTrials.gov, Census Bureau, NCI.</p>
@@ -179,9 +179,9 @@
       <h2 id="nat-h">Across the United States</h2>
       <p class="nat-sub">Distance is measured along the road network from where people live, not as counts per state, for residents aged 55 and older.</p>
       <div class="stats">
-        <div class="stat"><p class="v"><span data-f="people_z60_m">4.3</span><small>million</small></p><p>Americans 55 and older with no recruiting cancer trial within 60 road-miles of home</p><p class="s"><span data-f="z60">4.3</span>% of residents 55 and older</p></div>
-        <div class="stat calm"><p class="v"><small class="pre">about</small><span data-f="t60_typ">250</span></p><p>recruiting cancer trials within 60 road-miles for the typical older American</p><p class="s">The median is <span data-f="t60_med">247</span>; a few very large metro areas pull the average up to <span data-f="t60">362</span></p></div>
-        <div class="stat quiet"><p class="v"><span data-f="trials">4,035</span></p><p>recruiting cancer treatment trials with a US site, at <span data-f="facilities">9,655</span> <span data-f="fac_word">facilities</span></p><p class="s">From ClinicalTrials.gov, on a weekly refresh schedule</p></div>
+        <div class="stat"><p class="v"><span data-f="people_z60_m">4.2</span><small>million</small></p><p>Americans 55 and older with no recruiting cancer trial within 60 road-miles of home</p><p class="s"><span data-f="z60">4.2</span>% of residents 55 and older</p></div>
+        <div class="stat calm"><p class="v"><small class="pre">about</small><span data-f="t60_typ">250</span></p><p>recruiting cancer trials within 60 road-miles for the typical older American</p><p class="s">The median is <span data-f="t60_med">246</span>; a few very large metro areas pull the average up to <span data-f="t60">361</span></p></div>
+        <div class="stat quiet"><p class="v"><span data-f="trials">4,029</span></p><p>recruiting cancer treatment trials with a US site, at <span data-f="facilities">3,838</span> <span data-f="fac_word">named facilities</span></p><p class="s">From ClinicalTrials.gov, on a weekly refresh schedule</p></div>
       </div>
     </div>
   </section>
@@ -189,12 +189,12 @@
   <section class="gap" aria-labelledby="gap-h">
     <div class="wrap">
       <h2 id="gap-h">For every 100 older adults, rural and metro</h2>
-      <p class="sub">Each dot is one resident aged 55 or older. Rural (nonmetro) counties hold about one in six older Americans, and <span data-f="nm_share_z60">75</span>% of those with no cancer trial within reach.</p>
+      <p class="sub">Each dot is one resident aged 55 or older. Rural (nonmetro) counties hold about one in six older Americans, and <span data-f="nm_share_z60">76</span>% of those with no cancer trial within reach.</p>
       <div class="pair">
         <div class="hundred">
           <div class="dots" data-z="nm_z60" aria-hidden="true"></div>
           <h3>Rural counties</h3>
-          <div><p class="big"><span data-f="nm_z60">21</span></p><p>of 100 <span data-f="nm_have">have</span> no recruiting cancer trial within 60 road-miles of home</p></div>
+          <div><p class="big"><span data-f="nm_z60">20</span></p><p>of 100 <span data-f="nm_have">have</span> no recruiting cancer trial within 60 road-miles of home</p></div>
         </div>
         <div class="hundred">
           <div class="dots" data-z="m_z60" aria-hidden="true"></div>
@@ -280,19 +280,11 @@
 <footer class="site">
 <p class="foot-disc"><b>Not medical advice.</b> A listed trial may not be enrolling at a given site today, and being listed does not mean a patient is eligible. Ask your care team, and check each study's record on ClinicalTrials.gov. <b>Beta.</b> Methods and figures are reviewed weekly and may change: check figures against <a href="methods.html">Methods &amp; data</a> before citing them.</p><div class="foot-line"><b>Cancer Clinical Trial Access Map</b><span>Built by Neha Agrawal, MD</span><a href="about.html">About</a><a href="api.html">Data API</a><a href="methods.html">Methods &amp; data</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap" target="_blank" rel="noopener">Code and data on GitHub</a><a href="https://github.com/nehaamd/cancer-trial-access-fullmap/issues" target="_blank" rel="noopener">Report a problem</a><span data-site-date></span></div></footer>
 <script src="site.js"></script>
-<script src="findings.js"></script>
+<script src="findings.js"></script><script src="index-vals.js"></script>
 <script>
 (function () {
   const F = window.FINDINGS; if (!F) return; const N = F.nat, R = F.rural;
-  const M = v => (Math.round(v / 1e5) / 10).toLocaleString(undefined, { maximumFractionDigits: 1 });
-  const pct = v => (Math.round(v * 10) / 10).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  const pct0 = v => Math.round(v).toLocaleString();
-  const fmt = v => Number(v).toLocaleString();
-  // the headline: the typical resident (the median over census tracts, rounded to the nearest ten for the sentence) and the residents with no trial within reach
-  const med = N.t60_med, nmZ = Math.round(R.nonmetro.z60), mZ = Math.round(R.metro.z60);
-  const vals = { people_z60_m: M(N.people_z60), z60: pct(N.z60), nm_z60: String(nmZ), m_z60: String(mZ), nm_have: nmZ === 1 ? 'has' : 'have', m_have: mZ === 1 ? 'has' : 'have',
-                 nm_share_z60: R.nonmetro.n_z60 && N.people_z60 ? pct0(100 * R.nonmetro.n_z60 / N.people_z60) : undefined,
-                 trials: fmt(F.meta.trials), facilities: fmt(F.meta.facilities_named || F.meta.facilities), fac_word: F.meta.facilities_named ? 'named facilities' : 'facilities', t60: fmt(N.t60), t60_med: med ? fmt(med) : undefined, t60_typ: med ? fmt(Math.round(med / 10) * 10) : undefined };
+  const vals = window.indexVals(F);   // index-vals.js: the same function writes these figures into this file at each data refresh (prerender_findings.js)
   document.querySelectorAll('[data-f]').forEach(el => { const v = vals[el.dataset.f]; if (v !== undefined) el.textContent = v; });
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(F.meta));
   if (SITE.ASK_URL) { SITE.askStyles(); SITE.mountAskBox(document.getElementById('ask-mount'), { hero: true, action: 'map.html', placeholder: 'e.g. Which districts in Ohio have the least access?' }); document.getElementById('ask-band').hidden = false; document.body.classList.add('has-ask'); }   // the question box appears once the helper is deployed; the form's GET hands the question to map.html?ask=, where ask/ask.js answers it

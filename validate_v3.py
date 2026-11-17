@@ -272,7 +272,7 @@ def main():
     # write report
     md = ["# Validation — National Cancer Clinical Trial Access Map v3", "", f"Registry pull {flog['timestamp_utc'][:10]}" + (f" (registry data of {flog['registry_data_timestamp'][:10]})" if flog.get("registry_data_timestamp") else "") + f"; road graph TIGER 2025 (graph version {glog.get('graph_version', 1)}); {config.ACS_LABEL}; State Cancer Profiles {blog['sites']['all']['title'].split(', ')[-1]}. Checks re-run by `validate_v3.py` on {time.strftime('%Y-%m-%d', time.gmtime())} (UTC).", "",
           "| Check | Result | Pass | Context |", "|---|---|---|---|"] + [f"| {n} | {r} | {p} | {c} |" for n, r, p, c in rows]
-    text = "\n".join(md) + "\n" + (("\n" + Path("VALIDATION_review.md").read_text()) if Path("VALIDATION_review.md").exists() else "")
+    text = "\n".join(md) + "\n" + (("\n---\n\n**Earlier review notes (written September and October 2026; not rewritten at a refresh).** The table above is this pull's result. Where a figure or a statement below differs from the table, the table is current: since these notes were written the registry's spellings of one institution have been folded together, rows whose ZIP and city disagree are reviewed, and a few rows are decided by hand (data/ref/zip_city_overrides.csv).\n\n" + Path("VALIDATION_review.md").read_text()) if Path("VALIDATION_review.md").exists() else "")
     (OUT / "VALIDATION_v3.md").write_text(text); Path("VALIDATION_v3.md").write_text(text)
     failed = [n for n, _, p, _ in rows if p == "✗" and n not in KNOWN]
     print(f"\n{sum(1 for r in rows if r[2]=='✓')}/{len(rows)} checks pass" + (f"; {len(failed)} unexpected failure(s): " + "; ".join(failed) if failed else ""))

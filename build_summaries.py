@@ -25,6 +25,23 @@ OUT = ROOT / "docs" / "api" / "trial"
 MODEL = os.environ.get("SUMMARY_MODEL", "claude-haiku-5-5")
 LIMIT = int(os.environ.get("SUMMARY_LIMIT", "0") or 0)
 WORKERS = int(os.environ.get("SUMMARY_WORKERS", "4") or 4)
+# The reply budget. It was 900 tokens, and on 16 and 17 Nov 2026 every call came back with no text at all, or with text cut off inside
+# the first sentence ("Expecting value: line 1 column 1", "Unterminated string"): the budget was used up before the answer was
+# written. The answer itself is about 500 tokens; the rest of the budget is headroom for whatever the model produces before it. A
+# reply that stops at the budget, or carries no text, is now reported as that (reply_text) instead of as a JSON error, and the
+# second attempt gets twice the budget.
+MAX_TOKENS = int(os.environ.get("SUMMARY_MAX_TOKENS", "4000") or 4000)
+
+
+def reply_text(msg):
+    """The text of a reply, or a ValueError that says why there is none (so the run log names the cause)."""
+    text = "".join(getattr(b, "text", "") or "" for b in (msg.content or []) if getattr(b, "type", "") == "text")
+    stop = getattr(msg, "stop_reason", None)
+    if not text.strip() or stop == "max_tokens":
+        kinds = ", ".join(sorted({str(getattr(b, "type", "?")) for b in (msg.content or [])})) or "none"
+        used = getattr(getattr(msg, "usage", None), "output_tokens", "?")
+        raise ValueError(f"no complete answer: stop_reason {stop}, {used} output tokens, content blocks: {kinds}")
+    return text
 # A time budget and a give-up rule, so this optional step can never use up the refresh job's time limit: the manual refresh of 5 Nov 2026
 # was cancelled at 90 minutes inside this step (every call failed, each failure waited and retried, about 4,000 trials were queued) and
 # nothing was published. Whatever is not written this run is picked up by the next one.
@@ -127,14 +144,15 @@ def main():
             if stop.is_set() or time.time() > deadline: stop.set(); return n, u, None, "left for the next run"
             text = raw.get(n) or rows.get(n)
             if not text: return n, u, None, "no record text"
+            errs = []
             for attempt in (1, 2):
                 try:
-                    msg = client.messages.create(model=MODEL, max_tokens=900, system=SYSTEM,
+                    msg = client.messages.create(model=MODEL, max_tokens=MAX_TOKENS * attempt, system=SYSTEM,
                                                  messages=[{"role": "user", "content": f"Registry record {n}:\n\n{text}\n\nReturn the JSON object."}])
-                    return n, u, parse_json("".join(b.text for b in msg.content if getattr(b, "type", "") == "text")), None
-                except Exception as e:   # rate limits, transient errors, malformed JSON: once more, then leave it for next week
-                    err = f"{type(e).__name__}: {str(e)[:120]}"; time.sleep(2 * attempt)
-            return n, u, None, err
+                    return n, u, parse_json(reply_text(msg)), None
+                except Exception as e:   # rate limits, transient errors, a reply cut short, malformed JSON: once more, then leave it for next week
+                    errs.append(f"{type(e).__name__}: {str(e)[:160]}"); time.sleep(2 * attempt)
+            return n, u, None, " | then: ".join(errs)
         today = datetime.date.today().isoformat()
         with ThreadPoolExecutor(max_workers=WORKERS) as ex:
             futs = [ex.submit(one, n, u) for n, u in todo]
@@ -148,6 +166,8 @@ def main():
                     if streak >= GIVE_UP_AFTER and not stop.is_set(): stop.set(); why = f"{GIVE_UP_AFTER} calls in a row failed (last: {err})"
                 if (done + failed) % 200 == 0: print(f"summaries: {done} generated, {failed} skipped so far"); CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0), encoding="utf-8")
         if left: print(f"summaries: stopped early because {why}; {left} trials left for the next run")
+        # A step that may fail without stopping the refresh must at least say so where it is seen: an annotation on the run page.
+        if failed and not done: print(f"::warning title=Plain-language summaries::none written this run: all {failed} calls failed ({why or 'see the log lines above'}). The refresh is not affected; the summary expander stays hidden on the ZIP finder.")
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0), encoding="utf-8")
     # ---- publish: one file per listed trial that has a summary; drop files for trials no longer listed ----

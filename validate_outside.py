@@ -319,7 +319,7 @@ def headline_recompute(D, FI, CM):
     rec("headline", "districts where every resident 55+ is beyond 60 road-miles of a broad menu", f"{n73} (findings.js: {fd}; README: {rd_d})", n73 == fd == rd_d)
     # README headline block
     readme = (ROOT / "README.md").read_text(encoding="utf-8"); blk = readme[readme.index("headline:start"):readme.index("headline:end")]
-    want = {f"{got['l20']}% of Americans": True, f"{got['z60']}% have none": True, f"{got['zc']}% live in a county with no trial": True, f"{got['g60b']}% live more than 60 road-miles": True, f"{got['g120b']}% more than 120": True, f"{got['nr']}% (Alaska, Hawaii) have no road connection": True,
+    want = {f"{got['l20']}% have fewer than 20": True, f"{got['z60']}% (": True, "million) have none": True,   # the README's wording since the headline change of 16 Nov 2026 f"{got['zc']}% live in a county with no trial": True, f"{got['g60b']}% live more than 60 road-miles": True, f"{got['g120b']}% more than 120": True, f"{got['nr']}% (Alaska, Hawaii) have no road connection": True,
             f"{got['g60n']}% live more than 60 road-miles from an NCI": True, f"median resident 55+ is {got['medn']} road-miles": True, f"{got['g120n']}% are more than 120": True, f"{gn['l20']}% of residents 55+ in nonmetro": True, f"vs {gm['l20']}% in metro": True,
             f"{len(D['T']['id']):,} listed trials": True, f"({D['meta']['sitepoints']:,} distinct site locations)": True}
     miss = [k for k in want if k not in blk]

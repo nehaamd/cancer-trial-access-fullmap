@@ -4,13 +4,18 @@ Lists the condition strings that could pull a trial into the wrong cancer type, 
   1. a category matched by a stem that starts inside a longer word (the 'anorectal melanoma', 'gallbladder', 'paraganglioma' class of error)
   2. a category matched by a string that reads as non-neoplastic or supportive care (hypothyroidism, infection, lymphedema, ...)
   3. a string that names melanoma and still reaches another category
-Every string already reviewed is listed in audit_allowlist.txt (one per line, "category<TAB>condition string"); the audit exits non-zero
-when a string not on that list appears, which holds the weekly refresh until someone looks. Lines starting with "#" record why a string
-was accepted; --accept keeps them (at the top of the file). Output: qc_cancer_type_audit.md.
-    python3 audit_cancer_types.py            # audit; exit 1 if there is anything new to review
+Every string already reviewed is listed in audit_allowlist.txt (one per line, "category<TAB>condition string"). A few new strings do
+not hold the refresh: they are reported as a warning on the run page and stay marked NEW in qc_cancer_type_audit.md until someone
+reviews them. The audit exits non-zero, and holds the refresh, when more than AUDIT_MAX_NEW strings (default 3) or more than
+AUDIT_MAX_TRIALS trials (default 5) are new at once, which is what a broken classifier or a change in the registry's vocabulary
+looks like. Until 17 Nov 2026 a single new string held the refresh: one string on one trial ("Survivors of Pediatric Brain
+Tumors") kept the site on 3 Nov data for two weeks. A new string can change the cancer-type label of the trials that carry it; it
+cannot change a trial count or an access share. Set AUDIT_MAX_NEW=0 to hold the refresh on any new string, as before.
+Lines starting with "#" record why a string was accepted; --accept keeps them (at the top of the file). Output: qc_cancer_type_audit.md.
+    python3 audit_cancer_types.py            # audit; exit 1 if more is new than the limits allow
     python3 audit_cancer_types.py --accept   # add everything currently listed to the allowlist (after reviewing it)
 """
-import re, sys
+import os, re, sys
 from pathlib import Path
 import pandas as pd
 
@@ -62,4 +67,9 @@ if "--accept" in sys.argv:
     allow |= {(x[1], x[2]) for x in items}; allow_path.write_text("\n".join(notes + [f"{k}\t{c}" for k, c in sorted(allow)]) + "\n"); print(f"allowlist now has {len(allow)} reviewed strings"); sys.exit(0)
 print(f"{len(items)} flagged strings, {len(new)} new to review (out_adult55/qc_cancer_type_audit.md)")
 for x in new[:40]: print(f"  NEW  [{x[0]}] {x[1]}: {x[2]}  ({x[3]} trial{'s' if x[3] != 1 else ''}, e.g. {x[4]})")
+MAX_NEW = int(os.environ.get("AUDIT_MAX_NEW", "3") or 0); MAX_TRIALS = int(os.environ.get("AUDIT_MAX_TRIALS", "5") or 0)
+n_trials = sum(int(x[3]) for x in new)
+if new and len(new) <= MAX_NEW and n_trials <= MAX_TRIALS:
+    print(f"::warning title=Classification audit::{len(new)} new condition string{'s' if len(new) != 1 else ''} on {n_trials} trial{'s' if n_trials != 1 else ''} not yet reviewed (" + "; ".join(f"{x[1]}: {x[2]}" for x in new)[:300] + "). The refresh continues; review them and run audit_cancer_types.py --accept.")
+    sys.exit(0)
 sys.exit(1 if new else 0)

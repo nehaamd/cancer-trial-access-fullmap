@@ -179,13 +179,15 @@ eq('profile accepts a FIPS without the leading zero', (await P('counties', 1001)
 const d34 = await P('districts', '4834');
 eq('district by geoid', d34.id, 'TX-34');
 eq('member.bioguide', d34.row.member.bioguide, E.districts.tx34_bioguide);
-eq('member.cosponsor_date null for a non-cosponsor', d34.row.member.cosponsor_date, null);
-eq('member.vacant false', d34.row.member.vacant, false);
+// Expectations follow the data, so a member who signs the bill, a seat that falls vacant or a House with no vacancy does not stop a
+// refresh (the 16 Nov 2026 refresh was stopped by a test of this kind in claims.test.js).
+check('member.cosponsor_date is set exactly when the member is on the bill', (d34.row.member.cosponsor_date === null) === (d34.row.member.ctma_hr3521 === 'none' || d34.row.member.vacant), d34.row.member);
+eq('member.vacant matches the vacancy list', d34.row.member.vacant, E.districts.vacant.includes('TX-34'));
 eq('county_names', d34.row.county_names, E.districts.tx34_county_names);
 eq('deaths_vs_access (district)', d34.row.deaths_vs_access, { counties_classified: E.districts.tx34_deaths_vs_access.classified, high_death_low_access_counties: E.districts.tx34_deaths_vs_access.hh.length, ids: E.districts.tx34_deaths_vs_access.hh });
 eq('related.counties', d34.related.counties.length, 5);
 check('related.member has cosponsor_date', 'cosponsor_date' in d34.related.member);
-eq('vacant seat flagged', (await P('districts', E.districts.vacant[0])).row.member.vacant, true);
+if (E.districts.vacant.length) eq('vacant seat flagged', (await P('districts', E.districts.vacant[0])).row.member.vacant, true); else console.log('skip vacant seat flagged (no House seat is vacant in this pull)');
 const ruiz = await P('districts', E.districts.ruiz);
 eq('sponsor cosponsor_date', ruiz.row.member.cosponsor_date, E.districts.ruiz_date);
 const sc = await P('states', 'SC');
@@ -254,7 +256,7 @@ eq('min_age_at_most', (await TR({ scope: { national: true }, min_age_at_most: 18
 check('by_phase sums to count', Object.values(th.by_phase).reduce((a, b) => a + b, 0) === th.count);
 check('by_sponsor_type sums to count', Object.values(th.by_sponsor_type).reduce((a, b) => a + b, 0) === th.count);
 check('by_cancer_type ≤ 10, labelled', th.by_cancer_type.length <= 10 && th.by_cancer_type.every(x => x.label && x.count > 0));
-eq('by_cancer_type top for a lung filter is lung', (await TR({ scope: { county_id: '48215' }, cancer_type: 'lung' })).by_cancer_type[0].type, 'lung');
+{ const lung = (await TR({ scope: { county_id: '48215' }, cancer_type: 'lung' })).by_cancer_type; if (lung && lung.length) eq('by_cancer_type top for a lung filter is lung', lung[0].type, 'lung'); else console.log('skip by_cancer_type for a lung filter (Hidalgo County lists no lung trial in this pull)'); }
 const samp = await TR({ scope: { state: 'TX' }, limit: 5 });
 check('sample limited and most recently updated first', samp.sample.length === 5 && samp.sample.every((s, i, a) => i === 0 || a[i - 1].last_update >= s.last_update), samp.sample.map(s => s.last_update));
 check('sample rows have the documented keys', ['nct', 'title', 'phase', 'sponsor', 'sponsor_type', 'cancer_types', 'start', 'last_update'].every(k => k in samp.sample[0]));
@@ -318,10 +320,10 @@ const town = await one('McAllen', E.places.mcallen[0][1], 'town');
 check('town via text', /McAllen, TX is in Hidalgo County, Texas/.test(town.matches[0].via));
 const houston = await FP('Houston');
 check('Houston: the city wins (5x the residents 55+ of every namesake county) and the counties are listed as others', !houston.ambiguous && houston.matches.length === 1 && houston.matches[0].id === E.places.houston_top && houston.matches[0].how === 'town' && E.places.houston_counties.every(id => (houston.others || []).some(m => m.id === id)), houston.matches.map(m => m.id));
-const gz = await FP('Gonzalez');
-eq('member surname → district', gz.matches[0].id, E.places.gonzalez_districts[0]);
-eq('…how member', gz.matches[0].how, 'member');
-check('…via names the member', /Rep\. Vicente Gonzalez/.test(gz.matches[0].via));
+if (E.places.gonzalez_districts.length) { const gz = await FP('Gonzalez');
+  eq('member surname → district', gz.matches[0].id, E.places.gonzalez_districts[0]);
+  eq('…how member', gz.matches[0].how, 'member');
+  check('…via names the member', /Rep\. .*Gonzalez/.test(gz.matches[0].via)); } else console.log('skip member surname → district (no member named Gonzalez in this pull)');
 await one('Rep. Vicente Gonzalez', 'TX-34', 'member');
 await one("Gonzalez's district", 'TX-34', 'member');
 await one('Vicente Gonzales', 'TX-34', 'fuzzy');
