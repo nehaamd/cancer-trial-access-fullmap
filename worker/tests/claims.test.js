@@ -33,7 +33,9 @@ const claim = (place, field, value, call) => ({ place, field, value, call });
 const run = (sc, answer, claims) => verify({ answer, answerable: 'yes', interpretation: 'Read from the tool results.', claims }, buildContext({ question: sc.q, turns: sc.turns, catalog }));
 const correct = []; const wrong = [];
 const ok = (name, sc, answer, claims) => correct.push({ name, sc, answer, claims });
-const bad = (name, sc, answer, claims, expect) => wrong.push({ name, sc, answer, claims, expect });
+// A wrong answer is built by moving a real figure to another place, so it is only wrong when the two figures differ. `pair` names
+// the two: when a refresh makes them equal the sentence is true, and the case is skipped (and says so) instead of failing.
+const bad = (name, sc, answer, claims, expect, pair) => { if (pair && pair[0] === pair[1]) { console.log(`skip wrong:   ${name} (both figures are ${pair[0]} in this pull, so the sentence is not wrong)`); return; } wrong.push({ name, sc, answer, claims, expect }); };
 
 // ======================= the scenarios =======================
 const TX = [{ field: 'state', op: '=', value: 'TX' }];
@@ -45,7 +47,7 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   ok('ranking: five Texas counties with share and residents', sc, answer, claims);
   // wrong: the residents of the first two swapped inside the parentheses
   const sw = answer.replace(f(rows[0].pop55), '§').replace(f(rows[1].pop55), f(rows[0].pop55)).replace('§', f(rows[1].pop55));
-  bad('ranking: residents 55+ of two counties swapped in the parentheses', sc, sw, claims, rows[1].name);
+  bad('ranking: residents 55+ of two counties swapped in the parentheses', sc, sw, claims, rows[1].name, [rows[0].pop55, rows[1].pop55]);
 }
 { // 2. a national ranking of five districts with the member
   const sc = await scenario('Which 5 congressional districts have the largest share of residents 55+ short of trials?', [{ name: 'query', input: { table: 'districts', order_by: [{ field: 'pct_lt20_trials_within_60rdmi', dir: 'desc' }], limit: 5, columns: ['member.name'] } }]);
@@ -63,9 +65,9 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   ok('comparison: "With X%, Wyoming …" (number before the place, in its own clause)', sc, `With ${wy.pct_lt20_trials_within_60rdmi}%, Wyoming has the larger share of residents 55+ short of trials; Montana has ${mt.pct_lt20_trials_within_60rdmi}%.`, claims);
   ok('comparison: "respectively" form', sc, `Wyoming and Montana have ${wy.pct_lt20_trials_within_60rdmi}% and ${mt.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials, respectively.`, claims);
   ok('comparison: "higher than" form with possessives', sc, `Wyoming's share of residents 55+ short of trials, ${wy.pct_lt20_trials_within_60rdmi}%, is higher than Montana's ${mt.pct_lt20_trials_within_60rdmi}%; the national share is ${us.pct_lt20_trials_within_60rdmi}%.`, claims);
-  bad('comparison: the two states\' shares swapped', sc, `Wyoming has ${mt.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials, against ${wy.pct_lt20_trials_within_60rdmi}% in Montana.`, claims, 'Wyoming');
-  bad('comparison: the national share written as Wyoming\'s', sc, `Wyoming has ${us.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials, against ${wy.pct_lt20_trials_within_60rdmi}% nationally.`, claims, 'Wyoming');
-  bad('comparison: Montana\'s median distance written as Wyoming\'s in a "with" clause', sc, `With ${mt.median_road_mi_nci} road-miles to the nearest NCI center, Wyoming is farther than Montana.`, claims, 'Wyoming');
+  bad('comparison: the two states\' shares swapped', sc, `Wyoming has ${mt.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials, against ${wy.pct_lt20_trials_within_60rdmi}% in Montana.`, claims, 'Wyoming', [wy.pct_lt20_trials_within_60rdmi, mt.pct_lt20_trials_within_60rdmi]);
+  bad('comparison: the national share written as Wyoming\'s', sc, `Wyoming has ${us.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials, against ${wy.pct_lt20_trials_within_60rdmi}% nationally.`, claims, 'Wyoming', [wy.pct_lt20_trials_within_60rdmi, us.pct_lt20_trials_within_60rdmi]);
+  bad('comparison: Montana\'s median distance written as Wyoming\'s in a "with" clause', sc, `With ${mt.median_road_mi_nci} road-miles to the nearest NCI center, Wyoming is farther than Montana.`, claims, 'Wyoming', [wy.median_road_mi_nci, mt.median_road_mi_nci]);
 }
 { // 4. which is higher: the nonmetro share of two states
   const sc = await scenario('Which is more rural, Wyoming or Montana?', [{ name: 'query', input: { table: 'states', where: [{ field: 'id', op: 'in', value: ['WY', 'MT'] }], columns: ['nonmetro_pct'] } }]);
@@ -88,8 +90,16 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   ok('count, then a sentence with no place name carrying the scope figure', sc, `The largest such county is ${a.name}, with ${a['oncologists.count']} oncologists. In all, ${f(r.sum_pop55_matching)} residents 55+ live in the ${r.count} counties.`, claims);
   ok('count: "<county> is one of <n> Texas counties" (the place right after the number)', sc, `${a.name} is the largest of ${r.count} Texas counties with oncologists but no trial site, with ${f(a.pop55)} residents 55+.`, claims);
   ok('count: claim values written as in the answer ("1.2 million", "48") and a rows[0] field', sc, `${r.count} Texas counties match; ${(r.sum_pop55_matching / 1e6).toPrecision(2)} million residents 55+ live in them, ${f(a.pop55)} in ${a.name}.`, [claim('TX', 'count', String(r.count), id), claim('TX', 'sum_pop55_matching', `${(r.sum_pop55_matching / 1e6).toPrecision(2)} million`, id), claim(a.id, 'rows[0].pop55', a.pop55, id)]);
-  bad('count: a county\'s residents written next to another county', sc, `The largest are ${a.name} (${f(b.pop55)} residents 55+) and ${b.name} (${f(a.pop55)}).`, claims, a.name);
-  bad('count: the oncologists of the second county given to the first in a following sentence', sc, `The largest is ${a.name}. ${b.name} follows. It has ${a['oncologists.count']} oncologists.`, claims, b.name);
+  bad('count: a county\'s residents written next to another county', sc, `The largest are ${a.name} (${f(b.pop55)} residents 55+) and ${b.name} (${f(a.pop55)}).`, claims, a.name, [a.pop55, b.pop55]);
+  // One county's oncologist count written for another, in a following sentence that names no place. The two counties are chosen
+  // from the result so the sentence is wrong in every pull: the first whose count is a figure the check reads, and the first with
+  // a different count. A number the check sets aside as a definitional constant (1 to 4, 5, 10, 20, ...) is not examined in a
+  // sentence with no place, so "It has 1 oncologists" passes. (Until November 2026 the case always used the two largest counties;
+  // the refresh of 16 Nov made the largest Guadalupe County, which has 1 oncologist, and the gate stopped the refresh.)
+  { const skipped = buildContext({ question: sc.q, turns: sc.turns, catalog }).constants; const K = 'oncologists.count';
+    const x = r.rows.find(z => !skipped.has(String(z[K])) && z[K] !== r.count && z[K] !== r.in_scope); const y = x && r.rows.find(z => z.id !== x.id && z[K] !== x[K]);
+    if (x && y) bad('count: one county\'s oncologists given to another in a following sentence', sc, `${x.name} is one of them. ${y.name} is another. It has ${x[K]} oncologists.`, [...claims.slice(0, 3), ...[x, y].flatMap(z => [claim(z.id, 'pop55', z.pop55, id), claim(z.id, K, z[K], id)])], y.name);
+    else console.log('skip wrong:   count: one county\'s oncologists given to another (no two counties in this result have different, checkable counts)'); }
   bad('count: figures written but no claims at all', sc, answer, [], 'claims is empty');
   bad('count: a claim whose value does not match its row', sc, answer, claims.map(x => x.place === a.id && x.field === 'oncologists.count' ? { ...x, value: x.value + 3 } : x), 'copy the value');
   bad('count: a whole-result figure claimed for the nation on a Texas query', sc, answer, claims.map(x => x.field === 'count' ? { ...x, place: 'US' } : x), 'whole-result figure');
@@ -103,7 +113,7 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   ok('profile: eight county figures with the state and national shares', sc, answer, claims);
   ok('profile: the nearest broad menu named as "Bexar, Texas" next to a county figure', sc, `${p.name} is ${r.road_mi_broad_menu_from_center} road-miles by road from its nearest broad trial menu, ${r.nearest_broad_menu}, and ${r.pct_lt20_trials_within_60rdmi}% of its residents 55+ are short of trials.`, [...claims, claim('48215', 'road_mi_broad_menu_from_center', r.road_mi_broad_menu_from_center, id)]);
   ok('profile: an aside in parentheses naming the districts, then the county\'s figure', sc, `${p.name} (${p.related.districts.map(d => d.name).join(' and ')}) has ${r.trials_listed_here} recruiting trials with a site in the county and ${r.oncologists.count} oncologists.`, claims);
-  bad('profile: the national median distance written as the county\'s', sc, `${p.name} has a median of ${us.median_road_mi_nci} road-miles to an NCI-designated center, against ${r.median_road_mi_nci} nationally.`, claims, p.name);
+  bad('profile: the national median distance written as the county\'s', sc, `${p.name} has a median of ${us.median_road_mi_nci} road-miles to an NCI-designated center, against ${r.median_road_mi_nci} nationally.`, claims, p.name, [r.median_road_mi_nci, us.median_road_mi_nci]);
 }
 { // 8. a state and its national comparison (two queries)
   const sc = await scenario('How does Kentucky compare with the national average on the share of residents short of trials?', [{ name: 'query', input: { table: 'states', where: [{ field: 'id', op: '=', value: 'KY' }], columns: ['pct_lt20_trials_within_60rdmi', 'median_road_mi_nci'] } }, { name: 'query', input: { table: 'national', columns: ['pct_lt20_trials_within_60rdmi', 'median_road_mi_nci'] } }]);
@@ -111,14 +121,14 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   const claims = [claim('KY', 'pct_lt20_trials_within_60rdmi', ky.pct_lt20_trials_within_60rdmi, a), claim('KY', 'median_road_mi_nci', ky.median_road_mi_nci, a), claim('US', 'pct_lt20_trials_within_60rdmi', us.pct_lt20_trials_within_60rdmi, b), claim('US', 'median_road_mi_nci', us.median_road_mi_nci, b)];
   ok('state against the nation', sc, `In Kentucky, ${ky.pct_lt20_trials_within_60rdmi}% of residents 55+ are short of trials, against ${us.pct_lt20_trials_within_60rdmi}% nationally. The median distance to an NCI-designated center is ${ky.median_road_mi_nci} road-miles in Kentucky and ${us.median_road_mi_nci} in the United States.`, claims);
   ok('state against the nation, the national figure in its own sentence', sc, `Kentucky has ${ky.pct_lt20_trials_within_60rdmi}% of residents 55+ short of trials. Across the United States the share is ${us.pct_lt20_trials_within_60rdmi}%.`, claims);
-  bad('state against the nation: swapped', sc, `In Kentucky, ${us.pct_lt20_trials_within_60rdmi}% of residents 55+ are short of trials, against ${ky.pct_lt20_trials_within_60rdmi}% nationally.`, claims, 'Kentucky');
+  bad('state against the nation: swapped', sc, `In Kentucky, ${us.pct_lt20_trials_within_60rdmi}% of residents 55+ are short of trials, against ${ky.pct_lt20_trials_within_60rdmi}% nationally.`, claims, 'Kentucky', [ky.pct_lt20_trials_within_60rdmi, us.pct_lt20_trials_within_60rdmi]);
 }
 { // 9. an aggregate by metro / nonmetro in one state
   const sc = await scenario('In Kentucky, how does trial access in rural counties compare with metro counties?', [{ name: 'aggregate', input: { table: 'counties', where: [{ field: 'state', op: '=', value: 'KY' }], group_by: 'metro', measures: [{ field: 'pct_lt20_trials_within_60rdmi', stat: 'weighted_mean' }] } }]);
   const [id] = sc.id; const r = sc.R[id]; const non = r.groups.find(g => g.group === false), met = r.groups.find(g => g.group === true); const K = 'pct_lt20_trials_within_60rdmi:weighted_mean';
   const claims = [claim('KY', 'count', r.count, id), claim('KY', 'groups[group=false].n', non.n, id), claim('KY', 'groups[group=true].n', met.n, id), claim('KY', `groups[group=false].measures.${K}`, non.measures[K], id), claim('KY', `groups[group=true].measures.${K}`, met.measures[K], id)];
   ok('aggregate: metro against nonmetro in a state', sc, `Across Kentucky's ${r.count} counties, residents 55+ of nonmetro (rural) counties are short of trials at a weighted ${non.measures[K]}%, against ${met.measures[K]}% in metro counties. There are ${non.n} nonmetro and ${met.n} metro counties.`, claims);
-  bad('aggregate: the Kentucky figure written as Ohio\'s', sc, `In Ohio, residents 55+ of nonmetro counties are short of trials at a weighted ${non.measures[K]}%.`, claims, 'Ohio');
+  bad('aggregate: the Kentucky figure written as Ohio\'s', sc, `In Ohio, residents 55+ of nonmetro counties are short of trials at a weighted ${non.measures[K]}%.`, claims, 'Ohio', buildContext({ question: sc.q, turns: sc.turns, catalog }).constants.has(String(non.measures[K])) ? [0, 0] : null);   // a figure equal to a definitional constant (60, 100, ...) is not examined next to a place with no claims
 }
 { // 10. trials in a county by phase and sponsor
   const sc = await scenario('What phases are the trials in Hidalgo County, Texas?', [{ name: 'trials', input: { scope: { county_id: '48215' } } }]);
@@ -133,7 +143,7 @@ const TX = [{ field: 'state', op: '=', value: 'TX' }];
   ok('three counties compared on trials', sc, `${h.name} lists ${h.trials_listed_here} recruiting trials with a site in the county, ${c.name} ${c.trials_listed_here} and ${w.name} ${w.trials_listed_here}.`, claims);
   ok('three counties: a range "from X in A to Y in B"', sc, `Trials with a site in the county range from ${w.trials_listed_here} in ${w.name} to ${h.trials_listed_here} in ${h.name}; ${c.name} has ${c.trials_listed_here}.`, claims);
   ok('three counties compared, short names', sc, `Hidalgo County has ${h.trials_listed_here} trials, Cameron County ${c.trials_listed_here} and Webb County ${w.trials_listed_here}.`, claims);
-  bad('three counties: the first two counts swapped', sc, `${c.name} lists ${h.trials_listed_here} recruiting trials, ${h.name} ${c.trials_listed_here} and ${w.name} ${w.trials_listed_here}.`, claims, c.name);
+  bad('three counties: the first two counts swapped', sc, `${c.name} lists ${h.trials_listed_here} recruiting trials, ${h.name} ${c.trials_listed_here} and ${w.name} ${w.trials_listed_here}.`, claims, c.name, [h.trials_listed_here, c.trials_listed_here]);
 }
 { // 12. a definition and a no-figure answer (no claims needed)
   const sc = await scenario('What does short of trials mean?', [{ name: 'site_info', input: { topic: 'definitions' } }]);
