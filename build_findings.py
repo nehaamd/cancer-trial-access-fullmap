@@ -134,7 +134,7 @@ def methods_block():
     topics = []
     for t in (CO["meta"].get("topics") or {}).values():
         if t["name"] not in topics: topics.append(t["name"])
-    return {k: meta.get(k) for k in ("registry_data_timestamp", "pull", "trials", "facilities", "facilities_named", "sites_unresolved", "sitepoints", "virtual_sites", "zip_typos", "graph_note",
+    return {k: meta.get(k) for k in ("registry_data_timestamp", "pull", "trials", "facilities", "facilities_named", "sites_unresolved", "sitepoints", "virtual_sites", "zip_typos", "zip_city", "graph_note",
                                      "router", "plan", "pct_multi", "pct_unclassified", "acs", "members_pull")} | {
         "burden": {"period": bur["period"], "pulled": bur.get("pulled"), "not_available_states": bur.get("not_available_states") or []},
         "state_names": {s: sn.get(s, s) for s in (bur.get("not_available_states") or [])},

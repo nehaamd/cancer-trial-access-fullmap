@@ -42,6 +42,7 @@
   .meta{display:flex;flex-wrap:wrap;gap:.3rem .5rem;font-size:var(--fs-0);color:var(--ink-2);margin:0 0 .35rem} .tag{background:var(--paper);border:1px solid var(--rule-2);border-radius:999px;padding:.08rem .55rem;white-space:nowrap} .tag.b{background:var(--navy);color:#fff;border-color:var(--navy)}
   .site{font-size:var(--fs-1);margin:.2rem 0} .site b{font-variant-numeric:tabular-nums} .sub{color:var(--ink-2);font-size:var(--fs-0)} .card details{font-size:var(--fs-0);margin-top:.3rem} .card summary{cursor:pointer;color:var(--link)}
   .next{background:#FFF7DF;border:1px solid #E6D08A;border-radius:var(--r);padding:.8rem 1rem;margin:.9rem 0} .next h2{font-size:var(--fs-1);margin:0 0 .4rem} .next ol{margin:0;padding-left:1.2rem} .next li{margin:.3rem 0} .next li b{font-weight:650}
+  .card p.doubt{color:var(--ink);background:#FFF7DF;border:1px solid #E6D08A;border-radius:6px;padding:.3rem .55rem;margin:.3rem 0} .doubt-in{color:var(--ink);background:#FFF7DF;border-radius:4px;padding:0 .25rem}
   .summary p.warn{color:var(--ink);background:#FFF7DF;border:1px solid #E6D08A;border-radius:6px;padding:.4rem .6rem;margin-top:.5rem} .note{color:var(--ink-2);font-size:var(--fs-0);margin:.6rem 0 0} .empty{padding:1rem;border:1px dashed var(--ink-3);border-radius:var(--r);color:var(--ink-2);background:var(--card)} .err{color:var(--rust)}
   .more-btn{margin:.5rem 0} #foot{font-size:var(--fs-0);color:var(--ink-2);border-top:1px solid var(--rule);margin-top:1.2rem;padding-top:.6rem;line-height:1.5} #foot summary{cursor:pointer;font-weight:650;color:var(--link)} #foot p{margin:.5rem 0 0;max-width:90ch}
   @media (max-width:560px){form.f{grid-template-columns:1fr} h1{font-size:var(--fs-3)}}
@@ -138,9 +139,13 @@
   const SPX = D.SPX || null;
   // The city is the one the registry gives with that ZIP at that location (third item of an SPX entry, when the data carry it):
   // the facility's own record has a single city for all of its addresses.
-  const atPoint = s => SPI[s].map(([cf, i], k) => { const fa = C[cf].fac[i]; return fa ? { fa, cf, key: cf + ':' + i, zip: SPX ? SPX[s][k][0] : fa[2], tr: SPX ? SPX[s][k][1] : fa[3], city: (SPX && SPX[s][k][2]) || fa[1] } : null; }).filter(Boolean);
+  const atPoint = s => SPI[s].map(([cf, i], k) => { const fa = C[cf].fac[i]; return fa ? { fa, cf, key: cf + ':' + i, zip: SPX ? SPX[s][k][0] : fa[2], tr: SPX ? SPX[s][k][1] : fa[3], city: (SPX && SPX[s][k][2]) || fa[1], doubt: SPX ? SITE.placeDoubt(SPX[s][k]) : null } : null; }).filter(Boolean);
   function hosts(s, j) { const seen = new Set(); return atPoint(s).filter(x => x.tr.includes(j) && !seen.has(x.key) && seen.add(x.key)).sort((a, b) => (a.fa[5] - b.fa[5]) || (junk(a.fa[0]) - junk(b.fa[0])) || a.fa[0].localeCompare(b.fa[0])); }
   const facText = x => `${esc(x.fa[0])}${x.fa[5] ? ' <span class="sub">(site name not given in registry)</span>' : ''}, ${esc(x.city)}${x.zip ? ' ' + esc(x.zip) : ''}`;
+  // The registry gives this site a city and a ZIP that are far apart and nothing else settles which is right: the card says so in words
+  // (a tooltip would not reach a phone or the printed handout), because the distance shown is measured from the ZIP.
+  const doubtNote = x => x.doubt ? `<p class="sub doubt"><b>Check this address.</b> ${esc(x.doubt.text)}</p>` : '';
+  const doubtInline = x => x.doubt ? ` <span class="doubt-in">${esc(x.doubt.text)}</span>` : '';
   const miText = mi => mi < 1 ? 'under 1 mi' : `~${mi} mi`;
   const stName = Object.fromEntries(D.states || []);
   const tagsOf = j => `<div class="meta"><span class="tag b">${T.id[j]}</span><span class="tag">${SITE.phaseLabel(T.phases[T.ph[j]])}</span><span class="tag">${esc(T.sponsors[T.sp[j]][1])}</span><span class="tag">${ageTxt(j)}</span></div>`;
@@ -175,11 +180,11 @@
     if (!list.length) { out.innerHTML = head + `<div class="empty">No matching recruiting trial within ${radius} miles. Widen the distance, choose "Any cancer"${qtxt ? ', clear the keyword' : ''}, or ask a navigator (below) — trials sometimes accept patients from far away and can help with travel.</div>` + teleBlock(tele, usps); return; }
     const cards = list.slice(0, show).map(r => { const j = r.j;
       const sites = r.sites.map(([s, mi]) => ({ h: hosts(s, j), mi })).filter(x => x.h.length); const first = sites[0];
-      const also = first && first.h.length > 1 ? `Also listed at this location: ${first.h.slice(1).map(facText).join('; ')}` : '';
-      const others = sites.slice(1).map(x => `${facText(x.h[0])} · ${miText(x.mi)}${x.h.length > 1 ? ` <span class="sub">(and ${x.h.length - 1} more listed at this location)</span>` : ''}`);
+      const also = first && first.h.length > 1 ? `Also listed at this location: ${first.h.slice(1).map(x => facText(x) + doubtInline(x)).join('; ')}` : '';
+      const others = sites.slice(1).map(x => `${facText(x.h[0])} · ${miText(x.mi)}${doubtInline(x.h[0])}${x.h.length > 1 ? ` <span class="sub">(and ${x.h.length - 1} more listed at this location)</span>` : ''}`);
       return `<div class="card"><h2><a href="https://clinicaltrials.gov/study/${T.id[j]}" target="_blank" rel="noopener">${esc(T.title[j])}</a></h2>
         ${tagsOf(j)}
-        <p class="site"><b>${miText(r.mi)}</b> · ${first ? `${facText(first.h[0])} <span class="sub">(${esc(cname(first.h[0].cf))})</span>` : 'site not named in the registry'}${others.length ? ` <span class="sub">· ${others.length} more site${others.length === 1 ? '' : 's'} within ${radius} mi</span>` : ''}</p>
+        <p class="site"><b>${miText(r.mi)}</b> · ${first ? `${facText(first.h[0])} <span class="sub">(${esc(cname(first.h[0].cf))})</span>` : 'site not named in the registry'}${others.length ? ` <span class="sub">· ${others.length} more site${others.length === 1 ? '' : 's'} within ${radius} mi</span>` : ''}</p>${first ? doubtNote(first.h[0]) : ''}
         <p class="sub">${esc(SITE.cancerLine(T, j))}${T.iv[j] ? ' · ' + esc(T.iv[j].split(';').slice(0, 4).join('; ')) + (T.iv[j].split(';').length > 4 ? '…' : '') : ''} · sponsor ${esc(T.spn[j])}</p>
         <details><summary>Details${others.length ? ' and other sites' : ''}</summary>${also ? `<p class="sub">${also}</p>` : ''}${others.length ? `<p class="sub">${others.join('<br>')}</p>` : ''}<p class="sub">Start ${T.start[j] ? SITE.nice(T.start[j]) : '—'} · record updated ${T.upd[j] ? SITE.nice(T.upd[j]) : '—'}${T.cc[j] ? ` · central contact: ${esc(T.cc[j])}` : ''} · <a href="https://clinicaltrials.gov/study/${T.id[j]}#contacts-and-locations" target="_blank" rel="noopener">all sites and contacts on ClinicalTrials.gov</a></p></details>${sumBlock(j)}</div>`; }).join('');
     out.innerHTML = head + cards + (list.length > show ? `<p class="more-btn"><button class="btn sec" id="more">Show ${Math.min(50, list.length - show)} more of ${fmt(list.length)}</button></p>` : '') + teleBlock(tele, usps) + `<p class="more-btn"><button class="btn sec" onclick="window.print()">Print this list as a handout</button></p>`;

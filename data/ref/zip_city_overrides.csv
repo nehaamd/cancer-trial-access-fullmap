@@ -1,0 +1,10 @@
+# Registry rows whose ZIP code and city disagree and that a person has checked against the institution's own address.
+# Read by metrics_us.zip_city_review() before its rules. Matched on state, facility name (case and punctuation set aside), the
+# registry's city and the five-digit ZIP. verdict: "zip" (the site is at the ZIP; the pages print the ZIP's place) or "city"
+# (the site is in the stated city; the ZIP is set aside). Give the address and where it was read in the note.
+# Checked by Claude on 16 Nov 2026 from the sources named; not yet reviewed by a clinician.
+facility,state,city,zip,verdict,note
+Saint Catherine Hospital,IN,Indianapolis,46312,zip,"St. Catherine Hospital is at 4321 Fir Street, East Chicago, IN 46312 (Indiana Department of Health hospital directory)"
+Cancer Treatment Centers of America-Chicago,IL,Chicago,60099,zip,"the hospital, now City of Hope Chicago, is at 2520 Elisha Avenue, Zion, IL 60099 (cancercenter.com/locations/chicago)"
+City of Hope,IL,Chicago,60099,zip,"City of Hope Chicago, formerly Cancer Treatment Centers of America Chicago, is at 2520 Elisha Avenue, Zion, IL 60099 (cancercenter.com/locations/chicago)"
+City of Hope Orange County Lennar Foundation Cancer Center,CA,Irvine,91010,city,"the Lennar Foundation Cancer Center is at 1000 FivePoint, Irvine (City of Hope Orange County); 91010 is the ZIP of City of Hope's main campus in Duarte"
