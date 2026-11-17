@@ -73,4 +73,13 @@ jobs:
                      data/ref/nci_centers.csv data/ref/legislators-current.json data/ref/legislators_log.json data/ref/trial_summaries.json data/roads/graph_stats.json \
                      worker/tests/expected.json worker/tests/eval_expected.json
           git commit -m "Registry refresh $(date -u +%F)" || echo "nothing to commit"
-          git push
+          # A push can be refused because main moved during the run (a merged pull request, the worker deploy's own commit) or by a
+          # passing server error; either lost a finished, checked refresh (19 Oct 2026). Rebase on the latest main and try again, three times.
+          ok=""
+          for i in 1 2 3; do
+            if git push; then ok=1; break; fi
+            echo "push failed (attempt $i): rebasing on the latest main"
+            git pull --rebase origin main || { git rebase --abort || true; break; }
+            sleep $((i * 10))
+          done
+          [ -n "$ok" ] || { echo "::error title=Refresh not published::The refresh was built and passed its checks but could not be pushed to main."; exit 1; }
