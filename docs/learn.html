@@ -139,7 +139,7 @@
       <dt>Standard of care</dt><dd>The treatment that would be given outside a trial. New treatments are usually compared with it or added to it.</dd>
       <dt>Informed consent</dt><dd>The process, and the document, by which a participant learns what a trial involves and agrees to join; it can be withdrawn at any time.</dd>
       <dt>IRB</dt><dd>Institutional review board: the independent committee that reviews a protocol to protect participants.</dd>
-      <dt>NCI-designated cancer center</dt><dd>One of <span data-f="nci">about 70</span> centers that treat adults and are recognized by the National Cancer Institute for their research; they run the widest range of trials, including early-phase studies.</dd>
+      <dt>NCI-designated cancer center</dt><dd>One of <span data-f="nci">about 65</span> centers that treat adults and are recognized by the National Cancer Institute for their research; they run the widest range of trials, including early-phase studies.</dd>
       <dt>NCORP</dt><dd>The NCI Community Oncology Research Program: a network that funds community hospitals and practices to run federally sponsored trials.</dd>
       <dt>Basket or umbrella trial</dt><dd>A trial that enrolls several cancers sharing a target or biomarker (basket), or tests several treatments within one cancer (umbrella). They widen what counts as “a trial near me”.</dd>
       <dt>Road-miles</dt><dd>Distance along roads, measured on the Census Bureau’s road network, rather than in a straight line.</dd>
@@ -193,7 +193,7 @@
 <script>
 (function () { const M = window.COMMUNITY.meta; const meta = { registry_data_timestamp: M.registry_data_timestamp, pull: M.pull };
   document.querySelectorAll('[data-site-date]').forEach(el => el.textContent = SITE.stampText(meta));
-  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta)), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? String(M.nci.centers) : 'about 70',
+  const f = { trials: M.trials ? M.trials.toLocaleString('en-US') + ' trials' : 'about 4,000 trials', date: SITE.nice(SITE.dataDate(meta)), tracts: (M.nat.nt || 84000).toLocaleString('en-US'), nci: M.nci && M.nci.centers ? String(M.nci.centers) : 'about 65',
     multi: M.pct_multi ? `About ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][Math.round(M.pct_multi / 10)]} in ten (${M.pct_multi}%)` : 'About three in ten' };   // community.js meta.pct_multi, the share the map's Methods quotes
   document.querySelectorAll('[data-f]').forEach(el => el.textContent = f[el.dataset.f] || '');
   /* sections fold at every width now (main[data-fold], site.js foldSections), so the phone-only fold is not called here */ })();

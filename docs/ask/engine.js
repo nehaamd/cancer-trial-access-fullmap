@@ -235,8 +235,14 @@ export function createEngine(options = {}) {
   function buildFacilities(data, countyName, countyState) {
     if (!data || !data.counties) return [];
     const out = [];
+    // Registry rows whose city and ZIP code are far apart and that the registry's other rows do not settle (the fourth item of a
+    // DATA.SPX entry: [ZIP, the place the ZIP is in, miles]). The pages show a "check address" note for them; so does this table.
+    const doubt = new Map();
+    if (data.SPX && data.SPI) data.SPI.forEach((arr, sp) => arr.forEach(([cf, i], n) => { const e = data.SPX[sp][n]; if (e && e[3]) { const k = cf + ':' + i; if (!doubt.has(k)) doubt.set(k, { e, tr: new Set() }); e[1].forEach(j => doubt.get(k).tr.add(j)); } }));
+    const note = (d, total) => { if (!d) return null; const z = d.e[3], n = d.tr.size;
+      return `The registry lists ${n >= total ? 'this site' : `${n} of this site's ${total} trials`} in ${d.e[2] || 'one city'} with ZIP ${z[0]}${z[1] ? ', which is in ' + z[1] : ''}${z[2] !== null && z[2] !== undefined ? `, about ${z[2]} miles away` : ''}. It is counted at the ZIP; the address should be confirmed with the study team.`; };
     for (const [f, c] of Object.entries(data.counties)) {
-      for (const fa of c.fac || []) out.push({ id: `fac:${fa[4]}`, name: fa[0], city: fa[1], zip: fa[2], county_id: f, county_name: countyName.get(f) || c.nl || f, state: countyState.get(f) || null, trials: Array.isArray(fa[3]) ? fa[3].length : 0, unresolved: !!fa[5] });
+      (c.fac || []).forEach((fa, i) => { const total = Array.isArray(fa[3]) ? fa[3].length : 0; out.push({ id: `fac:${fa[4]}`, name: fa[0], city: fa[1], zip: fa[2], county_id: f, county_name: countyName.get(f) || c.nl || f, state: countyState.get(f) || null, trials: total, unresolved: !!fa[5], address_note: note(doubt.get(f + ':' + i), total) }); });
     }
     return out;
   }
@@ -880,8 +886,8 @@ export function createEngine(options = {}) {
   function plainScope(i) {
     const list = Array.isArray(i.where) ? i.where.filter(n => n && typeof n === 'object') : [];
     const st = list.filter(n => n.field === 'state' && ['=', 'in'].includes(n.op)).flatMap(n => Array.isArray(n.value) ? n.value : [n.value]).filter(v => typeof v === 'string').map(v => STATES[stateCode(v)] || v);
-    const types = [...new Set((safeJSON(i).match(/(?:by_type|by_cancer_type|by_site)\.([a-z_]+)/g) || []).map(x => x.split('.').pop()))].map(k => String(CANCER_TYPES[k] || SITES[k] || k).split(' (')[0].toLowerCase());
-    return (st.length ? ' for ' + joinAnd(st.slice(0, 4)) + (st.length > 4 ? ' and other states' : '') : '') + (types.length ? ` (${types.slice(0, 3).join(', ')})` : '');
+    const types = [...new Set((safeJSON(i).match(/(?:by_type|by_cancer_type|by_site)\.([a-z_]+)/g) || []).map(x => (x.startsWith('by_site') ? 's:' : 't:') + x.split('.').pop()))].map(x => { const k = x.slice(2); return String((x[0] === 's' ? SITES[k] || CANCER_TYPES[k] : CANCER_TYPES[k] || SITES[k]) || k).split(' (')[0].toLowerCase(); });
+    return (st.length ? ' for ' + (st.length > 4 ? st.slice(0, 4).join(', ') + ' and other states' : joinAnd(st)) : '') + (types.length ? ` (${types.slice(0, 3).join(', ')})` : '');
   }
   const safeJSON = o => { try { return JSON.stringify(o) || ''; } catch (e) { return ''; } };
   function describeCallPlain(name, input) {

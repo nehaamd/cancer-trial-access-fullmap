@@ -103,9 +103,9 @@ All field paths are dotted. `id`, `name`, `state` and (where present) `pop55` ar
 | `states` | 51 | `api/all_states.json` + map files | USPS | + `mortality` {rate_all_sites? no: state-level published death rates are not in the map data; present: high_death_low_access_counties, pop55, deaths_per_year (MORTALITY.summary.states hh_*)}, `nci_centers_count`, `trials_distinct` (DATA.state_data.trials), `broad_menu_counties`, `limited_menu_counties`, `counties_with_trials`, `rucc_codes` (per-code access from RUCC.states) |
 | `national` | 1 | `api/national.json` + map files | `US` | + `mortality` (MORTALITY.meta.us by site), `history` (CHANGES.history), `rucc_codes` |
 | `nci_centers` | 67 | DATA.nci | `nci:<index>` | name, full_name, state, tier (Comprehensive / Clinical), lat, lon |
-| `facilities` | 9,655 | DATA.counties[*].fac | `fac:<site_id>` | name, city, zip, county_id, county_name, state, trials (count), unresolved (bool) |
+| `facilities` | about 5,000 | DATA.counties[*].fac | `fac:<site_id>` | name, city, zip, county_id, county_name, state, trials (count), unresolved (bool) |
 | `senators` | 100 | states.senators + COSPONSORS | bioguide | name, party, state, s4440 (sponsor/original/cosponsor/none), cosponsor_date |
-| `cosponsors` | ~33 | COSPONSORS.by_member | `<bioguide>:<bill>` | name, party, state, chamber, district_id, bill (ctma_hr/ctma_s), bill_label, role, date |
+| `cosponsors` | about 40 | COSPONSORS.by_member | `<bioguide>:<bill>` | name, party, state, chamber, district_id, bill (ctma_hr/ctma_s), bill_label, role, date |
 
 The catalog (`catalog.js`) lists every field of every table with: `type` (number / integer / string / boolean / array / object),
 `unit`, `desc`, `nulls` (what null means), `enum` (allowed values when categorical), `source` (key into `SOURCES`, which carries
@@ -113,7 +113,7 @@ the file/URL and vintage), `computed` (true when the engine derives it from publ
 `layer` (which map layer shows it, per unit). Fields that exist only when a map file is loaded are marked `optional`; the engine
 reports them as `not loaded` (not null) when absent.
 
-`trials` are not a table (columnar, 4,035 rows, 22 columns in `DATA.T`); they are reached through the `trials` tool.
+`trials` are not a table (columnar, about 4,000 rows, 22 columns in `DATA.T`); they are reached through the `trials` tool.
 
 ## 5. Tools
 

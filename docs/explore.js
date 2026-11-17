@@ -7,7 +7,7 @@ window.EXPLORE = (function () {
   const pct = v => (v === null || v === undefined || isNaN(v)) ? '—' : (Math.round(v * 10) / 10).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const people = n => n === null || n === undefined ? '—' : n >= 9.95e5 ? (n / 1e6).toFixed(1) + ' million' : fmt(Math.round(n));   // the map's rule (map.html), so the same figure prints the same everywhere
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  const cdLabel = cd => (cd === '0' || cd === '00' || cd === 0 || cd === 'AL' || cd === '98') ? 'At large' : String(+cd);   // 98 is the registry code for DC's delegate seat
+  const cdLabel = cd => (cd === '0' || cd === '00' || cd === 0 || cd === 'AL' || cd === '98') ? 'AL' : String(+cd);   // 98 is the registry code for DC's delegate seat
   const stName = st => X.states[st] ? X.states[st].name : st;
   const typeLabel = {}; M.types.forEach(([k, l]) => typeLabel[k] = l);
   const typeIndex = {}; M.types.forEach(([k], i) => typeIndex[k] = i);          // position in a by-type array (ct)
@@ -16,7 +16,7 @@ window.EXPLORE = (function () {
 
   // ---- places ----
   function county(cf) { const a = X.counties[cf]; if (!a) return null; const o = { k: cf, kind: 'county' }; CC.forEach((c, i) => o[c] = a[i]); o.label = o.n + ', ' + o.st; o.name = o.n; o.metro = o.ru === null ? null : o.ru <= 3; return o; }
-  function district(k) { const d = X.districts[k]; if (!d) return null; return { k, kind: 'district', ...d, label: d.st + '-' + cdLabel(d.cd), name: stName(d.st) + (cdLabel(d.cd) === 'At large' ? ' (at-large district)' : "'s " + SITE.ordinal(+d.cd) + ' congressional district') }; }
+  function district(k) { const d = X.districts[k]; if (!d) return null; return { k, kind: 'district', ...d, label: d.st + '-' + cdLabel(d.cd), name: stName(d.st) + (cdLabel(d.cd) === 'AL' ? ' (at-large district)' : "'s " + SITE.ordinal(+d.cd) + ' congressional district') }; }
   function state(st) { const g = X.states[st]; if (!g) return null; return { k: st, kind: 'state', ...g, label: g.name }; }
   const nation = () => ({ k: 'US', kind: 'nat', ...NAT, label: 'United States', name: 'the United States' });
   function fromParams(p) { if (p.get('c') && X.counties[p.get('c')]) return county(p.get('c')); if (p.get('d') && X.districts[p.get('d')]) return district(p.get('d')); if (p.get('s') && X.states[(p.get('s') || '').toUpperCase()]) return state(p.get('s').toUpperCase()); return null; }
@@ -83,9 +83,9 @@ window.EXPLORE = (function () {
 
   // ---- a particular cancer: what changes for this place ----
   function cancerLine(pl, type) {
-    if (!type) return null; const lab = typeLabel[type] || type; const bi = btypeIndex[type], ti = typeIndex[type];
+    if (!type) return null; const lab0 = typeLabel[type] || type; const lab = /^[A-Z][a-z]/.test(lab0) && !/^(Hodgkin|Kaposi|Merkel|Ewing|Wilms)/.test(lab0) ? lab0[0].toLowerCase() + lab0.slice(1) : lab0;   // inside a sentence the label is lower-case, proper names apart const bi = btypeIndex[type], ti = typeIndex[type];
     if (pl.kind === 'county') { const z = pl.zt && bi !== undefined ? pl.zt[bi] : null; if (z === null || z === undefined) return { text: `No county figure for ${lab} here.`, more: '' };
-      return { text: `${pct(z)}% of residents 55+ in ${esc(pl.n)} have no recruiting ${lab} trial within 60 road-miles of home${z >= 50 ? ' — most of the county' : ''}.`, more: `Basket and umbrella trials that name ${lab} among several cancers are counted.` }; }
+      return { text: `${pct(z)}% of residents 55+ in ${esc(pl.n)} have no recruiting ${lab} trial within 60 road-miles of home${z >= 99.95 ? ' — all of the county' : z >= 50 ? ' — most of the county' : ''}.`, more: `Basket and umbrella trials that name ${lab} among several cancers are counted.` }; }
     const n = pl.ct && ti !== undefined ? pl.ct[ti] : null; const nn = NAT.ct && ti !== undefined ? NAT.ct[ti] : null;
     return { text: n === null || n === undefined ? `No figure for ${lab} here.` : `The average resident 55+ ${pl.kind === 'nat' ? 'in the United States' : 'in ' + esc(pl.label)} has ${fmt(n)} recruiting ${lab} ${SITE.plural(n, 'trial')} within 60 road-miles of home${pl.kind !== 'nat' && nn !== null ? `; nationally, ${fmt(nn)}` : ''}.`, more: 'An average is pulled up by residents near a big center; the map recomputes the share with none for this cancer when you filter it.' };
   }
@@ -98,7 +98,7 @@ window.EXPLORE = (function () {
   let IDX = null, PLACES = null, ZIP = null, PLp = null, ZIPp = null;
   function index() { if (IDX) return IDX; IDX = [];
     Object.keys(X.states).forEach(st => IDX.push({ t: 's', k: st, l: X.states[st].name, s: 'State', w: norm(X.states[st].name + ' ' + st), code: st.toLowerCase(), pri: 3 }));
-    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + cdLabel(d.cd) + ' ' + (d.member || '') + (d.nick ? ' ' + d.nick : '') + (cdLabel(d.cd) === 'At large' ? ' ' + d.st + '-AL ' + d.st + '-1' : '')), m: d.member ? surname(d.member) : '', pri: 1 }); });
+    Object.keys(X.districts).forEach(k => { const d = X.districts[k]; const lab = d.st + '-' + cdLabel(d.cd); IDX.push({ t: 'd', k, l: lab + (d.member ? ' · ' + d.member : ''), s: 'Congressional district · ' + stName(d.st) + (d.member ? ' · ' + d.member + ' (' + d.party + ')' : ' · vacant'), w: norm(lab + ' ' + lab.replace('-', ' ') + ' ' + stName(d.st) + ' ' + (cdLabel(d.cd) === 'AL' ? 'AL at large' : cdLabel(d.cd)) + ' ' + (d.member || '') + (d.nick ? ' ' + d.nick : '') + (cdLabel(d.cd) === 'At large' ? ' ' + d.st + '-AL ' + d.st + '-1' : '')), m: d.member ? surname(d.member) : '', pri: 1 }); });
     Object.keys(X.states).forEach(st => (X.states[st].senators || []).forEach(sn => IDX.push({ t: 's', k: st, l: sn.name + ' · ' + X.states[st].name, s: 'Senator (' + sn.party + ') · opens ' + X.states[st].name, w: norm(sn.name + (sn.nick ? ' ' + sn.nick : '') + ' ' + X.states[st].name + ' senator'), m: surname(sn.name), pri: 1 })));
     Object.keys(X.counties).forEach(cf => { const c = county(cf); IDX.push({ t: 'c', k: cf, l: c.n + ', ' + c.st, s: 'County · ' + stName(c.st), w: saints(norm(c.n + ' ' + c.st + ' ' + stName(c.st))), pri: 0.6 }); });
     return IDX; }
