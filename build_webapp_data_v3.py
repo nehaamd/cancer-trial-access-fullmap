@@ -121,7 +121,10 @@ def main():
     # distinctive name, or one line of data/ref/site_families.csv). Before November 2026 "MD Anderson Cancer Center" was 46 facilities in
     # Harris County. Every spelling folded in is listed in site_merges.csv beside the other QC tables. This changes which rows are listed together as one
     # facility and the facility counts; no site moves and no access figure changes.
-    MERGE, merges = site_names.merge_map(site_names.spellings_from_rows(sites), site_names.load_families(REF / "site_families.csv"))
+    # A row whose ZIP was a typing error (zip_typo_corrected) or no usable place (facility_listing) was placed at another ZIP: its own ZIP
+    # says nothing about where the facility is, so it is not used to decide which spellings share a place either
+    sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
+    MERGE, merges, SHOWN = site_names.merge_map(site_names.spellings_from_rows(sites), site_names.load_families(REF / "site_families.csv"))
     sites["fac"] = [MERGE.get((c, f), f) for c, f in zip(sites.county_fips, sites.fac)]
     canon = lambda c, f: MERGE.get((c, ALIAS.get((c, f), f)), ALIAS.get((c, f), f))   # the same two steps, for the other tables that carry names
     pd.DataFrame(merges, columns=["county_fips", "zip", "kept", "merged", "rows", "rule"]).to_csv(OUT / "site_merges.csv", index=False)
@@ -129,10 +132,11 @@ def main():
     # A facility's own ZIP comes from rows that were placed at their own ZIP: a row whose ZIP was a typing error (zip_typo_corrected) or no
     # usable place (facility_listing) was placed at another ZIP, and its own would print an address that is not there ("Albany Medical
     # College, Albany" carried 10461, the Bronx ZIP of one mistyped row, until October 2026)
-    sites["zip_own"] = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
-    fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", lambda s: s.value_counts().index[0]), city=("city", lambda s: s.value_counts().index[0]), zip=("zip_own", lambda s: s[s.str.len() == 5].value_counts().index[0] if (s.str.len() == 5).any() else ""),
+    # the commonest name, city and ZIP; ties are settled by site_names.mode (tidiest spelling, then alphabetical), not by row order
+    fac = sites.groupby(["county_fips", "fac"]).agg(name=("facility", site_names.mode), city=("city", site_names.mode), zip=("zip_own", lambda s: site_names.mode(s[s.str.len() == 5])),
                                                    trials=("nct_id", lambda s: sorted({j_of[n] for n in s})), n_rows=("nct_id", "size")).reset_index()
     # a sponsor's placeholder is judged on the name as the registry gives it ("Exelixis Clinical Site #12"), before the site code is trimmed
+    fac["name"] = [SHOWN.get((c, f), n) for c, f, n in zip(fac.county_fips, fac.fac, fac.name)]   # a facility that absorbed spellings shows the wording most rows use (site_merges.csv "kept")
     placeholder = [site_names.is_placeholder(n) for n in fac.name]
     fac["name"] = fac.name.map(clean_name)
     fac["unresolved"] = [int(bool(PLACEHOLDER.match(f)) or code_like(n) or ph) for f, n, ph in zip(fac.fac, fac.name, placeholder)]
