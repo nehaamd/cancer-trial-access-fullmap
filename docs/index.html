@@ -148,7 +148,7 @@
       <!-- The hero's right side is the map itself, with its key on the card: a first-time visitor sees what the product is and how to read it
            before choosing anything. The picture is assets/map-national.png (rewritten by make_assets.py after each refresh). -->
       <figure class="hero-map">
-        <a href="map.html" aria-label="Open the interactive map">
+        <a href="map.html">
           <img src="assets/map-national.png" width="1600" height="1000" alt="Map of US counties, each with a circle sized by the number of residents 55 and older who have no recruiting cancer treatment trial within 60 road-miles of home; NCI-designated cancer centers marked">
           <figcaption>
             <p class="key-t">Each circle is a county's older adults with no cancer trial within reach</p>
@@ -262,14 +262,14 @@
       <div>
         <h2 id="what-h">What this is</h2>
         <p>The Cancer Clinical Trial Access Map is an independent research project on where cancer care reaches and where it doesn't, built by <b>Neha Agrawal, MD</b>, a medical oncologist in training. It measures access to recruiting cancer clinical trials the way a patient experiences it: in road miles from home, not in counts per state.</p>
-        <p>The map is built entirely from public data, refreshed weekly, and checked against the live registry and independent routing. Everything it reports can be traced to its source. <a href="about.html">Read more about the project, how it is built, and how to cite it.</a></p>
+        <p>The map is built entirely from public data, refreshed weekly, and checked against the live registry and published driving distances. Everything it reports can be traced to its source. <a href="about.html">Read more about the project, how it is built, and how to cite it.</a></p>
       </div>
       <div class="how">
         <h3>How it is built</h3>
         <dl>
           <dt>Trials.</dt><dd> ClinicalTrials.gov: recruiting, interventional cancer treatment trials with a US site, open to some adults 55 or older.</dd>
           <dt>People.</dt><dd> Census tract centroids and ACS population, so distance is measured from where people actually live.</dd>
-          <dt>Distance.</dt><dd> Shortest route on the highway network, in road miles; compared against independent routing.</dd>
+          <dt>Distance.</dt><dd> Shortest route on the highway network, in road miles; compared against published city-pair driving distances.</dd>
           <dt>Policy.</dt><dd> Congressional districts, members and cosponsors from public records.</dd>
         </dl>
         <p class="cite" id="cite">Agrawal N. Cancer Clinical Trial Access Map (beta). https://cancertrialaccess.org/</p>
@@ -314,7 +314,8 @@
   });
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window);
   if (still) fill();
-  else { const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); fill(); } }, { threshold: 0.35 }); io.observe(document.querySelector('.gap')); }
+  else { const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); fill(); } }, { threshold: 0, rootMargin: '0px 0px -15% 0px' }); document.querySelectorAll('.gap .dots, .gap').forEach(el => io.observe(el)); }   // any part of the chart in view: the section can be taller than the screen at high zoom, and then 35% of it was never visible and the dots stayed grey
+  window.addEventListener('beforeprint', fill);
 })();
 </script>
 </body>

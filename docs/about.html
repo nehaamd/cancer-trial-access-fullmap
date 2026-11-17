@@ -87,9 +87,9 @@
   <section id="how">
     <h2>How it is built</h2>
     <dl class="facts">
-      <dt>Trials.</dt><dd> ClinicalTrials.gov API, limited to recruiting, interventional cancer treatment trials with a United States site and open to at least some adults aged 55 or older. Supportive-care studies are screened out. Refreshed weekly.</dd>
+      <dt>Trials.</dt><dd> ClinicalTrials.gov API, limited to recruiting, interventional cancer treatment trials with a United States site and open to at least some adults aged 55 or older. Most supportive-care studies are screened out; a few that carry the registry's treatment label are counted. Refreshed weekly.</dd>
       <dt>People.</dt><dd> Census Bureau tract centroids and American Community Survey population, so distance is measured from where people live rather than from a county's center.</dd>
-      <dt>Distance.</dt><dd> The shortest driving route on the highway network, in road miles. Trial sites are placed at the center of their ZIP code or city, so distances are approximate. The routing is compared against published city-pair distances and independent routing.</dd>
+      <dt>Distance.</dt><dd> The shortest driving route on the highway network, in road miles. Trial sites are placed at the center of their ZIP code or city, so distances are approximate. The routing is compared against published city-pair driving distances; it has not yet been checked against an independent routing engine.</dd>
       <dt>Policy.</dt><dd> Congressional district boundaries from the Census Bureau, members and cosponsors from public records, with the map vintage stated on every brief.</dd>
       <dt>Context.</dt><dd> Cancer mortality from NCI/CDC State Cancer Profiles, rural–urban classification from USDA, and Medicare-enrolled oncologists from CMS Care Compare.</dd>
     </dl>

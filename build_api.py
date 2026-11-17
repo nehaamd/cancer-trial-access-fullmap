@@ -15,6 +15,7 @@ national JSON from tract_metrics_us.py (district and state shares), the tract ta
 docs/data.js (names, trial counts, context) and docs/cosponsors.js (members and cosponsorship). Run after build_findings.py in run_refresh.sh.
 """
 import json, csv, datetime, sys, math
+import people_counts
 from collections import defaultdict
 from pathlib import Path
 
@@ -31,9 +32,9 @@ FIELDS = {
     "state": "USPS code of the state.",
     "pop55": "Residents aged 55 and older (ACS 5-year, summed from census tracts).",
     "pct_lt20_trials_within_60rdmi": "Share (%) of residents 55+ with fewer than 20 recruiting cancer treatment trials within 60 road-miles of home. What 'short of trials' means on this site; the lead figure until 16 Nov 2026 (the site now leads with pct_zero_trials_within_60rdmi and the typical trial count).",
-    "people_lt20_trials_within_60rdmi": "The same, as a count of people.",
+    "people_lt20_trials_within_60rdmi": "The same, as a count of people (summed over census tracts; a tract split between districts counts by its share of residents 55+).",
     "pct_zero_trials_within_60rdmi": "Share (%) with no recruiting trial within 60 road-miles.",
-    "people_zero_trials_within_60rdmi": "The same, as a count of people (pop55 x share, rounded; the rule used for people_lt20_trials_within_60rdmi).",
+    "people_zero_trials_within_60rdmi": "The same, as a count of people (summed over census tracts, as people_lt20_trials_within_60rdmi).",
     "pct_lt100_trials_within_60rdmi": "Share (%) with fewer than 100 trials within 60 road-miles.",
     "pct_gt60rdmi_broad_menu": "Share (%) living more than 60 road-miles from a county with 100 or more recruiting trials (a 'broad menu').",
     "pct_gt60rdmi_nci": "Share (%) living more than 60 road-miles from an NCI-designated cancer center.",
@@ -188,14 +189,17 @@ def main():
     common = {"data_as_of": data_as_of, "source": "ClinicalTrials.gov (registry), Census Bureau (tracts, ACS), NCI; see methods", "license": LICENSE["data"],
               "cite": LICENSE["attribution"], "methods": SITE + "methods.html#methods"}
 
-    def core(row, pop_key="pop55"):
-        pop = int(float(row[pop_key]))
-        l20 = fnum(row["pct_lt20_trials_within_60rdmi"])
+    # People counts are tract sums (people_counts.py), as on the map. Until November 2026 they were population x the share rounded to one
+    # decimal: Virginia's 0.1% with no trial printed as 2,568 people where the tracts sum to 3,812.
+    PC = people_counts.exact_counts()
+    def core(row, pop_key="pop55", exact=None):
+        pop = int(float(row[pop_key])); exact = exact or {}
+        l20 = fnum(row["pct_lt20_trials_within_60rdmi"]); z60 = fnum(row["pct_zero_trials_within_60rdmi"])
         return {"pop55": pop,
                 "pct_lt20_trials_within_60rdmi": l20,
-                "people_lt20_trials_within_60rdmi": int(round(pop * l20 / 100)) if l20 is not None else None,
-                "pct_zero_trials_within_60rdmi": fnum(row["pct_zero_trials_within_60rdmi"]),
-                "people_zero_trials_within_60rdmi": int(round(pop * fnum(row["pct_zero_trials_within_60rdmi"]) / 100)) if fnum(row["pct_zero_trials_within_60rdmi"]) is not None else None,
+                "people_lt20_trials_within_60rdmi": people_counts.pick(exact.get("l20"), pop, l20),
+                "pct_zero_trials_within_60rdmi": z60,
+                "people_zero_trials_within_60rdmi": people_counts.pick(exact.get("z60"), pop, z60),
                 "pct_lt100_trials_within_60rdmi": fnum(row["pct_lt100_trials_within_60rdmi"]),
                 "pct_gt60rdmi_broad_menu": fnum(row["pct_gt60rdmi_broad_menu"]),
                 "pct_gt60rdmi_nci": fnum(row["pct_gt60rdmi_nci"]),
@@ -217,7 +221,7 @@ def main():
     nat = json.load(open(ROOT / "out_adult55" / "national_metrics_v3.json"))
     nat_row = {k: (v if not isinstance(v, (list, dict)) else json.dumps(v)) for k, v in nat.items()}
     nat_ctx = meta.get("nat_ctx") or {}
-    national = {"id": "US", "level": "national", "name": "United States", **core(nat_row),
+    national = {"id": "US", "level": "national", "name": "United States", **core(nat_row, exact=PC["nat"]),
                 "trials_listed_here": meta["trials"], "facilities": meta["facilities"],
                 "trials_within_60rdmi_by_cancer_type": by_type(nat_row), "context": ctx_of(nat_ctx),
                 "nonmetro_pct": nonmetro_pct_of(RU["nat"] if RU else None), **split_of(RU["nat"] if RU else None),
@@ -244,7 +248,7 @@ def main():
         sd = D["state_data"][usps]; sctx = sd.get("ctx") or {}; ru = RU["states"].get(usps) if RU else None
         # trials_listed_here: state_data[usps].trials = distinct recruiting trials with a site in the state (the same figure as the union of
         # counties[f].tr over the state's counties; checked for all 51). `nt` is the state's census-tract count and was published here by mistake.
-        states[usps] = {"id": usps, "level": "state", "name": state_name[usps], "state": usps, "fips": fips, **core(r),
+        states[usps] = {"id": usps, "level": "state", "name": state_name[usps], "state": usps, "fips": fips, **core(r, exact=PC["state"].get(fips)),
                         "trials_listed_here": sd.get("trials"), "trials_within_60rdmi_by_cancer_type": by_type(r), "context": ctx_of(sd.get("ctx")),
                         "nonmetro_pct": nonmetro_pct_of(ru), **split_of(ru),
                         "incidence_all_sites": clean(sctx.get("inc")), "incidence_all_sites_cases_per_year": clean(sctx.get("cases")),
@@ -275,7 +279,7 @@ def main():
         did = f"{usps}-{num}"
         ordinal = "at-large" if num == "00" else f"{int(num)}{'th' if 11 <= int(num) % 100 <= 13 else {1:'st',2:'nd',3:'rd'}.get(int(num) % 10, 'th')}"
         for f in dd.get("counties", []): districts_of_county[f].append(did)
-        districts[did] = {"id": did, "level": "district", "name": f"{dd['stname']} {ordinal}", "state": usps, "geoid": key, "plan": meta.get("plan"), **core(r),
+        districts[did] = {"id": did, "level": "district", "name": f"{dd['stname']} {ordinal}", "state": usps, "geoid": key, "plan": meta.get("plan"), **core(r, exact=PC["district"].get(key)),
                           "trials_listed_here": district_trials(dd.get("counties", [])), "trials_within_60rdmi_by_cancer_type": by_type(r), "context": ctx_of(dd.get("ctx")),
                           "member": {"name": dd.get("member") or None, "party": dd.get("party") or None, "ctma_hr3521": role(key),
                                      "bill": bill["label"], "bill_url": bill["url"]},
@@ -340,9 +344,9 @@ def main():
         counties[fips] = {"id": fips, "level": "county", "name": f"{c['nl']}, {state_name.get(usps, '')}".strip(", "), "state": usps,
                           "pop55": pop,
                           "pct_lt20_trials_within_60rdmi": l20,
-                          "people_lt20_trials_within_60rdmi": int(round(pop * l20 / 100)) if l20 is not None else None,
+                          "people_lt20_trials_within_60rdmi": int(round(a["l20"])) if a and a["pop"] else None,   # the county's own tract sum
                           "pct_zero_trials_within_60rdmi": pct("z60"),
-                          "people_zero_trials_within_60rdmi": int(round(pop * pct("z60") / 100)) if pct("z60") is not None else None,
+                          "people_zero_trials_within_60rdmi": int(round(a["z60"])) if a and a["pop"] else None,
                           "pct_lt100_trials_within_60rdmi": pct("l100"),
                           "pct_gt60rdmi_broad_menu": round(100 * (a["gb60"] + a["nr_b"]) / a["pop"], 1) if a and a["pop"] else None,
                           "pct_gt60rdmi_nci": round(100 * (a["gn60"] + a["nr_n"]) / a["pop"], 1) if a and a["pop"] else None,

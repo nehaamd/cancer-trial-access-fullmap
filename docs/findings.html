@@ -89,7 +89,7 @@
       <div class="kpi"><p class="v"><small>about </small><span data-f="t60_typ"></span></p><p class="l">recruiting trials within 60 road-miles for the typical American 55+</p><p class="s">median <span data-f="t60_med"></span>; a few very large metro areas pull the average up to <span data-f="t60_mean"></span></p></div>
       <div class="kpi"><p class="v"><span data-f="g60b"></span><small>%</small></p><p class="l">live more than 60 road-miles from a county with a broad menu of trials (100 or more)</p><p class="s"><span data-f="g120b"></span>% live more than 120 road-miles away</p></div>
       <div class="kpi"><p class="v"><span data-f="medn"></span><small> miles</small></p><p class="l">median road distance to the nearest NCI-designated cancer center</p><p class="s"><span data-f="g60n"></span>% are more than 60 road-miles from one</p></div>
-      <div class="kpi"><p class="v"><span data-f="states_no_broad"></span><small> states</small></p><p class="l">have no county with a broad menu of trials</p><p class="s"><span data-f="districts_all_beyond"></span> congressional districts where every resident 55+ is more than 60 road-miles from one</p></div>
+      <div class="kpi"><p class="v"><span data-f="states_no_broad"></span><small> states</small></p><p class="l">have no county with a broad menu of trials</p><p class="s"><span data-f="districts_all_beyond"></span> congressional districts where 100.0% of residents 55+ (to one decimal) are more than 60 road-miles from one</p></div>
     </div>
     <p class="small">Distances are shortest driving routes on the highway network from each census tract's central point (the Census internal point), weighted by residents 55 and older; medians are over residents with a road route (those without one, in Alaska and on the Hawaiian islands beyond Oahu, are counted in the no-road-route shares). <a href="#how">How it was measured</a>.</p>
   </section>
@@ -222,7 +222,7 @@
       const two = W < 520 && label.length > 34;   // on a phone a long label wraps to two lines and the bars move down a line
       const lab = svg.append('text').attr('class', 'lab strong').attr('x', ml).attr('y', y0 + 6); if (two) { const cut = label.lastIndexOf(' ', 34); lab.append('tspan').attr('x', ml).text(label.slice(0, cut)); lab.append('tspan').attr('x', ml).attr('dy', 14).text(label.slice(cut + 1)); } else lab.text(label);
       series.forEach(([name, k, col], j) => { const v = R[k][key]; const y = y0 + 14 + (two ? 14 : 0) + j * (barH + gap); const w = Math.max(0, x(v) - x(0));
-        svg.append('path').attr('d', `M${x(0)},${y}h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z`).attr('fill', col)
+        svg.append('path').attr('d', v > 0 ? `M${x(0)},${y}h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z` : '').attr('fill', col)
           .on('mousemove', ev => on(ev, `<b>${name} counties</b><br>${label}: ${pct(v)}%<br><span style="color:#c7d0da">${fmt(R[k].p)} residents 55+ in ${fmt(R[k].n)} counties</span>`)).on('mouseleave', off);
         svg.append('text').attr('class', 'val').attr('x', x(v) + 6).attr('y', y + barH / 2 + 4).text(pct(v) + '%'); }); }); }
     draw(); onResize(draw);
@@ -241,7 +241,8 @@
       .on('mousemove', (ev, d) => on(ev, `<b>${esc(d.name)}</b><br>${pct(d.z60)}% have no recruiting trial within 60 road-miles<br><span style="color:#c7d0da">${d.broad} broad-menu and ${d.limited} limited-menu counties of ${d.counties} · median ${d.medn === null ? 'no road route' : d.medn + ' road-mi'} to an NCI center · ${fmt(d.pop55)} residents 55+</span>`)).on('mouseleave', off);
     g.append('rect').attr('x', 0).attr('y', 0).attr('width', W).attr('height', rowH).attr('fill', 'transparent');
     g.append('text').attr('class', 'lab').attr('x', ml - 8).attr('y', barH).attr('text-anchor', 'end').text(d => (narrow ? d.usps : d.name) + (d.broad === 0 ? ' ◇' : ''));
-    g.append('path').attr('d', d => { const w = Math.max(0, x(d.z60) - x(0)); return `M${x(0)},1h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z`; }).attr('fill', '#3F7FB5');
+    g.append('path').attr('d', d => { const w = Math.max(0, x(d.z60) - x(0)); if (d.z60 <= 0) return '';   // exactly zero: no bar (the rounded cap alone looked like 0.6%)
+      return `M${x(0)},1h${Math.max(0, w - 4)}a4,4 0 0 1 4,4v${barH - 8}a4,4 0 0 1 -4,4h${-Math.max(0, w - 4)}z`; }).attr('fill', '#3F7FB5');
     g.append('text').attr('class', 'val').attr('x', d => x(d.z60) + 5).attr('y', barH).text(d => pct(d.z60) + '%'); }
     draw(); onResize(draw);
     document.getElementById('tbl-states').innerHTML = `<table><thead><tr><th>State</th><th class="n">None within 60 mi</th><th class="n">Fewer than 20 within 60 mi</th><th class="n">Median mi to NCI center</th><th class="n">Broad-menu counties</th><th class="n">Residents 55+</th></tr></thead><tbody>${S.map(d => `<tr><td><a href="map.html?s=${d.usps}">${esc(d.name)}</a></td><td class="n">${pct(d.z60)}%</td><td class="n">${pct(d.l20)}%</td><td class="n">${d.medn === null ? 'no route' : fmt(d.medn)}</td><td class="n">${d.broad}</td><td class="n">${fmt(d.pop55)}</td></tr>`).join('')}</tbody></table>`;
