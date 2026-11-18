@@ -53,6 +53,8 @@ async def main(base):
         await m.goto(base + "map.html"); await m.wait_for_function("window.DATA && document.querySelectorAll('#map path').length > 3000", timeout=60000); await m.wait_for_timeout(1500)
         check("map: opens and draws the counties", True, f"{await m.evaluate('document.querySelectorAll(\"#map path\").length')} shapes")
         t = await text(m); check("map: the opening panel shows a headline share", re.search(r"\d\.\d%", t) is not None)
+        LABELS = "(() => { const s = [...document.querySelectorAll('#pane .stat')]; return [s.length, s.filter(e => { const l = e.querySelector('.lab'); return l && l.textContent.replace(/[\\s·]/g, '').length > 3; }).length]; })()"   # every figure in the panel carries a short label
+        n, lab = await m.evaluate(LABELS); check("map: every figure in the opening panel has a short label", n >= 4 and lab == n, f"{lab} of {n}")
         check("map: no 'undefined' or 'NaN' in the opening view", not BAD_TEXT.search(t), (BAD_TEXT.search(t) or [""])[0])
         for sel, label in (("#st-d", "Browse states and districts"), ("#st-c", "Find a county")):
             if await m.locator(sel).count():
@@ -71,6 +73,7 @@ async def main(base):
         check("map: a county link opens that county's panel", want["name"].split(" ")[0] in t, want["name"])
         check("map: the county panel shows the county's trial count from the data", f"{want['t']:,}" in t, f"{want['t']:,} trials")
         check("map: no 'undefined' or 'NaN' in the county panel", not BAD_TEXT.search(t))
+        n, lab = await m.evaluate(LABELS); check("map: every figure in the county panel has a short label", n >= 4 and lab == n, f"{lab} of {n}")
         await m.goto(base + f"map.html?c={cf}&lt=1&tab=trials"); await m.wait_for_selector("#tr-table tr", timeout=60000); await m.wait_for_timeout(800)
         n_rows = await m.locator("#tr-table tbody tr").count(); cnt = await m.inner_text("#tr-count")
         check("map: the Trials tab lists the county's trials", n_rows > 0 and f"{want['t']:,}" in cnt, f"{n_rows} rows shown; header says '{cnt.strip()[:40]}'")
