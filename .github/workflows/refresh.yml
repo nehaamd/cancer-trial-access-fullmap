@@ -1,6 +1,7 @@
 # Scheduled registry refresh (weekly) — rebuilds the trial-dependent stages and publishes docs/.
 # Run it by hand from the Actions tab ("Refresh registry data" -> "Run workflow") after any change to the pipeline and read the
 # result before trusting the schedule: if a step fails, the last lines of its output are shown on the run's summary page.
+# A change to the pipeline is run in full, without publishing, by practice-refresh.yml on its pull request: merge it only when that is green.
 # Reference data (Census tracts, State Cancer Profiles, ACS) are rebuilt only when their scripts are run by hand — they change
 # yearly, not weekly. The road graph is rebuilt automatically when its rules change (GRAPH_VERSION in build_roads_us.py).
 name: Refresh registry data

@@ -1,0 +1,93 @@
+# Practice refresh: runs the whole refresh chain and publishes nothing.
+#
+# Why it exists: until 17 Nov 2026 a change to the pipeline was first run in full by the real refresh, so a mistake in it was found
+# when the refresh stopped (three refreshes stopped that week). This workflow runs the same chain, on the same machine image, with the
+# same cached road graph, on the registry pull already in the repository (REFRESH_SKIP_FETCH=1: no call to ClinicalTrials.gov, no
+# snapshot), and then throws the result away. It runs by itself on every pull request that touches the pipeline, the tests or the
+# question box, and can be run by hand from the Actions tab on any branch.
+#
+# Reading the result: a green tick on a pull request means the chain ran to the end, the validator found no unexpected failure and
+# the release gate passed, on the registry pull in the repository. A red cross means the real refresh would have stopped: the last
+# lines of the output are on the run's summary page. It cannot push (contents: read) and it does not use the ANTHROPIC_API_KEY, so it
+# writes no trial summaries and costs nothing beyond the run.
+name: Practice refresh (publishes nothing)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '**.py'
+      - 'run_refresh.sh'
+      - 'requirements.txt'
+      - 'prerender_findings.js'
+      - 'data/ref/**'
+      - 'audit_allowlist.txt'
+      - 'worker/**'
+      - 'docs/ask/**'
+      - 'docs/findings-vals.js'
+      - 'docs/index-vals.js'
+      - 'docs/findings.html'
+      - 'docs/index.html'
+      - '.github/workflows/practice-refresh.yml'
+      - '.github/workflows/refresh.yml'
+permissions:
+  contents: read
+concurrency: { group: "practice-${{ github.ref }}", cancel-in-progress: true }
+jobs:
+  practice:
+    runs-on: ubuntu-24.04   # the same image as refresh.yml: change both together
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: pip install -r requirements.txt
+      # the same caches and keys as refresh.yml, so a practice run reads the road graph the real refresh uses
+      - name: Restore Census boundary files
+        uses: actions/cache@v4
+        with: { path: data/geo, key: geo-cb2023-cb2021-cd119-states-v1 }
+      - run: |
+          mkdir -p data/geo
+          test -f data/geo/cb.zip         || curl -sSfL --retry 3 -o data/geo/cb.zip         https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_county_500k.zip
+          test -f data/geo/cb500_2021.zip || curl -sSfL --retry 3 -o data/geo/cb500_2021.zip https://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_county_500k.zip
+          test -f data/geo/cd119.zip      || curl -sSfL --retry 3 -o data/geo/cd119.zip      https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_us_cd119_500k.zip
+          test -f data/geo/states.zip     || curl -sSfL --retry 3 -o data/geo/states.zip     https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_state_500k.zip
+      - name: Restore road graph
+        uses: actions/cache@v4
+        with: { path: data/roads, key: roads-tiger2025-graph-v2 }
+      - run: python build_roads_us.py --if-stale
+      - name: Self-tests of the placement and facility-name rules
+        run: |
+          python metrics_us.py --test-zip-city
+          python site_names.py --test
+      - name: Refresh chain on the registry pull in the repository (nothing is published)
+        env:
+          REFRESH_SKIP_FETCH: "1"
+        shell: bash
+        run: |
+          set -o pipefail
+          sh run_refresh.sh 2>&1 | tee refresh.log
+      - name: If the chain failed, show where
+        if: failure()
+        shell: bash
+        run: |
+          test -f refresh.log || exit 0
+          { echo '### The practice refresh stopped here: the real refresh would stop too'; echo; echo '```'; tail -n 60 refresh.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          echo "::error title=Practice refresh failed (last lines of its output)::$(tail -n 25 refresh.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}' | cut -c1-3500)"
+      - name: What a real refresh would change on this registry pull
+        if: success()
+        shell: bash
+        run: |
+          {
+            echo '### The practice refresh ran to the end'
+            echo
+            echo 'Validator and release gate passed on the registry pull in the repository. Nothing was published.'
+            echo
+            echo '```'
+            grep -E "checks pass|release gate:" refresh.log | tail -n 3
+            echo
+            echo "files a real refresh would rewrite: $(git status --short | wc -l)"
+            git diff --stat -- out_adult55/county_metrics.csv out_adult55/national_metrics_v3.json out_adult55/zip_city_review.csv docs/index.html docs/findings.html | tail -n 8
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

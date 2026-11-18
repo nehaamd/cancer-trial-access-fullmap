@@ -335,6 +335,18 @@ def mode(values):
     return min(c, key=lambda v: (-c[v], _tidy(v))) if c else ""
 
 
+def own_zip(sites):
+    """The ZIP each registry row was placed by, "" when it was placed some other way. One definition for every script that folds
+    spellings (build_webapp_data_v3.py, tier4_covering.py), so they cannot disagree about which rows share a ZIP. Blank when the ZIP
+    was judged a typing error or the row was placed by another trial's listing (zip_typo_corrected, facility_listing), when a ZIP
+    of another state was set aside for the city (city_gazetteer), and when the ZIP/city review could not confirm it (zip_city
+    "ambiguous"): such a ZIP must not be printed as the facility's own, nor fold the row into whatever institution is at that ZIP."""
+    blank = lambda: sites.zip.map(lambda _: "")
+    method = sites["assign_method"] if "assign_method" in sites.columns else blank()
+    review = sites["zip_city"] if "zip_city" in sites.columns else blank()
+    return sites.zip.where(~method.isin(["zip_typo_corrected", "facility_listing", "city_gazetteer"]) & ~(review == "ambiguous"), "")
+
+
 def spellings_from_rows(rows):
     """rows: DataFrame with county_fips, fac, facility, city, zip (and zip_own when the build has it: the ZIP of rows placed at their own
     ZIP, blank for rows whose ZIP was judged a typing error) -> the spelling records merge_map() reads."""

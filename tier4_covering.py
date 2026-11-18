@@ -204,7 +204,7 @@ def facility_keys(cand, sites):
     Until November 2026 the key was the exact spelling, so "Mayo Clinic Health System-Franciscan Healthcare" was ranked as a
     candidate while "Mayo Clinic Health System - Franciscan Healthcare" recruited at the same ZIP."""
     fams = site_names.load_families(REF / "site_families.csv")
-    own = sites.zip.where(~sites.get("assign_method", pd.Series("", index=sites.index)).isin(["zip_typo_corrected", "facility_listing"]), "")
+    own = site_names.own_zip(sites)   # the same rule as the page data, so both fold the same rows
     sp = {(x["county_fips"], x["fac"]): x for x in site_names.spellings_from_rows(sites.assign(zip_own=own))}
     for r in cand.itertuples():                      # a spelling the recruiting sites also use keeps the ZIP their rows give
         z = str(r.zip)[:5]
