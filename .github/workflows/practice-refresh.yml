@@ -27,6 +27,7 @@ on:
       - 'docs/index-vals.js'
       - 'docs/findings.html'
       - 'docs/index.html'
+      - 'tests/**'
       - '.github/workflows/practice-refresh.yml'
       - '.github/workflows/refresh.yml'
 permissions:
@@ -75,6 +76,19 @@ jobs:
           test -f refresh.log || exit 0
           { echo '### The practice refresh stopped here: the real refresh would stop too'; echo; echo '```'; tail -n 60 refresh.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
           echo "::error title=Practice refresh failed (last lines of its output)::$(tail -n 25 refresh.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}' | cut -c1-3500)"
+      # the pages on the data the chain has just rebuilt: the main buttons, lists and downloads (tests/browser_check.py)
+      - run: pip install playwright && python -m playwright install --with-deps chromium
+      - name: Browser check of the pages on the rebuilt data
+        shell: bash
+        run: |
+          set -o pipefail
+          python tests/browser_check.py 2>&1 | tee browser.log
+      - name: If the browser check failed, show which control
+        if: failure()
+        shell: bash
+        run: |
+          test -f browser.log || exit 0
+          { echo '### Page check on the rebuilt data'; echo; echo '```'; grep -E "^FAIL|^browser check:" browser.log | cut -c1-400; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - name: What a real refresh would change on this registry pull
         if: success()
         shell: bash
