@@ -1,0 +1,37 @@
+# Page check: opens the site in a real browser and presses its main buttons (tests/browser_check.py). Publishes nothing.
+#
+# It runs by itself on every pull request that changes a page, and can be run by hand from the Actions tab on any branch.
+# A green tick means the map's main buttons, the county panel and its lists, the downloads, the ZIP finder and every other page
+# worked on the data in the repository, at phone and laptop width, with no script error. A red cross names the control that failed
+# on the run's page: do not merge until it is green. The question box's server is never called.
+name: Page check (browser)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'tests/**'
+      - '.github/workflows/page-check.yml'
+permissions:
+  contents: read
+concurrency: { group: "page-check-${{ github.ref }}", cancel-in-progress: true }
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install playwright && python -m playwright install --with-deps chromium
+      - name: Browser check of the pages
+        shell: bash
+        run: |
+          set -o pipefail
+          python tests/browser_check.py 2>&1 | tee browser.log
+      - name: Show the result on the run's page
+        if: always()
+        shell: bash
+        run: |
+          test -f browser.log || exit 0
+          { echo '### Page check'; echo; echo '```'; grep -E "^FAIL|^browser check:" browser.log | cut -c1-400; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
