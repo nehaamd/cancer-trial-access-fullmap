@@ -1,5 +1,5 @@
 {
- "built": "2026-11-17",
+ "built": "2026-11-18",
  "median_all": 471.1,
  "national": {
   "counties_classified": 3130,
@@ -10,8 +10,8 @@
   "cells": {
    "hb_la": 481,
    "hb_ok": 1041,
-   "lb_la": 811,
-   "lb_ok": 797
+   "lb_la": 810,
+   "lb_ok": 798
   },
   "top": [
    "12073",

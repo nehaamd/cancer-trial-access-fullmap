@@ -2,7 +2,7 @@
   "national": {
     "pop55": 100019672,
     "n_tracts": 84397,
-    "pct_zero_trials_within_60rdmi": 4.2,
+    "pct_zero_trials_within_60rdmi": 4.3,
     "pct_lt20_trials_within_60rdmi": 11.8,
     "pct_lt100_trials_within_60rdmi": 33.9,
     "pct_in_zero_trial_county": 20.9,
@@ -35,7 +35,7 @@
     "wmean_t60_cancer_type_leukemia": 30.0,
     "wmean_t60_cancer_type_liver_biliary": 12.0,
     "wmean_t60_cancer_type_lung": 67.0,
-    "wmean_t60_cancer_type_lymphoma": 29.0,
+    "wmean_t60_cancer_type_lymphoma": 30.0,
     "wmean_t60_cancer_type_mds_mpn": 14.0,
     "wmean_t60_cancer_type_melanoma_skin": 17.0,
     "wmean_t60_cancer_type_myeloma": 18.0,
@@ -46,7 +46,7 @@
     "wmean_t60_cancer_type_sarcoma": 12.0,
     "wmean_t60_cancer_type_multi": 100.0,
     "wmean_t60_cancer_type_other_unclassified": 1.0,
-    "wmean_t60_phase_1": 80.0,
+    "wmean_t60_phase_1": 79.0,
     "wmean_t60_phase_1-2": 61.0,
     "wmean_t60_phase_2": 93.0,
     "wmean_t60_phase_2-3": 14.0,
@@ -69,13 +69,13 @@
     "inc_all_rate": 454.9,
     "inc_all_rate_pop_covered_pct": 100.0,
     "inc_all_cases_sum": 1871438,
-    "method_version": 6
+    "method_version": 8
   },
   "invariants": {
     "tract_pool_monotone_violations": 0,
     "tract_broad_ge_limited_violations": 0,
     "tract_in_menu_county_nonzero_violations": 0,
-    "tracts_where_own_county_trials_exceed_60mi_pool": 669,
+    "tracts_where_own_county_trials_exceed_60mi_pool": 670,
     "pop55_in_those_tracts": 835400,
     "district_pct120_le_pct60_violations": 0,
     "tract_share_sum_not_1": 0,

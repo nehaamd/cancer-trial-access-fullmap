@@ -152,9 +152,15 @@ county_fips,zip,kept,merged,rows,rule
 06037,90017,Los Angeles Cancer Network,Los Angeles Cancer Network (LACN) - Good Sam,1,family: Los Angeles Cancer Network
 06037,90017,Los Angeles Cancer Network,Oncura Health - Good Samaritan,2,family: Los Angeles Cancer Network
 06037,90020,Clinical Research Advisors (Korea Town),Clinical Research Advisors (Korea Town Satellite Location),1,same-words
-06037,90025,"The Angeles Clinic and Research Institute, A Cedars-Sinai Affiliate",Cedars-Sinai Cancer at The Angeles Clinic and Research Institute,1,family: Cedars-Sinai
-06037,90025,"The Angeles Clinic and Research Institute, A Cedars-Sinai Affiliate",The Angeles clinic - A cedars SINAI AFFILIATE,1,family: Cedars-Sinai
-06037,90025,"The Angeles Clinic and Research Institute, A Cedars-Sinai Affiliate",The Angeles Clinic at Cedars Sinai,1,family: Cedars-Sinai
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,Cedars-Sinai Cancer at The Angeles Clinic and Research Institute,1,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic,1,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles clinic - A cedars SINAI AFFILIATE,1,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute,9,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute (#601),1,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,"The Angeles Clinic and Research Institute, A Cedars-Sinai Affiliate",4,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute (Melanoma),1,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute- West Los Angeles,1,family: The Angeles Clinic
+06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic at Cedars Sinai,1,family: The Angeles Clinic
 06037,90025,START Los Angeles,South Texas Accelerated Research Therapeutics START LLC,1,family: START (South Texas Accelerated Research Therapeutics)
 06037,90025,START Los Angeles,Start Cal,1,family: START (South Texas Accelerated Research Therapeutics)
 06037,90025,START Los Angeles,Start Cala,1,family: START (South Texas Accelerated Research Therapeutics)
@@ -163,11 +169,6 @@ county_fips,zip,kept,merged,rows,rule
 06037,90025,START Los Angeles,Start Lacn,1,family: START (South Texas Accelerated Research Therapeutics)
 06037,90025,START Los Angeles,START Los Angele,1,family: START (South Texas Accelerated Research Therapeutics)
 06037,90025,START Los Angeles,"START Los Angeles, LLC",4,family: START (South Texas Accelerated Research Therapeutics)
-06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic,1,family: The Angeles Clinic
-06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute,9,family: The Angeles Clinic
-06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute (#601),1,family: The Angeles Clinic
-06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute (Melanoma),1,family: The Angeles Clinic
-06037,90025,The Angeles Clinic and Research Institute - West Los Angeles Office,The Angeles Clinic and Research Institute- West Los Angeles,1,family: The Angeles Clinic
 06037,90027,California Research Institute,California Research Institute (CRI),1,same-words
 06037,90027,Children's Hospital Los Angeles,Children's Hospital of Los Angeles,1,same-words
 06037,90027,Children's Hospital Los Angeles,Children's Hospital of Los Angeles (Data Collection Only),1,same-words
@@ -178,6 +179,7 @@ county_fips,zip,kept,merged,rows,rule
 06037,90033,USC / Norris Comprehensive Cancer Center,Keck School of Medicine of USC,2,family: USC Norris Comprehensive Cancer Center
 06037,90033,USC / Norris Comprehensive Cancer Center,Norris Comprehensive Cancer Center,2,family: USC Norris Comprehensive Cancer Center
 06037,90033,USC / Norris Comprehensive Cancer Center,University of Southern California,20,family: USC Norris Comprehensive Cancer Center
+06037,90033,USC / Norris Comprehensive Cancer Center,University of Southern California Cancer Center,1,family: USC Norris Comprehensive Cancer Center
 06037,90033,USC / Norris Comprehensive Cancer Center,University of Southern California - Norris Cancer Center,1,family: USC Norris Comprehensive Cancer Center
 06037,90033,USC / Norris Comprehensive Cancer Center,University of Southern California Norris Comprehensive,2,family: USC Norris Comprehensive Cancer Center
 06037,90033,USC / Norris Comprehensive Cancer Center,"University of Southern California, Norris Comprehensive Cancer Center",1,family: USC Norris Comprehensive Cancer Center
@@ -342,7 +344,7 @@ county_fips,zip,kept,merged,rows,rule
 06037,91010,City of Hope,City of Hope - Duarte Cancer Center,5,family: City of Hope (with the former Cancer Treatment Centers of America)
 06037,91010,City of Hope,City of Hope - Duarte Main Site,1,family: City of Hope (with the former Cancer Treatment Centers of America)
 06037,91010,City of Hope,City of Hope Investigational Drug Services (IDS),2,family: City of Hope (with the former Cancer Treatment Centers of America)
-06037,91010,City of Hope,City of Hope Medical Center,96,family: City of Hope (with the former Cancer Treatment Centers of America)
+06037,91010,City of Hope,City of Hope Medical Center,95,family: City of Hope (with the former Cancer Treatment Centers of America)
 06037,91010,City of Hope,City of Hope Medical Foundation,1,family: City of Hope (with the former Cancer Treatment Centers of America)
 06037,91010,City of Hope,City of Hope National Medical Center,48,family: City of Hope (with the former Cancer Treatment Centers of America)
 06037,91010,City of Hope,City of Hope Orange County Lennar Foundation Cancer Center,1,family: City of Hope (with the former Cancer Treatment Centers of America)
@@ -432,7 +434,6 @@ county_fips,zip,kept,merged,rows,rule
 06059,92708,MemorialCare Orange Coast Medical Center,Orange Coast Medical Center,1,same-name (through another spelling)
 06059,92708,MemorialCare Orange Coast Medical Center,Orange Coast Memorial Medical Center,4,same-name (through another spelling)
 06059,92801,Los Angeles Cancer Network,Los Angeles cancer Network_Anaheim,2,family: Los Angeles Cancer Network
-06059,92805,Oncura Health - Anaheim,LACN Aneheim Flagship Office,1,family: Los Angeles Cancer Network
 06059,92806,Kaiser Permanente-Anaheim,Kaiser Permanente Anaheim Kraemer Medical Offices,1,family: Kaiser Permanente
 06059,92835,Providence Medical Foundation,Clinical Research Providence Medical Foundation,1,family: Providence
 06059,92835,Providence Medical Foundation,Crosson Cancer Institute at Providence St. Jude Medical Center in Fullerton,1,family: Providence
@@ -693,7 +694,7 @@ county_fips,zip,kept,merged,rows,rule
 08001,80045,UCHealth University of Colorado Hospital,University of Colorado Anschutz,1,family: University of Colorado / UCHealth
 08001,80045,UCHealth University of Colorado Hospital,University of Colorado - Anschutz Cancer Pavilion,2,family: University of Colorado / UCHealth
 08001,80045,UCHealth University of Colorado Hospital,"University of Colorado, Anschutz Cancer Pavilion (ACP(",1,family: University of Colorado / UCHealth
-08001,80045,UCHealth University of Colorado Hospital,University of Colorado Anschutz Medical Campus,19,family: University of Colorado / UCHealth
+08001,80045,UCHealth University of Colorado Hospital,University of Colorado Anschutz Medical Campus,20,family: University of Colorado / UCHealth
 08001,80045,UCHealth University of Colorado Hospital,University of Colorado Anschutz Medical campus (CU AMC),1,family: University of Colorado / UCHealth
 08001,80045,UCHealth University of Colorado Hospital,University of Colorado - Aurora Cancer Center,1,family: University of Colorado / UCHealth
 08001,80045,UCHealth University of Colorado Hospital,University of Colorado Cancer Center,31,family: University of Colorado / UCHealth
@@ -785,7 +786,6 @@ county_fips,zip,kept,merged,rows,rule
 08031,80218,Rocky Mountain Cancer Centers,Rocky Mountain Cancer Center - Primary,1,family: Rocky Mountain Cancer Centers
 08031,80218,Rocky Mountain Cancer Centers,"Rocky Mountain Cancer Centers, LLP",11,family: Rocky Mountain Cancer Centers
 08031,80218,Rocky Mountain Cancer Centers,Rocky Mountain Cancer Centers-Midtown,2,family: Rocky Mountain Cancer Centers
-08031,80218,Saint Joseph Hospital - Cancer Centers of Colorado,Saint Joseph Hospital ( Site 0026),1,same-name
 08031,80220,Rocky Mountain Cancer Centers-Rose,Rocky Mountain Cancer Centers (RMCC) ( Site 8006),1,family: Rocky Mountain Cancer Centers
 08035,80124,"Rocky Mountain Cancer Centers, LLP",Rocky Mountain Cancer Centers,6,family: Rocky Mountain Cancer Centers
 08035,80124,"Rocky Mountain Cancer Centers, LLP","Rocky Mountain Cancer Centers, LLP- Aurora",1,family: Rocky Mountain Cancer Centers
@@ -798,9 +798,9 @@ county_fips,zip,kept,merged,rows,rule
 08035,80124,"Rocky Mountain Cancer Centers, LLP",USOR - Rocky Mountain Cancer Centers - Lone Tree,1,family: Rocky Mountain Cancer Centers
 08035,80124,UCHealth Lone Tree Health Center,UC Health Lone Tree Medical Center,1,family: University of Colorado / UCHealth
 08035,80124,UCHealth Lone Tree Health Center,University of Colorado Cancer Center,2,family: University of Colorado / UCHealth
-08035,80124,UCHealth Lone Tree Health Center,University of Colorado Health - Lone Tree Medical Center ( Site 0112),2,family: University of Colorado / UCHealth
+08035,80124,UCHealth Lone Tree Health Center,University of Colorado Health - Lone Tree Medical Center ( Site 0112),3,family: University of Colorado / UCHealth
 08035,80129,UCHealth Highlands Ranch Hospital,University of Colorado Cancer Center - Highlands Ranch Hospital,1,family: University of Colorado / UCHealth
-08035,80129,UCHealth Highlands Ranch Hospital,University of Colorado Health - Highlands Ranch Hospital ( Site 0094),2,family: University of Colorado / UCHealth
+08035,80129,UCHealth Highlands Ranch Hospital,University of Colorado Health - Highlands Ranch Hospital ( Site 0094),3,family: University of Colorado / UCHealth
 08037,81632,Vail Health Shaw Cancer Center,Vail Health Hospital - Shaw Cancer Center,1,same-name
 08041,80907,Rocky Mountain Cancer Centers-Penrose,Rocky Mountain Cancer Center,2,family: Rocky Mountain Cancer Centers
 08041,80907,Rocky Mountain Cancer Centers-Penrose,Rocky Mountain Cancer Centers LLP,8,family: Rocky Mountain Cancer Centers
@@ -892,7 +892,6 @@ county_fips,zip,kept,merged,rows,rule
 09009,06510,Yale University,Yale School of Medicine - Cedar Street,1,family: Yale / Smilow Cancer Hospital
 09009,06511,Yale University,Yale School of Medicine - Smilow Cancer Hospital,1,family: Yale / Smilow Cancer Hospital
 09009,06511,Yale University,Yale School of Medicine - Smilow Cancer Hospital - Center for Thoracic Cancers,1,family: Yale / Smilow Cancer Hospital
-09009,06519,Yale University,Yale School of Medicine - Smilow Cancer Hospital - Yale - New Haven Hospital Location,1,family: Yale / Smilow Cancer Hospital
 09009,06510,Yale University,Yale Smilow Cancer Hospital,1,family: Yale / Smilow Cancer Hospital
 09009,06520,Yale University,Yale University Cancer Center,6,family: Yale / Smilow Cancer Hospital
 09009,06511,Yale University,Yale University (Data Collection Only),1,family: Yale / Smilow Cancer Hospital
@@ -914,7 +913,6 @@ county_fips,zip,kept,merged,rows,rule
 09011,06360,Eastern Connecticut Hematology and Oncology Associates,Eastern CT Hematology & Oncology Associates ( Site 0033),2,same-words
 09011,06385,Smilow Cancer Hospital Care Center - Waterford,Smilow Cancer Hospital Care center at Waterford,1,family: Yale / Smilow Cancer Hospital
 09011,06385,Smilow Cancer Hospital Care Center - Waterford,Smilow Cancer Hospital - Waterford,2,family: Yale / Smilow Cancer Hospital
-09011,06385,Smilow Cancer Hospital Care Center - Waterford,Yale-New Haven Hospital North Haven Medical Center,1,family: Yale / Smilow Cancer Hospital
 10003,19713,Christiana Care,Christiana Care Health Services,3,same-name
 10003,19713,Helen F Graham Cancer Center,Helen F. Graham Cancer Center & Research Institute ( Site 0018),1,same-name
 10003,19713,Helen F Graham Cancer Center,Medical Oncology Hematology Consultants Helen F Graham Cancer Center,2,same-name
@@ -965,7 +963,6 @@ county_fips,zip,kept,merged,rows,rule
 11001,20037,George Washington University Medical Center,The George Washington Medical Faculty Associates,1,family: George Washington University
 11001,20037,George Washington University Medical Center,The George Washington University,2,family: George Washington University
 11001,20037,George Washington University Medical Center,The George Washington University Cancer Center (site 212),1,family: George Washington University
-11001,20037,George Washington University Medical Center,The George Washington University Hospital,1,family: George Washington University
 11001,20422,Washington DC Veterans Affairs Medical Center,Washington DC VAMC,1,family: Veterans Affairs medical centers
 12001,32608,Malcolm Randall V.A. Medical Center /ID# 267825,"North Florida/South Georgia Veterans Health System, Gainesville, FL",1,family: Veterans Affairs medical centers
 12001,32610,UF Health Cancer Institute - Gainesville,UF Health,2,family: University of Florida Health
@@ -981,6 +978,7 @@ county_fips,zip,kept,merged,rows,rule
 12001,32610,UF Health Cancer Institute - Gainesville,University of Florida Health,4,family: University of Florida Health
 12001,32610,UF Health Cancer Institute - Gainesville,University of Florida Health at Shands,1,family: University of Florida Health
 12001,32610,UF Health Cancer Institute - Gainesville,University of Florida Health Science Center - Gainesville,1,family: University of Florida Health
+12001,32610,UF Health Cancer Institute - Gainesville,University of Florida Health Shands Hospital,1,family: University of Florida Health
 12001,32610,UF Health Cancer Institute - Gainesville,"University of Florida Health (UF Health), Cancer Center",1,family: University of Florida Health
 12001,32610,UF Health Cancer Institute - Gainesville,University of Florida UF Health Cancer Center,1,family: University of Florida Health
 12009,32901,"Cancer Care Centers of Brevard, Inc.",Cancer Care Centers of Brevard (Site #0136),1,same-words
@@ -1038,14 +1036,13 @@ county_fips,zip,kept,merged,rows,rule
 12031,32207,Baptist MD Anderson Cancer Center,Baptist MD Anderson,2,family: Baptist MD Anderson Cancer Center
 12031,32207,Baptist MD Anderson Cancer Center,"Baptist MD Anderson Cancer Center, Baptist Health",1,family: Baptist MD Anderson Cancer Center
 12031,32207,Baptist MD Anderson Cancer Center,Baptist MD Anderson Cancer Institute,1,family: Baptist MD Anderson Cancer Center
-12031,32209,University of Florida,University of Florida Health Science Center,1,family: University of Florida Health
 12031,32209,University of Florida,University of Florida Jacksonville,1,family: University of Florida Health
 12031,32224,Mayo Clinic in Florida,"#1017, Mayo Clinic",1,family: Mayo Clinic Florida
 12031,32224,Mayo Clinic in Florida,Mayo Clinic,29,family: Mayo Clinic Florida
 12031,32224,Mayo Clinic in Florida,Mayo Clinic Cancer Center,4,family: Mayo Clinic Florida
 12031,32224,Mayo Clinic in Florida,"Mayo Clinic, Clinical Trials Referral Office",1,family: Mayo Clinic Florida
 12031,32224,Mayo Clinic in Florida,Mayo Clinic Comprehensive Cancer Center,2,family: Mayo Clinic Florida
-12031,32224,Mayo Clinic in Florida,Mayo Clinic Florida,31,family: Mayo Clinic Florida
+12031,32224,Mayo Clinic in Florida,Mayo Clinic Florida,32,family: Mayo Clinic Florida
 12031,32224,Mayo Clinic in Florida,Mayo Clinic Florida-Comprehensive Cancer Center,1,family: Mayo Clinic Florida
 12031,32224,Mayo Clinic in Florida,Mayo Clinic Hospital,2,family: Mayo Clinic Florida
 12031,32224,Mayo Clinic in Florida,Mayo Clinic Hospital - Florida,1,family: Mayo Clinic Florida
@@ -1148,7 +1145,7 @@ county_fips,zip,kept,merged,rows,rule
 12086,33140,Mount Sinai Medical Center,Mount Sinai Braman Comprehensive Cancer Center,8,family: Mount Sinai Medical Center (Miami Beach)
 12086,33140,Mount Sinai Medical Center,Mount Sinai Cancer Center ( Site 0009),3,family: Mount Sinai Medical Center (Miami Beach)
 12086,33140,Mount Sinai Medical Center,Mount Sinai Cancer Research Program,1,family: Mount Sinai Medical Center (Miami Beach)
-12086,33140,Mount Sinai Medical Center,Mount Sinai Comprehensive Cancer Center,10,family: Mount Sinai Medical Center (Miami Beach)
+12086,33140,Mount Sinai Medical Center,Mount Sinai Comprehensive Cancer Center,9,family: Mount Sinai Medical Center (Miami Beach)
 12086,33140,Mount Sinai Medical Center,Mount Sinai Medical Center Braman Comprehensive Cancer Center,3,family: Mount Sinai Medical Center (Miami Beach)
 12086,33140,Mount Sinai Medical Center,Mount Sinai Medical Center - Miami Beach,1,family: Mount Sinai Medical Center (Miami Beach)
 12086,33140,Mount Sinai Medical Center,Mt. Sinai Cancer Center,1,family: Mount Sinai Medical Center (Miami Beach)
@@ -1203,6 +1200,7 @@ county_fips,zip,kept,merged,rows,rule
 12095,32806,Orlando Health Cancer Institute,Orlando Health Cancer Institute Downtown Orlando,1,family: Orlando Health
 12095,32806,Orlando Health Cancer Institute,Orlando Health Cancer Institute Gynecologic Cancer Center - Orlando /ID# 278623,1,family: Orlando Health
 12095,32806,Orlando Health Cancer Institute,Orlando Health Cancer Institute (Melanoma/NSCLC),1,family: Orlando Health
+12095,32806,Orlando Health Cancer Institute,Orlando Health Clinical Trials,1,family: Orlando Health
 12095,32806,Orlando Health Cancer Institute,Orlando Health Orlando Regional Medical Center,4,family: Orlando Health
 12095,32806,Orlando Health Cancer Institute,Orlando Health UF Health Cancer Center,1,family: Orlando Health
 12095,32806,Orlando Health Cancer Institute,Orlando Health Winnie Palmer Hospital for Women and Babies ( Site 0085),1,family: Orlando Health
@@ -1218,9 +1216,8 @@ county_fips,zip,kept,merged,rows,rule
 12095,32827,Florida Cancer Specialists,Sarah Cannon Research Institute at Florida Cancer Specialists- Lake Nona,1,family: Florida Cancer Specialists
 12095,32827,Florida Cancer Specialists,Sarah Cannon Research Institute at Florida Cancer Specialists- Lake Nona DDU,1,family: Florida Cancer Specialists
 12095,32827,Florida Cancer Specialists,Sarah Cannon Research Institute - Florida Cancer Specialists,1,family: Florida Cancer Specialists
-12095,32827,SCRI- Lake Nona DDU,Sarah Cannon Research Institute @ Florida Cancer,1,family: Sarah Cannon Research Institute
-12095,32827,SCRI- Lake Nona DDU,Sarah Cannon Research Institute (Lake Nona),1,family: Sarah Cannon Research Institute
-12095,32827,SCRI- Lake Nona DDU,Sarah Cannon Research Institute - Lake Nona Florida,1,family: Sarah Cannon Research Institute
+12095,32827,Sarah Cannon Research Institute (Lake Nona),Sarah Cannon Research Institute @ Florida Cancer,1,family: Sarah Cannon Research Institute
+12095,32827,Sarah Cannon Research Institute (Lake Nona),Sarah Cannon Research Institute - Lake Nona Florida,1,family: Sarah Cannon Research Institute
 12097,34747,AdventHealth Celebration,Advent Health Research Institute,1,family: AdventHealth
 12097,34747,AdventHealth Celebration,Adventhealth,2,family: AdventHealth
 12097,34747,AdventHealth Celebration,AdventHealth Cancer Institute,1,family: AdventHealth
@@ -1470,7 +1467,7 @@ county_fips,zip,kept,merged,rows,rule
 17031,60637,University of Chicago Medical Center,UChicago Medicine,1,family: University of Chicago
 17031,60637,University of Chicago Medical Center,UChicago Medicine Comprehensive Cancer Center,2,family: University of Chicago
 17031,60637,University of Chicago Medical Center,University Chicago Medicine,1,family: University of Chicago
-17031,60637,University of Chicago Medical Center,University of Chicago,37,family: University of Chicago
+17031,60637,University of Chicago Medical Center,University of Chicago,38,family: University of Chicago
 17031,60637,University of Chicago Medical Center,University of Chicago Cancer Research Center,1,family: University of Chicago
 17031,60637,University of Chicago Medical Center,University of Chicago Comprehensive Cancer Center,56,family: University of Chicago
 17031,60637,University of Chicago Medical Center,University of Chicago (Data Collection Only),1,family: University of Chicago
@@ -1557,7 +1554,6 @@ county_fips,zip,kept,merged,rows,rule
 18097,46202,Indiana University/Melvin and Bren Simon Cancer Center,Indiana University Health,1,family: IU Simon Comprehensive Cancer Center
 18097,46202,Indiana University/Melvin and Bren Simon Cancer Center,Indiana University Health - Indiana University Melvin and Bren Simon Comprehensive Cancer Center,1,family: IU Simon Comprehensive Cancer Center
 18097,46202,Indiana University/Melvin and Bren Simon Cancer Center,Indiana University Health Melvin and Bren Simon Cancer Center,1,family: IU Simon Comprehensive Cancer Center
-18097,46202,Indiana University/Melvin and Bren Simon Cancer Center,Indiana University Health Melvin and Bren Simon Comprehensive Cancer Center,1,family: IU Simon Comprehensive Cancer Center
 18097,46202,Indiana University/Melvin and Bren Simon Cancer Center,Indiana University Health Neurosurgery Clinic,1,family: IU Simon Comprehensive Cancer Center
 18097,46202,Indiana University/Melvin and Bren Simon Cancer Center,Indiana University Health Simon Cancer Center,1,family: IU Simon Comprehensive Cancer Center
 18097,46202,Indiana University/Melvin and Bren Simon Cancer Center,Indiana University Health University Hospital,2,family: IU Simon Comprehensive Cancer Center
@@ -1579,7 +1575,7 @@ county_fips,zip,kept,merged,rows,rule
 18097,46237,Franciscan Health,Franciscan Health Indianapolis,7,same-words
 18097,46237,Franciscan Health,Franciscan Health Oncology and Hematology Specialists,1,same-name
 18097,46237,Indiana Blood and Marrow Transplantation,Indiana Blood & Marrow Transplantation,1,same-words
-18097,46250,"Community Health Network, Inc.",Community Health Network,12,family: Community Health Network
+18097,46250,"Community Health Network, Inc.",Community Health Network,11,family: Community Health Network
 18097,46250,"Community Health Network, Inc.",Community Health Network Investigational Drug Services,1,family: Community Health Network
 18097,46250,"Community Health Network, Inc.",Community Health Network - MD Anderson,1,family: Community Health Network
 18097,46250,"Community Health Network, Inc.",Community Health Network MD Anderson Cancer Center - North,1,family: Community Health Network
@@ -1665,7 +1661,6 @@ county_fips,zip,kept,merged,rows,rule
 20209,66160,University of Kansas Cancer Center,The University of Kansas Medical Center,1,family: University of Kansas Cancer Center
 20209,66160,University of Kansas Cancer Center,The University of Kansas Medical Center Medical Office Building,2,family: University of Kansas Cancer Center
 20209,66160,University of Kansas Cancer Center,Univ of Kansas Hosp and Med Ctr,1,family: University of Kansas Cancer Center
-20209,66160,University of Kansas Cancer Center,University of Kansas,1,family: University of Kansas Cancer Center
 20209,66160,University of Kansas Cancer Center,University of Kansas Health System,1,family: University of Kansas Cancer Center
 20209,66160,University of Kansas Cancer Center,University of Kansas Hospital,4,family: University of Kansas Cancer Center
 20209,66160,University of Kansas Cancer Center,University of Kansas Hospital Cambridge North Tower A,1,family: University of Kansas Cancer Center
@@ -1827,6 +1822,7 @@ county_fips,zip,kept,merged,rows,rule
 24031,20904,"Maryland Oncology Hematology, P.A.",Maryland Oncology Hematology,4,family: Maryland Oncology Hematology
 24031,20904,"Maryland Oncology Hematology, P.A.",Maryland Oncology Hematology - Silver Spring,2,family: Maryland Oncology Hematology
 24033,20613,"Maryland Oncology Hematology, P.A.","Maryland Oncology Hematology, PA",1,family: Maryland Oncology Hematology
+24033,20705,Maryland Oncology Hematology,Maryland Oncology Hematology Cancer Specialists,1,family: Maryland Oncology Hematology
 24510,21201,Baltimore Veterans Affairs Medical Center ( Site 0069),"Baltimore VA Medical Center VA Maryland Health Care System, Baltimore, MD",1,family: Veterans Affairs medical centers
 24510,21201,Baltimore Veterans Affairs Medical Center ( Site 0069),Veterans Administration Medical Center-Baltimore,1,family: Veterans Affairs medical centers
 24510,21201,University of Maryland/Greenebaum Cancer Center,Greenebaum Comprehensive Cancer Center ( Site 0049),4,family: University of Maryland / Greenebaum Comprehensive Cancer Center
@@ -2164,7 +2160,7 @@ county_fips,zip,kept,merged,rows,rule
 27053,55455,University of Minnesota/Masonic Cancer Center,"Masonic Cancer Center, University of Minnesota",5,family: University of Minnesota / Masonic Cancer Center
 27053,55455,University of Minnesota/Masonic Cancer Center,Regents of the University of Minnesota,1,family: University of Minnesota / Masonic Cancer Center
 27053,55455,University of Minnesota/Masonic Cancer Center,Univeristy of Minnesota,1,misspelling (through another spelling)
-27053,55455,University of Minnesota/Masonic Cancer Center,University of Minnesota,25,family: University of Minnesota / Masonic Cancer Center
+27053,55455,University of Minnesota/Masonic Cancer Center,University of Minnesota,26,family: University of Minnesota / Masonic Cancer Center
 27053,55455,University of Minnesota/Masonic Cancer Center,University of Minnesota-Clinical Research Unit,1,family: University of Minnesota / Masonic Cancer Center
 27053,55455,University of Minnesota/Masonic Cancer Center,University of Minnesota Medical Center,6,family: University of Minnesota / Masonic Cancer Center
 27053,55455,University of Minnesota/Masonic Cancer Center,University of Minnesota Medical Center Fairview,2,family: University of Minnesota / Masonic Cancer Center
@@ -2174,6 +2170,7 @@ county_fips,zip,kept,merged,rows,rule
 27083,56258,Avera Cancer Institute - Marshall ( Site 0122),Avera Cancer Institute at Marshall,2,family: Avera
 27105,56187,Sanford Cancer Center Worthington,Sanford Worthington Medical Center,1,family: Sanford
 27109,55902,Mayo Clinic in Rochester,"#1016, Mayo Clinic",1,family: Mayo Clinic
+27109,55905,Mayo Clinic in Rochester,May Clinic Rochester,1,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,Mayo Clinic,65,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,Mayo Clinic Cancer Center,7,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,Mayo Clinic Cancer Center Outpatient Pharmacy,3,family: Mayo Clinic
@@ -2193,6 +2190,7 @@ county_fips,zip,kept,merged,rows,rule
 27109,55902,Mayo Clinic in Rochester,Mayo Clinic Pharmacy,1,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,Mayo Clinic - PPDS,2,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,Mayo Clinic Rochester,54,family: Mayo Clinic
+27109,55902,Mayo Clinic in Rochester,Mayo Clinic - Rochester I,1,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,Mayo Clinic - Rochester Minnesota,2,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,"Mayo Clinic - Rochester, Mn",1,family: Mayo Clinic
 27109,55905,Mayo Clinic in Rochester,Mayo Clinic - Transplant Center - Rochester,1,family: Mayo Clinic
@@ -2295,6 +2293,8 @@ county_fips,zip,kept,merged,rows,rule
 29510,63110,Washington University School of Medicine,The Alvin J. Siteman Cancer Center - Center for Advanced Med,1,family: Siteman Cancer Center (Washington University)
 29510,63110,Washington University School of Medicine,The Washington University,1,family: Siteman Cancer Center (Washington University)
 29510,63110,Washington University School of Medicine,US-St Louis MO-WASHU,1,family: Siteman Cancer Center (Washington University)
+29510,63110,Washington University School of Medicine,WA Uni School Of Med,2,family: Siteman Cancer Center (Washington University)
+29510,63110,Washington University School of Medicine,Wash U School of Medicine,1,family: Siteman Cancer Center (Washington University)
 29510,63110,Washington University School of Medicine,Washington Univ. School of Medicine,1,family: Siteman Cancer Center (Washington University)
 29510,63110,Washington University School of Medicine,Washington University,36,family: Siteman Cancer Center (Washington University)
 29510,63110,Washington University School of Medicine,Washington University Center for Advanced Medicine,1,family: Siteman Cancer Center (Washington University)
@@ -2329,7 +2329,7 @@ county_fips,zip,kept,merged,rows,rule
 30031,59715,Bozeman Health Deaconess Hospital,Bozeman Deaconess Hospital,3,same-name
 30031,59715,Bozeman Health Deaconess Hospital,Bozeman Health Deaconess Hospital - Bozeman Health Cancer Center,1,same-name
 30031,59715,Bozeman Health Deaconess Hospital,Bozeman Health Deaconess Hospital - Bozeman Health Clinical Research,1,same-name
-30111,59101,Billings Clinic Cancer Center,Billings Clinic,3,same-name (through another spelling)
+30111,59101,Billings Clinic Cancer Center,Billings Clinic,2,same-name (through another spelling)
 30111,59101,Saint Vincent Healthcare,St. Vincent Regional Hospital Cancer Centers,1,same-name
 30111,59102,Saint Vincent Frontier Cancer Center,St. Vincent Frontier Cancer Center,3,same-words
 30111,59102,Saint Vincent Frontier Cancer Center,St. Vincent Frontier Cancer Center-Research ( Site 0037),3,same-name
@@ -2451,7 +2451,6 @@ county_fips,zip,kept,merged,rows,rule
 34021,08690,The Cancer Institute of New Jersey Hamilton,RWJBarnabas Health - Robert Wood Johnson University Hospital,1,family: Rutgers Cancer Institute
 34021,08690,The Cancer Institute of New Jersey Hamilton,"RWJBarnabas Health - Robert Wood Johnson University Hospital, Hamilton",3,family: Rutgers Cancer Institute
 34023,08816,Astera Cancer Care,Astera Cancer Care East Brunswick,6,same-words
-34023,08816,Astera Cancer Care,Astera Cancer Care (Formerly Regional Cancer Care Associates),1,same-words
 34023,08816,START New Jersey,"START, Astera",1,family: START (South Texas Accelerated Research Therapeutics)
 34023,08816,START New Jersey,"START Astera, LLC",4,family: START (South Texas Accelerated Research Therapeutics)
 34023,08816,START New Jersey,START Center for Cancer Research,1,family: START (South Texas Accelerated Research Therapeutics)
@@ -2978,7 +2977,7 @@ county_fips,zip,kept,merged,rows,rule
 37067,27012,Wake Forest University at Clemmons,Wake Forest Baptist Hematology and Oncology - Clemmons,1,family: Wake Forest Baptist
 37067,27103,Novant Health Forsyth Medical Center,"Forsythe Memorial Hospital Inc., dba Novant Health Oncology Specialists",1,family: Novant Health
 37067,27103,Novant Health Forsyth Medical Center,Novant Health Cancer Institute,7,family: Novant Health
-37067,27103,Novant Health Forsyth Medical Center,Novant Health Oncology Specialists,3,family: Novant Health
+37067,27103,Novant Health Forsyth Medical Center,Novant Health Oncology Specialists,2,family: Novant Health
 37067,27103,Novant Health Forsyth Medical Center,Novant Health Pharmacy Oncology Specialists,2,family: Novant Health
 37067,27103,Novant Health Forsyth Medical Center,US-Winston-Salem NC-NOVANTWINSTON,1,family: Novant Health
 37067,27157,Wake Forest University Health Sciences,Atrium Health Wake Forest Baptist,11,family: Wake Forest Baptist
@@ -3027,7 +3026,6 @@ county_fips,zip,kept,merged,rows,rule
 37119,28204,Novant Health Presbyterian Medical Center,Novant Health Charlotte,1,family: Novant Health
 37119,28204,Novant Health Presbyterian Medical Center,Novant Health Weisiger Cancer Insititute ( Site 0266),1,family: Novant Health
 37119,28204,Novant Health Presbyterian Medical Center,Novant Health Weisiger Cancer Institute - Charlotte,1,family: Novant Health
-37119,28204,Novant Health Presbyterian Medical Center,Novant Presbyterian Hospital,1,family: Novant Health
 37119,28204,Novant Health Presbyterian Medical Center,US-Charlotte NC-NOVANTCHARLOTTE,1,family: Novant Health
 37119,28207,Oncology Specialists of Charlotte,Carolina Oncology Specialists,2,same-words
 37119,28207,Oncology Specialists of Charlotte,"Carolina Oncology Specialists, PA ( Site 0054)",2,same-words
@@ -3366,7 +3364,7 @@ county_fips,zip,kept,merged,rows,rule
 41051,97213,Providence Portland Medical Center,Providence Cancer Center Oncology,1,family: Providence
 41051,97213,Providence Portland Medical Center,Providence Cancer Center Oncology and Hematology Care- Eastside,1,family: Providence
 41051,97213,Providence Portland Medical Center,Providence Cancer Institute,10,family: Providence
-41051,97213,Providence Portland Medical Center,Providence Cancer Institute Franz Clinic,9,family: Providence
+41051,97213,Providence Portland Medical Center,Providence Cancer Institute Franz Clinic,8,family: Providence
 41051,97213,Providence Portland Medical Center,"Providence Cancer Institute, Franz Clinic - Eastside ( Site 0107)",1,family: Providence
 41051,97213,Providence Portland Medical Center,Providence Cancer Institute of Oregon,1,family: Providence
 41051,97213,Providence Portland Medical Center,Providence Center Institute Franz Clinic,1,family: Providence
@@ -3405,6 +3403,7 @@ county_fips,zip,kept,merged,rows,rule
 41051,97239,VA Portland Health Care System,Portland VA,1,family: Veterans Affairs medical centers
 41051,97239,VA Portland Health Care System,VA Portland Healthcare System,1,family: Veterans Affairs medical centers
 41067,97062,Legacy Meridian Park Hospital,Legacy Meridian Park Medical Center,1,same-name
+41067,97223,Compass Oncology - West,Compass Oncology West Cancer Center,1,same-name
 41067,97223,Compass Oncology - West,"Compass Oncology - West Cancer Center (Northwest Cancer Specialists, P.C.)",1,same-name
 41067,97223,Compass Oncology - West,Compass Oncology - West - Tigard /ID# 275101,1,same-words
 41067,97223,"Northwest Cancer Specialists, P.C.",Northwest Cancer Specialists (Compass Oncology) ( Site 8010),1,same-words
@@ -3439,7 +3438,6 @@ county_fips,zip,kept,merged,rows,rule
 42003,15213,UPMC-Magee Womens Hospital,"University of Pittsburgh Medical Center, Magee-Womens Hospital",2,family: UPMC Magee-Womens Hospital
 42003,15213,UPMC-Magee Womens Hospital,UPMC Hillman Cancer Center - Magee-Women?s Hospital,1,family: UPMC Magee-Womens Hospital
 42003,15213,UPMC-Magee Womens Hospital,UPMC Magee-Women's Hospital,1,family: UPMC Magee-Womens Hospital
-42003,15213,University of Pittsburgh Medical Center,University of Pittsburgh Cancer Institute Cancer Services,1,family: UPMC Hillman Cancer Center
 42003,15213,University of Pittsburgh Medical Center,University of Pittsburgh Medical Center (Data Collection Only),1,family: UPMC Hillman Cancer Center
 42003,15213,University of Pittsburgh Medical Center,University of Pittsburgh (UPMC),1,family: UPMC Hillman Cancer Center
 42003,15213,University of Pittsburgh Medical Center,UPMC Hillman Cancer,1,family: UPMC Hillman Cancer Center
@@ -3517,12 +3515,12 @@ county_fips,zip,kept,merged,rows,rule
 42077,18104,Saint Luke's Cancer Center - Allentown,St. Luke's University Health Network - Allentown Cancer Center,1,family: St. Luke's University Health Network
 42091,19004,MidLantic Urology,MidLantic Urology LLC,1,same-words
 42091,19004,MidLantic Urology,Midlantic Urology (Solaris),1,same-words
-42091,19044,Alliance Cancer Specialists (ACS) ( Site 8001),"USO - Alliance Cancer Specialists, PC",1,same-name (through another spelling)
+42091,19044,Alliance Cancer Specialists,Alliance Cancer Specialists (ACS) ( Site 8001),2,same-words
+42091,19044,Alliance Cancer Specialists,"USO - Alliance Cancer Specialists, PC",1,same-name (through another spelling)
 42091,19090,Asplundh Cancer Pavilion,Asplundh Cancer Pavilion at Jefferson Health,1,same-words (through another spelling)
 42091,19090,Asplundh Cancer Pavilion,Asplundh Cancer Pavilion | Jefferson Health,1,same-words (through another spelling)
 42091,19090,Asplundh Cancer Pavilion,Asplundh Cancer Pavillion,1,misspelling
 42091,19090,Asplundh Cancer Pavilion,Sidney Kimmel Comprehensive Cancer - Asplundh Cancer Pavilion,1,family (through another spelling)
-42091,19096,"Alliance Cancer Specialists, PC",Alliance Cancer Specialists,2,same-words
 42091,19096,"Alliance Cancer Specialists, PC","Alliance Cancer Specialists, PC, Wynnewood",1,same-words
 42095,18015,St. Luke's University Health Network,Saint Luke's University Hospital-Bethlehem Campus,3,family: St. Luke's University Health Network
 42095,18015,St. Luke's University Health Network,St. Luke's Physician Group - St. Luke's Cancer Care Associates,1,family: St. Luke's University Health Network
@@ -3555,7 +3553,7 @@ county_fips,zip,kept,merged,rows,rule
 42101,19104,University of Pennsylvania/Abramson Cancer Center,"The University of Pennsylvania, Department of Radiation Oncology",1,family: Abramson Cancer Center (Penn Medicine)
 42101,19104,University of Pennsylvania/Abramson Cancer Center,"Univ of Pennsylvania, Abramson Cancer Center",1,family: Abramson Cancer Center (Penn Medicine)
 42101,19104,University of Pennsylvania/Abramson Cancer Center,"University of Pennsylania, Perelman School of Medicine",1,family: Abramson Cancer Center (Penn Medicine)
-42101,19104,University of Pennsylvania/Abramson Cancer Center,University of Pennsylvania,46,family: Abramson Cancer Center (Penn Medicine)
+42101,19104,University of Pennsylvania/Abramson Cancer Center,University of Pennsylvania,45,family: Abramson Cancer Center (Penn Medicine)
 42101,19104,University of Pennsylvania/Abramson Cancer Center,"University of Pennsylvania, Abramson Cancer Center, Perelman Center for Advanced Medicine",1,family: Abramson Cancer Center (Penn Medicine)
 42101,19104,University of Pennsylvania/Abramson Cancer Center,University of Pennsylvania - Abramson Caner Center,1,family: Abramson Cancer Center (Penn Medicine)
 42101,19104,University of Pennsylvania/Abramson Cancer Center,University of Pennsylvania Division of Hematology Oncology Perelman Center for Advanced Medicine,1,family: Abramson Cancer Center (Penn Medicine)
@@ -3606,7 +3604,6 @@ county_fips,zip,kept,merged,rows,rule
 42101,19107,Thomas Jefferson University Hospital,"Thomas Jefferson University, Sidney Kimmel Cancer Center - Clinical Trials Office",3,family: Sidney Kimmel Cancer Center (Jefferson)
 42101,19107,Thomas Jefferson University Hospital,"Thomas Jefferson University, Sidney Kimmel Comprehensive Cancer Center",3,family: Sidney Kimmel Cancer Center (Jefferson)
 42101,19107,Thomas Jefferson University Hospital,"Thomas Jefferson University, Sidney Kimmel Comprensive Cancer Center, Clinical Trials Office",1,family: Sidney Kimmel Cancer Center (Jefferson)
-42101,19107,Thomas Jefferson University Hospital,Wills Eye Hospital at Thomas Jefferson University,1,family: Sidney Kimmel Cancer Center (Jefferson)
 42101,19111,Fox Chase Cancer Center,Fox Chase Cancer Center 333 Cottman Avenue,1,family: Fox Chase Cancer Center
 42101,19111,Fox Chase Cancer Center,Fox Chase Cancer Center - Philadelphia,4,family: Fox Chase Cancer Center
 42101,19111,Fox Chase Cancer Center,Temple University - Fox Chase Cancer Center,1,family: Fox Chase Cancer Center
@@ -3687,7 +3684,6 @@ county_fips,zip,kept,merged,rows,rule
 46099,57104,Sanford Cancer Center Oncology Clinic,Sanford Cancer Center,15,family: Sanford
 46099,57104,Sanford Cancer Center Oncology Clinic,Sanford Cancer Center Gynecologic Oncology,1,family: Sanford
 46099,57104,Sanford Cancer Center Oncology Clinic,Sanford Cancer Center Oncology Clinic and Pharmacy,1,family: Sanford
-46099,57104,Sanford Cancer Center Oncology Clinic,Sanford Cancer Center-Sioux Falls,1,family: Sanford
 46099,57104,Sanford Cancer Center Oncology Clinic,Sanford Clinical Research,1,family: Sanford
 46099,57104,Sanford Cancer Center Oncology Clinic,Sanford Health,2,family: Sanford
 46099,57104,Sanford Cancer Center Oncology Clinic,Sanford Medical Center,1,family: Sanford
@@ -3721,7 +3717,7 @@ county_fips,zip,kept,merged,rows,rule
 47037,37203,Tennessee Oncology,Tennessee Oncology - Nashville / Sarah Cannon Research Institute,1,family: Tennessee Oncology
 47037,37203,Tennessee Oncology,Tennessee Oncology Nashville - SCRI Oncology Partners,1,family: Tennessee Oncology
 47037,37203,Tennessee Oncology,Tennessee Oncology Nashville St Thomas Midtown Clinic,2,family: Tennessee Oncology
-47037,37203,Tennessee Oncology,"Tennessee Oncology, PLLC",15,family: Tennessee Oncology
+47037,37203,Tennessee Oncology,"Tennessee Oncology, PLLC",14,family: Tennessee Oncology
 47037,37203,Tennessee Oncology,Tennessee Oncology PLLC - Chattanooga,1,family: Tennessee Oncology
 47037,37203,Tennessee Oncology,"Tennessee Oncology, PLLC- Elliston Place Plaza",1,family: Tennessee Oncology
 47037,37203,Tennessee Oncology,"Tennessee Oncology, PLLC - Elliston Place Plaza DDU",1,family: Tennessee Oncology
@@ -3754,7 +3750,7 @@ county_fips,zip,kept,merged,rows,rule
 47037,37203,Sarah Cannon Research Institute,Sarah Cannon Research Institute: USA/TN,1,family: Sarah Cannon Research Institute
 47037,37203,Sarah Cannon Research Institute,Sarah Cannon Research (SCRI)-Tennessee,1,family: Sarah Cannon Research Institute
 47037,37203,Sarah Cannon Research Institute,SCRI,1,family: Sarah Cannon Research Institute
-47037,37203,Sarah Cannon Research Institute,SCRI- Nashville,2,family: Sarah Cannon Research Institute
+47037,37203,Sarah Cannon Research Institute,SCRI- Nashville,1,family: Sarah Cannon Research Institute
 47037,37203,Sarah Cannon Research Institute,SCRI Oncology,1,family: Sarah Cannon Research Institute
 47037,37203,Sarah Cannon Research Institute,SCRI Oncology LLC,1,family: Sarah Cannon Research Institute
 47037,37203,Sarah Cannon Research Institute,SCRI OP (Oncology Partners),2,family: Sarah Cannon Research Institute
@@ -3798,8 +3794,8 @@ county_fips,zip,kept,merged,rows,rule
 47037,37232,Vanderbilt University/Ingram Cancer Center,Vanderbilt University Medical Center Henry-Joyce Cancer Clinic (Adults and Pediatrics),1,family: Vanderbilt-Ingram Cancer Center
 47037,37232,Vanderbilt University/Ingram Cancer Center,Vanderbilt University Medical Center-Vanderbilt-Ingram Cancer Center ( Site 0015),1,family: Vanderbilt-Ingram Cancer Center
 47037,37232,Vanderbilt University/Ingram Cancer Center,Vanderbilt University School of Medicine,1,family: Vanderbilt-Ingram Cancer Center
-47065,37403,"Erlanger Health, Inc.",Erlanger Health,1,same-words
-47065,37403,"Erlanger Health, Inc.",Erlanger Medical Center ( Site 5009),1,same-name
+47065,37403,"Erlanger Health, Inc",Erlanger Health,1,same-words
+47065,37403,"Erlanger Health, Inc",Erlanger Medical Center ( Site 5009),1,same-name
 47065,37403,"Tennessee Oncology, PLLC - Chattanooga Downtown",Tennessee Oncology - Chattanooga - Downtown,1,family: Tennessee Oncology
 47065,37403,"Tennessee Oncology, PLLC - Chattanooga Downtown",Tennessee Oncology - Chattanooga - GHCR Site I,1,family: Tennessee Oncology
 47065,37404,Tennessee Oncology Chattanooga,Tennessee Oncology,3,family: Tennessee Oncology
@@ -3876,6 +3872,8 @@ county_fips,zip,kept,merged,rows,rule
 48029,78229,University of Texas Health Science Center at San Antonio,UT Health San Antonio's Mays Cancer Center,1,family: Mays Cancer Center (UT Health San Antonio)
 48029,78229,University of Texas Health Science Center at San Antonio,UT San Antonio Mays Cancer,1,family: Mays Cancer Center (UT Health San Antonio)
 48029,78229,San Antonio Methodist TX Transplant Physicians Group,"Methodist HealthCare System of San Antonio Clinical Trials Office, Texas Transplant Institute",1,same-name
+48029,78229,NEXT Oncology,New Experimental Therapeutics of San Antonio LLC,2,same-name (through another spelling)
+48029,78229,NEXT Oncology,New Experimental Therapeutics of San Antonio - NEXT Oncology,1,family: NEXT Oncology
 48029,78229,NEXT Oncology,NEXT,1,family: NEXT Oncology
 48029,78229,NEXT Oncology,Next Oncology-Oncology,2,family: NEXT Oncology
 48029,78229,NEXT Oncology,NEXT Oncology San Antonio,12,family: NEXT Oncology
@@ -3903,7 +3901,7 @@ county_fips,zip,kept,merged,rows,rule
 48029,78229,University of Texas (UT) Health,University of Texas Health Science Center,1,same-name (through another spelling)
 48029,78229,USA Clinical Trials,Urology San Antonio PA dba USA Clinical Trials,2,same-name (through another spelling)
 48029,78240,Texas Oncology - San Antonio,Texas Oncology - San Aantonio,1,family: Texas Oncology
-48029,78240,Texas Oncology - San Antonio,Texas Oncology - San Antonio Medical Center,6,family: Texas Oncology
+48029,78240,Texas Oncology - San Antonio,Texas Oncology - San Antonio Medical Center,7,family: Texas Oncology
 48029,78240,Texas Oncology - San Antonio,Texas Oncology - San Antonio Medical Center - Research Drive /ID# 275090,2,family: Texas Oncology
 48029,78240,Texas Oncology - San Antonio,Texas Oncology San Antonio Medical Center Usor,1,family: Texas Oncology
 48029,78240,Texas Oncology - San Antonio,USO - Texas Oncology - San Antonio,1,family: Texas Oncology
@@ -3914,15 +3912,12 @@ county_fips,zip,kept,merged,rows,rule
 48061,78550,Texas Oncology - Central South,USOR - Texas Oncology,1,family: Texas Oncology
 48085,75075,Texas Oncology - DFW,Texas Oncology Plano East,1,family: Texas Oncology
 48091,78130,Texas Oncology - San Antonio,"Texas Oncology, New Braunfels",1,family: Texas Oncology
-48091,78130,Texas Oncology - San Antonio,Texas Oncology-San Antonio Medical Center,1,family: Texas Oncology
 48113,75039,NEXT Oncology Dallas,NEXT Dallas,26,family: NEXT Oncology
 48113,75039,NEXT Oncology Dallas,NEXT Dallas - Oncology Department,2,family: NEXT Oncology
 48113,75039,NEXT Oncology Dallas,NEXT Oncology,16,family: NEXT Oncology
 48113,75039,NEXT Oncology Dallas,NEXT Oncology - Irving,1,family: NEXT Oncology
 48113,75039,NEXT Oncology Dallas,NEXT Texas LLC - Dallas,2,family: NEXT Oncology
 48113,75063,Texas Oncology West,Texas Oncology Gulf Coast,1,family: Texas Oncology
-48113,75063,US Oncology Investigational Products Center (IPC),US Oncology Investigational Product Center (IPC),6,misspelling
-48113,75063,US Oncology Investigational Products Center (IPC),US Oncology Investigational Products Center,4,same-words
 48113,75080,UT Southwestern Clinical Center at Richardson/Plano,University of Texas Southwestern Simmons Cancer Center - Richardson/Plano,2,family: UT Southwestern / Simmons Comprehensive Cancer Center
 48113,75080,UT Southwestern Clinical Center at Richardson/Plano,UT Southwestern Medical Center at Richardson/Plano,1,family: UT Southwestern / Simmons Comprehensive Cancer Center
 48113,75080,UT Southwestern Clinical Center at Richardson/Plano,UT Southwestern - Simmons Cancer Center - Richardson/Plano,1,family: UT Southwestern / Simmons Comprehensive Cancer Center
@@ -3931,6 +3926,7 @@ county_fips,zip,kept,merged,rows,rule
 48113,75216,Dallas VA Medical Center,"VA North Texas Health Care System Dallas VA Medical Center, Dallas, TX",1,family: Veterans Affairs medical centers
 48113,75230,Mary Crowley Cancer Research,Mary Crowley Cancer Center,1,family: Mary Crowley Cancer Research
 48113,75230,Mary Crowley Cancer Research,Mary Crowley Cancer Research Centers,2,family: Mary Crowley Cancer Research
+48113,75230,Mary Crowley Cancer Research,Mary Crowley Cancer Research/Sarah Cannon Research Institute,1,family: Mary Crowley Cancer Research
 48113,75230,Mary Crowley Cancer Research,Mary Crowley Medical Research Center,1,family: Mary Crowley Cancer Research
 48113,75230,Mary Crowley Cancer Research,Mary Crowley Research Center US Oncology,1,family: Mary Crowley Cancer Research
 48113,75230,Mary Crowley Cancer Research,Sarah Cannon Research Institute at Mary Crowley,5,family: Mary Crowley Cancer Research
@@ -4015,7 +4011,7 @@ county_fips,zip,kept,merged,rows,rule
 48157,77478,UT MD Anderson - Sugar Land,"The University of Texas, MD Anderson Cancer Center - Sugar Land",4,family: MD Anderson Cancer Center
 48157,77479,Patientcare Clinical Research,PatientCare Clinical Research LLC ( Site 5435),1,same-words
 48157,77479,Texas Oncology - Gulf Coast,Texas Oncology 1,1,family: Texas Oncology
-48157,77479,Texas Oncology - Gulf Coast,Texas Oncology Cancer Center,2,family: Texas Oncology
+48157,77479,Texas Oncology - Gulf Coast,Texas Oncology Cancer Center,1,family: Texas Oncology
 48157,77479,Texas Oncology - Gulf Coast,USO - Texas Oncology Gulf Coast,1,family: Texas Oncology
 48167,77555,University of Texas Medical Branch,University Of Texas Medical Branch At Galveston,3,same-words
 48167,77573,UT MD Anderson - League City,MD Anderson League City,6,family: MD Anderson Cancer Center
@@ -4045,6 +4041,7 @@ county_fips,zip,kept,merged,rows,rule
 48201,77030,MD Anderson Cancer Center,MD Anderson Cancer Center - University of Texas,3,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,MD Anderson Cancer Centre,2,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,MD Anderson Cancer Hospital,1,family: MD Anderson Cancer Center
+48201,77030,MD Anderson Cancer Center,MDAC,1,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,MDACC,4,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,The Univeristy of Texas Md Anderson Cancer Center,1,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,The University of Texas M. D. Anderson Cancer Center,61,family: MD Anderson Cancer Center
@@ -4066,7 +4063,7 @@ county_fips,zip,kept,merged,rows,rule
 48201,77030,MD Anderson Cancer Center,University of Texas M.D. Anderson Cancer Center,8,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,University of Texas-MD Anderson,2,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,University of Texas MD Anderson Cancer Center,79,family: MD Anderson Cancer Center
-48201,77030,MD Anderson Cancer Center,UT MD Anderson,11,family: MD Anderson Cancer Center
+48201,77030,MD Anderson Cancer Center,UT MD Anderson,12,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,UT MD Anderson Cancer Center,44,family: MD Anderson Cancer Center
 48201,77030,MD Anderson Cancer Center,UT MD Anderson Cancer Center - Houston,1,family: MD Anderson Cancer Center
 48201,77030,Baylor College of Medicine/Dan L Duncan Comprehensive Cancer Center,Baylor College of Medicine,16,family: Baylor College of Medicine / Dan L Duncan Comprehensive Cancer Center
@@ -4114,10 +4111,10 @@ county_fips,zip,kept,merged,rows,rule
 48201,77030,The University of Texas Health Science Center at Houston,UTHealth/Memorial Hermann Cancer Center - Texas Medical Center,1,family: UT Health Houston
 48201,77042,Excel Diagnostics & Nuclear Oncology Center,Excel Diagnostics and Nuclear Oncology Center,1,same-words
 48201,77054,Harris Health System - Smith Clinic,Harris Health Smith Clinic,1,same-name
-48201,77054,NEXT Houston,NEXT Huston,1,family: NEXT Oncology
-48201,77054,NEXT Houston,NEXT Oncology,6,family: NEXT Oncology
-48201,77054,NEXT Houston,NEXT Oncology Houston,8,family: NEXT Oncology
-48201,77054,NEXT Houston,NEXT Texas LLC - Houston,2,family: NEXT Oncology
+48201,77054,NEXT Oncology Houston,NEXT Houston,12,family: NEXT Oncology
+48201,77054,NEXT Oncology Houston,NEXT Huston,1,family: NEXT Oncology
+48201,77054,NEXT Oncology Houston,NEXT Oncology,7,family: NEXT Oncology
+48201,77054,NEXT Oncology Houston,NEXT Texas LLC - Houston,2,family: NEXT Oncology
 48201,77054,O'Quinn Medical Tower at McNair Campus,O'Quinn Medical Tower - McNair Campus - Dan L Duncan Comprehensive Cancer Center,1,same-name (through another spelling)
 48201,77058,Houston Methodist Saint John Hospital,Houston Methodist Clear Lake Hospital (St. John),1,family: Houston Methodist / Methodist Hospital
 48201,77070,Methodist Willowbrook Hospital,Houston Methodist Willowbrook Hospital,1,family: Houston Methodist / Methodist Hospital
@@ -4131,7 +4128,6 @@ county_fips,zip,kept,merged,rows,rule
 48215,78503,Texas Oncology - Central South,Texas Oncology - Central South (South 2nd),1,family: Texas Oncology
 48215,78503,Texas Oncology - Central South,Texas Oncology - Central/South Texas,4,family: Texas Oncology
 48215,78503,Texas Oncology - Central South,Texas Oncology McAllen,2,family: Texas Oncology
-48215,78503,Texas Oncology - Central South,"Texas Oncology, P.A. - Oncology",1,family: Texas Oncology
 48215,78503,Texas Oncology - Central South,USOR - Texas Oncology,2,family: Texas Oncology
 48215,78596,Texas Oncology - Weslaco,Texas Oncology - Central South (E 6th St),1,family: Texas Oncology
 48215,78596,Texas Oncology - Weslaco,"Texas Oncology - Weslaco, Knapp Medical Plaza",1,family: Texas Oncology
@@ -4148,16 +4144,14 @@ county_fips,zip,kept,merged,rows,rule
 48339,77380,Renovatio Clinical,Renovatio Clinical - The Woodlands,1,same-words
 48339,77380,Renovatio Clinical,Renovatio Clinical - The Woodlands Research Center,2,same-name
 48339,77380,Texas Oncology - Gulf Coast,Texas Oncology,1,family: Texas Oncology
-48339,77380,Texas Oncology - Gulf Coast,Texas Oncology-The Woodlands ( Site 8000),5,family: Texas Oncology
+48339,77380,Texas Oncology - Gulf Coast,Texas Oncology - The Woodlands ( Site 8003),6,family: Texas Oncology
 48339,77380,Texas Oncology - Gulf Coast,"Texas Oncology-The Woodlands, Gynecologic Oncology",1,family: Texas Oncology
 48339,77380,Texas Oncology - Gulf Coast,USOR Texas Oncology Gulf Coast,1,family: Texas Oncology
 48339,77380,Texas Oncology - Gulf Coast,USOR - Texas Oncology - The Woodlands,1,family: Texas Oncology
-48339,77380,US Oncology Research Network,US Oncology,1,same-name (through another spelling)
-48339,77380,US Oncology Research Network,USO - US Oncology Research Network,1,same-name (through another spelling)
+48339,77380,US Oncology,USO - US Oncology Research Network,1,same-name (through another spelling)
 48339,77384,UT MD Anderson - The Woodlands,MD Anderson in The Woodlands,6,family: MD Anderson Cancer Center
 48339,77384,UT MD Anderson - The Woodlands,MD Anderson Regional Care Center-The Woodlands,1,family: MD Anderson Cancer Center
 48339,77384,UT MD Anderson - The Woodlands,MD Anderson The Woodlands,2,family: MD Anderson Cancer Center
-48339,77384,UT MD Anderson - The Woodlands,The University of Texas MD Anderson Cancer Center,1,family: MD Anderson Cancer Center
 48339,77384,UT MD Anderson - The Woodlands,The University of Texas MD Anderson Cancer Center - Conroe,2,family: MD Anderson Cancer Center
 48339,77384,UT MD Anderson - The Woodlands,"The University of Texas, MD Anderson Cancer Center - Woodlands",2,family: MD Anderson Cancer Center
 48375,79124,Texas Oncology - West Texas,Texas Oncology - Amarillo Cancer Center,2,family: Texas Oncology
@@ -4203,7 +4197,6 @@ county_fips,zip,kept,merged,rows,rule
 48439,76104,UT Southwestern/Simmons Cancer Center-Fort Worth,UT Southwestern Moncrief Cancer Institute,1,family: UT Southwestern / Simmons Comprehensive Cancer Center
 48441,79601,Hendrick Medical Center,Hendrick Health,1,same-name
 48441,79601,Hendrick Medical Center,Hendrick Health System,1,same-name
-48441,79606,Texas Oncology - West Texas,Texas Oncology-Abilene,1,family: Texas Oncology
 48441,79606,Texas Oncology - West Texas,Texas Oncology - Abilene - Antilley Road /ID# 277739,2,family: Texas Oncology
 48441,79606,Texas Oncology - West Texas,"Texas Oncology, P.A. - Abilene - 300210366",1,family: Texas Oncology
 48441,79606,Texas Oncology - West Texas,Texas Oncology - West (SCRI),1,family: Texas Oncology
@@ -4354,6 +4347,7 @@ county_fips,zip,kept,merged,rows,rule
 51540,22903,University of Virginia Cancer Center,"#1027, University of Virginia",1,family: University of Virginia
 51540,22908,University of Virginia Cancer Center,Cancer Center at the University of Virginia,1,family: University of Virginia
 51540,22908,University of Virginia Cancer Center,Emily Couric Clinical Cancer Center,1,family: University of Virginia
+51540,22908,University of Virginia Cancer Center,The University of Virgina,1,family: University of Virginia
 51540,22908,University of Virginia Cancer Center,University of Virginia,44,family: University of Virginia
 51540,22903,University of Virginia Cancer Center,University of Virginia Comprehensive Cancer Center,11,family: University of Virginia
 51540,22908,University of Virginia Cancer Center,University of Virginia Emily Couric Clinical Cancer Center,1,family: University of Virginia
@@ -4361,6 +4355,7 @@ county_fips,zip,kept,merged,rows,rule
 51540,22908,University of Virginia Cancer Center,University of Virginia Health System,19,family: University of Virginia
 51540,22908,University of Virginia Cancer Center,University of Virginia Medical Center,2,family: University of Virginia
 51540,22903,University of Virginia Cancer Center,University of Virginia School of Medicine,1,family: University of Virginia
+51540,22908,University of Virginia Cancer Center,Universtiy of Virginia,1,family: University of Virginia
 51540,22903,University of Virginia Cancer Center,UVA Center for Psychiatric Clinical Research,1,family: University of Virginia
 51540,22908,University of Virginia Cancer Center,UVA Comprehensive Cancer Center,3,family: University of Virginia
 51540,22903,University of Virginia Cancer Center,UVA Emily Couric Cancer Center,1,family: University of Virginia
@@ -4406,7 +4401,6 @@ county_fips,zip,kept,merged,rows,rule
 51760,23298,VCU Massey Comprehensive Cancer Center,Virginia Commonwealth University School of Medicine,1,family: VCU Massey Comprehensive Cancer Center
 51760,23298,VCU Massey Comprehensive Cancer Center,Virginia Commonwealth University (VCU) - Massey Cancer Center,2,family: VCU Massey Comprehensive Cancer Center
 51760,23298,VCU Massey Comprehensive Cancer Center,Virginia Commonwealth University (VCU) Medical Center ( Site 0030),1,family: VCU Massey Comprehensive Cancer Center
-51760,98003,VCU - McGlothlin Medical Education Center,Virginia Commonwealth University Massey Comprehensive Cancer Cente,1,family: VCU Massey Comprehensive Cancer Center
 51770,24014,Blue Ridge Cancer Care,Blue Ridge Cancer Care - 300202915,1,family: Blue Ridge Cancer Care
 51770,24014,Blue Ridge Cancer Care,Blue Ridge Cancer Care (Oncology and Hematology Associates of Southwest Virginia),1,family: Blue Ridge Cancer Care
 51770,24014,Blue Ridge Cancer Care,Blue Ridge Cancer Care - Roanoke /ID# 278722,1,family: Blue Ridge Cancer Care
@@ -4424,7 +4418,7 @@ county_fips,zip,kept,merged,rows,rule
 51840,22601,Shenandoah Oncology,"Shenandoah Oncology, P.C. (Shenandoah Oncology Associates, P.C.)",1,same-words
 53011,98684,"Northwest Cancer Specialists, P.C.","Northwest Cancer Specialist, Pc(Us Oncology Research)",2,same-words
 53011,98684,"Northwest Cancer Specialists, P.C.",Northwest Cancer Specialists,3,same-words
-53011,98684,"Northwest Cancer Specialists, P.C.",Northwest Cancer Specialists (Compass Oncology) ( Site 8000),1,same-words
+53011,98684,"Northwest Cancer Specialists, P.C.",Northwest Cancer Specialists (Compass Oncology) ( Site 8000),2,same-words
 53011,98684,"Northwest Cancer Specialists, P.C.","Northwest Cancer Specialists, P.C.-Vancouver",1,same-words
 53011,98684,"Northwest Cancer Specialists, P.C.",Northwest Cancer Specialists PC,2,same-words
 53011,98684,"Northwest Cancer Specialists, P.C.",Northwest Cancer Specialists - Vancouver /ID# 277855,1,same-words
@@ -4459,9 +4453,10 @@ county_fips,zip,kept,merged,rows,rule
 53033,98109,Fred Hutchinson Cancer Center,University of Washington (Data Collection Only),1,family: Fred Hutchinson Cancer Center / University of Washington
 53033,98109,Fred Hutchinson Cancer Center,University of Washington Fred Hutch Cancer Center,1,family: Fred Hutchinson Cancer Center / University of Washington
 53033,98109,Fred Hutchinson Cancer Center,University of Washington Fred Hutchinson,2,family: Fred Hutchinson Cancer Center / University of Washington
-53033,98109,Fred Hutchinson Cancer Center,University of Washington - Fred Hutchinson Cancer Center,13,family: Fred Hutchinson Cancer Center / University of Washington
+53033,98109,Fred Hutchinson Cancer Center,"University of Washington, Fred Hutchinson Cancer Center",14,family: Fred Hutchinson Cancer Center / University of Washington
 53033,98109,Fred Hutchinson Cancer Center,University of Washington School of Medicine,1,family: Fred Hutchinson Cancer Center / University of Washington
 53033,98109,Fred Hutchinson Cancer Center,University of Washington - Seattle Cancer Care Alliance,2,family: Fred Hutchinson Cancer Center / University of Washington
+53033,98109,Fred Hutchinson Cancer Center,Univesity of Washington (UW) / Fred Hutchinson Cancer Center (FHCC),1,family: Fred Hutchinson Cancer Center / University of Washington
 53033,98122,Swedish Medical Center-First Hill,Ivy Center for Advanced Brain Tumor Treatment; Swedish Neuroscience Institute,1,family: Swedish Cancer Institute
 53033,98104,Swedish Medical Center-First Hill,Providence Swedish Cancer Institute,1,family: Swedish Cancer Institute
 53033,98104,Swedish Medical Center-First Hill,Swedish,1,family: Swedish Cancer Institute

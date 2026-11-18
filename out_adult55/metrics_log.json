@@ -1,24 +1,24 @@
 {
   "age_filter": "trials with maximum age < 55 excluded (n=254)",
-  "site_rows": 55267,
+  "site_rows": 55275,
   "site_assignment": {
-    "zip": 52672,
-    "zip3": 1838,
+    "zip": 52671,
+    "zip3": 1837,
     "zip_pop": 293,
     "city_over_zip3": 189,
-    "virtual_site": 108,
-    "city_gazetteer": 102,
-    "zip_typo_corrected": 36,
+    "city_gazetteer": 109,
+    "virtual_site": 109,
+    "zip_typo_corrected": 37,
     "zip_state_corrected": 16,
     "facility_listing": 8,
-    "unassigned": 5
+    "unassigned": 6
   },
   "zip_city_review": {
-    "ZIP kept, city corrected": 44,
-    "city kept, ZIP corrected": 36,
-    "undecided, flagged on the pages": 35
+    "ZIP kept, city corrected": 45,
+    "city kept, ZIP corrected": 37,
+    "undecided, flagged on the pages": 33
   },
-  "distinct_trials": 4029,
+  "distinct_trials": 4033,
   "counties": 3143,
   "counties_with_any_trial": 826,
   "broad_menu_counties": 84,

@@ -8,8 +8,8 @@ Web app: `docs/` (static, deployable to GitHub Pages as-is; `index.html` the hom
 
 <!-- headline:start — rewritten by build_readme.py on every refresh; edit the script, not this block -->
 ## Headline results (residents 55+, trials accepting some adults aged 55 or older, road-miles from each census tract's central point)
-Registry data as of 16 November 2026: 4,029 listed trials at about 3,800 named facilities (2,417 distinct site locations).
-- **The typical American 55+ has about 250 recruiting cancer treatment trials within 60 road-miles of home (median 246, mean 361); 4.2% (4.2 million) have none.** 11.8% have fewer than 20, the lead figure until 16 November 2026 and still in every data file. (20.9% live in a county with no trial — a county-boundary statistic that overstates isolation and is not the lead number.)
+Registry data as of 17 November 2026: 4,033 listed trials at about 3,800 named facilities (2,411 distinct site locations).
+- **The typical American 55+ has about 250 recruiting cancer treatment trials within 60 road-miles of home (median 248, mean 361); 4.3% (4.3 million) have none.** 11.8% have fewer than 20, the lead figure until 16 November 2026 and still in every data file. (20.9% live in a county with no trial — a county-boundary statistic that overstates isolation and is not the lead number.)
 - **38.0% live more than 60 road-miles from a broad menu** (a county with 100 or more trials); 18.3% more than 120; 0.7% (Alaska, Hawaii) have no road connection to one at all.
 - **43.7% live more than 60 road-miles from an NCI-designated cancer center that treats adults** (65 centers at 67 locations); the median resident 55+ is 48 road-miles from one; 20.8% are more than 120.
 - 385 counties host at least a limited menu (20 or more trials), 84 of them a broad menu; **15 states have no broad-menu county**; 73 congressional districts have every resident 55+ (100.0% to one decimal; a few dozen residents of split tracts aside in two of them) beyond 60 road-miles of one.

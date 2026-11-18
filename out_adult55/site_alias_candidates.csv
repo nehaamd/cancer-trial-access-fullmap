@@ -1,6 +1,5 @@
 county_fips,zip,shorter,longer,suggested_canonical
 01069,36303,dothan hematology oncology,xcancer research network dothan hematology oncology,xcancer research network dothan hematology oncology
-01073,35233,university of alabama at birmingham,university of alabama at birmingham children s of alabama,university of alabama at birmingham children s of alabama
 01073,35243,alabama oncology,alabama oncology grandview cancer center,alabama oncology grandview cancer center
 04019,85711,arizona oncology associates,scri arizona oncology associates pc hope,scri arizona oncology associates pc hope
 04019,85715,arizona clinical research center,acrc arizona clinical research center,acrc arizona clinical research center
@@ -11,6 +10,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06001,94704,alta bates summit medical center,alta bates summit medical center herrick campus,alta bates summit medical center herrick campus
 06037,90027,children s hospital los angeles,children s hospital los angeles div of research immunology bmt adults and pediatrics,children s hospital los angeles div of research immunology bmt adults and pediatrics
 06037,90033,research,clinical research advisors downtown la,clinical research advisors downtown la
+06037,90048,cedars sinai medical center,the angeles cedars sinai medical center and its affiliates,the angeles cedars sinai medical center and its affiliates
 06037,90095,the regents of the university of california,the regents of the university of california on behalf of its los angeles campus,the regents of the university of california on behalf of its los angeles campus
 06037,90095,university of california,the regents of the university of california,the regents of the university of california
 06037,90095,university of california,the regents of the university of california on behalf of its los angeles campus,the regents of the university of california on behalf of its los angeles campus
@@ -25,6 +25,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 06067,95817,university of california,university of california davis comprehensive cancer center,university of california davis comprehensive cancer center
 06075,94143,university of california,university of california san francisco,university of california san francisco
 06075,94143,university of california,university of california san fransico,university of california san fransico
+06077,95204,stockton hematology oncology medical group,stockton hematology oncology medical group 2626 n california st,stockton hematology oncology medical group 2626 n california st
 06083,93105,ridley tree cancer center,samsun clinic ridley tree cancer center,samsun clinic ridley tree cancer center
 06115,95901,rideout cancer center,fremont rideout cancer center,fremont rideout cancer center
 08005,80113,skin cancer institute,the melanoma and skin cancer institute,the melanoma and skin cancer institute
@@ -49,9 +50,11 @@ county_fips,zip,shorter,longer,suggested_canonical
 12031,32256,cancer specialists of north florida,cancer specialists of north florida southpoint,cancer specialists of north florida southpoint
 12083,34474,florida cancer affiliates ocala,ocala oncology center pl dba florida cancer affiliates ocala,ocala oncology center pl dba florida cancer affiliates ocala
 12083,34474,ocala oncology center,ocala oncology center pl dba florida cancer affiliates ocala,ocala oncology center pl dba florida cancer affiliates ocala
+12086,33013,bioresearch partner,bioresearch partners holding hialeah hospital,bioresearch partners holding hialeah hospital
 12086,33136,university of miami,university of miami jackson memorial hospital adults only,university of miami jackson memorial hospital adults only
 12086,33165,biogenix,biogenix molecular llc,biogenix molecular llc
 12095,32827,research,sara cannon research institute lake nona,sara cannon research institute lake nona
+12095,32827,research,sarah cannon research institute lake nona,sarah cannon research institute lake nona
 12099,33458,jupiter medical center,jupiter medical center anderson family cancer institute,jupiter medical center anderson family cancer institute
 12099,33486,boca raton regional hospital,baptist health boca raton regional hospital,baptist health boca raton regional hospital
 12099,33486,boca raton regional hospital,boca raton regional hospital lynn cancer institute,boca raton regional hospital lynn cancer institute
@@ -97,14 +100,17 @@ county_fips,zip,shorter,longer,suggested_canonical
 24027,21044,maryland oncology,central maryland oncology center,central maryland oncology center
 24027,21044,maryland oncology,maryland oncology hematology p a,maryland oncology hematology p a
 24031,20892,national cancer institute,national cancer institute developmental therapeutics clinic,national cancer institute developmental therapeutics clinic
+24510,21201,ascentage,ascentage investigative site,ascentage investigative site
 24510,21201,clinical study site,ngm clinical study site,ngm clinical study site
 24510,21229,saint agnes hospital,ascension saint agnes hospital,ascension saint agnes hospital
+24510,21229,saint agnes hospital,saint agnes hospital baltimore hunt ppds,saint agnes hospital baltimore hunt ppds
 25017,01805,lahey clinic,beth israel lahey health lahey hospital medical center lhmc lahey clinic medical center,beth israel lahey health lahey hospital medical center lhmc lahey clinic medical center
 25021,02190,south shore hospital,df bwcc in clinical affiliation with south shore hospital,df bwcc in clinical affiliation with south shore hospital
 25025,02114,massachusetts general hospital,massachusetts general hospital dana farber,massachusetts general hospital dana farber
 25025,02215,dana farber cancer institute,dana farber cancer institute boston children s,dana farber cancer institute boston children s
 26055,49684,munson medical center,munson medical center cowell family cancer center,munson medical center cowell family cancer center
 26065,48912,sparrow hospital,herbert herman cancer center sparrow hospital,herbert herman cancer center sparrow hospital
+26081,49546,cancer hematology center,cancer hematology centers of western michigan pc kit storage,cancer hematology centers of western michigan pc kit storage
 26099,48314,cancer and leukemia center,profound research llc at cancer and leukemia center,profound research llc at cancer and leukemia center
 26125,48073,oakland medical group,profound research llc mhp medonc royal oak oakland medical group location,profound research llc mhp medonc royal oak oakland medical group location
 26125,48084,michigan institute of urology,michigan institute of urology solaris health,michigan institute of urology solaris health
@@ -122,6 +128,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 29019,65201,missouri cancer associates,missouri cancer associates 150518964,missouri cancer associates 150518964
 29077,65807,oncology hematology associates,oncology hematology associates springfield springfield 2,oncology hematology associates springfield springfield 2
 29510,63110,saint louis university,saint louis university hospital,saint louis university hospital
+31001,68901,mary lanning healthcare,mary lanning healthcare mlh morrison cancer center mcc,mary lanning healthcare mlh morrison cancer center mcc
 31109,68506,nebraska hematology oncology,nebraska hematology oncology revive research institute llc,nebraska hematology oncology revive research institute llc
 31109,68516,cancer partners of nebraska,cancer partners of nebraska april sampson cancer center,cancer partners of nebraska april sampson cancer center
 31109,68516,cancer partners of nebraska,cancer partners of nebraska pine lake,cancer partners of nebraska pine lake
@@ -134,6 +141,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 34003,07652,valley health system,valley health systems ridgewood campus,valley health systems ridgewood campus
 34013,07112,newark beth israel medical center,rwjbarnabas health newark beth israel medical center,rwjbarnabas health newark beth israel medical center
 34017,07302,jersey city medical center,rwjbarnabas health jersey city medical center,rwjbarnabas health jersey city medical center
+34023,08816,astera cancer care,titan health partners llc dba astera cancer care,titan health partners llc dba astera cancer care
 34025,07740,monmouth medical center,rwjbarnabas health monmouth medical center,rwjbarnabas health monmouth medical center
 34029,08701,monmouth medical center,monmouth medical center southern campus,monmouth medical center southern campus
 34029,08701,monmouth medical center,rwjbarnabas health monmouth medical center southern campus,rwjbarnabas health monmouth medical center southern campus
@@ -160,6 +168,8 @@ county_fips,zip,shorter,longer,suggested_canonical
 37125,28374,firsthealth of the carolinas,firsthealth of the carolinas speciality center,firsthealth of the carolinas speciality center
 37147,27834,east carolina university,brody school of medicine at east carolina university,brody school of medicine at east carolina university
 37195,27893,regional medical oncology center,regional medical oncology center wlson,regional medical oncology center wlson
+39035,44106,university hospitals,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center cleveland clinic taussig cancer center,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center cleveland clinic taussig cancer center
+39035,44106,university hospitals,university hospitals cleveland medical center,university hospitals cleveland medical center
 39035,44106,university hospitals cleveland medical center,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center cleveland clinic taussig cancer center,case comprehensive cancer center university hospitals cleveland medical center seidman cancer center cleveland clinic taussig cancer center
 39035,44130,helios clinical research,clinical research solutions helios clinical research,clinical research solutions helios clinical research
 39049,43210,clinical study site,clinical study sites,clinical study sites
@@ -175,10 +185,10 @@ county_fips,zip,shorter,longer,suggested_canonical
 39151,44718,research,the gabrail pharmacology phase 1 research center,the gabrail pharmacology phase 1 research center
 39153,44302,akron general medical center,cleveland clinic akron general medical center,cleveland clinic akron general medical center
 41003,97330,samaritan hospital,good samaritan hospital,good samaritan hospital
-41051,97239,va portland health care system,va portland health care system portland or,va portland health care system portland or
 42003,15232,ascentage,ascentage investigative site,ascentage investigative site
 42015,18840,guthrie medical group,guthrie medical group pc robert packer hospital,guthrie medical group pc robert packer hospital
 42029,19380,chester county hospital,penn medicine chester county hospital,penn medicine chester county hospital
+42091,19044,alliance cancer specialists,alliance cancer specialists abington hematology oncology associates horsham,alliance cancer specialists abington hematology oncology associates horsham
 42091,19046,redeemer health,redeemer health holy redeemer hospital,redeemer health holy redeemer hospital
 42091,19096,lankenau medical center,lankenau medical center mainline medical center,lankenau medical center mainline medical center
 42101,19104,children s hospital of philadelphia,children s hospital of philadelphia center for childhood cancer research,children s hospital of philadelphia center for childhood cancer research
@@ -198,9 +208,12 @@ county_fips,zip,shorter,longer,suggested_canonical
 47093,37920,university of tennessee,university of tennessee knoxville,university of tennessee knoxville
 47093,37920,university of tennessee,university of tennessee medical center,university of tennessee medical center
 47157,38138,the conrad pearson clinic,the conrad pearson clinic wolf river office urology center of the south,the conrad pearson clinic wolf river office urology center of the south
-48029,78229,next oncology,new experimental therapeutics of san antonio next oncology,new experimental therapeutics of san antonio next oncology
 48029,78229,research,research site,research site
 48029,78229,ut health,university of texas ut health,university of texas ut health
+48113,75063,us oncology investigational products center,us oncology investigational products center ipc,us oncology investigational products center ipc
+48113,75230,research,cbcc global research,cbcc global research
+48113,75230,research,mary crowley cancer research,mary crowley cancer research
+48113,75230,research,sarah cannon research institute,sarah cannon research institute
 48113,75246,baylor university,baylor university medical center,baylor university medical center
 48113,75390,university of texas southwestern medical center,university of texas southwestern medical center children s medical center pediatrics only,university of texas southwestern medical center children s medical center pediatrics only
 48201,77027,houston metro urology,houston metro urology hmu southwest location,houston metro urology hmu southwest location
@@ -210,6 +223,7 @@ county_fips,zip,shorter,longer,suggested_canonical
 48201,77054,harris health system,harris health system smith clinic,harris health system smith clinic
 48251,76028,the center for cancer and blood disorders,oner the center for cancer and blood disorders texas cancer care,oner the center for cancer and blood disorders texas cancer care
 48303,79410,covenant children s hospital,covenant children s hospital joe arrington cancer research and treatment center,covenant children s hospital joe arrington cancer research and treatment center
+48339,77380,us oncology,us oncology research network,us oncology research network
 48375,79106,harrington cancer center,the don and sybil harrington cancer center,the don and sybil harrington cancer center
 48439,76104,the center for cancer and blood disorders,oner the center for cancer and blood disorders texas cancer care,oner the center for cancer and blood disorders texas cancer care
 48453,78704,south austin medical center,sarah cannon st david south austin medical center,sarah cannon st david south austin medical center

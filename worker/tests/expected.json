@@ -27,13 +27,13 @@
   "cosponsor_rows": 39,
   "counties": 3143,
   "districts": 436,
-  "facilities": 4991,
-  "facilities_unresolved": 1153,
-  "history": 11,
+  "facilities": 4994,
+  "facilities_unresolved": 1167,
+  "history": 12,
   "nci": 67,
   "senators": 100,
   "states": 51,
-  "trials": 4029
+  "trials": 4033
  },
  "districts": {
   "cosponsoring": 37,
@@ -70,7 +70,7 @@
    "TX-15",
    "TX-34"
   ],
-  "facilities": 6,
+  "facilities": 7,
   "high_incidence_low_access": false,
   "menu": "few",
   "namesake_ratio_ge_20": true,
@@ -113,8 +113,8 @@
    "cells": {
     "h_only": 534,
     "hh": 473,
-    "l_only": 773,
-    "neither": 1303
+    "l_only": 772,
+    "neither": 1304
    },
    "counties_classified": 3083,
    "hh_counties": 473,
@@ -128,7 +128,7 @@
     "3": 1007
    },
    "tertile_low_access": {
-    "1": 438,
+    "1": 437,
     "2": 335,
     "3": 473
    },
@@ -246,7 +246,7 @@
    "trials": 3919,
    "z60": 4.6
   },
-  "history_len": 11,
+  "history_len": 12,
   "metro_pct_lt20": 6.0,
   "mortality_all": {
    "deaths": 609828.0,
@@ -260,8 +260,8 @@
    "cells": {
     "hb_la": 481,
     "hb_ok": 1041,
-    "lb_la": 811,
-    "lb_ok": 797
+    "lb_la": 810,
+    "lb_ok": 798
    },
    "counties_classified": 3130,
    "hb_la_cases": 87457,
@@ -301,7 +301,7 @@
    "West Virginia",
    "Wyoming"
   ],
-  "trials_listed_here": 4029
+  "trials_listed_here": 4033
  },
  "oh_by_metro": {
   "metro": {
@@ -317,7 +317,7 @@
   }
  },
  "ops": {
-  "center_gt_wmean": 1105,
+  "center_gt_wmean": 1102,
   "districts_intersect_48215": [
    "TX-15",
    "TX-34"
@@ -575,7 +575,7 @@
   "tx_nonmetro_pct_lt100": 87.4,
   "tx_pct_lt20": 19.6,
   "tx_sum_county_pop55": 7398511,
-  "tx_trials_distinct": 1462,
+  "tx_trials_distinct": 1463,
   "va_cosponsoring": 1
  },
  "tie_break": {
@@ -584,16 +584,16 @@
    "01089",
    "48061"
   ],
-  "n": 1064
+  "n": 1063
  },
  "trials": {
-  "national": 4029,
-  "national_lung": 557,
-  "national_min_age_at_most_18": 3892,
+  "national": 4033,
+  "national_lung": 556,
+  "national_min_age_at_most_18": 3896,
   "national_phase3": 385,
-  "tx_distinct": 1462,
-  "tx_keyword_pembrolizumab": 174,
-  "tx_state_data": 1462
+  "tx_distinct": 1463,
+  "tx_keyword_pembrolizumab": 175,
+  "tx_state_data": 1463
  },
  "tx_agg": {
   "count": 254,

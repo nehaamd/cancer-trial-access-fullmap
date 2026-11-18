@@ -3,20 +3,20 @@
   "universe_label": "registry stand-in (facilities that hosted an oncology treatment trial started 2016+)",
   "method": "Candidate universe. Existing facilities capable of hosting a trial, from the supplied candidates file (intended: Commission on Cancer-accredited programs plus NCORP affiliates; the stand-in used when those were unreachable is every US facility that hosted an interventional oncology treatment trial started 2016 or later on ClinicalTrials.gov). Candidates are excluded if (a) their county already hosts a limited menu (20 or more listed trials) or (b) the facility itself already hosts a listed trial today. A facility is one institution at one ZIP code, as on the map: a candidate spelled differently from a recruiting site of the same institution at the same ZIP is that site, and spellings of one candidate are ranked once. An entry that is a telemedicine service rather than a place, or is listed under a mistyped ZIP code, is not a candidate. Candidates are located by ZIP-code centroid (city centroid for a ZIP larger than 100 square miles, or as fallback) and joined to the highway network like every other point in this project.\n\nObjective (primary). Residents aged 55+ who today have no listed cancer treatment trial within 60 road-miles of their census tract's population center, and who would have one if a trial opened at the candidate (i.e. the candidate is within 60 road-miles of their tract). Secondary view: the same, for residents who today have fewer than 20 such trials within 60 road-miles.\n\nOutput. Every candidate ranked by the population 55+ it would newly cover (primary objective), and a greedy sequence: the best candidate is chosen, the residents it covers are removed, and the next best is chosen, for up to 25 steps, with the cumulative coverage curve. Marginal population is measured on the same road graph and tract data as the rest of the map.\n\nThis is not a recommendation to build anything. It identifies which existing, trial-capable facilities sit nearest to the largest currently uncovered older populations.",
   "uncovered_pop55": {
-    "zero_trials_within_60rdmi": 4239882,
-    "lt20_trials_within_60rdmi": 11785809
+    "zero_trials_within_60rdmi": 4251029,
+    "lt20_trials_within_60rdmi": 11776895
   },
   "candidates_read": 23667,
-  "excluded_not_a_place_or_mistyped_zip": 136,
-  "excluded_county_has_limited_menu": 20669,
-  "excluded_facility_already_recruiting": 1324,
-  "excluded_other_spelling_of_a_candidate": 210,
+  "excluded_not_a_place_or_mistyped_zip": 138,
+  "excluded_county_has_limited_menu": 20668,
+  "excluded_facility_already_recruiting": 1323,
+  "excluded_other_spelling_of_a_candidate": 209,
   "geocode": {
-    "zip": 1133,
+    "zip": 1134,
     "city_large_zip": 144,
     "city": 51
   },
-  "candidates_evaluated": 1286,
+  "candidates_evaluated": 1287,
   "excluded_unlocated_or_far": 42,
   "excluded_unlocated_or_far_detail": {
     "not_geocoded": 0,
@@ -111,7 +111,7 @@
       "county": "Woodbury, Iowa",
       "pop55_newly_covered": 56522,
       "cumulative_pop55_covered": 558469,
-      "pct_of_uncovered_pop55": 13.2,
+      "pct_of_uncovered_pop55": 13.1,
       "lat": 42.4937,
       "lon": -96.3942
     },
@@ -150,7 +150,7 @@
       "county": "Hawaii, Hawaii",
       "pop55_newly_covered": 46880,
       "cumulative_pop55_covered": 714512,
-      "pct_of_uncovered_pop55": 16.9,
+      "pct_of_uncovered_pop55": 16.8,
       "lat": 19.6887,
       "lon": -155.0829
     },
@@ -163,7 +163,7 @@
       "county": "Covington, Alabama",
       "pop55_newly_covered": 44115,
       "cumulative_pop55_covered": 758627,
-      "pct_of_uncovered_pop55": 17.9,
+      "pct_of_uncovered_pop55": 17.8,
       "lat": 31.3094,
       "lon": -86.478
     },
@@ -189,7 +189,7 @@
       "county": "Clinton, New York",
       "pop55_newly_covered": 40989,
       "cumulative_pop55_covered": 843618,
-      "pct_of_uncovered_pop55": 19.9,
+      "pct_of_uncovered_pop55": 19.8,
       "lat": 44.7091,
       "lon": -73.4735
     },
@@ -202,7 +202,7 @@
       "county": "Calhoun, Alabama",
       "pop55_newly_covered": 37455,
       "cumulative_pop55_covered": 881073,
-      "pct_of_uncovered_pop55": 20.8,
+      "pct_of_uncovered_pop55": 20.7,
       "lat": 33.6841,
       "lon": -85.7052
     },
@@ -215,7 +215,7 @@
       "county": "Vigo, Indiana",
       "pop55_newly_covered": 32998,
       "cumulative_pop55_covered": 914071,
-      "pct_of_uncovered_pop55": 21.6,
+      "pct_of_uncovered_pop55": 21.5,
       "lat": 39.4978,
       "lon": -87.3905
     },
@@ -228,7 +228,7 @@
       "county": "Coconino, Arizona",
       "pop55_newly_covered": 30311,
       "cumulative_pop55_covered": 944382,
-      "pct_of_uncovered_pop55": 22.3,
+      "pct_of_uncovered_pop55": 22.2,
       "lat": 35.1852,
       "lon": -111.6207
     },
@@ -241,7 +241,7 @@
       "county": "Union, Georgia",
       "pop55_newly_covered": 25858,
       "cumulative_pop55_covered": 970240,
-      "pct_of_uncovered_pop55": 22.9,
+      "pct_of_uncovered_pop55": 22.8,
       "lat": 34.8568,
       "lon": -83.968
     },
@@ -280,7 +280,7 @@
       "county": "Sioux, Nebraska",
       "pop55_newly_covered": 19620,
       "cumulative_pop55_covered": 1034475,
-      "pct_of_uncovered_pop55": 24.4,
+      "pct_of_uncovered_pop55": 24.3,
       "lat": 41.8681,
       "lon": -103.662
     },
@@ -306,7 +306,7 @@
       "county": "Wapello, Iowa",
       "pop55_newly_covered": 18545,
       "cumulative_pop55_covered": 1071612,
-      "pct_of_uncovered_pop55": 25.3,
+      "pct_of_uncovered_pop55": 25.2,
       "lat": 41.0444,
       "lon": -92.4291
     },
@@ -319,7 +319,7 @@
       "county": "Greene, Arkansas",
       "pop55_newly_covered": 18208,
       "cumulative_pop55_covered": 1089820,
-      "pct_of_uncovered_pop55": 25.7,
+      "pct_of_uncovered_pop55": 25.6,
       "lat": 36.0795,
       "lon": -90.5164
     },
@@ -432,5 +432,5 @@
       "pop55_newly_covered_lt20": 74975
     }
   ],
-  "seconds": 38
+  "seconds": 46
 }

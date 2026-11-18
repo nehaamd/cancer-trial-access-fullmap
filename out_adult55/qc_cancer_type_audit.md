@@ -1,6 +1,6 @@
 # Cancer-type classification audit
 
-5,303 distinct condition strings across 4,283 eligible trials · 66 strings flagged · **0 not yet reviewed**
+5,311 distinct condition strings across 4,287 eligible trials · 66 strings flagged · **0 not yet reviewed**
 
 ## Matched inside a longer word (41)
 
